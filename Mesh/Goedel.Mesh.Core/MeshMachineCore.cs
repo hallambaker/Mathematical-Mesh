@@ -128,7 +128,7 @@ namespace Goedel.Mesh {
         /// <returns>Context for administering the Mesh</returns>
         public ContextMeshAdmin RecoverMesh(
                 string localName,
-                DareMessage escrow = null,
+                DareEnvelope escrow = null,
                 IEnumerable<string> shares = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
@@ -170,24 +170,14 @@ namespace Goedel.Mesh {
         /// Create a new Mesh master profile and account and bind to a service
         /// </summary>
         /// <returns>Context for administering the Mesh account via the service</returns>
-        public ContextAccountService ConnectService(
-                string localName,
-                string accountName = null,
+        public ContextMeshPending Connect(
+                string serviceID,
+                string localName = null,
                 string PIN = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            return ContextMesh.ConnectService(localName, accountName, PIN);
-            }
-
-
-        public ContextAccountService Connect(
-                string serviceId,
-            string localName = null
-,
-
-            string PIN = null) {
-            throw new NYI();
+            return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
             }
 
         #endregion
@@ -252,7 +242,7 @@ namespace Goedel.Mesh {
                 string serviceID,
             KeyPair keyAuthentication,
             AssertionAccountConnection assertionAccountConnection,
-            ProfileMaster profileMaster = null) =>
+            Profile profile = null) =>
                     MeshService.GetService(serviceID);
 
 

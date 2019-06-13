@@ -30,7 +30,7 @@ namespace Goedel.Mesh {
                 }
             }
 
-        public void Add(DareMessage dareMessage) => Container.AppendDirect(dareMessage);
+        public void Add(DareEnvelope dareMessage) => Container.AppendDirect(dareMessage);
 
 
         }

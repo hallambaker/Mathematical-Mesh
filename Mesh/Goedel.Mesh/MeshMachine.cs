@@ -45,7 +45,7 @@ namespace Goedel.Mesh {
 
         void OpenCatalog(Catalog catalog, string name);
 
-        //void Register(DareMessage entry);
+        //void Register(DareEnvelope entry);
 
 
 

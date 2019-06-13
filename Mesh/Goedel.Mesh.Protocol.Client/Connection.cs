@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Client {
 
     public partial class DeviceConnection {
 
-        public DareMessage EncodedProfileDevice => CatalogEntryDevice.EncodedProfileDevice;
+        public DareEnvelope EncodedProfileDevice => CatalogEntryDevice.EncodedProfileDevice;
 
 
         }

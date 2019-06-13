@@ -4,9 +4,9 @@
 	Description
 		|Support classes for JSON Object Signing and Encryption
 
-	Section 1 "DARE Message Schema"
+	Section 1 "DARE Schema"
 		Description
-			|A DARE Message consists of a Header, an Enhanced Data Sequence (EDS) and 
+			|A DARE Envelope consists of a Header, an Enhanced Data Sequence (EDS) and 
 			|an optional trailer. This section describes the JSON data fields used to 
 			|construct headers, trailers and complete messages.
 		Description
@@ -19,7 +19,7 @@
 			|A DARE Message contains a single DAREMessageSequence in either the JSON or 
 			|Compact serialization as directed by the protocol in which it is applied.
 
-	Structure DareMessageSequence
+	Structure DareEnvelopeSequence
 		Description
 			|A DARE Message containing Header, EDS and Trailer in JSON object encoding.
 			|Since a DAREMessage is almost invariably presented in JSON sequence or

@@ -98,12 +98,12 @@ namespace Goedel.Mesh.Server {
         ///account assertion.
         /// </summary>
 
-		public virtual DareMessage						SignedProfileMesh  {get; set;}
+		public virtual DareEnvelope						SignedProfileMesh  {get; set;}
         /// <summary>
         ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual DareMessage						SignedAssertionAccount  {get; set;}
+		public virtual DareEnvelope						SignedAssertionAccount  {get; set;}
         /// <summary>
         ///The profile status. Valid values are "Pending", "Connected", "Blocked"
         /// </summary>
@@ -218,14 +218,14 @@ namespace Goedel.Mesh.Server {
 					}
 				case "SignedProfileMesh" : {
 					// An untagged structure
-					SignedProfileMesh = new DareMessage ();
+					SignedProfileMesh = new DareEnvelope ();
 					SignedProfileMesh.Deserialize (JSONReader);
  
 					break;
 					}
 				case "SignedAssertionAccount" : {
 					// An untagged structure
-					SignedAssertionAccount = new DareMessage ();
+					SignedAssertionAccount = new DareEnvelope ();
 					SignedAssertionAccount.Deserialize (JSONReader);
  
 					break;

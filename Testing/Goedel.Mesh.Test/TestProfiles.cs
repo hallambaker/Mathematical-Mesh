@@ -114,8 +114,8 @@ namespace Goedel.Mesh.Test {
 
             var catalog = deviceAdmin.ContextMesh.ContextMeshAdmin.GetCatalogDevice();
 
-            var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
-            var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
+            //var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
+            //var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);
 
 
             // Punt on these for now. Need to know what the export format is for direct connection.
@@ -138,14 +138,14 @@ namespace Goedel.Mesh.Test {
             //CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
-        protected DareMessage Sign(JSONObject data, KeyPair keySign) =>
-                    DareMessage.Encode(data.GetBytes(tag: true),
+        protected DareEnvelope Sign(JSONObject data, KeyPair keySign) =>
+                    DareEnvelope.Encode(data.GetBytes(tag: true),
                         signingKey: keySign, contentType: "application/mmm");
 
         public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 
             var profileMeshDevicePublic = new AssertionDeviceConnection() {
-                //DeviceProfile = profileDevice.DareMessage
+                //DeviceProfile = profileDevice.DareEnvelope
                 };
 
             var ProfileMeshDevicePrivate = new AssertionDevicePrivate() {

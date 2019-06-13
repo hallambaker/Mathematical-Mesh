@@ -11,9 +11,9 @@ namespace Goedel.Mesh {
     public partial class MeshItem {
 
         /// <summary>
-        /// The DareMessage encapsulation of this object instance.
+        /// The DareEnvelope encapsulation of this object instance.
         /// </summary>
-        public virtual DareMessage DareMessage { get; protected set; }
+        public virtual DareEnvelope DareEnvelope { get; protected set; }
 
 
         public static object Initialize => null;
@@ -38,9 +38,9 @@ namespace Goedel.Mesh {
             throw new CannotCreateAbstract();
             }
 
-        public static MeshItem Decode(DareMessage message) {
+        public static MeshItem Decode(DareEnvelope message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
+            result.DareEnvelope = message;
             return result;
             }
 
@@ -48,20 +48,20 @@ namespace Goedel.Mesh {
         }
 
     public partial class Assertion {
-        public virtual DareMessage Encode (KeyPair keyPair) {
-            DareMessage = DareMessage.Encode(GetBytes(tag: true),
+        public virtual DareEnvelope Encode (KeyPair keyPair) {
+            DareEnvelope = DareEnvelope.Encode(GetBytes(tag: true),
                     signingKey: keyPair, contentType: "application/mmm");
-            return DareMessage;
+            return DareEnvelope;
             }
 
-        public DareMessage Sign(KeyPair SignatureKey) {
-            DareMessage = DareMessage.Encode(GetBytes(true), signingKey: SignatureKey);
-            return DareMessage;
+        public DareEnvelope Sign(KeyPair SignatureKey) {
+            DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
+            return DareEnvelope;
             }
 
-        public static new Assertion Decode(DareMessage message) {
+        public static new Assertion Decode(DareEnvelope message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
+            result.DareEnvelope = message;
             return result;
             }
 

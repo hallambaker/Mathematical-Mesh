@@ -68,9 +68,9 @@ namespace Goedel.Mesh {
 
         public CatalogEntryTask() => Key = UDF.Nonce();
 
-        public CatalogEntryTask(DareMessage task) : this() => Task = task;
+        public CatalogEntryTask(DareEnvelope task) : this() => Task = task;
 
-        public CatalogEntryTask(Task task) : this() => Task = DareMessage.Encode(task.GetBytes(tag: true),
+        public CatalogEntryTask(Task task) : this() => Task = DareEnvelope.Encode(task.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
 
 
 
-        public DareMessage ContainerEntry(CatalogEntry catalogEntry, string eventID) {
+        public DareEnvelope ContainerEntry(CatalogEntry catalogEntry, string eventID) {
 
             var body = catalogEntry.GetBytes(tagged: true);
 
@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
 
             // here au
 
-            return new DareMessage() {
+            return new DareEnvelope() {
                 Header = header,
                 Body = body
                 };
@@ -71,7 +71,7 @@ namespace Goedel.Mesh {
 
 
         // Test: Check what happens when an attempt is made to perform conflicting updates to a store.
-        public virtual void Apply(DareMessage dareMessage) => ContainerPersistence.Apply(dareMessage);
+        public virtual void Apply(DareEnvelope dareMessage) => ContainerPersistence.Apply(dareMessage);
 
 
 

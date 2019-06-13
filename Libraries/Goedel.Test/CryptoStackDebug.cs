@@ -35,7 +35,7 @@
 //            }
 
 
-//        public DareMessage Message(
+//        public DareEnvelope Message(
 //                    byte[] Plaintext,
 //                    string ContentType = null,
 //                    byte[] Cloaked = null,
@@ -44,7 +44,7 @@
 //            var Header = new DareHeader(this, ContentType, Cloaked, DataSequences);
 //            var Body = Header.EnhanceBody(Plaintext, out var Trailer);
 
-//            return new DareMessage() { Header = Header, Body = Body, Trailer = Trailer };
+//            return new DareEnvelope() { Header = Header, Body = Body, Trailer = Trailer };
 //            }
 
 //        }

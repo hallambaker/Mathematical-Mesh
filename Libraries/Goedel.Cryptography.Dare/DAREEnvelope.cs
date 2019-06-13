@@ -12,13 +12,13 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// DARE Message class.
     /// </summary>
-    public partial class DareMessage : DareMessageSequence, IDisposable {
+    public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
 
         /// <summary>
         /// Tag identifying this class
         /// </summary>
-        public override string _Tag { get; } = "DareMessage";
+        public override string _Tag { get; } = "DareEnvelope";
 
 
 
@@ -26,7 +26,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create an empty DARE Message (for use by deserializers)
         /// </summary>
-        public DareMessage() {
+        public DareEnvelope() {
             }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DareMessage(
+        public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     byte[] plaintext,
                     string contentType = null,
@@ -67,7 +67,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DareMessage(
+        public DareEnvelope(
                     CryptoStack cryptoStack,
                     byte[] plaintext,
                     string contentType = null,
@@ -96,7 +96,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DareMessage(
+        public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     Stream outputStream,
                     string contentType = null,
@@ -122,7 +122,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked"></param>
         /// <param name="dataSequences"></param>
         /// <returns></returns>
-        public static DareMessage Encode(
+        public static DareEnvelope Encode(
                     byte[] plaintext,
                     KeyPair signingKey = null,
                     KeyPair encryptionKey = null,
@@ -130,7 +130,7 @@ namespace Goedel.Cryptography.Dare {
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
             var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
-            return new DareMessage(cryptoParameters, plaintext, contentType, cloaked, dataSequences);
+            return new DareEnvelope(cryptoParameters, plaintext, contentType, cloaked, dataSequences);
 
             }
 
@@ -165,7 +165,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Destructor.
         /// </summary>
-        ~DareMessage() {
+        ~DareEnvelope() {
             Dispose(false);
             }
         #endregion
@@ -278,7 +278,7 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        DareMessage(JSONBCDReader jsonReader, DareHeader header) {
+        DareEnvelope(JSONBCDReader jsonReader, DareHeader header) {
             this.JSONReader = jsonReader;
             this.Header = header;
             }
@@ -294,7 +294,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
-        public static DareMessage FromJSON(byte[] data, bool tagged = true,
+        public static DareEnvelope FromJSON(byte[] data, bool tagged = true,
                 bool decrypt = false, KeyCollection keyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(data);
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
@@ -308,7 +308,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
-        public static DareMessage FromJSON(Stream stream, bool tagged = true,
+        public static DareEnvelope FromJSON(Stream stream, bool tagged = true,
                 bool decrypt = false, KeyCollection keyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(stream);
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
@@ -322,7 +322,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>		
-        public static DareMessage FromJSON(JSONBCDReader jsonReader, bool tagged = true,
+        public static DareEnvelope FromJSON(JSONBCDReader jsonReader, bool tagged = true,
                 bool decrypt = false, KeyCollection keyCollection = null) {
             Assert.False(tagged, NYI.Throw);
 
@@ -344,17 +344,17 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Read a DAREMessage from a stream in incremental mode. The header of the 
+        /// Read a DareEnvelope from a stream in incremental mode. The header of the 
         /// message is read but not the body.
         /// </summary>
         /// <param name="jsonReader">The stream from which data is to be read.</param>
-        /// <returns>The DAREMessage instance.</returns>
-        public static DareMessage DecodeHeader(JSONBCDReader jsonReader) {
+        /// <returns>The DareEnvelope instance.</returns>
+        public static DareEnvelope DecodeHeader(JSONBCDReader jsonReader) {
             Assert.True(jsonReader.StartArray());
             var Header = DareHeader.FromJSON(jsonReader, false);
             Assert.NotNull(Header);
             Assert.True(jsonReader.NextArray());
-            return new DareMessage(jsonReader, Header);
+            return new DareEnvelope(jsonReader, Header);
             }
 
         /// <summary>
@@ -424,9 +424,9 @@ namespace Goedel.Cryptography.Dare {
                 int chunk = -1) {
 
 
-            using (var DAREMessageWriter = new DAREMessageWriter(cryptoParameters,
+            using (var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
                 outputStream, contentType, fileName, contentLength, cloaked, dataSequences)) {
-                inputStream.CopyTo(DAREMessageWriter);
+                inputStream.CopyTo(DAREEnvelopeWriter);
                 }
 
             }

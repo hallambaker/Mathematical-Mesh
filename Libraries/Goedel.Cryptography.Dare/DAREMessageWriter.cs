@@ -9,7 +9,7 @@ using Goedel.Cryptography.Jose;
 using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Dare {
-    class DAREMessageWriter : Stream {
+    class DareEnvelopeWriter : Stream {
         #region // Boilerplate implementations
         /// <summary>
         /// Gets a value indicating whether the current stream supports reading.
@@ -91,7 +91,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Destructor.
         /// </summary>
-        ~DAREMessageWriter() {
+        ~DareEnvelopeWriter() {
             Dispose(false);
             }
         #endregion
@@ -115,7 +115,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DAREMessageWriter(
+        public DareEnvelopeWriter(
                     CryptoParameters CryptoParameters,
                     Stream OutputStream,
                     string ContentType = null,
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public DAREMessageWriter(
+        public DareEnvelopeWriter(
                     CryptoParameters CryptoParameters,
                     JSONWriter OutputStream,
                     string ContentType = null,

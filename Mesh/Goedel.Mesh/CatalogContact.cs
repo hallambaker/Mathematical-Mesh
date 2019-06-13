@@ -61,14 +61,14 @@ namespace Goedel.Mesh {
             base(directory, ContainerName, cryptoParameters, keyCollection) {
             }
 
-        public void Add(DareMessage contact, bool self = false) {
+        public void Add(DareEnvelope contact, bool self = false) {
             var entry = new CatalogEntryContact(contact) {
                 Self=self
                 };
             Add(entry);
             }
 
-        public void Add(Contact contact, bool self = false) => Add(contact.DareMessage ?? DareMessage.Encode(contact.GetBytes(true)), self);
+        public void Add(Contact contact, bool self = false) => Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
 
 
@@ -82,9 +82,9 @@ namespace Goedel.Mesh {
 
         public CatalogEntryContact() => Key = UDF.Nonce();
 
-        public CatalogEntryContact(DareMessage contact) : this() => Contact = contact;
+        public CatalogEntryContact(DareEnvelope contact) : this() => Contact = contact;
 
-        public CatalogEntryContact(Contact contact) : this() => Contact = DareMessage.Encode(contact.GetBytes(tag: true),
+        public CatalogEntryContact(Contact contact) : this() => Contact = DareEnvelope.Encode(contact.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

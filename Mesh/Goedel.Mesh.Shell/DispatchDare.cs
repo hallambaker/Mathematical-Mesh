@@ -25,7 +25,7 @@ namespace Goedel.Mesh.Shell {
             var keyCollection = KeyCollection(Options);
             var cryptoParameters = GetCryptoParameters(keyCollection, Options);
 
-            var Length = DareMessage.Encode(cryptoParameters, inputFile, outputFile, 
+            var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile, 
                 fileName: inputFile, contentType: contentType);
 
             return new ResultFile() {
@@ -45,7 +45,7 @@ namespace Goedel.Mesh.Shell {
             var keyCollection = KeyCollection(Options);
 
 
-            var Length = DareMessage.Decode(inputFile, keyCollection: keyCollection);
+            var Length = DareEnvelope.Decode(inputFile, keyCollection: keyCollection);
 
             return new ResultFile() {
                 TotalBytes = (int)Length
@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareVerify(DareVerify Options) {
             var inputFile = Options.Input.Value;
-            var result = DareMessage.Verify(inputFile);
+            var result = DareEnvelope.Verify(inputFile);
 
             return new ResultFile() {
                 Filename = inputFile,
@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DareEARL(DareEARL Options) {
             var inputFile = Options.Input.Value;
             throw new NYI();
-            //var result = DareMessage.Verify(inputFile);
+            //var result = DareEnvelope.Verify(inputFile);
 
             //return new ResultFile() {
             //    Filename = inputFile,

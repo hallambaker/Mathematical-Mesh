@@ -7,7 +7,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Enumerator that returns the raw, unencrypted container data.
     /// </summary>
-    public class ContainerEnumeratorRaw : IEnumerator<DareMessage> {
+    public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
 
         Container Container;
         int LowIndex;
@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
-        public DareMessage Current { get; private set; } = null;
+        public DareEnvelope Current { get; private set; } = null;
 
 
         /// <summary>

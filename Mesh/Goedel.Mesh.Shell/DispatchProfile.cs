@@ -156,11 +156,11 @@ namespace Goedel.Mesh.Shell {
                 AddIfPresent(recoverShares, Options.Share8);
                 var secret = new Secret(recoverShares);
 
-                DareMessage Escrow=null;
+                DareEnvelope Escrow=null;
                 if (file != null) {
                     using (var inputStream = file.OpenFileRead()) {
                         using (var reader = new JSONBCDReader(inputStream)) {
-                            Escrow = DareMessage.FromJSON(reader, false);
+                            Escrow = DareEnvelope.FromJSON(reader, false);
 
                             }
                         }

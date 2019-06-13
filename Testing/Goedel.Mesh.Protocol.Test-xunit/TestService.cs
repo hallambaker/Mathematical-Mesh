@@ -102,7 +102,7 @@ namespace Goedel.XUnit {
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
             var PIN = contextAccountServiceAlice.GetPIN();
             var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
-            contextAccount2.Sync();
+            contextAccount2.Complete();
 
             // Do some catalog updates and check the results
             var catalogCredential = contextAccountAlice.GetCatalogCredential();
@@ -115,7 +115,7 @@ namespace Goedel.XUnit {
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
             contextAccountServiceAlice.Process(connectRequest);
 
-            contextAccount3.Sync();
+            contextAccount3.Complete();
 
 
             // Do some catalog updates and check the results
@@ -167,7 +167,7 @@ namespace Goedel.XUnit {
             // New Device
             var contextAccount2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: PIN);
-            contextAccount2.Sync();
+            contextAccount2.Complete();
             }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Goedel.XUnit {
             contextAccountAlice.Process(connectRequest);
 
             // New Device
-            contextAccount3.Sync();
+            contextAccount3.Complete();
             }
 
         [Fact]
@@ -267,11 +267,34 @@ namespace Goedel.XUnit {
 
 
         bool Verify(ContextAccount first, ContextAccount second) {
-            (first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
+            //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
-            throw new NYI();
-            //Verify (first.AssertionDeviceConnection, second.AssertionDeviceConnection).AssertTrue();
-            //return true;
+            Verify(first.ActivationAccount, second.ActivationAccount);
+            Verify(first.AssertionAccount, second.AssertionAccount);
+            (first.DirectoryAccount == second.DirectoryAccount).AssertTrue();
+            (first.KeySignatureUDF == second.KeySignatureUDF).AssertTrue();
+            (first.KeyEncryptionUDF == second.KeyEncryptionUDF).AssertTrue();
+            (first.KeyAuthenticationUDF == second.KeyAuthenticationUDF).AssertTrue();
+            return true;
+            }
+
+        bool Verify(ActivationAccount first, ActivationAccount second) {
+            Verify(first.AssertionAccountConnection, second.AssertionAccountConnection);
+            (first.AccountUDF == second.AccountUDF).AssertTrue();
+            return true;
+            }
+
+        bool Verify(AssertionAccount first, AssertionAccount second) {
+            (first.AccountEncryptionKey.UDF == second.AccountEncryptionKey.UDF).AssertTrue();
+            (first.MeshProfileUDF == second.MeshProfileUDF).AssertTrue();
+            return true;
+            }
+
+        bool Verify(AssertionAccountConnection first, AssertionAccountConnection second) {
+            (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
+            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
+            return true;
             }
 
 

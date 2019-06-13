@@ -711,7 +711,7 @@ namespace Goedel.Cryptography.Dare {
         /// stores such as catalogs and spools.
         /// </summary>
         /// <param name="dareMessage"></param>
-        public void AppendDirect(DareMessage dareMessage) {
+        public void AppendDirect(DareEnvelope dareMessage) {
             AppendContainerHeader = new ContainerHeader(dareMessage.Header) {
                 Index = (int)FrameCount++
                 };
@@ -736,7 +736,7 @@ namespace Goedel.Cryptography.Dare {
         /// the frame.
         /// </summary>
         /// <returns></returns>
-        public DareMessage ReadDirectReverse() {
+        public DareEnvelope ReadDirectReverse() {
             Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
 
             var position = JBCDStream.MoveFrameReverse();
@@ -752,15 +752,15 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Return the current container frame as a DareMessage.
+        /// Return the current container frame as a DareEnvelope.
         /// </summary>
         /// <returns>The container data.</returns>
-        public DareMessage ReadDirect() {
+        public DareEnvelope ReadDirect() {
             var found = JBCDStream.ReadFrame(out var headerData, out var FrameData, out var trailerData);
             if (!found) {
                 return null;
                 }
-            var message =  new DareMessage() { Body = FrameData};
+            var message =  new DareEnvelope() { Body = FrameData};
             if (headerData != null) {
                 message.Header = ContainerHeader.FromJSON(headerData.JSONReader(), false);
                 }

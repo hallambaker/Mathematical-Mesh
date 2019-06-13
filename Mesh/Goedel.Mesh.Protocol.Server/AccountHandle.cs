@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Server {
         /// that is supported for a device that is not connected to the account profile.
         /// </summary>
         /// <param name="dareMessage">The message to post.</param>
-        public void Post(DareMessage dareMessage) {
+        public void Post(DareEnvelope dareMessage) {
 
             // here we should perform an authorization operation against the store.
 
@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Server {
         public Catalog GetCatalog(string Label) =>
             new Catalog(AccountEntry.Directory, Label);
 
-        void PostToCatalog(DareMessage dareMessage) => throw new NYI();
+        void PostToCatalog(DareEnvelope dareMessage) => throw new NYI();
 
         }
     }

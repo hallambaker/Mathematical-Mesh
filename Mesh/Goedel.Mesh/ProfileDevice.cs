@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
 
             var bytes = ProfileDevice.GetBytes(tag:true);
 
-            ProfileDevice.DareMessage = DareMessage.Encode(bytes,
+            ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
                     signingKey: keyPublicSign, contentType: "application/mmm");
 
             return ProfileDevice;
@@ -66,9 +66,9 @@ namespace Goedel.Mesh {
 
             }
 
-        public static new ProfileDevice Decode(DareMessage message) {
+        public static new ProfileDevice Decode(DareEnvelope message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
+            result.DareEnvelope = message;
             return result;
             }
 
@@ -78,18 +78,18 @@ namespace Goedel.Mesh {
     public partial class AssertionDevicePrivate {
         public ProfileDevice ProfileDevice;
 
-        public  DareMessage Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
+        public  DareEnvelope Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
 
             var cryptoParameters = new CryptoParameters() {
                 EncryptionKeys = new List<KeyPair> { encryptDevice , encryptAdmin } 
                 };
 
-            this.DareMessage = new DareMessage(
+            this.DareEnvelope = new DareEnvelope(
                 cryptoParameters,
                 GetBytes(tag: true),
                 contentType: "application/mmm");
 
-            return DareMessage;
+            return DareEnvelope;
             }
 
         public AssertionDevicePrivate() { }
@@ -110,7 +110,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public static AssertionDevicePrivate Decode(IMeshMachine meshMachine, DareMessage message) =>
+        public static AssertionDevicePrivate Decode(IMeshMachine meshMachine, DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
 
         // is failing here because the device entry is not being written back to the catalog after the update.
@@ -149,7 +149,7 @@ namespace Goedel.Mesh {
             Console.WriteLine($"   Auth {KeyAuthentication.UDF}");
             }
 
-        public static new AssertionDeviceConnection Decode(DareMessage message) =>
+        public static new AssertionDeviceConnection Decode(DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
         }
 

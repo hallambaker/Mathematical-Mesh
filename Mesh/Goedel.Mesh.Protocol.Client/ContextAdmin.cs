@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Client {
             return new AdminConnection() {
                 ID = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
-                EncodedProfileMaster = profileMaster.DareMessage,
+                EncodedProfileMaster = profileMaster.DareEnvelope,
                 SignatureKey = keyOverlaySignature
                 };
             }
@@ -167,9 +167,9 @@ namespace Goedel.Mesh.Client {
             var catalogEntryDevice = new CatalogEntryDevice() {
                 UDF = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
-                SignedDeviceConnection = assertionDeviceConnection.DareMessage,
-                EncryptedDevicePrivate = assertionDevicePrivate.DareMessage,
-                EncodedProfileDevice = profileDevice.DareMessage
+                SignedDeviceConnection = assertionDeviceConnection.DareEnvelope,
+                EncryptedDevicePrivate = assertionDevicePrivate.DareEnvelope,
+                EncodedProfileDevice = profileDevice.DareEnvelope
                 };
 
             GetCatalogDevice().Add(catalogEntryDevice);
@@ -236,7 +236,7 @@ namespace Goedel.Mesh.Client {
             var contextAccount = new ContextAccount(this, activationAccount, assertionAccount);
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             var catalogApplication = contextAccount.GetCatalogApplication();
-            catalogApplication.Add(assertionAccount);
+            catalogApplication.Update(assertionAccount);
             MeshMachine.Register(AdminConnection);
 
             return contextAccount;
@@ -273,8 +273,8 @@ namespace Goedel.Mesh.Client {
 
             // Create the activation for this device
             var activationAccount = new ActivationAccount() {
-                SignedAssertionAccount = assertionAccount.DareMessage,
-                SignedAssertionAccountConnection = assertionAccountConnection.DareMessage,
+                AccountUDF = assertionAccount.UDF,
+                SignedAssertionAccountConnection = assertionAccountConnection.DareEnvelope,
                 KeyEncryption = keyEncryption,
                 KeySignature = keySignature,
                 KeyAuthentication = keyAuthentication
@@ -298,7 +298,7 @@ namespace Goedel.Mesh.Client {
         /// Sign the specified assertion under this device's administration key
         /// </summary>
         /// <param name="assertion">The assertion to sign.</param>
-        public DareMessage Sign(Assertion assertion) => assertion.Sign(KeyAdministratorSignature);
+        public DareEnvelope Sign(Assertion assertion) => assertion.Sign(KeyAdministratorSignature);
 
 
         #region // Escrow and recovery from escrow
@@ -311,7 +311,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="quorum">Number of shares required to recreate the quorum</param>
         /// <param name="bits">Key size in bits</param>
         /// <returns>The encrypted escrow entry and the key shares.</returns>
-        public (DareMessage, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
+        public (DareEnvelope, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
 
             var secret = new Secret(bits);
             var keyShares = secret.Split(shares, quorum);
@@ -327,7 +327,7 @@ namespace Goedel.Mesh.Client {
                 MasterEscrowKeys = MasterEscrowKeys
                 };
 
-            var message = new DareMessage(cryptoStack, EscrowedKeySet.GetBytes(true));
+            var message = new DareEnvelope(cryptoStack, EscrowedKeySet.GetBytes(true));
 
             return (message, keyShares);
             }
@@ -335,7 +335,7 @@ namespace Goedel.Mesh.Client {
         public static ContextMeshAdmin RecoverMesh(
                 IMeshMachineClient meshMachine,
                 ProfileDevice profileDevice = null,
-                DareMessage escrow = null,
+                DareEnvelope escrow = null,
                 IEnumerable<string> shares = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,

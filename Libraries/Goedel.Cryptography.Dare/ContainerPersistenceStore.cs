@@ -219,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
         /// Apply the specified message to the container.
         /// </summary>
         /// <param name="dareMessage"></param>
-        public virtual void Apply(DareMessage dareMessage) {
+        public virtual void Apply(DareEnvelope dareMessage) {
             Container.AppendDirect(dareMessage);
 
             }

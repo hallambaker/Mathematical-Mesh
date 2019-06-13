@@ -21,7 +21,7 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-		Struct DareMessage EncodedProfileMaster
+		Struct DareEnvelope EncodedProfileMaster
 			Description
 				|The master profile that provides the root of trust for this Mesh
 
@@ -55,7 +55,12 @@
 		Description
 			|Describes a pending connection to a Mesh account believed to have been 
 			|created and posted to a service.
-
-		Struct DareMessage MessageConnectionRequest
+		String DeviceUDF
+			Description
+				|UDF of the connected device
+		Struct DareEnvelope MessageConnectionRequest
+			Description
+				|
+		Struct DareEnvelope ProfileDevice
 			Description
 				|

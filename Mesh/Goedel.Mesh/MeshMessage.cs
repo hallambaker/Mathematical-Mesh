@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Utilities;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+
 namespace Goedel.Mesh {
-    
+    public partial class MeshMessage {
+
+        public DareEnvelope Encode(KeyPair keyPair) {
+            throw new NYI();
+            DareEnvelope = null;
+            return DareEnvelope;
+            }
+        }
 
     public partial class MeshMessageComplete  {
 
@@ -28,11 +37,14 @@ namespace Goedel.Mesh {
             }
 
         }
+
+
+
     public partial class MessageConnectionRequest {
 
-        ProfileDevice ProfileDevice => profileDevice ??
-            ProfileDevice.Decode(DeviceProfile).CacheValue(out profileDevice);
-        ProfileDevice profileDevice;
+        //ProfileDevice ProfileDevice => profileDevice ??
+        //    ProfileDevice.Decode(DeviceProfile).CacheValue(out profileDevice);
+        //ProfileDevice profileDevice;
 
 
         //public string MakeWitness(byte[] meshProfileUDF) {

@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Client {
     public class ContextAccount : Disposable {
 
         ///<summary>The device profile to which the signature key is bound</summary>
-        public ProfileDevice ProfileDevice { get; }
+        //public ProfileDevice ProfileDevice { get; }
 
         ///<summary>The enclosing machine context.</summary>
         public ContextMesh ContextMesh;
@@ -35,12 +35,20 @@ namespace Goedel.Mesh.Client {
         ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
         CryptoParameters ContainerCryptoParameters;
 
+
+        public string KeySignatureUDF => KeySignature.UDF;
+        public string KeyEncryptionUDF => KeyEncryption.UDF;
+        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
+
         KeyPair KeySignature;
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
 
+
+
+
         public string DirectoryAccount => directoryAccount ?? 
-            Path.Combine(MeshMachine.DirectoryMesh, AssertionAccount.UDF).CacheValue(out directoryAccount);
+            Path.Combine(MeshMachine.DirectoryMesh, ActivationAccount.AccountUDF).CacheValue(out directoryAccount);
         string directoryAccount;
 
         Dictionary<string, Store> DictionaryStores { get; }
@@ -56,6 +64,8 @@ namespace Goedel.Mesh.Client {
             KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
             KeyEncryption = activationAccount.KeyEncryption.GetPrivate(MeshMachine);
             KeyAuthentication = activationAccount.KeyAuthentication.GetPrivate(MeshMachine);
+
+            KeyCollection.Add(KeyEncryption);
 
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
             DictionaryStores = new Dictionary<string, Store>();
@@ -79,7 +89,8 @@ namespace Goedel.Mesh.Client {
             }
 
 
-
+        protected MeshService GetMeshClient (string serviceID) => MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+                ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
 
 
 
@@ -93,21 +104,20 @@ namespace Goedel.Mesh.Client {
 
             var createRequest = new CreateRequest() {
                 ServiceID = serviceID,
-                SignedAssertionAccount = AssertionAccount.DareMessage,
-                SignedProfileMesh = ContextMesh.ProfileMesh.DareMessage
+                SignedAssertionAccount = AssertionAccount.DareEnvelope,
+                SignedProfileMesh = ContextMesh.ProfileMesh.DareEnvelope
                 };
 
             // attempt to register with service in question
 
-            var meshClient = MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
-                ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
+            var meshClient = GetMeshClient(serviceID);
             meshClient.CreateAccount(createRequest, meshClient.JpcSession);
 
 
             // Update the account assertion. This lives in CatalogApplication.
             AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
             AssertionAccount.ServiceIDs.Add(serviceID);
-            GetCatalogApplication().Add(AssertionAccount);
+            GetCatalogApplication().Update(AssertionAccount);
 
             return new ContextAccountService (this, meshClient);
             }
@@ -249,14 +259,16 @@ namespace Goedel.Mesh.Client {
 
     public class ContextAccountService : ContextAccount {
         MeshService MeshService;
+        string ServiceID;
+
         public ContextAccountService(ContextMesh contextMesh, ActivationAccount activationAccount)  :
                 base (contextMesh, activationAccount, null) {
-
+            var CatalogApplication = GetCatalogApplication();
             // here pull the account assertion from the catalog
-
+            AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
             // now work out which service to use.
 
-            throw new NYI();
+
             }
 
         public ContextAccountService(ContextAccount contextAccount, MeshService  meshService) : 
@@ -265,8 +277,18 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public string GetPIN() {
-            throw new NYI();
+        public string GetPIN(int length=80, int validity = 24*60) {
+            var pin = UDF.Nonce(length);
+            var expires = DateTime.Now.AddMinutes(validity);
+            var messageConnectionPIN = new MessageConnectionPIN() {
+                Account = ActivationAccount.AccountUDF,
+                Expires = expires,
+                PIN = pin
+                };
+
+            SendMessageAdmin(messageConnectionPIN);
+
+            return pin;
             }
 
         public void Sync() {
@@ -286,5 +308,42 @@ namespace Goedel.Mesh.Client {
         public void ConfirmationRequest(string serviceID, string messageText) {
             throw new NYI();
             }
+
+        void Connect() {
+            if (MeshService != null) {
+                return;
+                }
+
+            AssertionAccount.ServiceIDs.AssertNotNull();
+            (AssertionAccount.ServiceIDs.Count > 0).AssertTrue();
+
+            ServiceID = AssertionAccount.ServiceIDs[0];
+
+            MeshService = GetMeshClient(ServiceID);
+            }
+
+
+        public void SendMessage(MeshMessage MeshMessage) {
+            Connect();
+
+            }
+
+        /// <summary>
+        /// Send a message signed using the mesh administration key.
+        /// </summary>
+        /// <param name="MeshMessage"></param>
+        public void SendMessageAdmin(MeshMessage MeshMessage) {
+            Connect();
+
+            var message = DareEnvelope.Encode(MeshMessage.GetBytes());
+
+            var postRequest = new PostRequest() {
+                Self = new List<DareEnvelope>() { message }
+                };
+
+
+            MeshService.Post(postRequest);
+            }
+
         }
     }

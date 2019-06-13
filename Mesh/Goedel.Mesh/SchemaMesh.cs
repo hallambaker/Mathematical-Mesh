@@ -100,6 +100,7 @@ namespace Goedel.Mesh {
 			{"CatalogEntryApplicationNetwork", CatalogEntryApplicationNetwork._Factory},
 			{"MeshMessage", MeshMessage._Factory},
 			{"MeshMessageComplete", MeshMessageComplete._Factory},
+			{"MessageConnectionRequestClient", MessageConnectionRequestClient._Factory},
 			{"MessageConnectionRequest", MessageConnectionRequest._Factory},
 			{"MessageConnectionPIN", MessageConnectionPIN._Factory},
 			{"MessageContactRequest", MessageContactRequest._Factory},
@@ -2077,7 +2078,7 @@ namespace Goedel.Mesh {
         ///The signed AssertionDeviceConnection.
         /// </summary>
 
-		public virtual DareMessage						AssertionDeviceConnection  {get; set;}
+		public virtual DareEnvelope						AssertionDeviceConnection  {get; set;}
         /// <summary>
         ///List of application and account activation data. Keys, etc.
         /// </summary>
@@ -2214,7 +2215,7 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "AssertionDeviceConnection" : {
 					// An untagged structure
-					AssertionDeviceConnection = new DareMessage ();
+					AssertionDeviceConnection = new DareEnvelope ();
 					AssertionDeviceConnection.Deserialize (JSONReader);
  
 					break;
@@ -2266,15 +2267,15 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ActivationAccount : Activation {
         /// <summary>
-        ///The account assertion
+        ///The UDF of the account
         /// </summary>
 
-		public virtual DareMessage						SignedAssertionAccount  {get; set;}
+		public virtual string						AccountUDF  {get; set;}
         /// <summary>
         ///The account connection assertion
         /// </summary>
 
-		public virtual DareMessage						SignedAssertionAccountConnection  {get; set;}
+		public virtual DareEnvelope						SignedAssertionAccountConnection  {get; set;}
         /// <summary>
         ///The key contribution for the decryption key for the device. NB this is 
         ///NOT an overlay on the device signature key, it is an overlay on the 
@@ -2337,10 +2338,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Activation)this).SerializeX(_Writer, false, ref _first);
-			if (SignedAssertionAccount != null) {
+			if (AccountUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignedAssertionAccount", 1);
-					SignedAssertionAccount.Serialize (_Writer, false);
+				_Writer.WriteToken ("AccountUDF", 1);
+					_Writer.WriteString (AccountUDF);
 				}
 			if (SignedAssertionAccountConnection != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2394,16 +2395,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "SignedAssertionAccount" : {
-					// An untagged structure
-					SignedAssertionAccount = new DareMessage ();
-					SignedAssertionAccount.Deserialize (JSONReader);
- 
+				case "AccountUDF" : {
+					AccountUDF = JSONReader.ReadString ();
 					break;
 					}
 				case "SignedAssertionAccountConnection" : {
 					// An untagged structure
-					SignedAssertionAccountConnection = new DareMessage ();
+					SignedAssertionAccountConnection = new DareEnvelope ();
 					SignedAssertionAccountConnection.Deserialize (JSONReader);
  
 					break;
@@ -2635,7 +2633,7 @@ namespace Goedel.Mesh {
         ///The decryption key encrypted under the user's device key.		
         /// </summary>
 
-		public virtual DareMessage						DeviceRecryptionKeyEncrypted  {get; set;}
+		public virtual DareEnvelope						DeviceRecryptionKeyEncrypted  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2738,7 +2736,7 @@ namespace Goedel.Mesh {
 					}
 				case "DeviceRecryptionKeyEncrypted" : {
 					// An untagged structure
-					DeviceRecryptionKeyEncrypted = new DareMessage ();
+					DeviceRecryptionKeyEncrypted = new DareEnvelope ();
 					DeviceRecryptionKeyEncrypted.Deserialize (JSONReader);
  
 					break;
@@ -2768,7 +2766,7 @@ namespace Goedel.Mesh {
         ///Keys or key contributions enabling the operation to be performed
         /// </summary>
 
-		public virtual DareMessage						Capabilities  {get; set;}
+		public virtual DareEnvelope						Capabilities  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2868,7 +2866,7 @@ namespace Goedel.Mesh {
 					}
 				case "Capabilities" : {
 					// An untagged structure
-					Capabilities = new DareMessage ();
+					Capabilities = new DareEnvelope ();
 					Capabilities.Deserialize (JSONReader);
  
 					break;
@@ -3945,17 +3943,17 @@ namespace Goedel.Mesh {
         ///The device profile
         /// </summary>
 
-		public virtual DareMessage						EncodedProfileDevice  {get; set;}
+		public virtual DareEnvelope						EncodedProfileDevice  {get; set;}
         /// <summary>
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
-		public virtual DareMessage						SignedDeviceConnection  {get; set;}
+		public virtual DareEnvelope						SignedDeviceConnection  {get; set;}
         /// <summary>
         ///The device profile
         /// </summary>
 
-		public virtual DareMessage						EncryptedDevicePrivate  {get; set;}
+		public virtual DareEnvelope						EncryptedDevicePrivate  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4089,21 +4087,21 @@ namespace Goedel.Mesh {
 					}
 				case "EncodedProfileDevice" : {
 					// An untagged structure
-					EncodedProfileDevice = new DareMessage ();
+					EncodedProfileDevice = new DareEnvelope ();
 					EncodedProfileDevice.Deserialize (JSONReader);
  
 					break;
 					}
 				case "SignedDeviceConnection" : {
 					// An untagged structure
-					SignedDeviceConnection = new DareMessage ();
+					SignedDeviceConnection = new DareEnvelope ();
 					SignedDeviceConnection.Deserialize (JSONReader);
  
 					break;
 					}
 				case "EncryptedDevicePrivate" : {
 					// An untagged structure
-					EncryptedDevicePrivate = new DareMessage ();
+					EncryptedDevicePrivate = new DareEnvelope ();
 					EncryptedDevicePrivate.Deserialize (JSONReader);
  
 					break;
@@ -4430,7 +4428,7 @@ namespace Goedel.Mesh {
         ///The (signed) contact data.
         /// </summary>
 
-		public virtual DareMessage						Contact  {get; set;}
+		public virtual DareEnvelope						Contact  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4562,7 +4560,7 @@ namespace Goedel.Mesh {
 					}
 				case "Contact" : {
 					// An untagged structure
-					Contact = new DareMessage ();
+					Contact = new DareEnvelope ();
 					Contact.Deserialize (JSONReader);
  
 					break;
@@ -4801,7 +4799,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual DareMessage						Task  {get; set;}
+		public virtual DareEnvelope						Task  {get; set;}
         /// <summary>
         ///Unique key.
         /// </summary>
@@ -4894,7 +4892,7 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "Task" : {
 					// An untagged structure
-					Task = new DareMessage ();
+					Task = new DareEnvelope ();
 					Task.Deserialize (JSONReader);
  
 					break;
@@ -5315,7 +5313,7 @@ namespace Goedel.Mesh {
         ///The account assertion
         /// </summary>
 
-		public virtual DareMessage						SignedAccountAssertion  {get; set;}
+		public virtual DareEnvelope						SignedAccountAssertion  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5398,7 +5396,7 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "SignedAccountAssertion" : {
 					// An untagged structure
-					SignedAccountAssertion = new DareMessage ();
+					SignedAccountAssertion = new DareEnvelope ();
 					SignedAccountAssertion.Deserialize (JSONReader);
  
 					break;
@@ -6013,34 +6011,176 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Connection request message. This message contains the information
 	/// </summary>
-	public partial class MessageConnectionRequest : MeshMessage {
+	public partial class MessageConnectionRequestClient : MeshMessage {
         /// <summary>
+        ///
         /// </summary>
 
-		public virtual string						Account  {get; set;}
+		public virtual string						ServiceID  {get; set;}
         /// <summary>
         ///Device profile of the device making the request.
         /// </summary>
 
-		public virtual DareMessage						DeviceProfile  {get; set;}
+		public virtual DareEnvelope						DeviceProfile  {get; set;}
         /// <summary>
+        ///
         /// </summary>
 
 		public virtual byte[]						ClientNonce  {get; set;}
         /// <summary>
+        ///Fingerprint of the PIN value used to authenticate the request.
+        /// </summary>
+
+		public virtual string						PinUDF  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "MessageConnectionRequestClient";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new MessageConnectionRequestClient();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			if (ServiceID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ServiceID", 1);
+					_Writer.WriteString (ServiceID);
+				}
+			if (DeviceProfile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceProfile", 1);
+					DeviceProfile.Serialize (_Writer, false);
+				}
+			if (ClientNonce != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ClientNonce", 1);
+					_Writer.WriteBinary (ClientNonce);
+				}
+			if (PinUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("PinUDF", 1);
+					_Writer.WriteString (PinUDF);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new MessageConnectionRequestClient FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as MessageConnectionRequestClient;
+				}
+		    var Result = new MessageConnectionRequestClient ();
+			Result.Deserialize (JSONReader);
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "ServiceID" : {
+					ServiceID = JSONReader.ReadString ();
+					break;
+					}
+				case "DeviceProfile" : {
+					// An untagged structure
+					DeviceProfile = new DareEnvelope ();
+					DeviceProfile.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "ClientNonce" : {
+					ClientNonce = JSONReader.ReadBinary ();
+					break;
+					}
+				case "PinUDF" : {
+					PinUDF = JSONReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Connection request message generated by a service on receipt of a valid
+	/// MessageConnectionRequestClient
+	/// </summary>
+	public partial class MessageConnectionRequest : MeshMessage {
+        /// <summary>
+        ///The client connection request.
+        /// </summary>
+
+		public virtual DareEnvelope						MessageConnectionRequestClient  {get; set;}
+        /// <summary>
+        ///
         /// </summary>
 
 		public virtual byte[]						ServerNonce  {get; set;}
         /// <summary>
+        ///
         /// </summary>
 
 		public virtual string						Witness  {get; set;}
-        /// <summary>
-        ///Pin identifier used to identify a PIN authenticated request. 
-        /// </summary>
-
-		public virtual string						PinID  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -6084,20 +6224,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
-			if (Account != null) {
+			if (MessageConnectionRequestClient != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Account", 1);
-					_Writer.WriteString (Account);
-				}
-			if (DeviceProfile != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceProfile", 1);
-					DeviceProfile.Serialize (_Writer, false);
-				}
-			if (ClientNonce != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ClientNonce", 1);
-					_Writer.WriteBinary (ClientNonce);
+				_Writer.WriteToken ("MessageConnectionRequestClient", 1);
+					MessageConnectionRequestClient.Serialize (_Writer, false);
 				}
 			if (ServerNonce != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -6108,11 +6238,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Witness", 1);
 					_Writer.WriteString (Witness);
-				}
-			if (PinID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("PinID", 1);
-					_Writer.WriteString (PinID);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -6146,19 +6271,11 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Account" : {
-					Account = JSONReader.ReadString ();
-					break;
-					}
-				case "DeviceProfile" : {
+				case "MessageConnectionRequestClient" : {
 					// An untagged structure
-					DeviceProfile = new DareMessage ();
-					DeviceProfile.Deserialize (JSONReader);
+					MessageConnectionRequestClient = new DareEnvelope ();
+					MessageConnectionRequestClient.Deserialize (JSONReader);
  
-					break;
-					}
-				case "ClientNonce" : {
-					ClientNonce = JSONReader.ReadBinary ();
 					break;
 					}
 				case "ServerNonce" : {
@@ -6167,10 +6284,6 @@ namespace Goedel.Mesh {
 					}
 				case "Witness" : {
 					Witness = JSONReader.ReadString ();
-					break;
-					}
-				case "PinID" : {
-					PinID = JSONReader.ReadString ();
 					break;
 					}
 				default : {
@@ -6319,7 +6432,7 @@ namespace Goedel.Mesh {
         ///The contact data.
         /// </summary>
 
-		public virtual DareMessage						Contact  {get; set;}
+		public virtual DareEnvelope						Contact  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -6402,7 +6515,7 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "Contact" : {
 					// An untagged structure
-					Contact = new DareMessage ();
+					Contact = new DareEnvelope ();
 					Contact.Deserialize (JSONReader);
  
 					break;

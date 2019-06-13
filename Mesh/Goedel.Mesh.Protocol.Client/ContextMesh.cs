@@ -67,13 +67,86 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        public static ContextAccountService ConnectService(
-                string localName, 
-                string accountName = null,
+
+
+
+        }
+
+
+    public class ContextMeshPending : ContextMesh {
+        public string ServiceID;
+        public MeshService MeshClient;
+
+        public ContextMeshPending(IMeshMachineClient meshMachine, Connection deviceConnection) :
+                    base(meshMachine, deviceConnection) {
+            }
+
+
+
+        public static ContextMeshPending ConnectService(
+        IMeshMachineClient meshMachine,
+        string serviceID,
+        string localName = null,
+        string PIN = null,
+        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+            var profileDevice = ProfileDevice.Generate(meshMachine,
+                algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
+                algorithmAuthenticate: algorithmAuthenticate);
+
+            return ConnectService(meshMachine, profileDevice, serviceID, localName, PIN);
+            }
+
+        
+
+        public static ContextMeshPending ConnectService(
+                IMeshMachineClient meshMachine,
+                ProfileDevice profileDevice,
+                string serviceID,
+                string localName = null,
                 string PIN = null) {
+
+            // generate MessageConnectionRequestClient
+            var messageConnectionRequestClient = new MessageConnectionRequestClient() {
+                ServiceID = serviceID,
+                DeviceProfile = profileDevice.DareEnvelope,
+                ClientNonce = CryptoCatalog.GetBits(128),
+                PinUDF = UDF.PIN2PinID(PIN)
+                };
+
+            
+
+            var keyAuthentication = meshMachine.KeyCollection.LocatePrivate(
+                        profileDevice.KeyAuthentication.UDF);
+
+            var messageConnectionRequestClientEncoded = messageConnectionRequestClient.Encode(keyAuthentication);
+
+            // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
+            var meshClient = meshMachine.GetMeshClient(serviceID, keyAuthentication, null);
+
+            var connectRequest = new ConnectRequest() {
+                MessageConnectionRequestClient = messageConnectionRequestClientEncoded
+                };
+
+            var response = meshClient.Connect(connectRequest);
+
 
             throw new NYI();
             }
-        }
 
+        /// <summary>
+        /// Complete the pending connection request.
+        /// </summary>
+        /// <returns>If successfull returns an ContextAccountService instance to allow access
+        /// to the connected account. Otherwise, a null value is returned.</returns>
+        public ContextAccountService Complete() {
+            throw new NYI();
+            }
+
+        //protected MeshService GetMeshClient(string serviceID) => 
+        //    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+        //        ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
+
+        }
     }

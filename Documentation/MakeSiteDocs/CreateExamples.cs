@@ -37,11 +37,11 @@ namespace ExampleGenerator {
             return Builder.ToString();
             }
 
-        public DareMessage GetDAREMessage(CryptoParameters CryptoParameters) {
+        public DareEnvelope GetDAREMessage(CryptoParameters CryptoParameters) {
             var Data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
-            return new DareMessage(CryptoParameters, Body.ToUTF8(),
+            return new DareEnvelope(CryptoParameters, Body.ToUTF8(),
                 contentType: "application/example-mail", dataSequences: Data);
             }
 
@@ -84,12 +84,12 @@ namespace ExampleGenerator {
 
 
 
-        public DareMessage DAREMessageAtomic;
-        public DareMessage DAREMessageAtomicSign;
-        public DareMessage DAREMessageAtomicSignEncrypt;
-        public DareMessage MessageAtomicDS;
-        public DareMessage MessageEnc;
-        public DareMessage MessageAtomicDSEnc;
+        public DareEnvelope DAREMessageAtomic;
+        public DareEnvelope DAREMessageAtomicSign;
+        public DareEnvelope DAREMessageAtomicSignEncrypt;
+        public DareEnvelope MessageAtomicDS;
+        public DareEnvelope MessageEnc;
+        public DareEnvelope MessageAtomicDSEnc;
 
 
         public byte[] DareMessageBody;
@@ -115,8 +115,8 @@ namespace ExampleGenerator {
 
         public MailMessage MailMessage;
         public string MailMessageAsRFC822;
-        public DareMessage MailMessageAsDAREPlaintext;
-        public DareMessage MailMessageAsDAREEncrypted;
+        public DareEnvelope MailMessageAsDAREPlaintext;
+        public DareEnvelope MailMessageAsDAREEncrypted;
 
         public string EDSText;
 
@@ -209,17 +209,17 @@ namespace ExampleGenerator {
         void GoDareMessage() {
 
             // Plaintext atomic
-            DAREMessageAtomic = new DareMessage(CryptoParametersPlaintext, DareMessageTest1);
+            DAREMessageAtomic = new DareEnvelope(CryptoParametersPlaintext, DareMessageTest1);
 
             // Plaintext atomic EDS
-            MessageAtomicDS = new DareMessage(CryptoParametersPlaintext, DareMessageTest1, dataSequences: DataSequences);
+            MessageAtomicDS = new DareEnvelope(CryptoParametersPlaintext, DareMessageTest1, dataSequences: DataSequences);
 
-            DAREMessageAtomicSign = new DareMessage(CryptoParametersSign, DareMessageTest1);
-            DAREMessageAtomicSignEncrypt = new DareMessage(CryptoParametersSignEncrypt, DareMessageTest1);
+            DAREMessageAtomicSign = new DareEnvelope(CryptoParametersSign, DareMessageTest1);
+            DAREMessageAtomicSignEncrypt = new DareEnvelope(CryptoParametersSignEncrypt, DareMessageTest1);
 
 
             CryptoStackEncrypt = new CryptoStackDebug(CryptoParametersEncrypt);
-            MessageEnc = new DareMessage(CryptoStackEncrypt, DareMessageTest1);
+            MessageEnc = new DareEnvelope(CryptoStackEncrypt, DareMessageTest1);
 
             //CryptoStackEncrypt.Message(DareMessageTest1);
 
@@ -346,14 +346,14 @@ namespace ExampleGenerator {
         public byte[] AdvancedCogenPrivateKeySeed;
         public PrivateKeyECDH AdvancedCogenPrivateKeyValue;
         public PublicKeyECDH AdvancedCogenCompositeKey;
-        public DareMessage AdvancedCogenPrivateKeySeedEncrypted;
+        public DareEnvelope AdvancedCogenPrivateKeySeedEncrypted;
 
 
         //AdvancedRecryption
         public string AdvancedRecryptionGroupID = "recrypt@example.com";
         public ProfileMaster AdvancedRecryptionGroup;
         public string AdvancedRecryptionMessagePlaintext;
-        public DareMessage AdvancedRecryptionMessageEncrypted;
+        public DareEnvelope AdvancedRecryptionMessageEncrypted;
         public Assertion AdvancedRecryptionBobProfile;
         public Key AdvancedRecryptionBobDecryptionKey;
         public Key AdvancedRecryptionBobRecryptionKey;

@@ -71,7 +71,7 @@
 //            var connectRequest = new ConnectRequest() {
 //                Account = account,
 //                ClientNonce = clientNonce,
-//                DeviceProfile = ProfileDevice.DareMessage,
+//                DeviceProfile = ProfileDevice.DareEnvelope,
 //                PinID = PinID
 //                };
 
@@ -111,7 +111,7 @@
 //        public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice) {
 
 //            var profileMeshDevicePublic = new AssertionDeviceConnection() {
-//                //DeviceProfile = profileDevice.DareMessage
+//                //DeviceProfile = profileDevice.DareEnvelope
 //                };
 
 //            var ProfileMeshDevicePrivate = new AssertionDevicePrivate() {
@@ -158,7 +158,7 @@
 //        /// <param name="recipient">The intended recipient.</param>
 //        /// <param name="signedContact">The sender's contact information.</param>
 //        /// <returns>Transaction status information</returns>
-//        public MeshResult ContactRequest(string recipient, DareMessage signedContact) {
+//        public MeshResult ContactRequest(string recipient, DareEnvelope signedContact) {
 //            MeshService = MeshService ?? MeshMachine.GetMeshClient(AccountName);
 //            var messageContactRequest = new MessageContactRequest() {
 
@@ -225,10 +225,10 @@
 //                    MeshMessageComplete meshMessageSelf=null) {
 //            meshMessage.MessageID = meshMessage.MessageID ?? UDF.Nonce(200);
 
-//            var DareMessage = Sign(meshMessage); // need to add in the recipient here
+//            var DareEnvelope = Sign(meshMessage); // need to add in the recipient here
             
 //            var postRequest = new PostRequest() {
-//                Message = new List<DareMessage> { DareMessage },
+//                Message = new List<DareEnvelope> { DareEnvelope },
 //                Accounts = new List<string> { recipient }
 //                };
 
@@ -350,7 +350,7 @@
 
 
 //            var message = catalog.ContainerEntry(catalogEntry, ContainerPersistenceStore.EventNew);
-//            var messages = new List<DareMessage>() { message };
+//            var messages = new List<DareEnvelope>() { message };
 
 //            var containerUpdate = new ContainerUpdate() {
 //                Message = messages,

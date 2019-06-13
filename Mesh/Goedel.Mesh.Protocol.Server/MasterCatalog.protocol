@@ -19,11 +19,11 @@
 		String ServiceID
 			Description
 				|The service account to bind to.
-		Struct DareMessage SignedProfileMesh
+		Struct DareEnvelope SignedProfileMesh
 			Description
 				|The persistent profile that will be used to validate changes to the
 				|account assertion.
-		Struct DareMessage SignedAssertionAccount
+		Struct DareEnvelope SignedAssertionAccount
 			Description
 				|The signed assertion describing the account.
 		String Status

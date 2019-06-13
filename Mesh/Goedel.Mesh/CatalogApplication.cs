@@ -51,16 +51,23 @@ namespace Goedel.Mesh {
         //public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
-        public void Add(AssertionAccount assertionAccount) {
+        public void Update(AssertionAccount assertionAccount) {
             var catalogEntryApplicationAccount = new CatalogEntryApplicationAccount() {
-                SignedAccountAssertion = assertionAccount.DareMessage
+                Key = assertionAccount.UDF,
+                SignedAccountAssertion = assertionAccount.DareEnvelope
                 };
-            Add(catalogEntryApplicationAccount);
+            Update(catalogEntryApplicationAccount);
 
             }
 
 
-        public CatalogEntryContact LocateBySite(string Key) => Locate(Key) as CatalogEntryContact;
+        public AssertionAccount GetAssertionAccount(string Key) {
+            var entry = Locate(Key) as CatalogEntryApplicationAccount;
+            return AssertionAccount.Decode(entry.SignedAccountAssertion);
+            }
+
+
+        public CatalogEntryApplication LocateBySite(string Key) => Locate(Key) as CatalogEntryApplication;
 
 
         public CatalogApplication(string directory, string ContainerName=null,
@@ -77,7 +84,15 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryApplication() => Key = UDF.Nonce();
+
+
+        }
+
+    public partial class CatalogEntryApplicationAccount {
+
+
+        public override string _PrimaryKey => Key;
+
 
 
         }

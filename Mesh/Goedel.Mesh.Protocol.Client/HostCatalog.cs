@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Client {
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual DareMessage						EncodedProfileMaster  {get; set;}
+		public virtual DareEnvelope						EncodedProfileMaster  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -219,7 +219,7 @@ namespace Goedel.Mesh.Client {
 					}
 				case "EncodedProfileMaster" : {
 					// An untagged structure
-					EncodedProfileMaster = new DareMessage ();
+					EncodedProfileMaster = new DareEnvelope ();
 					EncodedProfileMaster.Deserialize (JSONReader);
  
 					break;
@@ -472,10 +472,20 @@ namespace Goedel.Mesh.Client {
 	/// </summary>
 	public partial class PendingConnection : Connection {
         /// <summary>
+        ///UDF of the connected device
+        /// </summary>
+
+		public virtual string						DeviceUDF  {get; set;}
+        /// <summary>
         ///
         /// </summary>
 
-		public virtual DareMessage						MessageConnectionRequest  {get; set;}
+		public virtual DareEnvelope						MessageConnectionRequest  {get; set;}
+        /// <summary>
+        ///
+        /// </summary>
+
+		public virtual DareEnvelope						ProfileDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -519,10 +529,20 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteObjectStart ();
 				}
 			((Connection)this).SerializeX(_Writer, false, ref _first);
+			if (DeviceUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("DeviceUDF", 1);
+					_Writer.WriteString (DeviceUDF);
+				}
 			if (MessageConnectionRequest != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("MessageConnectionRequest", 1);
 					MessageConnectionRequest.Serialize (_Writer, false);
+				}
+			if (ProfileDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileDevice", 1);
+					ProfileDevice.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -556,10 +576,21 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "DeviceUDF" : {
+					DeviceUDF = JSONReader.ReadString ();
+					break;
+					}
 				case "MessageConnectionRequest" : {
 					// An untagged structure
-					MessageConnectionRequest = new DareMessage ();
+					MessageConnectionRequest = new DareEnvelope ();
 					MessageConnectionRequest.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "ProfileDevice" : {
+					// An untagged structure
+					ProfileDevice = new DareEnvelope ();
+					ProfileDevice.Deserialize (JSONReader);
  
 					break;
 					}

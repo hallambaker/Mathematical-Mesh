@@ -46,7 +46,7 @@ namespace Goedel.Test.Core {
                 string serviceID,
             KeyPair keyAuthentication,
             AssertionAccountConnection assertionAccountConnection,
-            ProfileMaster profileMaster = null) =>
+            Profile profile = null) =>
                 TestEnvironmentCommon.MeshPortalDirect.GetService(serviceID);
 
 
@@ -108,7 +108,7 @@ namespace Goedel.Test.Core {
             return result;
             }
 
-        public static ContextAccountService Connect(
+        public static ContextMeshPending Connect(
             TestEnvironmentCommon testEnvironmentCommon,
             string machineName,
             string accountId,

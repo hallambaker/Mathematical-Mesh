@@ -53,7 +53,7 @@ namespace Goedel.Mesh.Client {
                 string serviceID,
             KeyPair keyAuthentication,
             AssertionAccountConnection assertionAccountConnection,
-            ProfileMaster profileMaster = null);
+            Profile profile = null);
 
         /// <summary>
         /// Create a new management context for the specified Mesh profile.

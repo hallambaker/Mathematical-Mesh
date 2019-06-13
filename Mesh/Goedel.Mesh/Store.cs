@@ -73,7 +73,7 @@ namespace Goedel.Mesh {
             new Store(Directory, name, cryptoParameters, keyCollection);
 
 
-        public void AppendDirect(DareMessage message) => Container.AppendDirect(message);
+        public void AppendDirect(DareEnvelope message) => Container.AppendDirect(message);
 
 
         public ContainerEnumeratorRaw Select(int minIndex, bool reverse=false) => 

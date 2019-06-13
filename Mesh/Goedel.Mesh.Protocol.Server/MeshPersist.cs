@@ -88,44 +88,43 @@ namespace Goedel.Mesh.Server {
         /// <param name="deviceProfile">Profile of the device requesting connection.</param>
         /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
         /// <returns>The connection response.</returns>
-        public ConnectResponse Connect(JpcSession jpcSession,
-                        string account,
-                        DareMessage deviceProfile,
-                        byte [] clientNonce,
-                        string PinID) {
-
-            var profileDevice = ProfileDevice.Decode(deviceProfile);
-
-            var messageConnectionRequest = new MessageConnectionRequest() {
-                MessageID = UDF.Nonce(200),
-                Account = account,
-                DeviceProfile = deviceProfile,
-                ClientNonce = clientNonce,
-                ServerNonce = CryptoCatalog.GetBits(128),
-                PinID = PinID
-                };
-
-            var connectResponse = new ConnectResponse() {
-                ServerNonce = messageConnectionRequest.ServerNonce,
-                };
-
-            using (var accountHandle = GetAccountUnverified(messageConnectionRequest.Account)) {
-                throw new NYI();
-                //var witness = UDF.MakeWitnessString(
-                //        accountHandle.AssertionAccount.UDFBytes, messageConnectionRequest.ServerNonce,
-                //        profileDevice.UDFBytes, clientNonce);
-                //messageConnectionRequest.Witness = witness;
-                //connectResponse.Witness = witness;
+        public ConnectResponse Connect(JpcSession jpcSession) {
 
 
 
-                //connectResponse.ProfileMesh = accountHandle.MeshProfile;
+            throw new NYI();
 
-                //var message = DareMessage.Encode(messageConnectionRequest.GetBytes());
 
-                //accountHandle.Post(message);
-                //return connectResponse;
-                }
+            //var messageConnectionRequest = new MessageConnectionRequest() {
+            //    MessageID = UDF.Nonce(200),
+            //    Account = account,
+            //    DeviceProfile = deviceProfile,
+            //    ClientNonce = clientNonce,
+            //    ServerNonce = CryptoCatalog.GetBits(128),
+            //    PinID = PinID
+            //    };
+
+            //var connectResponse = new ConnectResponse() {
+            //    ServerNonce = messageConnectionRequest.ServerNonce,
+            //    };
+
+            //using (var accountHandle = GetAccountUnverified(messageConnectionRequest.Account)) {
+                
+            //    //var witness = UDF.MakeWitnessString(
+            //    //        accountHandle.AssertionAccount.UDFBytes, messageConnectionRequest.ServerNonce,
+            //    //        profileDevice.UDFBytes, clientNonce);
+            //    //messageConnectionRequest.Witness = witness;
+            //    //connectResponse.Witness = witness;
+
+
+
+            //    //connectResponse.ProfileMesh = accountHandle.MeshProfile;
+
+            //    //var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());
+
+            //    //accountHandle.Post(message);
+            //    //return connectResponse;
+            //    }
             }
 
         /// <summary>
@@ -173,7 +172,7 @@ namespace Goedel.Mesh.Server {
                     using (var store = accountEntry.GetStore(selection.Container)) {
                         var update = new ContainerUpdate() {
                             Container = selection.Container,
-                            Message = new List<DareMessage>()
+                            Message = new List<DareEnvelope>()
                             };
 
 
@@ -206,7 +205,7 @@ namespace Goedel.Mesh.Server {
                     JpcSession jpcSession, 
                     VerifiedAccount account, 
                     List<ContainerUpdate> updates,
-                    List<DareMessage> selfs) {
+                    List<DareEnvelope> selfs) {
             //AccountHandleVerified accountEntry = null;
 
             using (var accountEntry = GetAccountVerified(account, jpcSession)) {
@@ -247,7 +246,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to which the message is directed.</param>
         /// <param name="dareMessage">The message</param>
-        public string MessagePost(JpcSession jpcSession, string account, DareMessage dareMessage) {
+        public string MessagePost(JpcSession jpcSession, string account, DareEnvelope dareMessage) {
 
             using (var accountUnverified = GetAccountUnverified(account)) {
 

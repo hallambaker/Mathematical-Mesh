@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"DareMessageSequence", DareMessageSequence._Factory},
+			{"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
 			{"DareTrailer", DareTrailer._Factory},
 			{"DareHeader", DareHeader._Factory},
 			{"DareSigner", DareSigner._Factory},
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Dare {
 	/// precede the body in a serialization, this allowing processing of the header
 	/// information to be performed before the entire body has been received.
 	/// </summary>
-	public partial class DareMessageSequence : Dare {
+	public partial class DareEnvelopeSequence : Dare {
         /// <summary>
         ///The message header. May specify the key exchange data, pre-signature 
         ///or signature data, cloaked headers and/or encrypted data sequences.
@@ -119,13 +119,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DareMessageSequence";
+		public new const string __Tag = "DareEnvelopeSequence";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DareMessageSequence();
+		public static new JSONObject _Factory () => new DareEnvelopeSequence();
 
 
         /// <summary>
@@ -178,15 +178,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DareMessageSequence FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new DareEnvelopeSequence FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DareMessageSequence;
+				return Out as DareEnvelopeSequence;
 				}
-		    var Result = new DareMessageSequence ();
+		    var Result = new DareEnvelopeSequence ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}

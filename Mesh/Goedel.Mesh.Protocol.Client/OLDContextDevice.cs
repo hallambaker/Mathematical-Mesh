@@ -91,7 +91,7 @@
 //        ///<summary>The device profile</summary>
 //        public virtual ProfileDevice ProfileDevice { get; private set; }
 
-//        DareMessage ProfileDeviceSigned => ProfileDevice.DareMessage;
+//        DareEnvelope ProfileDeviceSigned => ProfileDevice.DareEnvelope;
 
 //        ///<summary>The active KeyCollection (from Machine)</summary>
 //        public KeyCollection KeyCollection => MeshMachine.KeyCollection;
@@ -218,7 +218,7 @@
 //            var profile = ProfileDevice.Generate(keyCollection, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
 
 //            // Register the profile locally
-//            machine.Register(profile.DareMessage);
+//            machine.Register(profile.DareEnvelope);
 
 
 //            // Create the self contact record and add to the catalog
@@ -259,8 +259,8 @@
 //            CatalogEntryDevice = profile.Add(MeshMachine, ProfileDevice, true);
 
 //            // Register the profile locally
-//            MeshMachine.Register(ProfileDevice.DareMessage);
-//            MeshMachine.Register(profile.DareMessage);
+//            MeshMachine.Register(ProfileDevice.DareEnvelope);
+//            MeshMachine.Register(profile.DareEnvelope);
 //            MeshMachine.Register(Encode(CatalogEntryDevice));
 
 //            ProfileMaster = profile;
@@ -269,7 +269,7 @@
 
 
 
-//        public DareMessage Encode(CatalogEntryDevice catalogEntryDevice) =>
+//        public DareEnvelope Encode(CatalogEntryDevice catalogEntryDevice) =>
 //            catalogEntryDevice.Encode(KeySign);
 
 //        public static ContextDevice GetContextDevice(
@@ -282,17 +282,17 @@
 //            }
 
 
-//        public ProfileMaster Recover(DareMessage escrow, IEnumerable<string> shares) {
+//        public ProfileMaster Recover(DareEnvelope escrow, IEnumerable<string> shares) {
 //            var secret = new Secret(shares);
 //            return Recover(escrow, secret);
 //            }
 
-//        public ProfileMaster Recover(DareMessage escrow, KeyShare[] shares) {
+//        public ProfileMaster Recover(DareEnvelope escrow, KeyShare[] shares) {
 //            var secret = new Secret(shares);
 //            return Recover(escrow, secret);
 //            }
 
-//        public ProfileMaster Recover(DareMessage escrow, Secret secret) {
+//        public ProfileMaster Recover(DareEnvelope escrow, Secret secret) {
 //            var escrowedKeySet = RecoverKeySet(escrow, secret);
 
 //            var masterSignatureKey = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Exportable);
@@ -303,7 +303,7 @@
 //            }
 
 
-//        public EscrowedKeySet RecoverKeySet(DareMessage escrow, Secret secret) {
+//        public EscrowedKeySet RecoverKeySet(DareEnvelope escrow, Secret secret) {
 
 
 //            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC) {
@@ -320,14 +320,14 @@
 
 //            selfMessage.MessageID = selfMessage.MessageID ?? UDF.Nonce(200);
 
-//            var message = DareMessage.Encode(selfMessage.GetBytes());
+//            var message = DareEnvelope.Encode(selfMessage.GetBytes());
 
 //            var uploadRequest = new UploadRequest() {
 //                Account = AccountName,
-//                Self = new List<DareMessage> { message }
+//                Self = new List<DareEnvelope> { message }
 //                };
 
-//            DareMessage catalogEntry = null;
+//            DareEnvelope catalogEntry = null;
 //            Catalog catalog = null;
 
 //            if (catalogID != null) {
@@ -335,7 +335,7 @@
 //                catalogEntry = catalog.ContainerEntry(entry, ContainerPersistenceStore.EventNew);
 //                var update = new ContainerUpdate() {
 //                    Container = catalogID,
-//                    Message = new List<DareMessage> { catalogEntry }
+//                    Message = new List<DareEnvelope> { catalogEntry }
 //                    };
 //                uploadRequest.Updates = new List<ContainerUpdate> { update };
 //                }
@@ -398,8 +398,8 @@
 //            }
 //        #endregion
 
-//        public DareMessage SignContact(string recipient, Contact contact) {
-//            var signedContact = DareMessage.Encode(contact.GetBytes(tag: true),
+//        public DareEnvelope SignContact(string recipient, Contact contact) {
+//            var signedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
 //                    signingKey: DeviceSign, contentType: "application/mmm");
 
 //            var request = new MessageContactRequest() {
@@ -410,8 +410,8 @@
 //            return Sign(request);
 //            }
 
-//        protected DareMessage Sign(JSONObject data) =>
-//                    DareMessage.Encode(data.GetBytes(tag: true),
+//        protected DareEnvelope Sign(JSONObject data) =>
+//                    DareEnvelope.Encode(data.GetBytes(tag: true),
 //                        signingKey: DeviceSign, contentType: "application/mmm");
 
 
@@ -447,12 +447,12 @@
 //        /// </summary>
 //        /// <param name="Profile"></param>
 //        /// <returns></returns>
-//        public DareMessage MakeAdministrator(ProfileDevice Profile) => throw new NYI();
+//        public DareEnvelope MakeAdministrator(ProfileDevice Profile) => throw new NYI();
 
 
 
 
-//        public (DareMessage, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
+//        public (DareEnvelope, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
 
 //            var secret = new Secret(bits);
 //            var keyShares = secret.Split(shares, quorum);
@@ -467,7 +467,7 @@
 //                MasterEscrowKeys = MasterEscrowKeys
 //                };
 
-//            var message = new DareMessage(cryptoStack, EscrowedKeySet.GetJson(true));
+//            var message = new DareEnvelope(cryptoStack, EscrowedKeySet.GetJson(true));
 
 //            return (message, keyShares);
 //            }
@@ -500,7 +500,7 @@
 
 //            var profileMesh = new AssertionAccount() {
 //                Account = new List<string> { accountName },
-//                MasterProfile = ProfileMaster.DareMessage,
+//                MasterProfile = ProfileMaster.DareEnvelope,
 //                AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
 //                };
 
@@ -515,7 +515,7 @@
 
 //            var createRequest = new CreateRequest() {
 //                MeshProfile = profileMeshSigned,
-//                CatalogEntryDevices = new List<DareMessage> { catalogEntryDeviceSigned },
+//                CatalogEntryDevices = new List<DareEnvelope> { catalogEntryDeviceSigned },
 //                CatalogEntryContacts = new List<CatalogEntryContact> { contactEntry }
 //                };
 
@@ -582,7 +582,7 @@
 //        /// </summary>
 //        /// <param name="Profile"></param>
 //        /// <returns></returns>
-//        public DareMessage Add(Assertion profile) => throw new NYI();
+//        public DareEnvelope Add(Assertion profile) => throw new NYI();
 
 //        public void ProcessConnectionRequest(
 //            MessageConnectionRequest messageConnectionRequest,

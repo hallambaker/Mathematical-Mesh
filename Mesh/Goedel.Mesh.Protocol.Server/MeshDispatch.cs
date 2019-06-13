@@ -239,20 +239,19 @@ namespace Goedel.Mesh.Server {
         public override ConnectResponse Connect(
                 ConnectRequest Request, JpcSession jpcSession) {
 
-            try {
-                var connectResponse = Mesh.Connect(jpcSession,
-                    Request.Account,
-                    Request.DeviceProfile, 
-                    Request.ClientNonce,
-                    Request.PinID);
+            throw new NYI();
 
 
-                return connectResponse;
-                }
-            catch (System.Exception exception) {
-                return new ConnectResponse(exception);
+            //try {
+            //    var connectResponse = Mesh.Connect(jpcSession);
 
-                }
+
+            //    return connectResponse;
+            //    }
+            //catch (System.Exception exception) {
+            //    return new ConnectResponse(exception);
+
+            //    }
 
 
             }

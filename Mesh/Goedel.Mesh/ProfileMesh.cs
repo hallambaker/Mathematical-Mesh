@@ -15,9 +15,9 @@ namespace Goedel.Mesh {
 
         }
     public partial class AssertionAccountConnection {
-        public static new AssertionAccountConnection Decode(DareMessage message) {
+        public static new AssertionAccountConnection Decode(DareEnvelope message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
+            result.DareEnvelope = message;
             return result;
             }
         }
@@ -34,9 +34,9 @@ namespace Goedel.Mesh {
         //ProfileMaster profileMaster = null;
 
 
-        public static new AssertionAccount Decode(DareMessage message) {
+        public static new AssertionAccount Decode(DareEnvelope message) {
             var result = FromJSON(message.GetBodyReader(), true);
-            result.DareMessage = message;
+            result.DareEnvelope = message;
             return result;
             }
 
