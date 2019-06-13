@@ -47,6 +47,9 @@ namespace Goedel.Mesh {
 
 
         public static new ProfileMaster Decode(DareEnvelope message) {
+            if (message == null) {
+                return null;
+                }
             var result = FromJSON(message.GetBodyReader(), true);
             result.DareEnvelope = message;
             return result;

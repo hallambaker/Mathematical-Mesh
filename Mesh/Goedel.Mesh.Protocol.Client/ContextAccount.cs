@@ -168,7 +168,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The latest unprocessed MessageConnectionRequest</returns>
         public MeshMessage GetPendingMessageConnectionRequest() =>
-            GetPendingMessage(MessageConnectionRequest.__Tag);
+            GetPendingMessage(MessageConnectionResponse.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageContactRequest that was received.

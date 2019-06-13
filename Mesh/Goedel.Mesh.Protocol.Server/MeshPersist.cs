@@ -88,43 +88,35 @@ namespace Goedel.Mesh.Server {
         /// <param name="deviceProfile">Profile of the device requesting connection.</param>
         /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
         /// <returns>The connection response.</returns>
-        public ConnectResponse Connect(JpcSession jpcSession) {
+        public ConnectResponse Connect(JpcSession jpcSession, 
+                        MessageConnectionRequest messageConnectionRequestClient) {
+
+            using (var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID)) {
+
+                var serviceNonce = CryptoCatalog.GetBits(128);
+
+                var MeshUDF = accountHandle.ProfileMesh.KeySignature.KeyPair.UDFBytes;
+                var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeySignature.KeyPair.UDFBytes;
+
+                var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF, 
+                    messageConnectionRequestClient.ClientNonce);
+
+                var messageConnectionRequest = new MessageConnectionResponse() {
+                    EnvelopedMessageConnectionRequest = messageConnectionRequestClient.DareEnvelope,
+                    ServerNonce = serviceNonce,
+                    Witness = witness
+                    };
+
+                var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());
+                accountHandle.Post(message);
 
 
+                var connectResponse = new ConnectResponse() {
+                    MessageConnectionRequest = message,
+                    };
 
-            throw new NYI();
-
-
-            //var messageConnectionRequest = new MessageConnectionRequest() {
-            //    MessageID = UDF.Nonce(200),
-            //    Account = account,
-            //    DeviceProfile = deviceProfile,
-            //    ClientNonce = clientNonce,
-            //    ServerNonce = CryptoCatalog.GetBits(128),
-            //    PinID = PinID
-            //    };
-
-            //var connectResponse = new ConnectResponse() {
-            //    ServerNonce = messageConnectionRequest.ServerNonce,
-            //    };
-
-            //using (var accountHandle = GetAccountUnverified(messageConnectionRequest.Account)) {
-                
-            //    //var witness = UDF.MakeWitnessString(
-            //    //        accountHandle.AssertionAccount.UDFBytes, messageConnectionRequest.ServerNonce,
-            //    //        profileDevice.UDFBytes, clientNonce);
-            //    //messageConnectionRequest.Witness = witness;
-            //    //connectResponse.Witness = witness;
-
-
-
-            //    //connectResponse.ProfileMesh = accountHandle.MeshProfile;
-
-            //    //var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());
-
-            //    //accountHandle.Post(message);
-            //    //return connectResponse;
-            //    }
+                return connectResponse;
+                }
             }
 
         /// <summary>
@@ -325,7 +317,15 @@ namespace Goedel.Mesh.Server {
 
     public partial class AccountEntry {
 
+
+
+
         public override string _PrimaryKey => ServiceID;
+
+        public ProfileMaster ProfileMesh => profileMesh ??
+                ProfileMaster.Decode(SignedProfileMesh).CacheValue(out profileMesh);
+        ProfileMaster profileMesh;
+
 
         public AssertionAccount AssertionAccount => assertionAccount ?? 
             AssertionAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);

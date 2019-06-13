@@ -10,7 +10,7 @@ namespace Goedel.Mesh {
     public partial class ActivationAccount {
         public AssertionAccountConnection AssertionAccountConnection => assertionAccountConnection ??
             AssertionAccountConnection.Decode(
-                    SignedAssertionAccountConnection).CacheValue(out assertionAccountConnection);
+                    EnvelopedAssertionAccountConnection).CacheValue(out assertionAccountConnection);
         AssertionAccountConnection assertionAccountConnection;
 
         }

@@ -64,7 +64,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"profile sync", fail: true);
 
             var result2 = device1.Dispatch($"device pending");
-            var message = (result2 as ResultPending).Messages[0] as MessageConnectionRequest;
+            var message = (result2 as ResultPending).Messages[0] as MessageConnectionResponse;
             var witness = message.Witness;
 
             device1.Dispatch($"device accept {witness}");
@@ -75,7 +75,7 @@ namespace Goedel.XUnit {
 
             var result3 = device1.Dispatch($"device pending");
 
-            message = (result3 as ResultPending).Messages[0] as MessageConnectionRequest;
+            message = (result3 as ResultPending).Messages[0] as MessageConnectionResponse;
             witness = message.Witness;
             device1.Dispatch($"device reject {witness}");
             device3.Dispatch($"profile sync", fail: true);

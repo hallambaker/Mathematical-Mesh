@@ -8,9 +8,9 @@ using Goedel.Cryptography.Dare;
 namespace Goedel.Mesh {
     public partial class MeshMessage {
 
-        public DareEnvelope Encode(KeyPair keyPair) {
-            throw new NYI();
-            DareEnvelope = null;
+        public DareEnvelope Encode(KeyPair signingKey) {
+            var data = this.GetBytes();
+            DareEnvelope = DareEnvelope.Encode (data, signingKey: signingKey);
             return DareEnvelope;
             }
         }
@@ -40,18 +40,36 @@ namespace Goedel.Mesh {
 
 
 
+    public partial class MessageConnectionResponse {
+
+        MessageConnectionRequest MessageConnectionRequest => messageConnectionRequest ??
+            MessageConnectionRequest.Decode(EnvelopedMessageConnectionRequest).CacheValue(out messageConnectionRequest);
+        MessageConnectionRequest messageConnectionRequest;
+
+        public static new MessageConnectionResponse Decode(DareEnvelope dareEnvelope) =>
+            MeshItem.Decode(dareEnvelope) as MessageConnectionResponse;
+        }
+
+
     public partial class MessageConnectionRequest {
 
-        //ProfileDevice ProfileDevice => profileDevice ??
-        //    ProfileDevice.Decode(DeviceProfile).CacheValue(out profileDevice);
-        //ProfileDevice profileDevice;
+        public static new MessageConnectionRequest Decode(DareEnvelope dareEnvelope) =>
+            MeshItem.Decode(dareEnvelope) as MessageConnectionRequest;
+
+        public ProfileDevice ProfileDevice => profileDevice ??
+            ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
+        ProfileDevice profileDevice;
 
 
-        //public string MakeWitness(byte[] meshProfileUDF) {
-        //    var s1 = UDF.MakeWitness(meshProfileUDF, ServerNonce);
-        //    var s2 = UDF.MakeWitness(ProfileDevice.UDFBytes, ClientNonce);
+        public static MessageConnectionRequest Verify(DareEnvelope dareEnvelope) {
+            var result = Decode(dareEnvelope) as MessageConnectionRequest;
 
-        //    return UDF.MakeWitnessString(s1, s2);
-        //    }
+            // ToDo: put the verification code in here.
+
+
+            return result;
+            }
         }
+
+
     }

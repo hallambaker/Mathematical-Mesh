@@ -40,6 +40,9 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class AccountHandle : Disposable {
 
+        public ProfileMaster ProfileMesh => AccountEntry.ProfileMesh;
+
+
         public AssertionAccount AssertionAccount => AccountEntry.AssertionAccount;
 
 

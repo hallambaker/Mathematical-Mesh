@@ -58,9 +58,6 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
-		Struct DareEnvelope MessageConnectionRequest
-			Description
-				|
-		Struct DareEnvelope ProfileDevice
+		Struct DareEnvelope EnvelopedMessageConnectionRequest
 			Description
 				|

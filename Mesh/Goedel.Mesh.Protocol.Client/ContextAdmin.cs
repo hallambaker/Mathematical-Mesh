@@ -167,9 +167,9 @@ namespace Goedel.Mesh.Client {
             var catalogEntryDevice = new CatalogEntryDevice() {
                 UDF = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
-                SignedDeviceConnection = assertionDeviceConnection.DareEnvelope,
-                EncryptedDevicePrivate = assertionDevicePrivate.DareEnvelope,
-                EncodedProfileDevice = profileDevice.DareEnvelope
+                EnvelopedDeviceConnection = assertionDeviceConnection.DareEnvelope,
+                EnvelopedDevicePrivate = assertionDevicePrivate.DareEnvelope,
+                EnvelopedProfileDevice = profileDevice.DareEnvelope
                 };
 
             GetCatalogDevice().Add(catalogEntryDevice);
@@ -253,7 +253,7 @@ namespace Goedel.Mesh.Client {
                     KeyPairAdvanced keyEncryptionMaster) {
             // Decrypt EncryptedDevicePrivate using the Master profile decryption key
 
-            var encryptedDevicePrivate = catalogEntryDevice.EncryptedDevicePrivate;
+            var encryptedDevicePrivate = catalogEntryDevice.EnvelopedDevicePrivate;
 
             var devicePrivate = AssertionDevicePrivate.Decode(
                                 MeshMachine, encryptedDevicePrivate);
@@ -274,7 +274,7 @@ namespace Goedel.Mesh.Client {
             // Create the activation for this device
             var activationAccount = new ActivationAccount() {
                 AccountUDF = assertionAccount.UDF,
-                SignedAssertionAccountConnection = assertionAccountConnection.DareEnvelope,
+                EnvelopedAssertionAccountConnection = assertionAccountConnection.DareEnvelope,
                 KeyEncryption = keyEncryption,
                 KeySignature = keySignature,
                 KeyAuthentication = keyAuthentication
@@ -284,7 +284,7 @@ namespace Goedel.Mesh.Client {
             devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
             devicePrivate.Activations.Add(activationAccount);
 
-            catalogEntryDevice.EncryptedDevicePrivate = 
+            catalogEntryDevice.EnvelopedDevicePrivate = 
                 devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
                         ProfileMesh.KeyEncryption.KeyPair);
 

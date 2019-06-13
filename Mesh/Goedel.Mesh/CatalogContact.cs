@@ -82,9 +82,9 @@ namespace Goedel.Mesh {
 
         public CatalogEntryContact() => Key = UDF.Nonce();
 
-        public CatalogEntryContact(DareEnvelope contact) : this() => Contact = contact;
+        public CatalogEntryContact(DareEnvelope contact) : this() => EnvelopedContact = contact;
 
-        public CatalogEntryContact(Contact contact) : this() => Contact = DareEnvelope.Encode(contact.GetBytes(tag: true),
+        public CatalogEntryContact(Contact contact) : this() => EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

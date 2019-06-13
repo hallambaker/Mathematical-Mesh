@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Client {
 
     public partial class DeviceConnection {
 
-        public DareEnvelope EncodedProfileDevice => CatalogEntryDevice.EncodedProfileDevice;
+        public DareEnvelope EncodedProfileDevice => CatalogEntryDevice.EnvelopedProfileDevice;
 
 
         }
@@ -71,6 +71,12 @@ namespace Goedel.Mesh.Client {
 
 
     public partial class PendingConnection {
+
+        MessageConnectionResponse MessageConnectionRequest => messageConnectionRequest ??
+            MessageConnectionResponse.Decode(EnvelopedMessageConnectionRequest).
+                CacheValue(out messageConnectionRequest);
+        MessageConnectionResponse messageConnectionRequest;
+
 
 
         }

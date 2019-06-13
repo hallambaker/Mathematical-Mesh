@@ -33,7 +33,7 @@ namespace Goedel.Mesh.Client {
 
         AssertionDevicePrivate AssertionDevicePrivate => assertionDevicePrivate ??
             AssertionDevicePrivate.Decode(
-                MeshMachine, CatalogEntryDevice.EncryptedDevicePrivate).CacheValue(
+                MeshMachine, CatalogEntryDevice.EnvelopedDevicePrivate).CacheValue(
                     out assertionDevicePrivate);
 
         AssertionDevicePrivate assertionDevicePrivate = null;
@@ -108,9 +108,9 @@ namespace Goedel.Mesh.Client {
                 string PIN = null) {
 
             // generate MessageConnectionRequestClient
-            var messageConnectionRequestClient = new MessageConnectionRequestClient() {
+            var messageConnectionRequestClient = new MessageConnectionRequest() {
                 ServiceID = serviceID,
-                DeviceProfile = profileDevice.DareEnvelope,
+                EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 ClientNonce = CryptoCatalog.GetBits(128),
                 PinUDF = UDF.PIN2PinID(PIN)
                 };
@@ -131,8 +131,18 @@ namespace Goedel.Mesh.Client {
 
             var response = meshClient.Connect(connectRequest);
 
+            // create the pending connection here
 
-            throw new NYI();
+            var connection = new PendingConnection() {
+                ID = profileDevice.UDF,
+                DeviceUDF = profileDevice.UDF,
+                EnvelopedMessageConnectionRequest = response.MessageConnectionRequest,
+                };
+
+            meshMachine.Register(connection);
+
+            return new ContextMeshPending(meshMachine, connection);
+
             }
 
         /// <summary>

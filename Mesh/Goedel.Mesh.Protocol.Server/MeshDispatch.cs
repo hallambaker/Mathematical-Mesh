@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
+using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh.Server {
@@ -239,21 +240,21 @@ namespace Goedel.Mesh.Server {
         public override ConnectResponse Connect(
                 ConnectRequest Request, JpcSession jpcSession) {
 
+
+
+            // decode MessageConnectionRequestClient with verification
+            var messageConnectionRequestClient = MessageConnectionRequest.Verify(
+                    Request.MessageConnectionRequestClient);
+            try {
+                var connectResponse = Mesh.Connect(jpcSession, messageConnectionRequestClient);
+                return connectResponse;
+                }
+            catch (System.Exception exception) {
+                return new ConnectResponse(exception);
+
+                }
+
             throw new NYI();
-
-
-            //try {
-            //    var connectResponse = Mesh.Connect(jpcSession);
-
-
-            //    return connectResponse;
-            //    }
-            //catch (System.Exception exception) {
-            //    return new ConnectResponse(exception);
-
-            //    }
-
-
             }
 
 
