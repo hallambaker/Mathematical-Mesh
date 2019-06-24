@@ -874,6 +874,29 @@ namespace Goedel.Cryptography.Dare {
             return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
             }
 
+        /// <summary>
+        /// Return the current container frame as a DareEnvelope.
+        /// </summary>
+        /// <returns>The container data.</returns>
+        public DareEnvelope ReadDareEnvelope() {
+            var found = ReadFrame(out var headerData, out var FrameData, out var trailerData);
+            if (!found) {
+                return null;
+                }
+            var message = new DareEnvelope() { Body = FrameData };
+            if (headerData != null) {
+                message.Header = ContainerHeaderFirst.FromJSON(headerData.JSONReader(), false);
+                }
+            if (trailerData != null) {
+                //JSONReader.Trace = true;
+                Console.WriteLine(trailerData.ToUTF8());
+                message.Trailer = DareTrailer.FromJSON(trailerData.JSONReader(), false);
+                }
+            return message;
+            }
+
+
+
         }
 
     }

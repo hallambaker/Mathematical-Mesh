@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
 
     public partial class MessageConnectionResponse {
 
-        MessageConnectionRequest MessageConnectionRequest => messageConnectionRequest ??
+        public MessageConnectionRequest MessageConnectionRequest => messageConnectionRequest ??
             MessageConnectionRequest.Decode(EnvelopedMessageConnectionRequest).CacheValue(out messageConnectionRequest);
         MessageConnectionRequest messageConnectionRequest;
 

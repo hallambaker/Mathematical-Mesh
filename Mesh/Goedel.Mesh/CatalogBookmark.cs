@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
 
     public class CatalogBookmark : Catalog {
         protected override void Dispose(bool disposing) => base.Dispose(disposing);
-        public const string Label = "CatalogBookmark";
+        public const string Label = "mmm_Bookmark";
 
         public override string ContainerDefault => Label;
         public AsCatalogEntryBookmark AsCatalogEntryBookmark => new AsCatalogEntryBookmark(this);

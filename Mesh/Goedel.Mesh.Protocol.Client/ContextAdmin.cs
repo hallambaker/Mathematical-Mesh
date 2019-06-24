@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Client {
             return new AdminConnection() {
                 ID = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
-                EncodedProfileMaster = profileMaster.DareEnvelope,
+                EnvelopedProfileMaster = profileMaster.DareEnvelope,
                 SignatureKey = keyOverlaySignature
                 };
             }
@@ -172,7 +172,7 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileDevice = profileDevice.DareEnvelope
                 };
 
-            GetCatalogDevice().Add(catalogEntryDevice);
+            GetCatalogDevice().New(catalogEntryDevice);
 
 
             return catalogEntryDevice;
@@ -215,9 +215,9 @@ namespace Goedel.Mesh.Client {
             ActivationAccount activationAccount = null;
 
 
-            var catalogChanges = new List<CatalogEntry>();
+            var catalogChanges = new List<CatalogUpdate>();
             foreach (var device in GetCatalogDevice().AsCatalogEntryDevice) {
-                catalogChanges.Add(device);
+                catalogChanges.Add(new CatalogUpdate(CatalogAction.Update, device));
                 if (device.DeviceUDF == AdminConnection.DeviceUDF) {
                     
                     activationAccount = AddDevice(assertionAccount, device, keyEncrypt as KeyPairAdvanced);
@@ -227,7 +227,7 @@ namespace Goedel.Mesh.Client {
                     }
 
                 }
-            GetCatalogDevice().Update(catalogChanges);
+            GetCatalogDevice().Transact(catalogChanges);
 
 
             // can't do it this way because the catalog entries are being modified inside the loop.

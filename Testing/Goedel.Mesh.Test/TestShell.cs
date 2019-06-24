@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Test {
 
         public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
 
-        public override JpcSession GetJpcSession(IAccountOptions Options) => new MeshClientSession();
+        public override JpcSession GetJpcSession(IAccountOptions Options) => new MeshClientSession(null);
 
 
 

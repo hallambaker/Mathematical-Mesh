@@ -8,7 +8,7 @@ namespace Goedel.Mesh.Client {
     public class MeshClientSession : JpcSession {
         PublicKey AuthenticationKey;
 
-        public MeshClientSession() {
+        public MeshClientSession(string serviceID) : base (serviceID) {
             throw new NYI();
 
             //AuthenticationKey = contextDevice?.ProfileDevice.KeyAuthentication;

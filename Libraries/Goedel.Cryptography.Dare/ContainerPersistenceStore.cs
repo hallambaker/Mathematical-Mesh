@@ -12,6 +12,9 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Cryptography.Dare {
 
 
+
+
+
     /// <summary>
     /// Persistence store based on a container interface.
     /// </summary>
@@ -33,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
         //JBCDStream JBCDStream;
 
         ///<summary>The underlying container.</summary>
-        public Container Container;
+        public container Container;
 
 
 
@@ -135,7 +138,7 @@ namespace Goedel.Cryptography.Dare {
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool readContainer = true) : this(
-                        Container.Open(
+                        container.Open(
                 fileName,
                 fileStatus,
                 keyCollection ?? cryptoParameters?.KeyCollection,
@@ -150,7 +153,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container"></param>
         /// <param name="readContainer"></param>
-        public ContainerPersistenceStore(Container container, bool readContainer = true) {
+        public ContainerPersistenceStore(container container, bool readContainer = true) {
             Container = container;
             try {
                 if (readContainer & container.JBCDStream.Length > 0) {
@@ -505,6 +508,10 @@ namespace Goedel.Cryptography.Dare {
                 }
             return Index.Last(value);
             }
+
+
+
+
         }
     }
 

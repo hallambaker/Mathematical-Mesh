@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Mesh;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Server {
 
@@ -60,7 +61,6 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class MeshPortalDirect: MeshLocalPortal {
 
-
         /// <summary>
         /// Create a new portal using the specified stores.
         /// </summary>
@@ -84,12 +84,11 @@ namespace Goedel.Mesh.Server {
         /// <param name="Account">The account to get.</param>
         /// <param name="Portal">The portal to get the service from.</param>
         /// <returns>The service instance</returns> 
-        public override MeshService GetService(string Portal, string Account) {
-            var Session = new DirectSession(null);
+        public override MeshService GetService(string serviceID) {
+            var Session = new DirectSession(serviceID);
             MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
             return MeshServiceClient;
             }
-
         }
 
 
@@ -114,8 +113,9 @@ namespace Goedel.Mesh.Server {
         /// <param name="Account">The account to get.</param>
         /// <param name="Service">The service to get the service from.</param> 
         /// <returns>The service instance</returns>
-        public override MeshService GetService(string Service, string Account) {
-            var Session = new LocalRemoteSession(MeshServiceHost, ServiceName, Account);
+        public override MeshService GetService(string serviceID) {
+            serviceID.SplitAccountIDService(out var Service, out var Account);
+            var Session = new LocalRemoteSession(MeshServiceHost, Service, Account);
             MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }

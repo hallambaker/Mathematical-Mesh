@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
 
     public class CatalogNetwork : Catalog {
 
-        public const string Label = "CatalogNetwork";
+        public const string Label = "mmm_Network";
 
         public override string ContainerDefault => Label;
         public AsCatalogEntryNetwork AsCatalogEntryNetwork => new AsCatalogEntryNetwork(this);

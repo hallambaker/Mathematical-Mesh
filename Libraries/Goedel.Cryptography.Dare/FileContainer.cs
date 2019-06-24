@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
     /// 
     /// </summary>
     public class FileContainerWriter : FileContainer {
-        Container Container=null;
+        container Container=null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -109,7 +109,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerType ContainerType = ContainerType.Unknown) => Container = BindContainer(
                     JBCDStream, CryptoParameters, Archive, Digest, ContainerType);
 
-        Container BindContainer(
+        container BindContainer(
                     JBCDStream JBCDStream,
                     CryptoParameters CryptoParameters,
                     bool Archive = false,
@@ -122,11 +122,11 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (JBCDStream.Length == 0) {
-                return Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+                return container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
 
                 }
             else {
-                return Container.Open(JBCDStream, null);
+                return container.Open(JBCDStream, null);
                 }
             }
 
@@ -269,7 +269,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class FileContainerReader : FileContainer, IEnumerable<ContainerDataReader> {
 
-        Container Container = null;
+        container Container = null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -304,7 +304,7 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
-            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
+            Container = Goedel.Cryptography.Dare.container.OpenExisting(JBCDStream, KeyCollection);
 
             //if (ReadIndex) {
             //    // here we read in the container index. Either from an archive referenced 
@@ -325,7 +325,7 @@ namespace Goedel.Cryptography.Dare {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JBCDStream(Stream, null);
-            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
+            Container = Goedel.Cryptography.Dare.container.OpenExisting(JBCDStream, KeyCollection);
 
             }
 

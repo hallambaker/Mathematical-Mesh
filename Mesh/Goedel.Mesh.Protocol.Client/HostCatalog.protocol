@@ -21,7 +21,7 @@
 		Boolean Default
 			Description
 				|If true, this is the default for the profile type (master, account)
-		Struct DareEnvelope EncodedProfileMaster
+		Struct DareEnvelope EnvelopedProfileMaster
 			Description
 				|The master profile that provides the root of trust for this Mesh
 
@@ -29,8 +29,6 @@
 		Inherits Connection
 		Description
 			|Describes an ordinary device connected to a Mesh
-
-
 		Struct CatalogEntryDevice CatalogEntryDevice
 			Description
 				|The device entry containing the full account binding information.
@@ -47,9 +45,6 @@
 			Description
 				|UDF of the connected device
 
-
-
-
 	Structure PendingConnection
 		Inherits Connection
 		Description
@@ -58,6 +53,9 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
-		Struct DareEnvelope EnvelopedMessageConnectionRequest
+		Struct DareEnvelope EnvelopedMessageConnectionResponse
 			Description
-				|
+				|The response returned by the service when the registration was requested.
+		Struct DareEnvelope EnvelopedAccountAssertion
+			Description
+				|The current account assertion

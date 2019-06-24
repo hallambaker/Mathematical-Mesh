@@ -9,9 +9,9 @@ using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
     public class Spool : Store {
-        public const string SpoolOutbound = "SpoolOutbound";
-        public const string SpoolInbound = "SpoolInbound";
-        public const string SpoolArchive = "SpoolArchive";
+        public const string SpoolOutbound = "mmm_Outbound";
+        public const string SpoolInbound = "mmm_Inbound";
+        public const string SpoolArchive = "mmm_Archive";
 
         public Spool(string directory, string containerName,
             CryptoParameters cryptoParameters = null,

@@ -468,7 +468,7 @@ namespace ExampleGenerator {
 
 
 
-        public Container MakeContainer (
+        public container MakeContainer (
                     string FileName,
                     CryptoParameters CryptoParameters, 
                     ContainerType ContainerType = ContainerType.Chain) {
@@ -476,7 +476,7 @@ namespace ExampleGenerator {
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output:ConsoleWriter);
-            return Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+            return container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
 
             }
 
@@ -491,7 +491,7 @@ namespace ExampleGenerator {
             }
 
 
-        public List<ContainerFrame>  ReadContainer (Container Container) {
+        public List<ContainerFrame>  ReadContainer (container Container) {
             var ContainerHeaders = new List<ContainerFrame> {
                 new ContainerFrame {
                     Header = Container.ContainerHeaderFirst

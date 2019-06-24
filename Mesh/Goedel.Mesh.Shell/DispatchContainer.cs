@@ -108,7 +108,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ContainerIndex(ContainerIndex Options) {
             var inputFile = Options.Container.Value;
 
-            using (var container = Container.Open(
+            using (var container = Cryptography.Dare.container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 
@@ -155,7 +155,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var outputFile = Options.Output.Value;
 
-            using (var container = Container.Open(
+            using (var container = Cryptography.Dare.container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 
@@ -173,7 +173,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ContainerVerify(ContainerVerify Options) {
             var inputFile = Options.Container.Value;
 
-            using (var container = Container.Open(
+            using (var container = Cryptography.Dare.container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 

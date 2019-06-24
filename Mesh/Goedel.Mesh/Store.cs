@@ -26,12 +26,14 @@ namespace Goedel.Mesh {
 
     public class Store : Disposable {
         public virtual string ContainerDefault => throw new NYI();
-        protected virtual Container Container { get; }
+        public virtual container Container { get; }
         //protected override void Disposing() => Container?.Dispose();
 
         protected CryptoParameters CryptoParameters;
         protected KeyCollection KeyCollection;
-        string ContainerName;
+
+        ///<summary>The container identifier. Must be unique within a given account.</summary>
+        public string ContainerName;
 
 
         public long FrameCount => Container.FrameCount;
@@ -48,7 +50,7 @@ namespace Goedel.Mesh {
             //Console.WriteLine($"Open Store {ContainerName} / {directory}");
             ContainerName = containerName;
 
-            Container = Container.Open(
+            Container = container.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyCollection,

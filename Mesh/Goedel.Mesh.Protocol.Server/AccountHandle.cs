@@ -92,7 +92,11 @@ namespace Goedel.Mesh.Server {
 
             }
 
+        public CatalogEntryDevice GetCatalogEntryDevice(string deviceUDF) {
 
+
+            throw new NYI();
+            }
         }
 
     /// <summary>

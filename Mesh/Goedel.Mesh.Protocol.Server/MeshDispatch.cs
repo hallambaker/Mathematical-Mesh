@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Server {
             this.Provider = Host;
             Host.Interfaces.Add(this);
             Host.Service = this;
-            //this.JPCSession = Session;
+            this.JpcSession = Session;
             }
 
         /// <summary>
@@ -95,6 +95,7 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override MeshHelloResponse Hello(
                 HelloRequest Request, JpcSession jpcSession=null) {
+            jpcSession = jpcSession ?? JpcSession;
 
             var HelloResponse = new MeshHelloResponse() {
                 Version = new Goedel.Protocol.Version() {
@@ -120,7 +121,7 @@ namespace Goedel.Mesh.Server {
         public override CreateResponse CreateAccount(
                 CreateRequest request, JpcSession jpcSession = null) {
 
-            
+            jpcSession = jpcSession ?? JpcSession;
 
 
             try {
@@ -133,6 +134,25 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
+
+        /// <summary>
+        /// Base method for implementing the transaction Download.
+        /// </summary>
+        /// <param name="Request">The request object to send to the host.</param>
+        /// <returns>The response object from the service</returns>
+        public override StatusResponse Complete(
+                CompleteRequest Request, JpcSession jpcSession = null) {
+            jpcSession = jpcSession ?? JpcSession;
+            try {
+                return Mesh.AccountComplete(jpcSession, Request);
+                }
+            catch (System.Exception exception) {
+                return new StatusResponse(exception);
+
+                }
+
+            }
+
         /// <summary>
         /// Base method for implementing the transaction Download.
         /// </summary>
@@ -140,10 +160,9 @@ namespace Goedel.Mesh.Server {
         /// <returns>The response object from the service</returns>
         public override StatusResponse Status(
                 StatusRequest Request, JpcSession jpcSession = null) {
-
+            jpcSession = jpcSession ?? JpcSession;
             try {
-                var result = Mesh.AccountStatus(jpcSession, Request.VerifiedAccount);
-                return new StatusResponse() { ContainerStatus = result };
+                return Mesh.AccountStatus(jpcSession, jpcSession.VerifiedAccount);
                 }
             catch (System.Exception exception) {
                 return new StatusResponse(exception);
@@ -160,9 +179,9 @@ namespace Goedel.Mesh.Server {
         /// <returns>The response object from the service</returns>
         public override DeleteResponse DeleteAccount(
                 DeleteRequest Request, JpcSession jpcSession) {
-
+            jpcSession = jpcSession ?? JpcSession;
             try {
-                Mesh.AccountDelete(jpcSession, account: Request.VerifiedAccount);
+                Mesh.AccountDelete(jpcSession, account: jpcSession.VerifiedAccount);
                 return new DeleteResponse();
                 }
             catch (System.Exception exception) {
@@ -181,9 +200,9 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override DownloadResponse Download(
                 DownloadRequest Request, JpcSession jpcSession) {
-
+            jpcSession = jpcSession ?? JpcSession;
             try {
-                var Updates = Mesh.AccountDownload(jpcSession, Request.VerifiedAccount, Request.Select);
+                var Updates = Mesh.AccountDownload(jpcSession, jpcSession.VerifiedAccount, Request.Select);
                 return new DownloadResponse() { Updates = Updates};
                 }
             catch (System.Exception exception) {
@@ -199,10 +218,10 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override UploadResponse Upload(
                 UploadRequest Request, JpcSession jpcSession) {
-
+            jpcSession = jpcSession ?? JpcSession;
             try {
 
-                Mesh.AccountUpdate(jpcSession, Request.VerifiedAccount, Request.Updates, Request.Self);
+                Mesh.AccountUpdate(jpcSession, jpcSession.VerifiedAccount, Request.Updates, Request.Self);
                 return new UploadResponse();
                 }
             catch (System.Exception exception) {
@@ -219,6 +238,7 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override PostResponse Post(
                 PostRequest Request, JpcSession jpcSession) {
+            jpcSession = jpcSession ?? JpcSession;
             try {
                 Assert.True(Request.Accounts.Count == 1 & Request.Message.Count == 1,
                     NYI.Throw);
@@ -239,7 +259,7 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override ConnectResponse Connect(
                 ConnectRequest Request, JpcSession jpcSession) {
-
+            jpcSession = jpcSession ?? JpcSession;
 
 
             // decode MessageConnectionRequestClient with verification

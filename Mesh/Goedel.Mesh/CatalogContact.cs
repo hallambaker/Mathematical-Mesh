@@ -41,7 +41,7 @@ namespace Goedel.Mesh {
 
 
     public class CatalogContact : Catalog {
-        public const string Label = "CatalogContact";
+        public const string Label = "mmm_Contact";
 
         public CatalogEntryContact Self;
 
@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
             var entry = new CatalogEntryContact(contact) {
                 Self=self
                 };
-            Add(entry);
+            New(entry);
             }
 
         public void Add(Contact contact, bool self = false) => Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);

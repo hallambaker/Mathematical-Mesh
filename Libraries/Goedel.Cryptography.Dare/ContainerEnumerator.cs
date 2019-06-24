@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
 
-        Container Container;
+        container Container;
         int LowIndex;
         bool Reverse;
         bool Active;
@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
         /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumeratorRaw(Container container, int lowIndex = 0, bool reverse = false) {
+        public ContainerEnumeratorRaw(container container, int lowIndex = 0, bool reverse = false) {
             this.Container = container;
             LowIndex = lowIndex;
             Reverse = reverse;
@@ -90,7 +90,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumerator : IEnumerator<ContainerDataReader> {
 
-        Container Container;
+        container Container;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
@@ -104,7 +104,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumerator(Container container) {
+        public ContainerEnumerator(container container) {
             this.Container = container;
             Reset();
             }

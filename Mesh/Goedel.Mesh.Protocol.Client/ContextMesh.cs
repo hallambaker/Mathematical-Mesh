@@ -51,19 +51,19 @@ namespace Goedel.Mesh.Client {
             MeshMachine = meshMachine;
             Connection = deviceConnection;
 
-            ProfileMesh = ProfileMaster.Decode(Connection.EncodedProfileMaster);
+            ProfileMesh = ProfileMaster.Decode(Connection.EnvelopedProfileMaster);
             
             }
 
         // The account activation was not added to activations.
 
-        public ContextAccountService GetContextAccountService(
+        public ContextAccount GetContextAccountService(
                 string localName=null,
                 string accountName = null) {
 
             var activation = AssertionDevicePrivate.GetActivation(accountName);
 
-            return new ContextAccountService(this, activation);
+            return new ContextAccount (this, activation);
 
             }
 
@@ -74,7 +74,16 @@ namespace Goedel.Mesh.Client {
 
 
     public class ContextMeshPending : ContextMesh {
-        public string ServiceID;
+
+        PendingConnection PendingConnection => Connection as PendingConnection;
+        MessageConnectionResponse MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
+        MessageConnectionRequest MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
+
+        ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
+
+        KeyPair KeyAuthentication;
+
+        public string ServiceID => MessageConnectionRequest?.ServiceID;
         public MeshService MeshClient;
 
         public ContextMeshPending(IMeshMachineClient meshMachine, Connection deviceConnection) :
@@ -84,13 +93,13 @@ namespace Goedel.Mesh.Client {
 
 
         public static ContextMeshPending ConnectService(
-        IMeshMachineClient meshMachine,
-        string serviceID,
-        string localName = null,
-        string PIN = null,
-        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                IMeshMachineClient meshMachine,
+                string serviceID,
+                string localName = null,
+                string PIN = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
             var profileDevice = ProfileDevice.Generate(meshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
@@ -136,7 +145,9 @@ namespace Goedel.Mesh.Client {
             var connection = new PendingConnection() {
                 ID = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
-                EnvelopedMessageConnectionRequest = response.MessageConnectionRequest,
+                EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
+                EnvelopedProfileMaster = response.EnvelopedProfileMaster,
+                EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };
 
             meshMachine.Register(connection);
@@ -150,7 +161,21 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>If successfull returns an ContextAccountService instance to allow access
         /// to the connected account. Otherwise, a null value is returned.</returns>
-        public ContextAccountService Complete() {
+        public ContextAccount Complete() {
+
+            KeyAuthentication = KeyAuthentication ?? MeshMachine.KeyCollection.LocatePrivate(
+                        ProfileDevice.KeyAuthentication.UDF);
+
+            MeshClient = MeshClient ?? MeshMachine.GetMeshClient(ServiceID, KeyAuthentication, null);
+
+            var completeRequest = new CompleteRequest() {
+                DeviceUDF = ProfileDevice.UDF,
+                ServiceID = ServiceID
+                };
+
+            var statusResponse = MeshClient.Complete(completeRequest);
+
+
             throw new NYI();
             }
 

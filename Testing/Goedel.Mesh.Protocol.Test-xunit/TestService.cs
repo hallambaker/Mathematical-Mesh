@@ -77,49 +77,48 @@ namespace Goedel.XUnit {
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
             var contextMeshAdmin = machineAdmin.CreateMesh("main");
-            var contextAccountAlice = contextMeshAdmin.CreateAccount("main");
-            var contextAccountServiceAlice = contextAccountAlice.AddService("alice@example.com");
-
+            var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
 
             // Perform some offline operations on the account catalogs
-            var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contextAccountServiceAlice.SetContactSelf(ContactAlice);
+            var contactCatalog = contextAccountAlice_1_a.GetCatalogContact();
+            contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
-            // Check we can read the data back again
-            var contextAccount_2 = machineAdmin.GetContextAccount();
-            Verify(contextAccountAlice, contextAccount_2);
+            // Check we can read the data from a second context
+            var contextAccountAlice_1_b = machineAdmin.GetContextAccount();
+            Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
-
-            // Some test here to make sure it worked.
-
+            // Check that we can read back from the data stored on disk.
             var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAccount_3 = machineAdmin_3.GetContextAccount();
+            var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
+
+
+            // ****  Multiple device tests
 
             // Add a service
-            contextAccountAlice.AddService(AccountAlice);
+            contextAccountAlice_1_a.AddService(AccountAlice);
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            var PIN = contextAccountServiceAlice.GetPIN();
-            var contextAccount2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
-            contextAccount2.Complete();
+            var PIN = contextAccountAlice_1_a.GetPIN();
+            var contextAccountAlice_2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
+            contextAccountAlice_2.Complete();
 
             // Do some catalog updates and check the results
-            var catalogCredential = contextAccountAlice.GetCatalogCredential();
-            catalogCredential.Add(Password1);
+            var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();
+            catalogCredential.New(Password1);
 
             // Connect a third device by approving a request
             var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
             var contextAccount3 = machineAlice3.Connect(AccountAlice);
 
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountServiceAlice.Process(connectRequest);
+            var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            contextAccountAlice_1_a.Process(connectRequest);
 
             contextAccount3.Complete();
 
 
             // Do some catalog updates and check the results
-            catalogCredential.Add(Password2);
+            catalogCredential.New(Password2);
 
             // Check message handling - introduce Bob
             var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
@@ -132,24 +131,24 @@ namespace Goedel.XUnit {
 
             // **** Contact testing
             contextAccountBob.ContactRequest(AccountAlice);
-            var contactRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountServiceAlice.Process(contactRequest);
+            var contactRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            contextAccountAlice_1_a.Process(contactRequest);
 
             // Get the response back
             var contactResponseBob = contextAccountBob.GetPendingMessageConnectionRequest();
-            contextAccountServiceAlice.Process(contactResponseBob);
+            contextAccountAlice_1_a.Process(contactResponseBob);
 
 
             // **** Confirmation testing
 
             // Ask Alice to add our credential
             contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
-            var confirmRequest = contextAccountAlice.GetPendingMessageConfirmationRequest();
-            contextAccountServiceAlice.Process(confirmRequest);
+            var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
+            contextAccountAlice_1_a.Process(confirmRequest);
 
             // Get the response back
             var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
-            contextAccountServiceAlice.Process(confirmResponseBob);
+            contextAccountAlice_1_a.Process(confirmResponseBob);
             }
 
         /// <summary>

@@ -10,9 +10,9 @@ using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
 
-    public partial class MeshRequestUser {
+    //public partial class MeshRequestUser {
 
-        public VerifiedAccount VerifiedAccount => new VerifiedAccount() { Account = Account };
+    //    public VerifiedAccount VerifiedAccount => new VerifiedAccount() { Account = Account };
 
-        }
+    //    }
     }

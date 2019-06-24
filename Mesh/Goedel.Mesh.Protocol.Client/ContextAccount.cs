@@ -10,7 +10,24 @@ using System.IO;
 
 namespace Goedel.Mesh.Client {
 
+    ///<summary>Track the synchronization status of an upload or download operation.</summary>
+    public class SyncStatus {
+        
+        ///<summary>The local store</summary>
+        public Store Store;
 
+        ///<summary>The last index at the remote store</summary>
+        public long Index;
+
+        ///<summary>The apex digest value at the remote store</summary>
+        public string Digest;
+
+        public SyncStatus(Store store) {
+            Store = store;
+            Index = -1;
+            Digest = null;
+            }
+        }
 
     public class ContextAccount : Disposable {
 
@@ -44,59 +61,56 @@ namespace Goedel.Mesh.Client {
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
 
+        MeshService MeshClient;
+        string ServiceID;
+
+        SyncStatus SyncStatusDevice;
 
 
-
-        public string DirectoryAccount => directoryAccount ?? 
+        public string DirectoryAccount => directoryAccount ??
             Path.Combine(MeshMachine.DirectoryMesh, ActivationAccount.AccountUDF).CacheValue(out directoryAccount);
         string directoryAccount;
 
-        Dictionary<string, Store> DictionaryStores { get; }
+        Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
 
         public ContextAccount(
                     ContextMesh contextMesh,
-                    ActivationAccount  activationAccount,
-                    AssertionAccount assertionAccount
+                    ActivationAccount activationAccount,
+                    AssertionAccount assertionAccount = null
                     ) {
+            // Set up the basic context
             ContextMesh = contextMesh;
             ActivationAccount = activationAccount;
-            AssertionAccount = assertionAccount;
+
+            // Set up the crypto keys so that we can open the application catalog
             KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
             KeyEncryption = activationAccount.KeyEncryption.GetPrivate(MeshMachine);
             KeyAuthentication = activationAccount.KeyAuthentication.GetPrivate(MeshMachine);
-
             KeyCollection.Add(KeyEncryption);
 
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
-            DictionaryStores = new Dictionary<string, Store>();
+
+
+            if (assertionAccount == null) {
+                var CatalogApplication = GetCatalogApplication();
+                AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
+                }
+            else {
+                AssertionAccount = assertionAccount;
+                }
+
             }
 
 
-        /// <summary>
-        /// Constructor used to create a duplicate Context Account bound to a different service.
-        /// </summary>
-        /// <param name="contextAccount">The existing context.</param>
-        protected ContextAccount(ContextAccount contextAccount) {
-            ContextMesh = contextAccount.ContextMesh;
-            ActivationAccount = contextAccount.ActivationAccount;
-            AssertionAccount = contextAccount.AssertionAccount;
-            KeySignature = contextAccount.KeySignature;
-            KeyEncryption = contextAccount.KeyEncryption;
-            KeyAuthentication = contextAccount.KeyAuthentication;
-            ContainerCryptoParameters = contextAccount.ContainerCryptoParameters;
-
-            DictionaryStores = contextAccount.DictionaryStores;
-            }
-
-
-        protected MeshService GetMeshClient (string serviceID) => MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+        protected MeshService GetMeshClient(string serviceID) => MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
                 ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
 
 
 
 
-        public ContextAccountService AddService(
-                string serviceID) {
+        public void AddService(
+                string serviceID,
+                bool sync = true) {
             // Add to assertion
             AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
             AssertionAccount.ServiceIDs.Add(serviceID);
@@ -110,16 +124,27 @@ namespace Goedel.Mesh.Client {
 
             // attempt to register with service in question
 
-            var meshClient = GetMeshClient(serviceID);
-            meshClient.CreateAccount(createRequest, meshClient.JpcSession);
-
+            MeshClient = GetMeshClient(serviceID);
+            MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
+            MeshClient.JpcSession.Authenticated = true;
 
             // Update the account assertion. This lives in CatalogApplication.
             AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
             AssertionAccount.ServiceIDs.Add(serviceID);
             GetCatalogApplication().Update(AssertionAccount);
 
-            return new ContextAccountService (this, meshClient);
+            ServiceID = serviceID;
+
+            SyncStatusDevice = new SyncStatus(ContextMeshAdmin.GetCatalogDevice()) {
+                Index = -1
+                };
+
+            if (sync) {
+                SyncProgressUpload();
+                }
+
+
+            //return service;
             }
 
 
@@ -133,6 +158,84 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Dictionary used to cache stores to avoid need to re-open them repeatedly.</summary>
 
+        public bool SyncProgress(int maxEnvelopes = -1) {
+            return SyncProgressUpload(maxEnvelopes);
+
+            }
+
+
+        public bool SyncProgressUpload(int maxEnvelopes = -1) {
+            bool complete = true;
+            var updates = new List<ContainerUpdate>();
+
+            // Always do the devices first (if we are an admin device)
+            if (SyncStatusDevice != null) {
+                maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
+                }
+
+            if (updates.Count > 0) {
+                var uploadRequest = new UploadRequest() {
+                    Updates = updates
+                    };
+                MeshClient.Upload(uploadRequest);
+                }
+
+            return complete;
+            }
+
+
+        int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+            int uploads = 0;
+            if (maxEnvelopes == 0) {
+                return 0; // no more room left in this request.
+                }
+
+
+            if (syncStatus.Index <= syncStatus.Store.FrameCount) {
+                var container = syncStatus.Store.Container;
+                var envelopes = new List<DareEnvelope>();
+                var containerUpdate = new ContainerUpdate() {
+                    Container = syncStatus.Store.ContainerName,
+                    Envelopes = envelopes
+                    };
+
+                var start = 1+syncStatus.Index;
+                long last = (maxEnvelopes < 0) ? syncStatus.Store.FrameCount :
+                    Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
+
+                if (start == 0) {
+                    envelopes.Add(container.FrameZero);
+                    start++;
+                    }
+
+                
+                for (var i = start; i< last; i++) {
+                    container.MoveToIndex(i);
+                    envelopes.Add(container.ReadDirect());
+                    }
+
+
+                containerUpdates.Add(containerUpdate);
+                }
+
+
+            return uploads;
+
+            }
+
+
+
+        public List<string> Stores = new List<string> {
+            Spool.SpoolOutbound,
+            Spool.SpoolInbound,
+            Spool.SpoolArchive,
+            CatalogApplication.Label,
+            CatalogContact.Label,
+            CatalogCredential.Label,
+            CatalogBookmark.Label,
+            CatalogCalendar.Label,
+            CatalogNetwork.Label
+            };
 
         ///<summary>Returns the application catalog for the account</summary>
         public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
@@ -226,15 +329,15 @@ namespace Goedel.Mesh.Client {
 
         public Store GetStore(string name) {
 
-            if (DictionaryStores.TryGetValue(name, out var store)) {
-                return store;
+            if (DictionaryStores.TryGetValue(name, out var syncStore)) {
+                return syncStore.Store;
                 }
             //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {devicecount}");
 
-            store = MakeStore(name);
-            DictionaryStores.Add(name, store);
+            syncStore = new SyncStatus( MakeStore(name));
+            DictionaryStores.Add(name, syncStore);
 
-            return store;
+            return syncStore.Store;
             }
 
         Store MakeStore(string name) {
@@ -254,30 +357,11 @@ namespace Goedel.Mesh.Client {
             throw new NYI();
             }
 
-        }
+
+        /////////////////////
 
 
-    public class ContextAccountService : ContextAccount {
-        MeshService MeshService;
-        string ServiceID;
-
-        public ContextAccountService(ContextMesh contextMesh, ActivationAccount activationAccount)  :
-                base (contextMesh, activationAccount, null) {
-            var CatalogApplication = GetCatalogApplication();
-            // here pull the account assertion from the catalog
-            AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
-            // now work out which service to use.
-
-
-            }
-
-        public ContextAccountService(ContextAccount contextAccount, MeshService  meshService) : 
-                    base (contextAccount) {
-            MeshService = meshService;
-            }
-
-
-        public string GetPIN(int length=80, int validity = 24*60) {
+        public string GetPIN(int length = 80, int validity = 24 * 60) {
             var pin = UDF.Nonce(length);
             var expires = DateTime.Now.AddMinutes(validity);
             var messageConnectionPIN = new MessageConnectionPIN() {
@@ -291,7 +375,26 @@ namespace Goedel.Mesh.Client {
             return pin;
             }
 
-        public void Sync() {
+
+        public void Download(long maxItems = -1) {
+            }
+
+
+        void Download() {
+            }
+
+
+        public void Sync(bool all = true) {
+
+            //var statusRequest = new StatusRequest() {
+            //    };
+            //var status = MeshService.Status(statusRequest);
+
+            //// for each container
+            //if (all) {
+            //    Download();
+            //    }
+
             throw new NYI();
             }
 
@@ -310,7 +413,7 @@ namespace Goedel.Mesh.Client {
             }
 
         void Connect() {
-            if (MeshService != null) {
+            if (MeshClient != null) {
                 return;
                 }
 
@@ -319,7 +422,7 @@ namespace Goedel.Mesh.Client {
 
             ServiceID = AssertionAccount.ServiceIDs[0];
 
-            MeshService = GetMeshClient(ServiceID);
+            MeshClient = GetMeshClient(ServiceID);
             }
 
 
@@ -342,8 +445,70 @@ namespace Goedel.Mesh.Client {
                 };
 
 
-            MeshService.Post(postRequest);
+            MeshClient.Post(postRequest);
             }
 
+
         }
+
+
+    //public class ContextAccountService : ContextAccount {
+    //    MeshService MeshService;
+    //    string ServiceID;
+
+
+
+    //    public ContextAccountService(ContextMesh contextMesh, ActivationAccount activationAccount) :
+    //            base(contextMesh, activationAccount, null) {
+    //        var CatalogApplication = GetCatalogApplication();
+    //        // here pull the account assertion from the catalog
+    //        AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
+    //        // now work out which service to use.
+
+
+    //        }
+
+    //    public ContextAccountService(ContextAccount contextAccount, MeshService meshService) :
+    //                base(contextAccount) {
+    //        MeshService = meshService;
+    //        }
+
+
+
+
+    //    public void Upload(long maxItems=-1) {
+
+    //        //var updates = new List<ContainerUpdate>();
+
+
+    //        //var uploadRequest = new UploadRequest() {
+    //        //    Updates = updates
+    //        //    };
+
+    //        //int items = 0;
+    //        //// Compile the set of updates
+    //        //foreach (var storeEntry in DictionaryStores) {
+
+
+    //        //    }
+
+    //        //if (items == 0) {  // No work to be done!
+    //        //    return;
+    //        //    }
+
+    //        //var uploadResponse = MeshService.Upload(uploadRequest);
+
+    //        //// Now check off all the ones that have been updated.
+    //        //foreach (var responseEntry in uploadResponse.Entries) {
+
+
+    //        //    }
+
+
+    //        }
+
+
+
+
+    //    }
     }

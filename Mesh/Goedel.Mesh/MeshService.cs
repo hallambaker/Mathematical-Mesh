@@ -52,24 +52,13 @@ namespace Goedel.Mesh {
 
         public static GetPortalDelegate GetPortal;
 
-
-        /// <summary>
-        /// Return a MeshService object for the named portal service.
-        /// </summary>
-        /// <param name="address">Portal account address or domain name</param>
-        /// <returns>Mesh service object for API access to the service.</returns>
-        public virtual MeshService GetService(string address) {
-            address.SplitAccountIDService(out var Service, out var Account);
-            return GetService(Service, Account);
-            }
-
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
         /// <param name="service">Address of the portal service.</param>
         /// <param name="account">Account name.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public abstract MeshService GetService(string service, string account);
+        public abstract MeshService GetService(string serviceID);
 
 
         /// <summary>

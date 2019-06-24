@@ -22,6 +22,7 @@
 
 using System.IO;
 using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -108,10 +109,15 @@ namespace Goedel.Protocol {
     /// </summary>
     public abstract class JpcSession {
 
-        /// <summary>
-        /// Account name.
-        /// </summary>
+        ///<summary>The service identifier (Account@Domain)</summary>
+        public string ServiceID;
+
+
+        ///<summary>The account portion of ServiceID</summary>
         public string Account;
+
+        ///<summary>The domain portion of ServiceID</summary>
+        public string Domain;
 
         /// <summary>
         /// Fingerprint of authentication key
@@ -119,14 +125,14 @@ namespace Goedel.Protocol {
         public string UDF;
 
         /// <summary>
-        /// DNS Address.
-        /// </summary>
-        public string Domain;
-
-        /// <summary>
         /// If true we have an authentication structure.
         /// </summary>
         public bool Authenticated;
+
+
+        public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
+            new VerifiedAccount() { ServiceID = ServiceID };
+
 
         /// <summary>
         /// Authenticate session data.
@@ -134,7 +140,14 @@ namespace Goedel.Protocol {
         /// <param name="UDF">Fingerprint of authentication key to use for authentication.</param>
         /// <returns>True if authentication succeeded, otherwise false.</returns>
         public abstract bool Authenticate(string UDF);
-      
+
+
+
+
+        public JpcSession(string serviceID) {
+            ServiceID = serviceID;
+            serviceID.SplitAccountIDService(out Domain, out Account);
+            }
 
         }
 
@@ -144,11 +157,17 @@ namespace Goedel.Protocol {
     /// </summary>
     public partial class DirectSession : JpcSession{
 
+
+
+
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="Account">The account name</param>
-        public DirectSession(string Account) => this.Account = Account;
+        /// <param name="serviceID">The account name</param>
+        public DirectSession(string serviceID): base (serviceID) {
+            Authenticated = true;
+            }
+
 
         /// <summary>
         /// Authenticate session using the specified credentials
@@ -171,6 +190,12 @@ namespace Goedel.Protocol {
     public abstract partial class JPCRemoteSession : JpcSession {
 
 
+        /// <summary>
+        /// Create a direct session for the specified account.
+        /// </summary>
+        /// <param name="serviceID">The account name</param>
+        public JPCRemoteSession(string serviceID) : base(serviceID) {
+            }
 
         /// <summary>
         /// Set the authentication key for use with the session
@@ -235,8 +260,8 @@ namespace Goedel.Protocol {
         /// <param name="Host">The host implementation</param>
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
-        public LocalRemoteSession(JPCProvider Host, string Domain, string Account)
-                : this (Host, Domain, Account, null)  {
+        public LocalRemoteSession(JPCProvider Host, string serviceID)
+                : this (Host, serviceID, null)  {
             }
 
         /// <summary>
@@ -247,9 +272,7 @@ namespace Goedel.Protocol {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public LocalRemoteSession(JPCProvider Host, string Domain, string Account, string UDF) {
-            this.Account = Account;
-            this.Domain = Domain;
+        public LocalRemoteSession(JPCProvider Host, string serviceID, string UDF):base(serviceID) {
             this.UDF = UDF;
             this.Host = Host;
             }

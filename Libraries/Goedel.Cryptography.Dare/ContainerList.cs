@@ -16,7 +16,7 @@ namespace Goedel.Cryptography.Dare {
     /// provide for linked cryptographic integrity.
     /// </summary>
     /// <threadsafety static="true" instance="false"/>
-    public class ContainerList : Container {
+    public class ContainerList : container {
 
         /// <summary>
         /// The label for the container type for use in header declarations
@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static Container MakeNewContainer(
+        public static container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst {

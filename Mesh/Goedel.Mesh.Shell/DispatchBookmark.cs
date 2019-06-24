@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Shell {
                     };
 
                 using (var catalog = contextDevice.GetCatalogBookmark()) {
-                    catalog.Add(entry);
+                    catalog.New(entry);
                     }
 
                 return new ResultEntry() {

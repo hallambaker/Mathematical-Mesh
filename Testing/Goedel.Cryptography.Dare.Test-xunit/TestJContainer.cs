@@ -202,7 +202,7 @@ namespace Goedel.XUnit {
             int Record;
 
             // Write initial set of records
-            using (var XContainer = Container.NewContainer(
+            using (var XContainer = container.NewContainer(
                             FileName, FileStatus.Overwrite, containerType: ContainerType,
                             cryptoParameters: CryptoParameters)) {
                 for (Record = 0; Record < ReOpen; Record++) {
@@ -213,7 +213,7 @@ namespace Goedel.XUnit {
 
             // Write additional records
             while (Record < Records) {
-                using (var XContainer = Container.Open(FileName, FileStatus.Append,
+                using (var XContainer = container.Open(FileName, FileStatus.Append,
                             cryptoParameters: CryptoParameters)) {
                     for (var i = 0; (Record < Records) & i < ReOpen; i++) {
                         var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
@@ -224,14 +224,14 @@ namespace Goedel.XUnit {
                 }
 
             var Headers = new List<ContainerHeader>();
-            using (var XContainer = Container.Open(FileName, FileStatus.Read,
+            using (var XContainer = container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters,
                             keyCollection: KeyCollection)) {
                 XContainer.VerifyContainer();
                 }
 
             // Read records 
-            using (var XContainer = Container.Open(FileName, FileStatus.Read,
+            using (var XContainer = container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters,
                             keyCollection: KeyCollection)) {
 
@@ -253,7 +253,7 @@ namespace Goedel.XUnit {
             // Test random access.
             if (MoveStep > 0) {
                 // Check in forward direction
-                using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                using (var XContainer = container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters)) {
                     for (Record = MoveStep; Record < Records; Record+= MoveStep) {
                         var ContainerDataReader = XContainer.GetFrameDataReader(Record);
@@ -263,7 +263,7 @@ namespace Goedel.XUnit {
                     }
 
                 // Check in backwards direction
-                using (var XContainer = Container.Open(FileName, FileStatus.Read,
+                using (var XContainer = container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
                         var ContainerDataReader = XContainer.GetFrameDataReader(Record);

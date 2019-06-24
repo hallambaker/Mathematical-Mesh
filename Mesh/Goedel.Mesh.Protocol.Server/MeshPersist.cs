@@ -112,7 +112,9 @@ namespace Goedel.Mesh.Server {
 
 
                 var connectResponse = new ConnectResponse() {
-                    MessageConnectionRequest = message,
+                    EnvelopedConnectionResponse = message,
+                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope
                     };
 
                 return connectResponse;
@@ -125,20 +127,55 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
-        public List<ContainerStatus> AccountStatus(JpcSession jpcSession, VerifiedAccount account) {
-            AccountHandleVerified accountEntry = null;
+        public StatusResponse AccountComplete(JpcSession jpcSession, CompleteRequest completeRequest) {
 
-            using (accountEntry = GetAccountVerified(account, jpcSession)) {
-                var result = new List<ContainerStatus> {
-                    accountEntry.GetStatusSpool (Spool.SpoolInbound),
-                    accountEntry.GetStatusCatalog (CatalogCredential.Label),
-                    accountEntry.GetStatusCatalog (CatalogDevice.Label),
-                    accountEntry.GetStatusCatalog (CatalogContact.Label),
-                    accountEntry.GetStatusCatalog (CatalogApplication.Label),
-                    accountEntry.GetStatusCatalog (CatalogCredential.Label)
+            using (var accountHandle = GetAccountUnverified(completeRequest.ServiceID)) {
+
+                var catalogEntry = accountHandle.GetCatalogEntryDevice(completeRequest.DeviceUDF);
+
+                var statusResponse = new StatusResponse() {
+                    //ContainerStatus = containerStatus,
+                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope,
+                    EnvelopedCatalogEntryDevice = catalogEntry.DareEnvelope
                     };
 
-                return result;
+
+                return statusResponse;
+                }
+
+            }
+
+
+        /// <summary>
+        /// Update an account record. There must be an existing record and the request must
+        /// be appropriately authenticated.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account for which the status is requested..</param>
+        public StatusResponse AccountStatus(JpcSession jpcSession, VerifiedAccount account) {
+            AccountHandleVerified accountHandle = null;
+
+            using (accountHandle = GetAccountVerified(account, jpcSession)) {
+
+                var containerStatus = new List<ContainerStatus> {
+                    accountHandle.GetStatusSpool (Spool.SpoolInbound),
+                    accountHandle.GetStatusCatalog (CatalogCredential.Label),
+                    accountHandle.GetStatusCatalog (CatalogDevice.Label),
+                    accountHandle.GetStatusCatalog (CatalogContact.Label),
+                    accountHandle.GetStatusCatalog (CatalogApplication.Label),
+                    accountHandle.GetStatusCatalog (CatalogCredential.Label)
+                    };
+
+                var statusResponse = new StatusResponse() {
+                    ContainerStatus = containerStatus,
+                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope,
+                    EnvelopedCatalogEntryDevice = null
+                    };
+
+
+                return statusResponse;
                 }
 
             }
@@ -164,12 +201,12 @@ namespace Goedel.Mesh.Server {
                     using (var store = accountEntry.GetStore(selection.Container)) {
                         var update = new ContainerUpdate() {
                             Container = selection.Container,
-                            Message = new List<DareEnvelope>()
+                            Envelopes = new List<DareEnvelope>()
                             };
 
 
                         foreach (var message in store.Select(selection.IndexMin)) {
-                            update.Message.Add(message);
+                            update.Envelopes.Add(message);
                             }
 
                         updates.Add(update);
@@ -211,7 +248,7 @@ namespace Goedel.Mesh.Server {
                 if (updates != null) {
                     foreach (var update in updates) {
                         using (var catalog = accountEntry.GetCatalog(update.Container)) {
-                            foreach (var message in update.Message) {
+                            foreach (var message in update.Envelopes) {
                                 catalog.Apply(message);
                                 }
                             }
@@ -228,7 +265,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account to be deleted.</param> 
         public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
             lock (Container) {
-                return Container.Delete(account.Account);
+                return Container.Delete(account.ServiceID);
                 }
             }
 
@@ -259,7 +296,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="verifiedAccount">The account for which the data is requested.</param>
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, JpcSession jpcSession) {
-            var accountEntry = GetAccountLocked(verifiedAccount.Account);
+            var accountEntry = GetAccountLocked(verifiedAccount.ServiceID);
             Assert.NotNull(accountEntry);
 
             using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
@@ -271,6 +308,13 @@ namespace Goedel.Mesh.Server {
                 }
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
+
+            if (jpcSession is DirectSession directSession) {
+                return new AccountHandleVerified(accountEntry);
+                }
+
+            // At this point we need to examine the actual information presented and the 
+            // AssertionDeviceConnection value from the session.
 
             throw new NotAuthenticated();
             }

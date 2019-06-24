@@ -154,7 +154,7 @@ namespace Goedel.Mesh {
         /// Create a new Mesh master profile and account and bind to a service
         /// </summary>
         /// <returns>Context for administering the Mesh account via the service</returns>
-        public ContextAccountService CreateService(
+        public ContextAccount CreateService(
                 string localName,
                 string accountName=null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -162,7 +162,8 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
             var contextMeshAdmin = CreateMesh(localName);
             var contextAccount = contextMeshAdmin.CreateAccount(localName);
-            return contextAccount.AddService(accountName ?? localName);
+            contextAccount.AddService(accountName ?? localName);
+            return contextAccount;
             }
 
 

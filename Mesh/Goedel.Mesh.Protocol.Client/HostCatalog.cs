@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Client {
         ///The master profile that provides the root of trust for this Mesh
         /// </summary>
 
-		public virtual DareEnvelope						EncodedProfileMaster  {get; set;}
+		public virtual DareEnvelope						EnvelopedProfileMaster  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -168,10 +168,10 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
 				}
-			if (EncodedProfileMaster != null) {
+			if (EnvelopedProfileMaster != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EncodedProfileMaster", 1);
-					EncodedProfileMaster.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedProfileMaster", 1);
+					EnvelopedProfileMaster.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -217,10 +217,10 @@ namespace Goedel.Mesh.Client {
 					Default = JSONReader.ReadBoolean ();
 					break;
 					}
-				case "EncodedProfileMaster" : {
+				case "EnvelopedProfileMaster" : {
 					// An untagged structure
-					EncodedProfileMaster = new DareEnvelope ();
-					EncodedProfileMaster.Deserialize (JSONReader);
+					EnvelopedProfileMaster = new DareEnvelope ();
+					EnvelopedProfileMaster.Deserialize (JSONReader);
  
 					break;
 					}
@@ -477,10 +477,15 @@ namespace Goedel.Mesh.Client {
 
 		public virtual string						DeviceUDF  {get; set;}
         /// <summary>
-        ///
+        ///The response returned by the service when the registration was requested.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedMessageConnectionRequest  {get; set;}
+		public virtual DareEnvelope						EnvelopedMessageConnectionResponse  {get; set;}
+        /// <summary>
+        ///The current account assertion
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -529,10 +534,15 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("DeviceUDF", 1);
 					_Writer.WriteString (DeviceUDF);
 				}
-			if (EnvelopedMessageConnectionRequest != null) {
+			if (EnvelopedMessageConnectionResponse != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedMessageConnectionRequest", 1);
-					EnvelopedMessageConnectionRequest.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedMessageConnectionResponse", 1);
+					EnvelopedMessageConnectionResponse.Serialize (_Writer, false);
+				}
+			if (EnvelopedAccountAssertion != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
+					EnvelopedAccountAssertion.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -570,10 +580,17 @@ namespace Goedel.Mesh.Client {
 					DeviceUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "EnvelopedMessageConnectionRequest" : {
+				case "EnvelopedMessageConnectionResponse" : {
 					// An untagged structure
-					EnvelopedMessageConnectionRequest = new DareEnvelope ();
-					EnvelopedMessageConnectionRequest.Deserialize (JSONReader);
+					EnvelopedMessageConnectionResponse = new DareEnvelope ();
+					EnvelopedMessageConnectionResponse.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedAccountAssertion" : {
+					// An untagged structure
+					EnvelopedAccountAssertion = new DareEnvelope ();
+					EnvelopedAccountAssertion.Deserialize (JSONReader);
  
 					break;
 					}

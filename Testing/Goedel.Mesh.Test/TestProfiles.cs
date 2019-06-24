@@ -72,16 +72,16 @@ namespace Goedel.Mesh.Test {
 
                 CheckCatalog(catalog, new List<CatalogEntry> { });
 
-                catalog.Add(entry1);
+                catalog.New(entry1);
                 CheckCatalog(catalog, new List<CatalogEntry> { entry1 });
 
-                catalog.Add(entry2);
+                catalog.New(entry2);
                 CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2 });
 
-                catalog.Add(entry3);
+                catalog.New(entry3);
                 CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3 });
 
-                catalog.Add(entry4);
+                catalog.New(entry4);
                 CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3, entry4 });
 
                 catalog.Update(entry5);
@@ -202,16 +202,16 @@ namespace Goedel.Mesh.Test {
                 };
             var Entry4 = new CatalogEntryContact(Contact4);
 
-            catalog.Add(Entry1);
+            catalog.New(Entry1);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
 
-            catalog.Add(Entry2);
+            catalog.New(Entry2);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
 
-            catalog.Add(Entry3);
+            catalog.New(Entry3);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
 
-            catalog.Add(Entry4);
+            catalog.New(Entry4);
             CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
             }
 

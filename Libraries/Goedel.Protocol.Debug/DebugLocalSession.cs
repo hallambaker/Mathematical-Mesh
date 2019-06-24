@@ -31,10 +31,9 @@ namespace Goedel.Protocol.Debug {
         /// lead to the authentication credential being established.
         /// </summary>
         /// <param name="Host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
-        public DebugLocalSession(JPCProvider Host, string Domain, string Account)
-                : this(Host, Domain, Account, null) {
+        /// <param name="serviceID">User account</param>
+        public DebugLocalSession(JPCProvider Host, string serviceID)
+                : this(Host, serviceID, null) {
             }
 
         /// <summary>
@@ -43,10 +42,10 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Host">The host implementation</param>
         /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
+        /// <param name="serviceID">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public DebugLocalSession(JPCProvider Host, string Domain, string Account, string UDF) :
-                base (Host, Domain, Account, UDF ){
+        public DebugLocalSession(JPCProvider Host, string Domain, string serviceID, string UDF=null) :
+                base (Host, serviceID, UDF ){
 
 
             }

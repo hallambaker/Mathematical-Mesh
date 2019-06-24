@@ -41,7 +41,7 @@ namespace Goedel.Mesh {
 
 
     public class CatalogCalendar : Catalog {
-        public const string Label = "CatalogCalendar";
+        public const string Label = "mmm_Calendar";
 
         public override string ContainerDefault => Label;
 
