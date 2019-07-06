@@ -11,6 +11,7 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 ````
 >dare encode TestFile1.txt
+ERROR - The feature has not been implemented
 ````
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
@@ -22,7 +23,8 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+ERROR - The feature has not been implemented
 ````
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -30,8 +32,8 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
-ERROR - Object reference not set to an instance of an object.
+>dare encode TestDir1 /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+ERROR - The feature has not been implemented
 ````
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
@@ -42,7 +44,7 @@ public encryption key.
 
 ````
 >dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 
@@ -71,7 +73,7 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
 ERROR - The option  is not known.
 ````
 
@@ -89,14 +91,14 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 ````
 >dare decode TestFile1.txt.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
+ERROR - The feature has not been implemented
 ````
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
 ERROR - The option  is not known.
 ````
 
@@ -106,7 +108,7 @@ the necessary decryption key(s) automatically:
 
 ````
 >dare decode TestFile1.txt.mesh.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
+ERROR - The feature has not been implemented
 ````
 
 

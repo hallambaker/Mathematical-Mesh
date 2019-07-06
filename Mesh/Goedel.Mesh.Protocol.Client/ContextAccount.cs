@@ -384,7 +384,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void Sync(bool all = true) {
+        public int Sync(bool all = true) {
 
             //var statusRequest = new StatusRequest() {
             //    };

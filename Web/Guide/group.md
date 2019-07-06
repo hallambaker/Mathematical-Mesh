@@ -65,7 +65,7 @@ public key but he is unable to read it:
 >dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupies@example.com
 ERROR - The command  is not known.
 >dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+ERROR - The feature has not been implemented
 ````
 
 Since Alice is the group administrator, she can decrypt the file using her 
@@ -74,7 +74,7 @@ administrator key:
 
 ````
 >dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+ERROR - The feature has not been implemented
 ````
 
 
@@ -95,7 +95,7 @@ Bob can now decrypt the file.
 
 ````
 >dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+ERROR - The feature has not been implemented
 ````
 
 ## Reporting users
@@ -125,7 +125,7 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 ````
 >dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+ERROR - The feature has not been implemented
 ````
 
 

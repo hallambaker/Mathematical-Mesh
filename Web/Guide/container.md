@@ -80,6 +80,7 @@ the files are extracted by default:
 
 ````
 >container extract Container.dcon TestOut
+ERROR - The feature has not been implemented
 ````
 
 Alternatively, the `/file` option may be used to extract a specific file:

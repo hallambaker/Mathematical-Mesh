@@ -63,18 +63,18 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultFile:
+Specifying the /json option returns a result of type Result:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
 {
-  "ResultFile": {
-    "Success": true,
-    "Filename": "TestFile1.dare",
-    "TotalBytes": 14}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=ECDV-X42A-QCZL-FKCH-6ODT-P3JX-U4QA /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
 {
   "Result": {
     "Success": false,

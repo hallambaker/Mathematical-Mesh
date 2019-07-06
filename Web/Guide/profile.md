@@ -12,7 +12,8 @@ a description of the service parameters.
 
 
 ````
->profile hello alice@example.com
+>service hello alice@example.com
+ERROR - The command  is not known.
 ````
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
@@ -26,7 +27,7 @@ This includes the steps of:
 
 * Create a Master profile.
 
-* Create a device profile.
+* Create a Mesh Account
 
 * Create a Mesh profile and make the current device an administrator.
 
@@ -36,41 +37,13 @@ The `profile create` command creates a profile:
 
 
 ````
->profile create
-Device Profile UDF=MANG-XLXR-5S7L-HE4B-2DPE-A456-SVOZ
-Personal Profile UDF=MCY7-VGVV-K2ZZ-KQWB-566D-F4PD-WKR3
-````
-
-The `profile register` commands registers a profile:
-
-
-````
->profile register  alice@example.com
-ERROR - Object reference not set to an instance of an object.
-````
-
-Or we can perform both at once by specifying the service to register the profile when we create the
-profile:
-
-
-````
->profile create  bob@example.com
-ERROR - Object reference not set to an instance of an object.
+>mesh create
+Device Profile UDF=MCCE-E7DI-EVQ2-QOV3-TXT2-BF5W-F4EP
+Personal Profile UDF=MBBK-T2SZ-MQNV-3UH3-XLQR-Y2QR-IF6S
 ````
 
 
-## Synchronizing a profile
 
-The `profile ` command is used to synchronize the catalogs and 
-spools associated with a Mesh profile:
-
-
-````
->profile sync
-````
-
-Synchronization is also performed automatically before every command requiring 
-interaction with the Mesh service.
 
 ## Listing profiles installed on a machine
 
@@ -80,6 +53,7 @@ machine:
 
 ````
 >profile list
+ERROR - The command  is not known.
 ````
 
 The `profile dump` command provides a more detailed description of 
@@ -87,8 +61,8 @@ a profile:
 
 
 ````
->profile get /mesh=alice@example.com
-ERROR - The feature has not been implemented
+>profile get /mesh=personal
+ERROR - The command  is not known.
 ````
 
 ## Escrowing Profile Master Keys
@@ -105,10 +79,7 @@ of the user's master profile and returns a set of recovery shares.
 
 ````
 >profile escrow
-Share: SAQB-IZK6-D7WF-2E7R-Z7AG-BXM6-LM37-U
-Share: SAQ3-YWLV-GJHV-FGLB-R7GP-YT6G-FE4P-4
-Share: SARG-ITMM-ISZE-QHWR-J7MZ-PQPN-6444-6
-Written to MCY7-VGVV-K2ZZ-KQWB-566D-F4PD-WKR3.escrow
+ERROR - The command  is not known.
 ````
 
 By default, three recovery shares are created such that two shares are required to
@@ -117,45 +88,20 @@ recover the master keys.
 Recovery of the master keys is performed by the `profile recover`
 command.
 
-
-````
->profile recover $SAQB-IZK6-D7WF-2E7R-Z7AG-BXM6-LM37-U $SARG-ITMM-ISZE-QHWR-J7MZ-PQPN-6444-6 /verify
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 The `/verify` flag causes the tool to check that the keys can be correctly recovered
 without actually installing on the machine.
 
-## Changing the Mesh Service
-
-The `profile ` command allows a profile to be registered at a different
-Mesh Service:
-
-
-````
->profile register alice@example.net
-ERROR - Object reference not set to an instance of an object.
-````
-
-Although the Mesh protocols are designed to allow a Mesh profile to be registered with
-multiple services, this use is not currently implemented in the Mesh reference code.
 
 ## Direct profile management
 
 A Mesh profile may be exported as a file using the `profile ` command:
 
-
-````
->profile export profile.dare
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 The `profile ` profile can then be used to import the file on another 
 machine:
 
-
-````
->profile import profile.dare
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 

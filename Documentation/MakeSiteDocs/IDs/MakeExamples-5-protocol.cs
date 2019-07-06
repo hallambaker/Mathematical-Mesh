@@ -135,8 +135,8 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileAliceCreate);
-				  DescribeResponse (Example.ProfileAliceCreate);
+				  DescribeRequest (Example.CommandsAddServiceAlice);
+				  DescribeResponse (Example.CommandsAddServiceAlice);
 					}
 		
 

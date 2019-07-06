@@ -171,15 +171,14 @@
 			Case eCatalog "catalog"
 				Brief "Object catalog"
 
-	CommandSet Profile "profile"
+	CommandSet Mesh "mesh"
 
-		Brief "Manage personal and device profiles and accounts."
+		Brief "Commands for creating and managing a personal Mesh"
 
-		Command ProfileHello "hello"		
-			Brief "Connect to the service(s) a profile is connected to and report status."
-			Include AccountOptions
 
-		Command ProfileCreate "create"
+
+
+		Command MeshCreate "create"
 			Brief "Create new personal profile"
 			Parameter NewAccountID "new" String
 				Brief "New account"
@@ -187,21 +186,7 @@
 			Include DeviceProfileInfo
 			Include CryptoOptions
 
-		Command ProfileRegister "register"
-			Brief "Register existing profile at a new portal"
-			Parameter NewAccountID "account" String
-				Brief "New account"
-			Include Reporting
-			Include AccountOptions
-			Include MasterProfileInfo
-			Include DeviceProfileInfo
-
-		Command ProfileSync "sync"
-			Brief "Synchronize local copies of Mesh profiles with the server"
-			Include AccountOptions
-			Include Reporting
-
-		Command ProfileEscrow "escrow"
+		Command MeshEscrow "escrow"
 			Brief "Create a set of key escrow shares"
 			Include CryptoOptions
 			Include AccountOptions
@@ -212,7 +197,7 @@
 			Option Shares "shares" Integer
 				Default "3"
 
-		Command ProfileRecover "recover"
+		Command MeshRecover "recover"
 			Brief "Recover escrowed profile"
 			Include AccountOptions
 			Include Reporting
@@ -229,28 +214,60 @@
 
 
 		// Describe configuration
-		Command ProfileList "list"
+		Command MeshList "list"
 			Brief "List all profiles on the local machine"
 			Include Reporting
 
-		Command ProfileGet "get"
+		Command MeshGet "get"
 			Brief "Describe the specified profile"
 			Include AccountOptions
 			Include Reporting
 
 		// Export and import of profiles
-		Command ProfileExport "export"
+		Command MeshExport "export"
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile
 			Include AccountOptions
 			Include Reporting
 
-		Command ProfileImport "import"
+		Command MeshImport "import"
 			Brief "Import the specified profile data to the specified file"
 			Parameter File "file" NewFile
 			Include AccountOptions
 			Include Reporting
-			
+
+	CommandSet Account "account"
+		Brief "Account creation and management commands."
+		
+		Command AccountCreate "create"
+			Brief "Create new account"
+			Parameter NewAccountID "account" String
+				Brief "Account friendly name"
+			Include DeviceProfileInfo
+			Include Reporting
+			Include CryptoOptions
+
+		Command AccountHello "hello"		
+			Brief "Connect to the service(s) a profile is connected to and report status."
+			Include AccountOptions
+
+		Command AccountSync "sync"
+			Brief "Synchronize local copies of Mesh profiles with the server"
+			Include AccountOptions
+			Include Reporting
+
+		Command AccountRegister "register"
+			Brief "Register existing profile at a new portal"
+			Parameter NewAccountID "account" String
+				Brief "New account"
+			Include Reporting
+			Include AccountOptions
+			Include MasterProfileInfo
+			Include DeviceProfileInfo
+
+
+
+
 	CommandSet Connect "device"
 		Brief "Device management commands."
 
@@ -355,6 +372,7 @@
 			Include Reporting
 			Parameter GroupID "group" String
 				Brief "Recryption group name in user@example.com format"
+
 
 	CommandSet Message "message"
 		Brief "Contact and confirmation message options"
@@ -728,9 +746,6 @@
 			Include AccountOptions
 			Include Reporting
 
-
-
-
 	CommandSet Key "key"
 		Brief "Key operations."
 
@@ -739,7 +754,6 @@
 			Return ResultKey
 			Include Reporting
 			Include LengthOptions
-			
 
 		Command KeySecret "secret"
 			Brief "Return a randomized secret value formatted as a UDF Encryption Key Type."			
@@ -829,7 +843,6 @@
 			Parameter Input "in" ExistingFile
 				Brief "File to create commitment of"
 
-
 	CommandSet Dare "dare"
 		Brief "DARE Message encryption and decryption commands"
 		Command DareEncode "encode"
@@ -886,9 +899,6 @@
 			Include CryptoOptions
 			Include AccountOptions
 			Include Reporting
-
-
-
 
 	CommandSet Container "container"
 		Brief "DARE container commands"

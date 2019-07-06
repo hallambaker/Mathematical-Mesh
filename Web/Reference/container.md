@@ -139,16 +139,17 @@ to files.
 
 ````
 >container extract Container.dcon TestOut
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultFile:
+Specifying the /json option returns a result of type Result:
 
 ````
 >container extract Container.dcon TestOut /json
 {
-  "ResultFile": {
-    "Success": true,
-    "Filename": "Container.dcon"}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # container append

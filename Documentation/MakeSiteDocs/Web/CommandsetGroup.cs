@@ -74,7 +74,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Examples.GroupCreate);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("This command creates the group {1}. Since Alice created the\n{0}", _Indent, Examples.GroupAccount);
+				_Output.Write ("This command creates the group {1}. Since Alice created the\n{0}", _Indent, Examples.GroupService);
 				_Output.Write ("account she is the administrator.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("At this point, the group has no members. Bob can encrypt a file under the group\n{0}", _Indent);

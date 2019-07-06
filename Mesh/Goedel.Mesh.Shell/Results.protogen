@@ -29,22 +29,6 @@
 		Boolean			Verified
 
 
-	Structure ResultTransactionRequest
-		Inherits		Result
-		String			Identifier
-
-
-	Structure ResultEntry
-		Inherits		Result
-		Struct CatalogEntry CatalogEntry
-
-	Structure ResultMail
-		Inherits		ResultEntry
-	Structure ResultSSH
-		Inherits		ResultEntry
-
-
-
 	Structure ResultDump
 		Inherits		Result
 		Struct CatalogEntry CatalogEntries
@@ -63,24 +47,43 @@
 		Struct ProfileService	ProfileService
 
 	Structure ResultDeviceCreate
-		Inherits						Result
-		String							DeviceUDF
-		Boolean							Default
-		Struct ProfileDevice			ProfileDevice
+		Inherits							Result
+		Boolean								Default
+		String								DeviceUDF
+		Struct CatalogEntryDevice			CatalogEntryDevice
+
+	Structure ResultAccountCreate
+		Inherits							ResultDeviceCreate
+		Struct ActivationAccount			ActivationAccount
+		String								ServiceID
 
 	Structure ResultMasterCreate
-		Inherits							ResultDeviceCreate
-		String								PersonalUDF
+		Inherits							ResultAccountCreate
+		String								MeshUDF
 		String								Account
+		Struct ActivationAccount			ActivationAccount
 		Struct ProfileMaster				ProfileMaster
-		Struct AssertionDeviceConnection	DeviceConnection
-		Struct AssertionAccount				AssertionAccount
-		Struct AssertionDevicePrivate		AssertionDevicePrivate
-
 
 	Structure ResultSync
 		Inherits		Result
 		Integer			Fetched
+
+
+
+	Structure ResultTransactionRequest
+		Inherits		Result
+		String			Identifier
+
+
+	Structure ResultEntry
+		Inherits		Result
+		Struct CatalogEntry CatalogEntry
+
+	Structure ResultMail
+		Inherits		ResultEntry
+	Structure ResultSSH
+		Inherits		ResultEntry
+
 
 
 	Structure ResultEscrow

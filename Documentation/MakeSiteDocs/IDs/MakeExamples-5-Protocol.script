@@ -68,8 +68,8 @@
 
 
 #zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
-#%  DescribeRequest (Example.ProfileAliceCreate);
-#%  DescribeResponse (Example.ProfileAliceCreate);
+#%  DescribeRequest (Example.CommandsAddServiceAlice);
+#%  DescribeResponse (Example.CommandsAddServiceAlice);
 #end zfile
 
 

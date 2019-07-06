@@ -1,0 +1,79 @@
+﻿#using System.Text
+#using Goedel.Mesh
+#using Goedel.Mesh.Shell
+#using Goedel.Protocol
+#xclass ExampleGenerator CreateExamples
+
+
+
+#xfile CreateExamples WebAccount "Guide/profile.md" CreateExamples Examples
+
+## Using the `profile` Command Set
+
+The `account` command set contains commands used to create and manage
+Mesh accounts.
+
+
+#### Creating a Mesh Account
+
+Create a new Mesh profile
+
+#%  ConsoleExample (Examples.ProfileCreateAlice);
+
+Add an account to the profile
+
+#%  ConsoleExample (Examples.CommandsAddAcountAlice);
+
+The #{ToCommand("account service")} command registers a profile:
+
+#%  ConsoleExample (Examples.CommandsAddServiceAlice);
+
+Or we can perform all three tasks at once by creating an account and registering it with a 
+service when we create the profile:
+
+#%  ConsoleExample (Examples.ProfileCreateBob);
+
+
+
+#### Contacting a Mesh Service.
+
+#### Registering an account with a service.
+
+#### Synchronizing an account with a service
+
+
+
+#end xfile
+
+#xfile CreateExamples AccountReference "Reference/profile.md" CreateExamples Examples
+#% var CommandSet = CommandLineInterpreter.DescribeCommandSet_Account;
+
+
+#% Describe(CommandSet);
+
+#% Describe(CommandSet, _AccountHello._DescribeCommand);
+
+The `profile hello` command attempts to contact a Mesh service and reports the
+service configuration if successful.
+
+#%  ConsoleReference (Examples.ProfileHello);
+
+#!% Describe(CommandSet, _AccountRegister._DescribeCommand);
+
+The `profile register` command 
+
+#!%  ConsoleReference (Examples.ProfileRegister);
+
+#% Describe(CommandSet, _AccountSync._DescribeCommand);
+
+The `profile sync` command 
+
+#!%  ConsoleReference (Examples.ProfileSync);
+
+
+
+
+#end xfile
+
+#end xclass
+

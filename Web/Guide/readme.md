@@ -1,6 +1,8 @@
 # meshman User Guide
 
 <dl>
+<dt><a href="account.md">account</a>
+<dd>Account creation and management commands.
 <dt><a href="bookmark.md">bookmark</a>
 <dd>Manage bookmark catalogs connected to an account
 <dt><a href="calendar.md">calendar</a>
@@ -21,14 +23,14 @@
 <dd>Key operations.
 <dt><a href="mail.md">mail</a>
 <dd>Manage mail profiles connected to a personal profile
+<dt><a href="mesh.md">mesh</a>
+<dd>Commands for creating and managing a personal Mesh
 <dt><a href="message.md">message</a>
 <dd>Contact and confirmation message options
 <dt><a href="network.md">network</a>
 <dd>Manage network profile settings
 <dt><a href="password.md">password</a>
 <dd>Manage password catalogs connected to an account
-<dt><a href="profile.md">profile</a>
-<dd>Manage personal and device profiles and accounts.
 <dt><a href="ssh.md">ssh</a>
 <dd>Manage SSH profiles connected to a personal profile
 </dl>

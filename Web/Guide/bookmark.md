@@ -66,16 +66,13 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
-  "Path": "Folder1/1"}
-{
+  "Path": "Folder1/1"}{
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}
-{
+  "Path": "Folder1/2"}{
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
-  "Path": "Folder1/1a"}
-````
+  "Path": "Folder1/1a"}````
 
 ## Adding devices
 
@@ -93,5 +90,5 @@ The new device now has access to the Bookmarks catalog:
 
 ````
 >bookmark list
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````

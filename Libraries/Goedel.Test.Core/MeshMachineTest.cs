@@ -77,7 +77,7 @@ namespace Goedel.Test.Core {
         public ContextAccount GetContextAccount(string localName=null, string accountName = null) {
             var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
             var contextMesh = machine.GetContextMesh(localName);
-            return contextMesh.GetContextAccountService (localName, accountName);
+            return contextMesh.GetContextAccount (localName, accountName);
             }
 
         public static MeshMachineTest GenerateMasterAccount(

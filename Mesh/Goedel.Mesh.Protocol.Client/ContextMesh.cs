@@ -57,7 +57,7 @@ namespace Goedel.Mesh.Client {
 
         // The account activation was not added to activations.
 
-        public ContextAccount GetContextAccountService(
+        public ContextAccount GetContextAccount(
                 string localName=null,
                 string accountName = null) {
 

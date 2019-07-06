@@ -272,14 +272,14 @@ being that all authorizations are denied.
 
 
 ````
->device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
+>device earl udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3 /json
+>device earl udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K /json
 {
   "Result": {
     "Success": false,
@@ -331,65 +331,17 @@ the inbound message spool.
 
 ````
 >device pending
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultPending:
+Specifying the /json option returns a result of type Result:
 
 ````
 >device pending /json
 {
-  "ResultPending": {
-    "Success": true,
-    "Messages": [{
-        "MessageID": "NDTT-QY2Q-62HE-2ZWJ-L5C2-UDNE-64VS-U6OJ-M3YW-F4JK-3I",
-        "Account": "alice@example.com",
-        "DeviceProfile": [{
-            "dig": "S512",
-            "cty": "application/mmm"},
-          "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIlNpZ25hdHVyZUtleSI
-  6IHsKICAgICAgIlVERiI6ICJNREFYLTZURjUtUzRFNC1JQUJMLVZFWjItTlNDN
-  S1WQUNaIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB
-  1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
-  CAgICAgICJQdWJsaWMiOiAiR0dMd1BWOE9FTWYxWXdwcTJvbGdDeU93eVk3UDh
-  ZSFk5MGtoM1ZPUkFQZ0Q0cTlUQ01FSwogIEhsVjN5Zk12akZwUUszQmo0V0YtM
-  l9ZQSJ9fX0sCiAgICAiRGV2aWNlQXV0aGVudGljYXRpb25LZXkiOiB7CiAgICA
-  gICJVREYiOiAiTUQ0Ti1URDZELU80RkwtQVZTWC00UkEzLU5CTFYtT1JZRSIsC
-  iAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXl
-  FQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiU
-  HVibGljIjogImJkMnJnR0wzUHVtczNiNUxWemZ1d1ZJZGtuZm5MWmZ1cDhBRWJ
-  4TDBmMEVka1AxY1NJNWYKICBjNU13czE2d0lYUWZVNnBfTXZFQmFGS0EifX19L
-  AogICAgIkRldmljZUVuY3J5cHRpb25LZXkiOiB7CiAgICAgICJVREYiOiAiTUN
-  ENy1LNUpELVFSWlMtNktOWi1JU1kzLTVENVgtUzJUTyIsCiAgICAgICJQdWJsa
-  WNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICA
-  gICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIkJXR
-  DJZVUZ6YzZTeGNBZVNnMGVBbDk1Sk1JVW1GWk03NGUzb0Y2LWd3ZkkwTDRyZGc
-  xWTIKICBCOThUVHBQNHF6enp4bElYaXVRemxtNEEifX19fX0",
-          {
-            "signatures": [{
-                "signature": "9eeTL-Q7npEA51YPbcaiZz5k9ZxhEfF8M7IHjlTdesqHJDRY7
-  xCGSVt6h8jgG0CGtABslCW9p2UAcFJKDVtH20k1XdmBNKPKCc3vGhurvCyIdTd
-  Ft5nNjOiJvqsPPx9SUgg4C0UV0vdkB_p_oIJgHiYA"}],
-            "PayloadDigest": "V4MkF08a9l60bJb03ohYtS2DBANtYOhmSSVT-MUQSCetP
-  B4uZNe2une9mzLXCAOeypG14SWDk6gZkb50BenRUQ"}],
-        "ClientNonce": "3FWj3SlEMndfSzG7N03CTw",
-        "ServerNonce": "Uk1MMaHYOqij8BxAKTG0VA",
-        "Witness": "VH74-S44N-BJZH-ABPG-QXAL-PQON-JJFL"},
-      {
-        "MessageID": "NDK2-WE2P-SZNK-ZPEI-HZCO-S4D4-IED7-UCI7-FW2E-BGQZ-N4",
-        "Recipient": "alice@example.com",
-        "Contact": [{
-            "dig": "S512",
-            "cty": "application/mmm"},
-          "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUFWVC1
-  TQUk2LTVOS1ktR0NCWS00SUhMLVBIR0ctTVhZUiIsCiAgICAiQWNjb3VudCI6I
-  CJib2JAZXhhbXBsZS5jb20ifX0",
-          {
-            "signatures": [{
-                "signature": "jNGcydDBxL0h8vSDIhlwzD8X_E5Z1isUL22imlIHdVyE6GTbr
-  i3Qfcsp8EqgY9jDe6ig1ly-bwYAs9a7BOROW_HrekQYbWBIjK-C-sbhae7TapQ
-  VVxjOkFugViGpc7B7Q1PsofDb2l7-LiVkwFRr-TgA"}],
-            "PayloadDigest": "pKYz04TShS0xhrCz7TpyLqP3QraZzUoq9o_aQEdxMGujF
-  vT8Boc7UNBvwF9m1aHY_uhSuOJ65oTZu-awjFnW8A"}]}]}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # device reject
@@ -450,20 +402,17 @@ followed by the letter m, h or d for minutes, hours and days respectively.
 
 ````
 >device pin
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultPIN:
+Specifying the /json option returns a result of type Result:
 
 ````
 >device pin /json
 {
-  "ResultPIN": {
-    "Success": true,
-    "MessageConnectionPIN": {
-      "MessageID": "NCXB-4ELG-LIOO-NG3S-YCNY-O2B4-AKPX-PFLD-IUMW-CJCV-JU",
-      "Account": "alice@example.com",
-      "Expires": "2019-04-15T22:08:04Z",
-      "PIN": "NDJ2-IF3R-GAZY-GN3O-2W2C-HYR7-YAT"}}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # device pre
@@ -512,14 +461,14 @@ offline initialization of device profiles in batch mode during manufacture.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
+>device pre devices@example.com /key=udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3 /json
+>device pre devices@example.com /key=udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K /json
 {
   "Result": {
     "Success": false,
@@ -565,15 +514,17 @@ the `/pin` option.
 
 ````
 >device request alice@example.com
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultConnect:
+Specifying the /json option returns a result of type Result:
 
 ````
 >device request alice@example.com /json
 {
-  "ResultConnect": {
-    "Success": true}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 

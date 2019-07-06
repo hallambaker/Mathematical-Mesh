@@ -203,21 +203,26 @@ namespace Goedel.Cryptography {
         public static int GetCompression(byte[] buffer) {
             Assert.True(buffer.Length == 64);
 
-            // Check for less than 20 leading zeros
-            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61]&0b00001111)!=0)) {
+            // Check for less than 20 trailing zeros
+            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61]&0b0000_1111)!=0)) {
                 return 0;
                 }
 
-            // Check for less than 40 leading zeros
-            if (buffer[60] != 0 | buffer[59] != 0 | buffer[58] != 0) {
+            // Check for less than 30 trailing zeros
+            if (buffer[61] != 0 | ((buffer[60] & 0b0011_1111) != 0)) {
                 return 1;
                 }
 
-            // Check for less than 50 leading zeros
-            if (buffer[57] != 0 | ((buffer[56] & 0b00000011) == 0)) {
+            // Check for less than 40 trailing zeros
+            if (buffer[60] != 0 | buffer[59] != 0 | buffer[58] != 0) {
                 return 2;
                 }
-            return 3;
+
+            // Check for less than 50 trailing zeros
+            if (buffer[57] != 0 | ((buffer[56] & 0b0000_0011) == 0)) {
+                return 3;
+                }
+            return 4;
             }
 
         /// <summary>

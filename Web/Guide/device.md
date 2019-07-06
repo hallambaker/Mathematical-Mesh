@@ -13,6 +13,7 @@ the mesh service account alice@example.com to which connection is requested:
 
 ````
 >device request alice@example.com
+ERROR - The feature has not been implemented
 ````
 
 In this case there is no existing device profile and so a new profile is
@@ -31,6 +32,7 @@ messages.
 
 ````
 >device pending
+ERROR - The feature has not been implemented
 ````
 
 Alice sees the request that she posted and approves it with the connect
@@ -58,7 +60,7 @@ second:
 
 ````
 >profile sync
-ERROR
+ERROR - The command  is not known.
 ````
 
 ##Managing connected devices
@@ -98,6 +100,7 @@ a new PIN code:
 
 ````
 >device pin
+ERROR - The feature has not been implemented
 ````
 
 The pin code can now be used to authenticate the connection request:
@@ -105,6 +108,7 @@ The pin code can now be used to authenticate the connection request:
 
 ````
 >device request alice@example.com /pin=tbs
+ERROR - The feature has not been implemented
 ````
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -114,6 +118,7 @@ administrator device:
 
 ````
 >device pending
+ERROR - The feature has not been implemented
 ````
 
 
@@ -163,7 +168,7 @@ this type of device connection.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
+>device pre devices@example.com /key=udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -173,7 +178,7 @@ and network connectivity using the `profile sync` command.
 
 ````
 >profile sync
-ERROR - Object reference not set to an instance of an object.
+ERROR - The command  is not known.
 ````
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
@@ -191,7 +196,7 @@ and retrieve the data using the `device earl` command:
 
 
 ````
->device earl udf://example.com/EB4V-7FPA-OQ5G-IEMZ-XXKE-IYYE-KVCH-D3
+>device earl udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
 ERROR - The feature has not been implemented
 ````
 
@@ -202,7 +207,7 @@ The next time the device polls the hailing account, it retrieves the connection 
 
 ````
 >profile sync
-ERROR - Object reference not set to an instance of an object.
+ERROR - The command  is not known.
 ````
 
 Once connected to an account, a device does not attempt to poll the hailing account. 

@@ -20,7 +20,7 @@ namespace Goedel.Mesh.Test {
 
         public TestEnvironmentCommon TestEnvironmentCommon;
 
-        public override IMeshMachine MeshMachine => MeshMachineTest;
+        public override IMeshMachineClient MeshMachine => MeshMachineTest;
 
         public MeshMachineTest MeshMachineTest => meshMachineTest ??
             new MeshMachineTest(TestEnvironmentCommon, MachineName).CacheValue(out meshMachineTest);
@@ -113,6 +113,13 @@ namespace Goedel.Mesh.Test {
         public Result Last => Results[Results.Count - 1];
 
 
+        public int ErrorCount = 0;
+        public static int ErrorCountTotal = 0;
+
+
+        public int Count = 0;
+        public static int CountTotal = 0;
+
         public TestCLI(TestShell shell) : base() => Shell = shell;
 
 
@@ -133,11 +140,17 @@ namespace Goedel.Mesh.Test {
             //result.Add(new ExampleResult(command, Shell.ShellResult as Result));
 
             foreach (var cmd in commands) {
+                Count++;
+                CountTotal++;
+
                 try {
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(cmd, Shell.ShellResult as Result));
                     }
                 catch (Exception exception) {
+                    ErrorCount++;
+                    ErrorCountTotal++;
+
                     var cmdresult = new Result() {
                         Success = false,
                         Reason = exception.Message

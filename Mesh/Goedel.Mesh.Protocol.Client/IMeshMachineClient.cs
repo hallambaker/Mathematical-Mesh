@@ -63,6 +63,20 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh</returns>
         ContextMesh GetContextMesh(string localName = null, bool admin = true);
 
+        /// <summary>
+        /// Create a new Mesh
+        /// </summary>
+        /// <param name="localName"></param>
+        /// <param name="algorithmSign"></param>
+        /// <param name="algorithmEncrypt"></param>
+        /// <param name="algorithmAuthenticate"></param>
+        /// <returns></returns>
+        ContextMeshAdmin CreateMesh(
+                string localName,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) ;
+
 
         }
     }

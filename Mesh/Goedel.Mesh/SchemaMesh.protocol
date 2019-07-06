@@ -345,6 +345,8 @@
 	Section 2 "Catalog Entries"
 
 	Structure CatalogEntry
+		Description
+			|Base class for cataloged Mesh data.
 
 	Structure CatalogEntryDevice
 		Inherits CatalogEntry
@@ -523,10 +525,10 @@
 		DateTime Expires
 		String PIN
 
-	Structure MessageContactRequest
+	Structure MessageContact
 		Inherits MeshMessage
-
-		Struct DareEnvelope Contact
+		Bool Reply
+		Struct DareEnvelope Self
 			Description
 				|The contact data.
 

@@ -82,17 +82,17 @@ If no key is specified, a random secret is generated:
 
 ````
 >hash mac TestFile1.txt
-ACIK-ZCKB-KOBQ-UU6G-KZF3-CUEL-TCRD
-NCT6-3VEM-LKOB-SJBC-E5FO-FYDU-YIG5
+AARG-25DD-65CQ-NJ6H-PL6Y-3XJV-KUOX
+NBCJ-2V3R-D63U-Z3EH-J5CZ-UH2R-FI43
 ````
 
 A key may be specified using the `/key` option:
 
 
 ````
->hash mac TestFile1.txt /key=NCT6-3VEM-LKOB-SJBC-E5FO-FYDU-YIG5
-ACIK-ZCKB-KOBQ-UU6G-KZF3-CUEL-TCRD
-NCT6-3VEM-LKOB-SJBC-E5FO-FYDU-YIG5
+>hash mac TestFile1.txt /key=NBCJ-2V3R-D63U-Z3EH-J5CZ-UH2R-FI43
+AARG-25DD-65CQ-NJ6H-PL6Y-3XJV-KUOX
+NBCJ-2V3R-D63U-Z3EH-J5CZ-UH2R-FI43
 ````
 
 If the expected digest value is specified, this is used to check the calculated value:
@@ -100,9 +100,9 @@ If the expected digest value is specified, this is used to check the calculated 
 
 
 ````
->hash mac TestFile1.txt /key=NCT6-3VEM-LKOB-SJBC-E5FO-FYDU-YIG5 /expect=ACIK-ZCKB-KOBQ-UU6G-KZF3-CUEL-TCRD
+>hash mac TestFile1.txt /key=NBCJ-2V3R-D63U-Z3EH-J5CZ-UH2R-FI43 /expect=AARG-25DD-65CQ-NJ6H-PL6Y-3XJV-KUOX
 True
->hash mac TestFile1.txt /key=NCT6-3VEM-LKOB-SJBC-E5FO-FYDU-YIG5 /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
+>hash mac TestFile1.txt /key=NBCJ-2V3R-D63U-Z3EH-J5CZ-UH2R-FI43 /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 ERROR - The calculated fingerprint did not match the expected value.
 ````
 

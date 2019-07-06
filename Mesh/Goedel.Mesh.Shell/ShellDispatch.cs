@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Shell {
         //CommandLineInterpreter CommandLineInterpreter;
 
 
-        public virtual IMeshMachine MeshMachine { get; }
+        public virtual IMeshMachineClient MeshMachine { get; }
 
 
         public virtual CatalogHost CatalogHost => catalogHost ??
@@ -158,11 +158,14 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The shell options.</param>
         /// <returns>The device context</returns>
-        public virtual ContextAccount GetContextDeviceUncached(IDeviceProfileInfo options) {
-            throw new NYI();
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) {
+
+
+            return MeshMachine.GetContextMesh(admin:true) as ContextMeshAdmin;
+
 
             //if (!options.DeviceNew.Value) {
-            //    var deviceUDF = options.DeviceUDF.Value;
+            //    var deviceUDF = options.DeviceUDF.Value;context
             //    var deviceID = options.DeviceID.Value;
 
             //    var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
@@ -177,6 +180,13 @@ namespace Goedel.Mesh.Shell {
 
         //public virtual ContextMaster GetContextMaster(IMasterProfileInfo options) {
         //    }
+
+        public virtual ContextAccount GetContextAccount(IAccountOptions options) {
+            var contextMesh = MeshMachine.GetContextMesh();
+
+            return contextMesh.GetContextAccount();
+            }
+
 
 
         public virtual ContextAccount GetContextDevice(IAccountOptions options) => throw new NYI();

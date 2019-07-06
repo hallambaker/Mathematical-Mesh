@@ -17,7 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
                 throw new NYI();
                 //var identifier = Options.Identifier.Value;
@@ -42,10 +42,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactGet(ContactGet Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
 
-                using (var catalog = contextDevice.GetCatalogContact()) {
+                using (var catalog = contextAccount.GetCatalogContact()) {
                     var result = catalog.Locate(identifier);
 
                     return new ResultEntry() {
@@ -62,10 +62,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDelete(ContactDelete Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
 
-                using (var catalog = contextDevice.GetCatalogContact()) {
+                using (var catalog = contextAccount.GetCatalogContact()) {
                     var result = catalog.Locate(identifier);
 
                     catalog.Delete(result);
@@ -84,13 +84,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactDump(ContactDump Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
                 var result = new ResultDump() {
                     Success = true,
                     CatalogEntries = new List<CatalogEntry>()
                     };
-                using (var catalog = contextDevice.GetCatalogContact()) {
+                using (var catalog = contextAccount.GetCatalogContact()) {
                     foreach (var entry in catalog) {
                         result.CatalogEntries.Add(entry);
                         }

@@ -2,6 +2,7 @@ using  System.Text;
 using  Goedel.Mesh;
 using  Goedel.Protocol;
 using  Goedel.Utilities;
+using  Goedel.Mesh.Test;
 using  Goedel.Cryptography;
 using  Goedel.Cryptography.Dare;
 using System;
@@ -18,8 +19,11 @@ namespace ExampleGenerator {
 		// MakeArchitectureExamples
 		//
 		public void MakeArchitectureExamples (CreateExamples Example) {
+			 Colophon(Example);
 			 ArchVariousUDF(Example);
-			 ArchitectureCreate(Example);
+			 ArchitectureCreateMesh(Example);
+			 ArchitectureAddAccount(Example);
+			 ArchitectureAddService(Example);
 			 ArchitectureCredential(Example);
 			 ArchitectureConnectDirect(Example);
 			 ArchitectureConnectPIN(Example);
@@ -31,7 +35,6 @@ namespace ExampleGenerator {
 			 ArchitectureRecovery(Example);
 			 ArchitectureConnectEARL(Example);
 			 ArchSIN(Example);
-			 ArchitectureRegister(Example);
 			 ArchitectureContactDefinition(Example);
 			}
 		
@@ -96,30 +99,61 @@ namespace ExampleGenerator {
 		
 
 		//
-		// ArchitectureCreate
+		// Colophon
 		//
-		public static void ArchitectureCreate(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureCreate.md")) {
-				Example._ArchitectureCreate(Example);
+		public static void Colophon(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\Colophon.md")) {
+				Example._Colophon(Example);
 				}
 			}
-		public void _ArchitectureCreate(CreateExamples Example) {
+		public void _Colophon(CreateExamples Example) {
 
-				  ConsoleExample (Example.ProfileAliceCreate);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The examples in this document were created on {1}. \n{0}", _Indent, DateTime.Now.ToString());
+				_Output.Write ("Out of {1} examples, {2} were not functional.\n{0}", _Indent, TestCLI.CountTotal, TestCLI.ErrorCountTotal);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
 		//
-		// ArchitectureRegister
+		// ArchitectureCreateMesh
 		//
-		public static void ArchitectureRegister(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureRegister.md")) {
-				Example._ArchitectureRegister(Example);
+		public static void ArchitectureCreateMesh(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ArchitectureCreateMesh.md")) {
+				Example._ArchitectureCreateMesh(Example);
 				}
 			}
-		public void _ArchitectureRegister(CreateExamples Example) {
+		public void _ArchitectureCreateMesh(CreateExamples Example) {
 
-				  ConsoleExample (Example.ProfileAliceRegister);
+				  ConsoleExample (Example.ProfileCreateAlice);
+					}
+		
+
+		//
+		// ArchitectureAddAccount
+		//
+		public static void ArchitectureAddAccount(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ArchitectureAddAccount.md")) {
+				Example._ArchitectureAddAccount(Example);
+				}
+			}
+		public void _ArchitectureAddAccount(CreateExamples Example) {
+
+				  ConsoleExample (Example.CommandsAddAcountAlice);
+					}
+		
+
+		//
+		// ArchitectureAddService
+		//
+		public static void ArchitectureAddService(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ArchitectureAddService.md")) {
+				Example._ArchitectureAddService(Example);
+				}
+			}
+		public void _ArchitectureAddService(CreateExamples Example) {
+
+				  ConsoleExample (Example.CommandsAddServiceAlice);
 					}
 		
 
@@ -157,9 +191,10 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Concat (Example.ConnectPending, Example.ConnectAccept) );
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Synchronizing the new device causes the connection request to be completed:\n{0}", _Indent);
+				_Output.Write ("The new device will now synchronize automatically in response to any Mesh commands. For example, \n{0}", _Indent);
+				_Output.Write ("listing the password catalog:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				  ConsoleExample (Example.ConnectSync);
+				  ConsoleExample (Example.PasswordList2);
 					}
 		
 
@@ -187,12 +222,12 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.ConnectPending3);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Synchronizing the new device completes the process as before:\n{0}", _Indent);
+				_Output.Write ("We can check the device connection by attempting to synchronize to the profile account:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  ConsoleExample (Example.ConnectSyncPIN);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Note that this connection mechanism could be addapted to allow a device with a \n{0}", _Indent);
 				_Output.Write ("camera affordance to connect by scanning a QR code on the administration device.\n{0}", _Indent);
-				  ConsoleExample (Example.ConnectSyncPIN);
-				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -208,7 +243,7 @@ namespace ExampleGenerator {
 
 				_Output.Write ("To use the device QR code connection mechanism, we require a Web service that will host\n{0}", _Indent);
 				_Output.Write ("the connection document {1} and a MeshService account that the device will attempt to \n{0}", _Indent, EARLService);
-				_Output.Write ("complete the connection by requesting synchronization {1}.\n{0}", _Indent, PollAccount);
+				_Output.Write ("complete the connection by requesting synchronization {1}.\n{0}", _Indent, PollService);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("To begin the process we generate a new random key and combine it with the service\n{0}", _Indent);
 				_Output.Write ("to create an EARL:\n{0}", _Indent);
@@ -242,7 +277,6 @@ namespace ExampleGenerator {
 				_Output.Write ("Connection Assertion:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.DeviceEarl4);
-				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -296,7 +330,7 @@ namespace ExampleGenerator {
 			}
 		public void _ArchitectureRecrypt(CreateExamples Example) {
 
-				_Output.Write ("Alice creates the recryption group {1} to share confidential information with\n{0}", _Indent, GroupAccount);
+				_Output.Write ("Alice creates the recryption group {1} to share confidential information with\n{0}", _Indent, GroupService);
 				_Output.Write ("her closest friends:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.GroupCreate);

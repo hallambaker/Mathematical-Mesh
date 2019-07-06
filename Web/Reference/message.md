@@ -27,6 +27,7 @@ contact   Post a conection request to a user
 
 ````
 >message contact alice@example.com
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -35,7 +36,8 @@ Specifying the /json option returns a result of type Result:
 >message contact alice@example.com /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # message confirm
@@ -52,6 +54,7 @@ confirm   Post a confirmation request to a user
 
 ````
 >message confirm alice@example.com "Purchase equipment for $6,000?"
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -60,7 +63,8 @@ Specifying the /json option returns a result of type Result:
 >message confirm alice@example.com "Purchase equipment for $6,000?" /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 
@@ -76,16 +80,17 @@ pending   List pending requests
 
 ````
 >message pending
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultPending:
+Specifying the /json option returns a result of type Result:
 
 ````
 >message pending /json
 {
-  "ResultPending": {
-    "Success": true,
-    "Messages": []}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 
@@ -102,6 +107,7 @@ status   Request status of pending requests
 
 ````
 >message status tbs
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -110,7 +116,8 @@ Specifying the /json option returns a result of type Result:
 >message status tbs /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # message accept
@@ -126,6 +133,7 @@ accept   Accept a pending request
 
 ````
 >message accept tbs
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -134,7 +142,8 @@ Specifying the /json option returns a result of type Result:
 >message accept tbs /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # message reject
@@ -150,6 +159,7 @@ reject   Reject a pending request
 
 ````
 >message reject tbs
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -158,7 +168,8 @@ Specifying the /json option returns a result of type Result:
 >message reject tbs /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # message block
@@ -174,6 +185,7 @@ block   Reject a pending request and block requests from that source
 
 ````
 >message block mallet@example.com
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -182,6 +194,7 @@ Specifying the /json option returns a result of type Result:
 >message block mallet@example.com /json
 {
   "Result": {
-    "Success": true}}
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 

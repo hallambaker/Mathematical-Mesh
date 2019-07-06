@@ -59,7 +59,7 @@ Recryption groups are created using the #{ToCommand("group create")} command:
 
 #%  ConsoleExample (Examples.GroupCreate);
 
-This command creates the group #{Examples.GroupAccount}. Since Alice created the
+This command creates the group #{Examples.GroupService}. Since Alice created the
 account she is the administrator.
 
 At this point, the group has no members. Bob can encrypt a file under the group

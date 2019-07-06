@@ -45,7 +45,8 @@ ToolTargets = \
 	IDs\MakeExamples-8-Cryptography.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
-	Web\CommandsetProfile.cs\
+	Web\CommandsetMesh.cs\
+	Web\CommandsetAccount.cs\
 	Web\CommandsetMail.cs\
 	Web\CommandsetSSH.cs\
 	Web\CommandsetPassword.cs\
@@ -88,8 +89,11 @@ Web\ToDo.cs : Web\ToDo.script
 Web\UserGuide.cs : Web\UserGuide.script 
 	gscript Web\UserGuide.script  Web\UserGuide.cs
 
-Web\CommandsetProfile.cs : Web\CommandsetProfile.script 
-	gscript Web\CommandsetProfile.script  Web\CommandsetProfile.cs
+Web\CommandsetMesh.cs : Web\CommandsetMesh.script 
+	gscript Web\CommandsetMesh.script  Web\CommandsetMesh.cs
+
+Web\CommandsetAccount.cs : Web\CommandsetAccount.script 
+	gscript Web\CommandsetAccount.script  Web\CommandsetAccount.cs
 
 Web\CommandsetMail.cs : Web\CommandsetMail.script 
 	gscript Web\CommandsetMail.script  Web\CommandsetMail.cs

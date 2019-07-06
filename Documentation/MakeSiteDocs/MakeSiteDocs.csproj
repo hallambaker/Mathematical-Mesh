@@ -79,8 +79,13 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Web\CommandsetProfile.cs">
-      <DependentUpon>CommandsetProfile.script</DependentUpon>
+    <Compile Update="Web\CommandsetMesh.cs">
+      <DependentUpon>CommandsetMesh.script</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Web\CommandsetAccount.cs">
+      <DependentUpon>CommandsetAccount.script</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -193,6 +198,11 @@
       <Generator>gscript</Generator>
     </None>
 
+    <None Update="Web\CommandsetAccount.script">
+      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+
     <None Update="Web\ToDo.script">
       <LastGenOutput>ToDo.cs</LastGenOutput>
       <Generator>gscript</Generator>
@@ -201,8 +211,12 @@
       <LastGenOutput>UserGuide.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
-    <None Update="Web\CommandsetProfile.script">
-      <LastGenOutput>CommandsetKey.cs</LastGenOutput>
+    <None Update="Web\CommandsetMesh.script">
+      <LastGenOutput>CommandsetMesh.cs</LastGenOutput>
+      <Generator>gscript</Generator>
+    </None>
+    <None Update="Web\CommandsetAccount.script">
+      <LastGenOutput>CommandsetAccount.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetMail.script">

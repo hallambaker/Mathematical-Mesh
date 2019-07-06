@@ -17,7 +17,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkAdd(BookmarkAdd Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
                 var uri = Options.Uri.Value;
                 var title = Options.Title.Value;
@@ -29,7 +29,7 @@ namespace Goedel.Mesh.Shell {
                     Path = path
                     };
 
-                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                using (var catalog = contextAccount.GetCatalogBookmark()) {
                     catalog.New(entry);
                     }
 
@@ -46,11 +46,11 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDelete(BookmarkDelete Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
                 var uri = Options.Uri.Value;
 
 
-                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                using (var catalog = contextAccount.GetCatalogBookmark()) {
                     var result = catalog.Locate(uri);
 
                     catalog.Delete(result);
@@ -69,8 +69,8 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkGet(BookmarkGet Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
-                using (var catalog = contextDevice.GetCatalogBookmark()) {
+            using (var contextAccount = GetContextAccount(Options)) {
+                using (var catalog = contextAccount.GetCatalogBookmark()) {
                     var identifier = Options.Identifier.Value;
 
                     var result = catalog.Locate(identifier);
@@ -89,13 +89,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDump(BookmarkDump Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
                 var result = new ResultDump() {
                     Success = true,
                     CatalogEntries = new List<CatalogEntry>()
                     };
-                using (var catalog = contextDevice.GetCatalogBookmark()) {
+                using (var catalog = contextAccount.GetCatalogBookmark()) {
                     foreach (var entry in catalog) {
                         result.CatalogEntries.Add(entry);
                         }

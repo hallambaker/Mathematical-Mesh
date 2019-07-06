@@ -18,14 +18,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkAdd(NetworkAdd Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
 
 
                 var entry = new CatalogEntryTask() {
                     Key = identifier
                     };
-                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                using (var catalog = contextAccount.GetCatalogNetwork()) {
                     catalog.Update(entry);
                     }
 
@@ -42,10 +42,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkDelete(NetworkDelete Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
 
-                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                using (var catalog = contextAccount.GetCatalogNetwork()) {
                     var result = catalog.Locate(identifier);
                     catalog.Delete(result);
 
@@ -63,8 +63,8 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkGet(NetworkGet Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
-                using (var catalog = contextDevice.GetCatalogNetwork()) {
+            using (var contextAccount = GetContextAccount(Options)) {
+                using (var catalog = contextAccount.GetCatalogNetwork()) {
                     var identifier = Options.Identifier.Value;
 
                     var result = catalog.Locate(identifier);
@@ -83,13 +83,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult NetworkDump(NetworkDump Options) {
-            using (var contextDevice = GetContextDevice(Options)) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
                 var result = new ResultDump() {
                     Success = true,
                     CatalogEntries = new List<CatalogEntry>()
                     };
-                using (var catalog = contextDevice.GetCatalogNetwork()) {
+                using (var catalog = contextAccount.GetCatalogNetwork()) {
                     foreach (var entry in catalog) {
                         result.CatalogEntries.Add(entry);
                         }

@@ -45,7 +45,7 @@ namespace ExampleGenerator {
 				_Output.Write ("as a whole.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, Alice creates an encrypted container readable by anyone who is a\n{0}", _Indent);
-				_Output.Write ("member of the group {1};\n{0}", _Indent, Examples.GroupAccount);
+				_Output.Write ("member of the group {1};\n{0}", _Indent, Examples.GroupService);
 				_Output.Write ("\n{0}", _Indent);
 				 ConsoleExample (Examples.ContainerCreateEncrypt);
 				_Output.Write ("\n{0}", _Indent);

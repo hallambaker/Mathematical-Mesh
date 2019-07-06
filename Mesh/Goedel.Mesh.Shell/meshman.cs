@@ -182,20 +182,28 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		public static DescribeCommandSet DescribeCommandSet_Profile = new DescribeCommandSet () {
-            Identifier = "profile",
-			Brief = "Manage personal and device profiles and accounts.",
+		public static DescribeCommandSet DescribeCommandSet_Mesh = new DescribeCommandSet () {
+            Identifier = "mesh",
+			Brief = "Commands for creating and managing a personal Mesh",
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"hello", _ProfileHello._DescribeCommand },
-				{"create", _ProfileCreate._DescribeCommand },
-				{"register", _ProfileRegister._DescribeCommand },
-				{"sync", _ProfileSync._DescribeCommand },
-				{"escrow", _ProfileEscrow._DescribeCommand },
-				{"recover", _ProfileRecover._DescribeCommand },
-				{"list", _ProfileList._DescribeCommand },
-				{"get", _ProfileGet._DescribeCommand },
-				{"export", _ProfileExport._DescribeCommand },
-				{"import", _ProfileImport._DescribeCommand }
+				{"create", _MeshCreate._DescribeCommand },
+				{"escrow", _MeshEscrow._DescribeCommand },
+				{"recover", _MeshRecover._DescribeCommand },
+				{"list", _MeshList._DescribeCommand },
+				{"get", _MeshGet._DescribeCommand },
+				{"export", _MeshExport._DescribeCommand },
+				{"import", _MeshImport._DescribeCommand }
+				} // End Entries
+			};
+
+		public static DescribeCommandSet DescribeCommandSet_Account = new DescribeCommandSet () {
+            Identifier = "account",
+			Brief = "Account creation and management commands.",
+			Entries = new  SortedDictionary<string, DescribeCommand> () {
+				{"create", _AccountCreate._DescribeCommand },
+				{"hello", _AccountHello._DescribeCommand },
+				{"sync", _AccountSync._DescribeCommand },
+				{"register", _AccountRegister._DescribeCommand }
 				} // End Entries
 			};
 
@@ -431,7 +439,8 @@ namespace Goedel.Mesh.Shell {
 				Description = "Mathematical Mesh command tool";
 
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
-				{"profile", DescribeCommandSet_Profile},
+				{"mesh", DescribeCommandSet_Mesh},
+				{"account", DescribeCommandSet_Account},
 				{"device", DescribeCommandSet_Connect},
 				{"message", DescribeCommandSet_Message},
 				{"group", DescribeCommandSet_Group},
@@ -477,103 +486,113 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		public static void Handle_ProfileHello (
+		public static void Handle_MeshCreate (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileHello		Options = new ProfileHello ();
+			MeshCreate		Options = new MeshCreate ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileHello (Options);
+			var result = Dispatch.MeshCreate (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileCreate (
+		public static void Handle_MeshEscrow (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileCreate		Options = new ProfileCreate ();
+			MeshEscrow		Options = new MeshEscrow ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileCreate (Options);
+			var result = Dispatch.MeshEscrow (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileRegister (
+		public static void Handle_MeshRecover (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileRegister		Options = new ProfileRegister ();
+			MeshRecover		Options = new MeshRecover ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileRegister (Options);
+			var result = Dispatch.MeshRecover (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileSync (
+		public static void Handle_MeshList (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileSync		Options = new ProfileSync ();
+			MeshList		Options = new MeshList ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileSync (Options);
+			var result = Dispatch.MeshList (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileEscrow (
+		public static void Handle_MeshGet (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileEscrow		Options = new ProfileEscrow ();
+			MeshGet		Options = new MeshGet ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileEscrow (Options);
+			var result = Dispatch.MeshGet (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileRecover (
+		public static void Handle_MeshExport (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileRecover		Options = new ProfileRecover ();
+			MeshExport		Options = new MeshExport ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileRecover (Options);
+			var result = Dispatch.MeshExport (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileList (
+		public static void Handle_MeshImport (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileList		Options = new ProfileList ();
+			MeshImport		Options = new MeshImport ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileList (Options);
+			var result = Dispatch.MeshImport (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileGet (
+		public static void Handle_AccountCreate (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileGet		Options = new ProfileGet ();
+			AccountCreate		Options = new AccountCreate ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileGet (Options);
+			var result = Dispatch.AccountCreate (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileExport (
+		public static void Handle_AccountHello (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileExport		Options = new ProfileExport ();
+			AccountHello		Options = new AccountHello ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileExport (Options);
+			var result = Dispatch.AccountHello (Options);
 			Dispatch._PostProcess (result);
 			}
 
-		public static void Handle_ProfileImport (
+		public static void Handle_AccountSync (
 					DispatchShell  DispatchIn, string[] Args, int Index) {
 			Shell Dispatch =	DispatchIn as Shell;
-			ProfileImport		Options = new ProfileImport ();
+			AccountSync		Options = new AccountSync ();
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
-			var result = Dispatch.ProfileImport (Options);
+			var result = Dispatch.AccountSync (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_AccountRegister (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			AccountRegister		Options = new AccountRegister ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.AccountRegister (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1457,49 +1476,7 @@ namespace Goedel.Mesh.Shell {
 		}
 
 
-    public class _ProfileHello : Goedel.Command.Dispatch ,
-							IAccountOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [mesh]</summary>
-		public virtual String Mesh {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Mesh {
-			set => _Data[0].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "hello",
-			Brief =  "Connect to the service(s) a profile is connected to and report status.",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileHello,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Mesh", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "mesh"
-					}
-				}
-			};
-
-		}
-
-    public partial class ProfileHello : _ProfileHello {
-        } // class ProfileHello
-
-    public class _ProfileCreate : Goedel.Command.Dispatch ,
+    public class _MeshCreate : Goedel.Command.Dispatch ,
 							IReporting,
 							IDeviceProfileInfo,
 							ICryptoOptions {
@@ -1615,7 +1592,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "create",
 			Brief =  "Create new personal profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileCreate,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshCreate,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -1693,336 +1670,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileCreate : _ProfileCreate {
-        } // class ProfileCreate
+    public partial class MeshCreate : _MeshCreate {
+        } // class MeshCreate
 
-    public class _ProfileRegister : Goedel.Command.Dispatch ,
-							IReporting,
-							IAccountOptions,
-							IMasterProfileInfo,
-							IDeviceProfileInfo {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new Flag (),
-			new String (),
-			new String (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String NewAccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _NewAccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [mesh]</summary>
-		public virtual String Mesh {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Mesh {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [mudf]</summary>
-		public virtual String MasterUDF {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _MasterUDF {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [new]</summary>
-		public virtual Flag DeviceNew {
-			get => _Data[7] as Flag;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _DeviceNew {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [dudf]</summary>
-		public virtual String DeviceUDF {
-			get => _Data[8] as String;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _DeviceUDF {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [did]</summary>
-		public virtual String DeviceID {
-			get => _Data[9] as String;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _DeviceID {
-			set => _Data[9].Parameter (value);
-			}
-		/// <summary>Field accessor for option [dd]</summary>
-		public virtual String DeviceDescription {
-			get => _Data[10] as String;
-			set => _Data[10]  = value;
-			}
-
-		public virtual string _DeviceDescription {
-			set => _Data[10].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "register",
-			Brief =  "Register existing profile at a new portal",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileRegister,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "NewAccountID", 
-					Default = null, // null if null
-					Brief = "New account",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Mesh", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 5,
-					Key = "mesh"
-					},
-				new DescribeEntryOption () {
-					Identifier = "MasterUDF", 
-					Default = null, // null if null
-					Brief = "Master profile fingerprint",
-					Index = 6,
-					Key = "mudf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceNew", 
-					Default = "false", // null if null
-					Brief = "Force creation of new device profile",
-					Index = 7,
-					Key = "new"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceUDF", 
-					Default = null, // null if null
-					Brief = "Device profile fingerprint",
-					Index = 8,
-					Key = "dudf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceID", 
-					Default = null, // null if null
-					Brief = "Device identifier",
-					Index = 9,
-					Key = "did"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceDescription", 
-					Default = null, // null if null
-					Brief = "Device description",
-					Index = 10,
-					Key = "dd"
-					}
-				}
-			};
-
-		}
-
-    public partial class ProfileRegister : _ProfileRegister {
-        } // class ProfileRegister
-
-    public class _ProfileSync : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [mesh]</summary>
-		public virtual String Mesh {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Mesh {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "sync",
-			Brief =  "Synchronize local copies of Mesh profiles with the server",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileSync,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Mesh", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "mesh"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ProfileSync : _ProfileSync {
-        } // class ProfileSync
-
-    public class _ProfileEscrow : Goedel.Command.Dispatch ,
+    public class _MeshEscrow : Goedel.Command.Dispatch ,
 							ICryptoOptions,
 							IAccountOptions,
 							IReporting {
@@ -2128,7 +1779,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "escrow",
 			Brief =  "Create a set of key escrow shares",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileEscrow,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshEscrow,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -2199,10 +1850,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileEscrow : _ProfileEscrow {
-        } // class ProfileEscrow
+    public partial class MeshEscrow : _MeshEscrow {
+        } // class MeshEscrow
 
-    public class _ProfileRecover : Goedel.Command.Dispatch ,
+    public class _MeshRecover : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -2367,7 +2018,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "recover",
 			Brief =  "Recover escrowed profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileRecover,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshRecover,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -2480,10 +2131,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileRecover : _ProfileRecover {
-        } // class ProfileRecover
+    public partial class MeshRecover : _MeshRecover {
+        } // class MeshRecover
 
-    public class _ProfileList : Goedel.Command.Dispatch ,
+    public class _MeshList : Goedel.Command.Dispatch ,
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
@@ -2537,7 +2188,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "list",
 			Brief =  "List all profiles on the local machine",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileList,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshList,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryEnumerate () {
@@ -2573,10 +2224,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileList : _ProfileList {
-        } // class ProfileList
+    public partial class MeshList : _MeshList {
+        } // class MeshList
 
-    public class _ProfileGet : Goedel.Command.Dispatch ,
+    public class _MeshGet : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -2641,7 +2292,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "get",
 			Brief =  "Describe the specified profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileGet,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshGet,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryOption () {
@@ -2684,10 +2335,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileGet : _ProfileGet {
-        } // class ProfileGet
+    public partial class MeshGet : _MeshGet {
+        } // class MeshGet
 
-    public class _ProfileExport : Goedel.Command.Dispatch ,
+    public class _MeshExport : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -2762,7 +2413,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "export",
 			Brief =  "Export the specified profile data to the specified file",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileExport,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshExport,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -2812,10 +2463,10 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileExport : _ProfileExport {
-        } // class ProfileExport
+    public partial class MeshExport : _MeshExport {
+        } // class MeshExport
 
-    public class _ProfileImport : Goedel.Command.Dispatch ,
+    public class _MeshImport : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
@@ -2890,7 +2541,7 @@ namespace Goedel.Mesh.Shell {
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "import",
 			Brief =  "Import the specified profile data to the specified file",
-			HandleDelegate =  CommandLineInterpreter.Handle_ProfileImport,
+			HandleDelegate =  CommandLineInterpreter.Handle_MeshImport,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -2940,8 +2591,573 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ProfileImport : _ProfileImport {
-        } // class ProfileImport
+    public partial class MeshImport : _MeshImport {
+        } // class MeshImport
+
+    public class _AccountCreate : Goedel.Command.Dispatch ,
+							IDeviceProfileInfo,
+							IReporting,
+							ICryptoOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String NewAccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _NewAccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [new]</summary>
+		public virtual Flag DeviceNew {
+			get => _Data[1] as Flag;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _DeviceNew {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dudf]</summary>
+		public virtual String DeviceUDF {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _DeviceUDF {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [did]</summary>
+		public virtual String DeviceID {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _DeviceID {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dd]</summary>
+		public virtual String DeviceDescription {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _DeviceDescription {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[5] as Enumeration<EnumReporting>;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Algorithms {
+			set => _Data[9].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "create",
+			Brief =  "Create new account",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountCreate,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "NewAccountID", 
+					Default = null, // null if null
+					Brief = "Account friendly name",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceNew", 
+					Default = "false", // null if null
+					Brief = "Force creation of new device profile",
+					Index = 1,
+					Key = "new"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceUDF", 
+					Default = null, // null if null
+					Brief = "Device profile fingerprint",
+					Index = 2,
+					Key = "dudf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceID", 
+					Default = null, // null if null
+					Brief = "Device identifier",
+					Index = 3,
+					Key = "did"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceDescription", 
+					Default = null, // null if null
+					Brief = "Device description",
+					Index = 4,
+					Key = "dd"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 6,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 7,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 8,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Algorithms", 
+					Default = null, // null if null
+					Brief = "List of algorithm specifiers",
+					Index = 9,
+					Key = "alg"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountCreate : _AccountCreate {
+        } // class AccountCreate
+
+    public class _AccountHello : Goedel.Command.Dispatch ,
+							IAccountOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [mesh]</summary>
+		public virtual String Mesh {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Mesh {
+			set => _Data[0].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "hello",
+			Brief =  "Connect to the service(s) a profile is connected to and report status.",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountHello,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Mesh", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "mesh"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountHello : _AccountHello {
+        } // class AccountHello
+
+    public class _AccountSync : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [mesh]</summary>
+		public virtual String Mesh {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Mesh {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[1] as Enumeration<EnumReporting>;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[4].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "sync",
+			Brief =  "Synchronize local copies of Mesh profiles with the server",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountSync,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Mesh", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "mesh"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 2,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 4,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountSync : _AccountSync {
+        } // class AccountSync
+
+    public class _AccountRegister : Goedel.Command.Dispatch ,
+							IReporting,
+							IAccountOptions,
+							IMasterProfileInfo,
+							IDeviceProfileInfo {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new Flag (),
+			new String (),
+			new String (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String NewAccountID {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _NewAccountID {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[1] as Enumeration<EnumReporting>;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mesh]</summary>
+		public virtual String Mesh {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Mesh {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [mudf]</summary>
+		public virtual String MasterUDF {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _MasterUDF {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [new]</summary>
+		public virtual Flag DeviceNew {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _DeviceNew {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dudf]</summary>
+		public virtual String DeviceUDF {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _DeviceUDF {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for option [did]</summary>
+		public virtual String DeviceID {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _DeviceID {
+			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [dd]</summary>
+		public virtual String DeviceDescription {
+			get => _Data[10] as String;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _DeviceDescription {
+			set => _Data[10].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "register",
+			Brief =  "Register existing profile at a new portal",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountRegister,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "NewAccountID", 
+					Default = null, // null if null
+					Brief = "New account",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 2,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 4,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Mesh", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 5,
+					Key = "mesh"
+					},
+				new DescribeEntryOption () {
+					Identifier = "MasterUDF", 
+					Default = null, // null if null
+					Brief = "Master profile fingerprint",
+					Index = 6,
+					Key = "mudf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceNew", 
+					Default = "false", // null if null
+					Brief = "Force creation of new device profile",
+					Index = 7,
+					Key = "new"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceUDF", 
+					Default = null, // null if null
+					Brief = "Device profile fingerprint",
+					Index = 8,
+					Key = "dudf"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceID", 
+					Default = null, // null if null
+					Brief = "Device identifier",
+					Index = 9,
+					Key = "did"
+					},
+				new DescribeEntryOption () {
+					Identifier = "DeviceDescription", 
+					Default = null, // null if null
+					Brief = "Device description",
+					Index = 10,
+					Key = "dd"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountRegister : _AccountRegister {
+        } // class AccountRegister
 
     public class _DeviceCreate : Goedel.Command.Dispatch ,
 							ICryptoOptions {
@@ -15801,52 +16017,57 @@ namespace Goedel.Mesh.Shell {
 	// to eliminate the redundant code
     public class _Shell : global::Goedel.Command.DispatchShell {
 
-		public virtual ShellResult ProfileHello ( ProfileHello Options) {
+		public virtual ShellResult MeshCreate ( MeshCreate Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileCreate ( ProfileCreate Options) {
+		public virtual ShellResult MeshEscrow ( MeshEscrow Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileRegister ( ProfileRegister Options) {
+		public virtual ShellResult MeshRecover ( MeshRecover Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileSync ( ProfileSync Options) {
+		public virtual ShellResult MeshList ( MeshList Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileEscrow ( ProfileEscrow Options) {
+		public virtual ShellResult MeshGet ( MeshGet Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileRecover ( ProfileRecover Options) {
+		public virtual ShellResult MeshExport ( MeshExport Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileList ( ProfileList Options) {
+		public virtual ShellResult MeshImport ( MeshImport Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileGet ( ProfileGet Options) {
+		public virtual ShellResult AccountCreate ( AccountCreate Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileExport ( ProfileExport Options) {
+		public virtual ShellResult AccountHello ( AccountHello Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}
 
-		public virtual ShellResult ProfileImport ( ProfileImport Options) {
+		public virtual ShellResult AccountSync ( AccountSync Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult AccountRegister ( AccountRegister Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

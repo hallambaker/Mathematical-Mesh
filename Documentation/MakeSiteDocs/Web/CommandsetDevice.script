@@ -17,7 +17,7 @@ profile.
 
 The #{ToCommand("device request")} command is used on the new device 
 to request connection to the user's profile. Alice need only specify 
-the mesh service account #{Examples.AliceAccount} to which connection is requested:
+the mesh service account #{Examples.AliceService1} to which connection is requested:
 
 #%  ConsoleExample (Examples.ConnectRequest);
 

@@ -88,22 +88,25 @@ namespace Goedel.Protocol {
             var Length = count < 0 ? Data.Length : count;
 
             Output.Write("\"");
-            if (Data.Length < Threshold) {
-                Output.Write(BaseConvert.ToStringBase64url(
+            Output.Write(BaseConvert.ToStringBase64url(
                     Data, offset, Length, Format: ConversionFormat.Draft,
-                    OutputCol: OutputCol, OutputMax:66));
-                }
-            else {
-                throw new NYI();
+                    OutputCol: OutputCol, OutputMax: 66));
 
-                //Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
-                //Output.Write("\n...");
-                //int Start = 48 * (Data.Length / 48);
-                //// If the last line is null, make it a full line.
-                //Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
-                //int Length = Data.Length - Start;
-                //Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
-                }
+
+            //if (Data.Length < Threshold) {
+                
+            //    }
+            //else {
+            //    throw new NYI();
+
+            //    //Output.Write(BaseConvert.ToStringBase64url(Data,0,96, Format:ConversionFormat.Draft));
+            //    //Output.Write("\n...");
+            //    //int Start = 48 * (Data.Length / 48);
+            //    //// If the last line is null, make it a full line.
+            //    //Start = (Data.Length % 48) == 0 ? Start - 48 : Start;
+            //    //int Length = Data.Length - Start;
+            //    //Output.Write(BaseConvert.ToStringBase64url(Data, Start, Length, Format: ConversionFormat.Draft));
+            //    }
             Output.Write("\"");
             }
 

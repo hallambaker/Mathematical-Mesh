@@ -27,9 +27,7 @@ The `password list` command lists all the passwords in the catalog:
 ````
 >password list
 alice1@ftp.example.com = [password]
-
 alice@example.com@www.example.com = [newpassword]
-
 ````
 
 The output of the list command may be used to configure a user application 
@@ -44,7 +42,7 @@ values for a specified service:
 
 ````
 >password get ftp.example.com
-alice1@ftp.example.com = [password]
+alice1@ftp.example.com = [newpassword]
 ````
 
 ### Using Credentials in scripts

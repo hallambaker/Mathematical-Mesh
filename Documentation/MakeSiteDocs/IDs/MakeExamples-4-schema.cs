@@ -52,7 +52,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
-				 Format(AliceProfiles.ProfileMaster);
+				 Format(AliceProfiles?.ProfileMaster);
 					}
 		
 
@@ -66,7 +66,25 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
-				 Format(AliceProfiles.ProfileDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice's Device Profile specifies keys for encryption, signature and exchange:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Since the Device Profile keys are ultimately under the control of the device and/or\n{0}", _Indent);
+				_Output.Write ("software provider, these are considered insufficiently trustworthy and the\n{0}", _Indent);
+				_Output.Write ("administration device creates key contributions to be added to the device keys\n{0}", _Indent);
+				_Output.Write ("to establish the key set to be used in the context of the user's personal Mesh:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(AliceProfiles?.PrivateDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The resulting key set is specified in the device connection:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(AliceProfiles?.ConnectionDevice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("All the above are combined to form the CatalogEntryDevice entry:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(AliceProfiles?.CatalogEntryDevice);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -80,7 +98,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaService(CreateExamples Example) {
 
-				 Format(ResultHello.ProfileService);
+				 Format(ResultHello?.ProfileService);
 					}
 		
 
@@ -94,7 +112,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaAccount(CreateExamples Example) {
 
-				 Format(AliceProfiles.AssertionAccount);
+				 Format(AliceProfiles?.AssertionAccount);
 					}
 		
 
@@ -108,7 +126,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevicePrivate(CreateExamples Example) {
 
-				 Format(AliceProfiles.AssertionAccount);
+				 Format(AliceProfiles?.AssertionAccount);
 					}
 		
 
@@ -122,7 +140,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDeviceConnection(CreateExamples Example) {
 
-				 Format(AliceProfiles.AssertionAccount);
+				 Format(AliceProfiles?.AssertionAccount);
 					}
 		
 
@@ -192,7 +210,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryContact(CreateExamples Example) {
 
-				 Format(ContactGet[0].ResultEntry.CatalogEntry);
+				 Format(ContactGet[0].ResultEntry?.CatalogEntry);
 					}
 		
 
@@ -206,7 +224,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryCredential(CreateExamples Example) {
 
-				 Format(PasswordGet[0].ResultEntry.CatalogEntry);
+				 Format(PasswordGet[0].ResultEntry?.CatalogEntry);
 					}
 		
 
@@ -220,7 +238,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryNetwork(CreateExamples Example) {
 
-				 Format(NetworkGet[0].ResultEntry.CatalogEntry);
+				 Format(NetworkGet[0].ResultEntry?.CatalogEntry);
 					}
 		
 
@@ -234,7 +252,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryBookmark(CreateExamples Example) {
 
-				 Format(BookmarkGet[0].ResultEntry.CatalogEntry);
+				 Format(BookmarkGet[0].ResultEntry?.CatalogEntry);
 					}
 		
 
@@ -248,7 +266,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaEntryTask(CreateExamples Example) {
 
-				 Format(CalendarGet[0].ResultEntry.CatalogEntry);
+				 Format(CalendarGet[0].ResultEntry?.CatalogEntry);
 					}
 		
 

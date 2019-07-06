@@ -32,27 +32,46 @@
 #end method
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
-#% Format(AliceProfiles.ProfileMaster);
+#% Format(AliceProfiles?.ProfileMaster);
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
-#% Format(AliceProfiles.ProfileDevice);
+
+Alice's Device Profile specifies keys for encryption, signature and exchange:
+
+#!% Format(AliceProfiles?.ProfileDevice);
+
+Since the Device Profile keys are ultimately under the control of the device and/or
+software provider, these are considered insufficiently trustworthy and the
+administration device creates key contributions to be added to the device keys
+to establish the key set to be used in the context of the user's personal Mesh:
+
+#% Format(AliceProfiles?.PrivateDevice);
+
+The resulting key set is specified in the device connection:
+
+#% Format(AliceProfiles?.ConnectionDevice);
+
+All the above are combined to form the CatalogEntryDevice entry:
+
+#% Format(AliceProfiles?.CatalogEntryDevice);
+
 #end zfile
 
 #zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
-#% Format(ResultHello.ProfileService);
+#% Format(ResultHello?.ProfileService);
 #end zfile
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
-#% Format(AliceProfiles.AssertionAccount);
+#% Format(AliceProfiles?.AssertionAccount);
 #end zfile
 
 #zfile CreateExamples SchemaDevicePrivate "Examples\\SchemaDevicePrivate.md" Example
-#% Format(AliceProfiles.AssertionAccount);
+#% Format(AliceProfiles?.AssertionAccount);
 #end zfile
 
 #zfile CreateExamples SchemaDeviceConnection "Examples\\SchemaDeviceConnection.md" Example
-#% Format(AliceProfiles.AssertionAccount);
+#% Format(AliceProfiles?.AssertionAccount);
 #end zfile
 
 
@@ -75,23 +94,23 @@
 #end zfile
 
 #zfile CreateExamples SchemaEntryContact "Examples\\SchemaEntryContact.md" Example
-#% Format(ContactGet[0].ResultEntry.CatalogEntry);
+#% Format(ContactGet[0].ResultEntry?.CatalogEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryCredential "Examples\\SchemaEntryCredential.md" Example
-#% Format(PasswordGet[0].ResultEntry.CatalogEntry);
+#% Format(PasswordGet[0].ResultEntry?.CatalogEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryNetwork "Examples\\SchemaEntryNetwork.md" Example
-#% Format(NetworkGet[0].ResultEntry.CatalogEntry);
+#% Format(NetworkGet[0].ResultEntry?.CatalogEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryBookmark "Examples\\SchemaEntryBookmark.md" Example
-#% Format(BookmarkGet[0].ResultEntry.CatalogEntry);
+#% Format(BookmarkGet[0].ResultEntry?.CatalogEntry);
 #end zfile
 
 #zfile CreateExamples SchemaEntryTask "Examples\\SchemaEntryTask.md" Example
-#% Format(CalendarGet[0].ResultEntry.CatalogEntry);
+#% Format(CalendarGet[0].ResultEntry?.CatalogEntry);
 #end zfile
 
 

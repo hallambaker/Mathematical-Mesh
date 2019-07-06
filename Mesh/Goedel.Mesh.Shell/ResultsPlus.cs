@@ -94,12 +94,36 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+
+    public partial class ResultAccountCreate {
+
+        //public AssertionDeviceConnection ConnectionDevice = null;
+        //public AssertionDevicePrivate PrivateDevice = null;
+        //public AssertionAccount AssertionAccount = null;
+        //CatalogEntryDevice.EnvelopedDevicePrivate.;
+
+        public string Account => ActivationAccount?.AccountUDF;
+
+        public override string ToString() {
+            var Builder = StringBuilder();
+            Builder.AppendNotNull(Account, $"Account={Account}");
+            return Builder.ToString();
+            }
+        }
+
     public partial class ResultMasterCreate {
+
+        public AssertionDeviceConnection ConnectionDevice = null;
+        public AssertionDevicePrivate PrivateDevice = null;
+        public AssertionAccount AssertionAccount = null;
+        //CatalogEntryDevice.EnvelopedDevicePrivate.;
+
+
 
         public override string ToString() {
             var Builder = StringBuilder();
             Builder.Append($"Device Profile UDF={DeviceUDF}\n");
-            Builder.Append($"Personal Profile UDF={PersonalUDF}\n");
+            Builder.Append($"Personal Profile UDF={MeshUDF}\n");
             Builder.AppendNotNull(Account, $"Account={Account}");
             return Builder.ToString();
             }
@@ -117,7 +141,7 @@ namespace Goedel.Mesh.Shell {
             var builder = StringBuilder();
             foreach (var entry in CatalogEntries) {
                 builder.Append(entry.ToString());
-                builder.AppendLine();
+                //builder.AppendLine();
                 }
             return builder.ToString();
             }

@@ -101,40 +101,6 @@ list   List contact entries
 
 ````
 >contact list
-{
-  "Key": "alice@example.com",
-  "Permissions": [{
-      "Name": "self"}],
-  "Contact": [{
-      "dig": "S512",
-      "cty": "application/mmm"},
-    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
-  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
-  CJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
-    {
-      "signatures": [{
-          "signature": "uKfOtAgEHkRdBI6aj29hBx1y-agzZQ721eVg0bOn0ZA8zTXoC
-  KY3Yh7t_V5Sd6so8UG2jFp42lMAf0vrjpknAemi66vnAePm_HT5GB-Dt0-63N3
-  cvvxKFh1tRLhcNrTh7jQ8-LWgIIqM9tK6hZSh8SIA"}],
-      "PayloadDigest": "pn2o3KqaBDdHcWDpRw5Lj-IEdj9kGFL7m2F2VVfWKt_tN
-  8ZbTdPuQjC_1lpLg33w_lLlG0eLJnCrjCQ8p6FYLA"}]}
-{
-  "Key": "alice@example.net",
-  "Permissions": [{
-      "Name": "self"}],
-  "Contact": [{
-      "dig": "S512",
-      "cty": "application/mmm"},
-    "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
-  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
-  CJhbGljZUBleGFtcGxlLm5ldCJ9fQ",
-    {
-      "signatures": [{
-          "signature": "Mc6DcXDIYblxSbsowSEHl_0x3M9F6UhU0YIBt49crkolAT8_H
-  v9JxnlTQK6bfUWC6VUiH_ye_fSApW7uDGefpkyUeY1vkyRN1BlZQXaPDBbz2EJ
-  jeqlMl7jArGyXozB4sdVvkJyQmr038ijIzvQtVSsA"}],
-      "PayloadDigest": "yHfXaJnUbLAk-8qPwP0-bs8y9yL_mRXTMp-RNLWFoiFdV
-  rn4yOfX-z_9fUtxL_NEAZA-sQnF4qpIWGSBhPFYtw"}]}
 ````
 
 Specifying the /json option returns a result of type ResultDump:
@@ -144,39 +110,6 @@ Specifying the /json option returns a result of type ResultDump:
 {
   "ResultDump": {
     "Success": true,
-    "CatalogEntries": [{
-        "Key": "alice@example.com",
-        "Permissions": [{
-            "Name": "self"}],
-        "Contact": [{
-            "dig": "S512",
-            "cty": "application/mmm"},
-          "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
-  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
-  CJhbGljZUBleGFtcGxlLmNvbSJ9fQ",
-          {
-            "signatures": [{
-                "signature": "uKfOtAgEHkRdBI6aj29hBx1y-agzZQ721eVg0bOn0ZA8zTXoC
-  KY3Yh7t_V5Sd6so8UG2jFp42lMAf0vrjpknAemi66vnAePm_HT5GB-Dt0-63N3
-  cvvxKFh1tRLhcNrTh7jQ8-LWgIIqM9tK6hZSh8SIA"}],
-            "PayloadDigest": "pn2o3KqaBDdHcWDpRw5Lj-IEdj9kGFL7m2F2VVfWKt_tN
-  8ZbTdPuQjC_1lpLg33w_lLlG0eLJnCrjCQ8p6FYLA"}]},
-      {
-        "Key": "alice@example.net",
-        "Permissions": [{
-            "Name": "self"}],
-        "Contact": [{
-            "dig": "S512",
-            "cty": "application/mmm"},
-          "ewogICJDb250YWN0IjogewogICAgIklkZW50aWZpZXIiOiAiTUNZNy1
-  WR1ZWLUsyWlotS1FXQi01NjZELUY0UEQtV0tSMyIsCiAgICAiQWNjb3VudCI6I
-  CJhbGljZUBleGFtcGxlLm5ldCJ9fQ",
-          {
-            "signatures": [{
-                "signature": "Mc6DcXDIYblxSbsowSEHl_0x3M9F6UhU0YIBt49crkolAT8_H
-  v9JxnlTQK6bfUWC6VUiH_ye_fSApW7uDGefpkyUeY1vkyRN1BlZQXaPDBbz2EJ
-  jeqlMl7jArGyXozB4sdVvkJyQmr038ijIzvQtVSsA"}],
-            "PayloadDigest": "yHfXaJnUbLAk-8qPwP0-bs8y9yL_mRXTMp-RNLWFoiFdV
-  rn4yOfX-z_9fUtxL_NEAZA-sQnF4qpIWGSBhPFYtw"}]}]}}
+    "CatalogEntries": []}}
 ````
 

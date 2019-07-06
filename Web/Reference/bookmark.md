@@ -117,16 +117,13 @@ list   List bookmark entries
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
-  "Path": "Folder1/1"}
-{
+  "Path": "Folder1/1"}{
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}
-{
+  "Path": "Folder1/2"}{
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
-  "Path": "Folder1/1a"}
-````
+  "Path": "Folder1/1a"}````
 
 Specifying the /json option returns a result of type ResultDump:
 
