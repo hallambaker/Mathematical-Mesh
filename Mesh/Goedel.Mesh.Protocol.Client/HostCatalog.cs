@@ -243,7 +243,7 @@ namespace Goedel.Mesh.Client {
         ///The device entry containing the full account binding information.
         /// </summary>
 
-		public virtual CatalogEntryDevice						CatalogEntryDevice  {get; set;}
+		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -287,10 +287,10 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteObjectStart ();
 				}
 			((Connection)this).SerializeX(_Writer, false, ref _first);
-			if (CatalogEntryDevice != null) {
+			if (CatalogedDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryDevice", 1);
-					CatalogEntryDevice.Serialize (_Writer, false);
+				_Writer.WriteToken ("CatalogedDevice", 1);
+					CatalogedDevice.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -324,10 +324,10 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "CatalogEntryDevice" : {
+				case "CatalogedDevice" : {
 					// An untagged structure
-					CatalogEntryDevice = new CatalogEntryDevice ();
-					CatalogEntryDevice.Deserialize (JSONReader);
+					CatalogedDevice = new CatalogedDevice ();
+					CatalogedDevice.Deserialize (JSONReader);
  
 					break;
 					}

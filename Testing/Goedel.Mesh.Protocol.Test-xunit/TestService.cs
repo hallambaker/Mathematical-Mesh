@@ -44,17 +44,17 @@ namespace Goedel.XUnit {
         public Contact ContactBob => MeshMachineTest.ContactBob;
 
 
-        CatalogEntryCredential Password1 = new CatalogEntryCredential() {
+        CatalogedCredential Password1 = new CatalogedCredential() {
             Username = "fred",
             Password = "password",
             Service = "example.com"
             };
-        CatalogEntryCredential Password2 = new CatalogEntryCredential() {
+        CatalogedCredential Password2 = new CatalogedCredential() {
             Username = "fred",
             Password = "password",
             Service = "example.net"
             };
-        CatalogEntryCredential Password3 = new CatalogEntryCredential() {
+        CatalogedCredential Password3 = new CatalogedCredential() {
             Username = "fred",
             Password = "password",
             Service = "fred.example.com"
@@ -283,13 +283,13 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(AssertionAccount first, AssertionAccount second) {
+        bool Verify(ProfileAccount first, ProfileAccount second) {
             (first.AccountEncryptionKey.UDF == second.AccountEncryptionKey.UDF).AssertTrue();
             (first.MeshProfileUDF == second.MeshProfileUDF).AssertTrue();
             return true;
             }
 
-        bool Verify(AssertionAccountConnection first, AssertionAccountConnection second) {
+        bool Verify(ConnectionAccount first, ConnectionAccount second) {
             (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
             (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
@@ -297,7 +297,7 @@ namespace Goedel.XUnit {
             }
 
 
-        bool Verify(AssertionDeviceConnection first, AssertionDeviceConnection second) {
+        bool Verify(ConnectionDevice first, ConnectionDevice second) {
             (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
             (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();

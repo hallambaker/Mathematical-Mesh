@@ -31,12 +31,12 @@
 
 	Structure ResultDump
 		Inherits		Result
-		Struct CatalogEntry CatalogEntries
+		Struct CatalogedEntry CatalogedEntries
 			Multiple
 
 	Structure ResultList
 		Inherits		Result
-		Struct CatalogEntryDevice CatalogEntryDevices
+		Struct CatalogedDevice CatalogedDevices
 			Multiple
 		TStruct Assertion Profiles
 			Multiple
@@ -50,7 +50,7 @@
 		Inherits							Result
 		Boolean								Default
 		String								DeviceUDF
-		Struct CatalogEntryDevice			CatalogEntryDevice
+		Struct CatalogedDevice			CatalogedDevice
 
 	Structure ResultAccountCreate
 		Inherits							ResultDeviceCreate
@@ -77,7 +77,7 @@
 
 	Structure ResultEntry
 		Inherits		Result
-		Struct CatalogEntry CatalogEntry
+		Struct CatalogedEntry CatalogEntry
 
 	Structure ResultMail
 		Inherits		ResultEntry
@@ -100,7 +100,7 @@
 
 	Structure ResultPending
 		Inherits		Result
-		Struct MeshMessage Messages
+		Struct Message Messages
 			Multiple
 
 	Structure ResultRecover

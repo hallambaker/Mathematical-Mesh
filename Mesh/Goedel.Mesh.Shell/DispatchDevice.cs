@@ -33,7 +33,14 @@ namespace Goedel.Mesh.Shell {
         //    }
 
         public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
             }
 
 
@@ -43,25 +50,30 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
+
             throw new NYI();
 
+            //using (var contextAccount = GetContextAccount(Options)) {
 
-            //using (var contextDevice = GetContextDeviceUncached(Options)) {
-            //    var portal = Options.Portal.Value;
-            //    var pin = Options.PIN.Value;
+            //    var result = new Result() {
 
-            //    var result = contextDevice.RequestConnect(portal, pin);
-
-            //    return new ResultConnect() {
-            //        Success = true
             //        };
+            //    throw new NYI();
+            //    //return result;
             //    }
+
             }
 
 
         public override ShellResult DevicePending(DevicePending Options) {
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
 
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
 
             //using (var contextDevice = GetContextDevice(Options)) {
 
@@ -108,7 +120,14 @@ namespace Goedel.Mesh.Shell {
 
 
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
 
             //using (var contextDevice = GetContextDevice(Options)) {
             //    contextDevice.Sync();
@@ -160,18 +179,17 @@ namespace Goedel.Mesh.Shell {
             //}
 
 
-        public override ShellResult DeviceGetPIN(DeviceGetPIN Options) {
-            throw new NYI();
 
-            //using (var contextDevice = GetContextDevice(Options)) {
-            //    return new ResultPIN() {
-            //        MessageConnectionPIN = contextDevice.GetPIN()
-            //        };
-            //    }
-            }
 
         public override ShellResult DeviceEarl(DeviceEarl Options) {
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
             }
         }
     }

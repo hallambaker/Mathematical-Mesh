@@ -23,7 +23,7 @@ namespace Goedel.Mesh.Shell {
                 var title = Options.Title.Value;
                 var path = Options.Path.Value;
 
-                var entry = new CatalogEntryBookmark() {
+                var entry = new CatalogedBookmark() {
                     Uri = uri,
                     Title = title,
                     Path = path
@@ -93,11 +93,11 @@ namespace Goedel.Mesh.Shell {
 
                 var result = new ResultDump() {
                     Success = true,
-                    CatalogEntries = new List<CatalogEntry>()
+                    CatalogedEntries = new List<CatalogedEntry>()
                     };
                 using (var catalog = contextAccount.GetCatalogBookmark()) {
                     foreach (var entry in catalog) {
-                        result.CatalogEntries.Add(entry);
+                        result.CatalogedEntries.Add(entry);
                         }
                     }
                 return result;

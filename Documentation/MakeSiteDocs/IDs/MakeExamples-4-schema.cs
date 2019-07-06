@@ -81,9 +81,9 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				 Format(AliceProfiles?.ConnectionDevice);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("All the above are combined to form the CatalogEntryDevice entry:\n{0}", _Indent);
+				_Output.Write ("All the above are combined to form the CatalogedDevice entry:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(AliceProfiles?.CatalogEntryDevice);
+				 Format(AliceProfiles?.CatalogedDevice);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

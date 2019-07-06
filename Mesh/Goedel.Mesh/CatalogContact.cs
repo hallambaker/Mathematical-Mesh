@@ -11,10 +11,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryContact : IEnumerator<CatalogEntryContact> {
+    public class EnumeratorCatalogEntryContact : IEnumerator<CatalogedContact> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryContact Current => BaseEnumerator.Current.JsonObject as CatalogEntryContact;
+        public CatalogedContact Current => BaseEnumerator.Current.JsonObject as CatalogedContact;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryContact : IEnumerable<CatalogEntryContact> {
+    public class AsCatalogEntryContact : IEnumerable<CatalogedContact> {
         CatalogContact Catalog;
 
         public AsCatalogEntryContact(CatalogContact catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryContact> GetEnumerator() =>
+        public IEnumerator<CatalogedContact> GetEnumerator() =>
                     new EnumeratorCatalogEntryContact(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
     public class CatalogContact : Catalog {
         public const string Label = "mmm_Contact";
 
-        public CatalogEntryContact Self;
+        public CatalogedContact Self;
 
 
 
@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
-        public CatalogEntryContact LocateByID(string Key) => Locate(Key) as CatalogEntryContact;
+        public CatalogedContact LocateByID(string Key) => Locate(Key) as CatalogedContact;
 
 
         public CatalogContact(string directory, string ContainerName = null,
@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
             }
 
         public void Add(DareEnvelope contact, bool self = false) {
-            var entry = new CatalogEntryContact(contact) {
+            var entry = new CatalogedContact(contact) {
                 Self=self
                 };
             New(entry);
@@ -75,16 +75,16 @@ namespace Goedel.Mesh {
         }
 
     // NYI should all be DareMessages to allow them to be signed.
-    public partial class CatalogEntryContact {
+    public partial class CatalogedContact {
 
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryContact() => Key = UDF.Nonce();
+        public CatalogedContact() => Key = UDF.Nonce();
 
-        public CatalogEntryContact(DareEnvelope contact) : this() => EnvelopedContact = contact;
+        public CatalogedContact(DareEnvelope contact) : this() => EnvelopedContact = contact;
 
-        public CatalogEntryContact(Contact contact) : this() => EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
+        public CatalogedContact(Contact contact) : this() => EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

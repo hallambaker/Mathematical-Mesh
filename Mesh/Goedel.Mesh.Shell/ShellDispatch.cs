@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is IAccountOptions AccountOptions) {
-                MeshID = AccountOptions.Mesh.Value;
+                MeshID = AccountOptions.AccountID.Value;
                 }
 
             if (options is ICryptoOptions CryptoOptions) {
@@ -177,6 +177,27 @@ namespace Goedel.Mesh.Shell {
             //return ContextDevice.Generate(MeshMachine, description: deviceDescription);
 
             }
+
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) {
+
+
+            return MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
+
+
+            //if (!options.DeviceNew.Value) {
+            //    var deviceUDF = options.DeviceUDF.Value;context
+            //    var deviceID = options.DeviceID.Value;
+
+            //    var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
+            //    if(result != null) {
+            //        return result;
+            //        }
+            //    }
+            //var deviceDescription = options.DeviceDescription.Value;
+            //return ContextDevice.Generate(MeshMachine, description: deviceDescription);
+
+            }
+
 
         //public virtual ContextMaster GetContextMaster(IMasterProfileInfo options) {
         //    }

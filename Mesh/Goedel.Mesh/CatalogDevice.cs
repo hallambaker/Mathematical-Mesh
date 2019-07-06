@@ -12,10 +12,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogEntryDevice> {
+    public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogedDevice> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryDevice Current => BaseEnumerator.Current.JsonObject as CatalogEntryDevice;
+        public CatalogedDevice Current => BaseEnumerator.Current.JsonObject as CatalogedDevice;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
         public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) => BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryDevice : IEnumerable<CatalogEntryDevice> {
+    public class AsCatalogEntryDevice : IEnumerable<CatalogedDevice> {
         CatalogDevice Catalog;
 
         public AsCatalogEntryDevice(CatalogDevice catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryDevice> GetEnumerator() =>
+        public IEnumerator<CatalogedDevice> GetEnumerator() =>
                     new EnumeratorCatalogEntryDevice(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -65,11 +65,11 @@ namespace Goedel.Mesh {
             }
 
 
-        public CatalogEntryDevice Get(string key) => Locate(key) as CatalogEntryDevice;
+        public CatalogedDevice Get(string key) => Locate(key) as CatalogedDevice;
 
         }
 
-    public partial class CatalogEntryDevice{
+    public partial class CatalogedDevice{
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
@@ -80,9 +80,9 @@ namespace Goedel.Mesh {
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public AssertionDeviceConnection AssertionDeviceConnection => assertionDeviceConnection ??
-            AssertionDeviceConnection.Decode(EnvelopedDeviceConnection).CacheValue(out assertionDeviceConnection);
-        AssertionDeviceConnection assertionDeviceConnection = null;
+        public ConnectionDevice AssertionDeviceConnection => assertionDeviceConnection ??
+            ConnectionDevice.Decode(EnvelopedDeviceConnection).CacheValue(out assertionDeviceConnection);
+        ConnectionDevice assertionDeviceConnection = null;
 
 
         public ProfileDevice ProfileDevice => profileDevice ??
@@ -94,7 +94,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
-        public CatalogEntryDevice() {
+        public CatalogedDevice() {
             }
 
 
@@ -108,7 +108,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public virtual void ActivateAccount(AssertionAccount assertionAccount, List<Permission> permission) {
+        public virtual void ActivateAccount(ProfileAccount assertionAccount, List<Permission> permission) {
 
             }
 

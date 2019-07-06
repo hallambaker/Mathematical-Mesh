@@ -29,7 +29,7 @@
 		Inherits Connection
 		Description
 			|Describes an ordinary device connected to a Mesh
-		Struct CatalogEntryDevice CatalogEntryDevice
+		Struct CatalogedDevice CatalogedDevice
 			Description
 				|The device entry containing the full account binding information.
 

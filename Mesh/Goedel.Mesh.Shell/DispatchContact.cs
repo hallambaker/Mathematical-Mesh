@@ -88,11 +88,11 @@ namespace Goedel.Mesh.Shell {
 
                 var result = new ResultDump() {
                     Success = true,
-                    CatalogEntries = new List<CatalogEntry>()
+                    CatalogedEntries = new List<CatalogedEntry>()
                     };
                 using (var catalog = contextAccount.GetCatalogContact()) {
                     foreach (var entry in catalog) {
-                        result.CatalogEntries.Add(entry);
+                        result.CatalogedEntries.Add(entry);
                         }
                     }
                 return result;

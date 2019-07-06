@@ -17,7 +17,7 @@ network    Manage network profile settings
 add   Add calendar entry from file
        <Unspecified>
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -44,7 +44,7 @@ Specifying the /json option returns a result of type ResultEntry:
 ````
 delete   Delete calendar entry
        Network entry identifier
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -71,7 +71,7 @@ Specifying the /json option returns a result of type ResultEntry:
 ````
 get   Lookup calendar entry
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -97,7 +97,7 @@ Specifying the /json option returns a result of type ResultEntry:
 
 ````
 dump   List network entries
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

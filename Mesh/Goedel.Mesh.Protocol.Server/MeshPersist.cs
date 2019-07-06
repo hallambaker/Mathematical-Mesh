@@ -371,9 +371,9 @@ namespace Goedel.Mesh.Server {
         ProfileMaster profileMesh;
 
 
-        public AssertionAccount AssertionAccount => assertionAccount ?? 
-            AssertionAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
-        AssertionAccount assertionAccount;
+        public ProfileAccount AssertionAccount => assertionAccount ?? 
+            ProfileAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
+        ProfileAccount assertionAccount;
 
         public AccountEntry() {
             }

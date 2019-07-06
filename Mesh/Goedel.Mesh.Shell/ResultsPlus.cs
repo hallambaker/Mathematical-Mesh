@@ -113,9 +113,9 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultMasterCreate {
 
-        public AssertionDeviceConnection ConnectionDevice = null;
-        public AssertionDevicePrivate PrivateDevice = null;
-        public AssertionAccount AssertionAccount = null;
+        public ConnectionDevice ConnectionDevice = null;
+        public ActivationDevice PrivateDevice = null;
+        public ProfileAccount AssertionAccount = null;
         //CatalogEntryDevice.EnvelopedDevicePrivate.;
 
 
@@ -139,7 +139,7 @@ namespace Goedel.Mesh.Shell {
     public partial class ResultDump {
         public override string ToString() {
             var builder = StringBuilder();
-            foreach (var entry in CatalogEntries) {
+            foreach (var entry in CatalogedEntries) {
                 builder.Append(entry.ToString());
                 //builder.AppendLine();
                 }

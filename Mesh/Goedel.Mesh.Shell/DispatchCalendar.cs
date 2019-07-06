@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Shell {
 
 
 
-                var entry = new CatalogEntryTask() {
+                var entry = new CatalogedTask() {
                     Key = identifier
                     };
                 using (var catalog = contextAccount.GetCatalogCalendar()) {
@@ -87,11 +87,11 @@ namespace Goedel.Mesh.Shell {
 
                 var result = new ResultDump() {
                     Success = true,
-                    CatalogEntries = new List<CatalogEntry>()
+                    CatalogedEntries = new List<CatalogedEntry>()
                     };
                 using (var catalog = contextAccount.GetCatalogCalendar()) {
                     foreach (var entry in catalog) {
-                        result.CatalogEntries.Add(entry);
+                        result.CatalogedEntries.Add(entry);
                         }
                     }
 

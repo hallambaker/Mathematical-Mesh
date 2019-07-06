@@ -17,7 +17,8 @@ mesh    Commands for creating and managing a personal Mesh
 
 ````
 create   Create new personal profile
-       New account
+    /account   New account
+    /service   New service
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -45,8 +46,8 @@ may be specified using the `/alg` option.
 
 ````
 >mesh create
-Device Profile UDF=MCCE-E7DI-EVQ2-QOV3-TXT2-BF5W-F4EP
-Personal Profile UDF=MBBK-T2SZ-MQNV-3UH3-XLQR-Y2QR-IF6S
+Device Profile UDF=MCGG-AUII-VXPT-36PS-PFMS-NJWV-ITPG
+Personal Profile UDF=MD45-T5CQ-IJOJ-YR7L-MIN3-RXVU-2WKS
 ````
 
 Specifying the /json option returns a result of type ResultMasterCreate:
@@ -56,129 +57,129 @@ Specifying the /json option returns a result of type ResultMasterCreate:
 {
   "ResultMasterCreate": {
     "Success": true,
-    "DeviceUDF": "MCCE-E7DI-EVQ2-QOV3-TXT2-BF5W-F4EP",
+    "DeviceUDF": "MCGG-AUII-VXPT-36PS-PFMS-NJWV-ITPG",
     "CatalogEntryDevice": {
-      "UDF": "MCCE-E7DI-EVQ2-QOV3-TXT2-BF5W-F4EP",
-      "DeviceUDF": "MA4R-CNBL-PSTE-QXT7-3GJK-KQQL-KCGD",
+      "UDF": "MCGG-AUII-VXPT-36PS-PFMS-NJWV-ITPG",
+      "DeviceUDF": "MA7L-SXQA-MYOW-UUHE-V6G2-EZAS-HUZE",
       "EnvelopedProfileDevice": [{
           "dig": "S512",
           "cty": "application/mmm"},
         "ewogICJQcm9maWxlRGV2aWNlIjogewogICAgIktleVNpZ25hdHVyZSI
-  6IHsKICAgICAgIlVERiI6ICJNQTRSLUNOQkwtUFNURS1RWFQ3LTNHSkstS1FRT
-  C1LQ0dEIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB
+  6IHsKICAgICAgIlVERiI6ICJNQTdMLVNYUUEtTVlPVy1VVUhFLVY2RzItRVpBU
+  y1IVVpFIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB
   1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgI
-  CAgICAgICJQdWJsaWMiOiAiUDhVZUJhM1p6TkFVRmx5NXNyaFR2NEpUbGtIbWs
-  xUWVTWFJRdDN0RVgzYTNKRHE3VkpBaAogIFZSSXhkd2VLWk1rRHdTU1ZqbWk3b
-  VBvQSJ9fX0sCiAgICAiS2V5RW5jcnlwdGlvbiI6IHsKICAgICAgIlVERiI6ICJ
-  NQklNLU5JNTctRVBCRC1UQVBHLURRWk4tV0pJRS1DS0U0IiwKICAgICAgIlB1Y
+  CAgICAgICJQdWJsaWMiOiAiQ1BGQ3A4WW5VbXl1enYxaVVUVG56X3Z1OUoyTEJ
+  SSnNteEVnVXg1VXJqOEZ3cm1UNlQwRgogIFpJTTRHSFRjZEJUMkowZS1xMnpJc
+  25NQSJ9fX0sCiAgICAiS2V5RW5jcnlwdGlvbiI6IHsKICAgICAgIlVERiI6ICJ
+  NQ1NWLTM3TUgtNFRQVi1FS0RKLVBLTFAtWVNJMy1QWTI0IiwKICAgICAgIlB1Y
   mxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiA
-  gICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAic
-  y05S0hQX0dVdWZobFVWeTRuTHRiSkY1VFZsYzI1a1NjMjFXNDZIeDdDdlA5MGl
-  4ZkNWeAogIHpGTVUwMktWNVFRTnBVRDZIeGNNYjhZQSJ9fX0sCiAgICAiS2V5Q
-  XV0aGVudGljYXRpb24iOiB7CiAgICAgICJVREYiOiAiTUJQNy1PS0ZELUxVTTQ
-  tTjY1TS1aUExSLUg2NkktQUdENCIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzI
+  gICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAia
+  WtsaVMzUkV6bVlsYW1JTERtUHJ2UkdRWjJqSkwyQnpyOXlqdGxseUZnY3VhRXB
+  MRzRQawogIGF1U2dFSy15akFmcG9zYlhCd0VqdVk2QSJ9fX0sCiAgICAiS2V5Q
+  XV0aGVudGljYXRpb24iOiB7CiAgICAgICJVREYiOiAiTUNPUC01SVdYLUJDSTc
+  tUjJEQS1OSlVBLUlZSEMtQ0NDNSIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzI
   jogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI
-  6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIm92UHN1VDRjTVFqa1NHS
-  Vh4dG93Q05zeU5lc0g2b3Bock16S040VXEwdTY2N2ViT2wtcnEKICBzUVhDVWt
-  pNHo1bWZiZFgtYzBFTlBIeUEifX19fX0",
+  6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogImhjWGNoX0lTSFF0bVpDQ
+  Ws2b2tFSmlvMU0xZWhhZGtxTmpBc3VidFBacDBiRTdVNnBGOVMKICBuT0E0UTh
+  iSzk3UDlnZzVHU1JSV2FzUUEifX19fX0",
         {
           "signatures": [{
-              "signature": "9Zc3IuHI6E6BoOYgzJDLZK8906vS-eTBfceuBHRrutdUOYeUu
-  _x8ii2Fk7W6_jvaVrAMSTmciayAih-SBG4rkGsWVdpxI2XY7Nr3f7zjApaylW2
-  Vj_UU697VYcdFr10uwBDZ_vviagFtBIL9C1gBijEA"}],
-          "PayloadDigest": "UyfA_CqoDmvzGyKj1Qv97UHu8tpt5NEXAuHFkycu5CTsB
-  H2bG-AKXsZLdzw1S2YJTC0OVLA6thUpPD3W2_AhbA"}],
+              "signature": "JBMCZldwoO_zpvA6GL6rZ_tNEQ-on4t0-FpqubZfMj5HcvsFU
+  pTRHwq6WgFX0_lfuGxCbq5HLJiAlOqAIXzPNBBQHPf9sSvOxGOVc6xo--oDy42
+  zUoy-FT7M14s2WUcSAIORqy4Ls-43aGZ9CNdYlTYA"}],
+          "PayloadDigest": "RhBqszmjmogeiao6FWsr2qbjLp2F_jjWxLMC_E_RgUWks
+  zucBqRiqLz_juNPaj9dWnNw1yDlW1ar6TwSs-XgNw"}],
       "EnvelopedDeviceConnection": [{
           "dig": "S512"},
         "ewogICJBc3NlcnRpb25EZXZpY2VDb25uZWN0aW9uIjogewogICAgIkt
-  leVNpZ25hdHVyZSI6IHsKICAgICAgIlVERiI6ICJNQ0NFLUU3REktRVZRMi1RT
-  1YzLVRYVDItQkY1Vy1GNEVQIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB
+  leVNpZ25hdHVyZSI6IHsKICAgICAgIlVERiI6ICJNQ0dHLUFVSUktVlhQVC0zN
+  lBTLVBGTVMtTkpXVi1JVFBHIiwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB
   7CiAgICAgICAgIlB1YmxpY0tleUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogI
-  kVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiOC1venpvcEZZV0Y5QUd0UVJ
-  NMXpnQTZoa2hZWU5TcU1ISVVlem5QZDFfaGpsWEJzYk9SMwogIGExOG00UEhFb
-  0RSWWhSZk82bElCU1JFQSJ9fX0sCiAgICAiS2V5RW5jcnlwdGlvbiI6IHsKICA
-  gICAgIlVERiI6ICJNRFBSLUZONEItTVNPWC1NVktXLUhSRFMtNlRXUC1KSEo1I
+  kVkNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiNHR3MTNhZ0Nscmg5M0xEd1B
+  ZZUwtT0tsYXA3TTg5UXVaSV8tcTBZSEw0YlQwdFd6QUZaXwogIDhKTUZzeXpYb
+  np1TWVkVThCLTA0VUtNQSJ9fX0sCiAgICAiS2V5RW5jcnlwdGlvbiI6IHsKICA
+  gICAgIlVERiI6ICJNQllOLUZOTEItRTRITC1MRVM0LUY1WE4tNFRPTS1VQk1KI
   iwKICAgICAgIlB1YmxpY1BhcmFtZXRlcnMiOiB7CiAgICAgICAgIlB1YmxpY0t
   leUVDREgiOiB7CiAgICAgICAgICAiY3J2IjogIkVkNDQ4IiwKICAgICAgICAgI
-  CJQdWJsaWMiOiAiUnRCYWYzT0NPVlBJQ3M4bW9MS04zNWg1WXRUVHllWUJCSFA
-  0R3dVcWZYXzhoQTdWeWpFVgogIEp1ZFoxQ3hlQnpqWEdrWEExdE56aEdNQSJ9f
+  CJQdWJsaWMiOiAiWG96R3pqYm1ob3VVV1pQbTdCelRGSjhZeG81em80YWlCNHJ
+  aN2dHakpVcjZxZ3JWbHJTegogIFNDUzQ5Wnc0ai14ZE5hTlhKRkJMSzF1QSJ9f
   X0sCiAgICAiS2V5QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJVREYiOiAiTUN
-  ZVC01U0tGLVc0NkgtNFEzRy00R0RHLTNUM1ItVzRUMiIsCiAgICAgICJQdWJsa
+  EWC1PWlRHLU9GUEgtUzQ1Vi1QM1BKLUxNUE0tSUZONiIsCiAgICAgICJQdWJsa
   WNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICA
-  gICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIkZqM
-  lZ0a1MxazFKeHptaU9GM1loOEpOVVNmN29ORkI0UnFNblc4RHJwQ3A1X183Tnl
-  MYjYKICBaaDNDc0t0bzVHZ1FoMHg1WXlxNEdSdUEifX19fX0",
+  gICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogIjY1d
+  jJNSFg3R3czVmVnNW9LMzZDaURQdl9TeWh4eU9tNDRYMDlIX2d0R0JKRHRmaHh
+  XZjAKICBES0tNVVQ3VkJOSlRCbW9mb01mbEVWZ0EifX19fX0",
         {
           "signatures": [{
-              "signature": "Ds2hHg54y1XnuK2Z6YNzNFV-d_-HjuCsUGpTTKkq9_vzBOWF7
-  c_0yQ5-njIVRELsUTYY8hMIr-yAzwOlLTn2_YVoPV4Ru-x1tMZGtEqZ3grWIg5
-  -DfFANHzLR3giv2RlbQQSL_h6uiUTvPJ92V8n6yAA"}],
-          "PayloadDigest": "DmgskmAYLLZSOMPPiUFxaU6Im4fO3sGl7gBuTf_U1_TMA
-  JzYx1njLwlMzg4o05AUF24R-SdfBZX3tVrCwYN3CQ"}],
+              "signature": "Ndu-ipCksYsWuw6vXrWMcQUPimDIx52Eflc1G-y3PGAXZBPNZ
+  OcYqzccgn4RYaeyAXGxJGik8W4AyEfuRfsahOMZLcU0kNYnogzPww009Vlk93H
+  zctlg0apVi9Kgf75BjYct45uFuBVsdVKTb77boDMA"}],
+          "PayloadDigest": "136DTH0KI7Y_zyfI_4eM95QZon81Sq1xQ_I4Dv6gn9PUe
+  r_efrnmJ9g2iyCz0afe4UBxxGd0RyYKrgJsxavwbw"}],
       "EnvelopedDevicePrivate": [{
           "enc": "none",
-          "Salt": "SF7lw-xjwYwfZo2NZYR-RA",
+          "Salt": "OXcRHYANDS_LT_p2GI-Ytw",
           "cty": "application/mmm",
           "recipients": [{
-              "kid": "MBIM-NI57-EPBD-TAPG-DQZN-WJIE-CKE4",
+              "kid": "MCSV-37MH-4TPV-EKDJ-PKLP-YSI3-PY24",
               "epk": {
                 "PublicKeyECDH": {
                   "crv": "Ed448",
-                  "Public": "JXEuhLh7TThJOMd0ojcGNSXU-H12rGS5RE0p1pVqP6c_UfizkFCl
-  l-vcSRKwRn8zhLFzrIHkkrcA"}},
+                  "Public": "dA4o6nJwhVWdt6-a1XBRvlScip75kRVSFClssnR4caCS2gAEGNZg
+  kqzILt7KZGvEAMvPjxIQ8s0A"}},
               "wmk": "pqampqampqY"},
             {
-              "kid": "MBSP-UDSW-R5G6-6RE6-XYKE-TGM2-KZUV",
+              "kid": "MCAC-DMMI-FLIT-3EED-E7ZU-G4OD-FOP7",
               "epk": {
                 "PublicKeyECDH": {
                   "crv": "Ed448",
-                  "Public": "CrX4ZZVuN8o1ISwkPOSFwb4jsNMsqBJnoLwDY2RntLzEQHSGxwxn
-  zbqYILVgtN8QnIj-PDp3IbcA"}},
+                  "Public": "i_43C_sWidkistlcR54xg366zSCLzTJ1hVJX3TtmdLUNhaBD43lR
+  uEV85zqAaSeKjvu6AEuRVseA"}},
               "wmk": "pqampqampqY"}]},
         "ewogICJBc3NlcnRpb25EZXZpY2VQcml2YXRlIjogewogICAgIktleVN
-  pZ25hdHVyZSI6IHsKICAgICAgIlVERiI6ICJNQ0NFLUU3REktRVZRMi1RT1YzL
-  VRYVDItQkY1Vy1GNEVQIiwKICAgICAgIkJhc2VVREYiOiAiTUE0Ui1DTkJMLVB
-  TVEUtUVhUNy0zR0pLLUtRUUwtS0NHRCIsCiAgICAgICJPdmVybGF5IjogewogI
+  pZ25hdHVyZSI6IHsKICAgICAgIlVERiI6ICJNQ0dHLUFVSUktVlhQVC0zNlBTL
+  VBGTVMtTkpXVi1JVFBHIiwKICAgICAgIkJhc2VVREYiOiAiTUE3TC1TWFFBLU1
+  ZT1ctVVVIRS1WNkcyLUVaQVMtSFVaRSIsCiAgICAgICJPdmVybGF5IjogewogI
   CAgICAgICJQcml2YXRlS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ
-  0NDgiLAogICAgICAgICAgIlByaXZhdGUiOiAidnFzdjhUbi1sLVJLNHhvdDFrV
-  HVxTzVqVHdyT1JrWFY3Y1BYWHJ5WnZQTXZsWjF2enpYCiAgRkdjREpPMUNPMVV
-  hZXE3MFVieU9BaXBFIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgI
-  CAiVURGIjogIk1EUFItRk40Qi1NU09YLU1WS1ctSFJEUy02VFdQLUpISjUiLAo
-  gICAgICAiQmFzZVVERiI6ICJNQklNLU5JNTctRVBCRC1UQVBHLURRWk4tV0pJR
-  S1DS0U0IiwKICAgICAgIk92ZXJsYXkiOiB7CiAgICAgICAgIlByaXZhdGVLZXl
+  0NDgiLAogICAgICAgICAgIlByaXZhdGUiOiAiaG1wUE5Hb0diRXQ5Z25jNHlYS
+  1VLblBJbkRaOGcwRTluOS11VmdsTld6b0QzZUprZkV1CiAgOGlXTXUxYkx0QjV
+  leVY0QnNqQVBxMzZZIn19fSwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgI
+  CAiVURGIjogIk1CWU4tRk5MQi1FNEhMLUxFUzQtRjVYTi00VE9NLVVCTUoiLAo
+  gICAgICAiQmFzZVVERiI6ICJNQ1NWLTM3TUgtNFRQVi1FS0RKLVBLTFAtWVNJM
+  y1QWTI0IiwKICAgICAgIk92ZXJsYXkiOiB7CiAgICAgICAgIlByaXZhdGVLZXl
   FQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiU
-  HJpdmF0ZSI6ICJfYnpTSzE2WmJZVE5XbVVDTEo2NmI1Q2JlZVZoWDFoYk1vNzd
-  aUkthSVd0Wl9vSzJsYjAKICB0dFl1cFk2dzNDN0pkOEdiQmJnamw5ck0ifX19L
-  AogICAgIktleUF1dGhlbnRpY2F0aW9uIjogewogICAgICAiVURGIjogIk1DWVQ
-  tNVNLRi1XNDZILTRRM0ctNEdERy0zVDNSLVc0VDIiLAogICAgICAiQmFzZVVER
-  iI6ICJNQlA3LU9LRkQtTFVNNC1ONjVNLVpQTFItSDY2SS1BR0Q0IiwKICAgICA
+  HJpdmF0ZSI6ICJ0R2tSYjIxR1pVeXhONDdwVHhoeDRqNE0wYWd4M1JlUVItY29
+  vaXJ5dURadlBDdjV5dWcKICBXVE5BOXc4ald0ejlYektRMDhCNXBnWjQifX19L
+  AogICAgIktleUF1dGhlbnRpY2F0aW9uIjogewogICAgICAiVURGIjogIk1DRFg
+  tT1pURy1PRlBILVM0NVYtUDNQSi1MTVBNLUlGTjYiLAogICAgICAiQmFzZVVER
+  iI6ICJNQ09QLTVJV1gtQkNJNy1SMkRBLU5KVUEtSVlIQy1DQ0M1IiwKICAgICA
   gIk92ZXJsYXkiOiB7CiAgICAgICAgIlByaXZhdGVLZXlFQ0RIIjogewogICAgI
-  CAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHJpdmF0ZSI6ICJiT05
-  tODMxUlgyVFpoZ2FZWTItbEIwdVMyYXNnMmpteDAxcXNpRENyZEZrQU5EUkNJU
-  DEKICBRdms5V1J4dkZPSy1rN0wxcm1QNXRkWncifX19fX0"]},
-    "MeshUDF": "MBBK-T2SZ-MQNV-3UH3-XLQR-Y2QR-IF6S",
+  CAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICAiUHJpdmF0ZSI6ICJreE9
+  qZl9TdkJpZS15eUNHbmJSMWtyOXFlTm96bWRJTmpUdVV5R2c3bWwtV1dzV0ZUN
+  msKICBJazZScnFoY3JTQ2Z5eFd6blpkSlE2MDAifX19fX0"]},
+    "MeshUDF": "MD45-T5CQ-IJOJ-YR7L-MIN3-RXVU-2WKS",
     "ProfileMaster": {
       "KeySignature": {
-        "UDF": "MBBK-T2SZ-MQNV-3UH3-XLQR-Y2QR-IF6S",
+        "UDF": "MD45-T5CQ-IJOJ-YR7L-MIN3-RXVU-2WKS",
         "PublicParameters": {
           "PublicKeyECDH": {
             "crv": "Ed448",
-            "Public": "sh4pYlZaU-HtyWzSRtsfQOAHH4pL1T26zZSCZK2kE1f1e6OdTRUK
-  WmSiRo3tKx8NHNyE4bmqqdkA"}}},
+            "Public": "sneRBzgWj3yzsNOY-VIg_RyRj11lGv6mR5LuhPqTAwTDz_67tevk
+  xTe1FVulCx3g6xN3YjkctHeA"}}},
       "OnlineSignatureKeys": [{
-          "UDF": "MD6K-FDLR-N4M3-QSOZ-KZW7-I4HI-Y7DY",
+          "UDF": "MCSR-MO56-6Q64-ODOO-WOBP-KJXR-HTIC",
           "PublicParameters": {
             "PublicKeyECDH": {
               "crv": "Ed448",
-              "Public": "gYt3ySP-K4KprIJN94LdnsMD2mc0Wb7BzL9v5dJSmJ5jfYZTo5Ts
-  lntFqqToZyQZsToIsJxDBLSA"}}}],
+              "Public": "TeDF15WFZHq1ZAX3DT6PfNZTxk_MDzefSYd8gwrbEyqXOscpTK53
+  6gcGHBkJA4NkyDx9DDqDEdqA"}}}],
       "KeyEncryption": {
-        "UDF": "MBSP-UDSW-R5G6-6RE6-XYKE-TGM2-KZUV",
+        "UDF": "MCAC-DMMI-FLIT-3EED-E7ZU-G4OD-FOP7",
         "PublicParameters": {
           "PublicKeyECDH": {
             "crv": "Ed448",
-            "Public": "6Txxd-tzVD-o37cLarIpGgIXjxsggYE1PfQyacLwSFjP-m384aqk
-  CWOoj726gO-s0Xwdnh3kSnyA"}}}}}}
+            "Public": "kJhetipFxq9g-9c5I9vx3gXKANtAY5mrSaVRIM3vXAqcMTuE5kh9
+  dUuaTV4hYP8quTU2i78u6JcA"}}}}}}
 ````
 
 
@@ -188,7 +189,7 @@ Specifying the /json option returns a result of type ResultMasterCreate:
 escrow   Create a set of key escrow shares
        <Unspecified>
     /alg   List of algorithm specifiers
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /mudf   Master profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -200,18 +201,18 @@ The `profile escrow` command
 
 
 ````
->profile escrow
-ERROR - The command  is not known.
+>mesh escrow
+ERROR - The cryptographic provider does not permit export of the private key parameters
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile escrow /json
+>mesh escrow /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The cryptographic provider does not permit export of the private key parameters"}}
 ````
 
 # mesh export
@@ -219,7 +220,7 @@ Specifying the /json option returns a result of type Result:
 ````
 export   Export the specified profile data to the specified file
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /mudf   Master profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -227,13 +228,27 @@ export   Export the specified profile data to the specified file
 
 The `profile export` command 
 
-**Missing Example***
+
+````
+>mesh export profile.dare
+ERROR - The feature has not been implemented
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>mesh export profile.dare /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
+````
 
 # mesh get
 
 ````
 get   Describe the specified profile
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /mudf   Master profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -243,18 +258,18 @@ The `profile get` command
 
 
 ````
->profile get /mesh=personal
-ERROR - The command  is not known.
+>mesh get
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile get /mesh=personal /json
+>mesh get /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 
@@ -265,7 +280,7 @@ Specifying the /json option returns a result of type Result:
 ````
 import   Import the specified profile data to the specified file
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /mudf   Master profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -273,7 +288,21 @@ import   Import the specified profile data to the specified file
 
 The `profile import` command 
 
-**Missing Example***
+
+````
+>mesh import profile.dare
+ERROR - The feature has not been implemented
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>mesh import profile.dare /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
+````
 
 # mesh list
 
@@ -282,24 +311,25 @@ list   List all profiles on the local machine
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
+    /mudf   Master profile fingerprint
 ````
 
 The `profile list` command 
 
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 
@@ -315,7 +345,7 @@ recover   Recover escrowed profile
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /mudf   Master profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -325,5 +355,19 @@ recover   Recover escrowed profile
 
 The `profile recover` command 
 
-**Missing Example***
+
+````
+>mesh recover $TBS $TBS /verify
+ERROR - The feature has not been implemented
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+>mesh recover $TBS $TBS /verify /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
+````
 

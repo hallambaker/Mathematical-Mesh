@@ -18,7 +18,7 @@ add   Add bookmark
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -50,7 +50,7 @@ Specifying the /json option returns a result of type ResultEntry:
 delete   Delete bookmark entry
        Contact entry identifier
     /path   <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -76,7 +76,7 @@ Specifying the /json option returns a result of type Result:
 ````
 get   Lookup bookmark entry
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -106,7 +106,7 @@ Specifying the /json option returns a result of type ResultEntry:
 
 ````
 list   List bookmark entries
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

@@ -14,9 +14,9 @@ namespace Goedel.Mesh.Client {
 
     public class AccountDescription {
         public string Account;
-        public AssertionAccount ProfileMesh;
+        public ProfileAccount ProfileMesh;
         public ProfileDevice DefaultProfileDevice;
-        public Dictionary<string, CatalogEntryDevice> Devices = new Dictionary<string, CatalogEntryDevice>();
+        public Dictionary<string, CatalogedDevice> Devices = new Dictionary<string, CatalogedDevice>();
 
         }
 

@@ -24,9 +24,9 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>For an administrative device, the CatalogEntryDevice is taken from the 
         ///device catalog.</summary>
-        public override CatalogEntryDevice CatalogEntryDevice => catalogEntryDevice ??
+        public override CatalogedDevice CatalogedDevice => catalogEntryDevice ??
             GetCatalogDevice().Get(AdminConnection.ID).CacheValue(out catalogEntryDevice);
-        CatalogEntryDevice catalogEntryDevice;
+        CatalogedDevice catalogEntryDevice;
 
 
         ///<summary>The master keys for administration.</summary>
@@ -89,7 +89,7 @@ namespace Goedel.Mesh.Client {
 
             Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
 
-            var assertionDevicePrivate = new AssertionDevicePrivate(meshMachine, profileDevice);
+            var assertionDevicePrivate = new ActivationDevice(meshMachine, profileDevice);
             var adminEntry = AddAdministrator(meshMachine, profileMaster, profileDevice, assertionDevicePrivate);
 
             // now create the device catalog and add profileDevice to it.
@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Client {
                     IMeshMachine meshMachine,
                     ProfileMaster profileMaster,
                     ProfileDevice profileDevice,
-                    AssertionDevicePrivate assertionDevicePrivate
+                    ActivationDevice assertionDevicePrivate
                     ) {
             var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeySignature);
 
@@ -151,20 +151,20 @@ namespace Goedel.Mesh.Client {
         //            ) => AddAdministrator(MeshMachine, ProfileMesh, profileDevice);
 
 
-        public CatalogEntryDevice AddDevice(ProfileDevice profileDevice) {
-            var assertionDevicePrivate = new AssertionDevicePrivate(MeshMachine, profileDevice);
+        public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
+            var assertionDevicePrivate = new ActivationDevice(MeshMachine, profileDevice);
             return AddDevice(profileDevice, assertionDevicePrivate);
             }
-        CatalogEntryDevice AddDevice(ProfileDevice profileDevice, AssertionDevicePrivate assertionDevicePrivate) {
+        CatalogedDevice AddDevice(ProfileDevice profileDevice, ActivationDevice assertionDevicePrivate) {
             assertionDevicePrivate.Encode(profileDevice.KeyEncryption.KeyPair, ProfileMesh.KeyEncryption.KeyPair);
 
-            var assertionDeviceConnection = new AssertionDeviceConnection(assertionDevicePrivate);
+            var assertionDeviceConnection = new ConnectionDevice(assertionDevicePrivate);
 
             KeyMasterSignature = KeyMasterSignature ??
                     MeshMachine.KeyCollection.LocatePrivate(ProfileMesh.UDF);
             Sign(assertionDeviceConnection);
 
-            var catalogEntryDevice = new CatalogEntryDevice() {
+            var catalogEntryDevice = new CatalogedDevice() {
                 UDF = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedDeviceConnection = assertionDeviceConnection.DareEnvelope,
@@ -201,7 +201,7 @@ namespace Goedel.Mesh.Client {
             algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
             var keyEncrypt = MeshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.ExportableStored, keyUses: KeyUses.Encrypt);
 
-            var assertionAccount = new AssertionAccount() {
+            var assertionAccount = new ProfileAccount() {
                 MeshProfileUDF = ProfileMesh.UDF,
                 AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
@@ -248,14 +248,14 @@ namespace Goedel.Mesh.Client {
         #region // Add regular device
 
         public ActivationAccount AddDevice(
-                    AssertionAccount  assertionAccount, 
-                    CatalogEntryDevice catalogEntryDevice, 
+                    ProfileAccount  assertionAccount, 
+                    CatalogedDevice catalogEntryDevice, 
                     KeyPairAdvanced keyEncryptionMaster) {
             // Decrypt EncryptedDevicePrivate using the Master profile decryption key
 
             var encryptedDevicePrivate = catalogEntryDevice.EnvelopedDevicePrivate;
 
-            var devicePrivate = AssertionDevicePrivate.Decode(
+            var devicePrivate = ActivationDevice.Decode(
                                 MeshMachine, encryptedDevicePrivate);
             var profileDevice = catalogEntryDevice.ProfileDevice;
 
@@ -263,7 +263,7 @@ namespace Goedel.Mesh.Client {
             var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeySignature);
             var keyAuthentication = new KeyOverlay(MeshMachine, profileDevice.KeyAuthentication);
 
-            var assertionAccountConnection = new AssertionAccountConnection() {
+            var assertionAccountConnection = new ConnectionAccount() {
                 KeySignature = new PublicKey(keySignature.KeyPair),
                 KeyEncryption = new PublicKey(keyEncryption.KeyPair),
                 KeyAuthentication = new PublicKey(keyAuthentication.KeyPair)

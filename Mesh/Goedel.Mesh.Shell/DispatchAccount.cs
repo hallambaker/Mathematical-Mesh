@@ -92,6 +92,15 @@ namespace Goedel.Mesh.Shell {
 
                 }
             }
+        public override ShellResult AccountGetPIN(AccountGetPIN Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
 
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
+            }
         }
     }

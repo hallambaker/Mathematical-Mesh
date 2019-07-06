@@ -14,7 +14,7 @@ ssh    Manage SSH profiles connected to a personal profile
 
 ````
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -24,25 +24,25 @@ create   Generate a new SSH public keypair for the current machine and add to th
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh private
 
 ````
 private   Extract the private key for this device
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -52,25 +52,25 @@ private   Extract the private key for this device
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh public
 
 ````
 public   Extract the public key for this device
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -79,25 +79,25 @@ public   Extract the public key for this device
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh host
 
 ````
 host   Add one or more hosts to the known_hosts file
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -105,18 +105,18 @@ host   Add one or more hosts to the known_hosts file
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh host
@@ -124,7 +124,7 @@ Specifying the /json option returns a result of type Result:
 ````
 host   Add one or more hosts to the known_hosts file
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -132,18 +132,18 @@ host   Add one or more hosts to the known_hosts file
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh client
@@ -151,7 +151,7 @@ Specifying the /json option returns a result of type Result:
 ````
 client   Add one or more keys to the authorized_keys file
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -159,25 +159,25 @@ client   Add one or more keys to the authorized_keys file
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh host
 
 ````
 host   List the known SSH sites (aka known hosts)
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -185,25 +185,25 @@ host   List the known SSH sites (aka known hosts)
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # ssh client
 
 ````
 client   List the authorized device keys (aka authorized_keys)
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -211,18 +211,18 @@ client   List the authorized device keys (aka authorized_keys)
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 

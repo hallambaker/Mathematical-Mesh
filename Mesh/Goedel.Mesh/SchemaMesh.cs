@@ -69,12 +69,17 @@ namespace Goedel.Mesh {
 			{"ProfileMaster", ProfileMaster._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ProfileService", ProfileService._Factory},
-			{"AssertionAccount", AssertionAccount._Factory},
-			{"AssertionDeviceConnection", AssertionDeviceConnection._Factory},
-			{"AssertionAccountConnection", AssertionAccountConnection._Factory},
-			{"AssertionDevicePrivate", AssertionDevicePrivate._Factory},
+			{"AssertionAccount", ProfileAccount._Factory},
+
+
+			{"AssertionDeviceConnection", ConnectionDevice._Factory},
+			{"AssertionAccountConnection", ConnectionAccount._Factory},
+
+
+			{"AssertionDevicePrivate", ActivationDevice._Factory},
 			{"ActivationAccount", ActivationAccount._Factory},
-			{"ProfileApplication", ProfileApplication._Factory},
+
+			{"ProfileApplication", ActivationApplication._Factory},
 			{"Activation", Activation._Factory},
 			{"DeviceRecryptionKey", DeviceRecryptionKey._Factory},
 			{"Permission", Permission._Factory},
@@ -83,23 +88,23 @@ namespace Goedel.Mesh {
 			{"Address", Address._Factory},
 			{"Location", Location._Factory},
 			{"Reference", Reference._Factory},
-			{"CatalogEntry", CatalogEntry._Factory},
-			{"CatalogEntryDevice", CatalogEntryDevice._Factory},
-			{"CatalogEntryCredential", CatalogEntryCredential._Factory},
-			{"CatalogEntryNetwork", CatalogEntryNetwork._Factory},
-			{"CatalogEntryContact", CatalogEntryContact._Factory},
-			{"CatalogEntryContactRecryption", CatalogEntryContactRecryption._Factory},
-			{"CatalogEntryBookmark", CatalogEntryBookmark._Factory},
-			{"CatalogEntryTask", CatalogEntryTask._Factory},
+			{"CatalogEntry", CatalogedEntry._Factory},
+			{"CatalogEntryDevice", CatalogedDevice._Factory},
+			{"CatalogEntryCredential", CatalogedCredential._Factory},
+			{"CatalogEntryNetwork", CatalogedNetwork._Factory},
+			{"CatalogEntryContact", CatalogedContact._Factory},
+			{"CatalogEntryContactRecryption", CatalogedContactRecryption._Factory},
+			{"CatalogEntryBookmark", CatalogedBookmark._Factory},
+			{"CatalogEntryTask", CatalogedTask._Factory},
 			{"Task", Task._Factory},
-			{"CatalogEntryApplication", CatalogEntryApplication._Factory},
-			{"CatalogEntryApplicationAccount", CatalogEntryApplicationAccount._Factory},
-			{"CatalogEntryApplicationRecryption", CatalogEntryApplicationRecryption._Factory},
-			{"CatalogEntryApplicationSSH", CatalogEntryApplicationSSH._Factory},
-			{"CatalogEntryApplicationMail", CatalogEntryApplicationMail._Factory},
-			{"CatalogEntryApplicationNetwork", CatalogEntryApplicationNetwork._Factory},
-			{"MeshMessage", MeshMessage._Factory},
-			{"MeshMessageComplete", MeshMessageComplete._Factory},
+			{"CatalogEntryApplication", CatalogedApplication._Factory},
+			{"CatalogEntryApplicationAccount", CatalogedApplicationAccount._Factory},
+			{"CatalogEntryApplicationRecryption", CatalogedApplicationRecryption._Factory},
+			{"CatalogEntryApplicationSSH", CatalogedApplicationSSH._Factory},
+			{"CatalogEntryApplicationMail", CatalogedApplicationMail._Factory},
+			{"CatalogEntryApplicationNetwork", CatalogedApplicationNetwork._Factory},
+			{"MeshMessage", Message._Factory},
+			{"MeshMessageComplete", MessageComplete._Factory},
 			{"MessageConnectionRequest", MessageConnectionRequest._Factory},
 			{"MessageConnectionResponse", MessageConnectionResponse._Factory},
 			{"MessageConnectionPIN", MessageConnectionPIN._Factory},
@@ -1573,7 +1578,7 @@ namespace Goedel.Mesh {
 	///
 	/// Account assertion. This is signed by the service hosting the account.
 	/// </summary>
-	public partial class AssertionAccount : Assertion {
+	public partial class ProfileAccount : Assertion {
         /// <summary>
         ///Service address(es).
         /// </summary>
@@ -1604,7 +1609,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AssertionAccount();
+		public static new JSONObject _Factory () => new ProfileAccount();
 
 
         /// <summary>
@@ -1665,15 +1670,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AssertionAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ProfileAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AssertionAccount;
+				return Out as ProfileAccount;
 				}
-		    var Result = new AssertionAccount ();
+		    var Result = new ProfileAccount ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -1721,7 +1726,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class AssertionDeviceConnection : Assertion {
+	public partial class ConnectionDevice : Assertion {
         /// <summary>
         ///List of the permissions that the device has been granted.
         /// </summary>
@@ -1757,7 +1762,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AssertionDeviceConnection();
+		public static new JSONObject _Factory () => new ConnectionDevice();
 
 
         /// <summary>
@@ -1828,15 +1833,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AssertionDeviceConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ConnectionDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AssertionDeviceConnection;
+				return Out as ConnectionDevice;
 				}
-		    var Result = new AssertionDeviceConnection ();
+		    var Result = new ConnectionDevice ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -1897,7 +1902,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class AssertionAccountConnection : Assertion {
+	public partial class ConnectionAccount : Assertion {
         /// <summary>
         ///List of the permissions that the device has been granted.
         /// </summary>
@@ -1933,7 +1938,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AssertionAccountConnection();
+		public static new JSONObject _Factory () => new ConnectionAccount();
 
 
         /// <summary>
@@ -2004,15 +2009,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AssertionAccountConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ConnectionAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AssertionAccountConnection;
+				return Out as ConnectionAccount;
 				}
-		    var Result = new AssertionAccountConnection ();
+		    var Result = new ConnectionAccount ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -2073,7 +2078,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class AssertionDevicePrivate : Assertion {
+	public partial class ActivationDevice : Assertion {
         /// <summary>
         ///The signed AssertionDeviceConnection.
         /// </summary>
@@ -2117,7 +2122,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AssertionDevicePrivate();
+		public static new JSONObject _Factory () => new ActivationDevice();
 
 
         /// <summary>
@@ -2192,15 +2197,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AssertionDevicePrivate FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ActivationDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AssertionDevicePrivate;
+				return Out as ActivationDevice;
 				}
-		    var Result = new AssertionDevicePrivate ();
+		    var Result = new ActivationDevice ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -2442,7 +2447,7 @@ namespace Goedel.Mesh {
 	///
 	/// Contains the public description of a Mesh application.
 	/// </summary>
-	abstract public partial class ProfileApplication : Profile {
+	abstract public partial class ActivationApplication : Profile {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2497,13 +2502,13 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ActivationApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileApplication;
+				return Out as ActivationApplication;
 				}
 			throw new CannotCreateAbstract();
 			}
@@ -2919,7 +2924,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual List<AssertionAccount>				AssertionAccounts  {get; set;}
+		public virtual List<ProfileAccount>				AssertionAccounts  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -3164,10 +3169,10 @@ namespace Goedel.Mesh {
 				case "AssertionAccounts" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					AssertionAccounts = new List <AssertionAccount> ();
+					AssertionAccounts = new List <ProfileAccount> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  AssertionAccount ();
+						var _Item = new  ProfileAccount ();
 						_Item.Deserialize (JSONReader);
 						// var _Item = new AssertionAccount (JSONReader);
 						AssertionAccounts.Add (_Item);
@@ -3834,7 +3839,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntry : MeshItem {
+	public partial class CatalogedEntry : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3850,7 +3855,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntry();
+		public static new JSONObject _Factory () => new CatalogedEntry();
 
 
         /// <summary>
@@ -3888,15 +3893,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntry;
+				return Out as CatalogedEntry;
 				}
-		    var Result = new CatalogEntry ();
+		    var Result = new CatalogedEntry ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -3923,7 +3928,7 @@ namespace Goedel.Mesh {
 	///
 	/// Public device entry, indexed under the device ID
 	/// </summary>
-	public partial class CatalogEntryDevice : CatalogEntry {
+	public partial class CatalogedDevice : CatalogedEntry {
         /// <summary>
         ///The accounts to which this device is bound.
         /// </summary>
@@ -3969,7 +3974,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryDevice();
+		public static new JSONObject _Factory () => new CatalogedDevice();
 
 
         /// <summary>
@@ -3996,7 +4001,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (AccountIDs != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("AccountIDs", 1);
@@ -4045,15 +4050,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryDevice;
+				return Out as CatalogedDevice;
 				}
-		    var Result = new CatalogEntryDevice ();
+		    var Result = new CatalogedDevice ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4119,7 +4124,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryCredential : CatalogEntry {
+	public partial class CatalogedCredential : CatalogedEntry {
         /// <summary>
         /// </summary>
 
@@ -4151,7 +4156,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryCredential();
+		public static new JSONObject _Factory () => new CatalogedCredential();
 
 
         /// <summary>
@@ -4178,7 +4183,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (Protocol != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Protocol", 1);
@@ -4210,15 +4215,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryCredential FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedCredential FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryCredential;
+				return Out as CatalogedCredential;
 				}
-		    var Result = new CatalogEntryCredential ();
+		    var Result = new CatalogedCredential ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4260,7 +4265,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryNetwork : CatalogEntry {
+	public partial class CatalogedNetwork : CatalogedEntry {
         /// <summary>
         /// </summary>
 
@@ -4292,7 +4297,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryNetwork();
+		public static new JSONObject _Factory () => new CatalogedNetwork();
 
 
         /// <summary>
@@ -4319,7 +4324,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (Protocol != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Protocol", 1);
@@ -4351,15 +4356,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryNetwork;
+				return Out as CatalogedNetwork;
 				}
-		    var Result = new CatalogEntryNetwork ();
+		    var Result = new CatalogedNetwork ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4401,7 +4406,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryContact : CatalogEntry {
+	public partial class CatalogedContact : CatalogedEntry {
 		bool								__Self = false;
 		private bool						_Self;
         /// <summary>
@@ -4444,7 +4449,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryContact();
+		public static new JSONObject _Factory () => new CatalogedContact();
 
 
         /// <summary>
@@ -4471,7 +4476,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (__Self){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Self", 1);
@@ -4515,15 +4520,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryContact;
+				return Out as CatalogedContact;
 				}
-		    var Result = new CatalogEntryContact ();
+		    var Result = new CatalogedContact ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4578,7 +4583,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryContactRecryption : CatalogEntryContact {
+	public partial class CatalogedContactRecryption : CatalogedContact {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4594,7 +4599,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryContactRecryption();
+		public static new JSONObject _Factory () => new CatalogedContactRecryption();
 
 
         /// <summary>
@@ -4621,7 +4626,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntryContact)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedContact)this).SerializeX(_Writer, false, ref _first);
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -4633,15 +4638,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryContactRecryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedContactRecryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryContactRecryption;
+				return Out as CatalogedContactRecryption;
 				}
-		    var Result = new CatalogEntryContactRecryption ();
+		    var Result = new CatalogedContactRecryption ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4667,7 +4672,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryBookmark : CatalogEntry {
+	public partial class CatalogedBookmark : CatalogedEntry {
         /// <summary>
         /// </summary>
 
@@ -4695,7 +4700,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryBookmark();
+		public static new JSONObject _Factory () => new CatalogedBookmark();
 
 
         /// <summary>
@@ -4722,7 +4727,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (Uri != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Uri", 1);
@@ -4749,15 +4754,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryBookmark FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedBookmark FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryBookmark;
+				return Out as CatalogedBookmark;
 				}
-		    var Result = new CatalogEntryBookmark ();
+		    var Result = new CatalogedBookmark ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -4795,7 +4800,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryTask : CatalogEntry {
+	public partial class CatalogedTask : CatalogedEntry {
         /// <summary>
         /// </summary>
 
@@ -4820,7 +4825,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryTask();
+		public static new JSONObject _Factory () => new CatalogedTask();
 
 
         /// <summary>
@@ -4847,7 +4852,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (EnvelopedTask != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedTask", 1);
@@ -4869,15 +4874,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryTask FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedTask FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryTask;
+				return Out as CatalogedTask;
 				}
-		    var Result = new CatalogEntryTask ();
+		    var Result = new CatalogedTask ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5204,7 +5209,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryApplication : CatalogEntry {
+	public partial class CatalogedApplication : CatalogedEntry {
         /// <summary>
         /// </summary>
 
@@ -5224,7 +5229,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplication();
+		public static new JSONObject _Factory () => new CatalogedApplication();
 
 
         /// <summary>
@@ -5251,7 +5256,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntry)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
 			if (Key != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Key", 1);
@@ -5268,15 +5273,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplication;
+				return Out as CatalogedApplication;
 				}
-		    var Result = new CatalogEntryApplication ();
+		    var Result = new CatalogedApplication ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5308,7 +5313,7 @@ namespace Goedel.Mesh {
 	///
 	/// Wrapper for a signed AccountAssertion
 	/// </summary>
-	public partial class CatalogEntryApplicationAccount : CatalogEntryApplication {
+	public partial class CatalogedApplicationAccount : CatalogedApplication {
         /// <summary>
         ///The account assertion
         /// </summary>
@@ -5329,7 +5334,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplicationAccount();
+		public static new JSONObject _Factory () => new CatalogedApplicationAccount();
 
 
         /// <summary>
@@ -5356,7 +5361,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((CatalogEntryApplication)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedApplication)this).SerializeX(_Writer, false, ref _first);
 			if (EnvelopedAccountAssertion != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
@@ -5373,15 +5378,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplicationAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplicationAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplicationAccount;
+				return Out as CatalogedApplicationAccount;
 				}
-		    var Result = new CatalogEntryApplicationAccount ();
+		    var Result = new CatalogedApplicationAccount ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5414,7 +5419,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryApplicationRecryption : MeshItem {
+	public partial class CatalogedApplicationRecryption : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5430,7 +5435,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplicationRecryption();
+		public static new JSONObject _Factory () => new CatalogedApplicationRecryption();
 
 
         /// <summary>
@@ -5468,15 +5473,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplicationRecryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplicationRecryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplicationRecryption;
+				return Out as CatalogedApplicationRecryption;
 				}
-		    var Result = new CatalogEntryApplicationRecryption ();
+		    var Result = new CatalogedApplicationRecryption ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5501,7 +5506,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryApplicationSSH : MeshItem {
+	public partial class CatalogedApplicationSSH : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5517,7 +5522,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplicationSSH();
+		public static new JSONObject _Factory () => new CatalogedApplicationSSH();
 
 
         /// <summary>
@@ -5555,15 +5560,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplicationSSH FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplicationSSH FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplicationSSH;
+				return Out as CatalogedApplicationSSH;
 				}
-		    var Result = new CatalogEntryApplicationSSH ();
+		    var Result = new CatalogedApplicationSSH ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5588,7 +5593,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryApplicationMail : MeshItem {
+	public partial class CatalogedApplicationMail : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5604,7 +5609,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplicationMail();
+		public static new JSONObject _Factory () => new CatalogedApplicationMail();
 
 
         /// <summary>
@@ -5642,15 +5647,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplicationMail FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplicationMail FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplicationMail;
+				return Out as CatalogedApplicationMail;
 				}
-		    var Result = new CatalogEntryApplicationMail ();
+		    var Result = new CatalogedApplicationMail ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5675,7 +5680,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CatalogEntryApplicationNetwork : MeshItem {
+	public partial class CatalogedApplicationNetwork : MeshItem {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5691,7 +5696,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogEntryApplicationNetwork();
+		public static new JSONObject _Factory () => new CatalogedApplicationNetwork();
 
 
         /// <summary>
@@ -5729,15 +5734,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogEntryApplicationNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedApplicationNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogEntryApplicationNetwork;
+				return Out as CatalogedApplicationNetwork;
 				}
-		    var Result = new CatalogEntryApplicationNetwork ();
+		    var Result = new CatalogedApplicationNetwork ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5762,7 +5767,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MeshMessage : MeshItem {
+	public partial class Message : MeshItem {
         /// <summary>
         /// </summary>
 
@@ -5794,7 +5799,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new MeshMessage();
+		public static new JSONObject _Factory () => new Message();
 
 
         /// <summary>
@@ -5864,15 +5869,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MeshMessage FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new Message FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as MeshMessage;
+				return Out as Message;
 				}
-		    var Result = new MeshMessage ();
+		    var Result = new Message ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -5923,7 +5928,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MeshMessageComplete : MeshMessage {
+	public partial class MessageComplete : Message {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5939,7 +5944,7 @@ namespace Goedel.Mesh {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new MeshMessageComplete();
+		public static new JSONObject _Factory () => new MessageComplete();
 
 
         /// <summary>
@@ -5966,7 +5971,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -5978,15 +5983,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MeshMessageComplete FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new MessageComplete FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as MeshMessageComplete;
+				return Out as MessageComplete;
 				}
-		    var Result = new MeshMessageComplete ();
+		    var Result = new MessageComplete ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -6014,7 +6019,7 @@ namespace Goedel.Mesh {
 	///
 	/// Connection request message. This message contains the information
 	/// </summary>
-	public partial class MessageConnectionRequest : MeshMessage {
+	public partial class MessageConnectionRequest : Message {
         /// <summary>
         ///
         /// </summary>
@@ -6077,7 +6082,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (ServiceID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ServiceID", 1);
@@ -6165,7 +6170,7 @@ namespace Goedel.Mesh {
 	/// Connection request message generated by a service on receipt of a valid
 	/// MessageConnectionRequestClient
 	/// </summary>
-	public partial class MessageConnectionResponse : MeshMessage {
+	public partial class MessageConnectionResponse : Message {
         /// <summary>
         ///The client connection request.
         /// </summary>
@@ -6223,7 +6228,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (EnvelopedMessageConnectionRequest != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedMessageConnectionRequest", 1);
@@ -6299,7 +6304,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MessageConnectionPIN : MeshMessage {
+	public partial class MessageConnectionPIN : Message {
         /// <summary>
         /// </summary>
 
@@ -6354,7 +6359,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (Account != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Account", 1);
@@ -6427,7 +6432,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MessageContactRequest : MeshMessage {
+	public partial class MessageContactRequest : Message {
         /// <summary>
         ///The contact data.
         /// </summary>
@@ -6475,7 +6480,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (Contact != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Contact", 1);
@@ -6533,7 +6538,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MessageConfirmationRequest : MeshMessage {
+	public partial class MessageConfirmationRequest : Message {
         /// <summary>
         /// </summary>
 
@@ -6580,7 +6585,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (Text != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Text", 1);
@@ -6635,7 +6640,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MessageConfirmationResponse : MeshMessage {
+	public partial class MessageConfirmationResponse : Message {
         /// <summary>
         /// </summary>
 
@@ -6691,7 +6696,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (ResponseID != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ResponseID", 1);
@@ -6755,7 +6760,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class MessageTaskRequest : MeshMessage {
+	public partial class MessageTaskRequest : Message {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -6798,7 +6803,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((MeshMessage)this).SerializeX(_Writer, false, ref _first);
+			((Message)this).SerializeX(_Writer, false, ref _first);
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}

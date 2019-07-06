@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Shell {
                 var username = Options.Username.Value;
                 var password = Options.Password.Value;
 
-                var entry = new CatalogEntryCredential() {
+                var entry = new CatalogedCredential() {
                     Service = site,
                     Username = username,
                     Password = password
@@ -91,11 +91,11 @@ namespace Goedel.Mesh.Shell {
 
                 var result = new ResultDump() {
                     Success = true,
-                    CatalogEntries = new List<CatalogEntry>()
+                    CatalogedEntries = new List<CatalogedEntry>()
                     };
                 using (var catalog = contextAccount.GetCatalogCredential()) {
                     foreach (var entry in catalog) {
-                        result.CatalogEntries.Add(entry);
+                        result.CatalogedEntries.Add(entry);
                         }
                     }
                 return result;

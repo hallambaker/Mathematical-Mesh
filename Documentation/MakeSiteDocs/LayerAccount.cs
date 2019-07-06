@@ -30,9 +30,6 @@ namespace ExampleGenerator {
 
             }
 
-
-
-
         public List<ExampleResult> ContactAdd;
         public List<ExampleResult> ContactAddSelf;
         public List<ExampleResult> ContactGet;
@@ -184,9 +181,6 @@ namespace ExampleGenerator {
             SSHAuthProof = testCLIAlice1.Example($"ssh show host");
             }
 
-
-
-
         public List<ExampleResult> MailAdd;
         public List<ExampleResult> MailAddExplicit;
         public List<ExampleResult> MailUpdate;
@@ -199,8 +193,6 @@ namespace ExampleGenerator {
         public List<ExampleResult> MailSMIMECA;
         public List<ExampleResult> MailSMIMEPrivate;
         public List<ExampleResult> MailSMIMEPublic;
-
-
 
         public string SMIMECA = "ca.example.net";
         public string MailPGPPublicKey = "pgp.public";
@@ -224,12 +216,6 @@ namespace ExampleGenerator {
 
 
             }
-
-
-
-
-
-
 
         #endregion
         }

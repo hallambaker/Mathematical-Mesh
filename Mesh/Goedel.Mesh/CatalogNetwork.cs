@@ -11,10 +11,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryNetwork : IEnumerator<CatalogEntryNetwork> {
+    public class EnumeratorCatalogEntryNetwork : IEnumerator<CatalogedNetwork> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryNetwork Current => BaseEnumerator.Current.JsonObject as CatalogEntryNetwork;
+        public CatalogedNetwork Current => BaseEnumerator.Current.JsonObject as CatalogedNetwork;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryNetwork : IEnumerable<CatalogEntryNetwork> {
+    public class AsCatalogEntryNetwork : IEnumerable<CatalogedNetwork> {
         CatalogNetwork Catalog;
 
         public AsCatalogEntryNetwork(CatalogNetwork catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryNetwork> GetEnumerator() =>
+        public IEnumerator<CatalogedNetwork> GetEnumerator() =>
                     new EnumeratorCatalogEntryNetwork(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">The service to be matched.</param>
         /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogEntryNetwork LocateByService(string key) {
+        public CatalogedNetwork LocateByService(string key) {
             foreach (var network in AsCatalogEntryNetwork) {
                 if (network.Service == key) {
                     return network;
@@ -78,7 +78,7 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class CatalogEntryNetwork {
+    public partial class CatalogedNetwork {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => $"{Protocol??""}:{Service??""}";
 

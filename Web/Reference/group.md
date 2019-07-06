@@ -16,7 +16,7 @@ group    Group management commands
 ````
 create   Create recryption group
        Recryption group name in user@example.com format
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -44,7 +44,7 @@ Specifying the /json option returns a result of type Result:
 add   Add user to recryption group
        Recryption group name in user@example.com format
        User to add
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -71,7 +71,7 @@ Specifying the /json option returns a result of type Result:
 delete   Remove user from recryption group
        Recryption group name in user@example.com format
        User to delete
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -97,7 +97,7 @@ Specifying the /json option returns a result of type Result:
 ````
 list   List members of a recryption group
        Recryption group name in user@example.com format
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

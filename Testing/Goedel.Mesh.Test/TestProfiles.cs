@@ -43,52 +43,52 @@ namespace Goedel.Mesh.Test {
 
             using (var catalog = deviceAdmin.GetCatalogCredential()) {
 
-                var entry1 = new CatalogEntryCredential() {
+                var entry1 = new CatalogedCredential() {
                     Service = "example.com",
                     Username = "alice",
                     Password = "password"
                     };
-                var entry2 = new CatalogEntryCredential() {
+                var entry2 = new CatalogedCredential() {
                     Service = "example.net",
                     Username = "alice",
                     Password = "samepassword"
                     };
-                var entry3 = new CatalogEntryCredential() {
+                var entry3 = new CatalogedCredential() {
                     Service = "www.cnn.com",
                     Username = "alice1977",
                     Password = "EasyToGuess"
                     };
-                var entry4 = new CatalogEntryCredential() {
+                var entry4 = new CatalogedCredential() {
                     Service = "www.bank.test",
                     Username = "alice1977",
                     Password = "EasyToGuess"
                     };
-                var entry5 = new CatalogEntryCredential() {
+                var entry5 = new CatalogedCredential() {
                     Service = "example.net",
                     Username = "alice",
                     Password = "samepassword2"
                     };
 
 
-                CheckCatalog(catalog, new List<CatalogEntry> { });
+                CheckCatalog(catalog, new List<CatalogedEntry> { });
 
                 catalog.New(entry1);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1 });
 
                 catalog.New(entry2);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2 });
 
                 catalog.New(entry3);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3 });
 
                 catalog.New(entry4);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry2, entry3, entry4 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3, entry4 });
 
                 catalog.Update(entry5);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry3, entry4, entry5 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry4, entry5 });
 
                 catalog.Delete(entry4);
-                CheckCatalog(catalog, new List<CatalogEntry> { entry1, entry3, entry5 });
+                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry5 });
 
                 CheckCatalogEntry(entry1, catalog.LocateByService(entry1.Service));
                 CheckCatalogEntry(entry3, catalog.LocateByService(entry3.Service));
@@ -142,16 +142,16 @@ namespace Goedel.Mesh.Test {
                     DareEnvelope.Encode(data.GetBytes(tag: true),
                         signingKey: keySign, contentType: "application/mmm");
 
-        public CatalogEntryDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
+        public CatalogedDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 
-            var profileMeshDevicePublic = new AssertionDeviceConnection() {
+            var profileMeshDevicePublic = new ConnectionDevice() {
                 //DeviceProfile = profileDevice.DareEnvelope
                 };
 
-            var ProfileMeshDevicePrivate = new AssertionDevicePrivate() {
+            var ProfileMeshDevicePrivate = new ActivationDevice() {
                 };
 
-            var catalogEntryDevice = new CatalogEntryDevice() {
+            var catalogEntryDevice = new CatalogedDevice() {
                 UDF = profileDevice.UDF,
                 EnvelopedDeviceConnection = Sign(profileMeshDevicePublic, keySign),
                 EnvelopedDevicePrivate = Sign(ProfileMeshDevicePrivate, keySign)
@@ -179,48 +179,48 @@ namespace Goedel.Mesh.Test {
                 First = "Alice",
                 Last = "Example"
                 };
-            var Entry1 = new CatalogEntryContact(Contact1);
+            var Entry1 = new CatalogedContact(Contact1);
 
             var Contact2 = new Contact() {
                 FullName = "Bob Example",
                 First = "Bob",
                 Last = "Example"
                 };
-            var Entry2 = new CatalogEntryContact(Contact2);
+            var Entry2 = new CatalogedContact(Contact2);
 
             var Contact3 = new Contact() {
                 FullName = "Carol Example",
                 First = "Carol",
                 Last = "Example"
                 };
-            var Entry3 = new CatalogEntryContact(Contact3);
+            var Entry3 = new CatalogedContact(Contact3);
 
             var Contact4 = new Contact() {
                 FullName = "Mallet Example",
                 First = "Mallet",
                 Last = "Example"
                 };
-            var Entry4 = new CatalogEntryContact(Contact4);
+            var Entry4 = new CatalogedContact(Contact4);
 
             catalog.New(Entry1);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1 });
+            CheckCatalog(catalog, new List<CatalogedEntry> { Entry1 });
 
             catalog.New(Entry2);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2 });
+            CheckCatalog(catalog, new List<CatalogedEntry> { Entry1, Entry2 });
 
             catalog.New(Entry3);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
+            CheckCatalog(catalog, new List<CatalogedEntry> { Entry1, Entry2, Entry3 });
 
             catalog.New(Entry4);
-            CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3, Entry4 });
+            CheckCatalog(catalog, new List<CatalogedEntry> { Entry1, Entry2, Entry3, Entry4 });
             }
 
 
 
 
-        void CheckCatalog(Catalog catalog, List<CatalogEntry> entries) {
+        void CheckCatalog(Catalog catalog, List<CatalogedEntry> entries) {
 
-            var sorted = new SortedDictionary<string, CatalogEntry>();
+            var sorted = new SortedDictionary<string, CatalogedEntry>();
             foreach (var entry in entries) {
                 sorted.Add(entry._PrimaryKey, entry);
                 }
@@ -234,7 +234,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        void CheckCatalogEntry(CatalogEntry Test1, CatalogEntry Test2) {
+        void CheckCatalogEntry(CatalogedEntry Test1, CatalogedEntry Test2) {
             if (Test1 == null) {
                 Test2.AssertNull();
                 }

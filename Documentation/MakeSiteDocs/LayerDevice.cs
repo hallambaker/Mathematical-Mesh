@@ -29,7 +29,7 @@ namespace ExampleGenerator {
 
         public List<ExampleResult> ProfileCreateAlice;
         public List<ExampleResult> ProfileAliceDelete;
-
+        public List<ExampleResult> ProfileAliceRecover;
 
 
         public List<ExampleResult> ProfileDevice;
@@ -44,7 +44,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> ProfileHelloDevice;
         public List<ExampleResult> ProfileHelloProfile;
         public List<ExampleResult> ProfileHelloTicket;
-        public List<ExampleResult> ProfileRegister;
+
 
         public List<ExampleResult> ProfileSync;
 
@@ -57,36 +57,31 @@ namespace ExampleGenerator {
 
 
         public void DoCommandsProfile() {
-
-
+            // Create a new profile
             ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
-
-
-
-
             AliceProfiles = ProfileCreateAlice[0].Result as ResultMasterCreate;
 
-            ProfileList = testCLIAlice1.Example($"profile list");
-            ProfileDump = testCLIAlice1.Example($"profile get /mesh={AliceAccount1}");
+            // Bob uses the all in one approach
+            ProfileCreateBob = testCLIBob1.Example($"mesh create /account {BobAccount} /service={BobService}");
+
+            // Basic get information tests.
+            ProfileList = testCLIAlice1.Example($"mesh list");
+            ProfileDump = testCLIAlice1.Example($"mesh get");
 
 
+            // Escrow round trip
+            ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
 
-            ProfileEscrow = testCLIAlice1.Example($"profile escrow");
+            var share1 = "TBS"; //(ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = "TBS"; //(ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            //var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
-            //var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+            ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+            ProfileRecover = testCLIAlice1.Example($"mesh recover ${share1} ${share2} /verify");
 
-            //ProfileAliceDelete = testCLIAlice1.Example($"profile delete  {AliceService1}");
 
-            //ProfileRecover = testCLIAlice1.Example($"profile recover ${share1} ${share2} /verify");
-            //ProfileExport = testCLIAlice1.Example($"profile export {TestExport}");
-            //ProfileImport = testCLIAlice2.Example($"profile import {TestExport}"); // do on another device
-
-  
-            //ProfileAliceRegister = testCLIAlice1.Example($"account recover  {AliceAccount1}");
-
-            
-
+            // Import and export test
+            ProfileExport = testCLIAlice1.Example($"mesh export {TestExport}");
+            ProfileImport = testCLIAlice4.Example($"mesh import {TestExport}"); // do on another device (to be created
             }
 
         #endregion

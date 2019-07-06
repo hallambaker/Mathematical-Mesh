@@ -11,10 +11,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryCredential : IEnumerator<CatalogEntryCredential> {
+    public class EnumeratorCatalogEntryCredential : IEnumerator<CatalogedCredential> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryCredential Current => BaseEnumerator.Current.JsonObject as CatalogEntryCredential;
+        public CatalogedCredential Current => BaseEnumerator.Current.JsonObject as CatalogedCredential;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryCredential : IEnumerable<CatalogEntryCredential> {
+    public class AsCatalogEntryCredential : IEnumerable<CatalogedCredential> {
         CatalogCredential Catalog;
 
         public AsCatalogEntryCredential(CatalogCredential catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryCredential> GetEnumerator() =>
+        public IEnumerator<CatalogedCredential> GetEnumerator() =>
                     new EnumeratorCatalogEntryCredential(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">The service to be matched.</param>
         /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogEntryCredential LocateByService(string key) {
+        public CatalogedCredential LocateByService(string key) {
             foreach (var Credential in AsCatalogEntryCredential) {
                 if (Credential.Service == key) {
                     return Credential;
@@ -78,7 +78,7 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class CatalogEntryCredential {
+    public partial class CatalogedCredential {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => $"{Protocol??""}:{Service??""}";
 

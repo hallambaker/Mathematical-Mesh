@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Server {
         public ProfileMaster ProfileMesh => AccountEntry.ProfileMesh;
 
 
-        public AssertionAccount AssertionAccount => AccountEntry.AssertionAccount;
+        public ProfileAccount AssertionAccount => AccountEntry.AssertionAccount;
 
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        public CatalogEntryDevice GetCatalogEntryDevice(string deviceUDF) {
+        public CatalogedDevice GetCatalogEntryDevice(string deviceUDF) {
 
 
             throw new NYI();

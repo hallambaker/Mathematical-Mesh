@@ -75,7 +75,7 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class AssertionDevicePrivate {
+    public partial class ActivationDevice {
         public ProfileDevice ProfileDevice;
 
         public  DareEnvelope Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
@@ -92,9 +92,9 @@ namespace Goedel.Mesh {
             return DareEnvelope;
             }
 
-        public AssertionDevicePrivate() { }
+        public ActivationDevice() { }
 
-        public AssertionDevicePrivate(
+        public ActivationDevice(
                     IMeshMachine meshMachine,
                     ProfileDevice profileDevice) {
             ProfileDevice = profileDevice;
@@ -110,7 +110,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public static AssertionDevicePrivate Decode(IMeshMachine meshMachine, DareEnvelope message) =>
+        public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
 
         // is failing here because the device entry is not being written back to the catalog after the update.
@@ -131,13 +131,13 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class AssertionDeviceConnection {
+    public partial class ConnectionDevice {
         public ProfileMaster ProfileMaster;
 
-        public AssertionDeviceConnection() {
+        public ConnectionDevice() {
             }
 
-        public AssertionDeviceConnection(AssertionDevicePrivate assertionDevicePrivate) {
+        public ConnectionDevice(ActivationDevice assertionDevicePrivate) {
 
             KeySignature = new PublicKey(assertionDevicePrivate.KeySignature.KeyPair);
             KeyEncryption = new PublicKey(assertionDevicePrivate.KeyEncryption.KeyPair);
@@ -149,7 +149,7 @@ namespace Goedel.Mesh {
             Console.WriteLine($"   Auth {KeyAuthentication.UDF}");
             }
 
-        public static new AssertionDeviceConnection Decode(DareEnvelope message) =>
+        public static new ConnectionDevice Decode(DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
         }
 

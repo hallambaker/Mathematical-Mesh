@@ -45,7 +45,7 @@ namespace Goedel.Test.Core {
         public override MeshService GetMeshClient(
                 string serviceID,
                 KeyPair keyAuthentication,
-                AssertionAccountConnection assertionAccountConnection,
+                ConnectionAccount assertionAccountConnection,
                 Profile profile = null) =>
             TestEnvironmentCommon.MeshPortalDirect.GetService(serviceID);
 

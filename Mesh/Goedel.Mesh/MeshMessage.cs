@@ -6,7 +6,7 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
-    public partial class MeshMessage {
+    public partial class Message {
 
         public DareEnvelope Encode(KeyPair signingKey) {
             var data = this.GetBytes();
@@ -15,7 +15,7 @@ namespace Goedel.Mesh {
             }
         }
 
-    public partial class MeshMessageComplete  {
+    public partial class MessageComplete  {
 
         public const string Accept = "Accept";
         public const string Reject = "Reject";
@@ -23,9 +23,9 @@ namespace Goedel.Mesh {
         public const string Unread = "Unread";
 
 
-        public MeshMessageComplete() { }
+        public MessageComplete() { }
 
-        public MeshMessageComplete(
+        public MessageComplete(
                     string messageID, string relationship, string responseID=null) {
             var reference = new Reference() {
                 MessageID = messageID,

@@ -17,8 +17,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupAdd(GroupAdd Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
+            
             }
 
         /// <summary>
@@ -27,8 +34,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupCreate(GroupCreate Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
             }
 
         /// <summary>
@@ -37,8 +50,32 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult GroupDelete(GroupDelete Options) {
-            var context = GetContextDevice(Options);
-            throw new NYI();
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
             }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult GroupList(GroupList Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                throw new NYI();
+                //return result;
+                }
+            }
+
+
         }
     }

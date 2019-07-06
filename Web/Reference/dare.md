@@ -21,7 +21,7 @@ encode   Encode data as DARE Message.
     /sign   Sign data with specified key
     /hash   Compute hash of content
     /alg   List of algorithm specifiers
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q /json
 {
   "Result": {
     "Success": false,
@@ -84,7 +84,7 @@ Specifying the /json option returns a result of type Result:
 decode   Decode a DARE Message.
        Encrypted File
        Decrypted File
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q /json
 {
   "Result": {
     "Success": false,
@@ -121,7 +121,7 @@ Specifying the /json option returns a result of type Result:
 ````
 verify   Verify a DARE Message.
        Encrypted File
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EA3T-V3P2-SNF7-SE24-S37S-VY5G-6QSQ /json
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q /json
 {
   "Result": {
     "Success": false,
@@ -160,7 +160,7 @@ earl   Create an Encrypted Authenticated Resource Locator (EARL)
     /new   Only convert file if not listed in DARE Container Log.
     /sub   Process subdirectories recursively.
     /alg   List of algorithm specifiers
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

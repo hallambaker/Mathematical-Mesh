@@ -299,18 +299,7 @@ four characters are given.
 
 #%  ConsoleReference (Examples.ConnectReject);
 
-#% Describe(CommandSet, _DeviceGetPIN._DescribeCommand);
 
-The `device pin` command generates and registers a new PIN code that may be used
-to authenticate a device connection request.
-
-The `/length` option specifies the length of the generated PIN in (significant)
-characters.
-
-The '/expire' option specifies an expiry time for the request as an integer 
-followed by the letter m, h or d for minutes, hours and days respectively.
-
-#%  ConsoleReference (Examples.ConnectGetPin);
 
 #% Describe(CommandSet, _DevicePreConnect._DescribeCommand);
 

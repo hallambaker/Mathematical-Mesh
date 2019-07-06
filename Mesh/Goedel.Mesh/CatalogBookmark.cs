@@ -11,10 +11,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryBookmark : IEnumerator<CatalogEntryBookmark> {
+    public class EnumeratorCatalogEntryBookmark : IEnumerator<CatalogedBookmark> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryBookmark Current => BaseEnumerator.Current.JsonObject as CatalogEntryBookmark;
+        public CatalogedBookmark Current => BaseEnumerator.Current.JsonObject as CatalogedBookmark;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryBookmark : IEnumerable<CatalogEntryBookmark> {
+    public class AsCatalogEntryBookmark : IEnumerable<CatalogedBookmark> {
         CatalogBookmark Catalog;
 
         public AsCatalogEntryBookmark(CatalogBookmark catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryBookmark> GetEnumerator() =>
+        public IEnumerator<CatalogedBookmark> GetEnumerator() =>
                     new EnumeratorCatalogEntryBookmark(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -56,7 +56,7 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class CatalogEntryBookmark {
+    public partial class CatalogedBookmark {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => Path;
 

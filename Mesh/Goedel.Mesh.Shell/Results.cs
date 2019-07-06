@@ -635,7 +635,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual List<CatalogEntry>				CatalogEntries  {get; set;}
+		public virtual List<CatalogedEntry>				CatalogedEntries  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -679,12 +679,12 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
-			if (CatalogEntries != null) {
+			if (CatalogedEntries != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntries", 1);
+				_Writer.WriteToken ("CatalogedEntries", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in CatalogEntries) {
+				foreach (var _index in CatalogedEntries) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -728,16 +728,16 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "CatalogEntries" : {
+				case "CatalogedEntries" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					CatalogEntries = new List <CatalogEntry> ();
+					CatalogedEntries = new List <CatalogedEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  CatalogEntry ();
+						var _Item = new  CatalogedEntry ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new CatalogEntry (JSONReader);
-						CatalogEntries.Add (_Item);
+						// var _Item = new CatalogedEntry (JSONReader);
+						CatalogedEntries.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -759,7 +759,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual List<CatalogEntryDevice>				CatalogEntryDevices  {get; set;}
+		public virtual List<CatalogedDevice>				CatalogedDevices  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -807,12 +807,12 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
-			if (CatalogEntryDevices != null) {
+			if (CatalogedDevices != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryDevices", 1);
+				_Writer.WriteToken ("CatalogedDevices", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in CatalogEntryDevices) {
+				foreach (var _index in CatalogedDevices) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -872,16 +872,16 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "CatalogEntryDevices" : {
+				case "CatalogedDevices" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					CatalogEntryDevices = new List <CatalogEntryDevice> ();
+					CatalogedDevices = new List <CatalogedDevice> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  CatalogEntryDevice ();
+						var _Item = new  CatalogedDevice ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new CatalogEntryDevice (JSONReader);
-						CatalogEntryDevices.Add (_Item);
+						// var _Item = new CatalogedDevice (JSONReader);
+						CatalogedDevices.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -1048,7 +1048,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual CatalogEntryDevice						CatalogEntryDevice  {get; set;}
+		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1102,10 +1102,10 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteToken ("DeviceUDF", 1);
 					_Writer.WriteString (DeviceUDF);
 				}
-			if (CatalogEntryDevice != null) {
+			if (CatalogedDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogEntryDevice", 1);
-					CatalogEntryDevice.Serialize (_Writer, false);
+				_Writer.WriteToken ("CatalogedDevice", 1);
+					CatalogedDevice.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1147,10 +1147,10 @@ namespace Goedel.Mesh.Shell {
 					DeviceUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "CatalogEntryDevice" : {
+				case "CatalogedDevice" : {
 					// An untagged structure
-					CatalogEntryDevice = new CatalogEntryDevice ();
-					CatalogEntryDevice.Deserialize (JSONReader);
+					CatalogedDevice = new CatalogedDevice ();
+					CatalogedDevice.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1645,7 +1645,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual CatalogEntry						CatalogEntry  {get; set;}
+		public virtual CatalogedEntry						CatalogEntry  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1728,7 +1728,7 @@ namespace Goedel.Mesh.Shell {
 			switch (Tag) {
 				case "CatalogEntry" : {
 					// An untagged structure
-					CatalogEntry = new CatalogEntry ();
+					CatalogEntry = new CatalogedEntry ();
 					CatalogEntry.Deserialize (JSONReader);
  
 					break;
@@ -2190,7 +2190,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual List<MeshMessage>				Messages  {get; set;}
+		public virtual List<Message>				Messages  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2286,12 +2286,12 @@ namespace Goedel.Mesh.Shell {
 				case "Messages" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Messages = new List <MeshMessage> ();
+					Messages = new List <Message> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  MeshMessage ();
+						var _Item = new  Message ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new MeshMessage (JSONReader);
+						// var _Item = new Message (JSONReader);
 						Messages.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}

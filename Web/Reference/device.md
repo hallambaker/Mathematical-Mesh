@@ -35,7 +35,7 @@ accept   Accept a pending connection
     /network   Authorize access to the network catalog
     /password   Authorize access to the password catalog
     /ssh   Authorize use of SSH
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -75,7 +75,7 @@ auth   Authorize device to use application
     /network   Authorize access to the network catalog
     /password   Authorize access to the password catalog
     /ssh   Authorize use of SSH
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -146,7 +146,7 @@ accept   Accept a pending connection
     /network   Authorize access to the network catalog
     /password   Authorize access to the password catalog
     /ssh   Authorize use of SSH
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -210,7 +210,7 @@ no previous default device profile or the`/default` option is specified.
 ````
 delete   Remove device from device catalog
        Device identifier
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -254,7 +254,7 @@ earl   Connect a new device by means of an EARL
     /network   Authorize access to the network catalog
     /password   Authorize access to the password catalog
     /ssh   Authorize use of SSH
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
 ````
 
 The `device earl` command attempts to connect a device to a personal profile
@@ -272,14 +272,14 @@ being that all authorizations are denied.
 
 
 ````
->device earl udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
+>device earl udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earl udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K /json
+>device earl udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU /json
 {
   "Result": {
     "Success": false,
@@ -291,7 +291,7 @@ Specifying the /json option returns a result of type Result:
 ````
 list   List devices in the device catalog
        Recryption group name in user@example.com format
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -319,7 +319,7 @@ Specifying the /json option returns a result of type Result:
 
 ````
 pending   Get list of pending connection requests
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -349,7 +349,7 @@ Specifying the /json option returns a result of type Result:
 ````
 reject   Reject a pending connection
        Fingerprint of connection to reject
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -384,7 +384,7 @@ Specifying the /json option returns a result of type Result:
 pin   Accept a pending connection
     /length   Length of PIN to generate (default is 8 characters)
     /expire   <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -461,14 +461,14 @@ offline initialization of device profiles in batch mode during manufacture.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K
+>device pre devices@example.com /key=udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device pre devices@example.com /key=udf://example.com/EDYO-NKJU-Z72G-27IQ-IHIJ-QLKO-6BCP-4K /json
+>device pre devices@example.com /key=udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU /json
 {
   "Result": {
     "Success": false,

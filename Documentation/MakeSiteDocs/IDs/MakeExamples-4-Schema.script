@@ -52,9 +52,9 @@ The resulting key set is specified in the device connection:
 
 #% Format(AliceProfiles?.ConnectionDevice);
 
-All the above are combined to form the CatalogEntryDevice entry:
+All the above are combined to form the CatalogedDevice entry:
 
-#% Format(AliceProfiles?.CatalogEntryDevice);
+#% Format(AliceProfiles?.CatalogedDevice);
 
 #end zfile
 

@@ -38,8 +38,8 @@ The `profile create` command creates a profile:
 
 ````
 >mesh create
-Device Profile UDF=MCCE-E7DI-EVQ2-QOV3-TXT2-BF5W-F4EP
-Personal Profile UDF=MBBK-T2SZ-MQNV-3UH3-XLQR-Y2QR-IF6S
+Device Profile UDF=MCGG-AUII-VXPT-36PS-PFMS-NJWV-ITPG
+Personal Profile UDF=MD45-T5CQ-IJOJ-YR7L-MIN3-RXVU-2WKS
 ````
 
 
@@ -52,8 +52,8 @@ machine:
 
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 The `profile dump` command provides a more detailed description of 
@@ -61,8 +61,8 @@ a profile:
 
 
 ````
->profile get /mesh=personal
-ERROR - The command  is not known.
+>mesh get
+ERROR - The feature has not been implemented
 ````
 
 ## Escrowing Profile Master Keys
@@ -78,8 +78,8 @@ of the user's master profile and returns a set of recovery shares.
 
 
 ````
->profile escrow
-ERROR - The command  is not known.
+>mesh escrow
+ERROR - The cryptographic provider does not permit export of the private key parameters
 ````
 
 By default, three recovery shares are created such that two shares are required to
@@ -88,7 +88,11 @@ recover the master keys.
 Recovery of the master keys is performed by the `profile recover`
 command.
 
-**Missing Example***
+
+````
+>mesh recover $TBS $TBS /verify
+ERROR - The feature has not been implemented
+````
 
 The `/verify` flag causes the tool to check that the keys can be correctly recovered
 without actually installing on the machine.
@@ -98,10 +102,18 @@ without actually installing on the machine.
 
 A Mesh profile may be exported as a file using the `profile ` command:
 
-**Missing Example***
+
+````
+>mesh export profile.dare
+ERROR - The feature has not been implemented
+````
 
 The `profile ` profile can then be used to import the file on another 
 machine:
 
-**Missing Example***
+
+````
+>mesh import profile.dare
+ERROR - The feature has not been implemented
+````
 

@@ -18,7 +18,7 @@ add   Add password entry
        <Unspecified>
        <Unspecified>
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -47,7 +47,7 @@ Specifying the /json option returns a result of type ResultEntry:
 ````
 get   Lookup password entry
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -71,25 +71,25 @@ Specifying the /json option returns a result of type Result:
 ````
 delete   Delete password entry
        Domain name of Web site
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
 ````
 
 ````
->profile list
-ERROR - The command  is not known.
+>mesh list
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->profile list /json
+>mesh list /json
 {
   "Result": {
     "Success": false,
-    "Reason": "The command  is not known."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # password list
@@ -97,7 +97,7 @@ Specifying the /json option returns a result of type Result:
 ````
 list   List password entries
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

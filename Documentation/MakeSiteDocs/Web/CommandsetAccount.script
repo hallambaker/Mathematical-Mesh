@@ -53,24 +53,35 @@ service when we create the profile:
 
 #% Describe(CommandSet, _AccountHello._DescribeCommand);
 
-The `profile hello` command attempts to contact a Mesh service and reports the
+The `account hello` command attempts to contact a Mesh service and reports the
 service configuration if successful.
 
 #%  ConsoleReference (Examples.ProfileHello);
 
 #!% Describe(CommandSet, _AccountRegister._DescribeCommand);
 
-The `profile register` command 
+The `account register` command 
 
 #!%  ConsoleReference (Examples.ProfileRegister);
 
 #% Describe(CommandSet, _AccountSync._DescribeCommand);
 
-The `profile sync` command 
+The `account sync` command 
 
 #!%  ConsoleReference (Examples.ProfileSync);
 
+#% Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 
+The `account pin` command generates and registers a new PIN code that may be used
+to authenticate a device connection request.
+
+The `/length` option specifies the length of the generated PIN in (significant)
+characters.
+
+The '/expire' option specifies an expiry time for the request as an integer 
+followed by the letter m, h or d for minutes, hours and days respectively.
+
+#%  ConsoleReference (Examples.ConnectGetPin);
 
 
 #end xfile

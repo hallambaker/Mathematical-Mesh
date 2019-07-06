@@ -325,18 +325,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleReference (Examples.ConnectReject);
 				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _DeviceGetPIN._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The `device pin` command generates and registers a new PIN code that may be used\n{0}", _Indent);
-				_Output.Write ("to authenticate a device connection request.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The `/length` option specifies the length of the generated PIN in (significant)\n{0}", _Indent);
-				_Output.Write ("characters.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The '/expire' option specifies an expiry time for the request as an integer \n{0}", _Indent);
-				_Output.Write ("followed by the letter m, h or d for minutes, hours and days respectively.\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				  ConsoleReference (Examples.ConnectGetPin);
 				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _DevicePreConnect._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);

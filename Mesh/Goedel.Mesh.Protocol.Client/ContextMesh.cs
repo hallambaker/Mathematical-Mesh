@@ -26,17 +26,17 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
-        public virtual CatalogEntryDevice CatalogEntryDevice => DeviceConnection.CatalogEntryDevice;
+        public virtual CatalogedDevice CatalogedDevice => DeviceConnection.CatalogedDevice;
 
         /////<summary>The device profile to which the signature key is bound</summary>
         //public ProfileDevice profileDevice { get; }
 
-        AssertionDevicePrivate AssertionDevicePrivate => assertionDevicePrivate ??
-            AssertionDevicePrivate.Decode(
-                MeshMachine, CatalogEntryDevice.EnvelopedDevicePrivate).CacheValue(
+        ActivationDevice AssertionDevicePrivate => assertionDevicePrivate ??
+            ActivationDevice.Decode(
+                MeshMachine, CatalogedDevice.EnvelopedDevicePrivate).CacheValue(
                     out assertionDevicePrivate);
 
-        AssertionDevicePrivate assertionDevicePrivate = null;
+        ActivationDevice assertionDevicePrivate = null;
 
         ///<summary>The context as an administration context.</summary>
         public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;

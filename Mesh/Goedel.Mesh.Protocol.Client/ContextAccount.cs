@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Client {
         public ActivationAccount ActivationAccount;
 
 
-        public AssertionAccount AssertionAccount;
+        public ProfileAccount AssertionAccount;
 
         ///<summary>The Machine context.</summary>
         IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
@@ -76,7 +76,7 @@ namespace Goedel.Mesh.Client {
         public ContextAccount(
                     ContextMesh contextMesh,
                     ActivationAccount activationAccount,
-                    AssertionAccount assertionAccount = null
+                    ProfileAccount assertionAccount = null
                     ) {
             // Set up the basic context
             ContextMesh = contextMesh;
@@ -270,28 +270,28 @@ namespace Goedel.Mesh.Client {
         /// Return the latest unprocessed MessageConnectionRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConnectionRequest</returns>
-        public MeshMessage GetPendingMessageConnectionRequest() =>
+        public Message GetPendingMessageConnectionRequest() =>
             GetPendingMessage(MessageConnectionResponse.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageContactRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageContactRequest</returns>
-        public MeshMessage GetPendingMessageContactRequest() =>
+        public Message GetPendingMessageContactRequest() =>
             GetPendingMessage(MessageContactRequest.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageConfirmationRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConfirmationRequest</returns>
-        public MeshMessage GetPendingMessageConfirmationRequest() =>
+        public Message GetPendingMessageConfirmationRequest() =>
             GetPendingMessage(MessageConfirmationRequest.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageConfirmationResponse that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConfirmationResponse</returns>
-        public MeshMessage GetPendingMessageConfirmationResponse() =>
+        public Message GetPendingMessageConfirmationResponse() =>
             GetPendingMessage(MessageConfirmationResponse.__Tag);
 
         /// <summary>
@@ -300,17 +300,17 @@ namespace Goedel.Mesh.Client {
         /// <param name="spoolInbound"></param>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public MeshMessage GetPendingMessage(string tag) {
-            var completed = new Dictionary<string, MeshMessage>();
+        public Message GetPendingMessage(string tag) {
+            var completed = new Dictionary<string, Message>();
 
             foreach (var message in spoolInbound.Select(1, true)) {
-                var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
                 if (!completed.ContainsKey(meshMessage.MessageID)) {
                     if (meshMessage._Tag == tag) {
                         return meshMessage;
                         }
                     switch (meshMessage) {
-                        case MeshMessageComplete meshMessageComplete: {
+                        case MessageComplete meshMessageComplete: {
                             foreach (var reference in meshMessageComplete.References) {
                                 completed.Add(reference.MessageID, meshMessageComplete);
                                 // Hack: This should make actual use of the relationship
@@ -399,7 +399,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void Process(MeshMessage meshMessage, bool accept = true, bool respond = true) {
+        public void Process(Message meshMessage, bool accept = true, bool respond = true) {
             throw new NYI();
             }
 
@@ -426,7 +426,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void SendMessage(MeshMessage MeshMessage) {
+        public void SendMessage(Message MeshMessage) {
             Connect();
 
             }
@@ -435,7 +435,7 @@ namespace Goedel.Mesh.Client {
         /// Send a message signed using the mesh administration key.
         /// </summary>
         /// <param name="MeshMessage"></param>
-        public void SendMessageAdmin(MeshMessage MeshMessage) {
+        public void SendMessageAdmin(Message MeshMessage) {
             Connect();
 
             var message = DareEnvelope.Encode(MeshMessage.GetBytes());

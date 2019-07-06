@@ -11,10 +11,10 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryTask : IEnumerator<CatalogEntryTask> {
+    public class EnumeratorCatalogEntryTask : IEnumerator<CatalogedTask> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntryTask Current => BaseEnumerator.Current.JsonObject as CatalogEntryTask;
+        public CatalogedTask Current => BaseEnumerator.Current.JsonObject as CatalogedTask;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -24,12 +24,12 @@ namespace Goedel.Mesh {
             BaseEnumerator = container.GetEnumerator();
         }
 
-    public class AsCatalogEntryTask : IEnumerable<CatalogEntryTask> {
+    public class AsCatalogEntryTask : IEnumerable<CatalogedTask> {
         CatalogCalendar Catalog;
 
         public AsCatalogEntryTask(CatalogCalendar catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryTask> GetEnumerator() =>
+        public IEnumerator<CatalogedTask> GetEnumerator() =>
                     new EnumeratorCatalogEntryTask(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
@@ -48,7 +48,7 @@ namespace Goedel.Mesh {
         public AsCatalogEntryTask AsCatalogEntryContact => new AsCatalogEntryTask(this);
 
 
-        public CatalogEntryTask LocateBySite(string Key) => Locate(Key) as CatalogEntryTask;
+        public CatalogedTask LocateBySite(string Key) => Locate(Key) as CatalogedTask;
 
 
         public CatalogCalendar(string directory, string ContainerName = null,
@@ -61,16 +61,16 @@ namespace Goedel.Mesh {
         }
 
     // NYI should all be DareMessages to allow them to be signed.
-    public partial class CatalogEntryTask {
+    public partial class CatalogedTask {
 
 
         public override string _PrimaryKey => Key;
 
-        public CatalogEntryTask() => Key = UDF.Nonce();
+        public CatalogedTask() => Key = UDF.Nonce();
 
-        public CatalogEntryTask(DareEnvelope task) : this() => EnvelopedTask = task;
+        public CatalogedTask(DareEnvelope task) : this() => EnvelopedTask = task;
 
-        public CatalogEntryTask(Task task) : this() => EnvelopedTask = DareEnvelope.Encode(task.GetBytes(tag: true),
+        public CatalogedTask(Task task) : this() => EnvelopedTask = DareEnvelope.Encode(task.GetBytes(tag: true),
                     contentType: "application/mmm");
         }
 

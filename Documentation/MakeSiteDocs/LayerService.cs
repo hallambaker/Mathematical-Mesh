@@ -57,7 +57,7 @@ namespace ExampleGenerator {
 
         public void DoCommandsService() {
 
-            ProfileHello = testCLIAlice1.Example($"service hello {AliceService1}");
+            ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             ResultHello = ProfileHello[0].Result as ResultHello;
 
             // here add the service
@@ -65,7 +65,7 @@ namespace ExampleGenerator {
             ProfileSync = testCLIAlice1.Example($"account sync");
 
 
-            ProfileCreateBob = testCLIBob1.Example($"profile create {BobAccount} /service={BobService}");
+
 
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
 

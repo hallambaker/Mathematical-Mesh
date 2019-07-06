@@ -13,22 +13,22 @@ namespace Goedel.Mesh {
 
 
 
-    public class AsCatalogEntryApplication: IEnumerable<CatalogEntryApplication> {
+    public class AsCatalogEntryApplication: IEnumerable<CatalogedApplication> {
         CatalogContact Catalog;
 
         public AsCatalogEntryApplication(CatalogContact catalog) => Catalog = catalog;
 
-        public IEnumerator<CatalogEntryApplication> GetEnumerator() =>
+        public IEnumerator<CatalogedApplication> GetEnumerator() =>
                     new EnumeratorCatalogEntryApplication(Catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
 
-        private class EnumeratorCatalogEntryApplication : IEnumerator<CatalogEntryApplication> {
+        private class EnumeratorCatalogEntryApplication : IEnumerator<CatalogedApplication> {
             IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-            public CatalogEntryApplication Current => BaseEnumerator.Current.JsonObject as CatalogEntryApplication;
+            public CatalogedApplication Current => BaseEnumerator.Current.JsonObject as CatalogedApplication;
             object IEnumerator.Current => Current;
             public void Dispose() => BaseEnumerator.Dispose();
             public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -51,8 +51,8 @@ namespace Goedel.Mesh {
         //public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
-        public void Update(AssertionAccount assertionAccount) {
-            var catalogEntryApplicationAccount = new CatalogEntryApplicationAccount() {
+        public void Update(ProfileAccount assertionAccount) {
+            var catalogEntryApplicationAccount = new CatalogedApplicationAccount() {
                 Key = assertionAccount.UDF,
                 EnvelopedAccountAssertion = assertionAccount.DareEnvelope
                 };
@@ -61,13 +61,13 @@ namespace Goedel.Mesh {
             }
 
 
-        public AssertionAccount GetAssertionAccount(string Key) {
-            var entry = Locate(Key) as CatalogEntryApplicationAccount;
-            return AssertionAccount.Decode(entry.EnvelopedAccountAssertion);
+        public ProfileAccount GetAssertionAccount(string Key) {
+            var entry = Locate(Key) as CatalogedApplicationAccount;
+            return ProfileAccount.Decode(entry.EnvelopedAccountAssertion);
             }
 
 
-        public CatalogEntryApplication LocateBySite(string Key) => Locate(Key) as CatalogEntryApplication;
+        public CatalogedApplication LocateBySite(string Key) => Locate(Key) as CatalogedApplication;
 
 
         public CatalogApplication(string directory, string ContainerName=null,
@@ -79,7 +79,7 @@ namespace Goedel.Mesh {
         new CatalogApplication(directory, containerName);
         }
 
-    public partial class CatalogEntryApplication {
+    public partial class CatalogedApplication {
 
 
         public override string _PrimaryKey => Key;
@@ -88,7 +88,7 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class CatalogEntryApplicationAccount {
+    public partial class CatalogedApplicationAccount {
 
 
         public override string _PrimaryKey => Key;

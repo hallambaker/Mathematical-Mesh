@@ -20,9 +20,9 @@ namespace Goedel.Mesh {
 
     public struct CatalogUpdate {
         public CatalogAction Action;
-        public CatalogEntry CatalogEntry;
+        public CatalogedEntry CatalogEntry;
         public string PrimaryKey;
-        public CatalogUpdate(CatalogAction action, CatalogEntry catalogEntry) {
+        public CatalogUpdate(CatalogAction action, CatalogedEntry catalogEntry) {
             Action = action;
             CatalogEntry = catalogEntry;
             PrimaryKey = catalogEntry._PrimaryKey;
@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
 
     public delegate bool CatalogTransactDelegate (List<CatalogUpdate> Updates);
 
-    public class Catalog : Store, IEnumerable<CatalogEntry> {
+    public class Catalog : Store, IEnumerable<CatalogedEntry> {
 
         public ContainerPersistenceStore ContainerPersistence = null;
 
@@ -64,7 +64,7 @@ namespace Goedel.Mesh {
             TransactDelegate = Transact;
             }
 
-        public DareEnvelope ContainerEntry(CatalogEntry catalogEntry, string eventID) {
+        public DareEnvelope ContainerEntry(CatalogedEntry catalogEntry, string eventID) {
 
             var body = catalogEntry.GetBytes(tagged: true);
 
@@ -126,29 +126,29 @@ namespace Goedel.Mesh {
 
 
 
-        public void New(CatalogEntry catalogEntry) {
+        public void New(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
             TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
             }
 
 
-        public  void Update(CatalogEntry catalogEntry) {
+        public  void Update(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.Update, catalogEntry);
 
             TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
             }
 
 
-        public void Delete(CatalogEntry catalogEntry) {
+        public void Delete(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(catalogEntry._PrimaryKey);
             TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
             }
 
-        public CatalogEntry Locate(string key) => 
-            (ContainerPersistence.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogEntry;
+        public CatalogedEntry Locate(string key) => 
+            (ContainerPersistence.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogedEntry;
 
 
-        public IEnumerator<CatalogEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);
+        public IEnumerator<CatalogedEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
@@ -156,10 +156,10 @@ namespace Goedel.Mesh {
         }
 
     #region // Enumerators and associated classes
-    public class EnumeratorCatalogEntry : IEnumerator<CatalogEntry> {
+    public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
         IEnumerator<ContainerStoreEntry> BaseEnumerator;
 
-        public CatalogEntry Current => BaseEnumerator.Current.JsonObject as CatalogEntry;
+        public CatalogedEntry Current => BaseEnumerator.Current.JsonObject as CatalogedEntry;
         object IEnumerator.Current => Current;
         public void Dispose() => BaseEnumerator.Dispose();
         public bool MoveNext() => BaseEnumerator.MoveNext();
@@ -172,7 +172,7 @@ namespace Goedel.Mesh {
 
     #endregion
 
-    public partial class CatalogEntry {
+    public partial class CatalogedEntry {
 
 
         }

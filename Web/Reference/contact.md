@@ -16,7 +16,7 @@ contact    Manage contact catalogs connected to an account
 ````
 add   Add contact entry from file
        <Unspecified>
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -42,7 +42,7 @@ Specifying the /json option returns a result of type Result:
 ````
 delete   Delete contact entry
        Contact entry identifier
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -68,7 +68,7 @@ Specifying the /json option returns a result of type Result:
 ````
 get   Lookup contact entry
        Contact entry identifier
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -93,7 +93,7 @@ Specifying the /json option returns a result of type ResultEntry:
 
 ````
 list   List contact entries
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

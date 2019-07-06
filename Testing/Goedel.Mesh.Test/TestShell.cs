@@ -184,7 +184,7 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckPasswordResult(string site, string username, string password) {
             var result = Dispatch($"password get {site}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogEntryCredential;
+            var entry = result.CatalogEntry as CatalogedCredential;
 
             (site == entry.Service).AssertTrue();
             (username == entry.Username).AssertTrue();
@@ -199,7 +199,7 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckContactResult(string key) {
             var result = Dispatch($"contact get {key}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogEntryContact;
+            var entry = result.CatalogEntry as CatalogedContact;
 
             (key == entry.Key).AssertTrue();
             return true;
@@ -212,7 +212,7 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckBookmarkResult(string path, string uri, string title) {
             var result = Dispatch($"bookmark get {path}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogEntryBookmark;
+            var entry = result.CatalogEntry as CatalogedBookmark;
 
             (uri == entry.Uri).AssertTrue();
             (title == entry.Title).AssertTrue();
@@ -227,7 +227,7 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckTaskResult(string key, string title) {
             var result = Dispatch($"calendar get {key}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogEntryTask;
+            var entry = result.CatalogEntry as CatalogedTask;
 
             (key == entry.Key).AssertTrue();
             return true;
@@ -240,7 +240,7 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckNetworkResult(string key, string password) {
             var result = Dispatch($"network get {key}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogEntryTask;
+            var entry = result.CatalogEntry as CatalogedTask;
 
             (key == entry.Key).AssertTrue();
             return true;

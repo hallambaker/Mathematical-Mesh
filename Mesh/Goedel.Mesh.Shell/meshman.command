@@ -35,7 +35,7 @@
 			Brief "Report output in JSON format"
 
 	OptionSet AccountOptions
-		Option Mesh "mesh" String
+		Option AccountID "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
 
 	OptionSet DeviceProfileInfo
@@ -175,13 +175,12 @@
 
 		Brief "Commands for creating and managing a personal Mesh"
 
-
-
-
 		Command MeshCreate "create"
 			Brief "Create new personal profile"
-			Parameter NewAccountID "new" String
+			Option NewAccountID "account" String
 				Brief "New account"
+			Option NewServiceID "service" String
+				Brief "New service"
 			Include Reporting
 			Include DeviceProfileInfo
 			Include CryptoOptions
@@ -189,7 +188,7 @@
 		Command MeshEscrow "escrow"
 			Brief "Create a set of key escrow shares"
 			Include CryptoOptions
-			Include AccountOptions
+			Include MasterProfileInfo
 			Include Reporting
 			Parameter File "file" NewFile
 			Option Quorum "quorum" Integer
@@ -199,7 +198,7 @@
 
 		Command MeshRecover "recover"
 			Brief "Recover escrowed profile"
-			Include AccountOptions
+			Include MasterProfileInfo
 			Include Reporting
 			Parameter Share1 "s1" String
 			Parameter Share2 "s2" String
@@ -217,39 +216,45 @@
 		Command MeshList "list"
 			Brief "List all profiles on the local machine"
 			Include Reporting
+			Include MasterProfileInfo
 
 		Command MeshGet "get"
 			Brief "Describe the specified profile"
-			Include AccountOptions
+			Include MasterProfileInfo
 			Include Reporting
 
 		// Export and import of profiles
 		Command MeshExport "export"
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile
-			Include AccountOptions
+			Include MasterProfileInfo
 			Include Reporting
 
 		Command MeshImport "import"
 			Brief "Import the specified profile data to the specified file"
 			Parameter File "file" NewFile
-			Include AccountOptions
+			Include MasterProfileInfo
 			Include Reporting
+
+
 
 	CommandSet Account "account"
 		Brief "Account creation and management commands."
 		
-		Command AccountCreate "create"
-			Brief "Create new account"
-			Parameter NewAccountID "account" String
-				Brief "Account friendly name"
-			Include DeviceProfileInfo
-			Include Reporting
-			Include CryptoOptions
 
 		Command AccountHello "hello"		
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
+
+		Command AccountCreate "create"
+			Brief "Create new account"
+			Parameter NewAccountID "account" String
+				Brief "Account friendly name"
+			Include MasterProfileInfo
+			Include Reporting
+			Include CryptoOptions
+
+
 
 		Command AccountSync "sync"
 			Brief "Synchronize local copies of Mesh profiles with the server"
@@ -265,7 +270,15 @@
 			Include MasterProfileInfo
 			Include DeviceProfileInfo
 
-
+		Command AccountGetPIN "pin"
+			Brief "Get a pin value to pre-authorize a connection"
+			Option Length "length" Integer
+				Brief "Length of PIN to generate (default is 8 characters)"
+				Default "8"
+			Option Expire "expire" String
+				Default "1d"
+			Include AccountOptions
+			Include Reporting
 
 
 	CommandSet Connect "device"
@@ -334,15 +347,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command DeviceGetPIN "pin"
-			Brief "Accept a pending connection"
-			Option Length "length" Integer
-				Brief "Length of PIN to generate (default is 8 characters)"
-				Default "8"
-			Option Expire "expire" String
-				Default "1d"
-			Include AccountOptions
-			Include Reporting
+
 
 		Command DeviceInit "init"
 			Brief "Create an initialization "

@@ -19,7 +19,7 @@ message    Contact and confirmation message options
 ````
 contact   Post a conection request to a user
        The recipient to send the conection request to
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -46,7 +46,7 @@ Specifying the /json option returns a result of type Result:
 confirm   Post a confirmation request to a user
        The recipient to send the confirmation request to
        The recipient to send the confirmation request to
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -72,7 +72,7 @@ Specifying the /json option returns a result of type Result:
 
 ````
 pending   List pending requests
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -99,7 +99,7 @@ Specifying the /json option returns a result of type Result:
 ````
 status   Request status of pending requests
     /requestid   Specifies the request to provide the status of
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -125,7 +125,7 @@ Specifying the /json option returns a result of type Result:
 ````
 accept   Accept a pending request
     /requestid   Specifies the request to accept
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -151,7 +151,7 @@ Specifying the /json option returns a result of type Result:
 ````
 reject   Reject a pending request
     /requestid   Specifies the request to reject
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
@@ -177,7 +177,7 @@ Specifying the /json option returns a result of type Result:
 ````
 block   Reject a pending request and block requests from that source
     /requestid   Specifies the request to reject and block
-    /mesh   Account identifier (e.g. alice@example.com) or profile fingerprint
+    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format

@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Client {
         MeshService GetMeshClient(
                 string serviceID,
             KeyPair keyAuthentication,
-            AssertionAccountConnection assertionAccountConnection,
+            ConnectionAccount assertionAccountConnection,
             Profile profile = null);
 
         /// <summary>
@@ -77,6 +77,27 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) ;
 
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        ContextAccount CreateService(
+                string localName,
+                string accountName = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
 
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        ContextMeshPending Connect(
+                string serviceID,
+                string localName = null,
+                string PIN = null,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
         }
     }

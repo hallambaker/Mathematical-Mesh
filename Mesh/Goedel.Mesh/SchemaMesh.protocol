@@ -8,7 +8,10 @@
 	Section 2 "Shared Classes"
 		Description
 			|The following classes are used as common elements in
-			|Mesh profile specifications.a
+			|Mesh profile specifications.
+
+	Section 3 "Classes describing keys"
+
 
 	Structure PublicKey
 		Description
@@ -34,49 +37,8 @@
 			Description
 				|The private key parameters as defined in the JOSE specification.
 		
-	Section 3 "Mesh Assertion Objects"
-		Description 
-			|Base class for all Mesh Assertion objects.
 
 
-	Structure Assertion
-		Abstract
-		Description 
-			|Parent class from which all assertion classes are derived
-
-		String Names
-			Multiple
-			Description
-				|Fingerprints of index terms for profile retrieval. The use of the fingerprint
-				|of the name rather than the name itself is a precaution against enumeration
-				|attacks and other forms of abuse.
-		DateTime Updated
-			Description
-				|The time instant the profile was last modified.
-		String NotaryToken
-			Description
-				|A Uniform Notary Token providing evidence that a signature
-				|was performed after the notary token was created.
-		TStruct Condition Conditions
-			Description
-				|Conditional clause(s) that MAY be verified to evaluate the validity of the
-				|assertion. At present no condition classes are specified.
-
-	Structure Condition
-		Abstract
-		Description 
-			|Parent class from which all condition classes are derived.
-
-	Structure Profile
-		Abstract
-		Inherits Assertion
-		Description 
-			|Parent class from which all profile classes are derived
-		Struct PublicKey KeySignature
-			Description
-				|The signature key associated with the profile.
-
-	Section 3 "Classes describing keys"
 
 	Structure KeyComposite
 		TStruct Key Public
@@ -114,8 +76,74 @@
 			Description
 				|The escrowed master escrow keys.
 
+	Structure DeviceRecryptionKey
+		String UDF
+			Description
+				|The fingerprint of the encryption key
+		Struct PublicKey RecryptionKey
+			Description
+				|The recryption key
+		Struct DareEnvelope EnvelopedRecryptionKeyDevice
+			Description
+				|The decryption key encrypted under the user's device key.	
+
+	Section 2 "Assertion classes"
+		Description
+			|Classes that are derived from an assertion.
+
+	Structure Assertion
+		Abstract
+		Description 
+			|Parent class from which all assertion classes are derived
+
+		String Names
+			Multiple
+			Description
+				|Fingerprints of index terms for profile retrieval. The use of the fingerprint
+				|of the name rather than the name itself is a precaution against enumeration
+				|attacks and other forms of abuse.
+		DateTime Updated
+			Description
+				|The time instant the profile was last modified.
+		String NotaryToken
+			Description
+				|A Uniform Notary Token providing evidence that a signature
+				|was performed after the notary token was created.
+		TStruct Condition Conditions
+			Description
+				|Conditional clause(s) that MAY be verified to evaluate the validity of the
+				|assertion. At present no condition classes are specified.
+
+	Structure Condition
+		Abstract
+		Description 
+			|Parent class from which all condition classes are derived.
+
+
 
 	Section 3 "Profile Classes"
+		Description
+			|Profiles are self signed assertions.
+
+
+
+	Structure Profile
+		Abstract
+		Inherits Assertion
+		Description 
+			|Parent class from which all profile classes are derived
+		Struct PublicKey KeySignature
+			Description
+				|The permanent signature key used to sign the profile itself. The UDF of
+				|the key is used as the permanent object identifier of the profile. Thus,
+				|by definition, the KeySignature value of a Profile does not change under
+				|any circumstance. The only case in which a 
+		Struct PublicKey OnlineSignatureKeys
+			Multiple
+			Description
+				|A Personal profile contains at least one OSK which is used to sign 
+				|device administration application profiles.
+
 
 	Structure ProfileMaster
 		Inherits Profile
@@ -126,11 +154,7 @@
 			Description
 				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
 				|of private keys used for stored data. 
-		Struct PublicKey OnlineSignatureKeys
-			Multiple
-			Description
-				|A Personal profile contains at least one OSK which is used to sign 
-				|device administration application profiles.
+
 		Struct PublicKey KeyEncryption
 			Description
 				|Key used to pass encrypted data to the device such as a
@@ -161,7 +185,7 @@
 				|Key used to authenticate service connections.
 
 
-	Structure AssertionAccount
+	Structure ProfileAccount
 		Inherits Assertion
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
@@ -177,10 +201,31 @@
 			Description
 				|Key used to encrypt data under this profile
 
+	Structure ProfileHost
+		Struct PublicKey AuthenticationKey
+			Description
+				|Key used to authenticate service connections.
 
+	Section 3 "Connection Classes"
 
-	Structure AssertionDeviceConnection
+	Structure Connection
 		Inherits Assertion
+		String SubjectUDF
+			Description
+				|UDF of the connection target.
+		String AuthorityUDF
+			Description
+				|UDF of the connection source.
+
+	Structure Permission
+		String Name
+		String Role
+		Struct DareEnvelope Capabilities
+			Description
+				|Keys or key contributions enabling the operation to be performed
+
+	Structure ConnectionDevice
+		Inherits Connection
 		Struct Permission Permissions
 			Multiple
 			Description
@@ -195,8 +240,8 @@
 			Description
 				|The authentication key for use of the device under the profile
 
-	Structure AssertionAccountConnection
-		Inherits Assertion
+	Structure ConnectionAccount
+		Inherits Connection
 		Struct Permission Permissions
 			Multiple
 			Description
@@ -211,9 +256,26 @@
 			Description
 				|The authentication key for use of the device under the profile
 
-	Structure AssertionDevicePrivate // To do list accounts as permissions 
+	Structure ConnectionService
+		Inherits Connection
+
+	Structure ConnectionHost
+		Inherits Connection
+
+	Structure ConnectionApplication
+		Inherits Connection
+
+
+	Section 3 "Activation Classes"
+
+	Structure Activation
 		Inherits Assertion
-		
+		Description 
+			|Contains the private activation information for a Mesh application running on
+			|a specific device
+
+	Structure ActivationDevice // To do list accounts as permissions 
+		Inherits Assertion
 		Struct DareEnvelope EnvelopedAssertionDeviceConnection
 			Description
 				|The signed AssertionDeviceConnection.
@@ -259,39 +321,14 @@
 				|The key overlay used to generate the account signature key from the
 				|device signature key 
 
-	Structure ProfileApplication
-		Abstract
-		Inherits Profile
-		Description 
-			|Contains the public description of a Mesh application.
+	Section 2 "Cataloged items"
 
-	Structure Activation
-		Description 
-			|Contains the private activation information for a Mesh application.
-
-	Structure DeviceRecryptionKey
-		String UDF
-			Description
-				|The fingerprint of the encryption key
-		Struct PublicKey RecryptionKey
-			Description
-				|The recryption key
-		Struct DareEnvelope EnvelopedRecryptionKeyDevice
-			Description
-				|The decryption key encrypted under the user's device key.		
-
-	Section 2 "Common Structures"
-
-	Structure Permission
-		String Name
-		String Role
-		Struct DareEnvelope Capabilities
-			Description
-				|Keys or key contributions enabling the operation to be performed
+	Section 3 "Data Structures"
+		Description
+			|Classes describing data used in cataloged data.
 
 	Structure Contact
 		Inherits Assertion
-
 		String Identifier
 		String FullName
 		String Title
@@ -342,14 +379,33 @@
 			Description
 				|The relationship type. This can be Read, Unread, Accept, Reject.
 
+	Structure Task
+		String Key
+			Description
+				|Unique key.
+		DateTime Start
+		DateTime Finish
+		String StartTravel
+		String FinishTravel
+		String TimeZone
+		String Title
+		String Description
+		String Location
+		String Trigger
+			Multiple
+		String Conference
+			Multiple
+		String Repeat
+		Boolean Busy
+	
 	Section 2 "Catalog Entries"
 
-	Structure CatalogEntry
+	Structure CatalogedEntry
 		Description
 			|Base class for cataloged Mesh data.
 
-	Structure CatalogEntryDevice
-		Inherits CatalogEntry
+	Structure CatalogedDevice
+		Inherits CatalogedEntry
 		Description
 			|Public device entry, indexed under the device ID
 		String AccountIDs
@@ -373,22 +429,22 @@
 				|The device profile
 
 
-	Structure CatalogEntryCredential
-		Inherits CatalogEntry
+	Structure CatalogedCredential
+		Inherits CatalogedEntry
 		String Protocol
 		String Service
 		String Username
 		String Password
 	
-	Structure CatalogEntryNetwork
-		Inherits CatalogEntry
+	Structure CatalogedNetwork
+		Inherits CatalogedEntry
 		String Protocol
 		String Service
 		String Username
 		String Password
 
-	Structure CatalogEntryContact
-		Inherits CatalogEntry
+	Structure CatalogedContact
+		Inherits CatalogedEntry
 		Boolean Self
 			Description
 				|If true, this catalog entry is for the user who created the catalog. To be
@@ -406,21 +462,21 @@
 			Description
 				|The (signed) contact data.
 
-	Structure CatalogEntryContactRecryption
-		Inherits CatalogEntryContact
+	Structure CatalogedContactRecryption
+		Inherits CatalogedContact
 		// Recryption group user has accepted membership of
 		// Describe document stores, chat groups, etc accessible
 
 
-	Structure CatalogEntryBookmark
-		Inherits CatalogEntry
+	Structure CatalogedBookmark
+		Inherits CatalogedEntry
 		String Uri
 		String Title
 		String Path
 
 
-	Structure CatalogEntryTask
-		Inherits CatalogEntry
+	Structure CatalogedTask
+		Inherits CatalogedEntry
 		Struct DareEnvelope EnvelopedTask
 		// Calendar entry
 		// Geolocation entry
@@ -428,60 +484,48 @@
 			Description
 				|Unique key.
 
-	Structure Task
-		String Key
-			Description
-				|Unique key.
-		DateTime Start
-		DateTime Finish
-		String StartTravel
-		String FinishTravel
-		String TimeZone
-		String Title
-		String Description
-		String Location
-		String Trigger
-			Multiple
-		String Conference
-			Multiple
-		String Repeat
-		Boolean Busy
+
 		
 
-	Structure CatalogEntryApplication
+	Structure CatalogedApplication
 		// The application profile
-		Inherits CatalogEntry
+		Inherits CatalogedEntry
 		String Key
 
 
-	Structure CatalogEntryApplicationAccount
+	Structure CatalogedApplicationAccount
 		Description
 			|Wrapper for a signed AccountAssertion
-		Inherits CatalogEntryApplication
+		Inherits CatalogedApplication
 		Struct DareEnvelope EnvelopedAccountAssertion
 			Description
 				|The account assertion
 
 
-	Structure CatalogEntryApplicationRecryption
+	Structure CatalogedApplicationRecryption
+		Inherits CatalogedApplication
+
 		// The recryption key
-	Structure CatalogEntryApplicationSSH
+	Structure CatalogedApplicationSSH
+		Inherits CatalogedApplication
 		// The recryption key
-	Structure CatalogEntryApplicationMail
+	Structure CatalogedApplicationMail
+		Inherits CatalogedApplication
 		// The recryption key
-	Structure CatalogEntryApplicationNetwork
+	Structure CatalogedApplicationNetwork
+		Inherits CatalogedApplication
 		// The recryption key
 
 	Section 2 "Messages"
 
-	Structure MeshMessage
+	Structure Message
 		String MessageID
 		String Sender
 		String Recipient
 		Struct Reference References
 			Multiple
 
-	Structure MeshMessageComplete
+	Structure MessageComplete
 		Inherits MeshMessage
 	
 	Structure MessageConnectionRequest
