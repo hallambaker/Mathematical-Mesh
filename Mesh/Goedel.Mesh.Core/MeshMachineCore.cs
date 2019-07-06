@@ -33,8 +33,8 @@ namespace Goedel.Mesh {
         #endregion
 
 
-        public Connection GetConnection(string local = null) => CatalogHost.GetConnection(local);
-        public PendingConnection GetPending(string local = null) => CatalogHost.GetPending(local);
+        public CatalogedMachine GetConnection(string local = null) => CatalogHost.GetConnection(local);
+        public CatalogedPending GetPending(string local = null) => CatalogHost.GetPending(local);
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Goedel.Mesh {
 
             var entry = CatalogHost.GetConnection(localName);
             switch (entry) {
-                case AdminConnection adminEntry: return new ContextMeshAdmin(this, adminEntry);
+                case CatalogedAdmin adminEntry: return new ContextMeshAdmin(this, adminEntry);
                 default:  return new ContextMesh(this, entry);
                 }
 
@@ -106,7 +106,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileEntry">The entry to add or update.</param>
         /// <param name="create">Report an error if the object identifier does not already exist.</param>
-        public void Register(Connection profileEntry, bool create = true) {
+        public void Register(CatalogedMachine profileEntry, bool create = true) {
             CatalogHost.Register(profileEntry, create);
             }
 
@@ -133,9 +133,11 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
-                ) => ContextMeshAdmin.RecoverMesh(
-                    this, null, escrow, shares, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-
+                ) {
+            var secret = new Secret(shares);
+            return ContextMeshAdmin.RecoverMesh(
+                    this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+            }
 
         /// <summary>
         /// Create a new Mesh master profile and account without binding to a service

@@ -23,7 +23,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
+>dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
 ERROR - The feature has not been implemented
 ````
 
@@ -32,7 +32,7 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
+>dare encode TestDir1 /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
 ERROR - The feature has not been implemented
 ````
 
@@ -73,7 +73,7 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
+>dare verify TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
 ERROR - The option  is not known.
 ````
 
@@ -98,7 +98,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EBVU-LCKJ-ZNZB-RJX5-63OF-ZGXD-6B7Q
+>dare decode TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
 ERROR - The option  is not known.
 ````
 

@@ -1,5 +1,6 @@
 ﻿Protocol Goedel.Mesh.Shell ShellResult ShellResult
 	Using Goedel.Mesh
+	Using Goedel.Mesh.Client
 
 	Description
 		|Classes to be used to test serialization an deserialization.
@@ -41,10 +42,13 @@
 		TStruct Assertion Profiles
 			Multiple
 
+
+
 	Structure ResultHello
 		Inherits		Result
 		Struct MeshHelloResponse Response
 		Struct ProfileService	ProfileService
+		Struct ProfileHost	ProfileHost
 
 	Structure ResultDeviceCreate
 		Inherits							Result
@@ -64,9 +68,30 @@
 		Struct ActivationAccount			ActivationAccount
 		Struct ProfileMaster				ProfileMaster
 
+
+
+
+
 	Structure ResultSync
 		Inherits		Result
 		Integer			Fetched
+
+	Structure ResultEscrow
+		Inherits		Result
+		String			Filename
+		String			Service
+		String			Shares
+			Multiple
+
+	Structure ResultRecover
+		Inherits		ResultMasterCreate
+
+	Structure ResultMachine
+		Inherits		Result
+		Struct CatalogedMachine CatalogedMachines
+			Multiple
+
+
 
 
 
@@ -86,12 +111,7 @@
 
 
 
-	Structure ResultEscrow
-		Inherits		Result
-		String			Filename
-		String			Service
-		String			Shares
-			Multiple
+
 
 	Structure ResultConnectProcess
 		Inherits		Result
@@ -103,11 +123,7 @@
 		Struct Message Messages
 			Multiple
 
-	Structure ResultRecover
-		Inherits		Result
-		String			SignUDF
-		String			EncryptUDF
-			Multiple
+
 
 
 	Structure ResultConnect

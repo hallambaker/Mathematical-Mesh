@@ -45,9 +45,9 @@ namespace Goedel.Mesh.Client {
             ContainerProfile = containerHost;
             }
 
-        public Connection GetConnection(string local = null) => ContainerProfile.GetConnection(local);
+        public CatalogedMachine GetConnection(string local = null) => ContainerProfile.GetConnection(local);
         //public AccountEntry GetAccount(string local = null) => ContainerProfile.GetAccount(local);
-        public PendingConnection GetPending(string local = null) => ContainerProfile.GetPending(local);
+        public CatalogedPending GetPending(string local = null) => ContainerProfile.GetPending(local);
 
 
         /// <summary>

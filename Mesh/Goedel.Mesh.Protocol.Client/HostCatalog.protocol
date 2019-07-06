@@ -9,7 +9,7 @@
 		Description
 			|The following classes are used to store Mesh connection descriptions.
 
-	Structure Connection
+	Structure CatalogedMachine
 		Description
 			|Describes a current or pending connection to a Mesh
 		String ID
@@ -25,16 +25,16 @@
 			Description
 				|The master profile that provides the root of trust for this Mesh
 
-	Structure DeviceConnection
-		Inherits Connection
+	Structure CatalogedStandard
+		Inherits CatalogedMachine
 		Description
 			|Describes an ordinary device connected to a Mesh
 		Struct CatalogedDevice CatalogedDevice
 			Description
 				|The device entry containing the full account binding information.
 
-	Structure AdminConnection
-		Inherits Connection
+	Structure CatalogedAdmin
+		Inherits CatalogedMachine
 		Description
 			|Information enabling administration of a Master profile. It adds an overlay key
 			|for the administration key.
@@ -45,8 +45,8 @@
 			Description
 				|UDF of the connected device
 
-	Structure PendingConnection
-		Inherits Connection
+	Structure CatalogedPending
+		Inherits CatalogedMachine
 		Description
 			|Describes a pending connection to a Mesh account believed to have been 
 			|created and posted to a service.

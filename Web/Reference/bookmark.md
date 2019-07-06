@@ -132,7 +132,7 @@ Specifying the /json option returns a result of type ResultDump:
 {
   "ResultDump": {
     "Success": true,
-    "CatalogEntries": [{
+    "CatalogedEntries": [{
         "Uri": "http://example.com/",
         "Title": "\"Example",
         "Path": "Folder1/1"},

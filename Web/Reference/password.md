@@ -116,7 +116,7 @@ Specifying the /json option returns a result of type ResultDump:
 {
   "ResultDump": {
     "Success": true,
-    "CatalogEntries": [{
+    "CatalogedEntries": [{
         "Service": "ftp.example.com",
         "Username": "alice1",
         "Password": "password"},

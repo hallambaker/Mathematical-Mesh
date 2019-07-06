@@ -36,11 +36,7 @@ namespace Goedel.Mesh.Shell {
                     MeshUDF = contextMesh.ProfileMesh.UDF,
                     DeviceUDF = contextMesh.CatalogedDevice.UDF
                     };
-
                 }
-
-
-            throw new NYI();
             }
 
 
@@ -82,69 +78,44 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshRecover(MeshRecover Options) {
             var file = Options.File.Value;
+            
+            var recoverShares = new List<string>();
+            AddIfPresent(recoverShares, Options.Share1);
+            AddIfPresent(recoverShares, Options.Share2);
+            AddIfPresent(recoverShares, Options.Share3);
+            AddIfPresent(recoverShares, Options.Share4);
 
-            throw new NYI();
+            AddIfPresent(recoverShares, Options.Share5);
+            AddIfPresent(recoverShares, Options.Share6);
+            AddIfPresent(recoverShares, Options.Share7);
+            AddIfPresent(recoverShares, Options.Share8);
+            var secret = new Secret(recoverShares);
 
-            //using (var contextMesh = GetContextMeshAdmin(Options)) {
-            //    }
+            DareEnvelope escrow = null;
 
-            //using (var contextDevice = GetContextDevice(Options)) {
-            //    // Read the escrow data from file
-
-
-            //    var recoverShares = new List<string>();
-            //    AddIfPresent(recoverShares, Options.Share1);
-            //    AddIfPresent(recoverShares, Options.Share2);
-            //    AddIfPresent(recoverShares, Options.Share3);
-            //    AddIfPresent(recoverShares, Options.Share4);
-
-            //    AddIfPresent(recoverShares, Options.Share5);
-            //    AddIfPresent(recoverShares, Options.Share6);
-            //    AddIfPresent(recoverShares, Options.Share7);
-            //    AddIfPresent(recoverShares, Options.Share8);
-            //    var secret = new Secret(recoverShares);
-
-            //    DareEnvelope Escrow=null;
-            //    if (file != null) {
-            //        using (var inputStream = file.OpenFileRead()) {
-            //            using (var reader = new JSONBCDReader(inputStream)) {
-            //                Escrow = DareEnvelope.FromJSON(reader, false);
-
-            //                }
-            //            }
-
-            //        }
-                
-            //    //if (Options.Verify.Value) {
-            //    //    var escrowedKeySet = contextDevice.RecoverKeySet(Escrow, secret);
-
-            //    //    var EncryptUDF = new List<string>();
-            //    //    if (escrowedKeySet.MasterEscrowKeys != null) {
-            //    //        foreach (var key in escrowedKeySet.MasterEscrowKeys) {
-            //    //            EncryptUDF.Add(key.KeyPair.UDF);
-            //    //            }
-            //    //        }
-
-            //    //    string SignUDF = null;
-            //    //    if (escrowedKeySet.MasterSignatureKey != null) {
-            //    //        SignUDF = escrowedKeySet.MasterSignatureKey.KeyPair.UDF;
-            //    //        }
-
-            //    //    return new ResultRecover() {
-            //    //        SignUDF = SignUDF,
-            //    //        EncryptUDF = EncryptUDF
-            //    //        };
-            //    //    }
+            if (file != null) {
+                "convert file to encrypted data".TaskFunctionality();
+                }
+            else {
+                "Pull encrypted escrow data from service".TaskFunctionality();
+                }
 
 
+            using (var contextMesh = ContextMeshAdmin.RecoverMesh(
+                MeshMachine, secret, escrow: escrow)) {
 
-            //    //var DeviceAdminRecovered = contextDevice.Recover(Escrow, secret);
-            //    //return new ResultRecover() {
-            //    //    Success = false
-            //    //    };
-            //    }
+                "recover subordinate accounts, etc.".TaskFunctionality();
+                return new ResultRecover() {
+                    Success = true,
+                    ProfileMaster = contextMesh.ProfileMesh,
+                    CatalogedDevice = contextMesh.CatalogedDevice,
+                    MeshUDF = contextMesh.ProfileMesh.UDF,
+                    DeviceUDF = contextMesh.CatalogedDevice.UDF
+                    };
+                }
             }
 
+        #region // Data dump, import and export of profiles - punt on this for now
 
         /// <summary>
         /// Dispatch method
@@ -152,14 +123,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshList(MeshList Options) {
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-                var catalogEntryDevices = contextMesh.GetCatalogDevice();
+            var catalogedMachines = new List<CatalogedMachine> ();
+            "extract hosts from machine".TaskFunctionality();
 
-                throw new NYI();
-                //return new ResultList() {
-                //    CatalogEntryDevices = catalogEntryDevices
-                //    };
-                }
+            return new ResultMachine() {
+                Success = true,
+                CatalogedMachines = catalogedMachines
+                };
             }
 
         /// <summary>
@@ -168,18 +138,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshGet(MeshGet Options) {
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-                // pull the Catalog Host
+            var catalogedMachines = new List<CatalogedMachine>();
 
-                // list out all the data for the default profile and connection state
+            "select default host".TaskFunctionality();
 
-                throw new NYI();
-                }
+            return new ResultMachine() {
+                Success = true,
+                CatalogedMachines = catalogedMachines
+                };
             }
-
-        #region // Import and export of profiles - punt on this for now
-
-
 
         /// <summary>
         /// Dispatch method
@@ -187,14 +154,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshExport(MeshExport Options) {
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-                }
+            var catalogedMachines = new List<CatalogedMachine>();
 
-            // pull the Catalog Host
+            "export host data".TaskFunctionality();
 
-            // dump the default profile to a file
-
-            throw new NYI();
+            return new ResultMachine() {
+                Success = true,
+                CatalogedMachines = catalogedMachines
+                };
             }
 
         /// <summary>
@@ -203,14 +170,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshImport(MeshImport Options) {
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-                }
+            var catalogedMachines = new List<CatalogedMachine>();
 
-            // pull the Catalog Host
+            "import host data".TaskFunctionality();
 
-            // add the profile to the catalog
-
-            throw new NYI();
+            return new ResultFile() {
+                Success = true
+                };
             }
         #endregion
         }

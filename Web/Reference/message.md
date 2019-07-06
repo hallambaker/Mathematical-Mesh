@@ -159,7 +159,6 @@ reject   Reject a pending request
 
 ````
 >message reject tbs
-ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -168,8 +167,7 @@ Specifying the /json option returns a result of type Result:
 >message reject tbs /json
 {
   "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+    "Success": true}}
 ````
 
 # message block
@@ -185,7 +183,6 @@ block   Reject a pending request and block requests from that source
 
 ````
 >message block mallet@example.com
-ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -194,7 +191,6 @@ Specifying the /json option returns a result of type Result:
 >message block mallet@example.com /json
 {
   "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+    "Success": true}}
 ````
 

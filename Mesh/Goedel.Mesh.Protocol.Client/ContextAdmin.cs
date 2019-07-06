@@ -19,14 +19,14 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public AdminConnection AdminConnection => Connection as AdminConnection;
+        public CatalogedAdmin AdminConnection => Connection as CatalogedAdmin;
 
 
         ///<summary>For an administrative device, the CatalogEntryDevice is taken from the 
         ///device catalog.</summary>
         public override CatalogedDevice CatalogedDevice => catalogEntryDevice ??
             GetCatalogDevice().Get(AdminConnection.ID).CacheValue(out catalogEntryDevice);
-        CatalogedDevice catalogEntryDevice;
+        Mesh.CatalogedDevice catalogEntryDevice;
 
 
         ///<summary>The master keys for administration.</summary>
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="adminConnection"></param>
         public ContextMeshAdmin(
                 IMeshMachineClient meshMachine,
-                AdminConnection adminConnection) : base(meshMachine, adminConnection) {
+                CatalogedAdmin adminConnection) : base(meshMachine, adminConnection) {
 
             // Join the composite keys to recover the signature key so we can perform admin functions
             KeyAdministratorSignature = adminConnection.SignatureKey.GetPrivate(MeshMachine);
@@ -116,7 +116,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileMaster">The master profile to add the device to as an administration device.</param>
         /// <param name="profileDevice">The </param>
         /// <returns></returns>
-        static AdminConnection AddAdministrator(
+        static CatalogedAdmin AddAdministrator(
                     IMeshMachine meshMachine,
                     ProfileMaster profileMaster,
                     ProfileDevice profileDevice,
@@ -133,7 +133,7 @@ namespace Goedel.Mesh.Client {
                     meshMachine.KeyCollection.LocatePrivate(profileMaster.UDF);
             profileMaster.Sign(keyMasterSignature);
 
-            return new AdminConnection() {
+            return new CatalogedAdmin() {
                 ID = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedProfileMaster = profileMaster.DareEnvelope,
@@ -164,7 +164,7 @@ namespace Goedel.Mesh.Client {
                     MeshMachine.KeyCollection.LocatePrivate(ProfileMesh.UDF);
             Sign(assertionDeviceConnection);
 
-            var catalogEntryDevice = new CatalogedDevice() {
+            var catalogEntryDevice = new Mesh.CatalogedDevice() {
                 UDF = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedDeviceConnection = assertionDeviceConnection.DareEnvelope,
@@ -248,8 +248,8 @@ namespace Goedel.Mesh.Client {
         #region // Add regular device
 
         public ActivationAccount AddDevice(
-                    ProfileAccount  assertionAccount, 
-                    CatalogedDevice catalogEntryDevice, 
+                    ProfileAccount  assertionAccount,
+                    Mesh.CatalogedDevice catalogEntryDevice, 
                     KeyPairAdvanced keyEncryptionMaster) {
             // Decrypt EncryptedDevicePrivate using the Master profile decryption key
 
@@ -334,15 +334,15 @@ namespace Goedel.Mesh.Client {
 
         public static ContextMeshAdmin RecoverMesh(
                 IMeshMachineClient meshMachine,
+                Secret secret,
                 ProfileDevice profileDevice = null,
                 DareEnvelope escrow = null,
-                IEnumerable<string> shares = null,
+                
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
                 ) {
 
-            var secret = new Secret(shares);
 
             var escrowedKeySet = EscrowedKeySet.FromJSON(escrow.GetBodyReader(secret), true);
             var keySign = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Device, keyCollection: meshMachine.KeyCollection);

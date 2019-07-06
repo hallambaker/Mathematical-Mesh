@@ -73,7 +73,6 @@ using the `message reject` command:
 
 ````
 >message reject tbs
-ERROR - The feature has not been implemented
 ````
 
 For good measure, she decides to block further requests:
@@ -81,7 +80,6 @@ For good measure, she decides to block further requests:
 
 ````
 >message block mallet@example.com
-ERROR - The feature has not been implemented
 ````
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
@@ -148,7 +146,6 @@ Alice can also reject requests using the `message reject` command:
 
 ````
 >message reject tbs
-ERROR - The feature has not been implemented
 ````
 
 Bob receives a reply telling him the request was rejected:

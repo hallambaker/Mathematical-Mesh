@@ -18,11 +18,11 @@ namespace Goedel.Mesh.Client {
         public ProfileMaster ProfileMesh { get; }
 
         ///<summary>The Device Entry in the CatalogHost</summary>
-        public Connection Connection;
+        public CatalogedMachine Connection;
 
 
         ///<summary>Convenience property returning the device connections</summary>
-        DeviceConnection DeviceConnection => Connection as DeviceConnection;
+        CatalogedStandard DeviceConnection => Connection as CatalogedStandard;
 
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
@@ -45,7 +45,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public ContextMesh(IMeshMachineClient meshMachine, Connection deviceConnection) {
+        public ContextMesh(IMeshMachineClient meshMachine, CatalogedMachine deviceConnection) {
             Assert.AssertNotNull(deviceConnection, NYI.Throw);
 
             MeshMachine = meshMachine;
@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Client {
 
     public class ContextMeshPending : ContextMesh {
 
-        PendingConnection PendingConnection => Connection as PendingConnection;
+        CatalogedPending PendingConnection => Connection as CatalogedPending;
         MessageConnectionResponse MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
         MessageConnectionRequest MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 
@@ -86,7 +86,7 @@ namespace Goedel.Mesh.Client {
         public string ServiceID => MessageConnectionRequest?.ServiceID;
         public MeshService MeshClient;
 
-        public ContextMeshPending(IMeshMachineClient meshMachine, Connection deviceConnection) :
+        public ContextMeshPending(IMeshMachineClient meshMachine, CatalogedMachine deviceConnection) :
                     base(meshMachine, deviceConnection) {
             }
 
@@ -142,7 +142,7 @@ namespace Goedel.Mesh.Client {
 
             // create the pending connection here
 
-            var connection = new PendingConnection() {
+            var connection = new CatalogedPending() {
                 ID = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,

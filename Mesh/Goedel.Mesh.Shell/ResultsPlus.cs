@@ -173,12 +173,12 @@ namespace Goedel.Mesh.Shell {
         public override string ToString() {
             var Builder = new StringBuilder();
 
-            if (SignUDF != null) {
-                Builder.AppendLine($"Signature Key: {SignUDF}");
-                }
-            foreach (var key in EncryptUDF) {
-                Builder.AppendLine($"Encryption Key: {key}");
-                }
+            //if (SignUDF != null) {
+            //    Builder.AppendLine($"Signature Key: {SignUDF}");
+            //    }
+            //foreach (var key in EncryptUDF) {
+            //    Builder.AppendLine($"Encryption Key: {key}");
+            //    }
 
 
             return Builder.ToString();

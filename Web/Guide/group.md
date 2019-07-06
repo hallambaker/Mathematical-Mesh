@@ -105,7 +105,7 @@ The `connect ` command returns a list of group members:
 
 ````
 >group list groupies@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 The group currently has one administrator and one member.

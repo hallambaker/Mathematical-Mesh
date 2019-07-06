@@ -12,8 +12,8 @@ a description of the service parameters.
 
 
 ````
->service hello alice@example.com
-ERROR - The command  is not known.
+>account hello alice@example.com
+ERROR - Object reference not set to an instance of an object.
 ````
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
@@ -38,8 +38,8 @@ The `profile create` command creates a profile:
 
 ````
 >mesh create
-Device Profile UDF=MCGG-AUII-VXPT-36PS-PFMS-NJWV-ITPG
-Personal Profile UDF=MD45-T5CQ-IJOJ-YR7L-MIN3-RXVU-2WKS
+Device Profile UDF=MC64-NI5G-SVSU-WIP6-AOZH-SFPQ-UQTW
+Personal Profile UDF=MDB2-7MDK-LXVK-UGT3-AWMP-C7BD-U65F
 ````
 
 

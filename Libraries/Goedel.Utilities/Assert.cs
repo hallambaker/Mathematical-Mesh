@@ -246,7 +246,8 @@ namespace Goedel.Utilities {
         /// functionality not yet implemented.
         /// </summary>
         /// <param name="description"></param>
-        public static void TaskFunctionality(this string description) { }
+        public static void TaskFunctionality(this string description) =>
+            throw new NYI();
 
 
         /// <summary>

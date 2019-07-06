@@ -18,14 +18,14 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="local">The profile to return.</param>
         /// <returns>The entry for the specified profile.</returns>
-       Connection GetConnection(string local = null);
+       CatalogedMachine GetConnection(string local = null);
 
         /// <summary>
         /// Return an pending connection request with local name <paramref name="local"/>.
         /// </summary>
         /// <param name="local">The profile to return.</param>
         /// <returns>The entry for the specified profile.</returns>
-        PendingConnection GetPending(string local = null);
+        CatalogedPending GetPending(string local = null);
 
         /// <summary>
         /// Register <paramref name="profileEntry"/> in the persistence store. An error is
@@ -33,7 +33,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="profileEntry">The entry to add or update.</param>
         /// <param name="create">Report an error if the object identifier does not already exist.</param>
-        void Register(Connection profileEntry, bool create=true);
+        void Register(CatalogedMachine profileEntry, bool create=true);
 
         /// <summary>
         /// Return a MeshService client for the service ID <paramref name="serviceID"/>

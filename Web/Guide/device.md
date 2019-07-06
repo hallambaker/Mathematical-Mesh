@@ -100,7 +100,7 @@ a new PIN code:
 
 ````
 >device pin
-ERROR - The feature has not been implemented
+ERROR - The command  is not known.
 ````
 
 The pin code can now be used to authenticate the connection request:
@@ -168,7 +168,7 @@ this type of device connection.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
+>device pre devices@example.com /key=udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -196,7 +196,7 @@ and retrieve the data using the `device earl` command:
 
 
 ````
->device earl udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
+>device earl udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
 ERROR - The feature has not been implemented
 ````
 

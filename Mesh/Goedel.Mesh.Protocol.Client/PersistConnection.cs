@@ -16,7 +16,7 @@ namespace Goedel.Mesh.Client {
         public string Account;
         public ProfileAccount ProfileMesh;
         public ProfileDevice DefaultProfileDevice;
-        public Dictionary<string, CatalogedDevice> Devices = new Dictionary<string, CatalogedDevice>();
+        public Dictionary<string, Mesh.CatalogedDevice> Devices = new Dictionary<string, Mesh.CatalogedDevice>();
 
         }
 
@@ -30,12 +30,12 @@ namespace Goedel.Mesh.Client {
     public class PersistConnection : ContainerPersistenceStore {
 
         ///<summary></summary>
-        public Connection DefaultEntry { get; private set; }
+        public CatalogedMachine DefaultEntry { get; private set; }
 
         ///<summary></summary>
-        public PendingConnection DefaultPendingEntry { get; private set; }
+        public CatalogedPending DefaultPendingEntry { get; private set; }
 
-        Dictionary<string, Connection> DictionaryLocal2Connection = new Dictionary<string, Connection>();
+        Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new Dictionary<string, CatalogedMachine>();
 
         ///<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         static PersistConnection() {
@@ -89,18 +89,18 @@ namespace Goedel.Mesh.Client {
 
 
         protected override void MemoryCommitUpdate(ContainerStoreEntry containerStoreEntry) {
-            var catalogItem = containerStoreEntry.JsonObject as Connection;
+            var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
             if (catalogItem.Local != null) {
                 DictionaryLocal2Connection.AddSafe(catalogItem.Local, catalogItem);
                 }
 
             switch (catalogItem) {
-                case PendingConnection pendingEntry: {
+                case CatalogedPending pendingEntry: {
                     DefaultPendingEntry = pendingEntry.Default ? pendingEntry : DefaultPendingEntry ?? pendingEntry;
                     break;
                     }
-                case Connection adminEntry: {
+                case CatalogedMachine adminEntry: {
                     DefaultEntry = adminEntry.Default ? adminEntry : DefaultEntry ?? adminEntry;
                     break;
                     }
@@ -122,12 +122,12 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="local"></param>
         /// <returns></returns>
-        public Connection GetConnection(string local = null) =>
+        public CatalogedMachine GetConnection(string local = null) =>
             (local == null) ? DefaultEntry : DictionaryLocal2Connection.GetValue(local, null);
             
 
-        public PendingConnection GetPending(string local = null) =>
-            (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as PendingConnection);
+        public CatalogedPending GetPending(string local = null) =>
+            (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as CatalogedPending);
 
 
         }

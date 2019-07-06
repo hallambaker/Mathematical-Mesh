@@ -176,6 +176,7 @@
 		Brief "Commands for creating and managing a personal Mesh"
 
 		Command MeshCreate "create"
+			Return ResultMasterCreate
 			Brief "Create new personal profile"
 			Option NewAccountID "account" String
 				Brief "New account"
@@ -186,6 +187,7 @@
 			Include CryptoOptions
 
 		Command MeshEscrow "escrow"
+			Return ResultEscrow
 			Brief "Create a set of key escrow shares"
 			Include CryptoOptions
 			Include MasterProfileInfo
@@ -197,6 +199,7 @@
 				Default "3"
 
 		Command MeshRecover "recover"
+			Return ResultMasterCreate
 			Brief "Recover escrowed profile"
 			Include MasterProfileInfo
 			Include Reporting
@@ -214,6 +217,7 @@
 
 		// Describe configuration
 		Command MeshList "list"
+			Return ResultMachine
 			Brief "List all profiles on the local machine"
 			Include Reporting
 			Include MasterProfileInfo

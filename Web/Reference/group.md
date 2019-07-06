@@ -105,7 +105,7 @@ list   List members of a recryption group
 
 ````
 >group list groupies@example.com
-ERROR - Object reference not set to an instance of an object.
+ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
@@ -115,6 +115,6 @@ Specifying the /json option returns a result of type Result:
 {
   "Result": {
     "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
+    "Reason": "The feature has not been implemented"}}
 ````
 

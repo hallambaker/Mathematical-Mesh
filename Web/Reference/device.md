@@ -12,7 +12,6 @@ device    Device management commands.
     init   Create an initialization 
     list   List devices in the device catalog
     pending   Get list of pending connection requests
-    pin   Accept a pending connection
     pre   Create a preconnection request
     reject   Reject a pending connection
     request   Connect to an existing profile registered at a portal
@@ -272,14 +271,14 @@ being that all authorizations are denied.
 
 
 ````
->device earl udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
+>device earl udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device earl udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU /json
+>device earl udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2 /json
 {
   "Result": {
     "Success": false,
@@ -378,42 +377,7 @@ Specifying the /json option returns a result of type Result:
     "Reason": "The feature has not been implemented"}}
 ````
 
-# device pin
 
-````
-pin   Accept a pending connection
-    /length   Length of PIN to generate (default is 8 characters)
-    /expire   <Unspecified>
-    /account   Account identifier (e.g. alice@example.com) or profile fingerprint
-    /verbose   Verbose reports (default)
-    /report   Report output (default)
-    /json   Report output in JSON format
-````
-
-The `device pin` command generates and registers a new PIN code that may be used
-to authenticate a device connection request.
-
-The `/length` option specifies the length of the generated PIN in (significant)
-characters.
-
-The '/expire' option specifies an expiry time for the request as an integer 
-followed by the letter m, h or d for minutes, hours and days respectively.
-
-
-````
->device pin
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->device pin /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
 
 # device pre
 
@@ -461,14 +425,14 @@ offline initialization of device profiles in batch mode during manufacture.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU
+>device pre devices@example.com /key=udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->device pre devices@example.com /key=udf://example.com/EAXX-2YRK-BLJ2-R5ZM-GNJ6-5ASH-OXHP-PU /json
+>device pre devices@example.com /key=udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2 /json
 {
   "Result": {
     "Success": false,

@@ -59,10 +59,10 @@ namespace Goedel.Mesh.Client {
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
 
-			{"Connection", Connection._Factory},
-			{"DeviceConnection", DeviceConnection._Factory},
-			{"AdminConnection", AdminConnection._Factory},
-			{"PendingConnection", PendingConnection._Factory}			};
+			{"CatalogedMachine", CatalogedMachine._Factory},
+			{"CatalogedStandard", CatalogedStandard._Factory},
+			{"CatalogedAdmin", CatalogedAdmin._Factory},
+			{"CatalogedPending", CatalogedPending._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Client {
 	///
 	/// Describes a current or pending connection to a Mesh
 	/// </summary>
-	public partial class Connection : ConnectionItem {
+	public partial class CatalogedMachine : ConnectionItem {
         /// <summary>
         ///Unique object instance identifier.
         /// </summary>
@@ -120,13 +120,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "Connection";
+		public new const string __Tag = "CatalogedMachine";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Connection();
+		public static new JSONObject _Factory () => new CatalogedMachine();
 
 
         /// <summary>
@@ -184,15 +184,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Connection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedMachine FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as Connection;
+				return Out as CatalogedMachine;
 				}
-		    var Result = new Connection ();
+		    var Result = new CatalogedMachine ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -238,7 +238,7 @@ namespace Goedel.Mesh.Client {
 	///
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
-	public partial class DeviceConnection : Connection {
+	public partial class CatalogedStandard : CatalogedMachine {
         /// <summary>
         ///The device entry containing the full account binding information.
         /// </summary>
@@ -253,13 +253,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DeviceConnection";
+		public new const string __Tag = "CatalogedStandard";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DeviceConnection();
+		public static new JSONObject _Factory () => new CatalogedStandard();
 
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((Connection)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
 			if (CatalogedDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("CatalogedDevice", 1);
@@ -303,15 +303,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DeviceConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedStandard FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DeviceConnection;
+				return Out as CatalogedStandard;
 				}
-		    var Result = new DeviceConnection ();
+		    var Result = new CatalogedStandard ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -347,7 +347,7 @@ namespace Goedel.Mesh.Client {
 	/// Information enabling administration of a Master profile. It adds an overlay key
 	/// for the administration key.
 	/// </summary>
-	public partial class AdminConnection : Connection {
+	public partial class CatalogedAdmin : CatalogedMachine {
         /// <summary>
         ///Overlay for the signature key.
         /// </summary>
@@ -367,13 +367,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "AdminConnection";
+		public new const string __Tag = "CatalogedAdmin";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AdminConnection();
+		public static new JSONObject _Factory () => new CatalogedAdmin();
 
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((Connection)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
 			if (SignatureKey != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("SignatureKey", 1);
@@ -422,15 +422,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AdminConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedAdmin FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as AdminConnection;
+				return Out as CatalogedAdmin;
 				}
-		    var Result = new AdminConnection ();
+		    var Result = new CatalogedAdmin ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -470,7 +470,7 @@ namespace Goedel.Mesh.Client {
 	/// Describes a pending connection to a Mesh account believed to have been 
 	/// created and posted to a service.
 	/// </summary>
-	public partial class PendingConnection : Connection {
+	public partial class CatalogedPending : CatalogedMachine {
         /// <summary>
         ///UDF of the connected device
         /// </summary>
@@ -495,13 +495,13 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "PendingConnection";
+		public new const string __Tag = "CatalogedPending";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PendingConnection();
+		public static new JSONObject _Factory () => new CatalogedPending();
 
 
         /// <summary>
@@ -528,7 +528,7 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((Connection)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
 			if (DeviceUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("DeviceUDF", 1);
@@ -555,15 +555,15 @@ namespace Goedel.Mesh.Client {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PendingConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new CatalogedPending FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as PendingConnection;
+				return Out as CatalogedPending;
 				}
-		    var Result = new PendingConnection ();
+		    var Result = new CatalogedPending ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}

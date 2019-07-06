@@ -15,28 +15,28 @@ namespace Goedel.Mesh.Client {
         static ConnectionItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
         }
 
-    public partial class Connection {
+    public partial class CatalogedMachine {
         public override string _PrimaryKey => ID;
 
 
         }
 
 
-    public partial class DeviceConnection {
+    public partial class CatalogedStandard {
 
         public DareEnvelope EncodedProfileDevice => CatalogedDevice.EnvelopedProfileDevice;
 
 
         }
 
-    public partial class AdminConnection {
+    public partial class CatalogedAdmin {
 
 
 
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
-        public AdminConnection() {
+        public CatalogedAdmin() {
             }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign"></param>
         /// <param name="algorithmEncrypt"></param>
         /// <returns></returns>
-        public static AdminConnection Generate(
+        public static CatalogedAdmin Generate(
                 IMeshMachine meshMachine,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
@@ -57,10 +57,10 @@ namespace Goedel.Mesh.Client {
             return Generate(meshMachine, profileMaster);
             }
 
-        public static AdminConnection Generate(
+        public static CatalogedAdmin Generate(
                 IMeshMachine meshMachine,
                 ProfileMaster profileMaster ) {
-            return new AdminConnection() {
+            return new CatalogedAdmin() {
 
                 };
 
@@ -70,7 +70,7 @@ namespace Goedel.Mesh.Client {
         }
 
 
-    public partial class PendingConnection {
+    public partial class CatalogedPending {
 
         public MessageConnectionResponse MessageConnectionResponse => messageConnectionResponse ??
             MessageConnectionResponse.Decode(EnvelopedMessageConnectionResponse).
