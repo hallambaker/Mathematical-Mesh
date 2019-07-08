@@ -43,6 +43,16 @@ namespace Goedel.Utilities {
         public static string ToRFC3339(this DateTime DateTime) => DateTime.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
 
         /// <summary>
+        /// Format a DateTime value in RFC3339 format.
+        /// </summary>
+        /// <param name="DateTime">The time to convert.</param>
+        /// <returns>The converted date time</returns>
+        public static string ToRFC3339(this DateTime? DateTime) => DateTime == null ? "null" :
+            ((DateTime) DateTime).ToString("yyyy-MM-dd'T'HH:mm:ssZ");
+
+
+
+        /// <summary>
         /// Parse an RFC3339 format date time value.
         /// </summary>
         /// <param name="Text">The date to parse</param>

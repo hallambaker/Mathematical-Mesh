@@ -192,7 +192,12 @@
 		Struct PolicyAccount PolicyAccount
 			Description
 				|Specifies the account creation policy
-		Struct ProfileService ProfileService
+		Struct DareEnvelope EnvelopedProfileService
+			Description
+				|The enveloped master profile of the service.
+		Struct DareEnvelope EnvelopedProfileHost
+			Description
+				|The enveloped profile of the host.
 
 
 	Transaction User Complete CompleteRequest StatusResponse

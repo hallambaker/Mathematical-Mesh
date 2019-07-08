@@ -45,16 +45,6 @@ namespace Goedel.Mesh {
 
         void OpenCatalog(Catalog catalog, string name);
 
-        //void Register(DareEnvelope entry);
-
-
-
-
-        //AssertionAccount GetConnection(
-        //            string accountName = null,
-        //            string deviceUDF = null);
-
-
 
         }
 

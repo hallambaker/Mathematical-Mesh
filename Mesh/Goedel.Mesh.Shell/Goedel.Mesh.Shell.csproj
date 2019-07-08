@@ -20,11 +20,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="meshman.cs">
-      <DependentUpon>meshman.command</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Results.cs">
       <DependentUpon>Results.protogen</DependentUpon>
       <DesignTime>True</DesignTime>

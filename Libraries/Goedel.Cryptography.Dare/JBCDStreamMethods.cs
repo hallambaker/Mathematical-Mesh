@@ -889,7 +889,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             if (trailerData != null) {
                 //JSONReader.Trace = true;
-                Console.WriteLine(trailerData.ToUTF8());
+                //Console.WriteLine(trailerData.ToUTF8());
                 message.Trailer = DareTrailer.FromJSON(trailerData.JSONReader(), false);
                 }
             return message;

@@ -12,8 +12,9 @@ the mesh service account alice@example.com to which connection is requested:
 
 
 ````
->device request alice@example.com
-ERROR - The feature has not been implemented
+Alice2> device request alice@example.com
+   Witness value = 46J6-M7HD-VH7E-CJ7I-EGM4-PNHS-HLD6
+   Personal Mesh = MD2T-3WE6-TJAM-QU3C-CXGM-4EW4-4QDM
 ````
 
 In this case there is no existing device profile and so a new profile is
@@ -31,8 +32,7 @@ messages.
 
 
 ````
->device pending
-ERROR - The feature has not been implemented
+Alice> device pending
 ````
 
 Alice sees the request that she posted and approves it with the connect
@@ -40,8 +40,7 @@ Alice sees the request that she posted and approves it with the connect
 
 
 ````
->device accept tbs
-ERROR - The feature has not been implemented
+Alice> device accept NBPK-F7VR-TIUK-O3Z4-VD66-CDIM-TMZL
 ````
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
@@ -49,8 +48,7 @@ request:
 
 
 ````
->device reject tbs
-ERROR - The feature has not been implemented
+Alice> device reject tbs
 ````
 
 The connection process is completed by synchronizing the new device. At this point,
@@ -59,8 +57,8 @@ second:
 
 
 ````
->profile sync
-ERROR - The command  is not known.
+Alice2> account sync
+ERROR - The feature has not been implemented
 ````
 
 ##Managing connected devices
@@ -70,18 +68,16 @@ catalog:
 
 
 ````
->device list
-ERROR - Object reference not set to an instance of an object.
+Alice> device list
 ````
 
 The `device delete` command removes a device from the catalog:
 
 
 ````
->device delete tbs
-ERROR - Object reference not set to an instance of an object.
->device list
-ERROR - Object reference not set to an instance of an object.
+Alice> device delete NBPK-F7VR-TIUK-O3Z4-VD66-CDIM-TMZL
+ERROR - The feature has not been implemented
+Alice> device list
 ````
 
 
@@ -99,16 +95,17 @@ a new PIN code:
 
 
 ````
->device pin
-ERROR - The command  is not known.
+Alice> account pin
+PIN=NCQV-ICBJ-NHQ7-SFTN-YM (Expires=2019-07-09T16:00:13Z)
 ````
 
 The pin code can now be used to authenticate the connection request:
 
 
 ````
->device request alice@example.com /pin=tbs
-ERROR - The feature has not been implemented
+Alice3> device request alice@example.com /pin=NCQV-ICBJ-NHQ7-SFTN-YM
+   Witness value = NVVS-2JXM-GPBU-JIBZ-LO6G-3ZSQ-LHTP
+   Personal Mesh = MD2T-3WE6-TJAM-QU3C-CXGM-4EW4-4QDM
 ````
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -117,20 +114,8 @@ administrator device:
 
 
 ````
->device pending
-ERROR - The feature has not been implemented
+Alice> device pending
 ````
-
-
-## Pre Configuring Devices
-
-The `device delete` command creates a device profile without attempting
-to connect the device to a Mesh profile:
-
-**Missing Example***
-
-The most common reason for generating a device profile in this fashion is to allow
-an embedded or 'IoT' device to be preconfigured for Mesh control during manufacture.
 
 
 ### Requesting a connection using an EARL
@@ -145,8 +130,6 @@ configuration then proceeds automatically.
 
 Alternatively, the EARL may be transfered wirelessly by a near field 
 communications link or by cycling an LED.
-
-
 
 To enable this connection mode, the manufacturer performs the steps of
 
@@ -168,7 +151,7 @@ this type of device connection.
 
 
 ````
->device pre devices@example.com /key=udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
+Alice4> device pre devices@example.com /key=udf://example.com/EAQZ-QTRP-Z7NQ-2Y26-GFWX-FIN3-K55G-PE
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -177,8 +160,8 @@ and network connectivity using the `profile sync` command.
 
 
 ````
->profile sync
-ERROR - The command  is not known.
+Alice4> account sync
+ERROR - The feature has not been implemented
 ````
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
@@ -196,8 +179,8 @@ and retrieve the data using the `device earl` command:
 
 
 ````
->device earl udf://example.com/EACF-TBZ6-QREI-RQT2-NX7M-AJM2-F7TE-P2
-ERROR - The feature has not been implemented
+Alice> device earl udf://example.com/EAQZ-QTRP-Z7NQ-2Y26-GFWX-FIN3-K55G-PE
+ERROR - Object reference not set to an instance of an object.
 ````
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
@@ -206,8 +189,8 @@ The next time the device polls the hailing account, it retrieves the connection 
 
 
 ````
->profile sync
-ERROR - The command  is not known.
+Alice4> account sync
+ERROR - The feature has not been implemented
 ````
 
 Once connected to an account, a device does not attempt to poll the hailing account. 

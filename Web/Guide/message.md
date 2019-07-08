@@ -28,7 +28,7 @@ using the `message contact` command:
 
 
 ````
->message contact alice@example.com
+Bob> message contact alice@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -36,31 +36,39 @@ Alice reviews her pending messages using the `message pending` command:
 
 
 ````
->message pending
-ERROR - The feature has not been implemented
+Alice> message pending
 ````
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
 
 ````
->message accept tbs
-ERROR - The feature has not been implemented
+Alice> message accept tbs
 ````
 
 Bob's contact information has been added to Alice's address book:
 
 
 ````
->contact list
-````
+Alice> contact list
+{
+  "Self": true,
+  "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Self": false,
+  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
 
 ````
->message status tbs
+Bob> message status tbs
 ERROR - The feature has not been implemented
 ````
 
@@ -72,14 +80,14 @@ using the `message reject` command:
 
 
 ````
->message reject tbs
+Alice> message reject tbs
 ````
 
 For good measure, she decides to block further requests:
 
 
 ````
->message block mallet@example.com
+Alice> message block mallet@example.com
 ````
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
@@ -110,7 +118,7 @@ a confirmation request `Purchase equipment for $6,000?` using the
 
 
 ````
->message confirm alice@example.com "Purchase equipment for $6,000?"
+Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
 ERROR - The feature has not been implemented
 ````
 
@@ -118,23 +126,21 @@ Alice reviews her pending messages using the using the `message pending` command
 
 
 ````
->message pending
-ERROR - The feature has not been implemented
+Alice> message pending
 ````
 
 Alice she accepts Bob's request using the `message pending` command:
 
 
 ````
->message accept tbs
-ERROR - The feature has not been implemented
+Alice> message accept tbs
 ````
 
 Bob receives Alice's approval using the `message status` command:
 
 
 ````
->message status tbs
+Bob> message status tbs
 ERROR - The feature has not been implemented
 ````
 
@@ -145,14 +151,14 @@ Alice can also reject requests using the `message reject` command:
 
 
 ````
->message reject tbs
+Alice> message reject tbs
 ````
 
 Bob receives a reply telling him the request was rejected:
 
 
 ````
->message status tbs
+Bob> message status tbs
 ERROR - The feature has not been implemented
 ````
 
@@ -162,7 +168,7 @@ hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
 ````
->message confirm alice@example.com "Purchase equipment for $6,000?"
+Mallet> message confirm alice@example.com "Purchase equipment for $6,000?"
 ERROR - The feature has not been implemented
 ````
 

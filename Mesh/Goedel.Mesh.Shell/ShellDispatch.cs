@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is IAccountOptions AccountOptions) {
-                MeshID = AccountOptions.AccountID.Value;
+                MeshID = AccountOptions.ServiceID.Value;
                 }
 
             if (options is ICryptoOptions CryptoOptions) {
@@ -151,7 +151,12 @@ namespace Goedel.Mesh.Shell {
         public virtual JpcSession GetJpcSession(IAccountOptions options) => throw new NYI();
 
 
-        public virtual MeshService GetMeshClient(IAccountOptions options) => throw new NYI();
+        public virtual MeshService GetMeshClient(IAccountOptions options) {
+            var serviceID = options.ServiceID.Value;
+
+            return MeshMachine.GetMeshClient(serviceID, null, null);
+
+            }
 
         /// <summary>
         /// Get or create a device profile without an associated account.

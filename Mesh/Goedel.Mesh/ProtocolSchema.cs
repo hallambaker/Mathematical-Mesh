@@ -1736,9 +1736,15 @@ namespace Goedel.Mesh {
 
 		public virtual PolicyAccount						PolicyAccount  {get; set;}
         /// <summary>
+        ///The enveloped master profile of the service.
         /// </summary>
 
-		public virtual ProfileService						ProfileService  {get; set;}
+		public virtual DareEnvelope						EnvelopedProfileService  {get; set;}
+        /// <summary>
+        ///The enveloped profile of the host.
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileHost  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1797,10 +1803,15 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("PolicyAccount", 1);
 					PolicyAccount.Serialize (_Writer, false);
 				}
-			if (ProfileService != null) {
+			if (EnvelopedProfileService != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfileService", 1);
-					ProfileService.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedProfileService", 1);
+					EnvelopedProfileService.Serialize (_Writer, false);
+				}
+			if (EnvelopedProfileHost != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedProfileHost", 1);
+					EnvelopedProfileHost.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1855,10 +1866,17 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "ProfileService" : {
+				case "EnvelopedProfileService" : {
 					// An untagged structure
-					ProfileService = new ProfileService ();
-					ProfileService.Deserialize (JSONReader);
+					EnvelopedProfileService = new DareEnvelope ();
+					EnvelopedProfileService.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedProfileHost" : {
+					// An untagged structure
+					EnvelopedProfileHost = new DareEnvelope ();
+					EnvelopedProfileHost.Deserialize (JSONReader);
  
 					break;
 					}

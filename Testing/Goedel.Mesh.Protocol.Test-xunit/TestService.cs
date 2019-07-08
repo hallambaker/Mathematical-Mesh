@@ -100,7 +100,7 @@ namespace Goedel.XUnit {
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
             var PIN = contextAccountAlice_1_a.GetPIN();
-            var contextAccountAlice_2 = machineAlice2.Connect(AccountAlice, PIN: PIN);
+            var contextAccountAlice_2 = machineAlice2.Connect(AccountAlice, PIN: PIN.PIN);
             contextAccountAlice_2.Complete();
 
             // Do some catalog updates and check the results
@@ -165,7 +165,7 @@ namespace Goedel.XUnit {
 
             // New Device
             var contextAccount2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
-                AccountAlice, PIN: PIN);
+                AccountAlice, PIN: PIN.PIN);
             contextAccount2.Complete();
             }
 

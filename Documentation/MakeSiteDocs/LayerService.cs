@@ -74,12 +74,12 @@ namespace ExampleGenerator {
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
-            var id1 = "tbs";// resultPending.Messages[0].MessageID;
+            var id1 = resultPending.Messages[0].MessageID;
             var id2 = "tbs";// resultPending.Messages[1].MessageID;
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
             ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceService1}");
-            ConnectSync = testCLIAlice2.Example($"profile sync");
+            ConnectSync = testCLIAlice2.Example($"account sync");
 
             ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
@@ -88,12 +88,12 @@ namespace ExampleGenerator {
                 $"device list");
 
             // Connect Device 3 using a PIN
-            ConnectGetPin = testCLIAlice1.Example($"device pin");
-            var resultPin = (ConnectPending[0].Result as ResultPIN);
-            var pin = "tbs";// resultPin.MessageConnectionPIN.PIN;
+            ConnectGetPin = testCLIAlice1.Example($"account pin");
+            var resultPin = (ConnectGetPin[0].Result as ResultPIN);
+            var pin = resultPin.MessagePIN.PIN;
             ConnectPin = testCLIAlice3.Example($"device request {AliceService1} /pin={pin}");
             ConnectPending3 = testCLIAlice1.Example($"device pending");
-            ConnectSyncPIN = testCLIAlice3.Example($"profile sync");
+            ConnectSyncPIN = testCLIAlice3.Example($"account sync");
 
 
             ConnectEarlPrep = testCLIAlice4.Example("key earl");
@@ -102,9 +102,9 @@ namespace ExampleGenerator {
             DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
 
             DeviceEarl1 = testCLIAlice4.Example($"device pre {PollService} /key={DeviceCreateUDF}");
-            DeviceEarl2 = testCLIAlice4.Example($"profile sync");
+            DeviceEarl2 = testCLIAlice4.Example($"account sync");
             DeviceEarl3 = testCLIAlice1.Example($"device earl {DeviceCreateUDF}");
-            DeviceEarl4 = testCLIAlice4.Example($"profile sync");
+            DeviceEarl4 = testCLIAlice4.Example($"account sync");
 
 
 
@@ -122,6 +122,13 @@ namespace ExampleGenerator {
 
 
         public void DoCommandsServicedAccount() {
+
+            ContactAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /contact");
+            BookmarkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /bookmark");
+            PasswordAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /password");
+            CalendarAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /calendar ");
+            NetworkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /network");
+
             ContactList2 = testCLIAlice2.Example($"contact list");
             BookmarkList2 = testCLIAlice2.Example($"bookmark list");
             PasswordList2 = testCLIAlice2.Example($"password list");

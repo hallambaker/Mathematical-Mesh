@@ -26,10 +26,9 @@ namespace Goedel.Mesh.Shell {
             // or service is created.
 
             var meshClient = GetMeshClient(Options);
-            var jpcSession = GetJpcSession(Options);
 
             var helloRequest = new HelloRequest();
-            var response = meshClient.Hello(helloRequest, jpcSession);
+            var response = meshClient.Hello(helloRequest);
 
             return new ResultHello() {
                 Success = true,
@@ -94,12 +93,13 @@ namespace Goedel.Mesh.Shell {
             }
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
             using (var contextAccount = GetContextAccount(Options)) {
+                var messageConnectionPIN = contextAccount.GetPIN();
 
-                var result = new Result() {
-
+                var result = new ResultPIN() {
+                    MessagePIN = messageConnectionPIN
                     };
-                throw new NYI();
-                //return result;
+
+                return result;
                 }
             }
         }

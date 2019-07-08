@@ -13,9 +13,9 @@ Alice adds the username and password for an ftp service to her catalog:
 
 
 ````
->password add ftp.example.com alice1 password
+Alice> password add ftp.example.com alice1 password
 alice1@ftp.example.com = [password]
->password add www.example.com alice@example.com newpassword
+Alice> password add www.example.com alice@example.com newpassword
 alice@example.com@www.example.com = [newpassword]
 ````
 
@@ -25,7 +25,7 @@ The `password list` command lists all the passwords in the catalog:
 
 
 ````
->password list
+Alice> password list
 alice1@ftp.example.com = [password]
 alice@example.com@www.example.com = [newpassword]
 ````
@@ -41,7 +41,7 @@ values for a specified service:
 
 
 ````
->password get ftp.example.com
+Alice> password get ftp.example.com
 alice1@ftp.example.com = [newpassword]
 ````
 
@@ -76,7 +76,7 @@ password that is randomly generated:
 
 
 ````
->password add ftp.example.com alice1 newpassword
+Alice> password add ftp.example.com alice1 newpassword
 alice1@ftp.example.com = [newpassword]
 ````
 
@@ -87,7 +87,7 @@ Password entries may be deleted using the  `password delete` command:
 
 
 ````
->password delete www.example.com
+Alice> password delete www.example.com
 ````
 
 ## Adding a Device.
@@ -96,8 +96,7 @@ When a device is added, it gets a copy of the password file:
 
 
 ````
->device auth Alice2 /password
-ERROR - The feature has not been implemented
+Alice> device auth Alice2 /password
 ````
 
 

@@ -24,18 +24,17 @@ create   Generate a new SSH public keypair for the current machine and add to th
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh private
@@ -52,18 +51,17 @@ private   Extract the private key for this device
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh public
@@ -79,18 +77,17 @@ public   Extract the public key for this device
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh host
@@ -105,18 +102,17 @@ host   Add one or more hosts to the known_hosts file
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh host
@@ -132,18 +128,17 @@ host   Add one or more hosts to the known_hosts file
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh client
@@ -159,18 +154,17 @@ client   Add one or more keys to the authorized_keys file
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh host
@@ -185,18 +179,17 @@ host   List the known SSH sites (aka known hosts)
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # ssh client
@@ -211,18 +204,17 @@ client   List the authorized device keys (aka authorized_keys)
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 

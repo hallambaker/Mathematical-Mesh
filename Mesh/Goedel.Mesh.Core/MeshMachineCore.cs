@@ -12,19 +12,81 @@ using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh {
 
+
+    public class MeshMachineCoreServer : Disposable, IMeshMachine {
+
+        #region // Properties
+        public virtual string DirectoryMaster { get; }
+        public virtual string DirectoryMesh { get; }
+        public virtual string DirectoryKeys { get; }
+        public virtual string DirectoryService { get; }
+
+        public virtual KeyCollection KeyCollection { get; }
+
+        public const string FileTypeHost = "application/mmm-host";
+        #endregion
+
+
+        public MeshMachineCoreServer(string directory)  {
+            DirectoryMaster = directory;
+            DirectoryMesh = Path.Combine(directory, "Profiles");
+            DirectoryKeys = Path.Combine(directory, "Keys");
+            Directory.CreateDirectory(DirectoryMesh);
+            Directory.CreateDirectory(DirectoryKeys);
+
+            KeyCollection = GetKeyCollection();
+            }
+
+
+
+        #region // Disposing
+        protected override void Disposing() {
+            //CatalogHost.Dispose();
+            }
+        #endregion
+
+        public virtual KeyCollection GetKeyCollection() =>
+            new KeyCollectionCore();
+
+        #region // Implementation
+
+        /// <summary>
+        /// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
+        /// KeyCollection of the machine instance.
+        /// </summary>
+        /// <param name="algorithmID">The type of keypair to create.</param>
+        /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        /// <returns>The created key pair</returns>
+        public KeyPair CreateKeyPair(
+                    CryptoAlgorithmID algorithmID,
+                    KeySecurity keySecurity,
+                    int keySize = 0,
+                    KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
+                        KeyCollection, keySize, keyUses);
+        #endregion 
+
+        public virtual void OpenCatalog(Catalog catalog, string Name) { }
+        }
+
     /// <summary>
     /// 
     /// </summary>
     /// <remarks>This implementation does not currently support concurrent access to the Mesh profile files
     /// from separate processes. This support should be added my introducing a system wide lock that is
     /// obtained before attempting a write operation and while opening a container.</remarks>
-    public class MeshMachineCore : Disposable, IMeshMachineClient {
+    public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
+        #region // Properties
 
-        public const string FileTypeHost = "application/mmm-host";
-
+        public CatalogHost CatalogHost { get; }
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
+        #endregion
+
 
         #region // Disposing
         protected override void Disposing() {
@@ -54,41 +116,11 @@ namespace Goedel.Mesh {
             
             }
 
-        ///// <summary>
-        ///// Create a new management context for the specified Mesh account.
-        ///// </summary>
-        ///// <param name="localName">The friendly name for the account</param>
-        ///// <param name="serviceID">The account service id</param>
-        ///// <returns>Context for administering the Mesh account</returns>
-        //public ContextAccount GetContextAccount(
-        //        string localName=null, string serviceID = null) => throw new NYI();
-
-
-        public CatalogHost CatalogHost { get; }
-
-
-
-
-        public virtual string DirectoryMaster { get; }
-        public virtual string DirectoryMesh { get; }
-        public virtual string DirectoryKeys { get; }
-        public virtual string DirectoryService { get; }
-
-        //public ContainerHost ContainerHost { get; }
-
 
         public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
             }
 
-        protected MeshMachineCore(string directory) {
-            DirectoryMaster = directory;
-            DirectoryMesh = Path.Combine(directory, "Profiles");
-            DirectoryKeys = Path.Combine(directory, "Keys");
-            Directory.CreateDirectory(DirectoryMesh);
-            Directory.CreateDirectory(DirectoryKeys);
-
-            KeyCollection = GetKeyCollection();
-
+        protected MeshMachineCore(string directory) : base (directory) {
             // Now read the container to get the directories.
             var containerHost = new PersistConnection(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
@@ -211,20 +243,11 @@ namespace Goedel.Mesh {
 
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 
-        public virtual KeyCollection KeyCollection { get; }
-
-        public virtual KeyCollection GetKeyCollection() => 
-            new KeyCollectionCore();
-
-        public virtual void OpenCatalog(Catalog catalog, string Name) { }
-
         public virtual void Register(ConnectionItem catalogItem) =>
                 CatalogHost.Register(catalogItem);
 
         public virtual void Delete(ConnectionItem catalogItem) =>
                 CatalogHost.Delete(catalogItem);
-
-
 
 
         /// <summary>
@@ -247,8 +270,6 @@ namespace Goedel.Mesh {
             ConnectionAccount assertionAccountConnection,
             Profile profile = null) =>
                     MeshService.GetService(serviceID);
-
-
 
         #endregion
 

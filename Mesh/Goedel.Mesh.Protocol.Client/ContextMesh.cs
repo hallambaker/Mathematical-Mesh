@@ -75,9 +75,9 @@ namespace Goedel.Mesh.Client {
 
     public class ContextMeshPending : ContextMesh {
 
-        CatalogedPending PendingConnection => Connection as CatalogedPending;
-        MessageConnectionResponse MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
-        MessageConnectionRequest MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
+        public CatalogedPending PendingConnection => Connection as CatalogedPending;
+        AcknowledgeConnection MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
+        RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 
         ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
 
@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Client {
                 string PIN = null) {
 
             // generate MessageConnectionRequestClient
-            var messageConnectionRequestClient = new MessageConnectionRequest() {
+            var messageConnectionRequestClient = new RequestConnection() {
                 ServiceID = serviceID,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 ClientNonce = CryptoCatalog.GetBits(128),

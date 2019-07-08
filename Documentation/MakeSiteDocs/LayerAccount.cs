@@ -39,12 +39,11 @@ namespace ExampleGenerator {
         public List<ExampleResult> ContactAuth;
 
         public void DoCommandsContact() {
-            ContactAdd = testCLIAlice1.Example($"contact add {CarolContactFile}");
-            ContactAddSelf = testCLIAlice1.Example($"contact add {AliceContactFile}");
+            ContactAddSelf = testCLIAlice1.Example($"contact self email {AliceService1}");
+            ContactAdd = testCLIAlice1.Example($"contact add email {CarolService}");
             ContactGet = testCLIAlice1.Example($"contact get {CarolService}");
             ContactList = testCLIAlice1.Example($"contact list");
             ContactDelete = testCLIAlice1.Example($"contact delete {CarolService}");
-            ContactAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /contact");
 
             }
 
@@ -71,7 +70,7 @@ namespace ExampleGenerator {
             PasswordUpdate = testCLIAlice1.Example($"password add {PasswordSite} {PasswordAccount1} {PasswordValue1a}");
             PasswordGet = testCLIAlice1.Example($"password get {PasswordSite}");
             PasswordDelete = testCLIAlice1.Example($"password delete {PasswordSite2}");
-            PasswordAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /password");
+
             }
 
         public List<ExampleResult> BookmarkAdd;
@@ -100,7 +99,7 @@ namespace ExampleGenerator {
             BookmarkGet = testCLIAlice1.Example($"bookmark get {BookmarkPath2}");
             BookmarkList = testCLIAlice1.Example($"bookmark list");
             BookmarkDelete = testCLIAlice1.Example($"bookmark delete BookmarkPath2");
-            BookmarkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /bookmark");
+
             }
 
         public List<ExampleResult> CalendarAdd;
@@ -123,7 +122,7 @@ namespace ExampleGenerator {
 
             CalendarDelete = testCLIAlice1.Example($"calendar delete {CalendarID1}",
                 $"calendar list");
-            CalendarAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /calendar ");
+
             }
 
         public List<ExampleResult> NetworkAdd;
@@ -146,7 +145,7 @@ namespace ExampleGenerator {
 
             NetworkDelete = testCLIAlice1.Example($"network delete {NetworkID2}",
                 $"network list");
-            NetworkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /network");
+
             }
 
         public List<ExampleResult> SSHCreate;

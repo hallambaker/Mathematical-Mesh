@@ -89,17 +89,6 @@ administrator device:
 #%  ConsoleExample (Examples.ConnectPending3);
 
 
-#### Pre Configuring Devices
-
-The #{ToCommand("device delete")} command creates a device profile without attempting
-to connect the device to a Mesh profile:
-
-#%  ConsoleExample (Examples.DeviceCreate);
-
-The most common reason for generating a device profile in this fashion is to allow
-an embedded or 'IoT' device to be preconfigured for Mesh control during manufacture.
-
-
 ###### Requesting a connection using an EARL
 
 Encrypted Authenticated Resource Locators provide one means of preconfiguring
@@ -112,8 +101,6 @@ configuration then proceeds automatically.
 
 Alternatively, the EARL may be transfered wirelessly by a near field 
 communications link or by cycling an LED.
-
-
 
 To enable this connection mode, the manufacturer performs the steps of
 
@@ -232,22 +219,6 @@ the same syntax as for the `device auth` command with the default authorization
 being that all authorizations are denied.
 
 #%  ConsoleReference (Examples.ConnectAccept);
-
-#% Describe(CommandSet, _DeviceCreate._DescribeCommand);
-
-The `device create` command creates a new device profile without attempting
-to connect the profile to a Mesh service account or profile.
-
-This command allows a device to be preconfigured during manufacture or
-site configuration before delivery or assignment to an indivdual user.
-
-The `/id` and `/dd` options allow a device identifier and description to be 
-assigned to the device.
-
-The profile is made the default profile for the device if either there is
-no previous default device profile or the`/default` option is specified.
-
-#%  ConsoleReference (Examples.DeviceCreate);
 
 #% Describe(CommandSet, _DeviceDelete._DescribeCommand);
 

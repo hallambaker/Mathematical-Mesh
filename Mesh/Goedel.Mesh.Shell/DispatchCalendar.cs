@@ -20,8 +20,6 @@ namespace Goedel.Mesh.Shell {
             using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
 
-
-
                 var entry = new CatalogedTask() {
                     Key = identifier
                     };
@@ -85,16 +83,18 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult CalendarDump(CalendarDump Options) {
             using (var contextAccount = GetContextAccount(Options)) {
 
-                var result = new ResultDump() {
-                    Success = true,
-                    CatalogedEntries = new List<CatalogedEntry>()
-                    };
+                var catalogedEntries = new List<CatalogedEntry>();
+
                 using (var catalog = contextAccount.GetCatalogCalendar()) {
                     foreach (var entry in catalog) {
-                        result.CatalogedEntries.Add(entry);
+                        catalogedEntries.Add(entry);
                         }
                     }
 
+                var result = new ResultDump() {
+                    Success = true,
+                    CatalogedEntries = catalogedEntries
+                    };
                 return result;
                 }
             }

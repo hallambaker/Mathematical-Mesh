@@ -44,33 +44,22 @@
 
 
 
-	Structure ResultHello
-		Inherits		Result
-		Struct MeshHelloResponse Response
-		Struct ProfileService	ProfileService
-		Struct ProfileHost	ProfileHost
 
+
+
+	// Mesh
 	Structure ResultDeviceCreate
 		Inherits							Result
 		Boolean								Default
 		String								DeviceUDF
 		Struct CatalogedDevice			CatalogedDevice
 
-	Structure ResultAccountCreate
-		Inherits							ResultDeviceCreate
-		Struct ActivationAccount			ActivationAccount
-		String								ServiceID
+
 
 	Structure ResultMasterCreate
 		Inherits							ResultAccountCreate
 		String								MeshUDF
-		String								Account
-		Struct ActivationAccount			ActivationAccount
 		Struct ProfileMaster				ProfileMaster
-
-
-
-
 
 	Structure ResultSync
 		Inherits		Result
@@ -91,14 +80,24 @@
 		Struct CatalogedMachine CatalogedMachines
 			Multiple
 
-
-
-
-
-	Structure ResultTransactionRequest
+	// Account
+	Structure ResultPIN
 		Inherits		Result
-		String			Identifier
+		Struct MessagePIN			MessagePIN
 
+	Structure ResultHello
+		Inherits		Result
+		Struct MeshHelloResponse Response
+		Struct ProfileService	ProfileService
+		Struct ProfileHost	ProfileHost
+
+	Structure ResultAccountCreate
+		Inherits							ResultDeviceCreate
+		Struct ActivationAccount			ActivationAccount
+		String								ServiceID
+
+
+	// Catalog commands
 
 	Structure ResultEntry
 		Inherits		Result
@@ -109,34 +108,49 @@
 	Structure ResultSSH
 		Inherits		ResultEntry
 
+	Structure ResultGroupCreate
+		Inherits		ResultEntry
 
 
+	// Message commands
 
-
-	Structure ResultConnectProcess
+	Structure ResultSent
 		Inherits		Result
-		Boolean			Accepted
-		String			Witness
+		Struct Message Message
+		String			Status
 
 	Structure ResultPending
 		Inherits		Result
 		Struct Message Messages
 			Multiple
 
+	Structure ResultAuthorize
+		Inherits		Result
+		Struct Message Messages
+			Multiple
+
+	Structure ResultConnectProcess
+		Inherits		Result
+		Boolean			Accepted
+		String			Witness
+
+
+
+
+	Structure ResultTransactionRequest
+		Inherits		Result
+		String			Identifier
 
 
 
 	Structure ResultConnect
 		Inherits		Result
-		String			Authenticator
+		Struct CatalogedMachine			CatalogedMachine
 
 	Structure ResultComplete
 		Inherits		Result
 		String			ConnectionStatus
 
-	Structure ResultPIN
-		Inherits		Result
-		Struct MessageConnectionPIN			MessageConnectionPIN
 
 
 

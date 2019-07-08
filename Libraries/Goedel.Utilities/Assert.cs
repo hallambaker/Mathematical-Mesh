@@ -246,9 +246,12 @@ namespace Goedel.Utilities {
         /// functionality not yet implemented.
         /// </summary>
         /// <param name="description"></param>
-        public static void TaskFunctionality(this string description) =>
-            throw new NYI();
-
+        public static void TaskFunctionality(this string description, bool exception = false) {
+            if (exception) {
+                throw new NYI();
+                }
+            Console.WriteLine($"***Functionality missing***{description}");
+            }
 
         /// <summary>
         /// Utility routine used to flag missing code to implement missing test for

@@ -311,7 +311,7 @@ namespace ExampleGenerator {
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			foreach  (var exampleResult in exampleResults) {
-				_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+				_Output.Write ("{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
 				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 				}
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
@@ -329,7 +329,7 @@ namespace ExampleGenerator {
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
 			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			}
@@ -346,14 +346,14 @@ namespace ExampleGenerator {
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			_Output.Write (">{1}\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
 			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("````\n{0}", _Indent);
-			_Output.Write (">{1} /json\n{0}", _Indent, exampleResult.Command);
+			_Output.Write ("{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
 			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
 			_Output.Write ("````\n{0}", _Indent);
 			}

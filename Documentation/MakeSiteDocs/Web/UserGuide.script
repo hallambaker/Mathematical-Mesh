@@ -230,7 +230,7 @@ executed without any output being made to the console.
 
 #{Preformat}
 #foreach (var exampleResult in exampleResults)
->#{exampleResult.Command}
+#{exampleResult.MachineName}> #{exampleResult.Command}
 #{exampleResult.ResultText}#!
 #end foreach
 #{Preformat}
@@ -245,7 +245,7 @@ executed without any output being made to the console.
 #% var exampleResult = exampleResults[0];
 
 #{Preformat}
->#{exampleResult.Command} /json
+#{exampleResult.MachineName}> #{exampleResult.Command} /json
 #{exampleResult.ResultJSON}
 #{Preformat}
 #end method
@@ -258,14 +258,14 @@ executed without any output being made to the console.
 #% var exampleResult = exampleResults[0];
 
 #{Preformat}
->#{exampleResult.Command}
+#{exampleResult.MachineName}> #{exampleResult.Command}
 #{exampleResult.ResultText}#!
 #{Preformat}
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:
 
 ````
->#{exampleResult.Command} /json
+#{exampleResult.MachineName}> #{exampleResult.Command} /json
 #{exampleResult.ResultJSON}
 ````
 #end method

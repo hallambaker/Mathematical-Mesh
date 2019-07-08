@@ -75,7 +75,7 @@ namespace ExampleGenerator {
         public string CarolService = "carol@example.com";
         public string DougService = "doug@example.com";
         public string MalletService = "mallet@example.com";
-        public string GroupService = "groupies@example.com";
+        public string GroupService = "groupw@example.com";
         public string PollService = "devices@example.com";
 
         public string AliceContactFile = "alice-contact.json";

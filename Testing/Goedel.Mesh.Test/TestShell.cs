@@ -70,6 +70,10 @@ namespace Goedel.Mesh.Test {
         public Result Result;
         public string ResultType => Result._Tag;
         public string Command;
+        public TestCLI TestCLI;
+
+
+
         public string ResultText => Result.ToString();
         public string ResultJSON => Result.GetJson(true).ToUTF8();
 
@@ -81,23 +85,12 @@ namespace Goedel.Mesh.Test {
         public ResultSSH ResultSSH => Result as ResultSSH;
 
 
-        public ResultDump ResultDump => Result as ResultDump;
-        public ResultList ResultList => Result as ResultList;
-        public ResultHello ResultHello => Result as ResultHello;
-        public ResultDeviceCreate ResultDeviceCreate => Result as ResultDeviceCreate;
-        public ResultMasterCreate ResultMasterCreate => Result as ResultMasterCreate;
-        public ResultSync ResultSync => Result as ResultSync;
-        public ResultEscrow ResultEscrow => Result as ResultEscrow;
-        public ResultConnectProcess ResultConnectProcess => Result as ResultConnectProcess;
-        public ResultPending ResultPending => Result as ResultPending;
-        public ResultRecover ResultRecover => Result as ResultRecover;
-        public ResultConnect ResultConnect => Result as ResultConnect;
-        public ResultComplete ResultComplete => Result as ResultComplete;
-        public ResultPIN ResultPIN => Result as ResultPIN;
+        public string MachineName => TestCLI.MachineName;
 
-        public ExampleResult(string command, Result result) {
+        public ExampleResult(TestCLI testCLI, string command, Result result) {
             Result = result;
             Command = command;
+            TestCLI = testCLI;
             }
 
 
@@ -121,7 +114,7 @@ namespace Goedel.Mesh.Test {
         public static int CountTotal = 0;
 
         public TestCLI(TestShell shell) : base() => Shell = shell;
-
+        public string MachineName => Shell.MachineName;
 
         //public ExampleResult Example(string command, bool fail = false) {
         //    var Args = command.Split(' ');
@@ -145,7 +138,7 @@ namespace Goedel.Mesh.Test {
 
                 try {
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
-                    result.Add(new ExampleResult(cmd, Shell.ShellResult as Result));
+                    result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result));
                     }
                 catch (Exception exception) {
                     ErrorCount++;
@@ -155,7 +148,7 @@ namespace Goedel.Mesh.Test {
                         Success = false,
                         Reason = exception.Message
                         };
-                    result.Add(new ExampleResult(cmd, cmdresult));
+                    result.Add(new ExampleResult(this, cmd, cmdresult));
                     }
                 }
 
@@ -249,7 +242,7 @@ namespace Goedel.Mesh.Test {
 
         public void Connect(TestCLI newDevice, string account) {
             var result = Dispatch($"device pin") as ResultPIN;
-            var pin = result.MessageConnectionPIN.PIN;
+            var pin = result.MessagePIN.PIN;
             newDevice.Dispatch($"device request {account} /pin {pin}");
             Dispatch($"profile sync");
             newDevice.Dispatch($"profile sync");

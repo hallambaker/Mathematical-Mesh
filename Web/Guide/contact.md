@@ -18,9 +18,13 @@ a file.
 
 
 ````
->contact add carol-contact.json
-ERROR - The feature has not been implemented
-````
+Alice> contact add email carol@example.com
+{
+  "Self": false,
+  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -34,17 +38,20 @@ details:
 
 
 ````
->contact add alice-contact.json
-ERROR - The feature has not been implemented
-````
+Alice> contact self email alice@example.com
+{
+  "Self": true,
+  "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
 
 ````
->message accept tbs
-ERROR - The feature has not been implemented
+Alice> message accept tbs
 ````
 
 ## Finding contacts
@@ -54,7 +61,7 @@ email address or label:
 
 
 ````
->contact get carol@example.com
+Alice> contact get carol@example.com
 Empty
 ````
 
@@ -64,8 +71,18 @@ A complete list of contacts is obtained using the  `contact list` command:
 
 
 ````
->contact list
-````
+Alice> contact list
+{
+  "Self": true,
+  "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Self": false,
+  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 ## Deleting contacts
 
@@ -73,7 +90,7 @@ Contact entries may be deleted using the  `contact delete` command:
 
 
 ````
->contact delete carol@example.com
+Alice> contact delete carol@example.com
 ERROR - Object reference not set to an instance of an object.
 ````
 

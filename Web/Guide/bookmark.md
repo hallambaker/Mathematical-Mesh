@@ -19,15 +19,15 @@ The `bookmark add` command adds a bookmark entry to a catalog:
 
 
 ````
->bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
-  "Path": "Folder1/1"}>bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+  "Path": "Folder1/1"}Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
 {
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}>bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+  "Path": "Folder1/2"}Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
 {
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
@@ -40,7 +40,7 @@ The `bookmark get`  command retreives a bookmark  by its index label:
 
 
 ````
->bookmark get Folder1/2
+Alice> bookmark get Folder1/2
 {
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
@@ -52,7 +52,7 @@ Bookmark entries may be deleted using the  `bookmark delete` command:
 
 
 ````
->bookmark delete BookmarkPath2
+Alice> bookmark delete BookmarkPath2
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -62,7 +62,7 @@ A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 
 ````
->bookmark list
+Alice> bookmark list
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
@@ -81,14 +81,13 @@ Devices are given authorization to access the bookmarks catalog using the
 
 
 ````
->device auth Alice2 /bookmark
-ERROR - The feature has not been implemented
+Alice> device auth Alice2 /bookmark
 ````
 
 The new device now has access to the Bookmarks catalog:
 
 
 ````
->bookmark list
+Alice2> bookmark list
 ERROR - The feature has not been implemented
 ````

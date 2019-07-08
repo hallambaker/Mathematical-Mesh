@@ -32,14 +32,14 @@ with the `/bits`, `/cty` and `/alg` options.
 
 
 ````
->hash udf TestFile1.txt
+Alice> hash udf TestFile1.txt
 MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
 
 ````
->hash udf TestFile1.txt /json
+Alice> hash udf TestFile1.txt /json
 {
   "ResultDigest": {
     "Success": true,
@@ -64,14 +64,14 @@ file according to the digest algorithm specifiedwith the `/alg` option.
 
 
 ````
->hash digest TestFile1.txt
+Alice> hash digest TestFile1.txt
 A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
 
 ````
->hash digest TestFile1.txt /json
+Alice> hash digest TestFile1.txt /json
 {
   "ResultDigest": {
     "Success": true,
@@ -107,19 +107,19 @@ true returned if and only if it matches the value specified.
 
 
 ````
->hash mac TestFile1.txt
-ABAB-XHW2-NHY3-EUA2-5LXE-AA5N-QI6O
-NAMJ-3WT4-IX6H-TNHV-7UOJ-BOIW-NHQ5
+Alice> hash mac TestFile1.txt
+AALT-TKGQ-BJCK-3KBR-QCPH-P243-5RXP
+NCYU-55G4-3GEP-GSBP-3DJI-3VM2-7CL6
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
 
 ````
->hash mac TestFile1.txt /json
+Alice> hash mac TestFile1.txt /json
 {
   "ResultDigest": {
     "Success": true,
-    "Digest": "ABAB-XHW2-NHY3-EUA2-5LXE-AA5N-QI6O",
-    "Key": "NAMJ-3WT4-IX6H-TNHV-7UOJ-BOIW-NHQ5"}}
+    "Digest": "AALT-TKGQ-BJCK-3KBR-QCPH-P243-5RXP",
+    "Key": "NCYU-55G4-3GEP-GSBP-3DJI-3VM2-7CL6"}}
 ````
 

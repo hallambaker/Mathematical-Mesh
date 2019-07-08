@@ -267,9 +267,6 @@ namespace Goedel.Cryptography.Dare {
             // Initialize frame zero
             var frameZero = jbcdStream.ReadDareEnvelope();
 
-            var found = jbcdStream.ReadFrame(out var Header, out var FrameData, out var FrameTrailer);
-            found.AssertTrue();
-
             var containerHeaderFirst = frameZero.Header as ContainerHeaderFirst;
 
             var position1 = jbcdStream.PositionRead; // is always positioned after the first record on entry.
@@ -726,7 +723,7 @@ namespace Goedel.Cryptography.Dare {
             var trailerBytes = dareMessage.Trailer?.GetBytes(false);
 
             AppendFrame(headerBytes, dareMessage.Body, trailerBytes);
-            Console.WriteLine($"Position Written {JBCDStream.PositionWrite}");
+            //Console.WriteLine($"Position Written {JBCDStream.PositionWrite}");
 
             //JBCDStream.WriteWrappedFrame(headerBytes, dareMessage.Body,
             //    trailerBytes);
@@ -741,14 +738,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public DareEnvelope ReadDirectReverse() {
-            Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
+            //Console.WriteLine($"Position Read {JBCDStream.PositionRead}");
 
             var position = JBCDStream.MoveFrameReverse();
             if (position <= 0) {
                 return null; // Exclude the first frame from reverse enumeration.
                 }
 
-            Console.WriteLine($"Position ReadII {position}");
+            //Console.WriteLine($"Position ReadII {position}");
 
             var message = ReadDirect();
             JBCDStream.PositionRead = position;

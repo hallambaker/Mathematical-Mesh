@@ -24,14 +24,14 @@ add   Add calendar entry from file
 ````
 
 ````
->network add NetworkEntry1.json NetID1
+Alice> network add NetworkEntry1.json NetID1
 {
   "Key": "NetID1"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->network add NetworkEntry1.json NetID1 /json
+Alice> network add NetworkEntry1.json NetID1 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -51,14 +51,14 @@ delete   Delete calendar entry
 ````
 
 ````
->network delete NetID2
+Alice> network delete NetID2
 {
   "Key": "NetID2"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->network delete NetID2 /json
+Alice> network delete NetID2 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -78,14 +78,14 @@ get   Lookup calendar entry
 ````
 
 ````
->network get NetID2
+Alice> network get NetID2
 {
   "Key": "NetID2"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->network get NetID2 /json
+Alice> network get NetID2 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -104,14 +104,14 @@ dump   List network entries
 ````
 
 ````
->network list
+Alice> network list
 ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->network list /json
+Alice> network list /json
 {
   "Result": {
     "Success": false,

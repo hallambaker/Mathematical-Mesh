@@ -16,23 +16,60 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactSelf(ContactSelf Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var email = Options.Email.Value;
+
+                var contact = new Contact() {
+                    Addresses = new List<Address>() {
+                        new Address () {
+                            URI = "mailto:{email}"
+                            }
+                        }
+                    };
+
+                CatalogedContact entry;
+                using (var catalog = contextAccount.GetCatalogContact()) {
+                    entry = catalog.Add(contact, self:true);
+                    }
+
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = entry
+                    };
+                }
+            }
+
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
             using (var contextAccount = GetContextAccount(Options)) {
 
-                throw new NYI();
-                //var identifier = Options.Identifier.Value;
+                var email = Options.Email.Value;
 
-                //var entry = new CatalogEntryContact() {
-                //    Key = identifier
-                //    };
-                //using (var catalog = contextDevice.GetCatalogContact()) {
-                //    catalog.Add(entry);
-                //    }
+                var contact = new Contact() {
+                    Addresses = new List<Address>() {
+                        new Address () {
+                            URI = "mailto:{email}"
+                            }
+                        }
+                    };
 
-                //return new ResultEntry() {
-                //    Success = true,
-                //    CatalogEntry = entry
-                //    };
+                CatalogedContact entry;
+                using (var catalog = contextAccount.GetCatalogContact()) {
+                    entry = catalog.Add(contact, self: false);
+                    }
+
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = entry
+                    };
                 }
             }
 

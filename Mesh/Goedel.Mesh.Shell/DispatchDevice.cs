@@ -15,102 +15,64 @@ namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
 
-        ///// <summary>
-        ///// Dispatch method
-        ///// </summary>
-        ///// <param name="Options">The command line options.</param>
-        ///// <returns>Mesh result instance</returns>
-        //public override ShellResult DeviceCreate(DeviceCreate Options) {
-        //    var context = ContextDevice.Generate(MeshMachine);
-
-        //    return new ResultDeviceCreate() {
-        //        Success = true,
-        //        DeviceUDF = context.ProfileDevice.UDF,
-        //        ProfileDevice = context.ProfileDevice,
-        //        Default = context.DefaultDevice
-        //        };
-
-        //    }
-
-        public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-
-                var result = new Result() {
-
-                    };
-                throw new NYI();
-                //return result;
-                }
-            }
-
-
         /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
+            var serviceID = Options.ServiceID.Value;
+            var pin = Options.PIN.Value;
+            var contextMeshPending = MeshMachine.Connect(serviceID, PIN:pin);
 
-            throw new NYI();
+            var result = new ResultConnect() {
+                CatalogedMachine = contextMeshPending.Connection
+                };
 
-            //using (var contextAccount = GetContextAccount(Options)) {
-
-            //    var result = new Result() {
-
-            //        };
-            //    throw new NYI();
-            //    //return result;
-            //    }
-
+            return result;
             }
 
 
         public override ShellResult DevicePending(DevicePending Options) {
             using (var contextAccount = GetContextAccount(Options)) {
 
-                var result = new Result() {
+                contextAccount.Sync();
 
+                // get the inbound spool
+                var inbound = contextAccount.GetSpoolInbound();
+
+                var messages = new List<Message>();
+                var completed = new Dictionary<string, Message>();
+
+                foreach (var message in inbound.Select(1, true)) {
+                    var meshMessage = Message.FromJSON(message.GetBodyReader());
+                    if (!completed.ContainsKey(meshMessage.MessageID)) {
+                        switch (meshMessage) {
+                            case MessageComplete meshMessageComplete: {
+                                foreach (var reference in meshMessageComplete.References) {
+                                    completed.Add(reference.MessageID, meshMessageComplete);
+                                    }
+                                break;
+                                }
+                            default: {
+                                messages.Add(meshMessage);
+                                break;
+                                }
+                            }
+                        }
+                    }
+
+                var result = new ResultPending() {
+                    Success = true,
+                    Messages = messages
                     };
-                throw new NYI();
-                //return result;
+
+                return result;
                 }
 
-            //using (var contextDevice = GetContextDevice(Options)) {
-
-            //    // sync
-            //    contextDevice.Sync();
-
-            //    var messages = new List<MeshMessage>();
-            //    var result = new ResultPending() {
-            //        Success = true,
-            //        Messages = messages
-            //        };
-
-            //    // get the inbound spool
-            //    var completed = new Dictionary<string, MeshMessage>();
-
-            //    foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
-            //        var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
-            //        if (!completed.ContainsKey(meshMessage.MessageID)) {
-            //            switch (meshMessage) {
-            //                case MeshMessageComplete meshMessageComplete: {
-            //                    foreach (var reference in meshMessageComplete.References) {
-            //                        completed.Add(reference.MessageID, meshMessageComplete);
-            //                        }
-            //                    break;
-            //                    }
-            //                default: {
-            //                    messages.Add(meshMessage);
-            //                    break;
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    return result;
-            //    }
             }
 
-        
+
 
         public override ShellResult DeviceAccept(DeviceAccept Options) =>
             ProcessRequest(Options, Options.CompletionCode.Value, true);
@@ -122,28 +84,68 @@ namespace Goedel.Mesh.Shell {
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
             using (var contextAccount = GetContextAccount(Options)) {
 
-                var result = new Result() {
+                var result = new ResultConnectProcess() {
 
                     };
-                throw new NYI();
-                //return result;
+                "".TaskFunctionality();
+                return result;
                 }
 
-            //using (var contextDevice = GetContextDevice(Options)) {
-            //    contextDevice.Sync();
 
-            //    var messageConnectionRequest = GetConnectionRequest(contextDevice, messageID);
-            //    messageConnectionRequest.AssertNotNull();
-
-            //    contextDevice.ProcessConnectionRequest(messageConnectionRequest, accept);
-
-            //    return new ResultConnectProcess() {
-            //        Success = true,
-            //        Accepted = accept,
-            //        Witness = messageConnectionRequest.Witness
-            //        };
-            //    }
             }
+
+        #region // dead code??
+
+        //using (var contextDevice = GetContextDevice(Options)) {
+        //    contextDevice.Sync();
+
+        //    var messageConnectionRequest = GetConnectionRequest(contextDevice, messageID);
+        //    messageConnectionRequest.AssertNotNull();
+
+        //    contextDevice.ProcessConnectionRequest(messageConnectionRequest, accept);
+
+        //    return new ResultConnectProcess() {
+        //        Success = true,
+        //        Accepted = accept,
+        //        Witness = messageConnectionRequest.Witness
+        //        };
+        //    }
+
+
+        //using (var contextDevice = GetContextDevice(Options)) {
+
+        //    // sync
+        //    contextDevice.Sync();
+
+        //    var messages = new List<MeshMessage>();
+        //    var result = new ResultPending() {
+        //        Success = true,
+        //        Messages = messages
+        //        };
+
+        //    // get the inbound spool
+        //    var completed = new Dictionary<string, MeshMessage>();
+
+        //    foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
+        //        var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
+        //        if (!completed.ContainsKey(meshMessage.MessageID)) {
+        //            switch (meshMessage) {
+        //                case MeshMessageComplete meshMessageComplete: {
+        //                    foreach (var reference in meshMessageComplete.References) {
+        //                        completed.Add(reference.MessageID, meshMessageComplete);
+        //                        }
+        //                    break;
+        //                    }
+        //                default: {
+        //                    messages.Add(meshMessage);
+        //                    break;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    return result;
+        //    }
+
 
         //MessageConnectionRequest GetConnectionRequest(
         //        ContextAccount contextDevice,
@@ -176,20 +178,41 @@ namespace Goedel.Mesh.Shell {
         //        }
 
         //    throw new NYI();
-            //}
+        //}
+
+        #endregion
 
 
-
-
-        public override ShellResult DeviceEarl(DeviceEarl Options) {
+        public override ShellResult DeviceDelete(DeviceDelete Options) {
             using (var contextAccount = GetContextAccount(Options)) {
 
                 var result = new Result() {
 
                     };
                 throw new NYI();
-                //return result;
                 }
             }
+        public override ShellResult DeviceList(DeviceList Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new Result() {
+
+                    };
+                "".TaskFunctionality();
+                return result;
+                }
+            }
+
+        public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                var result = new ResultAuthorize() {
+
+                    };
+                "".TaskFunctionality();
+                return result;
+                }
+            }
+
         }
     }

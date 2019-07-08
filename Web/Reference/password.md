@@ -25,14 +25,14 @@ add   Add password entry
 ````
 
 ````
->password add ftp.example.com alice1 password
+Alice> password add ftp.example.com alice1 password
 alice1@ftp.example.com = [password]
 ````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->password add ftp.example.com alice1 password /json
+Alice> password add ftp.example.com alice1 password /json
 {
   "ResultEntry": {
     "Success": true,
@@ -54,13 +54,13 @@ get   Lookup password entry
 ````
 
 ````
->password delete www.example.com
+Alice> password delete www.example.com
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->password delete www.example.com /json
+Alice> password delete www.example.com /json
 {
   "Result": {
     "Success": true}}
@@ -78,18 +78,17 @@ delete   Delete password entry
 ````
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultMachine:
 
 ````
->mesh list /json
+Alice> mesh list /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
 ````
 
 # password list
@@ -104,7 +103,7 @@ list   List password entries
 ````
 
 ````
->password list
+Alice> password list
 alice1@ftp.example.com = [password]
 alice@example.com@www.example.com = [newpassword]
 ````
@@ -112,7 +111,7 @@ alice@example.com@www.example.com = [newpassword]
 Specifying the /json option returns a result of type ResultDump:
 
 ````
->password list /json
+Alice> password list /json
 {
   "ResultDump": {
     "Success": true,

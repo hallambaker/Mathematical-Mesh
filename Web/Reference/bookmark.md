@@ -25,7 +25,7 @@ add   Add bookmark
 ````
 
 ````
->bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
@@ -34,7 +34,7 @@ add   Add bookmark
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
+Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
 {
   "ResultEntry": {
     "Success": true,
@@ -57,14 +57,14 @@ delete   Delete bookmark entry
 ````
 
 ````
->bookmark delete BookmarkPath2
+Alice> bookmark delete BookmarkPath2
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->bookmark delete BookmarkPath2 /json
+Alice> bookmark delete BookmarkPath2 /json
 {
   "Result": {
     "Success": false,
@@ -83,7 +83,7 @@ get   Lookup bookmark entry
 ````
 
 ````
->bookmark get Folder1/2
+Alice> bookmark get Folder1/2
 {
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
@@ -92,7 +92,7 @@ get   Lookup bookmark entry
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->bookmark get Folder1/2 /json
+Alice> bookmark get Folder1/2 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -113,7 +113,7 @@ list   List bookmark entries
 ````
 
 ````
->bookmark list
+Alice> bookmark list
 {
   "Uri": "http://example.com/",
   "Title": "\"Example",
@@ -128,7 +128,7 @@ list   List bookmark entries
 Specifying the /json option returns a result of type ResultDump:
 
 ````
->bookmark list /json
+Alice> bookmark list /json
 {
   "ResultDump": {
     "Success": true,

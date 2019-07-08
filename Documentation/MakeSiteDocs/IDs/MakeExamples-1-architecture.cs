@@ -112,6 +112,10 @@ namespace ExampleGenerator {
 				_Output.Write ("The examples in this document were created on {1}. \n{0}", _Indent, DateTime.Now.ToString());
 				_Output.Write ("Out of {1} examples, {2} were not functional.\n{0}", _Indent, TestCLI.CountTotal, TestCLI.ErrorCountTotal);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Note: Example data is now being produced using the mesh command line tool which is currently\n{0}", _Indent);
+				_Output.Write ("substantially less complete than the Mesh reference code it is intended to provide an interface\n{0}", _Indent);
+				_Output.Write ("to. As a result, the documentation currently lags the code by more than is usual.]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 

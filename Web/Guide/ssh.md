@@ -48,7 +48,7 @@ The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
 ````
->ssh create
+Alice> ssh create
 ERROR - The feature has not been implemented
 ````
 
@@ -66,7 +66,7 @@ an SSH client:
 
 
 ````
->ssh private ssh-key.public
+Alice> ssh private ssh-key.public
 ERROR - The feature has not been implemented
 ````
 
@@ -75,7 +75,7 @@ an SSH client:
 
 
 ````
->ssh public ssh-key.public
+Alice> ssh public ssh-key.public
 ERROR - The feature has not been implemented
 ````
 
@@ -95,7 +95,7 @@ corresponding SSH device public keys added:
 
 
 ````
->ssh merge client
+Alice> ssh merge client
 ````
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
@@ -103,7 +103,7 @@ the listed hosts to the user's ssh catalog.
 
 
 ````
->ssh merge host
+Alice> ssh merge host
 ````
 
 ## Client Key management
@@ -114,14 +114,14 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 
 ````
->ssh add client
+Alice> ssh add client
 ````
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
 ````
->ssh show client
+Alice> ssh show client
 ````
 
 ## Host Key Management
@@ -130,7 +130,7 @@ The `ssh add host`  command adds specific host entries to the user's SSH profile
 
 
 ````
->ssh add host
+Alice> ssh add host
 ````
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
@@ -138,7 +138,7 @@ command.
 
 
 ````
->ssh show host
+Alice> ssh show host
 ````
 
 ## Additional Devices
@@ -154,14 +154,13 @@ enable use of ssh on the machine:
 
 
 ````
->device auth Alice2 /ssh
-ERROR - The feature has not been implemented
+Alice> device auth Alice2 /ssh
 ````
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
 
 ````
->ssh show host
+Alice> ssh show host
 ````
 

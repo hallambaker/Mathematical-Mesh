@@ -50,6 +50,10 @@ namespace Goedel.Mesh.Server {
                 fileStatus: FileStatus.OpenOrCreate,
                 containerType: ContainerType.MerkleTree
                 );
+
+
+
+
             }
 
         /// <summary>
@@ -89,7 +93,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(JpcSession jpcSession, 
-                        MessageConnectionRequest messageConnectionRequestClient) {
+                        RequestConnection messageConnectionRequestClient) {
 
             using (var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID)) {
 
@@ -101,10 +105,11 @@ namespace Goedel.Mesh.Server {
                 var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF, 
                     messageConnectionRequestClient.ClientNonce);
 
-                var messageConnectionRequest = new MessageConnectionResponse() {
+                var messageConnectionRequest = new AcknowledgeConnection() {
                     EnvelopedMessageConnectionRequest = messageConnectionRequestClient.DareEnvelope,
                     ServerNonce = serviceNonce,
-                    Witness = witness
+                    Witness = witness,
+                    MessageID = UDF.Nonce ()
                     };
 
                 var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());

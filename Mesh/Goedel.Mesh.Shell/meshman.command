@@ -35,7 +35,7 @@
 			Brief "Report output in JSON format"
 
 	OptionSet AccountOptions
-		Option AccountID "account" String
+		Option ServiceID "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
 
 	OptionSet DeviceProfileInfo
@@ -223,18 +223,21 @@
 			Include MasterProfileInfo
 
 		Command MeshGet "get"
+			Return ResultMachine
 			Brief "Describe the specified profile"
 			Include MasterProfileInfo
 			Include Reporting
 
 		// Export and import of profiles
 		Command MeshExport "export"
+			Return ResultMachine
 			Brief "Export the specified profile data to the specified file"
 			Parameter File "file" NewFile
 			Include MasterProfileInfo
 			Include Reporting
 
 		Command MeshImport "import"
+			Return ResultMachine
 			Brief "Import the specified profile data to the specified file"
 			Parameter File "file" NewFile
 			Include MasterProfileInfo
@@ -244,8 +247,7 @@
 
 	CommandSet Account "account"
 		Brief "Account creation and management commands."
-		
-
+	
 		Command AccountHello "hello"		
 			Brief "Connect to the service(s) a profile is connected to and report status."
 			Include AccountOptions
@@ -288,44 +290,13 @@
 	CommandSet Connect "device"
 		Brief "Device management commands."
 
-		Command DeviceCreate "create"
-			Brief "Create new device profile"
-			Include CryptoOptions
-			Parameter DeviceID "id" String
-				Brief "Device identifier"
-			Parameter DeviceDescription "dd" String
-				Brief "Device description"
-			Option Default "default" Flag
-				Brief "Make the new device profile the default"
-
-		Command DeviceAuthorize "auth"
-			Brief "Authorize device to use application"
-			Parameter DeviceID "id" String
-				Brief "Device identifier"
-			Include DeviceAuthOptions
-			Include AccountOptions
-			Include Reporting
-
 		Command DeviceRequestConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
-			Parameter Portal "account" String
+			Parameter ServiceID "account" String
 				Brief "New portal account"
 			Option PIN "pin" String
 				Brief "One time use authenticator"
 			Include Reporting
-			Include DeviceProfileInfo
-			Include DeviceAuthOptions
-
-		Command DevicePreConnect "pre"
-			Brief "Create a preconnection request"
-			Parameter Portal "account" String
-				Brief "New portal account"
-			Option Key "key" String
-				Brief "Encryption key for use in generating an EARL connector."
-			Option Export "export" String
-				Brief "Export the device configuration information to the specified file"
-			Include Reporting
-			Include EncodeOptions
 			Include DeviceProfileInfo
 			Include DeviceAuthOptions
 
@@ -351,7 +322,40 @@
 			Include AccountOptions
 			Include Reporting
 
+		Command DeviceDelete "delete"
+			Brief "Remove device from device catalog"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
+			Include AccountOptions
+			Include Reporting
 
+		Command DeviceList "list"
+			Brief "List devices in the device catalog"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"
+		
+		Command DeviceAuthorize "auth"
+			Brief "Authorize device to use application"
+			Parameter DeviceID "id" String
+				Brief "Device identifier"
+			Include DeviceAuthOptions
+			Include AccountOptions
+			Include Reporting
+
+		Command DevicePreConnect "pre"
+			Brief "Create a preconnection request"
+			Parameter Portal "account" String
+				Brief "New portal account"
+			Option Key "key" String
+				Brief "Encryption key for use in generating an EARL connector."
+			Option Export "export" String
+				Brief "Export the device configuration information to the specified file"
+			Include Reporting
+			Include EncodeOptions
+			Include DeviceProfileInfo
+			Include DeviceAuthOptions
 
 		Command DeviceInit "init"
 			Brief "Create an initialization "
@@ -367,20 +371,6 @@
 				Brief "Device identifier"
 			Include DeviceAuthOptions
 			Include AccountOptions
-
-		Command DeviceDelete "delete"
-			Brief "Remove device from device catalog"
-			Parameter DeviceID "id" String
-				Brief "Device identifier"
-			Include AccountOptions
-			Include Reporting
-
-		Command DeviceList"list"
-			Brief "List devices in the device catalog"
-			Include AccountOptions
-			Include Reporting
-			Parameter GroupID "group" String
-				Brief "Recryption group name in user@example.com format"
 
 
 	CommandSet Message "message"
@@ -454,6 +444,15 @@
 				Brief "Recryption group name in user@example.com format"
 			Parameter MemberID "member" String
 				Brief "User to add"
+
+		Command GroupGet	 "get"
+			Brief "Find member in recryption group"
+			Include AccountOptions
+			Include Reporting
+			Parameter GroupID "group" String
+				Brief "Recryption group name in user@example.com format"			
+			Parameter MemberID "member" String
+				Brief "User to find"
 
 		Command GroupDelete "delete"
 			Brief "Remove user from recryption group"
@@ -641,9 +640,17 @@
 	CommandSet Contact "contact"
 		Brief "Manage contact catalogs connected to an account"
 
+		Command ContactSelf "self"
+			Brief "Add contact entry for self"
+			Option Email "email" String
+			Option File "file" ExistingFile
+			Include AccountOptions
+			Include Reporting
+
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
-			Parameter File "file" ExistingFile
+			Option Email "email" String
+			Option File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
 

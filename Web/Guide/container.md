@@ -13,7 +13,7 @@ a container archive.
 
 
 ````
->container create Container.dcon
+Alice> container create Container.dcon
 ````
 
 *catalog* *spool* *archive* *log*
@@ -24,11 +24,11 @@ same format and function as for DARE Messages but their scope is the container
 as a whole.
 
 For example, Alice creates an encrypted container readable by anyone who is a
-member of the group groupies@example.com;
+member of the group groupw@example.com;
 
 
 ````
->container create ContainerEncrypt.dcon /encrypt=groupies@example.com
+Alice> container create ContainerEncrypt.dcon /encrypt=groupw@example.com
 ````
 
 Since it is rarely desirable to sign every entry in a container, signatures
@@ -39,7 +39,7 @@ specified file(s) as entries and appends an index as the final record:
 
 
 ````
->container archive ContainerArchive.dcon TestDir1
+Alice> container archive ContainerArchive.dcon TestDir1
 ERROR - Path cannot be null.
 Parameter name: path
 ````
@@ -48,8 +48,8 @@ An archive may be signed and encrypted:
 
 
 ````
->container create ContainerArchiveEncrypt.dcon TestDir1
->/encrypt=groupies@example.com /sign=alice@example.com
+Alice> container create ContainerArchiveEncrypt.dcon TestDir1
+Alice> /encrypt=groupw@example.com /sign=alice@example.com
 ERROR - The command  is not known.
 ````
 
@@ -63,7 +63,7 @@ The `container verify` command verifies the contents of a container:
 
 
 ````
->container verify ContainerArchiveEncrypt.dcon
+Alice> container verify ContainerArchiveEncrypt.dcon
 ````
 
 The verification performed depends on the type of authentication applied to the
@@ -79,15 +79,14 @@ the files are extracted by default:
 
 
 ````
->container extract Container.dcon TestOut
-ERROR - The feature has not been implemented
+Alice> container extract Container.dcon TestOut
 ````
 
 Alternatively, the `/file` option may be used to extract a specific file:
 
 
 ````
->container extract Container.dcon /file=TestDir1\TestFile4.txt
+Alice> container extract Container.dcon /file=TestDir1\TestFile4.txt
 ERROR - Value cannot be null.
 Parameter name: path
 ````
@@ -99,7 +98,7 @@ The `container append` command adds an entry to a container:
 
 
 ````
->container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
+Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
 ````
 
@@ -113,7 +112,7 @@ marking an entry as deleted:
 
 
 ````
->container delete Container.dcon  TestFile2.txt
+Alice> container delete Container.dcon  TestFile2.txt
 ````
 
 Marking an entry for deletion does not cause the entry itself to be modified.
@@ -128,7 +127,7 @@ container:
 
 
 ````
->container index Container.dcon
+Alice> container index Container.dcon
 ````
 
 The index entry may be complete, providing an index of the entire file 
@@ -144,7 +143,7 @@ at the end:
 
 
 ````
->container copy Container2.dcon
+Alice> container copy Container2.dcon
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 
@@ -153,14 +152,14 @@ the copy:
 
 
 ````
->container copy ContainerArchiveEncrypt.dcon /decrypt
+Alice> container copy ContainerArchiveEncrypt.dcon /decrypt
 ````
 
 The copy command may also be used to reclaim space used by deleted items:
 
 
 ````
->container copy Container2.dcon /purge
+Alice> container copy Container2.dcon /purge
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 

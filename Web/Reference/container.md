@@ -37,13 +37,13 @@ enhancements.
 
 
 ````
->container create Container.dcon
+Alice> container create Container.dcon
 ````
 
 Specifying the /json option returns a result of type ResultFile:
 
 ````
->container create Container.dcon /json
+Alice> container create Container.dcon /json
 {
   "ResultFile": {
     "Success": true,
@@ -73,7 +73,7 @@ enhancements and adds the spefied file(s).
 
 
 ````
->container archive ContainerArchive.dcon TestDir1
+Alice> container archive ContainerArchive.dcon TestDir1
 ERROR - Path cannot be null.
 Parameter name: path
 ````
@@ -81,7 +81,7 @@ Parameter name: path
 Specifying the /json option returns a result of type Result:
 
 ````
->container archive ContainerArchive.dcon TestDir1 /json
+Alice> container archive ContainerArchive.dcon TestDir1 /json
 {
   "Result": {
     "Success": false,
@@ -104,13 +104,13 @@ container.
 
 
 ````
->container verify ContainerArchiveEncrypt.dcon
+Alice> container verify ContainerArchiveEncrypt.dcon
 ````
 
 Specifying the /json option returns a result of type ResultFile:
 
 ````
->container verify ContainerArchiveEncrypt.dcon /json
+Alice> container verify ContainerArchiveEncrypt.dcon /json
 {
   "ResultFile": {
     "Success": true,
@@ -138,18 +138,17 @@ to files.
 
 
 ````
->container extract Container.dcon TestOut
-ERROR - The feature has not been implemented
+Alice> container extract Container.dcon TestOut
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultFile:
 
 ````
->container extract Container.dcon TestOut /json
+Alice> container extract Container.dcon TestOut /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultFile": {
+    "Success": true,
+    "Filename": "Container.dcon"}}
 ````
 
 # container append
@@ -174,14 +173,14 @@ The `container append` command appends the specified file to the container.
 
 
 ````
->container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
+Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
+Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
 {
   "Result": {
     "Success": false,
@@ -203,13 +202,13 @@ container but does not erase the data from the file.
 
 
 ````
->container delete Container.dcon  TestFile2.txt
+Alice> container delete Container.dcon  TestFile2.txt
 ````
 
 Specifying the /json option returns a result of type ResultFile:
 
 ````
->container delete Container.dcon  TestFile2.txt /json
+Alice> container delete Container.dcon  TestFile2.txt /json
 {
   "ResultFile": {
     "Success": true}}
@@ -235,13 +234,13 @@ The `container index` command appends an index record to the end of the containe
 
 
 ````
->container index Container.dcon
+Alice> container index Container.dcon
 ````
 
 Specifying the /json option returns a result of type ResultFile:
 
 ````
->container index Container.dcon /json
+Alice> container index Container.dcon /json
 {
   "ResultFile": {
     "Success": true,
@@ -274,14 +273,14 @@ and indexing criteria.
 
 
 ````
->container copy Container2.dcon
+Alice> container copy Container2.dcon
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->container copy Container2.dcon /json
+Alice> container copy Container2.dcon /json
 {
   "Result": {
     "Success": false,

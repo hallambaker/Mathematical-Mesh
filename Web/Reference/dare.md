@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA /json
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
 {
   "Result": {
     "Success": false,
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA /json
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA /json
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
 {
   "Result": {
     "Success": false,
@@ -187,14 +187,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
->dare earl TestFile1.txt
+Alice> dare earl TestFile1.txt
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->dare earl TestFile1.txt /json
+Alice> dare earl TestFile1.txt /json
 {
   "Result": {
     "Success": false,

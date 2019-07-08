@@ -40,29 +40,29 @@ namespace Goedel.Mesh {
 
 
 
-    public partial class MessageConnectionResponse {
+    public partial class AcknowledgeConnection {
 
-        public MessageConnectionRequest MessageConnectionRequest => messageConnectionRequest ??
-            MessageConnectionRequest.Decode(EnvelopedMessageConnectionRequest).CacheValue(out messageConnectionRequest);
-        MessageConnectionRequest messageConnectionRequest;
+        public RequestConnection MessageConnectionRequest => messageConnectionRequest ??
+            RequestConnection.Decode(EnvelopedMessageConnectionRequest).CacheValue(out messageConnectionRequest);
+        RequestConnection messageConnectionRequest;
 
-        public static new MessageConnectionResponse Decode(DareEnvelope dareEnvelope) =>
-            MeshItem.Decode(dareEnvelope) as MessageConnectionResponse;
+        public static new AcknowledgeConnection Decode(DareEnvelope dareEnvelope) =>
+            MeshItem.Decode(dareEnvelope) as AcknowledgeConnection;
         }
 
 
-    public partial class MessageConnectionRequest {
+    public partial class RequestConnection {
 
-        public static new MessageConnectionRequest Decode(DareEnvelope dareEnvelope) =>
-            MeshItem.Decode(dareEnvelope) as MessageConnectionRequest;
+        public static new RequestConnection Decode(DareEnvelope dareEnvelope) =>
+            MeshItem.Decode(dareEnvelope) as RequestConnection;
 
         public ProfileDevice ProfileDevice => profileDevice ??
             ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
 
-        public static MessageConnectionRequest Verify(DareEnvelope dareEnvelope) {
-            var result = Decode(dareEnvelope) as MessageConnectionRequest;
+        public static RequestConnection Verify(DareEnvelope dareEnvelope) {
+            var result = Decode(dareEnvelope) as RequestConnection;
 
             // ToDo: put the verification code in here.
 

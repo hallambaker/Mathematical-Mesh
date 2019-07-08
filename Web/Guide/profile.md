@@ -12,8 +12,10 @@ a description of the service parameters.
 
 
 ````
->account hello alice@example.com
-ERROR - Object reference not set to an instance of an object.
+Alice> account hello alice@example.com
+MeshService 0.8
+   Service UDF = MATL-RPSI-QW4P-QCKH-7C3K-KPAD-PMNX
+   Host UDF = MDCS-EMTX-FI7O-UF3F-IVE4-W4MG-3IQX
 ````
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
@@ -37,9 +39,9 @@ The `profile create` command creates a profile:
 
 
 ````
->mesh create
-Device Profile UDF=MC64-NI5G-SVSU-WIP6-AOZH-SFPQ-UQTW
-Personal Profile UDF=MDB2-7MDK-LXVK-UGT3-AWMP-C7BD-U65F
+Alice> mesh create
+Device Profile UDF=MCJW-G2VQ-OM3B-REPM-RRGA-MSIR-BWPH
+Personal Profile UDF=MD2T-3WE6-TJAM-QU3C-CXGM-4EW4-4QDM
 ````
 
 
@@ -52,8 +54,7 @@ machine:
 
 
 ````
->mesh list
-ERROR - The feature has not been implemented
+Alice> mesh list
 ````
 
 The `profile dump` command provides a more detailed description of 
@@ -61,8 +62,7 @@ a profile:
 
 
 ````
->mesh get
-ERROR - The feature has not been implemented
+Alice> mesh get
 ````
 
 ## Escrowing Profile Master Keys
@@ -78,7 +78,7 @@ of the user's master profile and returns a set of recovery shares.
 
 
 ````
->mesh escrow
+Alice> mesh escrow
 ERROR - The cryptographic provider does not permit export of the private key parameters
 ````
 
@@ -90,7 +90,7 @@ command.
 
 
 ````
->mesh recover $TBS $TBS /verify
+Alice> mesh recover $TBS $TBS /verify
 ERROR - The feature has not been implemented
 ````
 
@@ -104,8 +104,7 @@ A Mesh profile may be exported as a file using the `profile ` command:
 
 
 ````
->mesh export profile.dare
-ERROR - The feature has not been implemented
+Alice> mesh export profile.dare
 ````
 
 The `profile ` profile can then be used to import the file on another 
@@ -113,7 +112,6 @@ machine:
 
 
 ````
->mesh import profile.dare
-ERROR - The feature has not been implemented
+Alice4> mesh import profile.dare
 ````
 

@@ -8,6 +8,7 @@ contact    Manage contact catalogs connected to an account
     delete   Delete contact entry
     get   Lookup contact entry
     list   List contact entries
+    self   Add contact entry for self
 ````
 
 
@@ -15,7 +16,8 @@ contact    Manage contact catalogs connected to an account
 
 ````
 add   Add contact entry from file
-       <Unspecified>
+    /email   <Unspecified>
+    /file   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -23,18 +25,27 @@ add   Add contact entry from file
 ````
 
 ````
->contact add carol-contact.json
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
->contact add carol-contact.json /json
+Alice> contact add email carol@example.com
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "Self": false,
+  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> contact add email carol@example.com /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Self": false,
+      "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+      "EnvelopedContact": [{},
+        "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}}}
 ````
 
 # contact delete
@@ -49,14 +60,14 @@ delete   Delete contact entry
 ````
 
 ````
->contact delete carol@example.com
+Alice> contact delete carol@example.com
 ERROR - Object reference not set to an instance of an object.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->contact delete carol@example.com /json
+Alice> contact delete carol@example.com /json
 {
   "Result": {
     "Success": false,
@@ -76,14 +87,14 @@ get   Lookup contact entry
 ````
 
 ````
->contact get carol@example.com
+Alice> contact get carol@example.com
 Empty
 ````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->contact get carol@example.com /json
+Alice> contact get carol@example.com /json
 {
   "ResultEntry": {
     "Success": false}}
@@ -100,16 +111,37 @@ list   List contact entries
 ````
 
 ````
->contact list
-````
+Alice> contact list
+{
+  "Self": true,
+  "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Self": false,
+  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Specifying the /json option returns a result of type ResultDump:
 
 ````
->contact list /json
+Alice> contact list /json
 {
   "ResultDump": {
     "Success": true,
-    "CatalogedEntries": []}}
+    "CatalogedEntries": [{
+        "Self": true,
+        "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
+        "EnvelopedContact": [{},
+          "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]},
+      {
+        "Self": false,
+        "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
+        "EnvelopedContact": [{},
+          "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}]}}
 ````
 

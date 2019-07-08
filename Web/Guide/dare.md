@@ -10,7 +10,7 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 
 ````
->dare encode TestFile1.txt
+Alice> dare encode TestFile1.txt
 ERROR - The feature has not been implemented
 ````
 
@@ -23,7 +23,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The feature has not been implemented
 ````
 
@@ -32,7 +32,7 @@ encoded:
 
 
 ````
->dare encode TestDir1 /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare encode TestDir1 /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The feature has not been implemented
 ````
 
@@ -43,7 +43,7 @@ public encryption key.
 
 
 ````
->dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -55,7 +55,7 @@ digest values on a DARE Message without decoding the message body:
 
 
 ````
->dare verify TestFile1.txt.dare
+Alice> dare verify TestFile1.txt.dare
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 ````
 
@@ -63,7 +63,7 @@ The command to verify a signed message is identical:
 
 
 ````
->dare verify TestFile1.txt.mesh.dare
+Alice> dare verify TestFile1.txt.mesh.dare
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 ````
 
@@ -73,14 +73,14 @@ level otherwise.
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The option  is not known.
 ````
 
 
 
 ````
->dare verify TestFile1.txt.symmetric.dare
+Alice> dare verify TestFile1.txt.symmetric.dare
 ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.symmetric.dare'.
 ````
 
@@ -90,7 +90,7 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 
 ````
->dare decode TestFile1.txt.dare
+Alice> dare decode TestFile1.txt.dare
 ERROR - The feature has not been implemented
 ````
 
@@ -98,7 +98,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
->dare decode TestFile1.txt.symmetric.dare /encrypt=EBBF-Z3GR-AOOO-2P2C-HM2F-KSX3-LRBA
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
 ERROR - The option  is not known.
 ````
 
@@ -107,7 +107,7 @@ the necessary decryption key(s) automatically:
 
 
 ````
->dare decode TestFile1.txt.mesh.dare
+Alice> dare decode TestFile1.txt.mesh.dare
 ERROR - The feature has not been implemented
 ````
 
@@ -118,7 +118,7 @@ The `dare earl` command is used to create an EARL:
 
 
 ````
->dare earl TestFile1.txt
+Alice> dare earl TestFile1.txt
 ERROR - The feature has not been implemented
 ````
 
@@ -131,9 +131,9 @@ the transaction to be written to a DARE Container Log.
 
 
 ````
->dare container create EarlLog.dlog /encrypt=alice@example.com
+Alice> dare container create EarlLog.dlog /encrypt=alice@example.com
 ERROR - The command  is not known.
->dare earl TestFile1.txt /log=EarlLog.dlog
+Alice> dare earl TestFile1.txt /log=EarlLog.dlog
 ERROR - The feature has not been implemented
 ````
 
@@ -142,7 +142,7 @@ been processed already.
 
 
 ````
->dare earl TestFile1.txt /new=EarlLog.dlog
+Alice> dare earl TestFile1.txt /new=EarlLog.dlog
 ERROR - The feature has not been implemented
 ````
 

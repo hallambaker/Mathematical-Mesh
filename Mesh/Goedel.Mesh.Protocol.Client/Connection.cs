@@ -72,10 +72,10 @@ namespace Goedel.Mesh.Client {
 
     public partial class CatalogedPending {
 
-        public MessageConnectionResponse MessageConnectionResponse => messageConnectionResponse ??
-            MessageConnectionResponse.Decode(EnvelopedMessageConnectionResponse).
+        public AcknowledgeConnection MessageConnectionResponse => messageConnectionResponse ??
+            AcknowledgeConnection.Decode(EnvelopedMessageConnectionResponse).
                 CacheValue(out messageConnectionResponse);
-        MessageConnectionResponse messageConnectionResponse;
+        AcknowledgeConnection messageConnectionResponse;
 
 
 

@@ -7,6 +7,7 @@ group    Group management commands
     add   Add user to recryption group
     create   Create recryption group
     delete   Remove user from recryption group
+    get   Find member in recryption group
     list   List members of a recryption group
 ````
 
@@ -24,14 +25,14 @@ create   Create recryption group
 ````
 
 ````
->group create groupies@example.com
+Alice> group create groupw@example.com
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group create groupies@example.com /json
+Alice> group create groupw@example.com /json
 {
   "Result": {
     "Success": false,
@@ -51,14 +52,14 @@ add   Add user to recryption group
 ````
 
 ````
->group add groupies@example.com bob@example.com
+Alice> group add groupw@example.com bob@example.com
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group add groupies@example.com bob@example.com /json
+Alice> group add groupw@example.com bob@example.com /json
 {
   "Result": {
     "Success": false,
@@ -78,14 +79,14 @@ delete   Remove user from recryption group
 ````
 
 ````
->group delete groupies@example.com bob@example.com
+Alice> group delete groupw@example.com bob@example.com
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group delete groupies@example.com bob@example.com /json
+Alice> group delete groupw@example.com bob@example.com /json
 {
   "Result": {
     "Success": false,
@@ -104,14 +105,14 @@ list   List members of a recryption group
 ````
 
 ````
->group list groupies@example.com
+Alice> group list groupw@example.com
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->group list groupies@example.com /json
+Alice> group list groupw@example.com /json
 {
   "Result": {
     "Success": false,

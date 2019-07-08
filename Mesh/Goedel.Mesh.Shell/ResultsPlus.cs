@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Goedel.Utilities;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh.Shell {
 
@@ -83,6 +84,87 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+    public partial class ResultHello {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (Response != null) {
+
+
+                if (Response.Version != null) {
+                    Builder.AppendLine($"MeshService {Response.Version.Major}.{Response.Version.Minor}");
+                    }
+                if (Response.EnvelopedProfileService != null) {
+                    var profileService = ProfileService.Decode(Response.EnvelopedProfileService);
+                    Builder.AppendLine($"   Service UDF = {profileService.UDF}");
+                    }
+                if (Response.EnvelopedProfileHost != null) {
+                    var profileHost = ProfileHost.Decode(Response.EnvelopedProfileHost);
+                    Builder.AppendLine($"   Host UDF = {profileHost.UDF}");
+                    }
+                }
+
+
+            return Builder.ToString();
+            }
+        }
+
+
+    public partial class ResultConnect{
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+
+            switch (CatalogedMachine) {
+
+                case CatalogedPending catalogedPending: {
+                    var messageConnectionResponse = AcknowledgeConnection.Decode(
+                                catalogedPending.EnvelopedMessageConnectionResponse);
+                    Builder.AppendLine($"   Witness value = {messageConnectionResponse.Witness}");
+
+                    break;
+                    }
+                case CatalogedStandard  catalogedStandard: {
+                    break;
+                    }
+                case CatalogedAdmin catalogedAdmin: {
+                    break;
+                    }
+                }
+
+
+
+            if (CatalogedMachine.EnvelopedProfileMaster != null) {
+
+                var profileMaster = ProfileMaster.Decode(CatalogedMachine.EnvelopedProfileMaster);
+                Builder.AppendLine($"   Personal Mesh = {profileMaster.UDF}");
+                }
+
+
+            return Builder.ToString();
+            }
+        }
+
+
+    public partial class ResultPIN {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (MessagePIN != null) {
+                Builder.Append($"PIN={MessagePIN.PIN}");
+
+                if (MessagePIN.Expires != null) {
+                    Builder.Append($" (Expires={MessagePIN.Expires.ToRFC3339()})");
+
+                    }
+                Builder.AppendLine();
+
+                }
+
+
+            return Builder.ToString();
+            }
+        }
 
 
     public partial class ResultDeviceCreate {

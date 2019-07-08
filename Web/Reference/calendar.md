@@ -24,14 +24,14 @@ add   Add calendar entry from file
 ````
 
 ````
->calendar add CalendarEntry1.json CalID1
+Alice> calendar add CalendarEntry1.json CalID1
 {
   "Key": "CalID1"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->calendar add CalendarEntry1.json CalID1 /json
+Alice> calendar add CalendarEntry1.json CalID1 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -51,14 +51,14 @@ delete   Delete calendar entry
 ````
 
 ````
->calendar delete CalID1
+Alice> calendar delete CalID1
 {
   "Key": "CalID1"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->calendar delete CalID1 /json
+Alice> calendar delete CalID1 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -78,14 +78,14 @@ get   Lookup calendar entry
 ````
 
 ````
->calendar get CalID1
+Alice> calendar get CalID1
 {
   "Key": "CalID1"}````
 
 Specifying the /json option returns a result of type ResultEntry:
 
 ````
->calendar get CalID1 /json
+Alice> calendar get CalID1 /json
 {
   "ResultEntry": {
     "Success": true,
@@ -104,14 +104,14 @@ dump   List calendar entries
 ````
 
 ````
->calendar list
+Alice> calendar list
 ERROR - The command  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
->calendar list /json
+Alice> calendar list /json
 {
   "Result": {
     "Success": false,

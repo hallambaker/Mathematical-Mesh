@@ -15,7 +15,7 @@ A mail application profile is added to a Mesh profile using the
 
 
 ````
->mail add alice@example.com
+Alice> mail add alice@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -28,7 +28,7 @@ Alternatively, the configuration may be given explicitly using the form
 
 
 ````
->mail add alice@example.net /inbound=imap4:imap.example.net:993 /outbound=smtp:submit.example.net:587
+Alice> mail add alice@example.net /inbound=imap4:imap.example.net:993 /outbound=smtp:submit.example.net:587
 ERROR - The feature has not been implemented
 ````
 
@@ -41,7 +41,7 @@ Account profiles may be updated to change the network configuration using the
 
 
 ````
->mail update alice@example.net
+Alice> mail update alice@example.net
 ERROR - The feature has not been implemented
 ````
 
@@ -55,7 +55,7 @@ profile when it is created or as a later update using the `/openpgp` option:
 
 
 ````
->mail update  alice@example.com /openpgp
+Alice> mail update  alice@example.com /openpgp
 ERROR - The option  is not known.
 ````
 
@@ -64,14 +64,14 @@ formats to allow installation in a key service:
 
 
 ````
->mail openpgp private alice@example.com pgp.private
+Alice> mail openpgp private alice@example.com pgp.private
 ````
 
 The public key may be exported likewise:
 
 
 ````
->mail openpgp public alice@example.com pgp.public
+Alice> mail openpgp public alice@example.com pgp.public
 ````
 
 ## Creating an S/MIME Key Set
@@ -81,7 +81,7 @@ profile when it is created or as a later update using the `/smime` option:
 
 
 ````
->mail alice@example.com /smime
+Alice> mail alice@example.com /smime
 ERROR - The command  is not known.
 ````
 
@@ -92,7 +92,7 @@ specified Certificate Authority service via ACME:
 
 
 ````
->mail alice@example.com /ca=ca.example.net
+Alice> mail alice@example.com /ca=ca.example.net
 ERROR - The command  is not known.
 ````
 
@@ -104,13 +104,13 @@ formats to allow installation in a key service:
 
 
 ````
->mail smime private alice@example.com smime.private
+Alice> mail smime private alice@example.com smime.private
 ````
 
 The public key may be exported likewise:
 
 
 ````
->mail smime public alice@example.com smime.public
+Alice> mail smime public alice@example.com smime.public
 ````
 

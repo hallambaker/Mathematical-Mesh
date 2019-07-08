@@ -94,6 +94,13 @@ namespace Goedel.Mesh.Client {
             if (assertionAccount == null) {
                 var CatalogApplication = GetCatalogApplication();
                 AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
+
+                if (AssertionAccount.ServiceIDs != null && AssertionAccount.ServiceIDs?.Count > 0) {
+
+                    ServiceID = AssertionAccount.ServiceIDs[0];
+                    MeshClient = GetMeshClient(ServiceID);
+                    }
+
                 }
             else {
                 AssertionAccount = assertionAccount;
@@ -271,28 +278,28 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The latest unprocessed MessageConnectionRequest</returns>
         public Message GetPendingMessageConnectionRequest() =>
-            GetPendingMessage(MessageConnectionResponse.__Tag);
+            GetPendingMessage(AcknowledgeConnection.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageContactRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageContactRequest</returns>
         public Message GetPendingMessageContactRequest() =>
-            GetPendingMessage(MessageContact.__Tag);
+            GetPendingMessage(RequestContact.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageConfirmationRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConfirmationRequest</returns>
         public Message GetPendingMessageConfirmationRequest() =>
-            GetPendingMessage(MessageConfirmationRequest.__Tag);
+            GetPendingMessage(RequestConfirmation.__Tag);
 
         /// <summary>
         /// Return the latest unprocessed MessageConfirmationResponse that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConfirmationResponse</returns>
         public Message GetPendingMessageConfirmationResponse() =>
-            GetPendingMessage(MessageConfirmationResponse.__Tag);
+            GetPendingMessage(ResponseConfirmation.__Tag);
 
         /// <summary>
         /// Search the inbound spool and 
@@ -352,6 +359,9 @@ namespace Goedel.Mesh.Client {
                 case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+
+
+                case CatalogDevice.Label: return ContextMeshAdmin.GetCatalogDevice();
                 }
 
             throw new NYI();
@@ -361,18 +371,19 @@ namespace Goedel.Mesh.Client {
         /////////////////////
 
 
-        public string GetPIN(int length = 80, int validity = 24 * 60) {
+        public MessagePIN GetPIN(int length = 80, int validity = 24 * 60) {
             var pin = UDF.Nonce(length);
             var expires = DateTime.Now.AddMinutes(validity);
-            var messageConnectionPIN = new MessageConnectionPIN() {
+            var messageConnectionPIN = new MessagePIN() {
                 Account = ActivationAccount.AccountUDF,
                 Expires = expires,
-                PIN = pin
+                PIN = pin,
+                MessageID = UDF.Nonce()
                 };
 
             SendMessageAdmin(messageConnectionPIN);
 
-            return pin;
+            return messageConnectionPIN;
             }
 
 
@@ -385,17 +396,57 @@ namespace Goedel.Mesh.Client {
 
 
         public int Sync(bool all = true) {
+            int count = 0;
 
-            //var statusRequest = new StatusRequest() {
-            //    };
-            //var status = MeshService.Status(statusRequest);
+            var statusRequest = new StatusRequest() {
+                };
+            var status = MeshClient.Status(statusRequest);
 
-            //// for each container
-            //if (all) {
-            //    Download();
-            //    }
+            (status.ContainerStatus == null).AssertFalse();
 
-            throw new NYI();
+
+            var constraintsSelects = new List<ConstraintsSelect>();
+
+            foreach (var container in status.ContainerStatus) {
+                var store = GetStore(container.Container);
+
+
+                Console.WriteLine($"Container {container.Container}, items {container.Index} [{store.Container.FrameCount}]" );
+
+                if (store.Container.FrameCount < container.Index) {
+                    var constraintsSelect = new ConstraintsSelect() {
+                        Container = container.Container,
+                        IndexMin = container.Index + 1,
+                        IndexMax = (int)store.Container.FrameCount
+
+                        };
+                    constraintsSelects.Add(constraintsSelect);
+
+                    }
+                }
+
+            if (constraintsSelects.Count == 0) {
+                return 0;
+                }
+
+            var downloadRequest = new DownloadRequest() {
+
+                Select = constraintsSelects
+                };
+
+            var download = MeshClient.Download(downloadRequest);
+
+            foreach (var update in download.Updates) {
+                var store = GetStore(update.Container);
+
+                foreach (var entry in update.Envelopes) {
+                    count++;
+                    store.AppendDirect(entry);
+                    }
+
+                }
+
+            return count;
             }
 
 
@@ -449,66 +500,13 @@ namespace Goedel.Mesh.Client {
             }
 
 
+
+        public CatalogedGroup CreateGroup(string groupName) {
+            throw new NYI();
+            }
+        public CatalogMember GetCatalogGroup(string groupName) {
+            throw new NYI();
+            }
         }
 
-
-    //public class ContextAccountService : ContextAccount {
-    //    MeshService MeshService;
-    //    string ServiceID;
-
-
-
-    //    public ContextAccountService(ContextMesh contextMesh, ActivationAccount activationAccount) :
-    //            base(contextMesh, activationAccount, null) {
-    //        var CatalogApplication = GetCatalogApplication();
-    //        // here pull the account assertion from the catalog
-    //        AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
-    //        // now work out which service to use.
-
-
-    //        }
-
-    //    public ContextAccountService(ContextAccount contextAccount, MeshService meshService) :
-    //                base(contextAccount) {
-    //        MeshService = meshService;
-    //        }
-
-
-
-
-    //    public void Upload(long maxItems=-1) {
-
-    //        //var updates = new List<ContainerUpdate>();
-
-
-    //        //var uploadRequest = new UploadRequest() {
-    //        //    Updates = updates
-    //        //    };
-
-    //        //int items = 0;
-    //        //// Compile the set of updates
-    //        //foreach (var storeEntry in DictionaryStores) {
-
-
-    //        //    }
-
-    //        //if (items == 0) {  // No work to be done!
-    //        //    return;
-    //        //    }
-
-    //        //var uploadResponse = MeshService.Upload(uploadRequest);
-
-    //        //// Now check off all the ones that have been updated.
-    //        //foreach (var responseEntry in uploadResponse.Entries) {
-
-
-    //        //    }
-
-
-    //        }
-
-
-
-
-    //    }
     }

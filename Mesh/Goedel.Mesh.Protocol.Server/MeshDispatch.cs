@@ -29,7 +29,7 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-
+using Goedel.Cryptography.Core;
 namespace Goedel.Mesh.Server {
 
     /// <summary>
@@ -37,13 +37,32 @@ namespace Goedel.Mesh.Server {
     /// dispatches the specified server.
     /// </summary>
     public class PublicMeshServiceProvider : MeshServiceProvider {
+
+
+        IMeshMachine MeshMachine;
+
+        ///<summary>The profile describing the service</summary>
+        public ProfileService ProfileService;
+
+        ///<summary>The profile describing the host</summary>
+        public ProfileHost ProfileHost;
+
+
         /// <summary>
         /// Initialize a Mesh Service Provider.
         /// </summary>
         /// <param name="domain">The domain of the service provider.</param>
         /// <param name="serviceDirectory">The mesh persistence store filename.</param>
-        public PublicMeshServiceProvider(string domain, string serviceDirectory) =>
+        public PublicMeshServiceProvider(string domain, string serviceDirectory) {
+
+            MeshMachine = new MeshMachineCoreServer(serviceDirectory);
+
             Mesh = new MeshPersist(serviceDirectory);
+
+            // Dummy profiles for the service and host at this point
+            ProfileService = ProfileService.Generate(MeshMachine);
+            ProfileHost = ProfileService.CreateHost(MeshMachine);
+            }
 
         /// <summary>
         /// The mesh persistence provider.
@@ -101,8 +120,10 @@ namespace Goedel.Mesh.Server {
                 Version = new Goedel.Protocol.Version() {
                     Major = 0,
                     Minor = 8,
-                    Encodings = new List<Goedel.Protocol.Encoding>()
-                    }
+                    Encodings = new List<Goedel.Protocol.Encoding>(),
+                    },
+                EnvelopedProfileService = Provider.ProfileService.DareEnvelope,
+                EnvelopedProfileHost = Provider.ProfileHost.DareEnvelope
                 };
 
             var Encoding = new Goedel.Protocol.Encoding() {
@@ -263,7 +284,7 @@ namespace Goedel.Mesh.Server {
 
 
             // decode MessageConnectionRequestClient with verification
-            var messageConnectionRequestClient = MessageConnectionRequest.Verify(
+            var messageConnectionRequestClient = RequestConnection.Verify(
                     Request.MessageConnectionRequestClient);
             try {
                 var connectResponse = Mesh.Connect(jpcSession, messageConnectionRequestClient);

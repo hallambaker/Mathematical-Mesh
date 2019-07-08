@@ -50,11 +50,11 @@ Recryption groups are created using the `group create` command:
 
 
 ````
->group create groupies@example.com
+Alice> group create groupw@example.com
 ERROR - The feature has not been implemented
 ````
 
-This command creates the group groupies@example.com. Since Alice created the
+This command creates the group groupw@example.com. Since Alice created the
 account she is the administrator.
 
 At this point, the group has no members. Bob can encrypt a file under the group
@@ -62,9 +62,9 @@ public key but he is unable to read it:
 
 
 ````
->dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupies@example.com
+Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupw@example.com
 ERROR - The command  is not known.
->dare decode  TestFile1-group.dare
+Bob> dare decode  TestFile1-group.dare
 ERROR - The feature has not been implemented
 ````
 
@@ -73,7 +73,7 @@ administrator key:
 
 
 ````
->dare decode  TestFile1-group.dare
+Alice> dare decode  TestFile1-group.dare
 ERROR - The feature has not been implemented
 ````
 
@@ -86,7 +86,7 @@ Alice adds Bob as a member of the group:
 
 
 ````
->group add groupies@example.com bob@example.com
+Alice> group add groupw@example.com bob@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -94,7 +94,7 @@ Bob can now decrypt the file.
 
 
 ````
->dare decode  TestFile1-group.dare
+Alice> dare decode  TestFile1-group.dare
 ERROR - The feature has not been implemented
 ````
 
@@ -104,7 +104,7 @@ The `connect ` command returns a list of group members:
 
 
 ````
->group list groupies@example.com
+Alice> group list groupw@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -116,7 +116,7 @@ Users may be removed from a recryption group using the `group delete` command:
 
 
 ````
->group delete groupies@example.com bob@example.com
+Alice> group delete groupw@example.com bob@example.com
 ERROR - The feature has not been implemented
 ````
 
@@ -124,7 +124,7 @@ Bob is no longer a member of the group and his decryption request now fails:
 
 
 ````
->dare decode  TestFile1-group.dare
+Alice> dare decode  TestFile1-group.dare
 ERROR - The feature has not been implemented
 ````
 

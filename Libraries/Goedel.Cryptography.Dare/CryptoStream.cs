@@ -399,7 +399,7 @@ namespace Goedel.Cryptography.Dare {
             this.PayloadLength = PayloadLength;
             if (PayloadLength >= 0 & PackagingFormat != PackagingFormat.Direct) {
                 JSONBWriter.WriteTag(Output, JSONBCD.DataTerm, PayloadLength);
-                Console.Write($"Written tag for {PayloadLength}");
+                //Console.Write($"Written tag for {PayloadLength}");
                 }
 
             StreamMac = Mac== null ? null : new CryptoStream(new CryptoStackStream(), Mac, CryptoStreamMode.Write);
