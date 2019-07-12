@@ -18,7 +18,7 @@ namespace Goedel.Mesh {
 
         public static object Initialize => null;
 
-        static MeshItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+        static MeshItem() => AddDictionary(ref _TagDictionary);
 
 
         /// <summary>

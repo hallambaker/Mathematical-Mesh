@@ -53,15 +53,17 @@ Bob's contact information has been added to Alice's address book:
 Alice> contact list
 {
   "Self": true,
-  "Key": "NAWI-VDVD-77DG-3RT2-PXO3-YA46-E6WA",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Key": "NBFE-WYYT-GIBG-AHLN-CQZE-DJJO-JCZA",
+  "EnvelopedContact": [{
+      "Index": 0},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
+  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NB6Z-AKO6-MFSG-GCHZ-MY3F-NK7V-7U23",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  "Key": "NC55-RB63-NICX-VOXG-AOBO-KMNM-IRLH",
+  "EnvelopedContact": [{
+      "Index": 0},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
+  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:

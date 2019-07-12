@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Test {
 
     public partial class TestShell : Goedel.Mesh.Shell.Shell {
         static string ServiceName = "example.com";
-        public MeshPortalDirect MeshPortalDirect => TestEnvironmentCommon.MeshPortalDirect;
+        public MeshLocalPortal MeshPortalDirect => TestEnvironmentCommon.MeshLocalPortal;
         public string MachineName = "Test";
 
 
@@ -66,6 +66,9 @@ namespace Goedel.Mesh.Test {
             }
         }
 
+
+
+
     public partial class ExampleResult {
         public Result Result;
         public string ResultType => Result._Tag;
@@ -86,6 +89,10 @@ namespace Goedel.Mesh.Test {
 
 
         public string MachineName => TestCLI.MachineName;
+
+        public List<Trace> Traces;
+
+
 
         public ExampleResult(TestCLI testCLI, string command, Result result) {
             Result = result;
@@ -135,10 +142,19 @@ namespace Goedel.Mesh.Test {
             foreach (var cmd in commands) {
                 Count++;
                 CountTotal++;
+                var portalTest = Shell.MeshPortalDirect as MeshPortalTest;
 
                 try {
+
+                    
+                    if (portalTest != null) {
+                        portalTest.MeshProtocolMessages = null;
+                        }
+
+
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
-                    result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result));
+                    result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
+                        Traces = portalTest?.MeshProtocolMessages });
                     }
                 catch (Exception exception) {
                     ErrorCount++;
@@ -148,7 +164,9 @@ namespace Goedel.Mesh.Test {
                         Success = false,
                         Reason = exception.Message
                         };
-                    result.Add(new ExampleResult(this, cmd, cmdresult));
+                    result.Add(new ExampleResult(this, cmd, cmdresult) {
+                        Traces = portalTest?.MeshProtocolMessages
+                        });
                     }
                 }
 

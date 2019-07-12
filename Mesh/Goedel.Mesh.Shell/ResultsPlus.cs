@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Shell {
 
             if (CatalogedMachine.EnvelopedProfileMaster != null) {
 
-                var profileMaster = ProfileMaster.Decode(CatalogedMachine.EnvelopedProfileMaster);
+                var profileMaster = ProfilePersonal.Decode(CatalogedMachine.EnvelopedProfileMaster);
                 Builder.AppendLine($"   Personal Mesh = {profileMaster.UDF}");
                 }
 
@@ -167,7 +167,7 @@ namespace Goedel.Mesh.Shell {
         }
 
 
-    public partial class ResultDeviceCreate {
+    public partial class ResultCreateDevice {
 
         public override string ToString() {
             var Builder = StringBuilder();
@@ -177,7 +177,7 @@ namespace Goedel.Mesh.Shell {
         }
 
 
-    public partial class ResultAccountCreate {
+    public partial class ResultCreateAccount {
 
         //public AssertionDeviceConnection ConnectionDevice = null;
         //public AssertionDevicePrivate PrivateDevice = null;
@@ -193,7 +193,7 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
-    public partial class ResultMasterCreate {
+    public partial class ResultCreatePersonal {
 
         public ConnectionDevice ConnectionDevice = null;
         public ActivationDevice PrivateDevice = null;

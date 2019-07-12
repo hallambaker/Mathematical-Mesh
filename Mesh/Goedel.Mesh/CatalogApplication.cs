@@ -54,7 +54,7 @@ namespace Goedel.Mesh {
         public void Update(ProfileAccount assertionAccount) {
             var catalogEntryApplicationAccount = new CatalogedApplicationAccount() {
                 Key = assertionAccount.UDF,
-                EnvelopedAccountAssertion = assertionAccount.DareEnvelope
+                EnvelopedProfileAccount = assertionAccount.DareEnvelope
                 };
             Update(catalogEntryApplicationAccount);
 
@@ -63,7 +63,7 @@ namespace Goedel.Mesh {
 
         public ProfileAccount GetAssertionAccount(string Key) {
             var entry = Locate(Key) as CatalogedApplicationAccount;
-            return ProfileAccount.Decode(entry.EnvelopedAccountAssertion);
+            return ProfileAccount.Decode(entry.EnvelopedProfileAccount);
             }
 
 

@@ -33,21 +33,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Host">The host implementation</param>
         /// <param name="serviceID">User account</param>
         public DebugLocalSession(JPCProvider Host, string serviceID)
-                : this(Host, serviceID, null) {
-            }
-
-        /// <summary>
-        /// Create a remote session with authentication under the
-        /// specified credential.
-        /// </summary>
-        /// <param name="Host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="serviceID">User account</param>
-        /// <param name="UDF">Authentication key identifier.</param>
-        public DebugLocalSession(JPCProvider Host, string Domain, string serviceID, string UDF=null) :
-                base (Host, serviceID, UDF ){
-
-
+                : base(Host, serviceID) {
             }
 
 

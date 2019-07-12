@@ -14,9 +14,9 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => UDF;
 
 
-        public string UDF => KeySignature.UDF;
+        public string UDF => KeyOfflineSignature.UDF;
 
-        public byte[] UDFBytes => KeySignature.KeyPair.PKIXPublicKey.UDFBytes(512);
+        public byte[] UDFBytes => KeyOfflineSignature.KeyPair.PKIXPublicKey.UDFBytes(512);
 
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
                         KeyPair keyPublicAuthenticate) {
 
             var ProfileDevice = new ProfileDevice() {
-                KeySignature = new PublicKey (keyPublicSign.KeyPairPublic()),
+                KeyOfflineSignature = new PublicKey (keyPublicSign.KeyPairPublic()),
                 KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
                 KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
                 };
@@ -98,17 +98,22 @@ namespace Goedel.Mesh {
                     IMeshMachine meshMachine,
                     ProfileDevice profileDevice) {
             ProfileDevice = profileDevice;
-            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeySignature);
+            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
             KeyEncryption = new KeyOverlay(meshMachine, profileDevice.KeyEncryption);
             KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
 
 
             Console.WriteLine($"Created new device private key");
-            Console.WriteLine($"   Device Sig  {profileDevice.KeySignature.UDF} -> {KeySignature.UDF}");
+            Console.WriteLine($"   Device Sig  {profileDevice.KeyOfflineSignature.UDF} -> {KeySignature.UDF}");
             Console.WriteLine($"   Device Enc  {profileDevice.KeyEncryption.UDF} -> {KeyEncryption.UDF}");
             Console.WriteLine($"   Device Auth {profileDevice.KeyAuthentication.UDF} -> {KeyAuthentication.UDF}");
             }
 
+        public static new ActivationDevice Decode(DareEnvelope message) {
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareEnvelope = message;
+            return result;
+            }
 
         public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
@@ -132,7 +137,7 @@ namespace Goedel.Mesh {
         }
 
     public partial class ConnectionDevice {
-        public ProfileMaster ProfileMaster;
+        public ProfilePersonal ProfileMaster;
 
         public ConnectionDevice() {
             }

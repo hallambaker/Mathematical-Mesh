@@ -11,10 +11,8 @@ The `network add` command adds a network entry to a catalog:
 
 ````
 Alice> network add NetworkEntry1.json NetID1
-{
-  "Key": "NetID1"}Alice> network add NetworkEntry2.json NetID2
-{
-  "Key": "NetID2"}````
+{Username}@{Service} = [{Password}]Alice> network add NetworkEntry2.json NetID2
+{Username}@{Service} = [{Password}]````
 
 
 ## Finding networks
@@ -24,8 +22,8 @@ The `network get`  command retreives a network entry by label:
 
 ````
 Alice> network get NetID2
-{
-  "Key": "NetID2"}````
+Empty
+````
 
 ## Deleting networks
 
@@ -34,8 +32,8 @@ Network entries may be deleted using the  `network delete` command:
 
 ````
 Alice> network delete NetID2
-{
-  "Key": "NetID2"}Alice> network list
+ERROR - Object reference not set to an instance of an object.
+Alice> network list
 ERROR - The command  is not known.
 ````
 

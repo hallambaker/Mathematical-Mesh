@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Client {
         public ActivationAccount ActivationAccount;
 
 
-        public ProfileAccount AssertionAccount;
+        public ProfileAccount ProfileAccount;
 
         ///<summary>The Machine context.</summary>
         IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
@@ -93,17 +93,17 @@ namespace Goedel.Mesh.Client {
 
             if (assertionAccount == null) {
                 var CatalogApplication = GetCatalogApplication();
-                AssertionAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
+                ProfileAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
 
-                if (AssertionAccount.ServiceIDs != null && AssertionAccount.ServiceIDs?.Count > 0) {
+                if (ProfileAccount.ServiceIDs != null && ProfileAccount.ServiceIDs?.Count > 0) {
 
-                    ServiceID = AssertionAccount.ServiceIDs[0];
+                    ServiceID = ProfileAccount.ServiceIDs[0];
                     MeshClient = GetMeshClient(ServiceID);
                     }
 
                 }
             else {
-                AssertionAccount = assertionAccount;
+                ProfileAccount = assertionAccount;
                 }
 
             }
@@ -119,13 +119,13 @@ namespace Goedel.Mesh.Client {
                 string serviceID,
                 bool sync = true) {
             // Add to assertion
-            AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
-            AssertionAccount.ServiceIDs.Add(serviceID);
-            ContextMeshAdmin.Sign(AssertionAccount);
+            ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
+            ProfileAccount.ServiceIDs.Add(serviceID);
+            ContextMeshAdmin.Sign(ProfileAccount);
 
             var createRequest = new CreateRequest() {
                 ServiceID = serviceID,
-                SignedAssertionAccount = AssertionAccount.DareEnvelope,
+                SignedAssertionAccount = ProfileAccount.DareEnvelope,
                 SignedProfileMesh = ContextMesh.ProfileMesh.DareEnvelope
                 };
 
@@ -136,9 +136,9 @@ namespace Goedel.Mesh.Client {
             MeshClient.JpcSession.Authenticated = true;
 
             // Update the account assertion. This lives in CatalogApplication.
-            AssertionAccount.ServiceIDs = AssertionAccount.ServiceIDs ?? new List<string>();
-            AssertionAccount.ServiceIDs.Add(serviceID);
-            GetCatalogApplication().Update(AssertionAccount);
+            ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
+            ProfileAccount.ServiceIDs.Add(serviceID);
+            GetCatalogApplication().Update(ProfileAccount);
 
             ServiceID = serviceID;
 
@@ -468,10 +468,10 @@ namespace Goedel.Mesh.Client {
                 return;
                 }
 
-            AssertionAccount.ServiceIDs.AssertNotNull();
-            (AssertionAccount.ServiceIDs.Count > 0).AssertTrue();
+            ProfileAccount.ServiceIDs.AssertNotNull();
+            (ProfileAccount.ServiceIDs.Count > 0).AssertTrue();
 
-            ServiceID = AssertionAccount.ServiceIDs[0];
+            ServiceID = ProfileAccount.ServiceIDs[0];
 
             MeshClient = GetMeshClient(ServiceID);
             }

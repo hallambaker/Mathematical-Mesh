@@ -102,10 +102,18 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class MeshPortalLocal : MeshLocalPortal {
 
+
         /// <summary>
-        /// Create new portal using the default stores.
+        /// Create a new portal using the specified stores.
         /// </summary>
-        public MeshPortalLocal() => MeshServiceHost = new PublicMeshServiceProvider(ServiceName, ServiceDirectory);
+        /// <param name="serviceName">DNS service name</param>
+        /// <param name="serviceDirectory">File name for the Mesh Store.</param>
+        /// <param name="portalStore">File name for the Portal Store.</param>
+        public MeshPortalLocal(string serviceName = null, string serviceDirectory = null) {
+            ServiceName = serviceName ?? ServiceName;
+            ServiceDirectory = serviceDirectory ?? ServiceDirectory;
+            MeshServiceHost = new PublicMeshServiceProvider(ServiceName, ServiceDirectory);
+            }
 
         /// <summary>
         /// Return a MeshService object for the named portal service.
@@ -114,8 +122,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="Service">The service to get the service from.</param> 
         /// <returns>The service instance</returns>
         public override MeshService GetService(string serviceID) {
-            serviceID.SplitAccountIDService(out var Service, out var Account);
-            var Session = new LocalRemoteSession(MeshServiceHost, Service, Account);
+            var Session = new LocalRemoteSession(MeshServiceHost, serviceID);
             MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }

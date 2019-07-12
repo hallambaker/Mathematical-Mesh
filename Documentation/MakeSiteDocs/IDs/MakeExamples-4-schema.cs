@@ -20,9 +20,6 @@ namespace ExampleGenerator {
 		public void MakeSchemaExamples (CreateExamples Example) {
 			 SchemaMaster(Example);
 			 SchemaDevice(Example);
-			 SchemaCatalog(Example);
-			 SchemaSpool(Example);
-			 SchemaContact(Example);
 			 SchemaAccount(Example);
 			 SchemaDevicePrivate(Example);
 			 SchemaDeviceConnection(Example);
@@ -52,7 +49,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
-				 Format(AliceProfiles?.ProfileMaster);
+				 Format(AliceProfiles?.ProfilePersonal);
 					}
 		
 
@@ -66,24 +63,55 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
+				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
+				 var profileDevice = Goedel.Mesh.ProfileDevice.Decode (catalogedDevice.EnvelopedProfileDevice);
+				 var connectionDevice = ConnectionDevice.Decode (catalogedDevice.EnvelopedConnectionDevice);
+				 var privateDevice = ActivationDevice.Decode (catalogedDevice.EnvelopedActivationDevice);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice's Device Profile specifies keys for encryption, signature and exchange:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				 Format(profileDevice);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Since the Device Profile keys are ultimately under the control of the device and/or\n{0}", _Indent);
 				_Output.Write ("software provider, these are considered insufficiently trustworthy and the\n{0}", _Indent);
 				_Output.Write ("administration device creates key contributions to be added to the device keys\n{0}", _Indent);
 				_Output.Write ("to establish the key set to be used in the context of the user's personal Mesh:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(AliceProfiles?.PrivateDevice);
+				 Format(privateDevice);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The resulting key set is specified in the device connection:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(AliceProfiles?.ConnectionDevice);
+				 Format(connectionDevice);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("All the above are combined to form the CatalogedDevice entry:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(AliceProfiles?.CatalogedDevice);
+				 Format(catalogedDevice);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// SchemaAccount
+		//
+		public static void SchemaAccount(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\SchemaAccount.md")) {
+				Example._SchemaAccount(Example);
+				}
+			}
+		public void _SchemaAccount(CreateExamples Example) {
+
+				 var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
+				 var profileAccount = resultCreateAccount.ProfileAccount;
+				 var activationAccount = resultCreateAccount.ActivationAccount;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The account profile specifies the online and offline signature keys used to maintain the\n{0}", _Indent);
+				_Output.Write ("profile and the encryption key to be used by the account.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(profileAccount);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Each device using the account requires an activation record:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(activationAccount);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -98,21 +126,23 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaService(CreateExamples Example) {
 
-				 Format(ResultHello?.ProfileService);
-					}
-		
-
-		//
-		// SchemaAccount
-		//
-		public static void SchemaAccount(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaAccount.md")) {
-				Example._SchemaAccount(Example);
-				}
-			}
-		public void _SchemaAccount(CreateExamples Example) {
-
-				 Format(AliceProfiles?.AssertionAccount);
+				 var response = ResultHello?.Response;
+				 var profileService = ProfileService.Decode (response.EnvelopedProfileService);
+				 var profileHost = ProfileHost.Decode (response.EnvelopedProfileHost);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The service profile\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(profileService);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The host also has a profile\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(profileHost);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("And there should be a connection of the host to the service but this isn't implemented yet:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(null);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -141,48 +171,6 @@ namespace ExampleGenerator {
 		public void _SchemaDeviceConnection(CreateExamples Example) {
 
 				 Format(AliceProfiles?.AssertionAccount);
-					}
-		
-
-		//
-		// SchemaCatalog
-		//
-		public static void SchemaCatalog(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaCatalog.md")) {
-				Example._SchemaCatalog(Example);
-				}
-			}
-		public void _SchemaCatalog(CreateExamples Example) {
-
-				_Output.Write ("{1}\n{0}", _Indent, "SchemaCatalog".Task("SchemaCatalog"));
-					}
-		
-
-		//
-		// SchemaSpool
-		//
-		public static void SchemaSpool(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaSpool.md")) {
-				Example._SchemaSpool(Example);
-				}
-			}
-		public void _SchemaSpool(CreateExamples Example) {
-
-				_Output.Write ("{1}\n{0}", _Indent, "SchemaCatalog".Task("SchemaCatalog"));
-					}
-		
-
-		//
-		// SchemaContact
-		//
-		public static void SchemaContact(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaContact.md")) {
-				Example._SchemaContact(Example);
-				}
-			}
-		public void _SchemaContact(CreateExamples Example) {
-
-				_Output.Write ("{1}\n{0}", _Indent, "SchemaEntryMail".Task("SchemaEntryMail"));
 					}
 		
 
@@ -308,7 +296,28 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMessageConnection(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The connection process begins with the assignment of a time-limited PIN value. This is\n{0}", _Indent);
+				_Output.Write ("described in a Message sent by the administration device to allow other admin devices\n{0}", _Indent);
+				_Output.Write ("to accept the request made.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (ConnectPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The initial request is sent to the service\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (ConnectPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'\n{0}", _Indent);
+				_Output.Write ("since it comes from the service, not the user.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (ConnectPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Note, this mechanism should be revised to ensure that there is perfect forward secrecy. The \n{0}", _Indent);
+				_Output.Write ("device should provide a nonce key as a mixin]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -322,7 +331,19 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMessageContact(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Bob asks Alice to send her contact details and sends his.\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (ContactPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Alice responds with her details:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (ContactPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Note that this exchange could be performed automatically on Alice's behalf by the service if she \n{0}", _Indent);
+				_Output.Write ("delegates this action to it.]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -336,7 +357,15 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMessageConfirmation(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The confirmation request\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (ConfirmPending[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The confirmation response\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 DescribeMessage (ConfirmPending[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -350,7 +379,13 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMessageCompletion(CreateExamples Example) {
 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Having processed a message, a completion message is added to the spool so that other devices \n{0}", _Indent);
+				_Output.Write ("can see that it has been read:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 				 DescribeMessage (ConfirmGetReject[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		}
 	}

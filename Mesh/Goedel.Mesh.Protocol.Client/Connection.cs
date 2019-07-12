@@ -12,7 +12,7 @@ namespace Goedel.Mesh.Client {
     public partial class ConnectionItem {
         public static object Initialize => null;
 
-        static ConnectionItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+        static ConnectionItem() => AddDictionary(ref _TagDictionary);
         }
 
     public partial class CatalogedMachine {
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-            var profileMaster = ProfileMaster.Generate(meshMachine, algorithmSign, algorithmEncrypt);
+            var profileMaster = ProfilePersonal.Generate(meshMachine, algorithmSign, algorithmEncrypt);
 
 
             return Generate(meshMachine, profileMaster);
@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Client {
 
         public static CatalogedAdmin Generate(
                 IMeshMachine meshMachine,
-                ProfileMaster profileMaster ) {
+                ProfilePersonal profileMaster ) {
             return new CatalogedAdmin() {
 
                 };

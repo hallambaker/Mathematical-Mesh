@@ -20,9 +20,6 @@ namespace ExampleGenerator {
 			 ProtocolHelloRequest(Example);
 			 ProtocolHelloResponse(Example);
 			 ProtocolHello(Example);
-			 ProtocolHelloDevice(Example);
-			 ProtocolHelloProfile(Example);
-			 ProtocolHelloTicket(Example);
 			 ProtocolAccountCreate(Example);
 			 ProtocolAccountDelete(Example);
 			 ProtocolStatus(Example);
@@ -31,8 +28,8 @@ namespace ExampleGenerator {
 			 ProtocolConnect(Example);
 			 ProtocolConnectPIN(Example);
 			 ProtocolConnectEARL(Example);
-			 ProtocolContact(Example);
-			 ProtocolConfirm(Example);
+			 ProtocolPostClientService(Example);
+			 ProtocolPostServiceService(Example);
 			}
 		
 
@@ -46,7 +43,12 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolHelloRequest(CreateExamples Example) {
 
-				  DescribeRequestBinding (Example.ProfileHello);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
+				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileHello[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -60,7 +62,12 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolHelloResponse(CreateExamples Example) {
 
-				  DescribeResponseBinding (Example.ProfileHello);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Note, this is showing the payload, not the binding as is intended because the current code \n{0}", _Indent);
+				_Output.Write ("doesn't implement it as intended yet]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ProfileHello[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -74,54 +81,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolHello(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileHello);
-				  DescribeResponse (Example.ProfileHello);
 				_Output.Write ("\n{0}", _Indent);
-					}
-		
-
-		//
-		// ProtocolHelloDevice
-		//
-		public static void ProtocolHelloDevice(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloDevice.md")) {
-				Example._ProtocolHelloDevice(Example);
-				}
-			}
-		public void _ProtocolHelloDevice(CreateExamples Example) {
-
-				  DescribeRequestBinding (Example.ProfileHelloDevice);
-				  DescribeResponseBinding (Example.ProfileHelloDevice);
-					}
-		
-
-		//
-		// ProtocolHelloProfile
-		//
-		public static void ProtocolHelloProfile(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloProfile.md")) {
-				Example._ProtocolHelloProfile(Example);
-				}
-			}
-		public void _ProtocolHelloProfile(CreateExamples Example) {
-
-				  DescribeRequestBinding (Example.ProfileHelloProfile);
-				  DescribeResponseBinding (Example.ProfileHelloProfile);
-					}
-		
-
-		//
-		// ProtocolHelloTicket
-		//
-		public static void ProtocolHelloTicket(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloTicket.md")) {
-				Example._ProtocolHelloTicket(Example);
-				}
-			}
-		public void _ProtocolHelloTicket(CreateExamples Example) {
-
-				  DescribeRequestBinding (Example.ProfileHelloTicket);
-				  DescribeResponseBinding (Example.ProfileHelloTicket);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileHello[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ProfileHello[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -135,8 +104,15 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
-				  DescribeRequest (Example.CommandsAddServiceAlice);
-				  DescribeResponse (Example.CommandsAddServiceAlice);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -150,8 +126,17 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileAliceDelete);
-				  DescribeResponse (Example.ProfileAliceDelete);
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -165,8 +150,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolStatus(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileSync);// Message 0,0
-				  DescribeResponse (Example.ProfileSync);
+				 if (ExampleInvalid (Example.ProfileSync)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileSync[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ProfileSync[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -180,8 +173,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileSync);// Message 0,1
-				  DescribeResponse (Example.ProfileSync);
+				 if (ExampleInvalid (Example.ProfileSync, 0, 1)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileSync[0].Traces[1]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ProfileSync[0].Traces[1]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -195,8 +196,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
-				  DescribeRequest (Example.ProfileSync);  // Message 0,2
-				  DescribeResponse (Example.ProfileSync);
+				 if (ExampleInvalid (Example.ProfileSync, 0, 2)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ProfileSync[0].Traces[2]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ProfileSync[0].Traces[2]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -210,10 +219,16 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnect(CreateExamples Example) {
 
-				  DescribeRequest (Example.ConnectRequest);
-				  DescribeResponse (Example.ConnectRequest);
-				  DescribeRequest (Example.ConnectPending);
-				  DescribeResponse (Example.ConnectPending);
+				 if (ExampleInvalid (Example.ConnectRequest, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ConnectRequest[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ConnectRequest[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -227,10 +242,17 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
-				  DescribeRequest (Example.ConnectGetPin);
-				  DescribeResponse (Example.ConnectGetPin);
-				  DescribeRequest (Example.ConnectPin);
-				  DescribeResponse (Example.ConnectPin);
+				 if (ExampleInvalid (Example.ConnectPin, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ConnectPin[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ConnectPin[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -244,42 +266,58 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
-				  DescribeRequest (Example.DeviceEarl1);
-				  DescribeRequest (Example.DeviceEarl3);
+				 if (ExampleInvalid (Example.DeviceEarl1, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.DeviceEarl1[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.DeviceEarl1[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
 		//
-		// ProtocolContact
+		// ProtocolPostClientService
 		//
-		public static void ProtocolContact(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolContact.md")) {
-				Example._ProtocolContact(Example);
+		public static void ProtocolPostClientService(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ProtocolPostClientService.md")) {
+				Example._ProtocolPostClientService(Example);
 				}
 			}
-		public void _ProtocolContact(CreateExamples Example) {
+		public void _ProtocolPostClientService(CreateExamples Example) {
 
-				  DescribeRequest (Example.ContactRequest);
-				  DescribeResponse (Example.ContactRequest);
-				  DescribeRequest (Example.ContactAccept);
-				  DescribeResponse (Example.ContactAccept);
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The request payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeRequestBinding (Example.ConnectRequest[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The response payload:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				  DescribeResponseBinding (Example.ConnectRequest[0].Traces[0]);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
 		//
-		// ProtocolConfirm
+		// ProtocolPostServiceService
 		//
-		public static void ProtocolConfirm(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolConfirm.md")) {
-				Example._ProtocolConfirm(Example);
+		public static void ProtocolPostServiceService(CreateExamples Example) { /* XFile  */
+				using (Example._Output = new StreamWriter("Examples\\ProtocolPostServiceService.md")) {
+				Example._ProtocolPostServiceService(Example);
 				}
 			}
-		public void _ProtocolConfirm(CreateExamples Example) {
+		public void _ProtocolPostServiceService(CreateExamples Example) {
 
-				  DescribeRequest (Example.ConfirmRequest);
-				  DescribeResponse (Example.ConfirmRequest);
-				  DescribeRequest (Example.ConfirmAccept);
-				  DescribeResponse (Example.ConfirmAccept);
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Not Yet Implemented]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		}
 	}

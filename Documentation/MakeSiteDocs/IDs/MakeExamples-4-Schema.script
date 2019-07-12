@@ -10,9 +10,6 @@
 #method MakeSchemaExamples CreateExamples Example
 #% SchemaMaster(Example);
 #% SchemaDevice(Example);
-#% SchemaCatalog(Example);
-#% SchemaSpool(Example);
-#% SchemaContact(Example);
 #% SchemaAccount(Example);
 #% SchemaDevicePrivate(Example);
 #% SchemaDeviceConnection(Example);
@@ -32,39 +29,77 @@
 #end method
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
-#% Format(AliceProfiles?.ProfileMaster);
+#% Format(AliceProfiles?.ProfilePersonal);
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
+#% var catalogedDevice = AliceProfiles?.CatalogedDevice;
+#% var profileDevice = Goedel.Mesh.ProfileDevice.Decode (catalogedDevice.EnvelopedProfileDevice);
+#% var connectionDevice = ConnectionDevice.Decode (catalogedDevice.EnvelopedConnectionDevice);
+#% var privateDevice = ActivationDevice.Decode (catalogedDevice.EnvelopedActivationDevice);
 
 Alice's Device Profile specifies keys for encryption, signature and exchange:
 
-#!% Format(AliceProfiles?.ProfileDevice);
+#% Format(profileDevice);
 
 Since the Device Profile keys are ultimately under the control of the device and/or
 software provider, these are considered insufficiently trustworthy and the
 administration device creates key contributions to be added to the device keys
 to establish the key set to be used in the context of the user's personal Mesh:
 
-#% Format(AliceProfiles?.PrivateDevice);
+#% Format(privateDevice);
 
 The resulting key set is specified in the device connection:
 
-#% Format(AliceProfiles?.ConnectionDevice);
+#% Format(connectionDevice);
 
 All the above are combined to form the CatalogedDevice entry:
 
-#% Format(AliceProfiles?.CatalogedDevice);
+#% Format(catalogedDevice);
 
 #end zfile
 
-#zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
-#% Format(ResultHello?.ProfileService);
-#end zfile
+
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
-#% Format(AliceProfiles?.AssertionAccount);
+#% var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
+#% var profileAccount = resultCreateAccount.ProfileAccount;
+#% var activationAccount = resultCreateAccount.ActivationAccount;
+
+The account profile specifies the online and offline signature keys used to maintain the
+profile and the encryption key to be used by the account.
+
+#% Format(profileAccount);
+
+Each device using the account requires an activation record:
+
+#% Format(activationAccount);
+
 #end zfile
+
+
+
+
+#zfile CreateExamples SchemaService "Examples\\SchemaService.md" Example
+#% var response = ResultHello?.Response;
+#% var profileService = ProfileService.Decode (response.EnvelopedProfileService);
+#% var profileHost = ProfileHost.Decode (response.EnvelopedProfileHost);
+
+The service profile
+
+#% Format(profileService);
+
+The host also has a profile
+
+#% Format(profileHost);
+
+And there should be a connection of the host to the service but this isn't implemented yet:
+
+#% Format(null);
+
+
+#end zfile
+
 
 #zfile CreateExamples SchemaDevicePrivate "Examples\\SchemaDevicePrivate.md" Example
 #% Format(AliceProfiles?.AssertionAccount);
@@ -74,20 +109,6 @@ All the above are combined to form the CatalogedDevice entry:
 #% Format(AliceProfiles?.AssertionAccount);
 #end zfile
 
-
-
-#zfile CreateExamples SchemaCatalog "Examples\\SchemaCatalog.md" Example
-#{"SchemaCatalog".Task("SchemaCatalog")}
-#end zfile
-
-#zfile CreateExamples SchemaSpool "Examples\\SchemaSpool.md" Example
-#{"SchemaCatalog".Task("SchemaCatalog")}
-#end zfile
-
-
-#zfile CreateExamples SchemaContact "Examples\\SchemaContact.md" Example
-#{"SchemaEntryMail".Task("SchemaEntryMail")}
-#end zfile
 
 #zfile CreateExamples SchemaEntryDevice "Examples\\SchemaEntryDevice.md" Example
 #{"SchemaEntryDevice".Task("SchemaEntryDevice")}
@@ -127,19 +148,66 @@ All the above are combined to form the CatalogedDevice entry:
 
 
 #zfile CreateExamples SchemaMessageConnection "Examples\\SchemaMessageConnection.md" Example
+
+The connection process begins with the assignment of a time-limited PIN value. This is
+described in a Message sent by the administration device to allow other admin devices
+to accept the request made.
+
 #% DescribeMessage (ConnectPending[0]);
+
+
+The initial request is sent to the service
+
+#% DescribeMessage (ConnectPending[0]);
+
+The service returns an acknowledgement giving the Witness value. Note that this is not a 'reply'
+since it comes from the service, not the user.
+
+
+#% DescribeMessage (ConnectPending[0]);
+
+[Note, this mechanism should be revised to ensure that there is perfect forward secrecy. The 
+device should provide a nonce key as a mixin]
+
+
 #end zfile
 
 #zfile CreateExamples SchemaMessageContact "Examples\\SchemaMessageContact.md" Example
+
+Bob asks Alice to send her contact details and sends his.
+
 #% DescribeMessage (ContactPending[0]);
+
+Alice responds with her details:
+
+#% DescribeMessage (ContactPending[0]);
+
+[Note that this exchange could be performed automatically on Alice's behalf by the service if she 
+delegates this action to it.]
+
+
 #end zfile
 
 #zfile CreateExamples SchemaMessageConfirmation "Examples\\SchemaMessageConfirmation.md" Example
+
+The confirmation request
+
 #% DescribeMessage (ConfirmPending[0]);
+
+The confirmation response
+
+#% DescribeMessage (ConfirmPending[0]);
+
 #end zfile
 
 #zfile CreateExamples SchemaMessageCompletion "Examples\\SchemaMessageCompletion.md" Example
+
+Having processed a message, a completion message is added to the spool so that other devices 
+can see that it has been read:
+
 #% DescribeMessage (ConfirmGetReject[0]);
+
+
 #end zfile
 
 #end xclass

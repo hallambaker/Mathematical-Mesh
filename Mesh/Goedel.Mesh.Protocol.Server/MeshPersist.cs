@@ -16,7 +16,7 @@ namespace Goedel.Mesh.Server {
         ///of the static method.</summary>
         public static object Initialize => null;
 
-        static CatalogItem() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+        static CatalogItem() => AddDictionary(ref _TagDictionary);
         }
 
     /// <summary>
@@ -99,14 +99,14 @@ namespace Goedel.Mesh.Server {
 
                 var serviceNonce = CryptoCatalog.GetBits(128);
 
-                var MeshUDF = accountHandle.ProfileMesh.KeySignature.KeyPair.UDFBytes;
-                var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeySignature.KeyPair.UDFBytes;
+                var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.KeyPair.UDFBytes;
+                var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.KeyPair.UDFBytes;
 
                 var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF, 
                     messageConnectionRequestClient.ClientNonce);
 
                 var messageConnectionRequest = new AcknowledgeConnection() {
-                    EnvelopedMessageConnectionRequest = messageConnectionRequestClient.DareEnvelope,
+                    EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
                     ServerNonce = serviceNonce,
                     Witness = witness,
                     MessageID = UDF.Nonce ()
@@ -197,10 +197,9 @@ namespace Goedel.Mesh.Server {
                     JpcSession jpcSession, 
                     VerifiedAccount account, 
                     List<ConstraintsSelect> selections) {
-            AccountHandleVerified accountEntry = null;
 
-            try {
-                accountEntry = GetAccountVerified(account, jpcSession);
+            using (var accountEntry = GetAccountVerified(account, jpcSession)) {
+
                 var updates = new List<ContainerUpdate>();
                 foreach (var selection in selections) {
                     using (var store = accountEntry.GetStore(selection.Container)) {
@@ -218,10 +217,6 @@ namespace Goedel.Mesh.Server {
                         }
                     }
                 return updates;
-                }
-
-            finally {
-                accountEntry?.Dispose();
                 }
             }
 
@@ -314,10 +309,12 @@ namespace Goedel.Mesh.Server {
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
 
-            if (jpcSession is DirectSession directSession) {
+            if (jpcSession is DirectSession ) {
                 return new AccountHandleVerified(accountEntry);
                 }
-
+            if (jpcSession is LocalRemoteSession ) {
+                return new AccountHandleVerified(accountEntry);
+                }
             // At this point we need to examine the actual information presented and the 
             // AssertionDeviceConnection value from the session.
 
@@ -371,9 +368,9 @@ namespace Goedel.Mesh.Server {
 
         public override string _PrimaryKey => ServiceID;
 
-        public ProfileMaster ProfileMesh => profileMesh ??
-                ProfileMaster.Decode(SignedProfileMesh).CacheValue(out profileMesh);
-        ProfileMaster profileMesh;
+        public ProfilePersonal ProfileMesh => profileMesh ??
+                ProfilePersonal.Decode(SignedProfileMesh).CacheValue(out profileMesh);
+        ProfilePersonal profileMesh;
 
 
         public ProfileAccount AssertionAccount => assertionAccount ?? 

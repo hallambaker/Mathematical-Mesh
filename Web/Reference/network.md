@@ -25,8 +25,7 @@ add   Add calendar entry from file
 
 ````
 Alice> network add NetworkEntry1.json NetID1
-{
-  "Key": "NetID1"}````
+{Username}@{Service} = [{Password}]````
 
 Specifying the /json option returns a result of type ResultEntry:
 
@@ -36,7 +35,7 @@ Alice> network add NetworkEntry1.json NetID1 /json
   "ResultEntry": {
     "Success": true,
     "CatalogEntry": {
-      "Key": "NetID1"}}}
+      "Service": "NetID1"}}}
 ````
 
 # network delete
@@ -52,18 +51,17 @@ delete   Delete calendar entry
 
 ````
 Alice> network delete NetID2
-{
-  "Key": "NetID2"}````
+ERROR - Object reference not set to an instance of an object.
+````
 
-Specifying the /json option returns a result of type ResultEntry:
+Specifying the /json option returns a result of type Result:
 
 ````
 Alice> network delete NetID2 /json
 {
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Key": "NetID2"}}}
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
 ````
 
 # network get
@@ -79,8 +77,8 @@ get   Lookup calendar entry
 
 ````
 Alice> network get NetID2
-{
-  "Key": "NetID2"}````
+Empty
+````
 
 Specifying the /json option returns a result of type ResultEntry:
 
@@ -88,9 +86,7 @@ Specifying the /json option returns a result of type ResultEntry:
 Alice> network get NetID2 /json
 {
   "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Key": "NetID2"}}}
+    "Success": false}}
 ````
 
 # network dump

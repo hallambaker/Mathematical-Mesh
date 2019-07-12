@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System;
-using System.IO;
+﻿using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
-using Goedel.Mesh.Shell;
-using Goedel.Test.Core;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using System.Linq;
-using Goedel.Cryptography;
-using System.Numerics;
+
 using System.Collections.Generic;
 
 namespace ExampleGenerator {

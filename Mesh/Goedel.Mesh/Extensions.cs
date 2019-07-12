@@ -7,8 +7,8 @@ using Goedel.Cryptography.Dare;
 namespace Goedel.Mesh {
     public static class Extensions {
 
-        public static ProfileMaster GetProfileMaster(this DareEnvelope dareMessage) {
-            var profile = ProfileMaster.FromJSON(dareMessage.GetBodyReader(), true);
+        public static ProfilePersonal GetProfileMaster(this DareEnvelope dareMessage) {
+            var profile = ProfilePersonal.FromJSON(dareMessage.GetBodyReader(), true);
             // Task: here put code to verify the signature of the message against the master signature.
 
             return profile;

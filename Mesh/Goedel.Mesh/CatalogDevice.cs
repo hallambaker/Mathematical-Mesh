@@ -81,7 +81,7 @@ namespace Goedel.Mesh {
         /// deserialization.
         /// </summary>
         public ConnectionDevice AssertionDeviceConnection => assertionDeviceConnection ??
-            ConnectionDevice.Decode(EnvelopedDeviceConnection).CacheValue(out assertionDeviceConnection);
+            ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out assertionDeviceConnection);
         ConnectionDevice assertionDeviceConnection = null;
 
 

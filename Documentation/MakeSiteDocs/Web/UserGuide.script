@@ -4,6 +4,7 @@
 #using Goedel.Mesh.Test
 #using Goedel.Protocol
 #using Goedel.Command
+#using Goedel.Test.Core 
 #xclass ExampleGenerator CreateExamples
 
 
@@ -206,11 +207,52 @@ executed without any output being made to the console.
 #end method
 
 
+#block "Check example"
+#% public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
+#% if (examples == null) return true;
+#% if (item >= examples.Count-1 ) return true;
+#% if (trace >= examples[item].Traces.Count-1 ) return true;
+
+~~~~
+[Example missing]
+~~~~
+
+#% return false;
+#% }
+#end block
+
+#method DescribeRequestBinding Trace trace
+
+~~~~
+#{trace.GetRequest()}
+~~~~
+
+#end method
+
+
+#method DescribeResponseBinding Trace trace
+
+~~~~
+#{trace.GetResponse()}
+~~~~
+
+#end method
+
+
+
 #method DescribeRequestBinding List<ExampleResult> exampleResults
+
+~~~~
+~~~~
+
 #end method
 
 
 #method DescribeResponseBinding List<ExampleResult> exampleResults
+
+~~~~
+~~~~
+
 #end method
 
 

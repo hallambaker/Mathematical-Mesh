@@ -53,7 +53,7 @@ namespace ExampleGenerator {
         public string DeviceCreateHTTP;
 
         public List<ExampleResult> CommandsAddServiceAlice;
-
+        public List<ExampleResult> CommandsDeleteServiceAlice;
 
         public void DoCommandsService() {
 

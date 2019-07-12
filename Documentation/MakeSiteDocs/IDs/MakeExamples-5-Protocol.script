@@ -10,9 +10,6 @@
 #% ProtocolHelloRequest(Example);
 #% ProtocolHelloResponse(Example);
 #% ProtocolHello(Example);
-#% ProtocolHelloDevice(Example);
-#% ProtocolHelloProfile(Example);
-#% ProtocolHelloTicket(Example);
 #% ProtocolAccountCreate(Example);
 #% ProtocolAccountDelete(Example);
 #% ProtocolStatus(Example);
@@ -21,117 +18,181 @@
 #% ProtocolConnect(Example);
 #% ProtocolConnectPIN(Example);
 #% ProtocolConnectEARL(Example);
-#% ProtocolContact(Example);
-#% ProtocolConfirm(Example);
+#% ProtocolPostClientService(Example);
+#% ProtocolPostServiceService(Example);
 #end method
 
 
 #zfile CreateExamples ProtocolHelloRequest "Examples\\ProtocolHelloRequest.md" Example
-#%  DescribeRequestBinding (Example.ProfileHello);
+
+[Note, this is showing the payload, not the binding as is intended because the current code 
+doesn't implement it as intended yet]
+
+#%  DescribeRequestBinding (Example.ProfileHello[0].Traces[0]);
+
 #end zfile
 
 #zfile CreateExamples ProtocolHelloResponse "Examples\\ProtocolHelloResponse.md" Example
-#%  DescribeResponseBinding (Example.ProfileHello);
+
+[Note, this is showing the payload, not the binding as is intended because the current code 
+doesn't implement it as intended yet]
+
+#%  DescribeResponseBinding (Example.ProfileHello[0].Traces[0]);
+
 #end zfile
 
 
 
 
 #zfile CreateExamples ProtocolHello "Examples\\ProtocolHello.md" Example
-#%  DescribeRequest (Example.ProfileHello);
-#%  DescribeResponse (Example.ProfileHello);
 
-#end zfile
+The request payload:
 
+#%  DescribeRequestBinding (Example.ProfileHello[0].Traces[0]);
 
-#zfile CreateExamples ProtocolHelloDevice "Examples\\ProtocolHelloDevice.md" Example
-#%  DescribeRequestBinding (Example.ProfileHelloDevice);
-#%  DescribeResponseBinding (Example.ProfileHelloDevice);
-#end zfile
+The response payload:
+
+#%  DescribeResponseBinding (Example.ProfileHello[0].Traces[0]);
 
 
-
-
-
-
-
-
-#zfile CreateExamples ProtocolHelloProfile "Examples\\ProtocolHelloProfile.md" Example
-#%  DescribeRequestBinding (Example.ProfileHelloProfile);
-#%  DescribeResponseBinding (Example.ProfileHelloProfile);
-#end zfile
-
-#zfile CreateExamples ProtocolHelloTicket "Examples\\ProtocolHelloTicket.md" Example
-#%  DescribeRequestBinding (Example.ProfileHelloTicket);
-#%  DescribeResponseBinding (Example.ProfileHelloTicket);
 #end zfile
 
 
 #zfile CreateExamples ProtocolAccountCreate "Examples\\ProtocolAccountCreate.md" Example
-#%  DescribeRequest (Example.CommandsAddServiceAlice);
-#%  DescribeResponse (Example.CommandsAddServiceAlice);
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.CommandsAddServiceAlice[0].Traces[0]);
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
-#%  DescribeRequest (Example.ProfileAliceDelete);
-#%  DescribeResponse (Example.ProfileAliceDelete);
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.CommandsDeleteServiceAlice[0].Traces[0]);
+
 #end zfile
 
 
+
 #zfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" Example
-#%  DescribeRequest (Example.ProfileSync);// Message 0,0
-#%  DescribeResponse (Example.ProfileSync);
+#% if (ExampleInvalid (Example.ProfileSync)) return;
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ProfileSync[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ProfileSync[0].Traces[0]);
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
-#%  DescribeRequest (Example.ProfileSync);// Message 0,1
-#%  DescribeResponse (Example.ProfileSync);
+#% if (ExampleInvalid (Example.ProfileSync, 0, 1)) return;
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ProfileSync[0].Traces[1]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ProfileSync[0].Traces[1]);
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
-#%  DescribeRequest (Example.ProfileSync);  // Message 0,2
-#%  DescribeResponse (Example.ProfileSync);
+#% if (ExampleInvalid (Example.ProfileSync, 0, 2)) return;
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ProfileSync[0].Traces[2]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ProfileSync[0].Traces[2]);
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
-#%  DescribeRequest (Example.ConnectRequest);
-#%  DescribeResponse (Example.ConnectRequest);
-#%  DescribeRequest (Example.ConnectPending);
-#%  DescribeResponse (Example.ConnectPending);
+#% if (ExampleInvalid (Example.ConnectRequest, 0)) return;
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ConnectRequest[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ConnectRequest[0].Traces[0]);
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
-#%  DescribeRequest (Example.ConnectGetPin);
-#%  DescribeResponse (Example.ConnectGetPin);
-#%  DescribeRequest (Example.ConnectPin);
-#%  DescribeResponse (Example.ConnectPin);
+#% if (ExampleInvalid (Example.ConnectPin, 0)) return;
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ConnectPin[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ConnectPin[0].Traces[0]);
+
+
 #end zfile
 
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
-#%  DescribeRequest (Example.DeviceEarl1);
-#%  DescribeRequest (Example.DeviceEarl3);
+#% if (ExampleInvalid (Example.DeviceEarl1, 0)) return;
+
+The request payload:
+
+
+#%  DescribeRequestBinding (Example.DeviceEarl1[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.DeviceEarl1[0].Traces[0]);
+
 #end zfile
 
 
-#zfile CreateExamples ProtocolContact "Examples\\ProtocolContact.md" Example
-#%  DescribeRequest (Example.ContactRequest);
-#%  DescribeResponse (Example.ContactRequest);
-#%  DescribeRequest (Example.ContactAccept);
-#%  DescribeResponse (Example.ContactAccept);
+#zfile CreateExamples ProtocolPostClientService "Examples\\ProtocolPostClientService.md" Example
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+
+
+The request payload:
+
+#%  DescribeRequestBinding (Example.ConnectRequest[0].Traces[0]);
+
+The response payload:
+
+#%  DescribeResponseBinding (Example.ConnectRequest[0].Traces[0]);
+
 #end zfile
 
 
-#zfile CreateExamples ProtocolConfirm "Examples\\ProtocolConfirm.md" Example
-#%  DescribeRequest (Example.ConfirmRequest);
-#%  DescribeResponse (Example.ConfirmRequest);
-#%  DescribeRequest (Example.ConfirmAccept);
-#%  DescribeResponse (Example.ConfirmAccept);
+#zfile CreateExamples ProtocolPostServiceService "Examples\\ProtocolPostServiceService.md" Example
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+
+[Not Yet Implemented]
+
 #end zfile
 
 

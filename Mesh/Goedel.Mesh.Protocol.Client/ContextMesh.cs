@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Client {
         public IMeshMachineClient MeshMachine { get; }
 
         ///<summary>The master profile</summary>
-        public ProfileMaster ProfileMesh { get; }
+        public ProfilePersonal ProfileMesh { get; }
 
         ///<summary>The Device Entry in the CatalogHost</summary>
         public CatalogedMachine Connection;
@@ -33,7 +33,7 @@ namespace Goedel.Mesh.Client {
 
         ActivationDevice AssertionDevicePrivate => assertionDevicePrivate ??
             ActivationDevice.Decode(
-                MeshMachine, CatalogedDevice.EnvelopedDevicePrivate).CacheValue(
+                MeshMachine, CatalogedDevice.EnvelopedActivationDevice).CacheValue(
                     out assertionDevicePrivate);
 
         ActivationDevice assertionDevicePrivate = null;
@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
             MeshMachine = meshMachine;
             Connection = deviceConnection;
 
-            ProfileMesh = ProfileMaster.Decode(Connection.EnvelopedProfileMaster);
+            ProfileMesh = ProfilePersonal.Decode(Connection.EnvelopedProfileMaster);
             
             }
 

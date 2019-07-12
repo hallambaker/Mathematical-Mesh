@@ -47,7 +47,7 @@ namespace Goedel.Test.Core {
                 KeyPair keyAuthentication,
                 ConnectionAccount assertionAccountConnection,
                 Profile profile = null) =>
-            TestEnvironmentCommon.MeshPortalDirect.GetService(serviceID);
+            TestEnvironmentCommon.MeshLocalPortal.GetService(serviceID);
 
 
         public readonly static Contact ContactAlice = new Contact() {

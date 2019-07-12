@@ -252,7 +252,7 @@ namespace Goedel.Cryptography.Dare {
             if (!jsonReader.StartArray()) {
                 return;
                 }
-            Header = new DareHeader();
+            Header = new ContainerHeaderFirst();
             Header.Deserialize(jsonReader);
             if (!jsonReader.NextArray()) {
                 return;

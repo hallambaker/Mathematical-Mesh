@@ -63,7 +63,7 @@ namespace Goedel.XUnit {
         public void ProtocolHello() {
 
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var meshClient = testEnvironmentCommon.MeshPortalDirect.GetService(ServiceName);
+            var meshClient = testEnvironmentCommon.MeshLocalPortal.GetService(ServiceName);
 
 
             var request = new HelloRequest();
@@ -269,7 +269,7 @@ namespace Goedel.XUnit {
             //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
             Verify(first.ActivationAccount, second.ActivationAccount);
-            Verify(first.AssertionAccount, second.AssertionAccount);
+            Verify(first.ProfileAccount, second.ProfileAccount);
             (first.DirectoryAccount == second.DirectoryAccount).AssertTrue();
             (first.KeySignatureUDF == second.KeySignatureUDF).AssertTrue();
             (first.KeyEncryptionUDF == second.KeyEncryptionUDF).AssertTrue();
@@ -284,7 +284,7 @@ namespace Goedel.XUnit {
             }
 
         bool Verify(ProfileAccount first, ProfileAccount second) {
-            (first.AccountEncryptionKey.UDF == second.AccountEncryptionKey.UDF).AssertTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
             (first.MeshProfileUDF == second.MeshProfileUDF).AssertTrue();
             return true;
             }

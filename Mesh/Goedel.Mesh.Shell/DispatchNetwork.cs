@@ -22,8 +22,8 @@ namespace Goedel.Mesh.Shell {
                 var identifier = Options.Identifier.Value;
 
 
-                var entry = new CatalogedTask() {
-                    Key = identifier
+                var entry = new CatalogedNetwork() {
+                    Service = identifier
                     };
                 using (var catalog = contextAccount.GetCatalogNetwork()) {
                     catalog.Update(entry);

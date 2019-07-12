@@ -48,8 +48,9 @@ namespace Goedel.Mesh.Shell {
             using (var contextMesh = GetContextMeshAdmin(Options)) {
 
                 var contextAccount = contextMesh.CreateAccount(accountID);
-                return new ResultAccountCreate() {
+                return new ResultCreateAccount() {
                     Success = true,
+                    ProfileAccount = contextAccount.ProfileAccount,
                     ActivationAccount = contextAccount.ActivationAccount
                     };
 
@@ -83,10 +84,10 @@ namespace Goedel.Mesh.Shell {
             using (var contextAccount = GetContextAccount(Options)) {
                 contextAccount.AddService(Options.NewAccountID.Value);
 
-                return new ResultAccountCreate() {
+                return new ResultCreateAccount() {
                     Success = true,
                     ActivationAccount = contextAccount.ActivationAccount,
-                    ServiceID = "fred"
+                    ProfileAccount = contextAccount.ProfileAccount
                     };
 
                 }

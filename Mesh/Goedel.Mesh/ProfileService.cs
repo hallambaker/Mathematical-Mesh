@@ -8,13 +8,13 @@ using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public partial class ProfileService {
-        public string UDF => KeySignature.UDF;
+        public string UDF => KeyOfflineSignature.UDF;
 
         public ProfileService() { }
 
         public ProfileService(KeyPair keySign) {
 
-            KeySignature = new PublicKey(keySign.KeyPairPublic());
+            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             }
 
         public static ProfileService Generate(
@@ -55,13 +55,13 @@ namespace Goedel.Mesh {
 
     public partial class ProfileHost {
 
-        public string UDF => KeySignature.UDF;
+        public string UDF => KeyOfflineSignature.UDF;
 
         public ProfileHost() { }
 
         public ProfileHost(KeyPair keySign,
                     KeyPair keyAuth) {
-            KeySignature = new PublicKey(keySign.KeyPairPublic());
+            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             KeyAuthentication = new PublicKey(keyAuth.KeyPairPublic());
             }
 

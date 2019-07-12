@@ -4,6 +4,7 @@ using  Goedel.Mesh.Shell;
 using  Goedel.Mesh.Test;
 using  Goedel.Protocol;
 using  Goedel.Command;
+using  Goedel.Test.Core ;
 using System;
 using System.IO;
 using System.Collections.Generic;
@@ -273,9 +274,55 @@ namespace ExampleGenerator {
 		
 
 		//
+		//  "Check example"
+		//
+
+			 public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
+			 if (examples == null) return true;
+			 if (item >= examples.Count-1 ) return true;
+			 if (trace >= examples[item].Traces.Count-1 ) return true;
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("[Example missing]\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			 return false;
+			 }
+		
+		
+
+		//
+		// DescribeRequestBinding
+		//
+		public void DescribeRequestBinding (Trace trace) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetRequest());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeResponseBinding
+		//
+		public void DescribeResponseBinding (Trace trace) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, trace.GetResponse());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
 		// DescribeRequestBinding
 		//
 		public void DescribeRequestBinding (List<ExampleResult> exampleResults) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 
@@ -283,6 +330,10 @@ namespace ExampleGenerator {
 		// DescribeResponseBinding
 		//
 		public void DescribeResponseBinding (List<ExampleResult> exampleResults) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
 			}
 		
 

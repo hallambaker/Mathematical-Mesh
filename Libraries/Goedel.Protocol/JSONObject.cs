@@ -114,8 +114,17 @@ namespace Goedel.Protocol {
         /// Add a dictionary to the persistence store decoder.
         /// </summary>
         /// <param name="dictionary">The dictionary to add</param>
-        public static void AddDictionary(Dictionary<string, JSONFactoryDelegate> dictionary) =>
-            JSONObject.Append(TagDictionary, dictionary);
+        public void AddDictionary(
+                    Dictionary<string, JSONFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
+
+        public static void AddDictionary(
+            ref Dictionary<string, JSONFactoryDelegate> dictionary) {
+            if (dictionary != TagDictionary) {
+                Append(TagDictionary, dictionary);
+                dictionary = TagDictionary;
+                }
+            }
+
 
         /// <summary>
         /// Base constructor.

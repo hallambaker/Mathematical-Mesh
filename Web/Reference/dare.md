@@ -63,14 +63,14 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
 ERROR - The feature has not been implemented
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA /json
 {
   "Result": {
     "Success": false,
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECBD-4Y65-TT7M-2RKX-XGNR-XC2K-DICQ /json
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA /json
 {
   "Result": {
     "Success": false,

@@ -69,7 +69,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
             // Create the master profile.
-            var profileMaster = ProfileMaster.Generate(meshMachine);
+            var profileMaster = ProfilePersonal.Generate(meshMachine);
             profileDevice = profileDevice ?? ProfileDevice.Generate(meshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Client {
 
         public static ContextMeshAdmin CreateMesh(
             IMeshMachineClient meshMachine,
-            ProfileMaster profileMaster,
+            ProfilePersonal profileMaster,
             ProfileDevice profileDevice) {
 
 
@@ -118,16 +118,16 @@ namespace Goedel.Mesh.Client {
         /// <returns></returns>
         static CatalogedAdmin AddAdministrator(
                     IMeshMachine meshMachine,
-                    ProfileMaster profileMaster,
+                    ProfilePersonal profileMaster,
                     ProfileDevice profileDevice,
                     ActivationDevice assertionDevicePrivate
                     ) {
-            var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeySignature);
+            var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
 
-            profileMaster.OnlineSignatureKeys = profileMaster.OnlineSignatureKeys ??
+            profileMaster.KeysOnlineSignature = profileMaster.KeysOnlineSignature ??
                         new List<PublicKey>();
 
-            profileMaster.OnlineSignatureKeys.Add(new PublicKey(keyOverlaySignature.KeyPair));
+            profileMaster.KeysOnlineSignature.Add(new PublicKey(keyOverlaySignature.KeyPair));
 
             var keyMasterSignature =
                     meshMachine.KeyCollection.LocatePrivate(profileMaster.UDF);
@@ -167,8 +167,8 @@ namespace Goedel.Mesh.Client {
             var catalogEntryDevice = new Mesh.CatalogedDevice() {
                 UDF = assertionDevicePrivate.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
-                EnvelopedDeviceConnection = assertionDeviceConnection.DareEnvelope,
-                EnvelopedDevicePrivate = assertionDevicePrivate.DareEnvelope,
+                EnvelopedConnectionDevice = assertionDeviceConnection.DareEnvelope,
+                EnvelopedActivationDevice = assertionDevicePrivate.DareEnvelope,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope
                 };
 
@@ -203,7 +203,7 @@ namespace Goedel.Mesh.Client {
 
             var assertionAccount = new ProfileAccount() {
                 MeshProfileUDF = ProfileMesh.UDF,
-                AccountEncryptionKey = new PublicKey(keyEncrypt.KeyPairPublic())
+                KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic())
                 };
 
             Sign(assertionAccount);
@@ -253,14 +253,14 @@ namespace Goedel.Mesh.Client {
                     KeyPairAdvanced keyEncryptionMaster) {
             // Decrypt EncryptedDevicePrivate using the Master profile decryption key
 
-            var encryptedDevicePrivate = catalogEntryDevice.EnvelopedDevicePrivate;
+            var encryptedDevicePrivate = catalogEntryDevice.EnvelopedActivationDevice;
 
             var devicePrivate = ActivationDevice.Decode(
                                 MeshMachine, encryptedDevicePrivate);
             var profileDevice = catalogEntryDevice.ProfileDevice;
 
             var keyEncryption = new KeyComposite(keyEncryptionMaster);
-            var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeySignature);
+            var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeyOfflineSignature);
             var keyAuthentication = new KeyOverlay(MeshMachine, profileDevice.KeyAuthentication);
 
             var assertionAccountConnection = new ConnectionAccount() {
@@ -284,7 +284,7 @@ namespace Goedel.Mesh.Client {
             devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
             devicePrivate.Activations.Add(activationAccount);
 
-            catalogEntryDevice.EnvelopedDevicePrivate = 
+            catalogEntryDevice.EnvelopedActivationDevice = 
                 devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
                         ProfileMesh.KeyEncryption.KeyPair);
 
@@ -318,7 +318,7 @@ namespace Goedel.Mesh.Client {
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
 
 
-            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMesh.KeySignature.UDF);
+            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMesh.KeyOfflineSignature.UDF);
             var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
             var MasterEscrowKeys = new List<Key>();
 
@@ -348,7 +348,7 @@ namespace Goedel.Mesh.Client {
             var keySign = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Device, keyCollection: meshMachine.KeyCollection);
             var keyEncrypt = escrowedKeySet.MasterEncryptionKey.GetKeyPair(KeySecurity.Device, keyCollection: meshMachine.KeyCollection);
 
-            var profileMaster = new ProfileMaster(keySign, null, keyEncrypt);
+            var profileMaster = new ProfilePersonal(keySign, null, keyEncrypt);
 
 
             return CreateMesh(meshMachine, profileMaster, profileDevice);

@@ -253,18 +253,6 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// Create a remote session without authentication. This call
-        /// is typically used when beginning an interaction that will
-        /// lead to the authentication credential being established.
-        /// </summary>
-        /// <param name="Host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
-        public LocalRemoteSession(JPCProvider Host, string serviceID)
-                : this (Host, serviceID, null)  {
-            }
-
-        /// <summary>
         /// Create a remote session with authentication under the
         /// specified credential.
         /// </summary>
@@ -272,8 +260,7 @@ namespace Goedel.Protocol {
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public LocalRemoteSession(JPCProvider Host, string serviceID, string UDF):base(serviceID) {
-            this.UDF = UDF;
+        public LocalRemoteSession(JPCProvider Host, string serviceID):base(serviceID) {
             this.Host = Host;
             }
 
@@ -287,9 +274,8 @@ namespace Goedel.Protocol {
             var DataText = Data.GetUTF8();
             var JSONReader = new JSONReader(DataText);
 
-            Host.Dispatch(this, JSONReader);
-
-            return null;
+            var result = Host.Dispatch(this, JSONReader);
+            return new MemoryStream (result.GetBytes());
             }
 
         }

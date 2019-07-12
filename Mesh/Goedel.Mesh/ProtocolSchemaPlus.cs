@@ -14,7 +14,10 @@ namespace Goedel.Mesh {
         ///of the static method.</summary>
         public static object Initialize => null;
 
-        static MeshProtocol() => ContainerPersistenceStore.AddDictionary(_TagDictionary);
+        static MeshProtocol() {
+            AddDictionary(ref Goedel.Protocol.Message._TagDictionary);
+            AddDictionary(ref _TagDictionary);
+            }
         }
 
 

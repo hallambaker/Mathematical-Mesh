@@ -42,14 +42,14 @@ namespace ExampleGenerator {
 
         public JSONObject Profile;
 
-        public ResultMasterCreate AliceProfiles;
+        public ResultCreatePersonal AliceProfiles;
         public ResultHello ResultHello;
 
 
         public void DoCommandsProfile() {
             // Create a new profile
             ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
-            AliceProfiles = ProfileCreateAlice[0].Result as ResultMasterCreate;
+            AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
             // Bob uses the all in one approach
             ProfileCreateBob = testCLIBob1.Example($"mesh create /account {BobAccount} /service={BobService}");

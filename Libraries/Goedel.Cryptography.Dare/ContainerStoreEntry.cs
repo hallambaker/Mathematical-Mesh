@@ -65,7 +65,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>The JSONObject.</summary>
         public JSONObject JsonObject => jsonObject ?? 
-            JSONReader.ReadTaggedObject(ContainerPersistenceStore.TagDictionary).CacheValue(out jsonObject);
+            JSONReader.ReadTaggedObject(JSONObject.TagDictionary).CacheValue(out jsonObject);
         JSONObject jsonObject;
 
         /// <summary>

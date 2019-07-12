@@ -67,7 +67,7 @@ namespace Goedel.Mesh {
 			{"Assertion", Assertion._Factory},
 			{"Condition", Condition._Factory},
 			{"Profile", Profile._Factory},
-			{"ProfileMaster", ProfileMaster._Factory},
+			{"ProfilePersonal", ProfilePersonal._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ProfileService", ProfileService._Factory},
 			{"ProfileAccount", ProfileAccount._Factory},
@@ -1185,13 +1185,13 @@ namespace Goedel.Mesh {
         ///any circumstance. The only case in which a 
         /// </summary>
 
-		public virtual PublicKey						KeySignature  {get; set;}
+		public virtual PublicKey						KeyOfflineSignature  {get; set;}
         /// <summary>
         ///A Personal profile contains at least one OSK which is used to sign 
         ///device administration application profiles.
         /// </summary>
 
-		public virtual List<PublicKey>				OnlineSignatureKeys  {get; set;}
+		public virtual List<PublicKey>				KeysOnlineSignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1235,17 +1235,17 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_Writer, false, ref _first);
-			if (KeySignature != null) {
+			if (KeyOfflineSignature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeySignature", 1);
-					KeySignature.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyOfflineSignature", 1);
+					KeyOfflineSignature.Serialize (_Writer, false);
 				}
-			if (OnlineSignatureKeys != null) {
+			if (KeysOnlineSignature != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("OnlineSignatureKeys", 1);
+				_Writer.WriteToken ("KeysOnlineSignature", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in OnlineSignatureKeys) {
+				foreach (var _index in KeysOnlineSignature) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -1287,23 +1287,23 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "KeySignature" : {
+				case "KeyOfflineSignature" : {
 					// An untagged structure
-					KeySignature = new PublicKey ();
-					KeySignature.Deserialize (JSONReader);
+					KeyOfflineSignature = new PublicKey ();
+					KeyOfflineSignature.Deserialize (JSONReader);
  
 					break;
 					}
-				case "OnlineSignatureKeys" : {
+				case "KeysOnlineSignature" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					OnlineSignatureKeys = new List <PublicKey> ();
+					KeysOnlineSignature = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  PublicKey ();
 						_Item.Deserialize (JSONReader);
 						// var _Item = new PublicKey (JSONReader);
-						OnlineSignatureKeys.Add (_Item);
+						KeysOnlineSignature.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -1323,13 +1323,13 @@ namespace Goedel.Mesh {
 	///
 	/// Describes the long term parameters associated with a personal profile.
 	/// </summary>
-	public partial class ProfileMaster : Profile {
+	public partial class ProfilePersonal : Profile {
         /// <summary>
         ///A Personal Profile MAY contain one or more PMEK keys to enable escrow 
         ///of private keys used for stored data. 
         /// </summary>
 
-		public virtual List<PublicKey>				MasterEscrowKeys  {get; set;}
+		public virtual List<PublicKey>				KeysMasterEscrow  {get; set;}
         /// <summary>
         ///Key used to pass encrypted data to the device such as a
         ///DeviceUseEntry
@@ -1345,13 +1345,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ProfileMaster";
+		public new const string __Tag = "ProfilePersonal";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfileMaster();
+		public static new JSONObject _Factory () => new ProfilePersonal();
 
 
         /// <summary>
@@ -1379,12 +1379,12 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_Writer, false, ref _first);
-			if (MasterEscrowKeys != null) {
+			if (KeysMasterEscrow != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("MasterEscrowKeys", 1);
+				_Writer.WriteToken ("KeysMasterEscrow", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in MasterEscrowKeys) {
+				foreach (var _index in KeysMasterEscrow) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_Writer.WriteObjectStart();
@@ -1412,15 +1412,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileMaster FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ProfilePersonal FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfileMaster;
+				return Out as ProfilePersonal;
 				}
-		    var Result = new ProfileMaster ();
+		    var Result = new ProfilePersonal ();
 			Result.Deserialize (JSONReader);
 			return Result;
 			}
@@ -1433,16 +1433,16 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "MasterEscrowKeys" : {
+				case "KeysMasterEscrow" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					MasterEscrowKeys = new List <PublicKey> ();
+					KeysMasterEscrow = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  PublicKey ();
 						_Item.Deserialize (JSONReader);
 						// var _Item = new PublicKey (JSONReader);
-						MasterEscrowKeys.Add (_Item);
+						KeysMasterEscrow.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -1614,7 +1614,7 @@ namespace Goedel.Mesh {
         ///Key used to authenticate service connections.
         /// </summary>
 
-		public virtual PublicKey						AuthenticationKey  {get; set;}
+		public virtual PublicKey						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1658,10 +1658,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_Writer, false, ref _first);
-			if (AuthenticationKey != null) {
+			if (KeyAuthentication != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AuthenticationKey", 1);
-					AuthenticationKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyAuthentication", 1);
+					KeyAuthentication.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1695,10 +1695,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "AuthenticationKey" : {
+				case "KeyAuthentication" : {
 					// An untagged structure
-					AuthenticationKey = new PublicKey ();
-					AuthenticationKey.Deserialize (JSONReader);
+					KeyAuthentication = new PublicKey ();
+					KeyAuthentication.Deserialize (JSONReader);
  
 					break;
 					}
@@ -1732,7 +1732,7 @@ namespace Goedel.Mesh {
         ///Key used to encrypt data under this profile
         /// </summary>
 
-		public virtual PublicKey						AccountEncryptionKey  {get; set;}
+		public virtual PublicKey						KeyEncryption  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1793,10 +1793,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("MeshProfileUDF", 1);
 					_Writer.WriteString (MeshProfileUDF);
 				}
-			if (AccountEncryptionKey != null) {
+			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AccountEncryptionKey", 1);
-					AccountEncryptionKey.Serialize (_Writer, false);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1845,10 +1845,10 @@ namespace Goedel.Mesh {
 					MeshProfileUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "AccountEncryptionKey" : {
+				case "KeyEncryption" : {
 					// An untagged structure
-					AccountEncryptionKey = new PublicKey ();
-					AccountEncryptionKey.Deserialize (JSONReader);
+					KeyEncryption = new PublicKey ();
+					KeyEncryption.Deserialize (JSONReader);
  
 					break;
 					}
@@ -4726,7 +4726,7 @@ namespace Goedel.Mesh {
         ///The accounts to which this device is bound.
         /// </summary>
 
-		public virtual List<string>				AccountIDs  {get; set;}
+		public virtual List<string>				AccountUDFs  {get; set;}
         /// <summary>
         ///UDF of the signature key of the device in the Mesh
         /// </summary>
@@ -4746,12 +4746,12 @@ namespace Goedel.Mesh {
         ///The public assertion demonstrating connection of the Device to the Mesh
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedDeviceConnection  {get; set;}
+		public virtual DareEnvelope						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
         ///The device profile
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedDevicePrivate  {get; set;}
+		public virtual DareEnvelope						EnvelopedActivationDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4795,12 +4795,12 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
-			if (AccountIDs != null) {
+			if (AccountUDFs != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AccountIDs", 1);
+				_Writer.WriteToken ("AccountUDFs", 1);
 				_Writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in AccountIDs) {
+				foreach (var _index in AccountUDFs) {
 					_Writer.WriteArraySeparator (ref _firstarray);
 					_Writer.WriteString (_index);
 					}
@@ -4822,15 +4822,15 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EnvelopedProfileDevice", 1);
 					EnvelopedProfileDevice.Serialize (_Writer, false);
 				}
-			if (EnvelopedDeviceConnection != null) {
+			if (EnvelopedConnectionDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedDeviceConnection", 1);
-					EnvelopedDeviceConnection.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedConnectionDevice", 1);
+					EnvelopedConnectionDevice.Serialize (_Writer, false);
 				}
-			if (EnvelopedDevicePrivate != null) {
+			if (EnvelopedActivationDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedDevicePrivate", 1);
-					EnvelopedDevicePrivate.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedActivationDevice", 1);
+					EnvelopedActivationDevice.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -4864,13 +4864,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "AccountIDs" : {
+				case "AccountUDFs" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					AccountIDs = new List <string> ();
+					AccountUDFs = new List <string> ();
 					while (_Going) {
 						string _Item = JSONReader.ReadString ();
-						AccountIDs.Add (_Item);
+						AccountUDFs.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
 					break;
@@ -4890,17 +4890,17 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "EnvelopedDeviceConnection" : {
+				case "EnvelopedConnectionDevice" : {
 					// An untagged structure
-					EnvelopedDeviceConnection = new DareEnvelope ();
-					EnvelopedDeviceConnection.Deserialize (JSONReader);
+					EnvelopedConnectionDevice = new DareEnvelope ();
+					EnvelopedConnectionDevice.Deserialize (JSONReader);
  
 					break;
 					}
-				case "EnvelopedDevicePrivate" : {
+				case "EnvelopedActivationDevice" : {
 					// An untagged structure
-					EnvelopedDevicePrivate = new DareEnvelope ();
-					EnvelopedDevicePrivate.Deserialize (JSONReader);
+					EnvelopedActivationDevice = new DareEnvelope ();
+					EnvelopedActivationDevice.Deserialize (JSONReader);
  
 					break;
 					}
@@ -5821,7 +5821,7 @@ namespace Goedel.Mesh {
         ///The account assertion
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
+		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5865,10 +5865,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_Writer, false, ref _first);
-			if (EnvelopedAccountAssertion != null) {
+			if (EnvelopedProfileAccount != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
-					EnvelopedAccountAssertion.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
+					EnvelopedProfileAccount.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -5902,10 +5902,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "EnvelopedAccountAssertion" : {
+				case "EnvelopedProfileAccount" : {
 					// An untagged structure
-					EnvelopedAccountAssertion = new DareEnvelope ();
-					EnvelopedAccountAssertion.Deserialize (JSONReader);
+					EnvelopedProfileAccount = new DareEnvelope ();
+					EnvelopedProfileAccount.Deserialize (JSONReader);
  
 					break;
 					}
@@ -6916,7 +6916,7 @@ namespace Goedel.Mesh {
         ///The client connection request.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedMessageConnectionRequest  {get; set;}
+		public virtual DareEnvelope						EnvelopedRequestConnection  {get; set;}
         /// <summary>
         ///
         /// </summary>
@@ -6970,10 +6970,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Message)this).SerializeX(_Writer, false, ref _first);
-			if (EnvelopedMessageConnectionRequest != null) {
+			if (EnvelopedRequestConnection != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedMessageConnectionRequest", 1);
-					EnvelopedMessageConnectionRequest.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedRequestConnection", 1);
+					EnvelopedRequestConnection.Serialize (_Writer, false);
 				}
 			if (ServerNonce != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -7017,10 +7017,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "EnvelopedMessageConnectionRequest" : {
+				case "EnvelopedRequestConnection" : {
 					// An untagged structure
-					EnvelopedMessageConnectionRequest = new DareEnvelope ();
-					EnvelopedMessageConnectionRequest.Deserialize (JSONReader);
+					EnvelopedRequestConnection = new DareEnvelope ();
+					EnvelopedRequestConnection.Deserialize (JSONReader);
  
 					break;
 					}

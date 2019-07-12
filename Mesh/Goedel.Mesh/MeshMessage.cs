@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
     public partial class AcknowledgeConnection {
 
         public RequestConnection MessageConnectionRequest => messageConnectionRequest ??
-            RequestConnection.Decode(EnvelopedMessageConnectionRequest).CacheValue(out messageConnectionRequest);
+            RequestConnection.Decode(EnvelopedRequestConnection).CacheValue(out messageConnectionRequest);
         RequestConnection messageConnectionRequest;
 
         public static new AcknowledgeConnection Decode(DareEnvelope dareEnvelope) =>

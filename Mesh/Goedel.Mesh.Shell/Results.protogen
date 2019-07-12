@@ -43,23 +43,27 @@
 			Multiple
 
 
-
-
-
-
-	// Mesh
-	Structure ResultDeviceCreate
+	Structure ResultCreateDevice
 		Inherits							Result
 		Boolean								Default
 		String								DeviceUDF
 		Struct CatalogedDevice			CatalogedDevice
 
-
-
-	Structure ResultMasterCreate
-		Inherits							ResultAccountCreate
+	Structure ResultCreatePersonal
+		Inherits							ResultCreateAccount
 		String								MeshUDF
-		Struct ProfileMaster				ProfileMaster
+		Struct ProfilePersonal				ProfilePersonal
+
+	Structure ResultCreateAccount
+		Inherits							ResultCreateDevice
+		Struct ProfileAccount				ProfileAccount
+		Struct ActivationAccount			ActivationAccount
+	
+	Structure ResultRecover
+		Inherits		ResultCreatePersonal
+
+	// Mesh
+
 
 	Structure ResultSync
 		Inherits		Result
@@ -72,8 +76,7 @@
 		String			Shares
 			Multiple
 
-	Structure ResultRecover
-		Inherits		ResultMasterCreate
+
 
 	Structure ResultMachine
 		Inherits		Result
@@ -88,13 +91,6 @@
 	Structure ResultHello
 		Inherits		Result
 		Struct MeshHelloResponse Response
-		Struct ProfileService	ProfileService
-		Struct ProfileHost	ProfileHost
-
-	Structure ResultAccountCreate
-		Inherits							ResultDeviceCreate
-		Struct ActivationAccount			ActivationAccount
-		String								ServiceID
 
 
 	// Catalog commands

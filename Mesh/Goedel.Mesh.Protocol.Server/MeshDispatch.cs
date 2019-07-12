@@ -118,8 +118,8 @@ namespace Goedel.Mesh.Server {
 
             var HelloResponse = new MeshHelloResponse() {
                 Version = new Goedel.Protocol.Version() {
-                    Major = 0,
-                    Minor = 8,
+                    Major = 3,
+                    Minor = 0,
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
                 EnvelopedProfileService = Provider.ProfileService.DareEnvelope,
