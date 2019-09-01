@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
 
 
     // This file has the methods that operate on the stream
-    public partial class JBCDStream  {
+    public partial class JBCDStream {
 
         /// <summary>JSON-B Code for unidirectional frame</summary>
         public const byte UFrame = 0xF0;
@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Length">Length of data to follow.</param>
         /// <returns>The tag length.</returns>
-        public static int TagLength (long Length) {
+        public static int TagLength(long Length) {
             if (Length < 0x100) {
                 return 2;
                 }
@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Code">Base code.</param>
         /// <returns>The number of bytes required.</returns>
-        public static int TagSpace (int Code) => TagSpaces[Code & LengthMask];
+        public static int TagSpace(int Code) => TagSpaces[Code & LengthMask];
 
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Code">Base code.</param>
         /// <returns>The number of bytes required.</returns>
-        public static int CodeSpace (int Code) {
+        public static int CodeSpace(int Code) {
             Assert.True(Code >= UFrame & Code <= (BFrame + Length64));
 
             return CodeSpaces[Code - UFrame];
@@ -99,7 +99,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Code">Base code.</param>
         /// <param name="Length">Length of data to follow.</param>
-        public void WriteTag (byte Code, long Length) {
+        public void WriteTag(byte Code, long Length) {
             if (Length < 0x100) {
                 WriteByte((byte)(Code + Length8));
                 WriteByte((byte)(Length & 0xff));
@@ -134,7 +134,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Code">Base code.</param>
         /// <param name="Length">Length of data to follow.</param>
-        public void WriteTagReverse (byte Code, long Length) {
+        public void WriteTagReverse(byte Code, long Length) {
             if (Length < 0x100) {
                 WriteByte((byte)(Length & 0xff));
                 WriteByte((byte)(Code + Length8));
@@ -174,7 +174,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">Number of bytes to write.</param>
         /// <param name="Bidirectional">If true, a bidirectional frame is written.</param>
         /// <returns>The total size of the frame.</returns>
-        public long WriteFrame (byte[] FrameData,
+        public long WriteFrame(byte[] FrameData,
                 long Offset = 0, long Length = -1, bool Bidirectional = false) {
             Length = Length == -1 ? FrameData.LongLength : Length;
 
@@ -186,7 +186,7 @@ namespace Goedel.Cryptography.Dare {
             else {
                 WriteTag(UFrame, Length);
                 }
-            Write(FrameData, (int)Offset, (int)Length); 
+            Write(FrameData, (int)Offset, (int)Length);
             if (Bidirectional) {
                 WriteTagReverse(BFrame, Length);
                 return TotalLength2(Length);
@@ -206,8 +206,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameData2">Second data record, contains protected metadata.</param>
         /// <param name="flush">If true, flush the frame data value to the file.</param>
         /// <returns>The total size of the frame.</returns>
-        public long WriteWrappedFrame (
-                    byte[] FrameHeader, 
+        public long WriteWrappedFrame(
+                    byte[] FrameHeader,
                     byte[] FrameData1 = null,
                     byte[] FrameData2 = null,
                     bool flush = true) {
@@ -275,8 +275,8 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The total size of the frame.</returns>
         public long WriteWrappedFrameBegin(
                     byte[] FrameHeader,
-                    long FrameDataLength=-1, 
-                    long FrameTrailerLength =-1) {
+                    long FrameDataLength = -1,
+                    long FrameTrailerLength = -1) {
 
             var HL = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length));
             var DL = (FrameDataLength < 0 ? 0 : TotalLength(FrameDataLength));
@@ -291,7 +291,7 @@ namespace Goedel.Cryptography.Dare {
                 WriteFrame(FrameHeader);
                 }
 
-            Assert.True(PositionWrite == Check+ HL, Internal.Throw);
+            Assert.True(PositionWrite == Check + HL, Internal.Throw);
 
             // here write out the binary marker for the frame data.
             WriteTag(UFrame, FrameDataLength);
@@ -305,7 +305,7 @@ namespace Goedel.Cryptography.Dare {
         /// does not match the length originally specified, an error is thrown.
         /// </summary>
         /// <returns>The total size of the frame.</returns>
-        public long WriteWrappedFrameEnd(byte[]FrameTrailer=null) {
+        public long WriteWrappedFrameEnd(byte[] FrameTrailer = null) {
             if (FrameTrailer != null) {
                 WriteFrame(FrameTrailer);
                 }
@@ -338,7 +338,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The length value read.</param>
         /// <returns>Always true. All failures trigger exceptions.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public virtual bool ReadLength (int LengthLength, out long Length) {
+        public virtual bool ReadLength(int LengthLength, out long Length) {
             Length = 0;
             for (var i = 0; i < LengthLength; i++) {
                 var Value = ReadByte();
@@ -356,9 +356,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="LengthIn">The length value read.</param>
         /// <returns>Always true. All failures trigger exceptions.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public virtual bool CheckReversedLength (int Code, long LengthIn) {
+        public virtual bool CheckReversedLength(int Code, long LengthIn) {
 
-            var LengthCount = TagLength(LengthIn)-1;
+            var LengthCount = TagLength(LengthIn) - 1;
             long Length = 0;
             for (var i = 0; i < LengthCount; i++) {
                 var Value = (long)ReadByte();
@@ -377,7 +377,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The length value read.</param>
         /// <returns>Always true. All failures trigger exceptions.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadLengthReverse (int LengthLength, out long Length) {
+        public bool ReadLengthReverse(int LengthLength, out long Length) {
             Length = 0;
 
             for (var i = 0; i < LengthLength; i++) {
@@ -395,7 +395,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The length that was read</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public virtual bool ReadTag (out int Code, out long Length) {
+        public virtual bool ReadTag(out int Code, out long Length) {
             Code = ReadByte();
 
             if (Code < 0) {
@@ -415,7 +415,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The length that was read</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadTagReverse (out int Code, out long Length) {
+        public bool ReadTagReverse(out int Code, out long Length) {
 
             Code = ReadByteReverse();
 
@@ -437,7 +437,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Data">The data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadRecord (ref long MaxLength, out byte[] Data) {
+        public bool ReadRecord(ref long MaxLength, out byte[] Data) {
             Data = null;
             var Success = ReadTag(out var Code, out var Length);
             if (!Success) {
@@ -471,7 +471,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameTrailer">The trailer data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadFrame (out byte[] FrameHeader, out byte[] FrameData, out byte[] FrameTrailer) {
+        public bool ReadFrame(out byte[] FrameHeader, out byte[] FrameData, out byte[] FrameTrailer) {
             FrameHeader = null;
             FrameData = null;
             FrameTrailer = null;
@@ -503,7 +503,7 @@ namespace Goedel.Cryptography.Dare {
         /// Move to the next position in the stream without reading any part of it.
         /// </summary>
         /// <returns></returns>
-        public bool Next () {
+        public bool Next() {
             StartLastFrameRead = PositionRead;
 
             var Success = ReadTag(out var Code, out var Length);
@@ -525,7 +525,7 @@ namespace Goedel.Cryptography.Dare {
         /// Move to the previous position in the stream without reading any part of it.
         /// </summary>
         /// <returns></returns>
-        public bool Previous () {
+        public bool Previous() {
             var Success = ReadTagReverse(out var Code, out var Length);
             if (!Success) {
                 return false;
@@ -614,8 +614,8 @@ namespace Goedel.Cryptography.Dare {
         /// record read with FramerOpen to be re-read unless FramerClose has been called 
         /// in which case the next frame in the stream will be read.</param>
         /// <returns>The length of the frame if it could be read, otherwise -1.</returns>
-        public long FramerOpen (long Position=-1) {
-            FramerFrameStart = Position<0 ? FramerFrameStart : Position;
+        public long FramerOpen(long Position = -1) {
+            FramerFrameStart = Position < 0 ? FramerFrameStart : Position;
             StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
             var Success = ReadTag(out FramerCode, out FramerFrameLength);
             FramerFrameEnd = StreamRead.Position + FramerFrameLength;
@@ -658,7 +658,7 @@ namespace Goedel.Cryptography.Dare {
             var Length = StreamRead.Read(Result, Offset, FramerRecordLength);
             while (Length > 0) {
                 Offset += (int)Length;
-                Length = StreamRead.Read(Result, Offset, FramerRecordLength-Offset);
+                Length = StreamRead.Read(Result, Offset, FramerRecordLength - Offset);
                 }
             Assert.True(Length == 0, DataRecordTruncated.Throw);
 
@@ -666,6 +666,34 @@ namespace Goedel.Cryptography.Dare {
             return Result;
             }
 
+        /// <summary>
+        /// Read the next frame and return the starting and ending frame markers.
+        /// </summary>
+        /// <param name="DataPosition"></param>
+        /// <param name="DataLength"></param>
+        public bool FramerGetFrameIndex(out long DataPosition, out long DataLength) {
+            FramerRecordStart = FramerRecordNext;
+            if (FramerRecordStart >= FramerFrameEnd) {
+                DataPosition = FramerRecordStart;
+                DataLength = 0;
+                return false;
+                }
+            StreamRead.Seek(FramerRecordStart, SeekOrigin.Begin);
+            var Success = ReadTag(out var Code, out DataLength);
+            if (!Success) {
+                DataPosition = FramerRecordStart;
+                DataLength = 0;
+                return false;
+                }
+
+            DataPosition = PositionRead;
+            return true;
+
+            }
+
+
+        public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
+            new StreamReaderBounded(StreamRead, DataPosition, DataLength);
 
         /// <summary>
         /// Get a record reader for the next frame record.

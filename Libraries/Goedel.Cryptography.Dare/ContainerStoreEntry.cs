@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.Dare {
         #region // Propeties and fields
 
         ///<summary>The container the store entry belongs to</summary>
-        public Container Container;
+         Container Container;
 
         ///<summary>The enveloped data</summary>
         public DareEnvelope DareEnvelope;
@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 
-        public bool Deleted { get; }
+        public bool Deleted => ContentInfo?.Event == ContainerPersistenceStore.EventDelete;
 
         /// <summary>
         /// The binary data. This should probably be removed and a system set up to allow 
@@ -60,9 +60,7 @@ namespace Goedel.Cryptography.Dare {
         public JSONReader JSONReader => Data.JSONReader();
 
         ///<summary>The JSONObject.</summary>
-        public JSONObject JsonObject => jsonObject ??
-            JSONReader.ReadTaggedObject(JSONObject.TagDictionary).CacheValue(out jsonObject);
-
+        public JSONObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
         JSONObject jsonObject;
 
 
@@ -92,11 +90,19 @@ namespace Goedel.Cryptography.Dare {
             jsonObject = item;
             DareEnvelope = dareEnvelope;
 
-            Deleted = ContentInfo.Event == ContainerPersistenceStore.EventDelete;
+            Previous = previous;
+            First = previous.First ?? this;
+            }
+
+        ContainerFrameIndex FrameIndex;
+        public ContainerStoreEntry(ContainerFrameIndex frameIndex, ContainerStoreEntry previous, Container container) {
+            Container = container;
+            FrameIndex = frameIndex;
 
             Previous = previous;
-            First = previous ?? this;
+            First = previous.First ?? this;
             }
+
 
         }
 

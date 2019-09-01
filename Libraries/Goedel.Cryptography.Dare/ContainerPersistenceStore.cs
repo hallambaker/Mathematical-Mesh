@@ -172,42 +172,16 @@ namespace Goedel.Cryptography.Dare {
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="Stream">The stream to read</param>
-        void ReadContainer(JBCDStream Stream) {
+        void ReadContainer(JBCDStream Stream, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
-                //throw new NYI();
-
-                if (frameIndex.HasPayload) {
-
-                    // CDR needs to support separate modes for reading data verbatim and with decryption.
-
-                    // Here we need the actual decrypted data ???
-
-                    // no, at this point we just want to record the index information into the container
+                CommitTransaction(frameIndex);
 
 
-                    // we only need to decrypt the object at the time it is being used.
-
-                    // so CDR.frameStart or sommat...
-
-
-                    // we need to fix this so that when the container is read back, the
-                    // contents can be decrypted and verified.
-
-
-
-                    //var Data = ContainerDataReader.ToArray();
-                    //var trailer = ContainerDataReader.GetTrailer();
-                    //CommitTransaction(ContainerDataReader.Header, trailer, Data);
-                    // here check the trailer.
+                if (containerIntegrity != ContainerIntegrity.None) {
+                    throw new NYI();
                     }
-                else {
-                    var trailer = frameIndex.GetTrailer();
 
-                    
-
-                    CommitTransaction(frameIndex.Header.ContentInfo, trailer);
-                    }
                 }
 
 
@@ -231,28 +205,29 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="contentInfo">The container header</param>
         /// <param name="data">The data to commit.</param>
-        public virtual void CommitTransaction(ContentInfo contentInfo, byte[] data) {
-            throw new NYI();
-            //var Exists = ObjectIndex.TryGetValue(contentInfo.UniqueID, out var Previous);
-            //var ContainerStoreEntry = new ContainerStoreEntry(contentInfo, Previous, data);
+        public virtual void CommitTransaction(ContainerFrameIndex frameIndex) {
+            var contentInfo = frameIndex.Header.ContentInfo;
 
-            //switch (contentInfo.Event) {
-            //    case EventNew: {
-            //        MemoryCommitNew(ContainerStoreEntry);
-            //        break;
-            //        }
-            //    case EventUpdate: {
-            //        MemoryCommitUpdate(ContainerStoreEntry);
-            //        break;
-            //        }
-            //    case EventDelete: {
-            //        MemoryCommitDelete(ContainerStoreEntry);
-            //        break;
-            //        }
-            //    default: {
-            //        throw new NYI();
-            //        }
-            //    }
+            ObjectIndex.TryGetValue(contentInfo.UniqueID, out var Previous);
+            var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container);
+
+            switch (contentInfo.Event) {
+                case EventNew: {
+                    MemoryCommitNew(ContainerStoreEntry);
+                    break;
+                    }
+                case EventUpdate: {
+                    MemoryCommitUpdate(ContainerStoreEntry);
+                    break;
+                    }
+                case EventDelete: {
+                    MemoryCommitDelete(ContainerStoreEntry);
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
             }
 
         /// <summary>
