@@ -244,10 +244,10 @@ namespace Goedel.Cryptography.Dare {
         /// container data is to be read.</param>
         /// <param name="CryptoParameters">The new crypto parameters to be used to 
         /// write the container data.</param>
-        public void Add(ContainerDataReader ContainerDataReader,
-                CryptoParameters CryptoParameters = null) => 
-            Container.AppendFromStream(ContainerDataReader, ContainerDataReader.Length,
-                ContainerDataReader.Header.ContentInfo, CryptoParameters);
+        public void Add(ContainerFrameIndex ContainerDataReader,
+                CryptoParameters CryptoParameters = null) => throw new NYI();
+        //Container.AppendFromStream(ContainerDataReader, ContainerDataReader.Length,
+        //        ContainerDataReader.Header.ContentInfo, CryptoParameters);
 
         /// <summary>
         /// Append an archive frame to the container.

@@ -27,6 +27,24 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The length of the data segment.</summary>
         public long DataLength;
 
+        ///<summary>If true, the frame has a payload section</summary>
+        public bool HasPayload => throw new NYI();
+
+
+
+
+
+
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="JBCDStream">Stream reader positioned to the start of the frame.</param>
+        public ContainerFrameIndex(JBCDStream JBCDStream) {
+            throw new NYI();
+            }
+
+
         /// <summary>
         /// Return a JSONReader for the content
         /// </summary>
@@ -40,6 +58,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
         public byte[] GetData(Container container) => throw new NYI();
+
 
         /// <summary>
         /// Return a DareEnvelope wrapping the fnewrame.
@@ -81,7 +100,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        public ContainerFrameIndex(JBCDStream JBCDStream) {
+        public void CopyToFile(string file) {
             throw new NYI();
             }
 
