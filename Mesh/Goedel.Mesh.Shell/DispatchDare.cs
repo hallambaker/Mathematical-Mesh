@@ -25,8 +25,14 @@ namespace Goedel.Mesh.Shell {
             var keyCollection = KeyCollection(Options);
             var cryptoParameters = GetCryptoParameters(keyCollection, Options);
 
+            var ContentInfo = new ContentInfo() {
+                Filename = inputFile,
+                ContentType = contentType
+                };
+
+
             var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile, 
-                fileName: inputFile, contentType: contentType);
+                contentInfo: ContentInfo);
 
             return new ResultFile() {
                 Filename = outputFile,

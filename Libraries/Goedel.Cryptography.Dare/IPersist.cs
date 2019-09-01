@@ -6,7 +6,7 @@ using System.Threading;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
-namespace Goedel.Persistence {
+namespace Goedel.Cryptography.Dare{
 
     /// <summary>
     /// 
@@ -57,7 +57,8 @@ namespace Goedel.Persistence {
         /// Add new JSON object to the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
-        IPersistenceEntry New (JSONObject Object);
+        IPersistenceEntry New (JSONObject Object,
+                Transaction transaction = null);
 
 
         /// <summary>
@@ -65,7 +66,8 @@ namespace Goedel.Persistence {
         /// </summary>
         /// <param name="Object">Object to add.</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
-        IPersistenceEntry Update (JSONObject Object, bool Create = true);
+        IPersistenceEntry Update (JSONObject Object, bool Create = true,
+                Transaction transaction = null);
 
         /// <summary>
         /// Delete a persistence entry
@@ -73,7 +75,8 @@ namespace Goedel.Persistence {
         /// <threadsafety static="true" instance="true"/>
         /// <param name="UniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
-        bool Delete (string UniqueID);
+        bool Delete (string UniqueID,
+                Transaction transaction = null);
 
 
 
@@ -144,15 +147,15 @@ namespace Goedel.Persistence {
         /// </summary>
         bool Deleted { get; }
 
-        /// <summary>
-        /// The time at which the object instance was created.
-        /// </summary>
-        DateTime Created { get; }
+        ///// <summary>
+        ///// The time at which the object instance was created.
+        ///// </summary>
+        //DateTime Created { get; }
 
-        /// <summary>
-        /// The time at which the object instance value was created. 
-        /// </summary>
-        DateTime Modified { get; }
+        ///// <summary>
+        ///// The time at which the object instance value was created. 
+        ///// </summary>
+        //DateTime Modified { get; }
 
         /// <summary>
         /// The binary data

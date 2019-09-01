@@ -97,9 +97,6 @@
 				|This field SHOULD NOT be present if the Salt field is present. It is used to
 				|allow the salt value to be erased (thus rendering the payload content irrecoverable)
 				|without affecting the ability to calculate the payload digest value.
-		Binary Signed
-			Description
-				|Contains signed headers.
 		Binary Cloaked
 			Tag "cloaked"
 			Description
@@ -113,10 +110,7 @@
 				|header.
 			Description
 				|Processing of cloaked data is described in…
-		String ContentType
-			Tag "cty"
-			Description
-				|The content type field as specified in JWE
+
 		Binary EDSS
 			Tag "Annotations"
 			Multiple
@@ -124,6 +118,10 @@
 				|If present, the Annotations field contains a sequence of Encrypted Data 
 				|Segments encrypted under the message Master Key. The interpretation of these fields 
 				|is application specific.
+		Binary ContentInfoData
+			Description			
+				|If present contains a JSON encoded ContentInfo structure which specifies
+				|plaintext content metadata and forms one of the inputs to the envelope digest value.
 
 		Struct DareSigner Signers
 			Multiple
@@ -136,29 +134,47 @@
 			Description
 				|A list of recipient key exchange information blocks.
 
-		// Information describing the object instance value
-		// Content Metadata
+
+	Structure ContentInfo
 		String UniqueID
 			Description 
 				|Unique object identifier
-
-		String Filename
-			Description 
-				|The original filename under which the data was stored.
-
-		String Event
-			Description 
-				|Operation on the header
-
 		String Labels
 			Multiple
 			Description
 				|List of labels that are applied to the payload of the frame.
-		
 		Struct KeyValue KeyValues
 			Multiple
 			Description
 				|List of key/value pairs describing the payload of the frame.
+		String ContentType
+			Tag "cty"
+			Description
+				|The content type field as specified in JWE
+		String Paths
+			Multiple
+			Description
+				|List of filename paths for the payload of the frame.
+		String Filename
+			Description 
+				|The original filename under which the data was stored.
+		String Event
+			Description 
+				|Operation on the header
+		DateTime Created
+			Description
+				|Initial creation date.
+		DateTime Modified
+			Description
+				|Date of last modification.
+		Integer First
+			Description
+				|Frame number of the first object instance value.
+
+		Integer Previous
+			Description
+				|Frame number of the immediately prior object instance value	
+
 
 
 	Section 2 "Cryptographic Data"

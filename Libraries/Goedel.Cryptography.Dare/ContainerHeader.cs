@@ -21,19 +21,21 @@ namespace Goedel.Cryptography.Dare {
         public ContainerHeader() {
             }
 
+        ///<summary>If true, the field ExchangePosition is specified</summary>
+        public bool HasExchangePosition => __ExchangePosition;
+
+
         /// <summary>
-        /// Create a container header from the specified DareHeader
+        /// Create a container header from the specified DareHeader copying over only the parts that
+        /// are common to the envelope and the container.
         /// </summary>
         /// <param name="dareHeader"></param>
         public ContainerHeader(DareHeader dareHeader) {
-            Signed = dareHeader.Signed;
             Cloaked = dareHeader.Cloaked;
-            ContentType = dareHeader.ContentType;
+            ContentInfoData = dareHeader.ContentInfoData;
             EDSS = dareHeader.EDSS;
             Signers = dareHeader.Signers;
             Recipients = dareHeader.Recipients;
-            UniqueID = dareHeader.UniqueID;
-            Event = dareHeader.Event;
             }
 
 

@@ -4,7 +4,7 @@ using System.Threading;
 using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.Persistence;
+
 
 namespace Goedel.Cryptography.Dare {
 
@@ -206,7 +206,8 @@ namespace Goedel.Cryptography.Dare {
         /// <threadsafety static="true" instance="true"/>
         /// <param name="UniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
-        public bool Delete (string UniqueID) {
+        public bool Delete (string UniqueID,
+                Transaction transaction = null) {
             GetWrite();
             return PersistenceStore.Delete(UniqueID);
             }
@@ -216,7 +217,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">Object to create</param>
-        public IPersistenceEntry New (JSONObject Object) {
+        public IPersistenceEntry New (JSONObject Object,
+                Transaction transaction = null) {
             GetWrite();
             PersistenceStore.New(Object);
             return null;
@@ -228,7 +230,8 @@ namespace Goedel.Cryptography.Dare {
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">The new object value</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
-        public IPersistenceEntry Update (JSONObject Object, bool Create = true) {
+        public IPersistenceEntry Update (JSONObject Object, bool Create = true,
+                Transaction transaction = null) {
             GetWrite();
             PersistenceStore.Update(Object, Create);
             return null;

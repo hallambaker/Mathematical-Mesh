@@ -19,6 +19,7 @@ namespace ExampleGenerator {
 		public void MakeUDFExamples (CreateExamples Example) {
 			 UDFVariousUDF(Example);
 			 UDFNonce(Example);
+			 UDFOID(Example);
 			 UDFEncrypt(Example);
 			 UDFShare(Example);
 			 UDFDigest(Example);
@@ -53,6 +54,7 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultDigestSHA3.Digest);
 				_Output.Write ("{1}\n{0}", _Indent, Example.ResultCommitSHA2.Digest);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDFValue);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
@@ -67,6 +69,42 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Nonce UDF:\n{0}", _Indent);
 				_Output.Write ("  {1}\n{0}", _Indent, Example.ResultUDFNonce.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFOID
+		//
+		public static void UDFOID (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFOID.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Given the following Ed25519 public key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.PublicData.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The equivalent DER encoding is:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.KeyInfoData.DER().ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To encode this key as a UDF OID sequence we prepend the value {1}\n{0}", _Indent, UDFTypeIdentifier.OID);
+				_Output.Write ("and convert to Base32:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDFValue);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The corresponding UDF content digest value is more compact and allows us to identify the \n{0}", _Indent);
+				_Output.Write ("key unambiguously but does not provide the value:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDF);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}

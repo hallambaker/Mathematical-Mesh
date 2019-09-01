@@ -2,6 +2,8 @@
 using Goedel.XUnit;
 using Goedel.Cryptography;
 using Goedel.Utilities;
+
+
 namespace Scratchpad {
 
     partial class Program {
@@ -10,10 +12,15 @@ namespace Scratchpad {
 
             Cryptography.Initialize();
 
-            TestService.Test().MeshNewContext();
-            //TestService.Test().MeshConnectBase();
 
-            //ShellTests.Test().TestProfileConnectAuth();
+
+            TestPersist.Test().TestPersistenceStoreAll();
+
+
+            //TestService.Test().MeshNewContext();
+            //TestService.Test().MeshConnectBase();            
+
+
             //ShellTests.Test().TestProfileConnectAuthAll();
             //ShellTests.Test().TestProfileConnectEARL();
 

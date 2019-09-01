@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new container MakeNewContainer(
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst {

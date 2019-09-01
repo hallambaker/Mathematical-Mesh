@@ -64,10 +64,14 @@
 
 	// Mesh
 
+	Structure ResultStatus
+		Inherits					Result
+		Struct 	StatusResponse					StatusResponse
+
 
 	Structure ResultSync
-		Inherits		Result
-		Integer			Fetched
+		Inherits					Result
+		Integer						Fetched
 
 	Structure ResultEscrow
 		Inherits		Result

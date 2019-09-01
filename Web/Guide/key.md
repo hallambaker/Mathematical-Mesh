@@ -17,7 +17,7 @@ The `key nonce` command is used to generate a new random nonce value:
 
 ````
 Alice> key nonce
-NBHJ-BVOE-BXTD-EPMW-QLI6-JSD6-2VHQ
+NA7S-6JYZ-2YEX-B5R3-GQEL-JM5A-VPPQ
 ````
 
 The Base32 presentation of a nonce value will always begin with the letter N.
@@ -28,7 +28,7 @@ generated using the `/bits` option:
 
 ````
 Alice> key nonce /bits=256
-NCCI-SBQM-GVKY-2DU4-XPNF-LG4G-UVH5-F6PK-K37A-NY2F-WNJ4-QEFT-KAAI-W
+NCPW-VACL-IX3R-EMSP-C7TO-7IF6-LCVF-S7AQ-4TG7-NRZP-PNUV-F6G5-PCIN-W
 ````
 
 Secrets are generated in the same way using the command `key secret`:
@@ -36,7 +36,7 @@ Secrets are generated in the same way using the command `key secret`:
 
 ````
 Alice> key secret
-EAQJ-2C3A-3YRU-GXVH-XXD5-BZR2-ET5A
+EBOB-OH23-N7L4-4DZK-5N4X-KAUQ-4WKQ
 ````
 
 The Base32 presentation of a secret value will always begin with the letter E.
@@ -45,7 +45,7 @@ Again, any output length can be requested up to the platform limit:
 
 ````
 Alice> key secret /bits=256
-EB3H-E3GF-MQSJ-SGCK-OMJR-6LEK-AFLH-J5YZ-EZB7-IX3K-HA6B-DRAN-2KNY-E
+EBIL-7TYN-OAKF-JLQS-LMNA-G3EP-7H67-XJ6U-LPVU-RZHS-UFBK-XXPY-KMBE-Y
 ````
 
 ## Generating EARL values
@@ -62,8 +62,8 @@ a new secret/digest pair which are then used to process the content data:
 
 ````
 Alice> key earl
-EDXG-XCNG-KBXW-MA5P-I6UY-ABUH-FDZB-DN
-MC3S-YICX-I57H-5AGR-6MEZ-BDP2-NSSI-2QBK-MFI4-EOA3-NCQI-Z4X4-IOQV-VV6P
+EDYW-QQL3-FASO-RZ4R-ZE2D-L3FC-T5PK-FR
+MAA7-WZKN-TDYK-3OYX-LXHT-7LF2-7GD2-5WGL-4JV6-XQMN-Y4OR-LIMP-OYL3-P24E
 ````
 
 Alternatively, the `dare earl` command may be used to perform both operations:
@@ -86,11 +86,11 @@ bit secret is created and three shares are created with a quorum of two:
 
 ````
 Alice> key share
-EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
-MDCU-NS3Z-PDAS-GGLE-A5AC-5GK3-LT3W-LFWW-S5KB-5TYF-CNDY-RTAT-ZSOA
-SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W
-SAQS-HD5N-T2LM-H6IQ-EFAF-YNEV-LQRF-U
-SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S
+ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+MCQL-ZVUT-J4ZT-EFPN-ASKA-ASNB-VCFC-5TCN-IUGT-JYVX-S7RX-VSG2-J6KQ
+SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q
+SAQZ-M2V6-SF75-XJCL-HRAD-J4ZL-WHIR-M
+SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I
 ````
 
 The first UDF output is the secret key, followed by the key identifier 
@@ -104,11 +104,11 @@ Alice> key share /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA",
-    "Identifier": "MDCU-NS3Z-PDAS-GGLE-A5AC-5GK3-LT3W-LFWW-S5KB-5TYF-CNDY-RTAT-ZSOA",
-    "Shares": ["SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W",
-      "SAQS-HD5N-T2LM-H6IQ-EFAF-YNEV-LQRF-U",
-      "SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S"]}}
+    "Key": "ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A",
+    "Identifier": "MCQL-ZVUT-J4ZT-EFPN-ASKA-ASNB-VCFC-5TCN-IUGT-JYVX-S7RX-VSG2-J6KQ",
+    "Shares": ["SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q",
+      "SAQZ-M2V6-SF75-XJCL-HRAD-J4ZL-WHIR-M",
+      "SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I"]}}
 ````
 
 The original secret may be recovered from a sufficient number of shares to
@@ -116,8 +116,8 @@ meet the quorum using the `key recover`:
 
 
 ````
-Alice> key recover SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S
-EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> key recover SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I
+ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ````
 
 As with secret generation, larger or smaller secrets may be created but due
@@ -131,13 +131,13 @@ of three:
 
 ````
 Alice> key share /quorum=3 /shares=5
-EDFI-QCIW-3WJO-XB5M-IXSO-OVUG-YO5A
-MC52-C2BM-HWLE-ZWCN-XABF-ERCT-HCQR-5UC2-6N2J-XZXW-QVPK-VOCJ-5ASA
-SAYK-NI2D-PESQ-RN7D-P4BG-NKMO-JZD4-E
-SAY5-WWF4-6SWH-ZB22-UQGK-HNZC-G6ZB-S
-SAZG-RKDV-RFZ6-4WPN-DNSJ-YEAS-IMBI-Y
-SAZU-5ETN-G55V-4L42-4UFE-7NC6-OA4U-4
-SA2I-2FVD-73BM-YCDE-AD63-5JAG-X5LF-6
+EBWL-ULYK-EDOV-WHW6-QEWQ-NNHN-5ZDA
+MDHZ-VV6D-ANTK-TEGZ-SIAB-E3DR-Q3VT-YAF4-YDCH-XNFI-3AEH-5DWI-JMTQ
+SAYC-V6DU-B2LQ-Y2IX-45BE-3COH-QB2V-4
+SAYW-OLZB-KCAP-YOHV-WQ4Q-XEJF-4K5A-S
+SAZC-CXRW-Z7PK-ZSVY-IVSW-OHGQ-CS6B-I
+SAZV-TBNU-RSYB-4HS7-TLDW-ALGG-CZ53-E
+SA2A-7JM2-Q32V-AM7L-WRPP-NQIH-474L-A
 ````
 
 It is also possible to share a specified secret. This allows a secret to be 
@@ -147,11 +147,11 @@ be different:
 
 
 ````
-Alice> key share EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
-EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
-MDCU-NS3Z-PDAS-GGLE-A5AC-5GK3-LT3W-LFWW-S5KB-5TYF-CNDY-RTAT-ZSOA
-SAQN-FUIM-YWPJ-BEX7-DUV5-WSLC-HTP6-A
-SAQV-ULXI-S4X5-4V7F-WBZL-4DK4-IL2P-C
-SARO-DDGE-NDAS-YHGM-IO42-BUKW-JEFD-K
+Alice> key share ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+MCQL-ZVUT-J4ZT-EFPN-ASKA-ASNB-VCFC-5TCN-IUGT-JYVX-S7RX-VSG2-J6KQ
+SAQC-HHEF-YM3K-7DNT-AIV7-F4UU-A6A3-M
+SAQ2-O5H3-U74C-LGNC-IX2P-OPA7-2DJW-K
+SARC-WTLR-RS4Z-XJMR-RG67-XBNL-TISO-C
 ````
 

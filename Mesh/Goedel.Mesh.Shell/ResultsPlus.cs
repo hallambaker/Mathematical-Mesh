@@ -146,6 +146,44 @@ namespace Goedel.Mesh.Shell {
         }
 
 
+    public partial class ResultStatus {
+        public override string ToString() {
+            var Builder = new StringBuilder();
+
+            if (StatusResponse != null) {
+
+                if (StatusResponse.EnvelopedProfileMaster != null) {
+                    }
+
+                if (StatusResponse.EnvelopedAccountAssertion != null) {
+                    }
+
+                if (StatusResponse.EnvelopedCatalogEntryDevice != null) {
+                    }
+                if (StatusResponse.ContainerStatus != null) {
+                    foreach (var containerStatus in StatusResponse.ContainerStatus) {
+
+                        var digest = containerStatus.Digest == null ? "" :
+                            containerStatus.Digest.ToStringBase32(Format: ConversionFormat.Dash4, OutputMax: 120);
+
+
+                        Builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");
+
+                        
+
+                        Builder.AppendLine();
+                        }
+                    }
+
+                }
+
+
+
+            return Builder.ToString();
+            }
+        }
+
+
     public partial class ResultPIN {
         public override string ToString() {
             var Builder = new StringBuilder();

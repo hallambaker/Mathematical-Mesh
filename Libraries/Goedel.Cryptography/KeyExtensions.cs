@@ -20,8 +20,13 @@ namespace Goedel.Cryptography {
         /// <param name="key">The key to calculate the fingerprint of</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary fingerprint value</returns>
-        public static byte[] UDFBytes(this IPKIXPublicKey key, int bits=0) => 
-            Cryptography.UDF.FromKeyInfo(key.PublicParameters.DER(), bits);
+        public static byte[] UDFBytes(this IPKIXPublicKey key, int bits = 0) {
+            var data = key.SubjectPublicKeyInfo().DER();
+
+            return Cryptography.UDF.FromKeyInfo(data, bits);
+            }
+
+
 
         /// <summary>
         /// Calculate UDF fingerprint presentation for public key parameters

@@ -25,6 +25,8 @@ namespace ExampleGenerator {
         public ResultKey ResultUDFEARL;
         public ResultKey ResultUDFShares;
 
+
+
         public ResultDigest ResultDigestSHA2;
         public ResultDigest ResultDigestSHA3;
 
@@ -37,6 +39,8 @@ namespace ExampleGenerator {
 
         public string TestStringValue = "UDF Content Data";
 
+
+        public KeyPairEd25519 PublicKeyed25519;
 
         public void PlatformUDF() {
             // ToDo: need to do full cleanup on the key splitting.
@@ -58,6 +62,12 @@ namespace ExampleGenerator {
             UDFSplitSecret = new Secret(128);
             UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);
 
+            PublicKeyed25519 = KeyPair.Factory(CryptoAlgorithmID.Ed25519, KeySecurity.Exportable)
+                as KeyPairEd25519;
+
+            var test = PublicKeyed25519.KeyInfoData;
+            var testder = test.DER();
+            var testudf = PublicKeyed25519.UDF;
             }
 
 

@@ -14,8 +14,8 @@ namespace Goedel.XUnit {
     /// <summary>
     /// Test routines for file containers
     /// </summary>
-    public partial class TestDare {
-
+    public partial class TestDareArchive {
+        public static TestDareArchive Test() => new TestDareArchive();
         /// <summary>
         /// Test a single plaintext singleton containers.
         /// </summary>

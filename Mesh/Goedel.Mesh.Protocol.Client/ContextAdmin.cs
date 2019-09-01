@@ -227,7 +227,9 @@ namespace Goedel.Mesh.Client {
                     }
 
                 }
-            GetCatalogDevice().Transact(catalogChanges);
+
+            var catalogDevice = GetCatalogDevice();
+            catalogDevice.Transact(catalogDevice,catalogChanges);
 
 
             // can't do it this way because the catalog entries are being modified inside the loop.

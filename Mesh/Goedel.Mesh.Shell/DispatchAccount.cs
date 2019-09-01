@@ -63,6 +63,23 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
+        public override ShellResult AccountStatus(AccountStatus Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+                var result = contextAccount.Status();
+
+                return new ResultStatus() {
+                    Success = true,
+                    StatusResponse = result
+                    };
+                }
+            }
+
+
+        /// <summary>
+        /// Register a profile to a new service. This is not currently supported.
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult AccountSync(AccountSync Options) {
             using (var contextAccount = GetContextAccount(Options)) {
                 var result = contextAccount.Sync();

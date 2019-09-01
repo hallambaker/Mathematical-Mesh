@@ -31,7 +31,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
-        public static new container MakeNewContainer(
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
@@ -67,9 +67,9 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void CompleteHeader() {
-            FinalContainerHeader = AppendContainerHeader;
-            base.CompleteHeader();
+        public override void PrepareFrame(ContextWrite contextWrite) {
+            FinalContainerHeader = contextWrite.ContainerHeader;
+            base.PrepareFrame(contextWrite);
             }
 
         /// <summary>
@@ -98,6 +98,8 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
+
+        #region // Verification
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
@@ -110,6 +112,6 @@ namespace Goedel.Cryptography.Dare {
                 Index++;
                 }
             }
-
+        #endregion 
         }
     }

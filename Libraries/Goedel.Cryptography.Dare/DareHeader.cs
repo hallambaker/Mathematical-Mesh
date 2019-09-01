@@ -31,18 +31,18 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// If true, the header specifies a key exchange.
         /// </summary>
-        public bool Encrypt => EncryptionAlgorithm!=null;
+        public bool Encrypt => EncryptionAlgorithm != null;
 
 
 
-        long SaltValue=0;
+        long SaltValue = 0;
 
         /// <summary>
         /// Threadsafe assignment of unique salt under this master secret.
         /// </summary>
         /// <returns></returns>
         /// <threadsafety static="true" instance="true"/>
-        public byte[] MakeSalt () {
+        public byte[] MakeSalt() {
             if (SaltValue >= 0) {
 
                 var Salt = Interlocked.Increment(ref SaltValue);
@@ -58,6 +58,24 @@ namespace Goedel.Cryptography.Dare {
         /// Cryptographic parameters and stream generator for the header.
         /// </summary>
         public CryptoStack CryptoStack;
+
+
+
+
+        public ContentInfo ContentInfo;
+
+        public string ContentType => ContentInfo?.ContentType;
+
+
+        public override void PreEncode() {
+            ContentInfoData = ContentInfo?.GetContentInfoData();
+
+            }
+        public override void PostDecode() {
+            ContentInfo = ContentInfo.GetContentInfo(ContentInfoData);
+
+            }
+
 
         /// <summary>
         /// Create a message header.
@@ -75,11 +93,11 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         public DareHeader(
                     CryptoStack CryptoStack,
-                    string ContentType = null,
+                    ContentInfo contentInfo = null,
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
                     ) {
-            this.ContentType = ContentType;
+            ContentInfoData = contentInfo?.GetContentInfoData();
             ApplyCryptoStack(CryptoStack, Cloaked, DataSequences);
             }
 
@@ -115,18 +133,20 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        
+
 
 
         /// <summary>
         /// Use information from the specified header to speficy defaults.
         /// </summary>
         /// <param name="DAREHeader"></param>
-        public virtual void SetDefaultContext (DareHeader DAREHeader) {
+        public virtual void SetDefaultContext(DareHeader DAREHeader) {
             SaltValue = -1;
             MasterSecret = DAREHeader.MasterSecret;
 
             }
+
+        #region // Consider moving this functionality out to ContextWrite
 
         /// <summary>
         /// Construct a stream that will write the body data with whatever crypto stream
@@ -154,6 +174,9 @@ namespace Goedel.Cryptography.Dare {
             CurrentBodyWriter = null;
             }
 
+
+        #endregion
+
         /// <summary>
         /// Return a binary EDS sequence of the specified plaintext under this header. A
         /// unique salt will be assigned.
@@ -161,7 +184,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Plaintext">The EDS plaintext.</param>
         /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The EDS</returns>
-        public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer DARETrailer) => 
+        public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer DARETrailer) =>
             CryptoStack.Encode(Plaintext, out DARETrailer);
 
 
@@ -170,7 +193,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="SaltValue"></param>
         /// <returns></returns>
-        public static byte[] MakeSalt (long SaltValue) {
+        public static byte[] MakeSalt(long SaltValue) {
             var Salt = SaltValue;
 
             var Index = 0;
@@ -179,14 +202,14 @@ namespace Goedel.Cryptography.Dare {
                 Salt >>= 8;
                 }
 
-            var Result = new byte[Index+1];
+            var Result = new byte[Index + 1];
 
             Salt = SaltValue;
             Index = 0;
             Result[Index++] = (byte)(Salt & 0xFF);
             while (Salt > 0xFF) {
-                Result[Index++] = (byte) (Salt & 0xFF);
-                Salt >>= 8; 
+                Result[Index++] = (byte)(Salt & 0xFF);
+                Salt >>= 8;
                 }
             return Result;
 
@@ -285,8 +308,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this KeyCollection KeyCollection, 
-                    List<DareRecipient> Recipients, 
+        public static byte[] Decrypt(this KeyCollection KeyCollection,
+                    List<DareRecipient> Recipients,
                     CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
@@ -298,7 +321,7 @@ namespace Goedel.Cryptography.Dare {
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
                 if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair, 
+                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair,
                         algorithmID: AlgorithmID, salt: DareRecipient.KDFSalt);
                     }
                 }
@@ -332,6 +355,18 @@ namespace Goedel.Cryptography.Dare {
             return Result;
 
             }
+
+        }
+
+
+
+    public partial class ContentInfo {
+        const bool TagData = false;
+
+        public byte[] GetContentInfoData () => GetBytes(TagData);
+
+        public static ContentInfo GetContentInfo(byte[] data) =>
+            data == null ? null : FromJSON(data.JSONReader(), TagData);
 
         }
 

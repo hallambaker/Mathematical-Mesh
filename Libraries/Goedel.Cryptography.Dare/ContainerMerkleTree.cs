@@ -31,7 +31,7 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
 
-        public static new container MakeNewContainer(
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
@@ -104,6 +104,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
+        #region // Construct tree digest
 
         /// <summary>
         /// Calculate the digest of the specified tree node
@@ -150,7 +151,8 @@ namespace Goedel.Cryptography.Dare {
             return Digest;
             }
 
-
+        #endregion
+        #region // Verification
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
@@ -165,7 +167,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-
+        #endregion 
         }
 
     }

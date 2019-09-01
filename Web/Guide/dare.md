@@ -23,7 +23,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ERROR - The feature has not been implemented
 ````
 
@@ -32,7 +32,7 @@ encoded:
 
 
 ````
-Alice> dare encode TestDir1 /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> dare encode TestDir1 /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ERROR - The feature has not been implemented
 ````
 
@@ -73,7 +73,7 @@ level otherwise.
 
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ERROR - The option  is not known.
 ````
 
@@ -98,7 +98,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ERROR - The option  is not known.
 ````
 

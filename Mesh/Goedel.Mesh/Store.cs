@@ -26,7 +26,7 @@ namespace Goedel.Mesh {
 
     public class Store : Disposable {
         public virtual string ContainerDefault => throw new NYI();
-        public virtual container Container { get; }
+        public virtual Container Container { get; }
         //protected override void Disposing() => Container?.Dispose();
 
         protected CryptoParameters CryptoParameters;
@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
             //Console.WriteLine($"Open Store {ContainerName} / {directory}");
             ContainerName = containerName;
 
-            Container = container.Open(
+            Container = Container.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,
                 keyCollection ?? cryptoParameters?.KeyCollection,
@@ -75,11 +75,13 @@ namespace Goedel.Mesh {
             new Store(Directory, name, cryptoParameters, keyCollection);
 
 
-        public void AppendDirect(DareEnvelope message) => Container.AppendDirect(message);
+        public void AppendDirect(DareEnvelope message) => Container.Append(message);
 
 
         public ContainerEnumeratorRaw Select(int minIndex, bool reverse=false) => 
             Container.Select(minIndex, reverse);
+
+
 
 
         }

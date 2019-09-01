@@ -28,7 +28,7 @@ add   Add contact entry from file
 Alice> contact add email carol@example.com
 {
   "Self": false,
-  "Key": "NC55-RB63-NICX-VOXG-AOBO-KMNM-IRLH",
+  "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
@@ -42,7 +42,7 @@ Alice> contact add email carol@example.com /json
     "Success": true,
     "CatalogEntry": {
       "Self": false,
-      "Key": "NC55-RB63-NICX-VOXG-AOBO-KMNM-IRLH",
+      "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
       "EnvelopedContact": [{},
         "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}}}
@@ -114,13 +114,13 @@ list   List contact entries
 Alice> contact list
 {
   "Self": true,
-  "Key": "NBFE-WYYT-GIBG-AHLN-CQZE-DJJO-JCZA",
+  "Key": "NA7T-AUB2-CVFC-SDEV-7TKX-BL3X-5ZY7",
   "EnvelopedContact": [{
       "Index": 0},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
   CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NC55-RB63-NICX-VOXG-AOBO-KMNM-IRLH",
+  "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
   "EnvelopedContact": [{
       "Index": 0},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
@@ -135,14 +135,14 @@ Alice> contact list /json
     "Success": true,
     "CatalogedEntries": [{
         "Self": true,
-        "Key": "NBFE-WYYT-GIBG-AHLN-CQZE-DJJO-JCZA",
+        "Key": "NA7T-AUB2-CVFC-SDEV-7TKX-BL3X-5ZY7",
         "EnvelopedContact": [{
             "Index": 0},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
   CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]},
       {
         "Self": false,
-        "Key": "NC55-RB63-NICX-VOXG-AOBO-KMNM-IRLH",
+        "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
         "EnvelopedContact": [{
             "Index": 0},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI

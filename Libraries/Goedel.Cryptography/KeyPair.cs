@@ -253,12 +253,14 @@ namespace Goedel.Cryptography {
         byte[] udfBytes = null;
 
 
-        string udf = null;
+        
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a string.
         /// </summary>
         public override string UDF => udf ?? Cryptography.UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
+        string udf = null;
 
+        public string UDFValue => Cryptography.UDF.OID (this);
 
 
 

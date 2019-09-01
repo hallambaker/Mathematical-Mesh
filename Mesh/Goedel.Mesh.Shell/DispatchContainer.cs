@@ -108,7 +108,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ContainerIndex(ContainerIndex Options) {
             var inputFile = Options.Container.Value;
 
-            using (var container = Cryptography.Dare.container.Open(
+            using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 
@@ -129,20 +129,22 @@ namespace Goedel.Mesh.Shell {
 
             Directory.CreateDirectory(outputFile);
 
-            using (var reader = new FileContainerReader (inputFile)) {
-                foreach (var entry in reader) {
-                    var path = Path.Combine(outputFile, entry.Header.Filename);
+            throw new NYI();
 
-                    entry.CopyToFile(path);
+            //using (var reader = new FileContainerReader (inputFile)) {
+            //    foreach (var entry in reader) {
+            //        var path = Path.Combine(outputFile, entry.Header.Filename);
+
+            //        entry.CopyToFile(path);
 
 
-                    }
+            //        }
 
-                }
+            //    }
 
-            return new ResultFile() {
-                Filename = inputFile
-                };
+            //return new ResultFile() {
+            //    Filename = inputFile
+            //    };
             }
 
 
@@ -155,7 +157,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var outputFile = Options.Output.Value;
 
-            using (var container = Cryptography.Dare.container.Open(
+            using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 
@@ -173,7 +175,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult ContainerVerify(ContainerVerify Options) {
             var inputFile = Options.Container.Value;
 
-            using (var container = Cryptography.Dare.container.Open(
+            using (var container = Cryptography.Dare.Container.Open(
                 inputFile, containerType: ContainerType.MerkleTree)) {
                 }
 

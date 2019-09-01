@@ -148,6 +148,7 @@ namespace Goedel.Mesh.Server {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -197,6 +198,7 @@ namespace Goedel.Mesh.Server {
 				}
 		    var Result = new AccountEntry ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

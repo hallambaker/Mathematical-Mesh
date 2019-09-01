@@ -1,11 +1,94 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Goedel.IO;
 using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
+
+
+    /// <summary>
+    /// Container index with the decoded head and tail and extent information for
+    /// the body.
+    /// </summary>
+    public partial class ContainerFrameIndex {
+
+        ///<summary>The frame header</summary>
+        public ContainerHeader Header;
+
+        ///<summary>The frame trailer</summary>
+        public DareTrailer Trailer;
+
+        ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
+        public long DataPosition;
+
+        ///<summary>The length of the data segment.</summary>
+        public long DataLength;
+
+        /// <summary>
+        /// Return a JSONReader for the content
+        /// </summary>
+        /// <param name="container">The indexed container.</param>
+        /// <returns></returns>
+        public JSONReader GetReader(Container container) => throw new NYI();
+
+        /// <summary>
+        /// Return the frame payload verbatim (i.e. ciphertext if encrypted).
+        /// </summary>
+        /// <param name="container">The indexed container.</param>
+        /// <returns>The frame payload</returns>
+        public byte[] GetData(Container container) => throw new NYI();
+
+        /// <summary>
+        /// Return a DareEnvelope wrapping the fnewrame.
+        /// </summary>
+        /// <param name="container">The indexed container.</param>
+        /// <param name="detatched">If true, </param>
+        /// <returns>The frame payload</returns>      
+        public DareEnvelope GetEnvelope(Container container, bool detatched = false) {
+            var envelope = new DareEnvelope() {
+                Header = Header,
+                Trailer = Trailer,
+                Body = GetData(container)
+                };
+
+            if (!detatched | !Header.HasExchangePosition) {
+                Header.Recipients = GetRecipients(container);
+                }
+
+
+            return envelope;
+
+            }
+
+        List<DareRecipient> GetRecipients (Container container) {
+            if (!Header.HasExchangePosition) {
+                return Header.Recipients;
+                }
+            var exchangeHeader = container.GetHeader(Header.ExchangePosition);
+
+            if (Header.Recipients == null) {
+                return exchangeHeader.Recipients;
+                }
+            else {
+                // Not yet decided if it should be permissable to specify a previous exchange
+                // and a current one.
+                throw new NYI();
+                }
+
+            }
+
+
+        public ContainerFrameIndex(JBCDStream JBCDStream) {
+            throw new NYI();
+            }
+
+        }
+
+
+
 
     /// <summary>
     /// 
@@ -56,7 +139,7 @@ namespace Goedel.Cryptography.Dare {
         /// 
         /// </summary>
         /// <returns></returns>
-        public DareTrailer GetTrailer() {
+        public override DareTrailer GetTrailer() {
             var HeaderBytes = JBCDStream.FramerGetData();
             if (HeaderBytes != null) {
                 Trailer = DareTrailer.FromJSON(HeaderBytes.JSONReader(), false);
@@ -98,14 +181,23 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public partial class ContainerDataReader : StreamReaderBase {
 
-        /// <summary></summary>
+        /// <summary>If true, the frame has a payload</summary>
         public bool HasPayload;
+
+        ///<summary>The start of the frame.</summary>
+        public long StartFrame;
+
+        ///<summary>The start of the payload</summary>
+        public long StartPayload;
+
         JBCDRecordDataReader JBCDFrameReader = null;
         CryptoStackStream CryptoStackStreamReader = null;
         Stream Reader;
 
         /// <summary></summary>
         public ContainerHeader Header;
+
+
 
         /// <summary>
         /// 
@@ -116,17 +208,29 @@ namespace Goedel.Cryptography.Dare {
         /// 
         /// </summary>
         /// <param name="JBCDStream"></param>
-        /// <param name="FrameRemaining"></param>
-        /// <param name="Header"></param>
-        /// <param name="KeyCollection"></param>
-        public ContainerDataReader(JBCDStream JBCDStream, ref long FrameRemaining,
-                        ContainerHeader Header, KeyCollection KeyCollection) {
-            this.Header = Header;
-            JBCDFrameReader = new JBCDRecordDataReader(JBCDStream, ref FrameRemaining);
-            CryptoStackStreamReader = Header.GetDecoder(JBCDFrameReader, out Reader,
-                            KeyCollection: KeyCollection);
+        /// <param name="frameRemaining"></param>
+        /// <param name="header"></param>
+        /// <param name="keyCollection"></param>
+        public ContainerDataReader(JBCDStream JBCDStream, ref long frameRemaining,
+                        ContainerHeader header, KeyCollection keyCollection) {
+            StartPayload = JBCDStream.PositionRead;
+            Header = header;
+
+            JBCDFrameReader = new JBCDRecordDataReader(JBCDStream, ref frameRemaining);
+            CryptoStackStreamReader = header.GetDecoder(JBCDFrameReader, out Reader,
+                            KeyCollection: keyCollection);
             //Console.WriteLine($"Begin Reading {FrameRemaining} / Index {Header.Index}");
             }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public virtual DareTrailer GetTrailer() {
+            throw new NYI();
+            }
+
 
         /// <summary>
         /// Close the strem and finaliza all cryptographic contexts.

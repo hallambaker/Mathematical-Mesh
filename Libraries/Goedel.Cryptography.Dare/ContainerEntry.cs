@@ -61,7 +61,6 @@ namespace Goedel.Cryptography.Dare {
 			{"ContainerEntry", ContainerEntry._Factory},
 			{"ContainerHeaderFirst", ContainerHeaderFirst._Factory},
 			{"ContainerHeader", ContainerHeader._Factory},
-			{"ContentMeta", ContentMeta._Factory},
 			{"ContainerIndex", ContainerIndex._Factory},
 			{"IndexPosition", IndexPosition._Factory},
 			{"KeyValue", KeyValue._Factory},
@@ -131,6 +130,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -161,6 +161,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new ContainerEntry ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -235,6 +236,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -265,6 +267,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new ContainerHeaderFirst ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -337,11 +340,6 @@ namespace Goedel.Cryptography.Dare {
 			get => _Default;
 			set {_Default = value; __Default = true; }
 			}
-        /// <summary>
-        ///Content meta data.
-        /// </summary>
-
-		public virtual ContentMeta						ContentMeta  {get; set;}
 		bool								__TreePosition = false;
 		private int						_TreePosition;
         /// <summary>
@@ -380,26 +378,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual ContainerIndex						ContainerIndex  {get; set;}
-		bool								__First = false;
-		private int						_First;
-        /// <summary>
-        ///Frame number of the first object instance value.
-        /// </summary>
-
-		public virtual int						First {
-			get => _First;
-			set {_First = value; __First = true; }
-			}
-		bool								__Previous = false;
-		private int						_Previous;
-        /// <summary>
-        ///Frame number of the immediately prior object instance value	
-        /// </summary>
-
-		public virtual int						Previous {
-			get => _Previous;
-			set {_Previous = value; __Previous = true; }
-			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -439,6 +417,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -463,11 +442,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("Default", 1);
 					_Writer.WriteBoolean (Default);
 				}
-			if (ContentMeta != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ContentMeta", 1);
-					ContentMeta.Serialize (_Writer, false);
-				}
 			if (__TreePosition){
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("TreePosition", 1);
@@ -487,16 +461,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ContainerIndex", 1);
 					ContainerIndex.Serialize (_Writer, false);
-				}
-			if (__First){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("First", 1);
-					_Writer.WriteInteger32 (First);
-				}
-			if (__Previous){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Previous", 1);
-					_Writer.WriteInteger32 (Previous);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -519,6 +483,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new ContainerHeader ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -546,13 +511,6 @@ namespace Goedel.Cryptography.Dare {
 					Default = JSONReader.ReadBoolean ();
 					break;
 					}
-				case "ContentMeta" : {
-					// An untagged structure
-					ContentMeta = new ContentMeta ();
-					ContentMeta.Deserialize (JSONReader);
- 
-					break;
-					}
 				case "TreePosition" : {
 					TreePosition = JSONReader.ReadInteger32 ();
 					break;
@@ -572,189 +530,8 @@ namespace Goedel.Cryptography.Dare {
  
 					break;
 					}
-				case "First" : {
-					First = JSONReader.ReadInteger32 ();
-					break;
-					}
-				case "Previous" : {
-					Previous = JSONReader.ReadInteger32 ();
-					break;
-					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Information describing the object instance
-	/// </summary>
-	public partial class ContentMeta : ContainerData {
-        /// <summary>
-        ///The content type field as specified in JWE
-        /// </summary>
-
-		public virtual string						ContentType  {get; set;}
-        /// <summary>
-        ///List of filename paths for the payload of the frame.
-        /// </summary>
-
-		public virtual List<string>				Paths  {get; set;}
-        /// <summary>
-        ///Unique object identifier
-        /// </summary>
-
-		public virtual string						UniqueID  {get; set;}
-        /// <summary>
-        ///Initial creation date.
-        /// </summary>
-
-		public virtual DateTime?						Created  {get; set;}
-        /// <summary>
-        ///Date of last modification.
-        /// </summary>
-
-		public virtual DateTime?						Modified  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ContentMeta";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContentMeta();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			if (ContentType != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("cty", 1);
-					_Writer.WriteString (ContentType);
-				}
-			if (Paths != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Paths", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Paths) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (UniqueID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("UniqueID", 1);
-					_Writer.WriteString (UniqueID);
-				}
-			if (Created != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Created", 1);
-					_Writer.WriteDateTime (Created);
-				}
-			if (Modified != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Modified", 1);
-					_Writer.WriteDateTime (Modified);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ContentMeta FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContentMeta;
-				}
-		    var Result = new ContentMeta ();
-			Result.Deserialize (JSONReader);
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "cty" : {
-					ContentType = JSONReader.ReadString ();
-					break;
-					}
-				case "Paths" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					Paths = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						Paths.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
-				case "UniqueID" : {
-					UniqueID = JSONReader.ReadString ();
-					break;
-					}
-				case "Created" : {
-					Created = JSONReader.ReadDateTime ();
-					break;
-					}
-				case "Modified" : {
-					Modified = JSONReader.ReadDateTime ();
-					break;
-					}
-				default : {
 					break;
 					}
 				}
@@ -831,6 +608,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -894,6 +672,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new ContainerIndex ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1011,6 +790,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1045,6 +825,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new IndexPosition ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1128,6 +909,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1162,6 +944,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new KeyValue ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1256,6 +1039,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1321,6 +1105,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new IndexMeta ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

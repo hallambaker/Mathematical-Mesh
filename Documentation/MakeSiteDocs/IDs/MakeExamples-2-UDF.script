@@ -9,6 +9,7 @@
 #method MakeUDFExamples CreateExamples Example
 #% UDFVariousUDF(Example);
 #% UDFNonce(Example);
+#% UDFOID(Example);
 #% UDFEncrypt(Example);
 #% UDFShare(Example);
 #% UDFDigest(Example);
@@ -39,6 +40,7 @@
 #{Example.ResultDigestSHA2.Digest}
 #{Example.ResultDigestSHA3.Digest}
 #{Example.ResultCommitSHA2.Digest}
+#{Example.PublicKeyed25519.UDFValue}
 ~~~~
 #end file
 
@@ -49,6 +51,37 @@ Nonce UDF:
   #{Example.ResultUDFNonce.Key}
 ~~~~
 #end file
+
+
+#file UDFOID "Examples\\UDFOID.md" CreateExamples Example
+
+Given the following Ed25519 public key:
+
+~~~~
+#{Example.PublicKeyed25519.PublicData.ToStringBase16FormatHex()}
+~~~~
+
+The equivalent DER encoding is:
+
+~~~~
+#{Example.PublicKeyed25519.KeyInfoData.DER().ToStringBase16FormatHex()}
+~~~~
+
+To encode this key as a UDF OID sequence we prepend the value #{UDFTypeIdentifier.OID}
+and convert to Base32:
+
+~~~~
+#{Example.PublicKeyed25519.UDFValue}
+~~~~
+
+The corresponding UDF content digest value is more compact and allows us to identify the 
+key unambiguously but does not provide the value:
+
+~~~~
+#{Example.PublicKeyed25519.UDF}
+~~~~
+#end file
+
 
 #file UDFEncrypt "Examples\\UDFEncrypt.md" CreateExamples Example
 #% var data = UDF.Parse (Example.ResultUDFSecret.Key, out var code);

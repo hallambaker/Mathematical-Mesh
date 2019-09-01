@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
 
-        container Container;
+        Container Container;
         int LowIndex;
         bool Reverse;
         bool Active;
@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="reverse">If true, enumeratre from the last item to <paramref name="lowIndex"/> (inclusive).
         /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumeratorRaw(container container, int lowIndex = 0, bool reverse = false) {
+        public ContainerEnumeratorRaw(Container container, int lowIndex = 0, bool reverse = false) {
             this.Container = container;
             LowIndex = lowIndex;
             Reverse = reverse;
@@ -88,15 +88,14 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Enumerator for frames in a container beginning with frame 1.
     /// </summary>
-    public class ContainerEnumerator : IEnumerator<ContainerDataReader> {
+    public class ContainerEnumerator : IEnumerator<ContainerFrameIndex> {
 
-        container Container;
+        Container Container;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
         /// </summary>
-        public ContainerDataReader Current => _Current;
-        ContainerFrameReader _Current = null;
+        public ContainerFrameIndex Current { get; set; }
 
 
 
@@ -104,7 +103,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create an enumerator for <paramref name="container"/>.
         /// </summary>
         /// <param name="container">The container to enumerate.</param>
-        public ContainerEnumerator(container container) {
+        public ContainerEnumerator(Container container) {
             this.Container = container;
             Reset();
             }
@@ -123,7 +122,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
-        public void Dispose() => _Current?.Close();
+        /// 
+        public void Dispose() { }
 
         /// <summary>
         /// Advances the enumerator to the next element of the collection.
@@ -132,7 +132,7 @@ namespace Goedel.Cryptography.Dare {
         /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
         public bool MoveNext() {
             var Result = Container.NextFrame();
-            _Current = Result ? Container.GetFrameDataReader() : null;
+            Current = Result ? Container.GetContainerFrameIndex() : null;
             return Result;
             }
         /// <summary>
@@ -140,7 +140,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public void Reset() {
             Container.Start();
-            _Current = Container.GetFrameDataReader();
+            Current = Container.GetContainerFrameIndex();
             }
         }
 

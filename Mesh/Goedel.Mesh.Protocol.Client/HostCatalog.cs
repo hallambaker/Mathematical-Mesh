@@ -150,6 +150,7 @@ namespace Goedel.Mesh.Client {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -194,6 +195,7 @@ namespace Goedel.Mesh.Client {
 				}
 		    var Result = new CatalogedMachine ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -283,6 +285,7 @@ namespace Goedel.Mesh.Client {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -313,6 +316,7 @@ namespace Goedel.Mesh.Client {
 				}
 		    var Result = new CatalogedStandard ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -397,6 +401,7 @@ namespace Goedel.Mesh.Client {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -432,6 +437,7 @@ namespace Goedel.Mesh.Client {
 				}
 		    var Result = new CatalogedAdmin ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -525,6 +531,7 @@ namespace Goedel.Mesh.Client {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -565,6 +572,7 @@ namespace Goedel.Mesh.Client {
 				}
 		    var Result = new CatalogedPending ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

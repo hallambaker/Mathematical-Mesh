@@ -154,6 +154,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -205,6 +206,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new JoseWebSignature ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -330,6 +332,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -402,6 +405,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new JoseWebEncryption ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -521,6 +525,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -560,6 +565,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Signed ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -657,6 +663,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -701,6 +708,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Encrypted ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -826,6 +834,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -890,6 +899,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new KeyData ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1023,6 +1033,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1106,6 +1117,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Header ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1222,6 +1234,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1261,6 +1274,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Signature ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1356,6 +1370,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1390,6 +1405,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new KeyContainer ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1495,6 +1511,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1545,6 +1562,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Key ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1641,6 +1659,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1675,6 +1694,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new Recipient ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1761,6 +1781,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1796,6 +1817,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PublicKeyRSA ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1900,6 +1922,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1955,6 +1978,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PrivateKeyRSA ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2055,6 +2079,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2090,6 +2115,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PublicKeyDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2169,6 +2195,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2199,6 +2226,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PrivateKeyDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2279,6 +2307,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2314,6 +2343,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PublicKeyECDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2393,6 +2423,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2423,6 +2454,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new PrivateKeyECDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2493,6 +2525,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2517,6 +2550,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new KeyAgreement ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2587,6 +2621,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2617,6 +2652,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new KeyAgreementDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2692,6 +2728,7 @@ namespace Goedel.Cryptography.Jose {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2722,6 +2759,7 @@ namespace Goedel.Cryptography.Jose {
 				}
 		    var Result = new KeyAgreementECDH ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

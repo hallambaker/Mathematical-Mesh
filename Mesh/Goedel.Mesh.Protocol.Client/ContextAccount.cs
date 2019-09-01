@@ -147,6 +147,15 @@ namespace Goedel.Mesh.Client {
                 };
 
             if (sync) {
+                GetCatalogApplication();
+                GetCatalogContact();
+                GetCatalogCredential();
+                GetCatalogBookmark();
+                GetCatalogCalendar();
+                GetCatalogNetwork();
+
+                // Don't sync spools as these are bound to the service
+
                 SyncProgressUpload();
                 }
 
@@ -180,6 +189,13 @@ namespace Goedel.Mesh.Client {
                 maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
                 }
 
+            // upload all the containers here
+            foreach (var store in DictionaryStores) {
+                maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
+                }
+
+
+
             if (updates.Count > 0) {
                 var uploadRequest = new UploadRequest() {
                     Updates = updates
@@ -192,6 +208,9 @@ namespace Goedel.Mesh.Client {
 
 
         int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+
+            Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
+
             int uploads = 0;
             if (maxEnvelopes == 0) {
                 return 0; // no more room left in this request.
@@ -206,7 +225,7 @@ namespace Goedel.Mesh.Client {
                     Envelopes = envelopes
                     };
 
-                var start = 1+syncStatus.Index;
+                var start = 1 + syncStatus.Index;
                 long last = (maxEnvelopes < 0) ? syncStatus.Store.FrameCount :
                     Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
 
@@ -215,8 +234,8 @@ namespace Goedel.Mesh.Client {
                     start++;
                     }
 
-                
-                for (var i = start; i< last; i++) {
+
+                for (var i = start; i < last; i++) {
                     container.MoveToIndex(i);
                     envelopes.Add(container.ReadDirect());
                     }
@@ -339,9 +358,16 @@ namespace Goedel.Mesh.Client {
             if (DictionaryStores.TryGetValue(name, out var syncStore)) {
                 return syncStore.Store;
                 }
-            //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh} {devicecount}");
+            Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
-            syncStore = new SyncStatus( MakeStore(name));
+            var store = MakeStore(name);
+            if (store is Catalog catalog) {
+                catalog.TransactDelegate = Transact;
+                }
+
+            syncStore = new SyncStatus(store);
+
+ 
             DictionaryStores.Add(name, syncStore);
 
             return syncStore.Store;
@@ -366,6 +392,35 @@ namespace Goedel.Mesh.Client {
 
             throw new NYI();
             }
+
+        public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+
+            if (ServiceID == null) {
+                return catalog.Transact(catalog, updates);
+                }
+            var envelopes = catalog.Prepare(updates);
+
+            var containerUpdate = new ContainerUpdate() {
+                Container = catalog.ContainerName,
+                Index = (int)catalog.Container.FrameCount,
+                Envelopes = envelopes
+                };
+
+
+
+            var uploadRequest = new UploadRequest() {
+                Updates = new List<ContainerUpdate> { containerUpdate }
+                };
+
+            var uploadResponse = MeshClient.Upload(uploadRequest);
+
+
+            catalog.Commit(envelopes);
+
+
+            return true;
+            }
+
 
 
         /////////////////////
@@ -395,7 +450,18 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public int Sync(bool all = true) {
+        public StatusResponse Status() {
+            var statusRequest = new StatusRequest() {
+                };
+            return MeshClient.Status(statusRequest);
+            }
+
+        /// <summary>
+        /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
+        /// the service is held at the service, this means only downloading updates at present.
+        /// </summary>
+        /// <returns></returns>
+        public int Sync() {
             int count = 0;
 
             var statusRequest = new StatusRequest() {
@@ -445,6 +511,9 @@ namespace Goedel.Mesh.Client {
                     }
 
                 }
+
+
+            // TBS: If we have synchronized the catalogs, upload cached offline updates here.
 
             return count;
             }

@@ -74,11 +74,7 @@ namespace Goedel.Mesh.Server {
 
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
-
                 // Create the pro-forma containers.
-                new CatalogCredential(directory).Dispose();
-                new CatalogContact(directory).Dispose();
-                new CatalogApplication(directory).Dispose();
                 new Spool(directory, Spool.SpoolInbound).Dispose();
 
                 }
@@ -278,13 +274,13 @@ namespace Goedel.Mesh.Server {
         public string MessagePost(JpcSession jpcSession, string account, DareEnvelope dareMessage) {
 
             using (var accountUnverified = GetAccountUnverified(account)) {
-
-                // calculate the identifier her
-                var identifier = "fred";
-                dareMessage.Header.UniqueID = identifier;
-                Assert.NotNull(accountUnverified);
-                accountUnverified.Post(dareMessage);
-                return identifier;
+                throw new NYI();
+                //// calculate the identifier her
+                //var identifier = "fred";
+                //dareMessage.Header.UniqueID = identifier;
+                //Assert.NotNull(accountUnverified);
+                //accountUnverified.Post(dareMessage);
+                //return identifier;
                 }
             }
 

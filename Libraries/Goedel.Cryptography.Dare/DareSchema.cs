@@ -61,6 +61,7 @@ namespace Goedel.Cryptography.Dare {
 			{"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
 			{"DareTrailer", DareTrailer._Factory},
 			{"DareHeader", DareHeader._Factory},
+			{"ContentInfo", ContentInfo._Factory},
 			{"DareSigner", DareSigner._Factory},
 			{"X509Certificate", X509Certificate._Factory},
 			{"DareSignature", DareSignature._Factory},
@@ -149,6 +150,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -188,6 +190,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareEnvelopeSequence ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -299,6 +302,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -360,6 +364,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareTrailer ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -442,11 +447,6 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual byte[]						Malt  {get; set;}
         /// <summary>
-        ///Contains signed headers.
-        /// </summary>
-
-		public virtual byte[]						Signed  {get; set;}
-        /// <summary>
         ///If present in a header or trailer, specifies an encrypted data block 
         ///containing additional header fields whose values override those specified 
         ///in the message and context headers.
@@ -459,17 +459,18 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual byte[]						Cloaked  {get; set;}
         /// <summary>
-        ///The content type field as specified in JWE
-        /// </summary>
-
-		public virtual string						ContentType  {get; set;}
-        /// <summary>
         ///If present, the Annotations field contains a sequence of Encrypted Data 
         ///Segments encrypted under the message Master Key. The interpretation of these fields 
         ///is application specific.
         /// </summary>
 
 		public virtual List<byte[]>				EDSS  {get; set;}
+        /// <summary>
+        ///If present contains a JSON encoded ContentInfo structure which specifies
+        ///plaintext content metadata and forms one of the inputs to the envelope digest value.
+        /// </summary>
+
+		public virtual byte[]						ContentInfoData  {get; set;}
         /// <summary>
         ///A list of 'presignature'
         /// </summary>
@@ -480,31 +481,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<DareRecipient>				Recipients  {get; set;}
-        /// <summary>
-        ///Unique object identifier
-        /// </summary>
-
-		public virtual string						UniqueID  {get; set;}
-        /// <summary>
-        ///The original filename under which the data was stored.
-        /// </summary>
-
-		public virtual string						Filename  {get; set;}
-        /// <summary>
-        ///Operation on the header
-        /// </summary>
-
-		public virtual string						Event  {get; set;}
-        /// <summary>
-        ///List of labels that are applied to the payload of the frame.
-        /// </summary>
-
-		public virtual List<string>				Labels  {get; set;}
-        /// <summary>
-        ///List of key/value pairs describing the payload of the frame.
-        /// </summary>
-
-		public virtual List<KeyValue>				KeyValues  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -544,6 +520,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -568,20 +545,10 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteToken ("Malt", 1);
 					_Writer.WriteBinary (Malt);
 				}
-			if (Signed != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Signed", 1);
-					_Writer.WriteBinary (Signed);
-				}
 			if (Cloaked != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("cloaked", 1);
 					_Writer.WriteBinary (Cloaked);
-				}
-			if (ContentType != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("cty", 1);
-					_Writer.WriteString (ContentType);
 				}
 			if (EDSS != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -595,6 +562,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (ContentInfoData != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContentInfoData", 1);
+					_Writer.WriteBinary (ContentInfoData);
+				}
 			if (Signers != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("signatures", 1);
@@ -629,50 +601,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (UniqueID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("UniqueID", 1);
-					_Writer.WriteString (UniqueID);
-				}
-			if (Filename != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Filename", 1);
-					_Writer.WriteString (Filename);
-				}
-			if (Event != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Event", 1);
-					_Writer.WriteString (Event);
-				}
-			if (Labels != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Labels", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Labels) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
-			if (KeyValues != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeyValues", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in KeyValues) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -694,6 +622,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareHeader ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -721,16 +650,8 @@ namespace Goedel.Cryptography.Dare {
 					Malt = JSONReader.ReadBinary ();
 					break;
 					}
-				case "Signed" : {
-					Signed = JSONReader.ReadBinary ();
-					break;
-					}
 				case "cloaked" : {
 					Cloaked = JSONReader.ReadBinary ();
-					break;
-					}
-				case "cty" : {
-					ContentType = JSONReader.ReadString ();
 					break;
 					}
 				case "Annotations" : {
@@ -742,6 +663,10 @@ namespace Goedel.Cryptography.Dare {
 						EDSS.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "ContentInfoData" : {
+					ContentInfoData = JSONReader.ReadBinary ();
 					break;
 					}
 				case "signatures" : {
@@ -772,16 +697,244 @@ namespace Goedel.Cryptography.Dare {
 						}
 					break;
 					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ContentInfo : Dare {
+        /// <summary>
+        ///Unique object identifier
+        /// </summary>
+
+		public virtual string						UniqueID  {get; set;}
+        /// <summary>
+        ///List of labels that are applied to the payload of the frame.
+        /// </summary>
+
+		public virtual List<string>				Labels  {get; set;}
+        /// <summary>
+        ///List of key/value pairs describing the payload of the frame.
+        /// </summary>
+
+		public virtual List<KeyValue>				KeyValues  {get; set;}
+        /// <summary>
+        ///The content type field as specified in JWE
+        /// </summary>
+
+		public virtual string						ContentType  {get; set;}
+        /// <summary>
+        ///List of filename paths for the payload of the frame.
+        /// </summary>
+
+		public virtual List<string>				Paths  {get; set;}
+        /// <summary>
+        ///The original filename under which the data was stored.
+        /// </summary>
+
+		public virtual string						Filename  {get; set;}
+        /// <summary>
+        ///Operation on the header
+        /// </summary>
+
+		public virtual string						Event  {get; set;}
+        /// <summary>
+        ///Initial creation date.
+        /// </summary>
+
+		public virtual DateTime?						Created  {get; set;}
+        /// <summary>
+        ///Date of last modification.
+        /// </summary>
+
+		public virtual DateTime?						Modified  {get; set;}
+		bool								__First = false;
+		private int						_First;
+        /// <summary>
+        ///Frame number of the first object instance value.
+        /// </summary>
+
+		public virtual int						First {
+			get => _First;
+			set {_First = value; __First = true; }
+			}
+		bool								__Previous = false;
+		private int						_Previous;
+        /// <summary>
+        ///Frame number of the immediately prior object instance value	
+        /// </summary>
+
+		public virtual int						Previous {
+			get => _Previous;
+			set {_Previous = value; __Previous = true; }
+			}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ContentInfo";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ContentInfo();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (UniqueID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("UniqueID", 1);
+					_Writer.WriteString (UniqueID);
+				}
+			if (Labels != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Labels", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Labels) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (KeyValues != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyValues", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in KeyValues) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (ContentType != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("cty", 1);
+					_Writer.WriteString (ContentType);
+				}
+			if (Paths != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Paths", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Paths) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
+			if (Filename != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Filename", 1);
+					_Writer.WriteString (Filename);
+				}
+			if (Event != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Event", 1);
+					_Writer.WriteString (Event);
+				}
+			if (Created != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Created", 1);
+					_Writer.WriteDateTime (Created);
+				}
+			if (Modified != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Modified", 1);
+					_Writer.WriteDateTime (Modified);
+				}
+			if (__First){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("First", 1);
+					_Writer.WriteInteger32 (First);
+				}
+			if (__Previous){
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Previous", 1);
+					_Writer.WriteInteger32 (Previous);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContentInfo FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContentInfo;
+				}
+		    var Result = new ContentInfo ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
 				case "UniqueID" : {
 					UniqueID = JSONReader.ReadString ();
-					break;
-					}
-				case "Filename" : {
-					Filename = JSONReader.ReadString ();
-					break;
-					}
-				case "Event" : {
-					Event = JSONReader.ReadString ();
 					break;
 					}
 				case "Labels" : {
@@ -809,8 +962,46 @@ namespace Goedel.Cryptography.Dare {
 						}
 					break;
 					}
+				case "cty" : {
+					ContentType = JSONReader.ReadString ();
+					break;
+					}
+				case "Paths" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Paths = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						Paths.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
+				case "Filename" : {
+					Filename = JSONReader.ReadString ();
+					break;
+					}
+				case "Event" : {
+					Event = JSONReader.ReadString ();
+					break;
+					}
+				case "Created" : {
+					Created = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "Modified" : {
+					Modified = JSONReader.ReadDateTime ();
+					break;
+					}
+				case "First" : {
+					First = JSONReader.ReadInteger32 ();
+					break;
+					}
+				case "Previous" : {
+					Previous = JSONReader.ReadInteger32 ();
+					break;
+					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}
@@ -890,6 +1081,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -939,6 +1131,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareSigner ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1038,6 +1231,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1072,6 +1266,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new X509Certificate ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1162,6 +1357,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1202,6 +1398,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareSignature ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1306,6 +1503,7 @@ namespace Goedel.Cryptography.Dare {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1363,6 +1561,7 @@ namespace Goedel.Cryptography.Dare {
 				}
 		    var Result = new DareRecipient ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

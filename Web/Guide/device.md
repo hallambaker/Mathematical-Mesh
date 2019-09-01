@@ -13,8 +13,8 @@ the mesh service account alice@example.com to which connection is requested:
 
 ````
 Alice2> device request alice@example.com
-   Witness value = 6D7S-QUSO-4XUJ-FTBQ-6RGP-JBGU-CDWR
-   Personal Mesh = MCE7-VDTJ-UIEB-6YDB-O5WX-Y747-3OF3
+   Witness value = QRQ3-3LCG-NUN5-W7CJ-PPLB-4CAM-64AX
+   Personal Mesh = MC6F-FW6P-LHO5-DS4P-QUBZ-3V7S-6QX7
 ````
 
 In this case there is no existing device profile and so a new profile is
@@ -40,7 +40,7 @@ Alice sees the request that she posted and approves it with the connect
 
 
 ````
-Alice> device accept NBTB-ZC3R-44LZ-WRJ2-FTTP-F3K3-6TUA
+Alice> device accept NCSZ-HZHS-QKLF-AP52-2YAB-ZIIS-VD6K
 ````
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
@@ -75,7 +75,7 @@ The `device delete` command removes a device from the catalog:
 
 
 ````
-Alice> device delete NBTB-ZC3R-44LZ-WRJ2-FTTP-F3K3-6TUA
+Alice> device delete NCSZ-HZHS-QKLF-AP52-2YAB-ZIIS-VD6K
 ERROR - The feature has not been implemented
 Alice> device list
 ````
@@ -96,16 +96,16 @@ a new PIN code:
 
 ````
 Alice> account pin
-PIN=NCNB-WTP2-7IMO-XBXE-YA (Expires=2019-07-11T23:50:39Z)
+PIN=NBHQ-WGAV-VIV3-GGJ4-EI (Expires=2019-08-21T23:27:11Z)
 ````
 
 The pin code can now be used to authenticate the connection request:
 
 
 ````
-Alice3> device request alice@example.com /pin=NCNB-WTP2-7IMO-XBXE-YA
-   Witness value = SDVM-PEQ2-JBDC-PMSO-IVUZ-6NAV-ZGY3
-   Personal Mesh = MCE7-VDTJ-UIEB-6YDB-O5WX-Y747-3OF3
+Alice3> device request alice@example.com /pin=NBHQ-WGAV-VIV3-GGJ4-EI
+   Witness value = ROCX-6LON-P4TF-YCSL-SJ4U-SS2D-JBJK
+   Personal Mesh = MC6F-FW6P-LHO5-DS4P-QUBZ-3V7S-6QX7
 ````
 
 Since the PIN code that was issued was set to be self-authorizing, the device
@@ -151,7 +151,7 @@ this type of device connection.
 
 
 ````
-Alice4> device pre devices@example.com /key=udf://example.com/EDHA-N63D-TGO3-D6Y6-45WV-32QG-YBBZ-6A
+Alice4> device pre devices@example.com /key=udf://example.com/EDN6-JLSO-BJ44-HXN7-FRCT-2S2M-A5XZ-X4
 ERROR - Object reference not set to an instance of an object.
 ````
 
@@ -179,7 +179,7 @@ and retrieve the data using the `device earl` command:
 
 
 ````
-Alice> device earl udf://example.com/EDHA-N63D-TGO3-D6Y6-45WV-32QG-YBBZ-6A
+Alice> device earl udf://example.com/EDN6-JLSO-BJ44-HXN7-FRCT-2S2M-A5XZ-X4
 ERROR - Object reference not set to an instance of an object.
 ````
 

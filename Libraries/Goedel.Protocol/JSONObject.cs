@@ -190,6 +190,12 @@ namespace Goedel.Protocol {
                 }
             }
 
+
+        public virtual void PreEncode() {
+            }
+        public virtual void PostDecode() {
+            }
+
         /// <summary>
         /// Serialize to the specified Writer.
         /// </summary>
@@ -197,7 +203,7 @@ namespace Goedel.Protocol {
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public abstract void Serialize (Writer writer, bool wrap, ref bool first);
+		public abstract void Serialize(Writer writer, bool wrap, ref bool first);
 
         /// <summary>
         /// Serialize to the specified Writer. This is a dummy routine
@@ -208,7 +214,7 @@ namespace Goedel.Protocol {
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public void SerializeX (Writer Writer, bool wrap, ref bool first) {
+		public void SerializeX(Writer Writer, bool wrap, ref bool first) {
             }
 
         /// <summary>

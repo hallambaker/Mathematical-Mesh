@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
     /// 
     /// </summary>
     public class FileContainerWriter : FileContainer {
-        container Container=null;
+        Container Container=null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -109,7 +109,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerType ContainerType = ContainerType.Unknown) => Container = BindContainer(
                     JBCDStream, CryptoParameters, Archive, Digest, ContainerType);
 
-        container BindContainer(
+        Container BindContainer(
                     JBCDStream JBCDStream,
                     CryptoParameters CryptoParameters,
                     bool Archive = false,
@@ -122,11 +122,11 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (JBCDStream.Length == 0) {
-                return container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+                return Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
 
                 }
             else {
-                return container.Open(JBCDStream, null);
+                return Container.Open(JBCDStream, null);
                 }
             }
 
@@ -146,7 +146,7 @@ namespace Goedel.Cryptography.Dare {
                 string FileName,
                 CryptoParameters CryptoParameters,
                 byte[] Data,
-                ContentMeta ContentMeta=null,
+                ContentInfo ContentMeta =null,
                 FileStatus FileStatus = FileStatus.Overwrite
                 ) {
 
@@ -170,7 +170,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         public static byte[] Data (
                 byte[] DataIn,
-                ContentMeta ContentMeta=null,
+                ContentInfo ContentMeta =null,
                 CryptoParameters CryptoParameters=null
                 ) {
 
@@ -196,15 +196,13 @@ namespace Goedel.Cryptography.Dare {
         public void Add(
                 byte[] Data,
             CryptoParameters CryptoParameters,
-            ContentMeta ContentMeta=null) {
-            var ContainerHeader = new ContainerHeader() {
-                ContentMeta = ContentMeta
-                };
+            ContentInfo ContentInfo = null) {
+
 
             Container.Append(
                     Data,
                     CryptoParameters,
-                    containerHeader: ContainerHeader);
+                    ContentInfo);
 
             }
 
@@ -222,14 +220,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Path">The path name attribute to give the file in the container</param>
         public void Add(string File, string Path = null) {
 
-            var ContainerHeader = Path == null ? null : new ContainerHeader() {
-                ContentMeta = new ContentMeta {
-                    Paths = new List<string> { Path }
-                    },
-                Filename = Path
+
+            var contentInfo = new ContentInfo() {
+                Filename = File,
+                Paths = new List<string> { Path }
                 };
 
-            Container.AppendFile(File, ContainerHeader);
+            Container.AppendFile(File, contentInfo);
             }
 
         /// <summary>
@@ -248,8 +245,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="CryptoParameters">The new crypto parameters to be used to 
         /// write the container data.</param>
         public void Add(ContainerDataReader ContainerDataReader,
-                CryptoParameters CryptoParameters = null) => Container.AppendFromStream(ContainerDataReader, ContainerDataReader.Length,
-                ContainerDataReader.Header, CryptoParameters);
+                CryptoParameters CryptoParameters = null) => 
+            Container.AppendFromStream(ContainerDataReader, ContainerDataReader.Length,
+                ContainerDataReader.Header.ContentInfo, CryptoParameters);
 
         /// <summary>
         /// Append an archive frame to the container.
@@ -267,9 +265,9 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// 
     /// </summary>
-    public class FileContainerReader : FileContainer, IEnumerable<ContainerDataReader> {
+    public class FileContainerReader : FileContainer, IEnumerable<ContainerFrameIndex> {
 
-        container Container = null;
+        Container Container = null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -286,7 +284,7 @@ namespace Goedel.Cryptography.Dare {
         /// Enumerate over the archive contents.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<ContainerDataReader> GetEnumerator() => Container.GetEnumerator();
+        public IEnumerator<ContainerFrameIndex> GetEnumerator() => Container.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
 
 
@@ -304,13 +302,7 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
-            Container = Goedel.Cryptography.Dare.container.OpenExisting(JBCDStream, KeyCollection);
-
-            //if (ReadIndex) {
-            //    // here we read in the container index. Either from an archive referenced 
-            //    // in the last frame or by scanning the entier container.
-            //    throw new NYI();
-            //    }
+            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
             }
 
 
@@ -325,7 +317,7 @@ namespace Goedel.Cryptography.Dare {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JBCDStream(Stream, null);
-            Container = Goedel.Cryptography.Dare.container.OpenExisting(JBCDStream, KeyCollection);
+            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
 
             }
 
@@ -340,18 +332,14 @@ namespace Goedel.Cryptography.Dare {
                 string FileName,
                 KeyCollection KeyCollection,
                 out byte[] Data,
-                out ContentMeta ContentMeta) {
+                out ContentInfo ContentMeta) {
 
             using (var Reader = new FileContainerReader(FileName, KeyCollection)) {
                 using (var ContainerDataReader = Reader.Container.GetFrameDataReader(
                             position:Reader.Container.PositionFinalFrameStart)) {
                     Data = ContainerDataReader.ToArray();
-                    ContentMeta = ContainerDataReader?.Header.ContentMeta;
+                    ContentMeta = ContainerDataReader?.Header.ContentInfo;
                     }
-
-
-
-                //Reader.Read(out Data, out ContentMeta);
                 }
 
             }
@@ -369,7 +357,7 @@ namespace Goedel.Cryptography.Dare {
                 byte[] DataIn,
 
                 out byte[] Data,
-                out ContentMeta ContentMeta) {
+                out ContentInfo ContentMeta) {
 
             using (var Reader = new FileContainerReader(DataIn)) {
                 Reader.Read(out Data, out ContentMeta);
@@ -386,14 +374,14 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Path">Specify a path value of an entry to read.</param>
         public void Read(
                 out byte[] Data,
-                out ContentMeta ContentMeta,
+                out ContentInfo ContentMeta,
                 int Index = -1,
                 string Path = null) {
 
 
             var ContainerDataReader = Container.GetFrameDataReader(Index);
             Data = ContainerDataReader.ToArray();
-            ContentMeta = ContainerDataReader?.Header.ContentMeta;
+            ContentMeta = ContainerDataReader?.Header.ContentInfo;
 
 
             }
@@ -432,7 +420,7 @@ namespace Goedel.Cryptography.Dare {
 
                 if (ContainerDataReader.HasPayload) {
 
-                    var FilePath = ContainerDataReader?.Header?.ContentMeta?.Paths;
+                    var FilePath = ContainerDataReader?.Header?.ContentInfo?.Paths;
                     Assert.True(FilePath != null && FilePath.Count > 0);
 
                     var OutputFile = Path.Combine(OutputDirectory, FilePath[0]);

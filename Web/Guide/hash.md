@@ -82,17 +82,17 @@ If no key is specified, a random secret is generated:
 
 ````
 Alice> hash mac TestFile1.txt
-AD4M-2YEB-G4H7-HCJ5-BVFU-GN7U-7RQM
-NAOI-YWYS-OUHK-5ZJO-RN3W-HXTP-VHE5
+AA5F-ZZ2D-JJBG-AKMH-ZMDM-JSVU-SSAL
+NAYV-NGPJ-DRXU-JAXQ-STE3-LA22-SWB3
 ````
 
 A key may be specified using the `/key` option:
 
 
 ````
-Alice> hash mac TestFile1.txt /key=NAOI-YWYS-OUHK-5ZJO-RN3W-HXTP-VHE5
-AD4M-2YEB-G4H7-HCJ5-BVFU-GN7U-7RQM
-NAOI-YWYS-OUHK-5ZJO-RN3W-HXTP-VHE5
+Alice> hash mac TestFile1.txt /key=NAYV-NGPJ-DRXU-JAXQ-STE3-LA22-SWB3
+AA5F-ZZ2D-JJBG-AKMH-ZMDM-JSVU-SSAL
+NAYV-NGPJ-DRXU-JAXQ-STE3-LA22-SWB3
 ````
 
 If the expected digest value is specified, this is used to check the calculated value:
@@ -100,9 +100,9 @@ If the expected digest value is specified, this is used to check the calculated 
 
 
 ````
-Alice> hash mac TestFile1.txt /key=NAOI-YWYS-OUHK-5ZJO-RN3W-HXTP-VHE5 /expect=AD4M-2YEB-G4H7-HCJ5-BVFU-GN7U-7RQM
+Alice> hash mac TestFile1.txt /key=NAYV-NGPJ-DRXU-JAXQ-STE3-LA22-SWB3 /expect=AA5F-ZZ2D-JJBG-AKMH-ZMDM-JSVU-SSAL
 True
-Alice> hash mac TestFile1.txt /key=NAOI-YWYS-OUHK-5ZJO-RN3W-HXTP-VHE5 /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
+Alice> hash mac TestFile1.txt /key=NAYV-NGPJ-DRXU-JAXQ-STE3-LA22-SWB3 /expect=MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
 ERROR - The calculated fingerprint did not match the expected value.
 ````
 

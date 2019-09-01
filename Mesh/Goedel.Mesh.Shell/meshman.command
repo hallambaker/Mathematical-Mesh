@@ -260,7 +260,10 @@
 			Include Reporting
 			Include CryptoOptions
 
-
+		Command AccountStatus "status"
+			Brief "Return the status of the account catalogs and spools"
+			Include AccountOptions
+			Include Reporting
 
 		Command AccountSync "sync"
 			Brief "Synchronize local copies of Mesh profiles with the server"

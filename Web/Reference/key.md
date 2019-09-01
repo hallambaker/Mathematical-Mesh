@@ -34,7 +34,7 @@ protocol.
 
 ````
 Alice> key nonce
-NBHJ-BVOE-BXTD-EPMW-QLI6-JSD6-2VHQ
+NA7S-6JYZ-2YEX-B5R3-GQEL-JM5A-VPPQ
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -44,7 +44,7 @@ Alice> key nonce /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "NBHJ-BVOE-BXTD-EPMW-QLI6-JSD6-2VHQ"}}
+    "Key": "NA7S-6JYZ-2YEX-B5R3-GQEL-JM5A-VPPQ"}}
 ````
 
 # key secret
@@ -63,7 +63,7 @@ key type.
 
 ````
 Alice> key secret
-EAQJ-2C3A-3YRU-GXVH-XXD5-BZR2-ET5A
+EBOB-OH23-N7L4-4DZK-5N4X-KAUQ-4WKQ
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -73,7 +73,7 @@ Alice> key secret /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EAQJ-2C3A-3YRU-GXVH-XXD5-BZR2-ET5A"}}
+    "Key": "EBOB-OH23-N7L4-4DZK-5N4X-KAUQ-4WKQ"}}
 ````
 
 
@@ -94,8 +94,8 @@ value, formatted as a UDF Encryption key type and Content Digest Type
 
 ````
 Alice> key earl
-EDXG-XCNG-KBXW-MA5P-I6UY-ABUH-FDZB-DN
-MC3S-YICX-I57H-5AGR-6MEZ-BDP2-NSSI-2QBK-MFI4-EOA3-NCQI-Z4X4-IOQV-VV6P
+EDYW-QQL3-FASO-RZ4R-ZE2D-L3FC-T5PK-FR
+MAA7-WZKN-TDYK-3OYX-LXHT-7LF2-7GD2-5WGL-4JV6-XQMN-Y4OR-LIMP-OYL3-P24E
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -105,8 +105,8 @@ Alice> key earl /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EDXG-XCNG-KBXW-MA5P-I6UY-ABUH-FDZB-DN",
-    "Identifier": "MC3S-YICX-I57H-5AGR-6MEZ-BDP2-NSSI-2QBK-MFI4-EOA3-NCQI-Z4X4-IOQV-VV6P"}}
+    "Key": "EDYW-QQL3-FASO-RZ4R-ZE2D-L3FC-T5PK-FR",
+    "Identifier": "MAA7-WZKN-TDYK-3OYX-LXHT-7LF2-7GD2-5WGL-4JV6-XQMN-Y4OR-LIMP-OYL3-P24E"}}
 ````
 
 # key share
@@ -129,11 +129,11 @@ formatted as a UDF Encryption key type and Share types
 
 ````
 Alice> key share
-EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
-MDCU-NS3Z-PDAS-GGLE-A5AC-5GK3-LT3W-LFWW-S5KB-5TYF-CNDY-RTAT-ZSOA
-SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W
-SAQS-HD5N-T2LM-H6IQ-EFAF-YNEV-LQRF-U
-SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S
+ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+MCQL-ZVUT-J4ZT-EFPN-ASKA-ASNB-VCFC-5TCN-IUGT-JYVX-S7RX-VSG2-J6KQ
+SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q
+SAQZ-M2V6-SF75-XJCL-HRAD-J4ZL-WHIR-M
+SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I
 ````
 
 Specifying the /json option returns a result of type ResultKey:
@@ -143,11 +143,11 @@ Alice> key share /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA",
-    "Identifier": "MDCU-NS3Z-PDAS-GGLE-A5AC-5GK3-LT3W-LFWW-S5KB-5TYF-CNDY-RTAT-ZSOA",
-    "Shares": ["SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W",
-      "SAQS-HD5N-T2LM-H6IQ-EFAF-YNEV-LQRF-U",
-      "SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S"]}}
+    "Key": "ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A",
+    "Identifier": "MCQL-ZVUT-J4ZT-EFPN-ASKA-ASNB-VCFC-5TCN-IUGT-JYVX-S7RX-VSG2-J6KQ",
+    "Shares": ["SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q",
+      "SAQZ-M2V6-SF75-XJCL-HRAD-J4ZL-WHIR-M",
+      "SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I"]}}
 ````
 
 
@@ -173,18 +173,18 @@ value as a UDF Encryption key type.
 
 
 ````
-Alice> key recover SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S
-EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA
+Alice> key recover SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I
+ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
 ````
 
 Specifying the /json option returns a result of type ResultKey:
 
 ````
-Alice> key recover SAQD-PALP-JFJA-GY4U-KWJK-UXH6-ZF3H-W SARA-7HPL-6PNY-JDUL-5TXA-4DBL-53HD-S /json
+Alice> key recover SAQJ-WF3H-G75I-VEYH-PVIZ-DTQZ-7AAK-Q SARJ-DPQV-5MCS-ZNMO-7MXN-QGB5-NOQY-I /json
 {
   "ResultKey": {
     "Success": true,
-    "Key": "EBFX-GMHU-BVBM-4GEJ-4T4I-K2BW-ZKOA"}}
+    "Key": "ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A"}}
 ````
 
 

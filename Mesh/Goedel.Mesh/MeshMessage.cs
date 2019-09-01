@@ -10,7 +10,7 @@ namespace Goedel.Mesh {
 
         public DareEnvelope Encode(KeyPair signingKey) {
             var data = this.GetBytes();
-            DareEnvelope = DareEnvelope.Encode (data, signingKey: signingKey);
+            DareEnvelope = DareEnvelope.Encode(data, signingKey: signingKey);
             return DareEnvelope;
             }
         }

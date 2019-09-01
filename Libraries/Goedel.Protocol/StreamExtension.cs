@@ -39,10 +39,10 @@ namespace Goedel.Protocol {
             Output.Write(buffer, 0, 1);
             }
 
-        /// <summary>Write buffer to to the output stream</summary>
-        /// <param name="Output">The stream to write the output to</param>
-        /// <param name="buffer">Data to write</param>
-        public static void Write(this Stream Output, byte[] buffer) => Output.Write(buffer, 0, buffer.Length);
+        ///// <summary>Write buffer to to the output stream</summary>
+        ///// <param name="Output">The stream to write the output to</param>
+        ///// <param name="buffer">Data to write</param>
+        //public static void Write(this Stream Output, byte[] buffer) => Output.Write(buffer, 0, buffer.Length);
 
         /// <summary>Write buffer to to the output stream</summary>
         /// <param name="Output">The stream to write the output to</param>

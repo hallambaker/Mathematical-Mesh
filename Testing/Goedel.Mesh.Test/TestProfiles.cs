@@ -140,7 +140,7 @@ namespace Goedel.Mesh.Test {
 
         protected DareEnvelope Sign(JSONObject data, KeyPair keySign) =>
                     DareEnvelope.Encode(data.GetBytes(tag: true),
-                        signingKey: keySign, contentType: "application/mmm");
+                        signingKey: keySign);
 
         public CatalogedDevice MakeCatalogEntryDevice(ProfileDevice profileDevice, KeyPair keySign) {
 

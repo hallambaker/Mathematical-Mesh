@@ -161,9 +161,7 @@
 		Binary Digest
 
 	Structure ContainerUpdate
-		String Container
-			Description
-				|The container to which the entries are to be uploaded.
+		Inherits ContainerStatus
 		Struct DareEnvelope Envelopes
 			Multiple
 			Description
@@ -225,11 +223,12 @@
 		Struct DareEnvelope EnvelopedAccountAssertion
 			Description
 				|The current account assertion
-		Struct ContainerStatus ContainerStatus
-			Multiple
 		Struct DareEnvelope EnvelopedCatalogEntryDevice
 			Description
 				|The catalog device entry
+		Struct ContainerStatus ContainerStatus
+			Multiple
+
 
 
 	//

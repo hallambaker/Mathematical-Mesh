@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
     public partial class Assertion {
         public virtual DareEnvelope Encode (KeyPair keyPair) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(tag: true),
-                    signingKey: keyPair, contentType: "application/mmm");
+                signingKey: keyPair);
             return DareEnvelope;
             }
 

@@ -48,6 +48,9 @@ namespace Goedel.Cryptography {
         ///<summary>Type code for random nonce</summary>
         Nonce = 104,
 
+        ///<summary>Type code for OID Sequence</summary>
+        OID = 112,
+
         ///<summary>Type code for Shamir secret</summary>
         ShamirSecret = 144
         }
@@ -501,6 +504,18 @@ namespace Goedel.Cryptography {
             var Data = CryptoCatalog.GetBits(bits);
             return TypeBDSToString(UDFTypeIdentifier.Nonce, Data, bits + 8);
             }
+
+        /// <summary>
+        /// Return the OID Sequence describing the public key <paramref name="keyPair"/>.
+        /// </summary>
+        /// <param name="keyPair">Number of random bits in the string</param>
+        /// <returns>A randomly generated UDF string.</returns>
+        public static string OID (KeyPair keyPair) {
+            var Data = keyPair.KeyInfoData.DER();
+            var bits = Data.Length * 8;
+            return TypeBDSToString(UDFTypeIdentifier.OID, Data, bits + 8);
+            }
+
 
 
         /// <summary>

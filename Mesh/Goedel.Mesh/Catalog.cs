@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
 
         }
 
-    public delegate bool CatalogTransactDelegate (List<CatalogUpdate> Updates);
+    public delegate bool CatalogTransactDelegate (Catalog catalog, List<CatalogUpdate> updates);
 
     public class Catalog : Store, IEnumerable<CatalogedEntry> {
 
@@ -64,24 +64,24 @@ namespace Goedel.Mesh {
             TransactDelegate = Transact;
             }
 
-        public DareEnvelope ContainerEntry(CatalogedEntry catalogEntry, string eventID) {
+        //public DareEnvelope ContainerEntry(CatalogedEntry catalogEntry, string eventID) {
 
-            var body = catalogEntry.GetBytes(tagged: true);
+        //    var body = catalogEntry.GetBytes(tagged: true);
 
-            var header = new DareHeader() {
-                Event = eventID,
-                UniqueID = catalogEntry._PrimaryKey,
-                KeyValues = catalogEntry._KeyValues.ToKeyValues()
-                };
+        //    var header = new ContentInfo() {
+        //        Event = eventID,
+        //        UniqueID = catalogEntry._PrimaryKey,
+        //        KeyValues = catalogEntry._KeyValues.ToKeyValues()
+        //        };
 
-            // here au
+        //    // here au
+        //    throw new NYI();
+        //    //return new DareEnvelope() {
+        //    //    Header = header,
+        //    //    Body = body
+        //    //    };
 
-            return new DareEnvelope() {
-                Header = header,
-                Body = body
-                };
-
-            }
+        //    }
 
 
 
@@ -97,19 +97,77 @@ namespace Goedel.Mesh {
             }
 
 
-        public bool Transact(List<CatalogUpdate> updates) {
+
+        DareEnvelope MakeFrame(
+                ContentInfo containerHeader,
+                JSONObject item) {
+
+            throw new NYI();
+
+            //return  new DareEnvelope() {
+            //    Header = containerHeader,
+            //    Body = item?.GetBytes(ContainerPersistence.Encoding, true)
+            //    };
+
+            }
+
+        public List<DareEnvelope> Prepare(List<CatalogUpdate> updates) {
+            //"Commit changes AFTER they have been accepted by the service".TaskFunctionality();
+
+            var result = new List<DareEnvelope>();
+
             foreach (var update in updates) {
                 switch (update.Action) {
+
                     case CatalogAction.New: {
-                        ContainerPersistence.New(update.CatalogEntry);
+                        
+                        var envelope = ContainerPersistence.PrepareNew(update.CatalogEntry);
+                        result.Add(envelope);
+
                         break;
                         }
                     case CatalogAction.Update: {
-                        ContainerPersistence.Update(update.CatalogEntry);
+                        var envelope = ContainerPersistence.PrepareUpdate(out _, update.CatalogEntry);
+                        result.Add(envelope);
                         break;
                         }
                     case CatalogAction.Delete: {
-                        ContainerPersistence.Delete(update.PrimaryKey);
+                        var envelope = ContainerPersistence.PrepareDelete(out _, update.PrimaryKey);
+                        if (envelope!= null) {
+                            result.Add(envelope);
+                            }
+                        break;
+                        }
+                    }
+
+
+                }
+
+            return result;
+
+            }
+        public void Commit(List<DareEnvelope> updates) {
+
+            foreach (var update in updates) {
+                ContainerPersistence.Apply(update);
+                }
+
+
+            }
+
+        public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+            foreach (var update in updates) {
+                switch (update.Action) {
+                    case CatalogAction.New: {
+                        catalog.ContainerPersistence.New(update.CatalogEntry);
+                        break;
+                        }
+                    case CatalogAction.Update: {
+                        catalog.ContainerPersistence.Update(update.CatalogEntry);
+                        break;
+                        }
+                    case CatalogAction.Delete: {
+                        catalog.ContainerPersistence.Delete(update.PrimaryKey);
                         break;
                         }
                     }
@@ -128,20 +186,20 @@ namespace Goedel.Mesh {
 
         public void New(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
-            TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
+            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
 
         public  void Update(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.Update, catalogEntry);
 
-            TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
+            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
 
         public void Delete(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(catalogEntry._PrimaryKey);
-            TransactDelegate(new List<CatalogUpdate> { catalogUpdate });
+            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
         public CatalogedEntry Locate(string key) => 

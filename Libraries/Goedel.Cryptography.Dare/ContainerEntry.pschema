@@ -58,9 +58,6 @@
 				|If set true in a persistent container, specifies that this record contains
 				|the default object for the container.
 
-		Struct ContentMeta ContentMeta
-			Description
-				|Content meta data.
 
 		// Frame position pointers
 		Integer TreePosition
@@ -83,51 +80,12 @@
 				|this one.
 
 
-
-
-
-		Integer First
-			Description
-				|Frame number of the first object instance value.
-
-		Integer Previous
-			Description
-				|Frame number of the immediately prior object instance value	
-
-
-	Section 2 "Content Metadata Structure"
-		Description
-			|TBS stuff
-
-	Structure ContentMeta
-		Description
-			|Information describing the object instance
-		
-		String ContentType
-			Tag "cty"
-			Description
-				|The content type field as specified in JWE
-		String Paths
-			Multiple
-			Description
-				|List of filename paths for the payload of the frame.
-
-		String UniqueID
-			Description 
-				|Unique object identifier
-		
-		DateTime Created
-			Description
-				|Initial creation date.
-
-		DateTime Modified
-			Description
-				|Date of last modification.
-
-
 	Section 2 "Index Structures"
 		Description
 			|TBS stuff
+
+
+
 	Structure ContainerIndex
 		Description
 			|A container index

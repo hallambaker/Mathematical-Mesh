@@ -30,7 +30,7 @@ namespace Goedel.Cryptography.Dare {
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
-        public static new container MakeNewContainer(
+        public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
             var ContainerHeader = new ContainerHeaderFirst() {
@@ -47,7 +47,27 @@ namespace Goedel.Cryptography.Dare {
             return Container;
             }
 
-        readonly static byte[] EmptyBytes = new byte[0];
+        //readonly static byte[] EmptyBytes = new byte[0];
+
+        /// <summary>
+        /// Append the header to the frame. This is called after the payload data
+        /// has been passed using AppendPreprocess.
+        /// </summary>
+        public override void PrepareFrame(ContextWrite contextWrite) {
+
+            var containerHeader = contextWrite.ContainerHeader;
+            if (containerHeader.Index > 0) {
+                containerHeader.TreePosition =
+                    (int)PreviousFramePosition(containerHeader.Index);
+                }
+
+            Console.WriteLine($"Prepare #{containerHeader.Index} @{JBCDStream.PositionWrite} Tree={containerHeader.TreePosition}");
+
+            base.PrepareFrame(contextWrite);
+            }
+
+
+        #region // Container navigation
 
         /// <summary>
         /// Initialize the dictionaries used to manage the tree by registering the set
@@ -203,21 +223,6 @@ namespace Goedel.Cryptography.Dare {
             //return Next();
             }
 
-        /// <summary>
-        /// Append the header to the frame. This is called after the payload data
-        /// has been passed using AppendPreprocess.
-        /// </summary>
-        public override void CompleteHeader() {
-
-
-            if (AppendContainerHeader.Index > 0) {
-                AppendContainerHeader.TreePosition = 
-                    (int)PreviousFramePosition(AppendContainerHeader.Index);
-                }
-            base.CompleteHeader();
-            }
-
-
 
         /// <summary>
         /// Get the frame position.
@@ -245,6 +250,9 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The position of the frame.</returns>
         public long PreviousFramePosition (long FrameIndex) {
             var Previous = PreviousFrame(FrameIndex);
+
+            Console.WriteLine($"  Previous {FrameIndex} = {Previous}");
+
             return GetFramePosition(Previous);
             }
 
@@ -267,6 +275,9 @@ namespace Goedel.Cryptography.Dare {
             return 0;
             }
 
+        #endregion 
+
+        #region // Verification
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
@@ -281,7 +292,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-
+        
         /// <summary>
         /// Verify container contents by reading every frame starting with the first and checking
         /// for integrity. This is likely to take a very long time.
@@ -317,7 +328,7 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-
+        #endregion 
         }
 
 

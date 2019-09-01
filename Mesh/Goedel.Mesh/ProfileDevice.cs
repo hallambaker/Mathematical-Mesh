@@ -44,7 +44,7 @@ namespace Goedel.Mesh {
             var bytes = ProfileDevice.GetBytes(tag:true);
 
             ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
-                    signingKey: keyPublicSign, contentType: "application/mmm");
+                signingKey: keyPublicSign);
 
             return ProfileDevice;
 
@@ -84,10 +84,12 @@ namespace Goedel.Mesh {
                 EncryptionKeys = new List<KeyPair> { encryptDevice , encryptAdmin } 
                 };
 
+            var contentInfo = new Goedel.Cryptography.Dare.ContentInfo() { ContentType = "application/mmm" };
+
             this.DareEnvelope = new DareEnvelope(
                 cryptoParameters,
                 GetBytes(tag: true),
-                contentType: "application/mmm");
+                contentInfo: contentInfo);
 
             return DareEnvelope;
             }

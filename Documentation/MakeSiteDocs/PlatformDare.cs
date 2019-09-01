@@ -41,7 +41,7 @@ namespace ExampleGenerator {
 
         #region // utils
 
-        public container MakeContainer(
+        public Container MakeContainer(
                     string FileName,
                     CryptoParameters CryptoParameters,
                     ContainerType ContainerType = ContainerType.Chain) {
@@ -49,7 +49,7 @@ namespace ExampleGenerator {
 
             //var FileStream = FileName.FileStream(FileStatus.Overwrite);
             var JBCDStream = new JBCDStreamDebug(FileName, FileStatus.Overwrite, Output: ConsoleWriter);
-            return container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+            return Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
 
             }
 
@@ -61,7 +61,7 @@ namespace ExampleGenerator {
             return Data;
             }
 
-        public List<ContainerFrame> ReadContainer(container Container) {
+        public List<ContainerFrame> ReadContainer(Container Container) {
             var ContainerHeaders = new List<ContainerFrame> {
                 new ContainerFrame {
                     Header = Container.ContainerHeaderFirst
@@ -69,11 +69,9 @@ namespace ExampleGenerator {
                 };
             //Console.WriteLine($"First Frame {Container.ContainerHeader}");
             foreach (var ContainerDataReader in Container) {
-                var Trailer = (ContainerDataReader as ContainerFrameReader).GetTrailer();
-
                 ContainerHeaders.Add(new ContainerFrame {
                     Header = ContainerDataReader.Header,
-                    Trailer = Trailer
+                    Trailer = ContainerDataReader.Trailer
                     });
                 //Console.WriteLine($"Read Frame {ContainerDataReader.Header}");
                 }
@@ -124,8 +122,11 @@ namespace ExampleGenerator {
                 var Data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
+
+                var contentInfo = new ContentInfo() { ContentType = "application/example-mail" };
+
                 return new DareEnvelope(CryptoParameters, Body.ToUTF8(),
-                    contentType: "application/example-mail", dataSequences: Data);
+                    contentInfo: contentInfo, dataSequences: Data);
                 }
 
 

@@ -43,18 +43,17 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     byte[] plaintext,
-                    string contentType = null,
+                    ContentInfo contentInfo=null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
 
             var cryptoStack = cryptoParameters.GetCryptoStack();
 
-            Header = new DareHeader(cryptoStack, contentType, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
             Body = Header.EnhanceBody(plaintext, out var trailer);
             Trailer = trailer;
             }
-
 
         /// <summary>
         /// Create a DARE Message instance.
@@ -70,11 +69,11 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoStack cryptoStack,
                     byte[] plaintext,
-                    string contentType = null,
+                    ContentInfo contentInfo=null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
-            Header = new DareHeader(cryptoStack, contentType, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
             Body = Header.EnhanceBody(plaintext, out var trailer);
             Trailer = trailer;
             }
@@ -99,7 +98,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     Stream outputStream,
-                    string contentType = null,
+                    ContentInfo contentInfo,
                     byte[] plaintext = null,
                     long contentLength = -1,
                     byte[] cloaked = null,
@@ -108,7 +107,7 @@ namespace Goedel.Cryptography.Dare {
 
             var cryptoStack = cryptoParameters.GetCryptoStack();
 
-            Header = new DareHeader(cryptoStack, contentType, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
             JSONBWriter = new JSONBWriter(outputStream);
             }
 
@@ -124,13 +123,29 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public static DareEnvelope Encode(
                     byte[] plaintext,
+                    string contentType) => Encode(plaintext, contentInfo: new ContentInfo() { ContentType = contentType });
+
+
+
+        /// <summary>
+        /// Create a new DARE Message from the specified parameters.
+        /// </summary>
+        /// <param name="plaintext"></param>
+        /// <param name="signingKey"></param>
+        /// <param name="encryptionKey"></param>
+        /// <param name="contentType"></param>
+        /// <param name="cloaked"></param>
+        /// <param name="dataSequences"></param>
+        /// <returns></returns>
+        public static DareEnvelope Encode(
+                    byte[] plaintext,
+                    ContentInfo contentInfo = null,
                     KeyPair signingKey = null,
                     KeyPair encryptionKey = null,
-                    string contentType = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
             var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
-            return new DareEnvelope(cryptoParameters, plaintext, contentType, cloaked, dataSequences);
+            return new DareEnvelope(cryptoParameters, plaintext, contentInfo, cloaked, dataSequences);
 
             }
 
@@ -376,15 +391,14 @@ namespace Goedel.Cryptography.Dare {
                 CryptoParameters cryptoParameters,
                 string inputFile,
                 string outputFile = null,
-                string contentType = null,
-                string fileName = null,
+                ContentInfo contentInfo = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
             using (var output = outputFile.OpenFileNew()) {
                 using (var input = inputFile.OpenFileRead()) {
                     Encode(cryptoParameters, input, output, input.Length,
-                        contentType, fileName, cloaked, dataSequences, chunk);
+                        contentInfo, cloaked, dataSequences, chunk);
                     return input.Length;
                     }
                 }
@@ -417,15 +431,14 @@ namespace Goedel.Cryptography.Dare {
                 Stream inputStream,
                 Stream outputStream,
                 long contentLength = -1,
-                string contentType = null,
-                string fileName = null,
+                ContentInfo contentInfo = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
 
 
             using (var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
-                outputStream, contentType, fileName, contentLength, cloaked, dataSequences)) {
+                outputStream, contentInfo, contentLength, cloaked, dataSequences)) {
                 inputStream.CopyTo(DAREEnvelopeWriter);
                 }
 
@@ -474,7 +487,7 @@ namespace Goedel.Cryptography.Dare {
                 outputStream.Flush();
                 }
             else {
-                var filename = outputFile ?? Message.Header.Filename;
+                var filename = outputFile ?? Message.Header.ContentInfo.Filename;
                 using (var output = filename.OpenFileNew()) {
                     Reader.CopyTo(output);
                     output.Flush();

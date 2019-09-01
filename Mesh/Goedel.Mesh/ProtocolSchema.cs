@@ -527,6 +527,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -552,6 +553,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new MeshRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -629,6 +631,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -664,6 +667,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new MeshRequestUser ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -742,6 +746,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -767,6 +772,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new MeshResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -844,6 +850,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -878,6 +885,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new KeyValue ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1001,6 +1009,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1055,6 +1064,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ConstraintsSelect ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1205,6 +1215,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1259,6 +1270,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ConstraintsData ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1377,6 +1389,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1416,6 +1429,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new PolicyAccount ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1508,6 +1522,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1547,6 +1562,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ContainerStatus ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1582,12 +1598,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class ContainerUpdate : MeshProtocol {
-        /// <summary>
-        ///The container to which the entries are to be uploaded.
-        /// </summary>
-
-		public virtual string						Container  {get; set;}
+	public partial class ContainerUpdate : ContainerStatus {
         /// <summary>
         ///The entries to be uploaded. 
         /// </summary>
@@ -1632,14 +1643,11 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			if (Container != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Container", 1);
-					_Writer.WriteString (Container);
-				}
+			((ContainerStatus)this).SerializeX(_Writer, false, ref _first);
 			if (Envelopes != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Envelopes", 1);
@@ -1678,6 +1686,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ContainerUpdate ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1689,10 +1698,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Container" : {
-					Container = JSONReader.ReadString ();
-					break;
-					}
 				case "Envelopes" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -1708,6 +1713,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					base.DeserializeToken(JSONReader, Tag);
 					break;
 					}
 				}
@@ -1784,6 +1790,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1834,6 +1841,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new MeshHelloResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -1937,6 +1945,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -1967,6 +1976,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new CompleteRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2047,6 +2057,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2101,6 +2112,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new StatusRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2163,14 +2175,14 @@ namespace Goedel.Mesh {
 
 		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
         /// <summary>
-        /// </summary>
-
-		public virtual List<ContainerStatus>				ContainerStatus  {get; set;}
-        /// <summary>
         ///The catalog device entry
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedCatalogEntryDevice  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<ContainerStatus>				ContainerStatus  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2210,6 +2222,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2223,6 +2236,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
 					EnvelopedAccountAssertion.Serialize (_Writer, false);
+				}
+			if (EnvelopedCatalogEntryDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedCatalogEntryDevice", 1);
+					EnvelopedCatalogEntryDevice.Serialize (_Writer, false);
 				}
 			if (ContainerStatus != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2241,11 +2259,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (EnvelopedCatalogEntryDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedCatalogEntryDevice", 1);
-					EnvelopedCatalogEntryDevice.Serialize (_Writer, false);
-				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -2267,6 +2280,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new StatusResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2292,6 +2306,13 @@ namespace Goedel.Mesh {
  
 					break;
 					}
+				case "EnvelopedCatalogEntryDevice" : {
+					// An untagged structure
+					EnvelopedCatalogEntryDevice = new DareEnvelope ();
+					EnvelopedCatalogEntryDevice.Deserialize (JSONReader);
+ 
+					break;
+					}
 				case "ContainerStatus" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -2304,13 +2325,6 @@ namespace Goedel.Mesh {
 						ContainerStatus.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
-					break;
-					}
-				case "EnvelopedCatalogEntryDevice" : {
-					// An untagged structure
-					EnvelopedCatalogEntryDevice = new DareEnvelope ();
-					EnvelopedCatalogEntryDevice.Deserialize (JSONReader);
- 
 					break;
 					}
 				default : {
@@ -2383,6 +2397,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2430,6 +2445,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new DownloadRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2526,6 +2542,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2568,6 +2585,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new DownloadResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2660,6 +2678,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2719,6 +2738,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new UploadRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2825,6 +2845,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -2872,6 +2893,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new UploadResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -2991,6 +3013,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3035,6 +3058,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new EntryResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3138,6 +3162,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3209,6 +3234,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new PostRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3314,6 +3340,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3339,6 +3366,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new PostResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3408,6 +3436,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3438,6 +3467,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ConnectRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3524,6 +3554,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3564,6 +3595,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new ConnectResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3667,6 +3699,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3707,6 +3740,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new CreateRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3802,6 +3836,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3837,6 +3872,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new CreateResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -3913,6 +3949,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -3938,6 +3975,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new DeleteRequest ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 
@@ -4004,6 +4042,7 @@ namespace Goedel.Mesh {
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
 		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
@@ -4029,6 +4068,7 @@ namespace Goedel.Mesh {
 				}
 		    var Result = new DeleteResponse ();
 			Result.Deserialize (JSONReader);
+			Result.PostDecode();
 			return Result;
 			}
 

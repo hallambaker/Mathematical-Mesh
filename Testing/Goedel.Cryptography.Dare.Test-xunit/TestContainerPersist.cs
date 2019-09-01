@@ -6,11 +6,12 @@ using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.IO;
+using Goedel.Test.Core;
 
 namespace Goedel.XUnit {
-    public partial class TestDare {
-
-
+    public partial class TestPersist {
+        public TestPersist() => TestEnvironmentCommon.Initialize(true);
+        public static TestPersist Test() => new TestPersist();
 
         static string FileTest = "TestStore.jcx";
         static string AccountIDAlice = "alice@whatever";
@@ -35,8 +36,40 @@ namespace Goedel.XUnit {
             UserProfileUDF = UDF.PresentationBase32(AccountIDBob.ToBytes())
             };
 
+
+
         [Fact]
-        public void TestPersistenceStore () {
+        public void TestPersistenceStoreCreate() {
+            using (var TestStore = new TestItemContainerPersistenceStore(
+            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
+                // retrieve by master key -fail
+                Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+                }
+            }
+
+
+        [Fact]
+        public void TestPersistenceStoreAdd() {
+            using (var TestStore = new TestItemContainerPersistenceStore(
+            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
+                // retrieve by master key -fail
+                Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+                TestStore.New(AccountAlice);
+
+                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
+                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+
+                var AccountTest = TestStore.GetAccountID(AccountIDAlice);
+                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+
+                var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
+                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
+                }
+            }
+
+
+        [Fact]
+        public void TestPersistenceStoreAll () {
             using (var TestStore = new TestItemContainerPersistenceStore(
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
                 // retrieve by master key -fail
