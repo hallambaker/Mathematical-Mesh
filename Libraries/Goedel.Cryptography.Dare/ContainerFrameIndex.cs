@@ -50,44 +50,89 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>If true, the frame has a payload section</summary>
         public bool HasPayload => throw new NYI();
 
+        KeyCollection KeyCollection;
+
+        ///<summary>The envelope body</summary>
+        public byte[] Payload => GetPayLoad().CacheValue(out payload);
+        byte[] payload;
+
+        public JSONObject JSONObject;
+
+        JBCDStream JBCDStream;
+
+        public byte[] GetPayLoad() {
+
+            
+
+            using (var input = JBCDStream.FramerGetReader(DataPosition, DataLength)) {
+
+                var Decoder = Header.GetDecoder(
+                            input, out var Reader,
+                            KeyCollection: KeyCollection);
+
+                using (var output = new MemoryStream()) {
+                    Reader.CopyTo(output);
+                    return output.ToArray();
+                    }
 
 
-
-
+                }
+            }
 
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="JBCDStream">Stream reader positioned to the start of the frame.</param>
-        public ContainerFrameIndex(JBCDStream JBCDStream, long Position = -1) {
+        /// <param name="jsonStream">Stream reader positioned to the start of the frame.</param>
+        public ContainerFrameIndex(JBCDStream jsonStream, KeyCollection keyCollection, long Position = -1) {
 
+            KeyCollection = keyCollection;
+            JBCDStream = jsonStream;
 
-            var length = JBCDStream.FramerOpen(Position);
-            var HeaderBytes = JBCDStream.FramerGetData();
+            var length = jsonStream.FramerOpen(Position);
+
+            var HeaderBytes = jsonStream.FramerGetData();
             var HeaderText = HeaderBytes.ToUTF8();
             Header = ContainerHeaderFirst.FromJSON(HeaderBytes.JSONReader(), false);
 
-            JBCDStream.FramerGetFrameIndex(out DataPosition, out DataLength);
+            jsonStream.FramerGetFrameIndex(out DataPosition, out DataLength);
 
-            var TrailerBytes = JBCDStream.FramerGetData();
-            if (TrailerBytes != null) {
+            //Payload = JBCDStream.FramerGetData();
+
+            //using (var Buffer = new MemoryStream()) {
+            //    var Decoder = Header.GetDecoder(
+            //                jsonReader, out var Reader,
+            //                KeyCollection: keyCollection);
+            //    Reader.CopyTo(Buffer);
+            //    Decoder.Close();
+            //    Payload= Buffer.ToArray();
+            //    }
+
+            var TrailerBytes = jsonStream.FramerGetData();
+            if (TrailerBytes != null && TrailerBytes.Length > 0) {
                 var TrailerText = TrailerBytes.ToUTF8();
-                Trailer = ContainerHeaderFirst.FromJSON(TrailerText.JSONReader(), false);
+                Trailer = DareTrailer.FromJSON(TrailerText.JSONReader(), false);
                 }
 
-            throw new NYI();
+
+            //if (Payload != null && Payload.Length > 0) {
+            //    //var PayloadText = HeaderBytes.ToUTF8();
+            //    //JSONObject = Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+
+            //    }
             }
 
 
         public JSONObject GetJSONObject(Container container) =>
-            GetReader(container).ReadTaggedObject(JSONObject.TagDictionary);
+            Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+
+            //GetReader(container).ReadTaggedObject(JSONObject.TagDictionary);
 
 
         /// <summary>
         /// Return a JSONReader for the content
         /// </summary>
-        /// <param name="container">The indexed container.</param>
+        /// <param name="container">The indexed containerG.</param>
         /// <returns></returns>
         public JSONReader GetReader(Container container) => throw new NYI();
 

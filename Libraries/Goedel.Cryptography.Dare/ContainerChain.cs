@@ -67,7 +67,7 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void PrepareFrame(ContextWrite contextWrite) {
+        public override void PrepareFrame(ContainerWriter contextWrite) {
             FinalContainerHeader = contextWrite.ContainerHeader;
             base.PrepareFrame(contextWrite);
             }

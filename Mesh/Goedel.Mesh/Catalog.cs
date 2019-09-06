@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         public ContainerPersistenceStore ContainerPersistence = null;
 
 
-        public CatalogTransactDelegate TransactDelegate;
+        //public CatalogTransactDelegate TransactDelegate;
 
         protected override void Disposing() {
             ContainerPersistence?.Dispose();
@@ -61,7 +61,7 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection = null, bool readContainer = true) :
                 base(directory, containerName, cryptoParameters, keyCollection) {
             ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
-            TransactDelegate = Transact;
+            //TransactDelegate = Transact;
             }
 
         //public DareEnvelope ContainerEntry(CatalogedEntry catalogEntry, string eventID) {
@@ -155,7 +155,7 @@ namespace Goedel.Mesh {
 
             }
 
-        public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+        public virtual bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
             foreach (var update in updates) {
                 switch (update.Action) {
                     case CatalogAction.New: {
@@ -184,22 +184,22 @@ namespace Goedel.Mesh {
 
 
 
-        public void New(CatalogedEntry catalogEntry) {
+        public  void New(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
-            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
+            Transact(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
 
         public  void Update(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.Update, catalogEntry);
 
-            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
+            Transact(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
 
         public void Delete(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(catalogEntry._PrimaryKey);
-            TransactDelegate(this, new List<CatalogUpdate> { catalogUpdate });
+            Transact(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
         public CatalogedEntry Locate(string key) => 

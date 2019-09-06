@@ -175,7 +175,10 @@ namespace Goedel.Cryptography.Dare {
         void ReadContainer(JBCDStream Stream, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
-                CommitTransaction(frameIndex);
+
+                var item = frameIndex.Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+
+                CommitTransaction(frameIndex, item);
 
 
                 if (containerIntegrity != ContainerIntegrity.None) {
@@ -205,11 +208,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="contentInfo">The container header</param>
         /// <param name="data">The data to commit.</param>
-        public virtual void CommitTransaction(ContainerFrameIndex frameIndex) {
+        public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JSONObject jSONObject) {
             var contentInfo = frameIndex.Header.ContentInfo;
 
             ObjectIndex.TryGetValue(contentInfo.UniqueID, out var Previous);
-            var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container);
+            var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container, jSONObject);
 
             switch (contentInfo.Event) {
                 case EventNew: {
@@ -306,9 +309,9 @@ namespace Goedel.Cryptography.Dare {
                 JSONObject jsonObject, 
                 Transaction transaction = null) {
 
-            var contextWrite = new ContextWriteDeferred(Container);
+            var contextWrite = new ContainerWriterDeferred(Container);
 
-            var data = jsonObject.GetBytes();
+            var data = jsonObject?.GetBytes();
             return Container.Defer(contextWrite, contentInfo, data);
 
             }

@@ -28,6 +28,17 @@ namespace Goedel.Test.Core {
     /// </summary>
     public class TestEnvironmentCommon : Initialization {
 
+        //static TestEnvironmentCommon() {
+        //    Cryptography.Cryptography.Initialize();
+        //    var _ = Goedel.Mesh.Client.ConnectionItem.Initialize;
+        //    _ = Goedel.Mesh.MeshProtocol.Initialize;
+        //    _ = Goedel.Mesh.MeshItem.Initialize;
+        //    _ = Goedel.Mesh.Server.CatalogItem.Initialize;
+
+
+        //    }
+
+
         public string ServiceName = "example.com";
         static string TestPath = "TestPath";
         static string TestRoot;

@@ -157,16 +157,19 @@ namespace Goedel.Cryptography.Dare{
         ///// </summary>
         //DateTime Modified { get; }
 
-        /// <summary>
-        /// The binary data
-        /// </summary>
-        byte[] Data { get; }
+        ///// <summary>
+        ///// The binary data
+        ///// </summary>
+        //byte[] Data { get; }
 
         /// <summary>
         /// A deserialization reader for the data according to the encoding specified by 
         /// the container header.
         /// </summary>
-        JSONReader JSONReader { get; }
+        //JSONReader JSONReader { get; }
+
+        JSONObject JsonObject { get; }
+
 
         /// <summary>
         /// The previous object instance value for this object instance.

@@ -14,7 +14,6 @@ namespace Goedel.Mesh.Shell {
 
         //CommandLineInterpreter CommandLineInterpreter;
 
-
         public virtual IMeshMachineClient MeshMachine { get; }
 
 
@@ -220,7 +219,7 @@ namespace Goedel.Mesh.Shell {
 
 
         public KeyCollection KeyCollection(IAccountOptions options) => throw new NYI();
-            //CatalogHost.GetKeyCollection();
+                    //CatalogHost.GetKeyCollection();
 
 
         /// <summary>

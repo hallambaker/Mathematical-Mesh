@@ -87,6 +87,9 @@ namespace Goedel.Cryptography.Dare {
 
         #region // Properties
 
+        ///<summary>The apex digest value of the container as written to the file.</summary>
+        public byte[] Digest;
+
         ///<summary>The first frame in the container</summary>
         public DareEnvelope FrameZero;
 
@@ -604,13 +607,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="envelope"></param>
         public void Append(DareEnvelope envelope) {
             var header = envelope.Header as ContainerHeader;
-            var contextWrite = new ContextWriteFile(header, JBCDStream);
+            var contextWrite = new ContainerWriterFile(this, header, JBCDStream);
 
-            contextWrite.CommitFrame(this);
+            contextWrite.CommitFrame(envelope.Trailer);
 
             //Apply(header, envelope.Body, envelope.Trailer);
             var dataHeader = envelope.Header.GetBytes(false);
-            var dataTrailer = envelope.Trailer.GetBytes(false);
+            var dataTrailer = envelope.Trailer?.GetBytes(false);
             AppendFrame(dataHeader, envelope.Body, dataTrailer);
 
 
@@ -618,16 +621,17 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        /// <summary>
-        /// Obtain a reader stream for the current frame data.
-        /// </summary>
-        /// <param name="index">The container index to be read.</param>
-        /// <param name="position">The byte offset within the file from which to read.</param>
-        /// <returns>The reader stream created.</returns>
-        public abstract ContainerFrameReader GetFrameDataReader(
-                long index = -1, long position = -1);
+        ///// <summary>
+        ///// Obtain a reader stream for the current frame data.
+        ///// </summary>
+        ///// <param name="index">The container index to be read.</param>
+        ///// <param name="position">The byte offset within the file from which to read.</param>
+        ///// <returns>The reader stream created.</returns>
+        //public abstract ContainerFrameReader GetFrameDataReader(
+        //        long index = -1, long position = -1);
 
-        public abstract ContainerFrameIndex GetContainerFrameIndex(long Index = -1, long Position = -1);
+        public abstract ContainerFrameIndex GetContainerFrameIndex(
+            long index = -1, long position = -1);
 
 
 
@@ -725,7 +729,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Header of the framer being written
         /// </summary>
-        ContextWrite ContextWrite;
+        ContainerWriterFile contextWrite;
         Stream bodyWrite;
 
         /// <summary>
@@ -763,9 +767,9 @@ namespace Goedel.Cryptography.Dare {
                 };
             appendContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
-            ContextWrite = new ContextWriteFile(appendContainerHeader, JBCDStream);
+            contextWrite = new ContainerWriterFile(this, appendContainerHeader, JBCDStream);
 
-            PrepareFrame(ContextWrite); // Perform container type specific processing.
+            PrepareFrame(contextWrite); // Perform container type specific processing.
 
             var payloadLength = appendContainerHeader.OutputLength(contentLength);
             var dummyTrailer = FillDummyTrailer(cryptoStack);
@@ -790,16 +794,16 @@ namespace Goedel.Cryptography.Dare {
         /// Complete appending a record.
         /// </summary>
         void AppendEnd() {
-            ContextWrite.ContainerHeader.CloseBodyWriter(out var trailer);
+            contextWrite.ContainerHeader.CloseBodyWriter(out var trailer);
             MakeTrailer(ref trailer);
             var trailerData = trailer?.GetBytes(false);
             JBCDStream.WriteWrappedFrameEnd(trailerData);
-            ContextWrite.CommitFrame(this);
+            contextWrite.CommitFrame(trailer);
             }
 
 
         public DareEnvelope Defer(
-            ContextWriteDeferred contextWrite,
+            ContainerWriterDeferred contextWrite,
             ContentInfo contentInfo,
             byte[] data,
             CryptoParameters cryptoParametersFrame = null,
@@ -807,34 +811,27 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null) {
 
             
-
-
             var cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
-            var header = new ContainerHeader() {
-                Index = (int)FrameCount++,
-                ContentInfo = contentInfo
-                };
-            header.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
-
-            PrepareFrame(contextWrite);
-
-            var envelope = new DareEnvelope() { Header = header };
+            
+            var header = contextWrite.ContainerHeader;
 
             if (data != null) {
-                using (var buffer = new MemoryStream(data.Length +32)) {
-                    var bodyWrite = header.BodyWriter(buffer);
-                    bodyWrite.Write(data);
-                    header.CloseBodyWriter(out var trailer);
-                    MakeTrailer(ref trailer);
-
-                    envelope.Body = buffer.ToArray();
-                    envelope.Trailer = trailer;
+                using (var buffer = new MemoryStream(data.Length + 32)) {
+                    var stream = contextWrite.StreamOpen(buffer, contentInfo, cryptoStack, cloaked, dataSequences);
+                    stream.Write(data);
+                    contextWrite.StreamClose();
+                    return contextWrite.End(buffer.ToArray());
 
                     }
                 }
+            else {
 
-            return envelope;
+                // still need a sodding trailer here for a null digest.
+
+                return contextWrite.End(null);
+                }
+            
             }
 
 
@@ -854,13 +851,13 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Prepare the header information to write an envelope to a container.
         /// </summary>
-        public virtual void PrepareFrame(ContextWrite contextWrite) {
+        public virtual void PrepareFrame(ContainerWriter contextWrite) {
             }
 
         /// <summary>
         /// Validate a frame to be added to the container.
         /// </summary>
-        public virtual void ValidateFrame(ContextWrite contextWrite) {
+        public virtual void ValidateFrame(ContainerWriter contextWrite) {
             }
 
 
@@ -868,7 +865,7 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public virtual void CommitHeader(ContainerHeader ContainerHeader, ContextWrite contextWrite) {
+        public virtual void CommitHeader(ContainerHeader ContainerHeader, ContainerWriter contextWrite) {
             }
 
 
@@ -916,12 +913,12 @@ namespace Goedel.Cryptography.Dare {
             return JBCDStream.EOF;
             }
 
-        /// <summary>
-        /// Begin reading record data. This method is called before ReadData
-        /// to move the read pointer to the start of the payload data.
-        /// </summary>
-        /// <returns></returns>
-        public abstract long ReadDataBegin();
+        ///// <summary>
+        ///// Begin reading record data. This method is called before ReadData
+        ///// to move the read pointer to the start of the payload data.
+        ///// </summary>
+        ///// <returns></returns>
+        //public abstract long ReadDataBegin();
 
         /// <summary>
         /// Read the next frame in the file.
@@ -1002,18 +999,6 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The container data.</returns>
         public DareEnvelope ReadDirect() => JBCDStream.ReadDareEnvelope();
 
-        /// <summary>
-        /// Write the remaining unread frame data to the specified output file.
-        /// </summary>
-        /// <param name="fileName">The file to write.</param>
-        public void WriteFrameToFile2(string fileName) {
-
-            using (var containerDataReader = GetFrameDataReader()) {
-                using (var outputStream = fileName.OpenFileWrite()) {
-                    containerDataReader.CopyTo(outputStream);
-                    }
-                }
-            }
 
 
         #endregion
@@ -1021,35 +1006,5 @@ namespace Goedel.Cryptography.Dare {
         }
 
 
-    public class ContextWrite {
-        public ContainerHeader ContainerHeader;
-        public virtual long FrameStart => throw new NYI();
-        public virtual void CommitFrame(Container container) {
-            }
-        }
 
-
-    public class ContextWriteFile: ContextWrite {
-
-        public override long FrameStart => frameStart;
-        long frameStart;
-
-        public ContextWriteFile(ContainerHeader containerHeader, JBCDStream JBCDStream) {
-            frameStart = JBCDStream.PositionWrite;
-            base.ContainerHeader = containerHeader;
-            }
-
-        public override void CommitFrame(Container container) {
-            container.CommitHeader(ContainerHeader, this);
-
-            }
-
-        }
-
-    public class ContextWriteDeferred: ContextWrite {
-        // set up at the start of the transaction and allow multiple 'cached writes'
-
-        public ContextWriteDeferred(Container container) {
-            }
-        }
     }

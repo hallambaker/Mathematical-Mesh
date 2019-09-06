@@ -99,12 +99,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Prepare the data to be incorporated into the header.
         /// </summary>
-        public override void PrepareFrame(ContextWrite contextWrite) { }
+        public override void PrepareFrame(ContainerWriter contextWrite) { }
 
         /// <summary>
         /// Commit the header data to the container.
         /// </summary>
-        public override void CommitHeader(ContainerHeader ContainerHeader, ContextWrite contextWrite) =>
+        public override void CommitHeader(ContainerHeader ContainerHeader, ContainerWriter contextWrite) =>
             FrameIndexToPositionDictionary.Add(ContainerHeader.Index,
                     contextWrite.FrameStart);
 
@@ -144,28 +144,27 @@ namespace Goedel.Cryptography.Dare {
         long PayloadData;
 
         #region // Container navigation
-        /// <summary>
-        /// Obtain a reader stream for the current frame data.
-        /// </summary>
-        /// <returns>The reader stream created.</returns>
-        public override ContainerFrameReader GetFrameDataReader(
-                long Index = -1, long Position = -1) {
+        ///// <summary>
+        ///// Obtain a reader stream for the current frame data.
+        ///// </summary>
+        ///// <returns>The reader stream created.</returns>
+        //public override ContainerFrameReader GetFrameDataReader(
+        //        long Index = -1, long Position = -1) {
 
-            if (Position < 0 & Index >= 0) {
-                MoveToIndex(Index);
-                Position = PositionRead;
-                }
+        //    if (Position < 0 & Index >= 0) {
+        //        MoveToIndex(Index);
+        //        Position = PositionRead;
+        //        }
 
-            return new ContainerFrameReader(JBCDStream, KeyCollection, Position);
-            }
+        //    return new ContainerFrameReader(JBCDStream, KeyCollection, Position);
+        //    }
 
         public override ContainerFrameIndex GetContainerFrameIndex(long Index = -1, long Position = -1) {
-
             if (Position < 0 & Index >= 0) {
                 MoveToIndex(Index);
                 Position = PositionRead;
                 }
-            return new ContainerFrameIndex(JBCDStream);
+            return new ContainerFrameIndex(JBCDStream, KeyCollection, Position: Position);
 
 
             }
@@ -184,15 +183,15 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>True if a next frame exists, otherwise false</returns>
         public override bool PreviousFrame() => JBCDStream.FramerPrevious();
 
-        /// <summary>
-        /// Begin reading record data. This method is called before ReadData
-        /// to move the read pointer to the start of the payload data.
-        /// </summary>
-        /// <returns></returns>
-        public override long ReadDataBegin() {
-            PayloadData = JBCDStream.ReadRecordBegin(ref FrameRemaining);
-            return PayloadData;
-            }
+        ///// <summary>
+        ///// Begin reading record data. This method is called before ReadData
+        ///// to move the read pointer to the start of the payload data.
+        ///// </summary>
+        ///// <returns></returns>
+        //public override long ReadDataBegin() {
+        //    PayloadData = JBCDStream.ReadRecordBegin(ref FrameRemaining);
+        //    return PayloadData;
+        //    }
 
 
         /// <summary>

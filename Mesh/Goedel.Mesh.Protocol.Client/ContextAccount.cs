@@ -222,7 +222,9 @@ namespace Goedel.Mesh.Client {
                 var envelopes = new List<DareEnvelope>();
                 var containerUpdate = new ContainerUpdate() {
                     Container = syncStatus.Store.ContainerName,
-                    Envelopes = envelopes
+                    Envelopes = envelopes,
+                    Digest = container.Digest
+                    // put the digest value here
                     };
 
                 var start = 1 + syncStatus.Index;
@@ -361,9 +363,9 @@ namespace Goedel.Mesh.Client {
             Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
             var store = MakeStore(name);
-            if (store is Catalog catalog) {
-                catalog.TransactDelegate = Transact;
-                }
+            //if (store is Catalog catalog) {
+            //    catalog.TransactDelegate = Transact;
+            //    }
 
             syncStore = new SyncStatus(store);
 

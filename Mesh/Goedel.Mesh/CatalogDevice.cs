@@ -67,6 +67,15 @@ namespace Goedel.Mesh {
 
         public CatalogedDevice Get(string key) => Locate(key) as CatalogedDevice;
 
+
+        public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+            Console.WriteLine("  Device transaction!");
+
+            return base.Transact(catalog, updates);
+            
+            }
+
+
         }
 
     public partial class CatalogedDevice{

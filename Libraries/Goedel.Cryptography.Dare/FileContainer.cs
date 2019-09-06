@@ -335,16 +335,12 @@ namespace Goedel.Cryptography.Dare {
                 out ContentInfo ContentMeta) {
 
             using (var Reader = new FileContainerReader(FileName, KeyCollection)) {
-                using (var ContainerDataReader = Reader.Container.GetFrameDataReader(
-                            position:Reader.Container.PositionFinalFrameStart)) {
-                    Data = ContainerDataReader.ToArray();
-                    ContentMeta = ContainerDataReader?.Header.ContentInfo;
-                    }
+                var ContainerDataReader = Reader.Container.GetContainerFrameIndex(
+                            position: Reader.Container.PositionFinalFrameStart);
+                Data = ContainerDataReader.Payload;
+                ContentMeta = ContainerDataReader?.Header.ContentInfo;
                 }
-
             }
-
-
 
 
         /// <summary>
@@ -378,9 +374,8 @@ namespace Goedel.Cryptography.Dare {
                 int Index = -1,
                 string Path = null) {
 
-
-            var ContainerDataReader = Container.GetFrameDataReader(Index);
-            Data = ContainerDataReader.ToArray();
+            var ContainerDataReader = Container.GetContainerFrameIndex(Index);
+            Data = ContainerDataReader.Payload;
             ContentMeta = ContainerDataReader?.Header.ContentInfo;
 
 
@@ -397,10 +392,7 @@ namespace Goedel.Cryptography.Dare {
                 string OutputFile = null,
                 int Index = -1,
                 string Path = null) {
-            //SetPosition(Index, Path);
-            //Container.WriteFrameToFile(OutputFile);
-
-            var ContainerDataReader = Container.GetFrameDataReader(Index);
+            var ContainerDataReader = Container.GetContainerFrameIndex(Index);
             ContainerDataReader.CopyToFile(OutputFile);
             }
 

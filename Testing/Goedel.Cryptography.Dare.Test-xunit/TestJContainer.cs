@@ -275,8 +275,8 @@ namespace Goedel.XUnit {
                 // Check in forward direction
                 using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters)) {
-                    for (Record = MoveStep; Record < Records; Record+= MoveStep) {
-                        var ContainerDataReader = XContainer.GetFrameDataReader(Record);
+                    for (Record = MoveStep; Record < Records; Record += MoveStep) {
+                        var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
                         Utilities.Assert.True(ContainerDataReader.Header.Index == Record);
                         }
 
@@ -286,7 +286,7 @@ namespace Goedel.XUnit {
                 using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
-                        var ContainerDataReader = XContainer.GetFrameDataReader(Record);
+                        var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
                         Utilities.Assert.True(ContainerDataReader.Header.Index == Record);
                         }
                     }

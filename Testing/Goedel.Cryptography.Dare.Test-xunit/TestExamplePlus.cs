@@ -12,6 +12,15 @@ namespace Goedel.XUnit {
     /// </summary>
     public partial class TestItem {
 
+        ///<summary>Initialization property. Access this property to force initialization 
+        ///of the static method.</summary>
+        public static object Initialize => null;
+
+        static TestItem() => AddDictionary(ref _TagDictionary);
+
+
+
+
         /// <summary>
         /// Primary key to use for the object. Note that a primary key MUST be unique. 
         /// </summary>
@@ -65,9 +74,10 @@ namespace Goedel.XUnit {
                     string Comment = null, 
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain) : base(
-                        FileName, Type, Comment, FileStatus, ContainerType) => IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
+                        FileName, Type, Comment, FileStatus, ContainerType) => 
+                        IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
-        TestItem Get(IPersistenceEntry DataItem) => TestItem.FromJSON(DataItem.JSONReader, true);
+        TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
 
 
         /// <summary>

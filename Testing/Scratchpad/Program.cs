@@ -12,16 +12,32 @@ namespace Scratchpad {
 
             Cryptography.Initialize();
 
+            var _ = Goedel.Mesh.Client.ConnectionItem.Initialize;
+            _ = Goedel.Mesh.MeshProtocol.Initialize;
+            _ = Goedel.Mesh.MeshItem.Initialize;
+            _ = Goedel.Mesh.Server.CatalogItem.Initialize;
+            _ = Goedel.XUnit.TestItem.Initialize;
 
+            //TestContainers.Test().ContainerTest1();
 
             TestPersist.Test().TestPersistenceStoreAll();
 
+            //ShellTests.Test().TestFilePlain();
 
-            //TestService.Test().MeshNewContext();
-            //TestService.Test().MeshConnectBase();            
+            //TestService.Test().MeshCatalogAccount();
 
 
-            //ShellTests.Test().TestProfileConnectAuthAll();
+            //ShellTests.Test().TestAccount();
+
+
+
+
+
+
+
+
+
+
             //ShellTests.Test().TestProfileConnectEARL();
 
             // Catalog 

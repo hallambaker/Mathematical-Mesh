@@ -545,44 +545,44 @@ namespace Goedel.Cryptography.Dare {
         #region // Methods that are used by JBCDRecordDataReader
 
 
-        long FrameDataPosition; // Start of the current record.
-        long RecordDataRemaining;
+        //long FrameDataPosition; // Start of the current record.
+        //long RecordDataRemaining;
 
-        /// <summary>
-        /// Begin reading a record frame.
-        /// </summary>
-        /// <param name="MaxLength"></param>
-        /// <returns></returns>
-        public long ReadRecordBegin(ref long MaxLength) {
-            StreamRead.Seek(FrameDataPosition, System.IO.SeekOrigin.Begin);
+        ///// <summary>
+        ///// Begin reading a record frame.
+        ///// </summary>
+        ///// <param name="MaxLength"></param>
+        ///// <returns></returns>
+        //public long ReadRecordBegin(ref long MaxLength) {
+        //    StreamRead.Seek(FrameDataPosition, System.IO.SeekOrigin.Begin);
 
-            var Success = ReadTag(out var Code, out var Length);
-            if (!Success) {
-                return -1;
-                }
-            MaxLength -= CodeSpace(Code);
-            Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
-            RecordDataRemaining = Length;
-            MaxLength -= Length;
+        //    var Success = ReadTag(out var Code, out var Length);
+        //    if (!Success) {
+        //        return -1;
+        //        }
+        //    MaxLength -= CodeSpace(Code);
+        //    Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
+        //    RecordDataRemaining = Length;
+        //    MaxLength -= Length;
 
-            return Length;
-            }
+        //    return Length;
+        //    }
 
 
-        /// <summary>
-        /// Read record data.
-        /// </summary>
-        /// <param name="Buffer">Buffer to store record data.</param>
-        /// <param name="Offset">Index to begin storing data.</param>
-        /// <param name="Length">Maximum number of bytes to read. This will 
-        /// be reduced if necessary to the remaining record to be read.</param>
-        /// <returns>The number of bytes read.</returns>
-        public int ReadRecordData(byte[] Buffer, int Offset = 0, int Length = -1) {
-            Length = Length < 0 ? Buffer.Length - Offset : Length;
-            Length = (Length > RecordDataRemaining) ? (int)RecordDataRemaining : Length;
-            RecordDataRemaining -= Length;
-            return Read(Buffer, Offset, Length);
-            }
+        ///// <summary>
+        ///// Read record data.
+        ///// </summary>
+        ///// <param name="Buffer">Buffer to store record data.</param>
+        ///// <param name="Offset">Index to begin storing data.</param>
+        ///// <param name="Length">Maximum number of bytes to read. This will 
+        ///// be reduced if necessary to the remaining record to be read.</param>
+        ///// <returns>The number of bytes read.</returns>
+        //public int ReadRecordData(byte[] Buffer, int Offset = 0, int Length = -1) {
+        //    Length = Length < 0 ? Buffer.Length - Offset : Length;
+        //    Length = (Length > RecordDataRemaining) ? (int)RecordDataRemaining : Length;
+        //    RecordDataRemaining -= Length;
+        //    return Read(Buffer, Offset, Length);
+        //    }
 
 
 
@@ -615,19 +615,23 @@ namespace Goedel.Cryptography.Dare {
         /// in which case the next frame in the stream will be read.</param>
         /// <returns>The length of the frame if it could be read, otherwise -1.</returns>
         public long FramerOpen(long Position = -1) {
+
             FramerFrameStart = Position < 0 ? FramerFrameStart : Position;
+
             StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
             var Success = ReadTag(out FramerCode, out FramerFrameLength);
             FramerFrameEnd = StreamRead.Position + FramerFrameLength;
             FramerRecordNext = StreamRead.Position;
             return FramerFrameLength;
+
+
             }
 
 
         bool FramerOpenRecord() {
             FramerRecordStart = FramerRecordNext;
 
-            FrameDataPosition = FramerRecordStart; // just in case, legacy.
+            //FrameDataPosition = FramerRecordStart; // just in case, legacy.
 
             if (FramerRecordStart >= FramerFrameEnd) {
                 return false;
@@ -662,9 +666,9 @@ namespace Goedel.Cryptography.Dare {
                 }
             Assert.True(Length == 0, DataRecordTruncated.Throw);
 
-
             return Result;
             }
+
 
         /// <summary>
         /// Read the next frame and return the starting and ending frame markers.
@@ -672,39 +676,23 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataPosition"></param>
         /// <param name="DataLength"></param>
         public bool FramerGetFrameIndex(out long DataPosition, out long DataLength) {
-            FramerRecordStart = FramerRecordNext;
-            if (FramerRecordStart >= FramerFrameEnd) {
-                DataPosition = FramerRecordStart;
-                DataLength = 0;
-                return false;
-                }
-            StreamRead.Seek(FramerRecordStart, SeekOrigin.Begin);
-            var Success = ReadTag(out var Code, out DataLength);
-            if (!Success) {
+            if (!FramerOpenRecord()) {
                 DataPosition = FramerRecordStart;
                 DataLength = 0;
                 return false;
                 }
 
-            DataPosition = PositionRead;
+            DataPosition = FramerRecordData;
+            DataLength = FramerRecordLength;
+
+            PositionRead = FramerRecordNext;
+
             return true;
 
             }
 
-
         public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
             new StreamReaderBounded(StreamRead, DataPosition, DataLength);
-
-        /// <summary>
-        /// Get a record reader for the next frame record.
-        /// </summary>
-        /// <returns>The record data reader</returns>
-        public StreamReaderBounded FramerGetReader() {
-            if (!FramerOpenRecord()) {
-                return null;
-                }
-            return new StreamReaderBounded(StreamRead, FramerRecordData, FramerRecordLength);
-            }
 
         /// <summary>
         /// Skip all remaining records in the frame and move to the next record.
@@ -777,7 +765,7 @@ namespace Goedel.Cryptography.Dare {
                 ReadRecord(ref Length, out FrameHeader);
                 }
             if (Length > 0) {
-                FrameDataPosition = StreamRead.Position;
+                //FrameDataPosition = StreamRead.Position;
                 StreamRead.Seek(Length, System.IO.SeekOrigin.Current);
                 }
             if ((Code & TypeMask) == BFrame) {

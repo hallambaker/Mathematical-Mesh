@@ -10,6 +10,20 @@ using Goedel.Test.Core;
 
 namespace Goedel.XUnit {
     public partial class TestPersist {
+
+
+
+        ///<summary>Initialization property. Access this property to force initialization 
+        ///of the static method.</summary>
+        public static object Initialize => null;
+
+        static TestPersist() {
+            Cryptography.Cryptography.Initialize();
+            _ = Goedel.XUnit.TestItem.Initialize;
+            }
+        
+
+
         public TestPersist() => TestEnvironmentCommon.Initialize(true);
         public static TestPersist Test() => new TestPersist();
 
@@ -54,7 +68,13 @@ namespace Goedel.XUnit {
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
                 // retrieve by master key -fail
                 Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+                (TestStore.Container.FrameCount == 1).AssertTrue();
+
+
                 TestStore.New(AccountAlice);
+
+                (TestStore.Container.FrameCount == 2).AssertTrue();
+
 
                 Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
                 Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));

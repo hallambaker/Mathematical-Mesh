@@ -53,7 +53,7 @@ namespace Goedel.Cryptography.Dare {
         /// Append the header to the frame. This is called after the payload data
         /// has been passed using AppendPreprocess.
         /// </summary>
-        public override void PrepareFrame(ContextWrite contextWrite) {
+        public override void PrepareFrame(ContainerWriter contextWrite) {
 
             var containerHeader = contextWrite.ContainerHeader;
             if (containerHeader.Index > 0) {
@@ -156,6 +156,12 @@ namespace Goedel.Cryptography.Dare {
             //Obtain the position of the very last record in the file, this must be known.
             var Record = FrameCount-1;
             Assert.True(FrameIndexToPositionDictionary.TryGetValue(Record, out Position));
+               // Bug: this is failing because the position dictionary is not being updated.
+               // check that commit frame is being properly called on deferred writes.
+               // Also check every operation on the device catalog
+
+               // ContainerHeader is not being properly updated.
+               // Also check on the calculation of the trailer.
 
             long NextRecord;
             bool Found = true;

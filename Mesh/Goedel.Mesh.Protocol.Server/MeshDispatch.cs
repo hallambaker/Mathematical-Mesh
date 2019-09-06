@@ -123,7 +123,8 @@ namespace Goedel.Mesh.Server {
                     Encodings = new List<Goedel.Protocol.Encoding>(),
                     },
                 EnvelopedProfileService = Provider.ProfileService.DareEnvelope,
-                EnvelopedProfileHost = Provider.ProfileHost.DareEnvelope
+                EnvelopedProfileHost = Provider.ProfileHost.DareEnvelope,
+                Status = 201 // Must specify this explicitly since not derrived from MeshResponse.
                 };
 
             var Encoding = new Goedel.Protocol.Encoding() {
