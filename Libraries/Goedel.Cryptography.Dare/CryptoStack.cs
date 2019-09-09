@@ -172,13 +172,13 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-    /// <summary>
-    /// Add a recipient.
-    /// </summary>
-    /// <param name="MasterKey"></param>
-    /// <param name="EncryptionKey"></param>
-    public virtual void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) => 
-            Recipients.Add(new DareRecipient(MasterSecret, EncryptionKey));
+        /// <summary>
+        /// Add a recipient.
+        /// </summary>
+        /// <param name="MasterKey"></param>
+        /// <param name="EncryptionKey"></param>
+        public virtual void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) =>
+                Recipients.Add(new DareRecipient(MasterSecret, EncryptionKey));
 
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Signatures">The message signatures.</param>
         /// <param name="KeyCollection">The key collection to be used to resolve private keys.</param>
         public CryptoStack(
-                CryptoAlgorithmID EncryptID=CryptoAlgorithmID.NULL,
+                CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
                 CryptoAlgorithmID Digest = CryptoAlgorithmID.NULL,
                 List<DareRecipient> Recipients = null,
                 List<DareSignature> Signatures = null,
@@ -249,7 +249,7 @@ namespace Goedel.Cryptography.Dare {
             var ThisSalt = ExtraSalt == null ? Salt : ExtraSalt.Concatenate(Salt);
 
 
-            CalculateParameters (ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
+            CalculateParameters(ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
 
             //CalculateParameters(KeySize, BlockSize,
             //    MasterSecret, ThisSalt, out var KeyEncrypt, out var KeyMac, out var IV);
@@ -285,7 +285,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             //WitnessValue
 
-            var KDF = EncryptID == CryptoAlgorithmID.NULL ? null : 
+            var KDF = EncryptID == CryptoAlgorithmID.NULL ? null :
                 new KeyDeriveHKDF(MasterSecret, Salt, CryptoAlgorithmID.HMAC_SHA_2_256);
 
             if (SignerKeys != null) {
@@ -351,7 +351,7 @@ namespace Goedel.Cryptography.Dare {
             using (var Input = new MemoryStream(Data)) {
                 using (var Output = new MemoryStream()) {
                     //var JSONBWriter = new JSONBWriter(Output);
-                    var EncoderData = GetEncoder(Output, PackagingFormat.EDS, 
+                    var EncoderData = GetEncoder(Output, PackagingFormat.EDS,
                                 Data.LongLength, ExtraSalt);
                     Input.CopyTo(EncoderData.Writer);
                     EncoderData.Close();
@@ -372,11 +372,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The encoded data.</returns>
         public byte[] Encode(
-                    byte[] Data, 
+                    byte[] Data,
                     out DareTrailer DARETrailer
                     ) {
             Data = Data ?? NullArray;
-            using (var Input = new MemoryStream(Data )) {
+            using (var Input = new MemoryStream(Data)) {
                 using (var Output = new MemoryStream()) {
                     //var JSONBWriter = new JSONBWriter(Output);
                     var EncoderData = GetEncoder(Output, PackagingFormat.Direct, Data.LongLength, null);
@@ -529,6 +529,10 @@ namespace Goedel.Cryptography.Dare {
             }
         CryptoProviderDigest _DigestProvider;
 
+        //byte[] NullDigest => DigestProvider.NullDigest;
+        public DareTrailer GetNullTrailer() => new DareTrailer() {
+            PayloadDigest = DigestProvider.NullDigest
+            };
 
         /// <summary>
         /// Calculate the length of the trailer.

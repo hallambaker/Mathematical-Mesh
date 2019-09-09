@@ -89,7 +89,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public override void MakeTrailer(ref DareTrailer Trailer) {
-            //var PreviousHeader = FinalContainerHeader ?? ContainerHeaderFirst;
+            Trailer = Trailer ?? CryptoStackContainer.GetNullTrailer();
+
             if (FinalContainerHeader!=null) {
                 Trailer.ChainDigest = CryptoStackContainer.CombineDigest(FinalContainerHeader.ChainDigest, Trailer.PayloadDigest);
                 }

@@ -25,6 +25,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -50,6 +51,12 @@ namespace Goedel.Cryptography {
     /// Base class for cryptographic digest providers.
     /// </summary>
     public abstract class CryptoProviderDigest : CryptoProviderBulk {
+
+        readonly byte[] emptyByteArray = new byte[0];
+
+        public byte[] NullDigest => nullDigest ?? ProcessData(emptyByteArray, emptyByteArray).CacheValue(out nullDigest);
+        byte[] nullDigest;
+
         /// <summary>
         /// Processes the specified byte array
         /// </summary>

@@ -72,7 +72,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void MeshNewContext() {
+        public void MeshServiceFull() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 

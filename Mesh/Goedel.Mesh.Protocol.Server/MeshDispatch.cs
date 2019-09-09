@@ -57,7 +57,7 @@ namespace Goedel.Mesh.Server {
 
             MeshMachine = new MeshMachineCoreServer(serviceDirectory);
 
-            Mesh = new MeshPersist(serviceDirectory);
+            Mesh = new MeshPersist(this, serviceDirectory);
 
             // Dummy profiles for the service and host at this point
             ProfileService = ProfileService.Generate(MeshMachine);

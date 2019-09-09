@@ -24,6 +24,8 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class MeshPersist {
 
+        protected PublicMeshServiceProvider Provider;
+
         ///<summary>The underlying persistence store for the account catalog.</summary>
         public ContainerPersistenceStore Container;
 
@@ -41,7 +43,10 @@ namespace Goedel.Mesh.Server {
         /// Open or create the accounts persistence container.
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
-        public MeshPersist(string directory) {
+        public MeshPersist(PublicMeshServiceProvider provider, string directory) {
+
+            Provider = provider;
+
             // Load/create the accounts catalog
             DirectoryRoot = directory;
             Directory.CreateDirectory(directory);
@@ -107,6 +112,8 @@ namespace Goedel.Mesh.Server {
                     Witness = witness,
                     MessageID = UDF.Nonce ()
                     };
+
+                // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
                 var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());
                 accountHandle.Post(message);

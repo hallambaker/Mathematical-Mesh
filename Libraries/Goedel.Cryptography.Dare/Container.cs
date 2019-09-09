@@ -606,7 +606,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="envelope"></param>
         public void Append(DareEnvelope envelope) {
-            var header = envelope.Header as ContainerHeader;
+            var header = envelope.Header as ContainerHeader; // fails ! need to copy over !!
             var contextWrite = new ContainerWriterFile(this, header, JBCDStream);
 
             contextWrite.CommitFrame(envelope.Trailer);
@@ -814,11 +814,11 @@ namespace Goedel.Cryptography.Dare {
             var cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
             
-            var header = contextWrite.ContainerHeader;
+            contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
 
             if (data != null) {
                 using (var buffer = new MemoryStream(data.Length + 32)) {
-                    var stream = contextWrite.StreamOpen(buffer, contentInfo, cryptoStack, cloaked, dataSequences);
+                    var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
                     stream.Write(data);
                     contextWrite.StreamClose();
                     return contextWrite.End(buffer.ToArray());
@@ -826,8 +826,6 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
             else {
-
-                // still need a sodding trailer here for a null digest.
 
                 return contextWrite.End(null);
                 }

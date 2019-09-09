@@ -62,8 +62,7 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        public Stream StreamOpen(
-                    Stream output,
+        public void StreamOpen(
                     ContentInfo contentInfo,
                     CryptoStack cryptoStack,
                     byte[] cloaked = null,
@@ -82,7 +81,7 @@ namespace Goedel.Cryptography.Dare {
 
             DareTrailer = null;
 
-            return ContainerHeader.BodyWriter(output);
+            return;
             }
 
         public void StreamClose() {
