@@ -131,7 +131,7 @@ namespace ExampleGenerator {
 		// DumpHeader
 		//
 		public void DumpHeader (ContainerFrame Frame) {
-			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.Index);
+			_Output.Write ("Frame {1}\n{0}", _Indent, Frame.Header.ContainerInfo.Index);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("{1}\n{0}", _Indent, Frame.Header);

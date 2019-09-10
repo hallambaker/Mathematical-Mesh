@@ -66,8 +66,8 @@ namespace Goedel.Cryptography.Dare {
                 return false;
                 }
 
-            var header = Current.Header as ContainerHeader;
-            return header.Index >= LowIndex;
+            var header = Current.Header;
+            return header.ContainerInfo.Index >= LowIndex;
             }
 
         /// <summary>

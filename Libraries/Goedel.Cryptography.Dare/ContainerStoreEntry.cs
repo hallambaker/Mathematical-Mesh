@@ -24,7 +24,7 @@ namespace Goedel.Cryptography.Dare {
         //public DareEnvelope DareEnvelope;
 
         ///<summary>The envelope header</summary>
-        public ContainerHeader ContainerHeader; //=> DareEnvelope.Header as ContainerHeader;
+        public DareHeader ContainerHeader; //=> DareEnvelope.Header as ContainerHeader;
 
         //public ContentInfo ContentInfo => DareHeader.ContentInfo;
 
@@ -36,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
         public string UniqueID => ContentInfo?.UniqueID;
 
         ///<summary>The container frame</summary>
-        public long FrameCount => ContainerHeader.Index;
+        public long FrameCount => ContainerHeader.ContainerInfo.Index;
 
         ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 
@@ -92,7 +92,7 @@ namespace Goedel.Cryptography.Dare {
             Container = container;
             jsonObject = item;
 
-            ContainerHeader = dareEnvelope.Header as ContainerHeader;
+            ContainerHeader = dareEnvelope.Header as DareHeader;
             //DareEnvelope = dareEnvelope;
 
             Previous = previous;

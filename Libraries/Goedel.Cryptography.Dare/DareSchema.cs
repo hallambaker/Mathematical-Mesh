@@ -481,6 +481,17 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<DareRecipient>				Recipients  {get; set;}
+        /// <summary>
+        ///Information that describes container information
+        /// </summary>
+
+		public virtual ContainerInfo						ContainerInfo  {get; set;}
+        /// <summary>
+        ///An index of records in the current container up to but not including
+        ///this one.
+        /// </summary>
+
+		public virtual ContainerIndex						ContainerIndex  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -601,6 +612,16 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (ContainerInfo != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContainerInfo", 1);
+					ContainerInfo.Serialize (_Writer, false);
+				}
+			if (ContainerIndex != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContainerIndex", 1);
+					ContainerIndex.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -695,6 +716,20 @@ namespace Goedel.Cryptography.Dare {
 						Recipients.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "ContainerInfo" : {
+					// An untagged structure
+					ContainerInfo = new ContainerInfo ();
+					ContainerInfo.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "ContainerIndex" : {
+					// An untagged structure
+					ContainerIndex = new ContainerIndex ();
+					ContainerIndex.Deserialize (JSONReader);
+ 
 					break;
 					}
 				default : {

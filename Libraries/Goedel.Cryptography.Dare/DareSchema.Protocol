@@ -134,6 +134,16 @@
 			Description
 				|A list of recipient key exchange information blocks.
 
+		Struct ContainerInfo ContainerInfo
+			Description
+				|Information that describes container information
+
+		Struct ContainerIndex ContainerIndex
+			Description
+				|An index of records in the current container up to but not including
+				|this one.
+
+
 
 	Structure ContentInfo
 		String UniqueID

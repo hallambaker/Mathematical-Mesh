@@ -860,9 +860,9 @@ namespace Goedel.Cryptography.Dare {
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public ContainerHeader ReadFrameHeader () {
+        public DareHeader ReadFrameHeader () {
             ReadFrame(out var HeaderData);
-            return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
             }
 
 
@@ -870,24 +870,24 @@ namespace Goedel.Cryptography.Dare {
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public ContainerHeader ReadFirstFrameHeader () {
+        public DareHeader ReadFirstFrameHeader () {
             Begin();
             ReadFrame(out var HeaderData);
-            return ContainerHeaderFirst.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
             }
 
         /// <summary>
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public ContainerHeader ReadLastFrameHeader () {
+        public DareHeader ReadLastFrameHeader () {
             End();
             ReadFrameReverse(out var HeaderData);
             End();
 
             var HeaderText = HeaderData.ToUTF8();
 
-            return ContainerHeader.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
             }
 
         /// <summary>
@@ -901,7 +901,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             var message = new DareEnvelope() { Body = FrameData };
             if (headerData != null) {
-                message.Header = ContainerHeaderFirst.FromJSON(headerData.JSONReader(), false);
+                message.Header = DareHeader.FromJSON(headerData.JSONReader(), false);
                 }
             if (trailerData != null) {
                 //JSONReader.Trace = true;

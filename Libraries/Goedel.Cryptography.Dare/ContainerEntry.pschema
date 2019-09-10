@@ -15,25 +15,20 @@
 		Description
 			|TBS stuff
 
-	Structure ContainerEntry
-		Inherits ContainerHeader
-		Binary Body
-			Description
-				|The container data.
+	//Structure ContainerEntry
+	//	Inherits ContainerHeader
+	//	Binary Body
+	//		Description
+	//			|The container data.
 
-	Structure ContainerHeaderFirst
-		Inherits ContainerHeader
+	Structure ContainerInfo
 		String DataEncoding
 			Description
 				|Specifies the data encoding for the header section of for the following frames.
 				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
-
-	Structure ContainerHeader
-		Inherits DareHeader
-		
+				
 		Description
-			|Describes a container header. A container header MAY contain any 
-			|DARE Message header.
+			|Information that describes container information
 
 
 		Integer Index
@@ -74,10 +69,7 @@
 				|Specifies the position in the file at which the key exchange data is
 				|to be found
 
-		Struct ContainerIndex ContainerIndex
-			Description
-				|An index of records in the current container up to but not including
-				|this one.
+
 
 
 	Section 2 "Index Structures"

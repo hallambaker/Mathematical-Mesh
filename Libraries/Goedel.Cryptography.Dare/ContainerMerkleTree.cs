@@ -34,18 +34,22 @@ namespace Goedel.Cryptography.Dare {
         public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
-            var ContainerHeader = new ContainerHeaderFirst() {
+            var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0
                 };
 
-            var Container = new ContainerMerkleTree() {
-                JBCDStream = JBCDStream,
-                ContainerHeaderFirst = ContainerHeader
+
+            var containerHeader = new DareHeader() {
+                ContainerInfo = containerInfo
                 };
 
+            var container = new ContainerMerkleTree() {
+                JBCDStream = JBCDStream,
+                ContainerHeaderFirst = containerHeader
+                };
 
-            return Container;
+            return container;
             }
 
         /// <summary>
@@ -65,12 +69,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Register a frame in the container access dictionaries.
         /// </summary>
-        /// <param name="Header">Frame header</param>
+        /// <param name="ContainerInfo">Frame header</param>
         /// <param name="Position">Position of the frame</param>
-        protected override void RegisterFrame (ContainerHeader Header, long Position) {
-            var Index = Header.Index;
+        protected override void RegisterFrame (ContainerInfo ContainerInfo, long Position) {
+            var Index = ContainerInfo.Index;
             FrameIndexToPositionDictionary.Add(Index, Position);
-            FrameDigestDictionary.Add(Index, Header.TreeDigest);
+            //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
             }
 
         /// <summary>
@@ -160,10 +164,12 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<ContainerHeader> Headers) {
+        public override void CheckContainer (List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
-                Assert.True(Header.Index == Index);
+                Assert.NotNull(Header.ContainerInfo);
+
+                Assert.True(Header.ContainerInfo.Index == Index);
                 Assert.NotNull(Header.PayloadDigest);
 
                 Index++;

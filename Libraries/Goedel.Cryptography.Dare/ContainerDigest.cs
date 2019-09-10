@@ -36,18 +36,25 @@ namespace Goedel.Cryptography.Dare {
         public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
-            var ContainerHeader = new ContainerHeaderFirst {
-                ContainerType = Label
+
+            var containerInfo = new ContainerInfo() {
+                ContainerType = Label,
+                Index = 0
                 };
 
-            var Container = new ContainerDigest() {
+
+            var containerHeader = new DareHeader() {
+                ContainerInfo = containerInfo
+                };
+
+            var container = new ContainerDigest() {
                 JBCDStream = JBCDStream,
-                ContainerHeaderFirst = ContainerHeader
+                ContainerHeaderFirst = containerHeader
                 };
 
             // initialize the Frame index dictionary
 
-            return Container;
+            return container;
 
 
             }
@@ -69,12 +76,14 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<ContainerHeader> Headers) {
+        public override void CheckContainer (List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
-                Assert.True(Header.Index == Index);
+                Assert.NotNull(Header.ContainerInfo);
 
-                if (ContainerHeaderFirst.ContainerType == ContainerList.Label) {
+                Assert.True(Header.ContainerInfo.Index == Index);
+
+                if (ContainerHeaderFirst.ContainerInfo.ContainerType == ContainerList.Label) {
                     Assert.Null(Header.PayloadDigest);
                     }
                 else {

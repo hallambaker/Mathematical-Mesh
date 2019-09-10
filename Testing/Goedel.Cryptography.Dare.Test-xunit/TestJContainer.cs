@@ -243,7 +243,7 @@ namespace Goedel.XUnit {
                     }
                 }
 
-            var Headers = new List<ContainerHeader>();
+            var Headers = new List<DareHeader>();
             using (var XContainer = Container.Open(FileName, FileStatus.Read,
                             cryptoParameters: CryptoParameters,
                             keyCollection: KeyCollection)) {
@@ -277,7 +277,7 @@ namespace Goedel.XUnit {
                             cryptoParameters: CryptoParameters)) {
                     for (Record = MoveStep; Record < Records; Record += MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        Utilities.Assert.True(ContainerDataReader.Header.Index == Record);
+                        Utilities.Assert.True(ContainerDataReader.Header.ContainerInfo.Index == Record);
                         }
 
                     }
@@ -287,7 +287,7 @@ namespace Goedel.XUnit {
                             cryptoParameters: CryptoParameters)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        Utilities.Assert.True(ContainerDataReader.Header.Index == Record);
+                        Utilities.Assert.True(ContainerDataReader.Header.ContainerInfo.Index == Record);
                         }
                     }
                 }

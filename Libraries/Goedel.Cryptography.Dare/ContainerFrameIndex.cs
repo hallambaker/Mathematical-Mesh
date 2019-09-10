@@ -33,7 +33,7 @@ namespace Goedel.Cryptography.Dare {
     public partial class ContainerFrameIndex {
 
         ///<summary>The frame header</summary>
-        public ContainerHeader Header;
+        public DareHeader Header;
 
         ///<summary>The frame trailer</summary>
         public DareTrailer Trailer;
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Dare {
 
             var HeaderBytes = jsonStream.FramerGetData();
             var HeaderText = HeaderBytes.ToUTF8();
-            Header = ContainerHeaderFirst.FromJSON(HeaderBytes.JSONReader(), false);
+            Header = DareHeader.FromJSON(HeaderBytes.JSONReader(), false);
 
             jsonStream.FramerGetFrameIndex(out DataPosition, out DataLength);
 
@@ -170,7 +170,7 @@ namespace Goedel.Cryptography.Dare {
             if (!Header.HasExchangePosition) {
                 return Header.Recipients;
                 }
-            var exchangeHeader = container.GetHeader(Header.ExchangePosition);
+            var exchangeHeader = container.GetHeader(Header.ContainerInfo.ExchangePosition);
 
             if (Header.Recipients == null) {
                 return exchangeHeader.Recipients;

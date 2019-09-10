@@ -47,8 +47,8 @@ namespace Goedel.XUnit {
         /// <summary>
         /// Container header corresponding to persistence store entry
         /// </summary>
-        public ContainerHeader ContainerHeader {
-            get => _Metadata as ContainerHeader; set => _Metadata = value; }
+        public DareHeader ContainerHeader {
+            get => _Metadata as DareHeader; set => _Metadata = value; }
         }
 
 

@@ -34,21 +34,28 @@ namespace Goedel.Cryptography.Dare {
         public static new Container MakeNewContainer(
                         JBCDStream JBCDStream) {
 
-            var ContainerHeader = new ContainerHeaderFirst() {
+
+
+            var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
                 Index = 0
                 };
 
-            var Container = new ContainerChain() {
-                JBCDStream = JBCDStream,
-                ContainerHeaderFirst = ContainerHeader
+
+            var containerHeader = new DareHeader() {
+                ContainerInfo = containerInfo
                 };
 
-            return Container;
+            var container = new ContainerChain() {
+                JBCDStream = JBCDStream,
+                ContainerHeaderFirst = containerHeader
+                };
+
+            return container;
             }
 
         readonly static byte[] EmptyBytes = new byte[0];
-        ContainerHeader FinalContainerHeader = null;
+        //DareHeader DareHeaderFinal = null;
 
         /// <summary>
         /// Initialize the dictionaries used to manage the tree by registering the set
@@ -57,8 +64,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Header">Final frame header</param>
         /// <param name="FirstPosition">Position of frame 1</param>
         /// <param name="PositionLast">Position of the last frame</param>
-        protected override void FillDictionary(ContainerHeader Header, long FirstPosition, long PositionLast) {
-            FinalContainerHeader = Header;
+        protected override void FillDictionary(ContainerInfo Header, long FirstPosition, long PositionLast) {
             base.FillDictionary(Header, FirstPosition, PositionLast);
             }
 
@@ -68,7 +74,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been passed using AppendPreprocess.
         /// </summary>
         public override void PrepareFrame(ContainerWriter contextWrite) {
-            FinalContainerHeader = contextWrite.ContainerHeader;
+            DareHeaderFinal = contextWrite.ContainerHeader;
             base.PrepareFrame(contextWrite);
             }
 
@@ -91,8 +97,8 @@ namespace Goedel.Cryptography.Dare {
         public override void MakeTrailer(ref DareTrailer Trailer) {
             Trailer = Trailer ?? CryptoStackContainer.GetNullTrailer();
 
-            if (FinalContainerHeader!=null) {
-                Trailer.ChainDigest = CryptoStackContainer.CombineDigest(FinalContainerHeader.ChainDigest, Trailer.PayloadDigest);
+            if (DareHeaderFinal!=null) {
+                Trailer.ChainDigest = CryptoStackContainer.CombineDigest(DareHeaderFinal.ChainDigest, Trailer.PayloadDigest);
                 }
             else {
                 Trailer.ChainDigest = CryptoStackContainer.CombineDigest(null, Trailer.PayloadDigest);
@@ -105,10 +111,13 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<ContainerHeader> Headers) {
+        public override void CheckContainer (List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
-                Assert.True(Header.Index == Index);
+                Assert.NotNull(Header.ContainerInfo);
+
+
+                Assert.True(Header.ContainerInfo.Index == Index);
                 Assert.NotNull(Header.PayloadDigest);
                 Index++;
                 }

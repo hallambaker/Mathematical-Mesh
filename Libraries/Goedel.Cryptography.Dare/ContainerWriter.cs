@@ -13,8 +13,8 @@ namespace Goedel.Cryptography.Dare {
     public class ContainerWriter {
         protected Container Container;
 
-        public ContainerHeader ContainerHeader;
-
+        public DareHeader ContainerHeader;
+        public ContainerInfo ContainerInfo => ContainerHeader.ContainerInfo;
 
         public DareTrailer DareTrailer;
 
@@ -30,7 +30,7 @@ namespace Goedel.Cryptography.Dare {
         public override long FrameStart => frameStart;
         long frameStart;
 
-        public ContainerWriterFile(Container container, ContainerHeader containerHeader, JBCDStream JBCDStream) {
+        public ContainerWriterFile(Container container, DareHeader containerHeader, JBCDStream JBCDStream) {
             Container = container;
             frameStart = JBCDStream.PositionWrite;
             ContainerHeader = containerHeader;
@@ -69,10 +69,16 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null
 
             ) {
-            ContainerHeader = new ContainerHeader() {
-                Index = (int)FrameCount++,
+
+            var containerInfo = new ContainerInfo() {
+                Index = (int)FrameCount++
+                };
+
+            ContainerHeader = new DareHeader() {
+                ContainerInfo = containerInfo,
                 ContentInfo = contentInfo
                 };
+
             ContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
 
