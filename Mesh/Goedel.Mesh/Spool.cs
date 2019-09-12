@@ -30,7 +30,16 @@ namespace Goedel.Mesh {
                 }
             }
 
-        public void Add(DareEnvelope dareMessage) => Container.Append(dareMessage);
+        /// <summary>
+        /// Add an envelope to the spool. All information provided in the ContainerInfo
+        /// field is discarded. The trailer, if present must be rewritten for the 
+        /// purposes of the container.
+        /// </summary>
+        /// <param name="dareMessage"></param>
+        public void Add(DareEnvelope dareMessage) =>
+            // NYI: If the message is signed or encrypted, these enhancements should be carried over
+            Container.Append(dareMessage.Body, null, dareMessage.Header.ContentInfo);
+
 
 
         }

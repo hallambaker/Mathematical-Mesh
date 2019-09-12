@@ -273,6 +273,17 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         protected KeyCollection KeyCollection;
 
+
+        public static Container OpenExisting(
+                string fileName,
+                FileStatus fileStatus = FileStatus.Read,
+                KeyCollection keyCollection = null) {
+            var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
+
+            return OpenExisting(jbcdStream, keyCollection);
+            }
+
+
         /// <summary>
         /// Open an existing container according to the information contained in the next frame to be read.
         /// </summary>
@@ -552,6 +563,47 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        public static Container MakeNewContainer(
+                        string fileName,
+                        List<DareEnvelope> envelopes,
+                        FileStatus fileStatus = FileStatus.CreateNew) {
+
+            var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
+
+
+            var container = MakeNewContainer(jbcdStream, envelopes[0].Header);
+            container.Append(envelopes);
+
+            return container;
+            }
+
+
+        public static Container MakeNewContainer(
+                        JBCDStream jbcdStream,
+                        DareHeader header) {
+
+            switch (header.ContainerInfo.ContainerType) {
+                //case ContainerList.Label: {
+                //    return ContainerList.MakeNewContainer(envelope);
+                //    }
+
+                case ContainerMerkleTree.Label: {
+                    return new ContainerMerkleTree() {
+                        JBCDStream = jbcdStream,
+                        ContainerHeaderFirst = header
+                        };
+                    }
+
+                default: {
+                    throw new InvalidContainerTypeException();
+                    }
+                }
+
+            }
+
+
+
+
         #endregion
         #region // Navigation and enumeration methods
 
@@ -620,17 +672,40 @@ namespace Goedel.Cryptography.Dare {
             return length;
             }
 
+        /// <summary>
+        /// Append the envelopes <paramref name="envelopes"/> to the container starting
+        /// with the <paramref name="index"/>th envelope.
+        /// </summary>
+        /// <param name="envelopes">The enveolpes to append</param>
+        /// <param name="index">The starting point at which to begin appending.</param>
+        public void Append(List<DareEnvelope> envelopes, int index=0) {
+
+            for (var i = index; i < envelopes.Count; i++) {
+                Console.WriteLine($"Container Append #{i}  Write:{JBCDStream.PositionWrite} ");
+
+
+                Append(envelopes[i]);
+                }
+            }
+
 
 
         /// <summary>
         /// Write a previously prepared or validated Dare Envelope to the container directly.
         /// </summary>
         /// <param name="envelope"></param>
-        public void Append(DareEnvelope envelope) {
+        public virtual void Append(DareEnvelope envelope) {
             var header = envelope.Header as DareHeader; // fails ! need to copy over !!
+
+            PrepareFrame(header.ContainerInfo);
+
             var contextWrite = new ContainerWriterFile(this, header, JBCDStream);
 
+
+
             contextWrite.CommitFrame(envelope.Trailer);
+
+            Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
 
             //Apply(header, envelope.Body, envelope.Trailer);
             var dataHeader = envelope.Header.GetBytes(false);
@@ -639,6 +714,9 @@ namespace Goedel.Cryptography.Dare {
 
 
             
+            }
+
+        protected virtual void PrepareFrame(ContainerInfo containerInfo) {
             }
 
 

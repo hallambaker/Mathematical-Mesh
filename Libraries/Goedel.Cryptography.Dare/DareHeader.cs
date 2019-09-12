@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public CryptoStack CryptoStack;
 
-
+        public override string ToString() => "{Header}";
 
 
         public ContentInfo ContentInfo;
@@ -68,12 +68,13 @@ namespace Goedel.Cryptography.Dare {
 
 
         public override void PreEncode() {
-            ContentInfoData = ContentInfo?.GetContentInfoData();
-
+            if (ContentInfo != null) {
+                ContentInfoData = ContentInfo.GetContentInfoData();
+                }
             }
         public override void PostDecode() {
             ContentInfo = ContentInfo.GetContentInfo(ContentInfoData);
-
+            // this is only being called by DareEnvelope and not by the recursive deserializer.
             }
 
 
@@ -97,7 +98,7 @@ namespace Goedel.Cryptography.Dare {
                     byte[] Cloaked = null,
                     List<byte[]> DataSequences = null
                     ) {
-            ContentInfoData = contentInfo?.GetContentInfoData();
+            //ContentInfoData = contentInfo?.GetContentInfoData();
             ApplyCryptoStack(CryptoStack, Cloaked, DataSequences);
             }
 

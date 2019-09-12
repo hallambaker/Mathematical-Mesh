@@ -92,6 +92,13 @@ namespace Goedel.Mesh.Server {
             }
 
         public CatalogedDevice GetCatalogEntryDevice(string deviceUDF) {
+            // NYI: pull up the device catalog for the account
+            // Identify the relevant device record
+            // return it.
+
+            using (var container = new CatalogDevice(AccountEntry.Directory, ProfileMesh.UDF)) {
+                return container.Get(deviceUDF);
+                }
 
 
             throw new NYI();
@@ -123,7 +130,10 @@ namespace Goedel.Mesh.Server {
         public Catalog GetCatalog(string Label) =>
             new Catalog(AccountEntry.Directory, Label);
 
-        void PostToCatalog(DareEnvelope dareMessage) => throw new NYI();
+
+        public void StoreAppend(string Label, List<DareEnvelope> envelopes) =>
+            Store.Append(AccountEntry.Directory, envelopes, Label);
+
 
         }
     }

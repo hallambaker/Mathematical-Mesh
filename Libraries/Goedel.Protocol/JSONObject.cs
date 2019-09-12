@@ -271,6 +271,8 @@ namespace Goedel.Protocol {
                     }
                 Going = JSONReader.NextObject();
                 }
+            PostDecode();
+
             // JSONReader.EndObject (); Implicit 
             }
 

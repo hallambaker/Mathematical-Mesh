@@ -166,6 +166,11 @@ namespace Goedel.XUnit {
             // New Device
             var contextAccount2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: PIN.PIN);
+
+            // Admin Device
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
             contextAccount2.Complete();
             }
 

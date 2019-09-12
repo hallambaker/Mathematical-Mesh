@@ -147,6 +147,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             if (sync) {
+                //GetCatalogDevice(); ???? - notsyncing!!!
                 GetCatalogApplication();
                 GetCatalogContact();
                 GetCatalogCredential();

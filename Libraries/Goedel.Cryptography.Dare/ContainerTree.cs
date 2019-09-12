@@ -60,16 +60,25 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override void PrepareFrame(ContainerWriter contextWrite) {
 
-            var containerInfo = contextWrite.ContainerInfo;
+
+            PrepareFrame(contextWrite.ContainerInfo);
+
+            
+            base.PrepareFrame(contextWrite);
+            }
+
+
+        protected override void PrepareFrame(ContainerInfo containerInfo) {
             if (containerInfo.Index > 0) {
                 containerInfo.TreePosition =
                     (int)PreviousFramePosition(containerInfo.Index);
                 }
-
             Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
 
-            base.PrepareFrame(contextWrite);
+
             }
+
+
 
 
         #region // Container navigation

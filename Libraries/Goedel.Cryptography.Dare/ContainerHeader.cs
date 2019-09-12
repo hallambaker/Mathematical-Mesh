@@ -17,27 +17,27 @@ namespace Goedel.Cryptography.Dare {
 
     public partial class DareHeader {
 
-        /// <summary>The container payload. Note that this is not a serialized field of the container
-        /// header.</summary>
-        public byte[] Payload;
+        ///// <summary>The container payload. Note that this is not a serialized field of the container
+        ///// header.</summary>
+        //public byte[] Payload;
 
 
         ///<summary>If true, the field ExchangePosition is specified</summary>
         public bool HasExchangePosition => ContainerInfo.HasExchangePosition;
 
 
-        /// <summary>
-        /// Create a container header from the specified DareHeader copying over only the parts that
-        /// are common to the envelope and the container.
-        /// </summary>
-        /// <param name="dareHeader"></param>
-        public DareHeader(DareHeader dareHeader) {
-            Cloaked = dareHeader.Cloaked;
-            ContentInfoData = dareHeader.ContentInfoData;
-            EDSS = dareHeader.EDSS;
-            Signers = dareHeader.Signers;
-            Recipients = dareHeader.Recipients;
-            }
+        ///// <summary>
+        ///// Create a container header from the specified DareHeader copying over only the parts that
+        ///// are common to the envelope and the container.
+        ///// </summary>
+        ///// <param name="dareHeader"></param>
+        //public DareHeader(DareHeader dareHeader) {
+        //    Cloaked = dareHeader.Cloaked;
+        //    ContentInfoData = dareHeader.ContentInfoData;
+        //    EDSS = dareHeader.EDSS;
+        //    Signers = dareHeader.Signers;
+        //    Recipients = dareHeader.Recipients;
+        //    }
 
 
         ///// <summary>

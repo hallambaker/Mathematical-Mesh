@@ -20,11 +20,11 @@ namespace Scratchpad {
 
             //TestContainers.Test().ContainerTest1();
 
-            TestPersist.Test().TestPersistenceStoreAdd();
+            //TestPersist.Test().TestPersistenceStoreAdd();
 
             //ShellTests.Test().TestFilePlain();
 
-            //TestService.Test().MeshDeviceConnectPIN();
+            TestService.Test().MeshDeviceConnectPIN();
 
 
             //ShellTests.Test().TestAccount();

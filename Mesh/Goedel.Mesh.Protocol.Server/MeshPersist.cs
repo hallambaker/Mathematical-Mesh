@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Server {
 
                 // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
-                var message = DareEnvelope.Encode(messageConnectionRequest.GetBytes());
+                var message = Envelope(messageConnectionRequest);
                 accountHandle.Post(message);
 
 
@@ -250,11 +250,7 @@ namespace Goedel.Mesh.Server {
 
                 if (updates != null) {
                     foreach (var update in updates) {
-                        using (var catalog = accountEntry.GetCatalog(update.Container)) {
-                            foreach (var message in update.Envelopes) {
-                                catalog.Apply(message);
-                                }
-                            }
+                        accountEntry.StoreAppend(update.Container, update.Envelopes);
                         }
                     }
                 }
@@ -360,6 +356,29 @@ namespace Goedel.Mesh.Server {
                 return null;
                 }
             }
+
+
+
+        /// <summary>
+        /// Create a message envelope for a message originated by the service. The message is
+        /// always signed under the service key and encrypted under the keys of at least
+        /// one recipient.
+        /// </summary>
+        /// <param name="message">The message to be wrapped by the envelope</param>
+        /// <returns>The signed message.</returns>
+        DareEnvelope Envelope(Message message) {
+
+
+
+
+            return DareEnvelope.Encode(message.GetBytes());
+
+
+            }
+
+
+
+
         }
 
 
