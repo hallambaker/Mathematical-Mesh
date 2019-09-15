@@ -9,11 +9,7 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
 
-        public void LayerDevice() {
-
-            DoCommandsProfile();
-
-            }
+        public void LayerDevice() => DoCommandsProfile();
 
         #region // Tests
 

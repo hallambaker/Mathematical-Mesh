@@ -16,7 +16,7 @@ namespace ExampleGenerator {
 
     public partial class CreateExamples {
 
-        static void Main(string[] args) {
+        static void Main() {
             Console.WriteLine("Make Document Set");
             Goedel.IO.Debug.Initialize();
             Goedel.Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
@@ -88,12 +88,12 @@ namespace ExampleGenerator {
         public string AliceDevice4 = "Alice4";
         public string AliceDevice5 = "Alice5";
 
-        string OutputPath;
+        string outputPath;
 
         public void Examples() {
-            OutputPath = Directory.GetCurrentDirectory();
+            outputPath = Directory.GetCurrentDirectory();
             TestEnvironment = new TestEnvironmentCommon();
-            var t= Directory.GetCurrentDirectory();
+            //var t= Directory.GetCurrentDirectory();
 
             testCLIAlice1 = GetTestCLI(AliceDevice1);
             testCLIAlice2 = GetTestCLI(AliceDevice2);
@@ -108,7 +108,7 @@ namespace ExampleGenerator {
             TestFile3.WriteFileNew(TestText3.ToString());
             TestFile4.WriteFileNew(TestText4.ToString());
             TestFile5.WriteFileNew(TestText5.ToString());
-            var t2 = Directory.GetCurrentDirectory();
+            //var t2 = Directory.GetCurrentDirectory();
 
             GitHub = true;
 
@@ -121,7 +121,7 @@ namespace ExampleGenerator {
             LayerService();
             LayerMessage();
 
-            Directory.SetCurrentDirectory(OutputPath);
+            Directory.SetCurrentDirectory(outputPath);
             var CreateExamples = new CreateExamples();
             CreateExamples.WebDocs(this);
 

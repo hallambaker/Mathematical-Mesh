@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.Dare {
         #region // Propeties and fields
 
         ///<summary>The container the store entry belongs to</summary>
-         Container Container;
+        Container Container;
 
         /////<summary>The enveloped data</summary>
         //public DareEnvelope DareEnvelope;
@@ -26,11 +26,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The envelope header</summary>
         public DareHeader ContainerHeader; //=> DareEnvelope.Header as ContainerHeader;
 
-        //public ContentInfo ContentInfo => DareHeader.ContentInfo;
-
-
         ///<summary>The envelope metadata</summary>
-        public ContentInfo ContentInfo => ContainerHeader.ContentInfo;
+        public ContentMeta ContentInfo => ContainerHeader.ContentMeta;
 
         ///<summary>Unique identifier of entry;</summary>
         public string UniqueID => ContentInfo?.UniqueID;
@@ -42,30 +39,16 @@ namespace Goedel.Cryptography.Dare {
 
         public bool Deleted => ContentInfo?.Event == ContainerPersistenceStore.EventDelete;
 
-        ///// <summary>
-        ///// The binary data. This should probably be removed and a system set up to allow 
-        ///// for the contents of the frame to only be read if needed. So in place of the
-        ///// envelope there would be an index into the container file.
-        ///// </summary>
-        //public byte[] Data => DareEnvelope.Body;
-
-
-        #endregion
-
-
-        /// <summary>
-        /// A deserialization reader for the data according to the encoding specified by 
-        /// the container header.
-        /// </summary>
-        //public JSONReader JSONReader => Data.JSONReader();
-
         ///<summary>The JSONObject.</summary>
         public JSONObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
         JSONObject jsonObject;
 
-
-
+        ///<summary>The frame index within the container</summary>
+        public ContainerFrameIndex FrameIndex;
+        
+        #endregion
         #region // Related records
+
         /// <summary>
         /// The previous object instance value for this object instance.
         /// </summary>
@@ -76,15 +59,17 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public IPersistenceEntry First { get;  }
 
+
+
+
         #endregion
 
         /// <summary>
         /// Constructor, creates an entry for the specified container header, data and previous relationship.
         /// </summary>
-        /// <param name="containerHeader">Parsed container header from frame</param>
+        /// <param name="dareEnvelope">The envelope entry.</param>
         /// <param name="previous">Link to previous value of this object</param>
-        /// <param name="data">The binary data</param>
-        /// <param name="item">The JSONObject serialized by <paramref name="data"/>.</param>
+        /// <param name="item">The JSONObject representation.</param>
         public ContainerStoreEntry(Container container, 
                     DareEnvelope dareEnvelope, 
                     ContainerStoreEntry previous, 
@@ -99,7 +84,13 @@ namespace Goedel.Cryptography.Dare {
             First = previous?.First ?? this;
             }
 
-        ContainerFrameIndex FrameIndex;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="frameIndex">The position of the entry within the container frame.</param>
+        /// <param name="previous">Link to previous value of this object</param>
+        /// <param name="container"></param>
+        /// <param name="item">The JSONObject representation.</param>
         public ContainerStoreEntry(
                     ContainerFrameIndex frameIndex, 
                     ContainerStoreEntry previous, 

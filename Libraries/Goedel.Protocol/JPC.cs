@@ -129,7 +129,9 @@ namespace Goedel.Protocol {
         /// </summary>
         public bool Authenticated;
 
-
+        /// <summary>
+        /// VerifiedAccount instance describing the verified account details. 
+        /// </summary>
         public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
             new VerifiedAccount() { ServiceID = ServiceID };
 
@@ -143,7 +145,11 @@ namespace Goedel.Protocol {
 
 
 
-
+        /// <summary>
+        /// Constructor for a session with service <paramref name="serviceID"/>.
+        /// </summary>
+        /// <param name="serviceID">The name of the service (e.g. example.com) or an account 
+        /// at the service (e.g. alice@example.com).</param>
         public JpcSession(string serviceID) {
             ServiceID = serviceID;
             serviceID.SplitAccountIDService(out Domain, out Account);
@@ -164,9 +170,7 @@ namespace Goedel.Protocol {
         /// Create a direct session for the specified account.
         /// </summary>
         /// <param name="serviceID">The account name</param>
-        public DirectSession(string serviceID): base (serviceID) {
-            Authenticated = true;
-            }
+        public DirectSession(string serviceID) : base(serviceID) => Authenticated = true;
 
 
         /// <summary>
@@ -257,12 +261,9 @@ namespace Goedel.Protocol {
         /// specified credential.
         /// </summary>
         /// <param name="Host">The host implementation</param>
-        /// <param name="Domain">Portal address</param>
-        /// <param name="Account">User account</param>
-        /// <param name="UDF">Authentication key identifier.</param>
-        public LocalRemoteSession(JPCProvider Host, string serviceID):base(serviceID) {
-            this.Host = Host;
-            }
+        /// <param name="serviceID">The service account.</param>
+        public LocalRemoteSession(JPCProvider Host, string serviceID) : base(serviceID) => 
+                this.Host = Host;
 
         /// <summary>
         /// Post a request and retrieve the response.

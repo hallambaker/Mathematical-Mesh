@@ -63,7 +63,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         public void StreamOpen(
-                    ContentInfo contentInfo,
+                    ContentMeta contentInfo,
                     CryptoStack cryptoStack,
                     byte[] cloaked = null,
                         List<byte[]> dataSequences = null
@@ -76,7 +76,7 @@ namespace Goedel.Cryptography.Dare {
 
             ContainerHeader = new DareHeader() {
                 ContainerInfo = containerInfo,
-                ContentInfo = contentInfo
+                ContentMeta = contentInfo
                 };
 
             ContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);

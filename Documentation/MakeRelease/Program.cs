@@ -11,8 +11,8 @@ namespace Goedel.Tool.Version {
 
         public Distribution Distribution = new Distribution();
 
-        static void Main (string[] args) {
-            var Program = new Program();
+        static void Main () {
+            var _ = new Program();
             }
 
         public Program(){

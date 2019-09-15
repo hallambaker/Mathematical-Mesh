@@ -43,17 +43,6 @@ namespace Goedel.Mesh.Test {
 
         public override MeshService GetMeshClient(IAccountOptions Options) => MeshClient;
 
-        public override JpcSession GetJpcSession(IAccountOptions Options) => new MeshClientSession(null);
-
-
-
-
-
-        //public override ContextDevice GetContextDevice(IAccountOptions Options) => throw new NYI();
-
-        //public override ContextMaster GetContextMaster(IAccountOptions Options) => throw new NYI();
-
-
         public ShellResult ShellResult;
 
         /// <summary>

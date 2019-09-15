@@ -172,19 +172,25 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileDevice = profileDevice.DareEnvelope
                 };
 
+
+            // this needs to be set up so that the device can be added to the catalog of every account the device is connected to
+            // in addition to the master catalog....
+
             GetCatalogDevice().New(catalogEntryDevice);
 
 
             return catalogEntryDevice;
             }
 
+
+
+
+
+        public void Accept(AcknowledgeConnection request) {
+            var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
+            }
+
         #endregion
-
-
-
-
-
-
 
 
         #region // Add Account

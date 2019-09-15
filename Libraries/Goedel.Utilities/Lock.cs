@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 
 namespace Goedel.Utilities {
+
+    /// <summary>
+    /// Wrapper for system wide lock with convenience accessors.
+    /// </summary>
     public class LockGlobal : Disposable {
 
 
@@ -13,8 +17,12 @@ namespace Goedel.Utilities {
         //bool HaveRead = false;
         int MillisecondsTimeout;
 
+        ///<summary>Maximum number of readers</summary>
         public int MaxRead { get; private set; }
 
+        /// <summary>
+        /// Dispose the lock releasing all mutexes and disposing the resources correctly.
+        /// </summary>
         protected override void Disposing() {
             if (HaveWrite) {
                 WriteLock?.ReleaseMutex();
@@ -23,7 +31,12 @@ namespace Goedel.Utilities {
             WriteLock.Dispose();
             }
 
-
+        /// <summary>
+        /// Constructor returning a lock on the resource <paramref name="resource"/> with a
+        /// timeout value of <paramref name="millisecondsTimeout"/>
+        /// </summary>
+        /// <param name="resource">The resource to lock.</param>
+        /// <param name="millisecondsTimeout">The timeout value (it less than zero wait forever).</param>
         public LockGlobal(string resource, int millisecondsTimeout = -1) {
             MillisecondsTimeout = millisecondsTimeout;
             //MaxRead = maxRead;
@@ -47,7 +60,9 @@ namespace Goedel.Utilities {
             }
 
 
-        //public void EnterReadLock() => EnterWriteLock();
+        /// <summary>
+        /// Enter the lock.
+        /// </summary>
         public void Enter() {
             if (HaveWrite) {
                 return; // Do not try to reacquire the lock.
@@ -55,7 +70,9 @@ namespace Goedel.Utilities {
             WriteLock.WaitOne();
             }
 
-
+        /// <summary>
+        /// Exit the lock.
+        /// </summary>
         public void Exit() {
             if (HaveWrite) {
                 WriteLock.ReleaseMutex();

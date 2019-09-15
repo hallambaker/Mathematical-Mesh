@@ -110,7 +110,6 @@
 				|header.
 			Description
 				|Processing of cloaked data is described in…
-
 		Binary EDSS
 			Tag "Annotations"
 			Multiple
@@ -118,11 +117,6 @@
 				|If present, the Annotations field contains a sequence of Encrypted Data 
 				|Segments encrypted under the message Master Key. The interpretation of these fields 
 				|is application specific.
-		Binary ContentInfoData
-			Description			
-				|If present contains a JSON encoded ContentInfo structure which specifies
-				|plaintext content metadata and forms one of the inputs to the envelope digest value.
-
 		Struct DareSigner Signers
 			Multiple
 			Tag "signatures"
@@ -134,10 +128,13 @@
 			Description
 				|A list of recipient key exchange information blocks.
 
+		Binary ContentMetaData
+			Description			
+				|If present contains a JSON encoded ContentInfo structure which specifies
+				|plaintext content metadata and forms one of the inputs to the envelope digest value.
 		Struct ContainerInfo ContainerInfo
 			Description
 				|Information that describes container information
-
 		Struct ContainerIndex ContainerIndex
 			Description
 				|An index of records in the current container up to but not including
@@ -145,7 +142,7 @@
 
 
 
-	Structure ContentInfo
+	Structure ContentMeta
 		String UniqueID
 			Description 
 				|Unique object identifier

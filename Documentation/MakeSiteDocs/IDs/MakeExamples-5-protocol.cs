@@ -126,7 +126,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
@@ -150,7 +150,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolStatus(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.ProfileSync)) return;
+				 if (ExampleInvalid (Example.ProfileSync)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -173,7 +173,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.ProfileSync, 0, 1)) return;
+				 if (ExampleInvalid (Example.ProfileSync, 0, 1)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -196,7 +196,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.ProfileSync, 0, 2)) return;
+				 if (ExampleInvalid (Example.ProfileSync, 0, 2)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -219,7 +219,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnect(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.ConnectRequest, 0)) return;
+				 if (ExampleInvalid (Example.ConnectRequest, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -242,7 +242,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.ConnectPin, 0)) return;
+				 if (ExampleInvalid (Example.ConnectPin, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -266,7 +266,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.DeviceEarl1, 0)) return;
+				 if (ExampleInvalid (Example.DeviceEarl1, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -290,7 +290,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostClientService(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The request payload:\n{0}", _Indent);
@@ -314,7 +314,7 @@ namespace ExampleGenerator {
 			}
 		public void _ProtocolPostServiceService(CreateExamples Example) {
 
-				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+				 if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("[Not Yet Implemented]\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

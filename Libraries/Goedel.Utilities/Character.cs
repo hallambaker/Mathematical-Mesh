@@ -148,6 +148,13 @@ namespace Goedel.Utilities {
             return Result.ToString();
             }
 
+        /// <summary>
+        /// Append the string <paramref name="text"/> to the StringBuilder <paramref name="builder"/> 
+        /// if and only if <paramref name="value"/> is not null.
+        /// </summary>
+        /// <param name="builder">The builder to append to.</param>
+        /// <param name="value">The text value to append to <paramref name="builder"/>.</param>
+        /// <param name="text">The test to be added iff <paramref name="value"/> is not null.</param>
         public static void AppendNotNull(this StringBuilder builder, string value, string text) {
             if (value != null) {
                 builder.AppendLine(text);

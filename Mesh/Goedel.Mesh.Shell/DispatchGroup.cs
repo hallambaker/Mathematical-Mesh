@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Shell {
             using (var contextAccount = GetContextAccount(Options)) {
                 using (var catalog = contextAccount.GetCatalogGroup(groupID)) {
 
-                    Contact contact = null;
+                    //Contact contact = null;
                     "Implement pulling contact from contacts catalog".TaskFunctionality(false);
 
                     var entryMember = catalog.Add(memberID);

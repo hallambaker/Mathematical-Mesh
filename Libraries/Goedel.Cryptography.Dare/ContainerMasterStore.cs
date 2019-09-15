@@ -205,6 +205,9 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
         /// <param name="UniqueID">The UniqueID of the object to delete</param>
+        /// <param name="transaction">Optional transaction context. If specified, the 
+        /// data is written in the specified transaction context allowing multiple 
+        /// transactions to be staged and committed all or nothing.</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
         public bool Delete (string UniqueID,
                 Transaction transaction = null) {
@@ -217,6 +220,10 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">Object to create</param>
+        /// <param name="transaction">Optional transaction context. If specified, the 
+        /// data is written in the specified transaction context allowing multiple 
+        /// transactions to be staged and committed all or nothing.</param>
+        /// <returns>The persistence entry.</returns>
         public IPersistenceEntry New (JSONObject Object,
                 Transaction transaction = null) {
             GetWrite();
@@ -230,6 +237,10 @@ namespace Goedel.Cryptography.Dare {
         /// <threadsafety static="true" instance="true"/>
         /// <param name="Object">The new object value</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
+        /// <param name="transaction">Optional transaction context. If specified, the 
+        /// data is written in the specified transaction context allowing multiple 
+        /// transactions to be staged and committed all or nothing.</param>
+        /// <returns>The persistence entry.</returns>
         public IPersistenceEntry Update (JSONObject Object, bool Create = true,
                 Transaction transaction = null) {
             GetWrite();

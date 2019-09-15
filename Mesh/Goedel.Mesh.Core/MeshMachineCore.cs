@@ -61,7 +61,7 @@ namespace Goedel.Mesh {
         /// the value of <paramref name="keySecurity"/></param>
         /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The created key pair</returns>
-        public KeyPair CreateKeyPair(
+        public virtual KeyPair CreateKeyPair(
                     CryptoAlgorithmID algorithmID,
                     KeySecurity keySecurity,
                     int keySize = 0,
@@ -220,23 +220,23 @@ namespace Goedel.Mesh {
 
         #region // Implementation
 
-        /// <summary>
-        /// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
-        /// KeyCollection of the machine instance.
-        /// </summary>
-        /// <param name="algorithmID">The type of keypair to create.</param>
-        /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
-        /// <param name="keySecurity">The key security model</param>
-        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
-        /// the value of <paramref name="keySecurity"/></param>
-        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
-        /// <returns>The created key pair</returns>
-        public KeyPair CreateKeyPair(
-                    CryptoAlgorithmID algorithmID,
-                    KeySecurity keySecurity,
-                    int keySize = 0,
-                    KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
-                        KeyCollection, keySize, keyUses);
+        ///// <summary>
+        ///// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
+        ///// KeyCollection of the machine instance.
+        ///// </summary>
+        ///// <param name="algorithmID">The type of keypair to create.</param>
+        ///// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        ///// <param name="keySecurity">The key security model</param>
+        ///// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        ///// the value of <paramref name="keySecurity"/></param>
+        ///// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        ///// <returns>The created key pair</returns>
+        //public KeyPair CreateKeyPair(
+        //            CryptoAlgorithmID algorithmID,
+        //            KeySecurity keySecurity,
+        //            int keySize = 0,
+        //            KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
+        //                KeyCollection, keySize, keyUses);
 
 
 

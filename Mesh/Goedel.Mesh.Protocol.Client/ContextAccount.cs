@@ -210,7 +210,7 @@ namespace Goedel.Mesh.Client {
 
         int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
 
-            Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
+            //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
 
             int uploads = 0;
             if (maxEnvelopes == 0) {
@@ -332,7 +332,7 @@ namespace Goedel.Mesh.Client {
         public Message GetPendingMessage(string tag) {
             var completed = new Dictionary<string, Message>();
 
-            foreach (var message in spoolInbound.Select(1, true)) {
+            foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var meshMessage = Message.FromJSON(message.GetBodyReader());
                 if (!completed.ContainsKey(meshMessage.MessageID)) {
                     if (meshMessage._Tag == tag) {
@@ -361,7 +361,7 @@ namespace Goedel.Mesh.Client {
             if (DictionaryStores.TryGetValue(name, out var syncStore)) {
                 return syncStore.Store;
                 }
-            Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
+            //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
             var store = MakeStore(name);
             //if (store is Catalog catalog) {
@@ -426,9 +426,6 @@ namespace Goedel.Mesh.Client {
 
 
 
-        /////////////////////
-
-
         public MessagePIN GetPIN(int length = 80, int validity = 24 * 60) {
             var pin = UDF.Nonce(length);
             var expires = DateTime.Now.AddMinutes(validity);
@@ -445,25 +442,11 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void Download(long maxItems = -1) {
-            }
-
-
-        void Download() {
-            }
-
-
-        public StatusResponse Status() {
-            var statusRequest = new StatusRequest() {
-                };
-            return MeshClient.Status(statusRequest);
-            }
-
         /// <summary>
         /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
         /// the service is held at the service, this means only downloading updates at present.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The number of items synchronized</returns>
         public int Sync() {
             int count = 0;
 
@@ -480,7 +463,7 @@ namespace Goedel.Mesh.Client {
                 var store = GetStore(container.Container);
 
 
-                Console.WriteLine($"Container {container.Container}, items {container.Index} [{store.Container.FrameCount}]" );
+                //Console.WriteLine($"Container {container.Container}, items {container.Index} [{store.Container.FrameCount}]");
 
                 if (store.Container.FrameCount < container.Index) {
                     var constraintsSelect = new ConstraintsSelect() {
@@ -521,9 +504,39 @@ namespace Goedel.Mesh.Client {
             return count;
             }
 
+        public StatusResponse Status() {
+            var statusRequest = new StatusRequest() {
+                };
+            return MeshClient.Status(statusRequest);
+            }
+
+
+
+        //-------------------------------
+
+        public void Download(long maxItems = -1) {
+            }
+
+
+        void Download() {
+            }
+
+
+
+
+
 
         public void Process(Message meshMessage, bool accept = true, bool respond = true) {
-            throw new NYI();
+
+            switch (meshMessage) {
+                case AcknowledgeConnection connection: {
+                    ContextMeshAdmin.Accept(connection);
+                    break;
+                    }
+
+
+                default: throw new NYI();
+                }
             }
 
 

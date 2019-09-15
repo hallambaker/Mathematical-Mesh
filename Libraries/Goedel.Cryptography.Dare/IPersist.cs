@@ -57,15 +57,19 @@ namespace Goedel.Cryptography.Dare{
         /// Add new JSON object to the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
+        /// <param name="transaction">The transaction context under which the object is 
+        /// created.</param>
         IPersistenceEntry New (JSONObject Object,
                 Transaction transaction = null);
 
 
         /// <summary>
-        /// Add new JSON object to the store with the specified identifier, unique ID and keys.
+        /// Update a JSON object in the store with the specified identifier, unique ID and keys.
         /// </summary>
         /// <param name="Object">Object to add.</param>
         /// <param name="Create">If true, create a new value if one does not already exist</param>
+        /// <param name="transaction">The transaction context under which the object is 
+        /// created.</param>
         IPersistenceEntry Update (JSONObject Object, bool Create = true,
                 Transaction transaction = null);
 
@@ -75,6 +79,8 @@ namespace Goedel.Cryptography.Dare{
         /// <threadsafety static="true" instance="true"/>
         /// <param name="UniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
+        /// <param name="transaction">The transaction context under which the object is 
+        /// created.</param>
         bool Delete (string UniqueID,
                 Transaction transaction = null);
 

@@ -5,7 +5,7 @@
 namespace Goedel.Mesh.Server {
 
     /// <summary>
-    /// Mesh Portal Server implementation
+    /// Mesh Service implementation
     /// </summary>
 
     [System.Runtime.CompilerServices.CompilerGenerated]

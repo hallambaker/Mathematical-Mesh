@@ -60,21 +60,6 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>Tag for Delete event</summary>
         public const string EventDelete = "Delete";
 
-        /////<summary>The tag dictionary for decoding entries.</summary>
-        //public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
-        //    new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
-        //static Dictionary<string, JSONFactoryDelegate> tagDictionary;
-
-        /// <summary>
-        /// Add a dictionary to the persistence store decoder.
-        /// </summary>
-        /// <param name="dictionary">The dictionary to add</param>
-        //public static Dictionary<string, JSONFactoryDelegate> AddDictionary(
-        //            Dictionary<string, JSONFactoryDelegate> dictionary) {
-        //    JSONObject.Append(TagDictionary, dictionary);
-        //    return TagDictionary;
-        //    }
-
         /// <summary>
         /// The default data encoding of payload items.
         /// </summary>
@@ -209,7 +194,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="contentInfo">The container header</param>
         /// <param name="data">The data to commit.</param>
         public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JSONObject jSONObject) {
-            var contentInfo = frameIndex.Header.ContentInfo;
+            var contentInfo = frameIndex.Header.ContentMeta;
 
             ObjectIndex.TryGetValue(contentInfo.UniqueID, out var Previous);
             var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container, jSONObject);
@@ -305,7 +290,7 @@ namespace Goedel.Cryptography.Dare {
         #region Prepare and commit transaction to container
 
         public DareEnvelope Prepare(
-                ContentInfo contentInfo, 
+                ContentMeta contentInfo, 
                 JSONObject jsonObject, 
                 Transaction transaction = null) {
 
@@ -349,7 +334,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.False(Exists, ObjectIdentifierNotUnique.Throw);
 
             // Create new container
-            var contentInfo = new ContentInfo() {
+            var contentInfo = new ContentMeta() {
                 Event = EventNew,
                 UniqueID = jsonObject._PrimaryKey,
                 KeyValues = jsonObject._KeyValues.ToKeyValues()
@@ -374,7 +359,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.True(Exists | create, NYI.Throw);
 
             // Create new container
-            var contentInfo = new ContentInfo() {
+            var contentInfo = new ContentMeta() {
                 Event = Exists ? EventUpdate : EventNew,
                 UniqueID = jsonObject._PrimaryKey,
                 KeyValues = jsonObject._KeyValues.ToKeyValues(),
@@ -403,7 +388,7 @@ namespace Goedel.Cryptography.Dare {
 
             var First = previous?.First as ContainerStoreEntry;
             // Create new container
-            var contentInfo = new ContentInfo() {
+            var contentInfo = new ContentMeta() {
                 Event = EventDelete,
                 UniqueID = uniqueID,
                 Previous = (int)previous?.FrameCount,

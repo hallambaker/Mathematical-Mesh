@@ -52,8 +52,9 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class CryptoProviderDigest : CryptoProviderBulk {
 
-        readonly byte[] emptyByteArray = new byte[0];
+        readonly static byte[] emptyByteArray = new byte[0];
 
+        ///<summary>Return the digest value of a empty byte array. The value is calculated once and cached.</summary>
         public byte[] NullDigest => nullDigest ?? ProcessData(emptyByteArray, emptyByteArray).CacheValue(out nullDigest);
         byte[] nullDigest;
 

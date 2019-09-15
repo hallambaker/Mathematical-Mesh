@@ -138,18 +138,6 @@ namespace Goedel.Mesh.Shell {
                 }
             }
 
-        //public List<string> Signers(IEncodeOptions Options) =>
-        //    (Options.Signer.Value == null) ? null : new List<string> { Options.Signer.Value };
-        //public List<string> Recipients(IEncodeOptions Options) =>
-        //    (Options.Recipient.Value == null) ? null : new List<string> { Options.Recipient.Value };
-
-
-        // This pair of methods is specified her so as to allow them to be overridden in
-        // a test shell
-
-        public virtual JpcSession GetJpcSession(IAccountOptions options) => throw new NYI();
-
-
         public virtual MeshService GetMeshClient(IAccountOptions options) {
             var serviceID = options.ServiceID.Value;
 

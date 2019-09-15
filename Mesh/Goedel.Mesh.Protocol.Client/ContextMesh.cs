@@ -179,6 +179,11 @@ namespace Goedel.Mesh.Client {
             throw new NYI();
             }
 
+
+
+
+
+
         //protected MeshService GetMeshClient(string serviceID) => 
         //    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
         //        ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);

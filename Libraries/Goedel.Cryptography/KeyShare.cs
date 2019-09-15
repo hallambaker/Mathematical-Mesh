@@ -266,7 +266,7 @@ namespace Goedel.Cryptography {
 
             var secretBits = shares[0].KeyBits - 8;
 
-            Console.WriteLine($"Recovered Share {shares[0].Value}");
+            //Console.WriteLine($"Recovered Share {shares[0].Value}");
 
             var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
             BigInteger accum = 0;

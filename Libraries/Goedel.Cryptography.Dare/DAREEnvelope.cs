@@ -34,7 +34,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="contentType">The payload content type.</param>
+        /// <param name="contentMeta">The content metadata</param>
         /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
         /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
@@ -43,14 +43,14 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     byte[] plaintext,
-                    ContentInfo contentInfo=null,
+                    ContentMeta contentMeta=null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
 
             var cryptoStack = cryptoParameters.GetCryptoStack();
 
-            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
             Body = Header.EnhanceBody(plaintext, out var trailer);
             Trailer = trailer;
             }
@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="cryptoStack">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="contentType">The payload content type.</param>
+        /// <param name="contentMeta">The content metadata</param>
         /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
         /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
@@ -69,11 +69,11 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoStack cryptoStack,
                     byte[] plaintext,
-                    ContentInfo contentInfo=null,
+                    ContentMeta contentMeta=null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
-            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
             Body = Header.EnhanceBody(plaintext, out var trailer);
             Trailer = trailer;
             }
@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="outputStream">The stream to which the output will be written.</param>
-        /// <param name="contentType">The payload content type.</param>
+        /// <param name="contentMeta">The content metadata</param>
         /// <param name="contentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>
@@ -98,7 +98,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     Stream outputStream,
-                    ContentInfo contentInfo,
+                    ContentMeta contentMeta,
                     byte[] plaintext = null,
                     long contentLength = -1,
                     byte[] cloaked = null,
@@ -107,45 +107,43 @@ namespace Goedel.Cryptography.Dare {
 
             var cryptoStack = cryptoParameters.GetCryptoStack();
 
-            Header = new DareHeader(cryptoStack, contentInfo, cloaked, dataSequences);
+            Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
             JSONBWriter = new JSONBWriter(outputStream);
             }
 
         /// <summary>
         /// Create a new DARE Message from the specified parameters.
         /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="signingKey"></param>
-        /// <param name="encryptionKey"></param>
-        /// <param name="contentType"></param>
-        /// <param name="cloaked"></param>
-        /// <param name="dataSequences"></param>
-        /// <returns></returns>
+        /// <param name="plaintext">The payload plaintext.</param>
+        /// <param name="contentType">The content type.</param>
+        /// <returns>The new envelope</returns>
         public static DareEnvelope Encode(
                     byte[] plaintext,
-                    string contentType) => Encode(plaintext, contentInfo: new ContentInfo() { ContentType = contentType });
+                    string contentType) => Encode(plaintext, contentMeta: new ContentMeta() { ContentType = contentType });
 
 
 
         /// <summary>
         /// Create a new DARE Message from the specified parameters.
         /// </summary>
-        /// <param name="plaintext"></param>
-        /// <param name="signingKey"></param>
-        /// <param name="encryptionKey"></param>
-        /// <param name="contentType"></param>
-        /// <param name="cloaked"></param>
-        /// <param name="dataSequences"></param>
+        /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        /// <param name="signingKey">The signature key.</param>
+        /// <param name="encryptionKey">The encryption key.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
         /// <returns></returns>
         public static DareEnvelope Encode(
                     byte[] plaintext,
-                    ContentInfo contentInfo = null,
+                    ContentMeta contentMeta = null,
                     KeyPair signingKey = null,
                     KeyPair encryptionKey = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
             var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
-            return new DareEnvelope(cryptoParameters, plaintext, contentInfo, cloaked, dataSequences);
+            return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
 
             }
 
@@ -379,26 +377,25 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="outputFile">The output file, must support writing</param>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="contentType">The payload content type.</param>
+        /// <param name="contentMeta">The content metadata</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <param name="chunk">The maximum chunk size. If unspecified, the default
         /// system chunk size (2048) is used.</param>
-        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <returns>The number of bytes in the input file.</returns>
         public static long Encode(
                 CryptoParameters cryptoParameters,
                 string inputFile,
                 string outputFile = null,
-                ContentInfo contentInfo = null,
+                ContentMeta contentMeta = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
             using (var output = outputFile.OpenFileNew()) {
                 using (var input = inputFile.OpenFileRead()) {
                     Encode(cryptoParameters, input, output, input.Length,
-                        contentInfo, cloaked, dataSequences, chunk);
+                        contentMeta, cloaked, dataSequences, chunk);
                     return input.Length;
                     }
                 }
@@ -416,13 +413,12 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="outputStream">The output stream, must support writing</param>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="contentType">The payload content type.</param>
+        /// <param name="contentMeta">The content metadata</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <param name="chunk">The maximum chunk size. If unspecified, the default
         /// system chunk size (2048) is used.</param>
-        /// <param name="fileName">The file name to be specified in the message header.</param>
         /// <param name="contentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>         
@@ -431,14 +427,14 @@ namespace Goedel.Cryptography.Dare {
                 Stream inputStream,
                 Stream outputStream,
                 long contentLength = -1,
-                ContentInfo contentInfo = null,
+                ContentMeta contentMeta = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
 
 
             using (var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
-                outputStream, contentInfo, contentLength, cloaked, dataSequences)) {
+                outputStream, contentMeta, contentLength, cloaked, dataSequences)) {
                 inputStream.CopyTo(DAREEnvelopeWriter);
                 }
 
@@ -487,7 +483,7 @@ namespace Goedel.Cryptography.Dare {
                 outputStream.Flush();
                 }
             else {
-                var filename = outputFile ?? Message.Header.ContentInfo.Filename;
+                var filename = outputFile ?? Message.Header.ContentMeta.Filename;
                 using (var output = filename.OpenFileNew()) {
                     Reader.CopyTo(output);
                     output.Flush();

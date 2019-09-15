@@ -260,6 +260,7 @@ namespace Goedel.Cryptography {
         public override string UDF => udf ?? Cryptography.UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
         string udf = null;
 
+        ///<summary>The UDF fingerprint of this key pair.</summary>
         public string UDFValue => Cryptography.UDF.OID (this);
 
 

@@ -691,6 +691,12 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        /// <summary>
+        /// Return a bounded stream reader for the frame payload data.
+        /// </summary>
+        /// <param name="DataPosition">The position of the first byte of data.</param>
+        /// <param name="DataLength">The number of bytes to be read.</param>
+        /// <returns>The bounded stream reader.</returns>
         public StreamReaderBounded FramerGetReader(long DataPosition, long DataLength) =>
             new StreamReaderBounded(StreamRead, DataPosition, DataLength);
 

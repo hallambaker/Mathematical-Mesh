@@ -67,13 +67,16 @@ namespace Goedel.Cryptography.Dare {
             base.PrepareFrame(contextWrite);
             }
 
-
+        /// <summary>
+        /// Prepare the ContainerInfo data for the frame.
+        /// </summary>
+        /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(ContainerInfo containerInfo) {
             if (containerInfo.Index > 0) {
                 containerInfo.TreePosition =
                     (int)PreviousFramePosition(containerInfo.Index);
                 }
-            Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
+            //Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
 
 
             }
@@ -271,7 +274,7 @@ namespace Goedel.Cryptography.Dare {
         public long PreviousFramePosition (long FrameIndex) {
             var Previous = PreviousFrame(FrameIndex);
 
-            Console.WriteLine($"  Previous {FrameIndex} = {Previous}");
+            //Console.WriteLine($"  Previous {FrameIndex} = {Previous}");
 
             return GetFramePosition(Previous);
             }

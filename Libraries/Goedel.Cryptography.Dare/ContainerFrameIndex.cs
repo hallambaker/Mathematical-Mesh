@@ -56,15 +56,18 @@ namespace Goedel.Cryptography.Dare {
         public byte[] Payload => GetPayLoad().CacheValue(out payload);
         byte[] payload;
 
+        ///<summary>The decoded JSONObject</summary>
         public JSONObject JSONObject;
 
-        JBCDStream JBCDStream;
 
+        JBCDStream jbcdStream;
+
+        /// <summary>
+        /// Return the frame payload.
+        /// </summary>
+        /// <returns>The frame payload data.</returns>
         public byte[] GetPayLoad() {
-
-            
-
-            using (var input = JBCDStream.FramerGetReader(DataPosition, DataLength)) {
+            using (var input = jbcdStream.FramerGetReader(DataPosition, DataLength)) {
 
                 var Decoder = Header.GetDecoder(
                             input, out var Reader,
@@ -74,8 +77,6 @@ namespace Goedel.Cryptography.Dare {
                     Reader.CopyTo(output);
                     return output.ToArray();
                     }
-
-
                 }
             }
 
@@ -84,10 +85,13 @@ namespace Goedel.Cryptography.Dare {
         /// Constructor
         /// </summary>
         /// <param name="jsonStream">Stream reader positioned to the start of the frame.</param>
+        /// <param name="keyCollection">The key collection to be used to obtain the decryption 
+        /// key for the payload.</param>
+        /// <param name="Position">The position in the file.</param>
         public ContainerFrameIndex(JBCDStream jsonStream, KeyCollection keyCollection, long Position = -1) {
 
             KeyCollection = keyCollection;
-            JBCDStream = jsonStream;
+            jbcdStream = jsonStream;
 
             var length = jsonStream.FramerOpen(Position);
 
@@ -97,37 +101,21 @@ namespace Goedel.Cryptography.Dare {
 
             jsonStream.FramerGetFrameIndex(out DataPosition, out DataLength);
 
-            //Payload = JBCDStream.FramerGetData();
-
-            //using (var Buffer = new MemoryStream()) {
-            //    var Decoder = Header.GetDecoder(
-            //                jsonReader, out var Reader,
-            //                KeyCollection: keyCollection);
-            //    Reader.CopyTo(Buffer);
-            //    Decoder.Close();
-            //    Payload= Buffer.ToArray();
-            //    }
-
             var TrailerBytes = jsonStream.FramerGetData();
             if (TrailerBytes != null && TrailerBytes.Length > 0) {
                 var TrailerText = TrailerBytes.ToUTF8();
                 Trailer = DareTrailer.FromJSON(TrailerText.JSONReader(), false);
                 }
-
-
-            //if (Payload != null && Payload.Length > 0) {
-            //    //var PayloadText = HeaderBytes.ToUTF8();
-            //    //JSONObject = Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
-
-            //    }
             }
 
-
+        /// <summary>
+        /// Read the payload data from the specified position in <paramref name="container"/>
+        /// and deserialize to return the corresponding object.
+        /// </summary>
+        /// <param name="container">The container that was indexed.</param>
+        /// <returns>The deserialized object.</returns>
         public JSONObject GetJSONObject(Container container) =>
             Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
-
-            //GetReader(container).ReadTaggedObject(JSONObject.TagDictionary);
-
 
         /// <summary>
         /// Return a JSONReader for the content
@@ -183,7 +171,10 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-
+        /// <summary>
+        /// Copy the payload data to file.
+        /// </summary>
+        /// <param name="file"></param>
         public void CopyToFile(string file) {
             throw new NYI();
             }

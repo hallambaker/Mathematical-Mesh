@@ -25,10 +25,7 @@ namespace ExampleGenerator {
         public List<ExampleResult> CommandsAddAcountAlice;
 
 
-        public void DoCommandsCreateAcount() {
-            CommandsAddAcountAlice = testCLIAlice1.Example($"account create {AliceAccount1}");
-
-            }
+        public void DoCommandsCreateAcount() => CommandsAddAcountAlice = testCLIAlice1.Example($"account create {AliceAccount1}");
 
         public List<ExampleResult> ContactAdd;
         public List<ExampleResult> ContactAddSelf;

@@ -72,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
         /// Initialize the dictionaries used to manage the tree by registering the set
         /// of values leading up to the apex value.
         /// </summary>
-        /// <param name="header">Final frame header</param>
+        /// <param name="containerInfo">Final frame header container information.</param>
         /// <param name="firstPosition">Position of frame 1</param>
         /// <param name="positionLast">Position of the last frame</param>
         protected override void FillDictionary(ContainerInfo containerInfo, long firstPosition, long positionLast) {
@@ -107,8 +107,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Commit the header data to the container.
         /// </summary>
-        public override void CommitHeader(DareHeader ContainerHeader, ContainerWriter contextWrite) =>
-            FrameIndexToPositionDictionary.Add(ContainerHeader.ContainerInfo.Index,
+        public override void CommitHeader(DareHeader containerHeader, ContainerWriter contextWrite) =>
+            FrameIndexToPositionDictionary.Add(containerHeader.ContainerInfo.Index,
                     contextWrite.FrameStart);
 
 
@@ -116,8 +116,8 @@ namespace Goedel.Cryptography.Dare {
         /// The number of bytes to be reserved for the trailer.
         /// </summary>
         /// <returns>The number of bytes to reserve</returns>
-        public override DareTrailer FillDummyTrailer(CryptoStack CryptoStack) => 
-            CryptoStack?.GetDummyTrailer();
+        public override DareTrailer FillDummyTrailer(CryptoStack cryptoStack) => 
+            cryptoStack?.GetDummyTrailer();
 
 
         /// <summary>If positive, specifies the file position of the next frame.
@@ -144,30 +144,24 @@ namespace Goedel.Cryptography.Dare {
             }
 
         long FrameRemaining;
-        long PayloadData;
 
         #region // Container navigation
-        ///// <summary>
-        ///// Obtain a reader stream for the current frame data.
-        ///// </summary>
-        ///// <returns>The reader stream created.</returns>
-        //public override ContainerFrameReader GetFrameDataReader(
-        //        long Index = -1, long Position = -1) {
 
-        //    if (Position < 0 & Index >= 0) {
-        //        MoveToIndex(Index);
-        //        Position = PositionRead;
-        //        }
-
-        //    return new ContainerFrameReader(JBCDStream, KeyCollection, Position);
-        //    }
-
-        public override ContainerFrameIndex GetContainerFrameIndex(long Index = -1, long Position = -1) {
-            if (Position < 0 & Index >= 0) {
-                MoveToIndex(Index);
-                Position = PositionRead;
+        /// <summary>
+        /// Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
+        /// specified or <paramref name="position"/> otherwise.
+        /// </summary>
+        /// <param name="index">The container index to obtain the frame index for.</param>
+        /// <param name="position">The container position to obtain the frame index for.</param>
+        /// <returns>The created ContainerFrameIndex instance,</returns>
+        public override ContainerFrameIndex GetContainerFrameIndex(
+                    long index = -1, 
+                    long position = -1) {
+            if (position < 0 & index >= 0) {
+                MoveToIndex(index);
+                position = PositionRead;
                 }
-            return new ContainerFrameIndex(JBCDStream, KeyCollection, Position: Position);
+            return new ContainerFrameIndex(JBCDStream, KeyCollection, Position: position);
 
 
             }
@@ -250,28 +244,28 @@ namespace Goedel.Cryptography.Dare {
         /// Move to the frame with index Position in the file. 
         /// <para>Since the file format only supports sequential access, this is slow.</para>
         /// </summary>
-        /// <param name="Index">The frame index to move to</param>
+        /// <param name="index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
-        public override bool MoveToIndex (long Index) {
+        public override bool MoveToIndex (long index) {
 
-            if (FrameIndexToPositionDictionary.TryGetValue(Index, out var Position)) {
+            if (FrameIndexToPositionDictionary.TryGetValue(index, out var Position)) {
                 PositionRead = Position;
                 }
             else {
-                Assert.True(Index > FrameLowUnknown & Index < FrameHighUnknown);
+                Assert.True(index > FrameLowUnknown & index < FrameHighUnknown);
 
-                if (Index - FrameLowUnknown <= FrameHighUnknown - Index) {
+                if (index - FrameLowUnknown <= FrameHighUnknown - index) {
                     Assert.True(FrameIndexToPositionDictionary.TryGetValue(FrameLowUnknown, out Position));
                     PositionRead = Position;
                     var Last = PositionRead;
                     Next();
-                    while (ContainerInfo != null && ContainerInfo.Index < Index) {
+                    while (ContainerInfo != null && ContainerInfo.Index < index) {
                         Last = PositionRead;
                         Next();
                         }
                     PositionRead = Last;
                     FrameLowUnknown = ContainerInfo.Index;
-                    return ContainerInfo.Index == Index;
+                    return ContainerInfo.Index == index;
                     }
 
                 else {
@@ -279,12 +273,12 @@ namespace Goedel.Cryptography.Dare {
                     PositionRead = Position;
 
                     Previous();
-                    while (ContainerInfo != null && (ContainerInfo.Index > Index)) {
+                    while (ContainerInfo != null && (ContainerInfo.Index > index)) {
                         Previous();
                         }
 
                     FrameHighUnknown = ContainerInfo.Index;
-                    return ContainerInfo.Index == Index;
+                    return ContainerInfo.Index == index;
                     }
                 }
             return true;
@@ -298,10 +292,10 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
-        /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<DareHeader> Headers) {
+        /// <param name="headers">List of headers to check</param>
+        public override void CheckContainer (List<DareHeader> headers) {
             int Index = 1;
-            foreach (var Header in Headers) {
+            foreach (var Header in headers) {
                 Assert.NotNull(Header.ContainerInfo);
 
                 Assert.True(Header.ContainerInfo.Index == Index);

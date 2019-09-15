@@ -278,9 +278,9 @@ namespace ExampleGenerator {
 		//
 
 			 public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
-			 if (examples == null) return true;
-			 if (item >= examples.Count-1 ) return true;
-			 if (trace >= examples[item].Traces.Count-1 ) return true;
+			 if (examples == null) {return true;}
+			 if (item >= examples.Count-1 ) {return true;}
+			 if (trace >= examples[item].Traces.Count-1 ) {return true;}
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("[Example missing]\n{0}", _Indent);

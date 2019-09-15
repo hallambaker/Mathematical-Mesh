@@ -13,12 +13,9 @@ namespace Goedel.Cryptography.Dare {
 
     public partial class DareHeader {
 
-        byte[] MasterSecret;
+        byte[] masterSecret;
+        long saltValue = 0;
 
-        ///// <summary>
-        ///// The cryptography provider.
-        ///// </summary>
-        //protected CryptoProviderEncryption ProviderEncryption = null;
 
         /// <summary>
         /// Calculate the expected payload length for the specified <paramref name="ContentLength"/>.
@@ -33,19 +30,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public bool Encrypt => EncryptionAlgorithm != null;
 
-
-
-        long SaltValue = 0;
-
         /// <summary>
         /// Threadsafe assignment of unique salt under this master secret.
         /// </summary>
         /// <returns></returns>
         /// <threadsafety static="true" instance="true"/>
         public byte[] MakeSalt() {
-            if (SaltValue >= 0) {
+            if (saltValue >= 0) {
 
-                var Salt = Interlocked.Increment(ref SaltValue);
+                var Salt = Interlocked.Increment(ref saltValue);
                 return MakeSalt(Salt);
                 }
             else {
@@ -59,23 +52,24 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public CryptoStack CryptoStack;
 
-        public override string ToString() => "{Header}";
+        //public override string ToString() => "{Header}";
 
+        ///<summary>The content Metadata.</summary>
+        public ContentMeta ContentMeta;
 
-        public ContentInfo ContentInfo;
+        ///<summary>The content type.</summary>
+        public string ContentType => ContentMeta?.ContentType;
 
-        public string ContentType => ContentInfo?.ContentType;
-
-
+        ///<summary>Routine called before serialization.</summary>
         public override void PreEncode() {
-            if (ContentInfo != null) {
-                ContentInfoData = ContentInfo.GetContentInfoData();
+            if (ContentMeta != null) {
+                ContentMetaData = ContentMeta.GetContentMetaData();
                 }
             }
-        public override void PostDecode() {
-            ContentInfo = ContentInfo.GetContentInfo(ContentInfoData);
-            // this is only being called by DareEnvelope and not by the recursive deserializer.
-            }
+
+        ///<summary>Routine called after serialization.</summary>
+        public override void PostDecode() => 
+            ContentMeta = ContentMeta.GetContentInfo(ContentMetaData);
 
 
         /// <summary>
@@ -87,54 +81,50 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a message header.
         /// </summary>
-        /// <param name="CryptoStack">The cryptographic enhancements to apply.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public DareHeader(
-                    CryptoStack CryptoStack,
-                    ContentInfo contentInfo = null,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null
+                    CryptoStack cryptoStack,
+                    ContentMeta contentMeta = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null
                     ) {
-            //ContentInfoData = contentInfo?.GetContentInfoData();
-            ApplyCryptoStack(CryptoStack, Cloaked, DataSequences);
+            ContentMeta = contentMeta;
+            ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
             }
 
         /// <summary>
         /// Apply the specified cryptographic options.
         /// </summary>
-        /// <param name="CryptoStack">The cryptographic enhancements to apply.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="cryptoStack">The cryptographic enhancements to apply.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public virtual void ApplyCryptoStack(
-                    CryptoStack CryptoStack,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null) {
-            this.CryptoStack = CryptoStack;
+                    CryptoStack cryptoStack,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null) {
+            this.CryptoStack = cryptoStack;
 
-            Salt = CryptoStack.Salt;
-            Recipients = CryptoStack.Recipients;
-            EncryptionAlgorithm = CryptoStack.EncryptionAlgorithm;
-            DigestAlgorithm = CryptoStack.DigestAlgorithm;
+            Salt = cryptoStack.Salt;
+            Recipients = cryptoStack.Recipients;
+            EncryptionAlgorithm = cryptoStack.EncryptionAlgorithm;
+            DigestAlgorithm = cryptoStack.DigestAlgorithm;
 
-            if (Cloaked != null) {
-                this.Cloaked = CryptoStack.Encode(Cloaked, MakeSalt());
+            if (cloaked != null) {
+                this.Cloaked = cryptoStack.Encode(cloaked, MakeSalt());
                 }
-            if (DataSequences != null) {
+            if (dataSequences != null) {
                 EDSS = new List<byte[]>();
-                foreach (var DataSequence in DataSequences) {
-                    EDSS.Add(CryptoStack.Encode(DataSequence, MakeSalt()));
+                foreach (var DataSequence in dataSequences) {
+                    EDSS.Add(cryptoStack.Encode(DataSequence, MakeSalt()));
                     }
                 }
 
             }
-
-
-
-
 
 
         /// <summary>
@@ -142,13 +132,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="DAREHeader"></param>
         public virtual void SetDefaultContext(DareHeader DAREHeader) {
-            SaltValue = -1;
-            MasterSecret = DAREHeader.MasterSecret;
+            saltValue = -1;
+            masterSecret = DAREHeader.masterSecret;
 
             }
 
         #region // Consider moving this functionality out to ContextWrite
 
+        CryptoStackStreamWriter currentBodyWriter = null;
+        
         /// <summary>
         /// Construct a stream that will write the body data with whatever crypto stream
         /// modules are required.
@@ -159,20 +151,18 @@ namespace Goedel.Cryptography.Dare {
             if (CryptoStack == null) {
                 return Output;
                 }
-            CurrentBodyWriter = CryptoStack.GetEncoder(Output, PackagingFormat.Direct);
-            return CurrentBodyWriter.Writer;
+            currentBodyWriter = CryptoStack.GetEncoder(Output, PackagingFormat.Direct);
+            return currentBodyWriter.Writer;
             }
-
-        CryptoStackStreamWriter CurrentBodyWriter = null;
 
         /// <summary>
         /// Close the body writer stack and free all associated resources.
         /// </summary>
         public void CloseBodyWriter(out DareTrailer DARETrailer) {
-            CurrentBodyWriter.Close();
-            DARETrailer = GetTrailer(CurrentBodyWriter);
-            CurrentBodyWriter?.Dispose();
-            CurrentBodyWriter = null;
+            currentBodyWriter.Close();
+            DARETrailer = GetTrailer(currentBodyWriter);
+            currentBodyWriter?.Dispose();
+            currentBodyWriter = null;
             }
 
 
@@ -249,12 +239,13 @@ namespace Goedel.Cryptography.Dare {
         /// header.
         /// </summary>
         /// <returns>The created CryptoStack</returns>
-        public CryptoStack GetCryptoStack(KeyCollection KeyCollection) {
+        public CryptoStack GetCryptoStack(KeyCollection KeyCollection, bool decrypt = true) {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
             var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
-                Recipients, Signatures, KeyCollection) {
+                Recipients, Signatures, KeyCollection, decrypt: decrypt) {
                 Salt = Salt
+                
                 };
             return CryptoStack;
             }
@@ -286,7 +277,7 @@ namespace Goedel.Cryptography.Dare {
         /// if null.</param>
         public void DecryptMaster(KeyCollection KeyCollection) {
             EncryptId = EncryptionAlgorithm.FromJoseID();
-            MasterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
+            masterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
             }
 
         /// <summary>
@@ -361,12 +352,21 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-    public partial class ContentInfo {
+    public partial class ContentMeta {
         const bool TagData = false;
 
-        public byte[] GetContentInfoData () => GetBytes(TagData);
+        /// <summary>
+        /// Encode the content metadata bytes.
+        /// </summary>
+        /// <returns>The serialized content metadata.</returns>
+        public byte[] GetContentMetaData () => GetBytes(TagData);
 
-        public static ContentInfo GetContentInfo(byte[] data) =>
+        /// <summary>
+        /// Decode the content metadata bytes
+        /// </summary>
+        /// <param name="data">The data to decode.</param>
+        /// <returns>The decoded data.</returns>
+        public static ContentMeta GetContentInfo(byte[] data) =>
             data == null ? null : FromJSON(data.JSONReader(), TagData);
 
         }

@@ -208,7 +208,7 @@ namespace Goedel.XUnit {
                     List<byte[]> DataSequences = null,
                     string contentType = null) {
             CryptoParameters = CryptoParameters ?? CryptoParametersNull;
-            var contentInfo = new ContentInfo() { ContentType = contentType };
+            var contentInfo = new ContentMeta() { ContentType = contentType };
             using (var InputStream = new MemoryStream(Plaintext)) {
 
                 using (var OutputStream = new MemoryStream()) {
@@ -227,12 +227,12 @@ namespace Goedel.XUnit {
                     List<byte[]> DataSequences = null,
                     string contentType = null) {
             CryptoParameters = CryptoParameters ?? CryptoParametersNull;
-            var contentInfo = new ContentInfo() { ContentType = contentType };
+            var contentInfo = new ContentMeta() { ContentType = contentType };
             using (var InputStream = new MemoryStream(Plaintext)) {
 
                 using (var OutputStream = new MemoryStream()) {
                     DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-                        contentInfo: contentInfo, dataSequences: DataSequences);
+                        contentMeta: contentInfo, dataSequences: DataSequences);
 
                     var MessageBytes = OutputStream.ToArray();
                     CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);

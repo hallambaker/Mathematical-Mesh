@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
         /// <param name="dareMessage"></param>
         public void Add(DareEnvelope dareMessage) =>
             // NYI: If the message is signed or encrypted, these enhancements should be carried over
-            Container.Append(dareMessage.Body, null, dareMessage.Header.ContentInfo);
+            Container.Append(dareMessage.Body, null, dareMessage.Header.ContentMeta);
 
 
 

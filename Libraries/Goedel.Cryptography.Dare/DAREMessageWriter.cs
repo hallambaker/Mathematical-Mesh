@@ -97,76 +97,76 @@ namespace Goedel.Cryptography.Dare {
         #endregion
 
 
-        JSONWriter OutputStream = null;
-        CryptoStackStreamWriter CryptoStackStreamWriter;
+        /// <summary>
+        /// The class specific disposal routine.
+        /// </summary>
+        protected virtual void Disposing() => Close();
+
+        JSONWriter outputStream;
+        CryptoStackStreamWriter cryptoStackStreamWriter;
 
         #region // Convenience constructors
         /// <summary>
         /// Create a writer to output a DARE Message to a stream.
         /// </summary>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="OutputStream">The stream to which the output will be written.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="ContentLength">The content length. This value is ignored if the Plaintext
+        /// <param name="outputStream">The stream to which the output will be written.</param>
+        /// <param name="contentMeta">The Content metadata</param>
+        /// <param name="contentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>
-        /// <param name="fileName">The file name to be specified in the message header.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public DareEnvelopeWriter(
-                    CryptoParameters CryptoParameters,
-                    Stream OutputStream,
-                    ContentInfo contentInfo=null,
-                    long ContentLength = -1,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null) : this(CryptoParameters,
-                        new JSONWriter(OutputStream), contentInfo, ContentLength, Cloaked, DataSequences) {
+                    CryptoParameters cryptoParameters,
+                    Stream outputStream,
+                    ContentMeta contentMeta=null,
+                    long contentLength = -1,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null) : this(cryptoParameters,
+                        new JSONWriter(outputStream), contentMeta, contentLength, cloaked, dataSequences) {
             }
         #endregion
 
         /// <summary>
         /// Create a writer to output a DARE Message to a stream.
         /// </summary>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
-        /// <param name="OutputStream">The stream to which the output will be written.</param>
-        /// <param name="ContentType">The payload content type.</param>
-        /// <param name="ContentLength">The content length. This value is ignored if the Plaintext
+        /// <param name="outputStream">The stream to which the output will be written.</param>
+        /// <param name="contentMeta">The Content metadata</param>
+        /// <param name="contentLength">The content length. This value is ignored if the Plaintext
         /// parameter is not null. If the value is less than 0, chunked encoding
         /// will be used for the payload data. </param>
-        /// <param name="fileName">The file name to be specified in the message header.</param>
-        /// <param name="Cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        /// <param name="DataSequences">Data sequences to be converted to an EDS and presented 
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public DareEnvelopeWriter(
-                    CryptoParameters CryptoParameters,
-                    JSONWriter OutputStream,
-                    ContentInfo contentInfo = null,
-                    long ContentLength = -1,
-                    byte[] Cloaked = null,
-                    List<byte[]> DataSequences = null) {
-            this.OutputStream = OutputStream;
+                    CryptoParameters cryptoParameters,
+                    JSONWriter outputStream,
+                    ContentMeta contentMeta = null,
+                    long contentLength = -1,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null) {
+            this.outputStream = outputStream;
 
-            var CryptoStack = CryptoParameters.GetCryptoStack();
-            var Header = new DareHeader(CryptoStack, contentInfo, Cloaked, DataSequences);
+            var CryptoStack = cryptoParameters.GetCryptoStack();
+            var Header = new DareHeader(CryptoStack, contentMeta, cloaked, dataSequences);
 
-            OutputStream.WriteArrayStart();
-            Header.Serialize(OutputStream, false);
-            OutputStream.WriteArraySeparator();
+            outputStream.WriteArrayStart();
+            Header.Serialize(outputStream, false);
+            outputStream.WriteArraySeparator();
 
-            CryptoStackStreamWriter = Header.CryptoStack.GetEncoder(
-                    OutputStream.Output, PackagingFormat.EDS, ContentLength);
-            Writer = CryptoStackStreamWriter.Writer;
+            cryptoStackStreamWriter = Header.CryptoStack.GetEncoder(
+                    outputStream.Output, PackagingFormat.EDS, contentLength);
+            writer = cryptoStackStreamWriter.Writer;
             }
 
-        Stream Writer;
+        Stream writer;
 
-        /// <summary>
-        /// The class specific disposal routine.
-        /// </summary>
-        protected virtual void Disposing() => Close();
+
 
         /// <summary>
         /// Write data to the output stream.
@@ -177,7 +177,7 @@ namespace Goedel.Cryptography.Dare {
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer, int offset, int count) =>
-            Writer.Write(buffer, offset, count);
+            writer.Write(buffer, offset, count);
 
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace Goedel.Cryptography.Dare {
         public override void Close() {
 
             // write out the trailer
-            CryptoStackStreamWriter.Close();
+            cryptoStackStreamWriter.Close();
 
             // Close the message sequence.
-            OutputStream.WriteArrayEnd();
+            outputStream.WriteArrayEnd();
 
             // Force writes to the output stream.
             Flush();
@@ -203,7 +203,7 @@ namespace Goedel.Cryptography.Dare {
         /// Clears all buffers for this stream and causes any buffered data to be written 
         /// to the underlying device.
         /// </summary>
-        public override void Flush() => OutputStream.Flush();
+        public override void Flush() => outputStream.Flush();
 
 
         }

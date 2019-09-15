@@ -145,7 +145,7 @@ namespace Goedel.Cryptography.Dare {
             }
         DareHeader containerHeader = null;
 
-
+        ///<summary>Convenience accessor for the ContainerInfo field of the container.</summary>
         protected ContainerInfo ContainerInfo => ContainerHeader?.ContainerInfo;
 
 
@@ -156,13 +156,13 @@ namespace Goedel.Cryptography.Dare {
         public DareHeader ContainerHeaderFirst { get; protected set; }
 
 
-        protected ContainerInfo ContainerInfoFirst => ContainerHeaderFirst.ContainerInfo;
+        //protected ContainerInfo ContainerInfoFirst => ContainerHeaderFirst.ContainerInfo;
 
         ///<summary>The last container header.</summary>
         public DareHeader DareHeaderFinal { get; protected set; }
 
 
-        protected ContainerInfo ContainerInfoLast => DareHeaderFinal.ContainerInfo;
+        //protected ContainerInfo ContainerInfoLast => DareHeaderFinal.ContainerInfo;
 
         /// <summary>
         /// The underlying stream reader/writer for the container. This will be disposed of when
@@ -210,6 +210,8 @@ namespace Goedel.Cryptography.Dare {
         /// not already exist.</param>
         /// <param name="contentType">The content type to declare if a new container is
         /// created.</param>
+        /// <param name="decrypt">If true, enable decryption of container payload,
+        /// otherwise return payload contents as plaintext.</param>
         /// <returns>The new container.</returns>
         public static Container Open(
                         string fileName,
@@ -217,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
                         KeyCollection keyCollection = null,
                         CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
-                        string contentType = null) {
+                        string contentType = null, bool decrypt = true) {
 
             var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
 
@@ -234,7 +236,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 else {
                     keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
-                    Container = OpenExisting(jbcdStream, keyCollection);
+                    Container = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
 
                     }
                 Container.DisposeJBCDStream = jbcdStream;
@@ -273,7 +275,14 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         protected KeyCollection KeyCollection;
 
-
+        /// <summary>
+        /// Open an existing container file.
+        /// </summary>
+        /// <param name="fileName">The file to open as a container.</param>
+        /// <param name="fileStatus">The file status.</param>
+        /// <param name="keyCollection">The key collection to be used to decrypt the contents
+        /// of the container.</param>
+        /// <returns>The container object if found. Otherwise, an exception is thrown.</returns>
         public static Container OpenExisting(
                 string fileName,
                 FileStatus fileStatus = FileStatus.Read,
@@ -291,10 +300,12 @@ namespace Goedel.Cryptography.Dare {
         /// method to create the class it is not disposed with the container using it.</param>
         /// <param name="keyCollection">The key collection to be used to resolve requests
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
+        /// <param name="decrypt">If true, enable decryption of container payload,
+        /// otherwise return payload contents as plaintext.</param>
         /// <returns></returns>
         public static Container OpenExisting(
                         JBCDStream jbcdStream,
-                        KeyCollection keyCollection = null) {
+                        KeyCollection keyCollection = null, bool decrypt = true) {
 
             // Initialize frame zero
             var frameZero = jbcdStream.ReadDareEnvelope();
@@ -317,7 +328,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             var containerInfo = containerHeaderFirst.ContainerInfo;
-            var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection);
+            var cryptoStack = containerHeaderFirst.GetCryptoStack(keyCollection, decrypt: decrypt);
 
             var positionFinalFrameStart = jbcdStream.StartLastFrameRead;
 
@@ -484,7 +495,7 @@ namespace Goedel.Cryptography.Dare {
 
             containerInfoFirst.DataEncoding = dataEncoding.ToString();
 
-            containerHeaderFirst.ContentInfo = new ContentInfo() {
+            containerHeaderFirst.ContentMeta = new ContentMeta() {
                 ContentType = contentType
                 };
 
@@ -563,6 +574,14 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        /// <summary>
+        /// Create a new container with the name <paramref name="fileName"/> and
+        /// append <paramref name="envelopes"/> to the end of the container.
+        /// </summary>
+        /// <param name="fileName">Name of the container to create</param>
+        /// <param name="envelopes">Envelopes to add</param>
+        /// <param name="fileStatus">File status (used for concurrency locking)</param>
+        /// <returns>The created container</returns>
         public static Container MakeNewContainer(
                         string fileName,
                         List<DareEnvelope> envelopes,
@@ -577,7 +596,12 @@ namespace Goedel.Cryptography.Dare {
             return container;
             }
 
-
+        /// <summary>
+        /// Create a new container matching the features specified in <paramref name="header"/>.
+        /// </summary>
+        /// <param name="jbcdStream">The stream to be written to.</param>
+        /// <param name="header">The header to use to specity the parameters.</param>
+        /// <returns>The created container</returns>
         public static Container MakeNewContainer(
                         JBCDStream jbcdStream,
                         DareHeader header) {
@@ -681,7 +705,7 @@ namespace Goedel.Cryptography.Dare {
         public void Append(List<DareEnvelope> envelopes, int index=0) {
 
             for (var i = index; i < envelopes.Count; i++) {
-                Console.WriteLine($"Container Append #{i}  Write:{JBCDStream.PositionWrite} ");
+                //Console.WriteLine($"Container Append #{i}  Write:{JBCDStream.PositionWrite} ");
 
 
                 Append(envelopes[i]);
@@ -705,7 +729,7 @@ namespace Goedel.Cryptography.Dare {
 
             contextWrite.CommitFrame(envelope.Trailer);
 
-            Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
+            //Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
 
             //Apply(header, envelope.Body, envelope.Trailer);
             var dataHeader = envelope.Header.GetBytes(false);
@@ -716,19 +740,21 @@ namespace Goedel.Cryptography.Dare {
             
             }
 
+        /// <summary>
+        /// Prepare the container frame information in <paramref name="containerInfo"/>.
+        /// </summary>
+        /// <param name="containerInfo">The container information to be prepared.</param>
         protected virtual void PrepareFrame(ContainerInfo containerInfo) {
             }
 
 
-        ///// <summary>
-        ///// Obtain a reader stream for the current frame data.
-        ///// </summary>
-        ///// <param name="index">The container index to be read.</param>
-        ///// <param name="position">The byte offset within the file from which to read.</param>
-        ///// <returns>The reader stream created.</returns>
-        //public abstract ContainerFrameReader GetFrameDataReader(
-        //        long index = -1, long position = -1);
-
+        /// <summary>
+        /// Obtain a ContainerFrameIndex instance for <paramref name="index"/> if
+        /// specified or <paramref name="position"/> otherwise.
+        /// </summary>
+        /// <param name="index">The container index to obtain the frame index for.</param>
+        /// <param name="position">The container position to obtain the frame index for.</param>
+        /// <returns>The created ContainerFrameIndex instance,</returns>
         public abstract ContainerFrameIndex GetContainerFrameIndex(
             long index = -1, long position = -1);
 
@@ -751,7 +777,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The number of bytes written.</returns>
         public void Append(byte[] data,
             CryptoParameters cryptoParameters = null,
-            ContentInfo contentInfo = null,
+            ContentMeta contentInfo = null,
 
                         string contentType = null,
                         byte[] cloaked = null,
@@ -778,7 +804,7 @@ namespace Goedel.Cryptography.Dare {
         ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
         public void AppendFile(string fileName,
-                ContentInfo contentInfo = null,
+                ContentMeta contentInfo = null,
                 CryptoParameters cryptoParameters = null,
                 string contentType = null,
                 byte[] cloaked = null,
@@ -809,7 +835,7 @@ namespace Goedel.Cryptography.Dare {
         /// which is an issue that has to be removed.</remarks>
         public void AppendFromStream(Stream input,
                 long contentLength,
-                ContentInfo contentInfo = null,
+                ContentMeta contentInfo = null,
                 CryptoParameters cryptoParameters = null,
                 string contentType = null,
                 byte[] cloaked = null,
@@ -851,13 +877,13 @@ namespace Goedel.Cryptography.Dare {
                         long contentLength,
                         out CryptoStack cryptoStack,
                         CryptoParameters cryptoParametersFrame = null,
-                        ContentInfo contentInfo = null,
+                        ContentMeta contentInfo = null,
                         string contentType = null,
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
             cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
-            contentInfo = contentInfo ?? new ContentInfo() {
+            contentInfo = contentInfo ?? new ContentMeta() {
                 ContentType = contentType
                 };
 
@@ -867,7 +893,7 @@ namespace Goedel.Cryptography.Dare {
 
             var appendContainerHeader = new DareHeader() {
                 ContainerInfo = containerInfo,
-                ContentInfo = contentInfo
+                ContentMeta = contentInfo
                 };
             appendContainerHeader.ApplyCryptoStack(cryptoStack, cloaked, dataSequences);
 
@@ -905,10 +931,20 @@ namespace Goedel.Cryptography.Dare {
             contextWrite.CommitFrame(trailer);
             }
 
-
+        /// <summary>
+        /// Create a DareEnvelope to be added to the container in deferred write mode.
+        /// </summary>
+        /// <param name="contextWrite">The container write context the envelope is to be written in.</param>
+        /// <param name="contentInfo">The content metadata.</param>
+        /// <param name="data">The data plaintext payload.</param>
+        /// <param name="cryptoParametersFrame">The cryptographic parameters.</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        /// <returns>The created envelope</returns>
         public DareEnvelope Defer(
             ContainerWriterDeferred contextWrite,
-            ContentInfo contentInfo,
+            ContentMeta contentInfo,
             byte[] data,
             CryptoParameters cryptoParametersFrame = null,
             byte[] cloaked = null,
@@ -975,6 +1011,11 @@ namespace Goedel.Cryptography.Dare {
 
         #region // Abstract and Virtual methods
 
+        /// <summary>
+        /// Return the header of frame with index <paramref name="frame"/>.
+        /// </summary>
+        /// <param name="frame">The index of the frame to be returned.</param>
+        /// <returns>The requested header.</returns>
         public DareHeader GetHeader(int frame) {
             throw new NYI();
             }

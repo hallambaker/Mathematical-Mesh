@@ -168,6 +168,8 @@ namespace Goedel.XUnit {
                 AccountAlice, PIN: PIN.PIN);
 
             // Admin Device
+            contextAccountAlice.Sync();
+
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
             contextAccountAlice.Process(connectRequest);
 

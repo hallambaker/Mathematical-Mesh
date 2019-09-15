@@ -61,7 +61,7 @@ namespace Goedel.Cryptography.Dare {
 			{"DareEnvelopeSequence", DareEnvelopeSequence._Factory},
 			{"DareTrailer", DareTrailer._Factory},
 			{"DareHeader", DareHeader._Factory},
-			{"ContentInfo", ContentInfo._Factory},
+			{"ContentMeta", ContentMeta._Factory},
 			{"DareSigner", DareSigner._Factory},
 			{"X509Certificate", X509Certificate._Factory},
 			{"DareSignature", DareSignature._Factory},
@@ -466,12 +466,6 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual List<byte[]>				EDSS  {get; set;}
         /// <summary>
-        ///If present contains a JSON encoded ContentInfo structure which specifies
-        ///plaintext content metadata and forms one of the inputs to the envelope digest value.
-        /// </summary>
-
-		public virtual byte[]						ContentInfoData  {get; set;}
-        /// <summary>
         ///A list of 'presignature'
         /// </summary>
 
@@ -481,6 +475,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<DareRecipient>				Recipients  {get; set;}
+        /// <summary>
+        ///If present contains a JSON encoded ContentInfo structure which specifies
+        ///plaintext content metadata and forms one of the inputs to the envelope digest value.
+        /// </summary>
+
+		public virtual byte[]						ContentMetaData  {get; set;}
         /// <summary>
         ///Information that describes container information
         /// </summary>
@@ -573,11 +573,6 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (ContentInfoData != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ContentInfoData", 1);
-					_Writer.WriteBinary (ContentInfoData);
-				}
 			if (Signers != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("signatures", 1);
@@ -612,6 +607,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (ContentMetaData != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ContentMetaData", 1);
+					_Writer.WriteBinary (ContentMetaData);
+				}
 			if (ContainerInfo != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("ContainerInfo", 1);
@@ -686,10 +686,6 @@ namespace Goedel.Cryptography.Dare {
 						}
 					break;
 					}
-				case "ContentInfoData" : {
-					ContentInfoData = JSONReader.ReadBinary ();
-					break;
-					}
 				case "signatures" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -716,6 +712,10 @@ namespace Goedel.Cryptography.Dare {
 						Recipients.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "ContentMetaData" : {
+					ContentMetaData = JSONReader.ReadBinary ();
 					break;
 					}
 				case "ContainerInfo" : {
@@ -745,7 +745,7 @@ namespace Goedel.Cryptography.Dare {
 
 	/// <summary>
 	/// </summary>
-	public partial class ContentInfo : Dare {
+	public partial class ContentMeta : Dare {
         /// <summary>
         ///Unique object identifier
         /// </summary>
@@ -820,13 +820,13 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ContentInfo";
+		public new const string __Tag = "ContentMeta";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContentInfo();
+		public static new JSONObject _Factory () => new ContentMeta();
 
 
         /// <summary>
@@ -946,15 +946,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContentInfo FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ContentMeta FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContentInfo;
+				return Out as ContentMeta;
 				}
-		    var Result = new ContentInfo ();
+		    var Result = new ContentMeta ();
 			Result.Deserialize (JSONReader);
 			Result.PostDecode();
 			return Result;

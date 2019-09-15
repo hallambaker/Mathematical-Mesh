@@ -58,8 +58,8 @@ namespace Goedel.Mesh {
 
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, bool readContainer = true) :
-                base(directory, containerName, cryptoParameters, keyCollection) {
+                    KeyCollection keyCollection = null, bool readContainer = true, bool decrypt=true) :
+                base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt) {
             ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
             //TransactDelegate = Transact;
             }
@@ -87,7 +87,7 @@ namespace Goedel.Mesh {
 
 
         public static ContainerStatus Status(string directory, string containerName) {
-            using (var container = new Catalog(directory, containerName)) {
+            using (var container = new Catalog(directory, containerName, decrypt:false)) {
 
                 return new ContainerStatus() {
                     Index = (int)container.ContainerPersistence.FrameCount,
@@ -99,7 +99,7 @@ namespace Goedel.Mesh {
 
 
         DareEnvelope MakeFrame(
-                ContentInfo containerHeader,
+                ContentMeta containerHeader,
                 JSONObject item) {
 
             throw new NYI();
@@ -156,6 +156,11 @@ namespace Goedel.Mesh {
             }
 
         public virtual bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+
+            /// if we are connected to a service, perfom the update here.
+
+
+
             foreach (var update in updates) {
                 switch (update.Action) {
                     case CatalogAction.New: {

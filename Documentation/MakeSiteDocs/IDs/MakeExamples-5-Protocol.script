@@ -72,7 +72,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolAccountDelete "Examples\\ProtocolAccountDelete.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 
 
 The request payload:
@@ -88,7 +88,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolStatus "Examples\\ProtocolStatus.md" Example
-#% if (ExampleInvalid (Example.ProfileSync)) return;
+#% if (ExampleInvalid (Example.ProfileSync)) {return;}
 
 The request payload:
 
@@ -102,7 +102,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolDownload "Examples\\ProtocolDownload.md" Example
-#% if (ExampleInvalid (Example.ProfileSync, 0, 1)) return;
+#% if (ExampleInvalid (Example.ProfileSync, 0, 1)) {return;}
 
 The request payload:
 
@@ -116,7 +116,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolUpload "Examples\\ProtocolUpload.md" Example
-#% if (ExampleInvalid (Example.ProfileSync, 0, 2)) return;
+#% if (ExampleInvalid (Example.ProfileSync, 0, 2)) {return;}
 
 The request payload:
 
@@ -130,7 +130,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolConnect "Examples\\ProtocolConnect.md" Example
-#% if (ExampleInvalid (Example.ConnectRequest, 0)) return;
+#% if (ExampleInvalid (Example.ConnectRequest, 0)) {return;}
 
 The request payload:
 
@@ -144,7 +144,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolConnectPIN "Examples\\ProtocolConnectPIN.md" Example
-#% if (ExampleInvalid (Example.ConnectPin, 0)) return;
+#% if (ExampleInvalid (Example.ConnectPin, 0)) {return;}
 
 The request payload:
 
@@ -159,7 +159,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolConnectEARL "Examples\\ProtocolConnectEARL.md" Example
-#% if (ExampleInvalid (Example.DeviceEarl1, 0)) return;
+#% if (ExampleInvalid (Example.DeviceEarl1, 0)) {return;}
 
 The request payload:
 
@@ -174,7 +174,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostClientService "Examples\\ProtocolPostClientService.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 
 
 The request payload:
@@ -189,7 +189,7 @@ The response payload:
 
 
 #zfile CreateExamples ProtocolPostServiceService "Examples\\ProtocolPostServiceService.md" Example
-#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) return;
+#% if (ExampleInvalid (Example.CommandsDeleteServiceAlice, 0)) {return;}
 
 [Not Yet Implemented]
 

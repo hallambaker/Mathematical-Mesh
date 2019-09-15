@@ -53,22 +53,22 @@ namespace ExampleGenerator {
 
             }
 
-        public static byte[] TestData(int MaxSize) {
-            var Data = new byte[MaxSize];
-            for (var i = 0; i < MaxSize; i++) {
+        public static byte[] TestData(int maxSize) {
+            var Data = new byte[maxSize];
+            for (var i = 0; i < maxSize; i++) {
                 Data[i] = (byte)(i & 0xff);
                 }
             return Data;
             }
 
-        public List<ContainerFrame> ReadContainer(Container Container) {
+        public List<ContainerFrame> ReadContainer(Container container) {
             var ContainerHeaders = new List<ContainerFrame> {
                 new ContainerFrame {
-                    Header = Container.ContainerHeaderFirst
+                    Header = container.ContainerHeaderFirst
                     }
                 };
             //Console.WriteLine($"First Frame {Container.ContainerHeader}");
-            foreach (var ContainerDataReader in Container) {
+            foreach (var ContainerDataReader in container) {
                 ContainerHeaders.Add(new ContainerFrame {
                     Header = ContainerDataReader.Header,
                     Trailer = ContainerDataReader.Trailer
@@ -79,17 +79,17 @@ namespace ExampleGenerator {
             }
 
 
-        byte[] ReadBinary(JBCDStream JBCDStream) {
-            JBCDStream.ReadTag(out var Code, out var Length);
+        byte[] ReadBinary(JBCDStream jBCDStream) {
+            jBCDStream.ReadTag(out _, out var Length);
             var Result = new byte[Length];
-            JBCDStream.Read(Result, 0, (int)Length);
+            jBCDStream.Read(Result, 0, (int)Length);
             return Result;
             }
 
-        string ReadEDS(byte[] Data) {
+        string ReadEDS(byte[] data) {
             var TextWriter = new StringWriter();
 
-            using (var Input = new MemoryStream(Data)) {
+            using (var Input = new MemoryStream(data)) {
                 using (var JBCDStream = new JBCDStreamDebug(Input, TextWriter)) {
 
                     var Salt = ReadBinary(JBCDStream);
@@ -118,15 +118,15 @@ namespace ExampleGenerator {
                 return Builder.ToString();
                 }
 
-            public DareEnvelope GetDAREMessage(CryptoParameters CryptoParameters) {
+            public DareEnvelope GetDAREMessage(CryptoParameters cryptoParameters) {
                 var Data = new List<byte[]>() {
                 MakeData("From", From),MakeData("To", To),MakeData("Subject", Subject)
                 };
 
-                var contentInfo = new ContentInfo() { ContentType = "application/example-mail" };
+                var contentInfo = new ContentMeta() { ContentType = "application/example-mail" };
 
-                return new DareEnvelope(CryptoParameters, Body.ToUTF8(),
-                    contentInfo: contentInfo, dataSequences: Data);
+                return new DareEnvelope(cryptoParameters, Body.ToUTF8(),
+                    contentMeta: contentInfo, dataSequences: Data);
                 }
 
 
@@ -181,7 +181,7 @@ namespace ExampleGenerator {
 
         public string ContainerFramingEncrypted = "";
         public string ContainerFramingEncryptedIndependent;
-        byte[] TestData300 = TestData(300);
+        byte[] testData300 = TestData(300);
 
         public string AccountAlice = "alice@example.com";
 
@@ -193,9 +193,9 @@ namespace ExampleGenerator {
 
         public CryptoStackDebug CryptoStackEncrypt;
 
-        KeyCollection KeyCollection;
+        KeyCollection keyCollection;
 
-        List<byte[]> DataSequences;
+        List<byte[]> dataSequences;
 
 
         public string MailMessageAsRFC822;
@@ -214,44 +214,44 @@ namespace ExampleGenerator {
 
             // Simple
             var TContainer = MakeContainer("Test1List", CryptoParametersPlaintext, ContainerType.List);
-            TContainer.Append(TestData300);
+            TContainer.Append(testData300);
             ContainerHeadersSimple = ReadContainer(TContainer);
             ContainerFramingSimple = ConsoleWriter.ToString();
 
 
             // Digest
             TContainer = MakeContainer("Test1Chain", CryptoParametersPlaintext, ContainerType.Chain);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
             ContainerHeadersChain = ReadContainer(TContainer);
 
 
             // Tree
             TContainer = MakeContainer("Test1Tree", CryptoParametersPlaintext, ContainerType.Tree);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
             ContainerHeadersTree = ReadContainer(TContainer);
 
 
             // Merkle Tree
             TContainer = MakeContainer("Test1Merkle", CryptoParametersPlaintext, ContainerType.MerkleTree);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300);
             ContainerHeadersMerkleTree = ReadContainer(TContainer);
 
 
             TContainer = MakeContainer("Test1Sign", CryptoParametersPlaintext, ContainerType.MerkleTree);
-            TContainer.Append(TestData300);
-            TContainer.Append(TestData300, CryptoParametersSign);
+            TContainer.Append(testData300);
+            TContainer.Append(testData300, CryptoParametersSign);
             ContainerHeadersSigned = ReadContainer(TContainer);
 
 
@@ -280,26 +280,26 @@ namespace ExampleGenerator {
             SignatureAliceKey = Key.GetPrivate(SignatureAliceKeyPair);
 
 
-            KeyCollection = new KeyCollectionTest(Machine1);
-            KeyCollection.Add(DareMessageAlicePrivateKeyPair);
-            KeyCollection.Add(SignatureAliceKeyPair);
+            keyCollection = new KeyCollectionTest(Machine1);
+            keyCollection.Add(DareMessageAlicePrivateKeyPair);
+            keyCollection.Add(SignatureAliceKeyPair);
 
             // Initialize the crypto parameters.
 
             var Accounts = new List<string> { AccountAlice };
             CryptoParametersPlaintext = new CryptoParameters(
-                        keyCollection: KeyCollection);
+                        keyCollection: keyCollection);
 
             CryptoParametersEncrypt = new CryptoParameters(
-                        keyCollection: KeyCollection,
+                        keyCollection: keyCollection,
                         recipients: Accounts);
 
             CryptoParametersSign = new CryptoParameters(
-                        keyCollection: KeyCollection,
+                        keyCollection: keyCollection,
                         signers: Accounts);
 
             CryptoParametersSignEncrypt = new CryptoParameters(
-                        keyCollection: KeyCollection,
+                        keyCollection: keyCollection,
                         recipients: Accounts,
                         signers: Accounts);
 
@@ -307,7 +307,7 @@ namespace ExampleGenerator {
 
 
             // Data Sequences
-            DataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
+            dataSequences = new List<byte[]> { DareMessageTest2, DareMessageTest3 };
 
             // Dummy Mail Message
             var MailMessage = new MailMessage();
@@ -327,7 +327,7 @@ namespace ExampleGenerator {
             DAREMessageAtomic = new DareEnvelope(CryptoParametersPlaintext, DareMessageTest1);
 
             // Plaintext atomic EDS
-            MessageAtomicDS = new DareEnvelope(CryptoParametersPlaintext, DareMessageTest1, dataSequences: DataSequences);
+            MessageAtomicDS = new DareEnvelope(CryptoParametersPlaintext, DareMessageTest1, dataSequences: dataSequences);
 
             DAREMessageAtomicSign = new DareEnvelope(CryptoParametersSign, DareMessageTest1);
             DAREMessageAtomicSignEncrypt = new DareEnvelope(CryptoParametersSignEncrypt, DareMessageTest1);
@@ -348,16 +348,16 @@ namespace ExampleGenerator {
         void GoDareContainer() {
             // Encrypt a set of data under one key exchange.
             var EncryptingContainer = MakeContainer("Test1Enc", CryptoParametersEncrypt, ContainerType.List);
-            EncryptingContainer.Append(TestData300);
-            EncryptingContainer.Append(TestData300);
+            EncryptingContainer.Append(testData300);
+            EncryptingContainer.Append(testData300);
             ContainerHeadersEncryptSingleSession = ReadContainer(EncryptingContainer);
             ContainerFramingEncrypted = ConsoleWriter.ToString();
 
 
             // Encrypt a sequence of items with a key exchange per item.
             var EncryptedContainer = MakeContainer("Test1EncSep", CryptoParametersPlaintext, ContainerType.List);
-            EncryptedContainer.Append(TestData300, cryptoParameters: CryptoParametersEncrypt);
-            EncryptedContainer.Append(TestData300, cryptoParameters: CryptoParametersEncrypt);
+            EncryptedContainer.Append(testData300, cryptoParameters: CryptoParametersEncrypt);
+            EncryptedContainer.Append(testData300, cryptoParameters: CryptoParametersEncrypt);
             ContainerHeadersEncryptIndependentSession = ReadContainer(EncryptedContainer);
             ContainerFramingEncryptedIndependent = ConsoleWriter.ToString();
             }

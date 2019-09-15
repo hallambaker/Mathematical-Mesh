@@ -66,8 +66,8 @@ namespace ExampleGenerator {
                 as KeyPairEd25519;
 
             var test = PublicKeyed25519.KeyInfoData;
-            var testder = test.DER();
-            var testudf = PublicKeyed25519.UDF;
+            test.DER();
+            var _ = PublicKeyed25519.UDF;
             }
 
 

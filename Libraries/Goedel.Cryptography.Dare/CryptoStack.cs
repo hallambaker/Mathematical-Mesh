@@ -190,12 +190,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient information</param>
         /// <param name="Signatures">The message signatures.</param>
         /// <param name="KeyCollection">The key collection to be used to resolve private keys.</param>
+        /// <param name="decrypt">If true, prepare to decrypt the payload.</param>
         public CryptoStack(
                 CryptoAlgorithmID EncryptID = CryptoAlgorithmID.NULL,
                 CryptoAlgorithmID Digest = CryptoAlgorithmID.NULL,
                 List<DareRecipient> Recipients = null,
                 List<DareSignature> Signatures = null,
-                KeyCollection KeyCollection = null
+                KeyCollection KeyCollection = null, bool decrypt = true
                 ) {
             this.EncryptID = EncryptID;
             this.DigestID = Digest;
@@ -203,7 +204,7 @@ namespace Goedel.Cryptography.Dare {
 
             KeyCollection = KeyCollection ?? KeyCollection.Default;
 
-            if (Recipients != null) {
+            if (Recipients != null & decrypt) {
                 MasterSecret = KeyCollection.Decrypt(Recipients, EncryptID);
                 }
 
@@ -523,13 +524,16 @@ namespace Goedel.Cryptography.Dare {
 
         CryptoProviderDigest DigestProvider {
             get {
-                _DigestProvider = _DigestProvider ?? CryptoCatalog.Default.GetDigest(DigestID);
-                return _DigestProvider;
+                digestProvider = digestProvider ?? CryptoCatalog.Default.GetDigest(DigestID);
+                return digestProvider;
                 }
             }
-        CryptoProviderDigest _DigestProvider;
+        CryptoProviderDigest digestProvider;
 
-        //byte[] NullDigest => DigestProvider.NullDigest;
+        /// <summary>
+        /// Get a trailer for an empty payload.
+        /// </summary>
+        /// <returns>The trailer with a null digest value.</returns>
         public DareTrailer GetNullTrailer() => new DareTrailer() {
             PayloadDigest = DigestProvider.NullDigest
             };

@@ -84,12 +84,12 @@ namespace Goedel.Mesh {
                 EncryptionKeys = new List<KeyPair> { encryptDevice , encryptAdmin } 
                 };
 
-            var contentInfo = new Goedel.Cryptography.Dare.ContentInfo() { ContentType = "application/mmm" };
+            var contentInfo = new Goedel.Cryptography.Dare.ContentMeta() { ContentType = "application/mmm" };
 
             this.DareEnvelope = new DareEnvelope(
                 cryptoParameters,
                 GetBytes(tag: true),
-                contentInfo: contentInfo);
+                contentMeta: contentInfo);
 
             return DareEnvelope;
             }

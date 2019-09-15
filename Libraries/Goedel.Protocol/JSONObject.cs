@@ -117,6 +117,10 @@ namespace Goedel.Protocol {
         public void AddDictionary(
                     Dictionary<string, JSONFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
 
+        /// <summary>
+        /// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
+        /// </summary>
+        /// <param name="dictionary">The dictionary to append the values to.</param>
         public static void AddDictionary(
             ref Dictionary<string, JSONFactoryDelegate> dictionary) {
             if (dictionary != TagDictionary) {
@@ -190,9 +194,21 @@ namespace Goedel.Protocol {
                 }
             }
 
-
+        /// <summary>
+        /// Routine called before serializing the data structure. This may be used to perform
+        /// tasks such as serializing a sub-field to a byte array and/or signing subfields.
+        /// </summary>
+        /// <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
+        /// when debugging. </remarks>
         public virtual void PreEncode() {
             }
+
+        /// <summary>
+        /// Routine called afer deserializing the wire form. This may be used to cause deserialization
+        /// of nested binary fields.
+        /// </summary>
+        /// <remarks>There is a potential for conflict between PostDecode and PreEncode, particularly
+        /// when debugging. </remarks>
         public virtual void PostDecode() {
             }
 

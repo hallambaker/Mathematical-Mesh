@@ -209,9 +209,9 @@ executed without any output being made to the console.
 
 #block "Check example"
 #% public bool ExampleInvalid(List<ExampleResult> examples, int item=0, int trace=0) {
-#% if (examples == null) return true;
-#% if (item >= examples.Count-1 ) return true;
-#% if (trace >= examples[item].Traces.Count-1 ) return true;
+#% if (examples == null) {return true;}
+#% if (item >= examples.Count-1 ) {return true;}
+#% if (trace >= examples[item].Traces.Count-1 ) {return true;}
 
 ~~~~
 [Example missing]
