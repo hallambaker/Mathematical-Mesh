@@ -31,7 +31,7 @@ namespace Goedel.Mesh.Shell {
 
                 return new ResultCreatePersonal() {
                     Success = true,
-                    ProfilePersonal = contextMesh.ProfileMesh,
+                    ProfileMesh = contextMesh.ProfileMesh,
                     CatalogedDevice = contextMesh.CatalogedDevice,
                     MeshUDF = contextMesh.ProfileMesh.UDF,
                     DeviceUDF = contextMesh.CatalogedDevice.UDF
@@ -107,7 +107,7 @@ namespace Goedel.Mesh.Shell {
                 "recover subordinate accounts, etc.".TaskFunctionality();
                 return new ResultRecover() {
                     Success = true,
-                    ProfilePersonal = contextMesh.ProfileMesh,
+                    ProfileMesh = contextMesh.ProfileMesh,
                     CatalogedDevice = contextMesh.CatalogedDevice,
                     MeshUDF = contextMesh.ProfileMesh.UDF,
                     DeviceUDF = contextMesh.CatalogedDevice.UDF

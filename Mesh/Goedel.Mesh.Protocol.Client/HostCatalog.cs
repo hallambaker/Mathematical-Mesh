@@ -111,6 +111,16 @@ namespace Goedel.Mesh.Client {
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedProfileMaster  {get; set;}
+        /// <summary>
+        ///The cataloged device profile
+        /// </summary>
+
+		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+        /// <summary>
+        ///The accounts to which this Mesh is connected
+        /// </summary>
+
+		public virtual List<DareEnvelope>				EnvelopedProfileAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -174,6 +184,28 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("EnvelopedProfileMaster", 1);
 					EnvelopedProfileMaster.Serialize (_Writer, false);
 				}
+			if (CatalogedDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("CatalogedDevice", 1);
+					CatalogedDevice.Serialize (_Writer, false);
+				}
+			if (EnvelopedProfileAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EnvelopedProfileAccount) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -226,6 +258,27 @@ namespace Goedel.Mesh.Client {
  
 					break;
 					}
+				case "CatalogedDevice" : {
+					// An untagged structure
+					CatalogedDevice = new CatalogedDevice ();
+					CatalogedDevice.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedProfileAccount" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					EnvelopedProfileAccount = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new DareEnvelope (JSONReader);
+						EnvelopedProfileAccount.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					break;
 					}
@@ -241,11 +294,6 @@ namespace Goedel.Mesh.Client {
 	/// Describes an ordinary device connected to a Mesh
 	/// </summary>
 	public partial class CatalogedStandard : CatalogedMachine {
-        /// <summary>
-        ///The device entry containing the full account binding information.
-        /// </summary>
-
-		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -290,11 +338,6 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
-			if (CatalogedDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogedDevice", 1);
-					CatalogedDevice.Serialize (_Writer, false);
-				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -328,13 +371,6 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "CatalogedDevice" : {
-					// An untagged structure
-					CatalogedDevice = new CatalogedDevice ();
-					CatalogedDevice.Deserialize (JSONReader);
- 
-					break;
-					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

@@ -43,7 +43,9 @@ namespace Goedel.Mesh.Client {
         public ActivationAccount ActivationAccount;
 
 
-        public ProfileAccount ProfileAccount;
+        public ProfileAccount ProfileAccount => profileAccount ??
+            ProfileAccount.Decode(ActivationAccount.EnvelopedProfileAccount).CacheValue(out profileAccount);
+        ProfileAccount profileAccount;
 
         ///<summary>The Machine context.</summary>
         IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
@@ -75,8 +77,7 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount(
                     ContextMesh contextMesh,
-                    ActivationAccount activationAccount,
-                    ProfileAccount assertionAccount = null
+                    ActivationAccount activationAccount
                     ) {
             // Set up the basic context
             ContextMesh = contextMesh;
@@ -91,26 +92,26 @@ namespace Goedel.Mesh.Client {
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
 
 
-            if (assertionAccount == null) {
-                var CatalogApplication = GetCatalogApplication();
-                ProfileAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
+            //if (assertionAccount == null) {
+            //    var CatalogApplication = GetCatalogApplication();
+            //    ProfileAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
 
-                if (ProfileAccount.ServiceIDs != null && ProfileAccount.ServiceIDs?.Count > 0) {
+            //    if (ProfileAccount.ServiceIDs != null && ProfileAccount.ServiceIDs?.Count > 0) {
 
-                    ServiceID = ProfileAccount.ServiceIDs[0];
-                    MeshClient = GetMeshClient(ServiceID);
-                    }
+            //        ServiceID = ProfileAccount.ServiceIDs[0];
+            //        MeshClient = GetMeshClient(ServiceID);
+            //        }
 
-                }
-            else {
-                ProfileAccount = assertionAccount;
-                }
+            //    }
+            //else {
+            //    ProfileAccount = assertionAccount;
+            //    }
 
             }
 
 
         protected MeshService GetMeshClient(string serviceID) => MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
-                ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
+                ActivationAccount.ConnectionAccount, ContextMesh.ProfileMesh);
 
 
 
@@ -138,30 +139,25 @@ namespace Goedel.Mesh.Client {
             // Update the account assertion. This lives in CatalogApplication.
             ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
             ProfileAccount.ServiceIDs.Add(serviceID);
+
+            //Update the application catalog with the new version of the 
             GetCatalogApplication().Update(ProfileAccount);
 
             ServiceID = serviceID;
-
-            SyncStatusDevice = new SyncStatus(ContextMeshAdmin.GetCatalogDevice()) {
-                Index = -1
-                };
 
             if (sync) {
                 //GetCatalogDevice(); ???? - notsyncing!!!
                 GetCatalogApplication();
                 GetCatalogContact();
+                GetCatalogDevice();
                 GetCatalogCredential();
                 GetCatalogBookmark();
                 GetCatalogCalendar();
                 GetCatalogNetwork();
-
                 // Don't sync spools as these are bound to the service
-
                 SyncProgressUpload();
                 }
 
-
-            //return service;
             }
 
 
@@ -259,6 +255,7 @@ namespace Goedel.Mesh.Client {
             Spool.SpoolInbound,
             Spool.SpoolArchive,
             CatalogApplication.Label,
+            CatalogDevice.Label,
             CatalogContact.Label,
             CatalogCredential.Label,
             CatalogBookmark.Label,
@@ -269,6 +266,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>Returns the application catalog for the account</summary>
         public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
 
+        ///<summary>Returns the contacts catalog for the account</summary>
+        public CatalogDevice GetCatalogDevice() => GetStore(CatalogDevice.Label) as CatalogDevice;
 
         ///<summary>Returns the contacts catalog for the account</summary>
         public CatalogContact GetCatalogContact() => GetStore(CatalogContact.Label) as CatalogContact;
@@ -388,9 +387,7 @@ namespace Goedel.Mesh.Client {
                 case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-
-
-                case CatalogDevice.Label: return ContextMeshAdmin.GetCatalogDevice();
+                case CatalogDevice.Label: return new CatalogDevice(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
                 }
 
             throw new NYI();
@@ -510,6 +507,17 @@ namespace Goedel.Mesh.Client {
             return MeshClient.Status(statusRequest);
             }
 
+        
+        
+        /// <summary>
+        /// Accept a connection request.
+        /// </summary>
+        /// <param name="request">The request to accept.</param>
+        void Accept(AcknowledgeConnection request) {
+            var device = ContextMeshAdmin.CreateCataloguedDevice(request.MessageConnectionRequest.ProfileDevice);
+            GetCatalogDevice().New(device);
+            }
+
 
 
         //-------------------------------
@@ -526,11 +534,12 @@ namespace Goedel.Mesh.Client {
 
 
 
+
         public void Process(Message meshMessage, bool accept = true, bool respond = true) {
 
             switch (meshMessage) {
                 case AcknowledgeConnection connection: {
-                    ContextMeshAdmin.Accept(connection);
+                    Accept(connection);
                     break;
                     }
 

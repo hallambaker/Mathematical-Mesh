@@ -285,7 +285,7 @@ namespace Goedel.XUnit {
             }
 
         bool Verify(ActivationAccount first, ActivationAccount second) {
-            Verify(first.AssertionAccountConnection, second.AssertionAccountConnection);
+            Verify(first.ConnectionAccount, second.ConnectionAccount);
             (first.AccountUDF == second.AccountUDF).AssertTrue();
             return true;
             }

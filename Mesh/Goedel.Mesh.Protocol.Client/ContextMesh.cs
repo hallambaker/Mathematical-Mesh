@@ -15,18 +15,23 @@ namespace Goedel.Mesh.Client {
         public IMeshMachineClient MeshMachine { get; }
 
         ///<summary>The master profile</summary>
-        public ProfilePersonal ProfileMesh { get; }
+        public ProfileMesh ProfileMesh { get; }
 
         ///<summary>The Device Entry in the CatalogHost</summary>
-        public CatalogedMachine Connection;
+        public CatalogedMachine CatalogedMachine;
 
 
         ///<summary>Convenience property returning the device connections</summary>
-        CatalogedStandard DeviceConnection => Connection as CatalogedStandard;
+        CatalogedStandard DeviceConnection => CatalogedMachine as CatalogedStandard;
 
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
-        public virtual CatalogedDevice CatalogedDevice => DeviceConnection.CatalogedDevice;
+        public CatalogedDevice CatalogedDevice => CatalogedMachine.CatalogedDevice;
+
+        public ConnectionDevice ConnectionDevice =>
+            CatalogedDevice.ConnectionDevice;
+
+
 
         /////<summary>The device profile to which the signature key is bound</summary>
         //public ProfileDevice profileDevice { get; }
@@ -49,9 +54,9 @@ namespace Goedel.Mesh.Client {
             Assert.AssertNotNull(deviceConnection, NYI.Throw);
 
             MeshMachine = meshMachine;
-            Connection = deviceConnection;
+            CatalogedMachine = deviceConnection;
 
-            ProfileMesh = ProfilePersonal.Decode(Connection.EnvelopedProfileMaster);
+            ProfileMesh = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
             
             }
 
@@ -68,6 +73,32 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        public void UpdateDevice(CatalogedDevice catalogedDevice) {
+
+            CatalogedMachine.CatalogedDevice = catalogedDevice;
+            MeshMachine.Register(CatalogedMachine);
+            }
+
+        public void UpdateAccount(ProfileAccount profileUpdate) {
+
+            CatalogedMachine.EnvelopedProfileAccount = CatalogedMachine.EnvelopedProfileAccount ??
+                new List<DareEnvelope>();
+
+            bool found = false;
+            foreach (var envelope in CatalogedMachine.EnvelopedProfileAccount) {
+                var profileAccount = ProfileAccount.Decode(envelope);
+                if (profileAccount.UDF == profileUpdate.UDF) {
+                    found = true;
+                    profileAccount.ServiceIDs = profileUpdate.ServiceIDs;
+                    }
+                }
+            if (!found) {
+                CatalogedMachine.EnvelopedProfileAccount.Add(profileUpdate.DareEnvelope);
+                }
+
+            MeshMachine.Register(CatalogedMachine);
+            }
+
 
 
         }
@@ -75,7 +106,7 @@ namespace Goedel.Mesh.Client {
 
     public class ContextMeshPending : ContextMesh {
 
-        public CatalogedPending PendingConnection => Connection as CatalogedPending;
+        public CatalogedPending PendingConnection => CatalogedMachine as CatalogedPending;
         AcknowledgeConnection MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
         RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 

@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Shell {
 
             if (CatalogedMachine.EnvelopedProfileMaster != null) {
 
-                var profileMaster = ProfilePersonal.Decode(CatalogedMachine.EnvelopedProfileMaster);
+                var profileMaster = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
                 Builder.AppendLine($"   Personal Mesh = {profileMaster.UDF}");
                 }
 

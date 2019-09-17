@@ -52,19 +52,14 @@ namespace Goedel.Mesh {
 
 
         public void Update(ProfileAccount assertionAccount) {
-            var catalogEntryApplicationAccount = new CatalogedApplicationAccount() {
-                Key = assertionAccount.UDF,
-                EnvelopedProfileAccount = assertionAccount.DareEnvelope
-                };
-            Update(catalogEntryApplicationAccount);
+            //var catalogEntryApplicationAccount = new CatalogedApplicationAccount() {
+            //    Key = assertionAccount.UDF,
+            //    EnvelopedProfileAccount = assertionAccount.DareEnvelope
+            //    };
+            //Update(catalogEntryApplicationAccount);
 
             }
 
-
-        public ProfileAccount GetAssertionAccount(string Key) {
-            var entry = Locate(Key) as CatalogedApplicationAccount;
-            return ProfileAccount.Decode(entry.EnvelopedProfileAccount);
-            }
 
 
         public CatalogedApplication LocateBySite(string Key) => Locate(Key) as CatalogedApplication;
@@ -88,13 +83,5 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class CatalogedApplicationAccount {
-
-
-        public override string _PrimaryKey => Key;
-
-
-
-        }
 
     }

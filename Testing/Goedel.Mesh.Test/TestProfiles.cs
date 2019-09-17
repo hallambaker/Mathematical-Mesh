@@ -112,7 +112,7 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.CreateAccount("main");
 
-            var catalog = deviceAdmin.ContextMesh.ContextMeshAdmin.GetCatalogDevice();
+            var catalog = deviceAdmin.GetCatalogDevice();
 
             //var keySign = machineAliceAdmin.KeyCollection.LocatePrivate(deviceAdmin.ProfileDevice.KeySignature.UDF);
             //var Entry1 = MakeCatalogEntryDevice(deviceAdmin.ProfileDevice, keySign);

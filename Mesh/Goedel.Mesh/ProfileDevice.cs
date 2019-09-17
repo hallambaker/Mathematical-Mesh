@@ -139,7 +139,7 @@ namespace Goedel.Mesh {
         }
 
     public partial class ConnectionDevice {
-        public ProfilePersonal ProfileMaster;
+        public ProfileMesh ProfileMaster;
 
         public ConnectionDevice() {
             }

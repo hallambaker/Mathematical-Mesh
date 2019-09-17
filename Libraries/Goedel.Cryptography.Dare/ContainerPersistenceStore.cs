@@ -519,6 +519,11 @@ namespace Goedel.Cryptography.Dare {
 
 
     public class Transaction {
+
+
+
+
+
         }
 
     }

@@ -1074,7 +1074,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual ProfilePersonal						ProfilePersonal  {get; set;}
+		public virtual ProfileMesh						ProfileMesh  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1124,10 +1124,10 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteToken ("MeshUDF", 1);
 					_Writer.WriteString (MeshUDF);
 				}
-			if (ProfilePersonal != null) {
+			if (ProfileMesh != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ProfilePersonal", 1);
-					ProfilePersonal.Serialize (_Writer, false);
+				_Writer.WriteToken ("ProfileMesh", 1);
+					ProfileMesh.Serialize (_Writer, false);
 				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
@@ -1166,10 +1166,10 @@ namespace Goedel.Mesh.Shell {
 					MeshUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "ProfilePersonal" : {
+				case "ProfileMesh" : {
 					// An untagged structure
-					ProfilePersonal = new ProfilePersonal ();
-					ProfilePersonal.Deserialize (JSONReader);
+					ProfileMesh = new ProfileMesh ();
+					ProfileMesh.Deserialize (JSONReader);
  
 					break;
 					}

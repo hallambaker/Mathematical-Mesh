@@ -29,7 +29,7 @@
 #end method
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
-#% Format(AliceProfiles?.ProfilePersonal);
+#% Format(AliceProfiles?.ProfileMesh);
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example

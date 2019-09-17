@@ -26,7 +26,7 @@ namespace Goedel.Mesh.Shell {
             var contextMeshPending = MeshMachine.Connect(serviceID, PIN:pin);
 
             var result = new ResultConnect() {
-                CatalogedMachine = contextMeshPending.Connection
+                CatalogedMachine = contextMeshPending.CatalogedMachine
                 };
 
             return result;

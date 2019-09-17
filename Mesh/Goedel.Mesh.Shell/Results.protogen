@@ -52,7 +52,7 @@
 	Structure ResultCreatePersonal
 		Inherits							ResultCreateAccount
 		String								MeshUDF
-		Struct ProfilePersonal				ProfilePersonal
+		Struct ProfileMesh				ProfileMesh
 
 	Structure ResultCreateAccount
 		Inherits							ResultCreateDevice

@@ -10,6 +10,12 @@ Namespace Goedel.Mesh.Client
 		Description
 			|The action requested can only be performed by an administrator account
 
+	
+	Exception SyncFailed
+		Description
+			|The attempt to synchronize with the service failed.
+	
+	
 	Exception Gateway
         Console "Error occurred in Gateway"
 		Description

@@ -24,14 +24,22 @@
 		Struct DareEnvelope EnvelopedProfileMaster
 			Description
 				|The master profile that provides the root of trust for this Mesh
+		Struct CatalogedDevice CatalogedDevice
+			Description
+				|The cataloged device profile
+
+
+	Structure CatalogAccount
+		Struct DareEnvelope EnvelopedProfileAccount
+			Description
+				|The account profile
+		struct DareEnvelope EnvelopedCatalogedAccount
+
 
 	Structure CatalogedStandard
 		Inherits CatalogedMachine
 		Description
 			|Describes an ordinary device connected to a Mesh
-		Struct CatalogedDevice CatalogedDevice
-			Description
-				|The device entry containing the full account binding information.
 
 	Structure CatalogedAdmin
 		Inherits CatalogedMachine
@@ -44,6 +52,7 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
+
 
 	Structure CatalogedPending
 		Inherits CatalogedMachine

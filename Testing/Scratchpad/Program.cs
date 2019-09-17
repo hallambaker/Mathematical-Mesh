@@ -24,7 +24,10 @@ namespace Scratchpad {
 
             //ShellTests.Test().TestFilePlain();
 
-            TestService.Test().MeshDeviceConnectPIN();
+            TestService.Test().MeshCatalogAccount();
+
+
+            //TestService.Test().MeshDeviceConnectPIN();
 
 
             //ShellTests.Test().TestAccount();

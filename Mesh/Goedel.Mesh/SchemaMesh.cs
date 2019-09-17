@@ -67,7 +67,7 @@ namespace Goedel.Mesh {
 			{"Assertion", Assertion._Factory},
 			{"Condition", Condition._Factory},
 			{"Profile", Profile._Factory},
-			{"ProfilePersonal", ProfilePersonal._Factory},
+			{"ProfileMesh", ProfileMesh._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ProfileService", ProfileService._Factory},
 			{"ProfileAccount", ProfileAccount._Factory},
@@ -91,6 +91,7 @@ namespace Goedel.Mesh {
 			{"Task", Task._Factory},
 			{"CatalogedEntry", CatalogedEntry._Factory},
 			{"CatalogedDevice", CatalogedDevice._Factory},
+			{"DeviceAccount", DeviceAccount._Factory},
 			{"CatalogedCredential", CatalogedCredential._Factory},
 			{"CatalogedNetwork", CatalogedNetwork._Factory},
 			{"CatalogedContact", CatalogedContact._Factory},
@@ -98,7 +99,6 @@ namespace Goedel.Mesh {
 			{"CatalogedBookmark", CatalogedBookmark._Factory},
 			{"CatalogedTask", CatalogedTask._Factory},
 			{"CatalogedApplication", CatalogedApplication._Factory},
-			{"CatalogedApplicationAccount", CatalogedApplicationAccount._Factory},
 			{"CatalogedMember", CatalogedMember._Factory},
 			{"CatalogedGroup", CatalogedGroup._Factory},
 			{"CatalogedApplicationSSH", CatalogedApplicationSSH._Factory},
@@ -1336,7 +1336,7 @@ namespace Goedel.Mesh {
 	///
 	/// Describes the long term parameters associated with a personal profile.
 	/// </summary>
-	public partial class ProfilePersonal : Profile {
+	public partial class ProfileMesh : Profile {
         /// <summary>
         ///A Personal Profile MAY contain one or more PMEK keys to enable escrow 
         ///of private keys used for stored data. 
@@ -1358,13 +1358,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ProfilePersonal";
+		public new const string __Tag = "ProfileMesh";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ProfilePersonal();
+		public static new JSONObject _Factory () => new ProfileMesh();
 
 
         /// <summary>
@@ -1426,15 +1426,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfilePersonal FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new ProfileMesh FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as ProfilePersonal;
+				return Out as ProfileMesh;
 				}
-		    var Result = new ProfilePersonal ();
+		    var Result = new ProfileMesh ();
 			Result.Deserialize (JSONReader);
 			Result.PostDecode();
 			return Result;
@@ -3264,10 +3264,15 @@ namespace Goedel.Mesh {
 
 		public virtual string						AccountUDF  {get; set;}
         /// <summary>
+        ///The enveloped profile account
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
+        /// <summary>
         ///The account connection assertion
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedAssertionAccountConnection  {get; set;}
+		public virtual DareEnvelope						EnvelopedConnectionAccount  {get; set;}
         /// <summary>
         ///The key contribution for the decryption key for the device. NB this is 
         ///NOT an overlay on the device signature key, it is an overlay on the 
@@ -3336,10 +3341,15 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("AccountUDF", 1);
 					_Writer.WriteString (AccountUDF);
 				}
-			if (EnvelopedAssertionAccountConnection != null) {
+			if (EnvelopedProfileAccount != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedAssertionAccountConnection", 1);
-					EnvelopedAssertionAccountConnection.Serialize (_Writer, false);
+				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
+					EnvelopedProfileAccount.Serialize (_Writer, false);
+				}
+			if (EnvelopedConnectionAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedConnectionAccount", 1);
+					EnvelopedConnectionAccount.Serialize (_Writer, false);
 				}
 			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -3393,10 +3403,17 @@ namespace Goedel.Mesh {
 					AccountUDF = JSONReader.ReadString ();
 					break;
 					}
-				case "EnvelopedAssertionAccountConnection" : {
+				case "EnvelopedProfileAccount" : {
 					// An untagged structure
-					EnvelopedAssertionAccountConnection = new DareEnvelope ();
-					EnvelopedAssertionAccountConnection.Deserialize (JSONReader);
+					EnvelopedProfileAccount = new DareEnvelope ();
+					EnvelopedProfileAccount.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionAccount" : {
+					// An untagged structure
+					EnvelopedConnectionAccount = new DareEnvelope ();
+					EnvelopedConnectionAccount.Deserialize (JSONReader);
  
 					break;
 					}
@@ -4782,11 +4799,6 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class CatalogedDevice : CatalogedEntry {
         /// <summary>
-        ///The accounts to which this device is bound.
-        /// </summary>
-
-		public virtual List<string>				AccountUDFs  {get; set;}
-        /// <summary>
         ///UDF of the signature key of the device in the Mesh
         /// </summary>
 
@@ -4807,10 +4819,15 @@ namespace Goedel.Mesh {
 
 		public virtual DareEnvelope						EnvelopedConnectionDevice  {get; set;}
         /// <summary>
-        ///The device profile
+        ///The activations of the device within the Mesh
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedActivationDevice  {get; set;}
+        /// <summary>
+        ///The accounts that this device is connected to
+        /// </summary>
+
+		public virtual List<DeviceAccount>				Accounts  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4855,18 +4872,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_Writer, false, ref _first);
-			if (AccountUDFs != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("AccountUDFs", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in AccountUDFs) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (UDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("UDF", 1);
@@ -4892,6 +4897,23 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EnvelopedActivationDevice", 1);
 					EnvelopedActivationDevice.Serialize (_Writer, false);
 				}
+			if (Accounts != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Accounts", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Accounts) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_Writer.WriteObjectStart();
+                    //_Writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_Writer, true, ref firstinner);
+                    //_Writer.WriteObjectEnd();
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -4925,17 +4947,6 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "AccountUDFs" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					AccountUDFs = new List <string> ();
-					while (_Going) {
-						string _Item = JSONReader.ReadString ();
-						AccountUDFs.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
-					break;
-					}
 				case "UDF" : {
 					UDF = JSONReader.ReadString ();
 					break;
@@ -4965,8 +4976,176 @@ namespace Goedel.Mesh {
  
 					break;
 					}
+				case "Accounts" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					Accounts = new List <DeviceAccount> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DeviceAccount ();
+						_Item.Deserialize (JSONReader);
+						// var _Item = new DeviceAccount (JSONReader);
+						Accounts.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class DeviceAccount : MeshItem {
+        /// <summary>
+        ///UDF of the account profile
+        /// </summary>
+
+		public virtual string						AccountUDF  {get; set;}
+        /// <summary>
+        ///The account profile
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
+        /// <summary>
+        ///The connection of this device to the account
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedConnectionAccount  {get; set;}
+        /// <summary>
+        ///The activation data for this device to the account
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedActivationAccount  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "DeviceAccount";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new DeviceAccount();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			if (AccountUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("AccountUDF", 1);
+					_Writer.WriteString (AccountUDF);
+				}
+			if (EnvelopedProfileAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
+					EnvelopedProfileAccount.Serialize (_Writer, false);
+				}
+			if (EnvelopedConnectionAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedConnectionAccount", 1);
+					EnvelopedConnectionAccount.Serialize (_Writer, false);
+				}
+			if (EnvelopedActivationAccount != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedActivationAccount", 1);
+					EnvelopedActivationAccount.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new DeviceAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as DeviceAccount;
+				}
+		    var Result = new DeviceAccount ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "AccountUDF" : {
+					AccountUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "EnvelopedProfileAccount" : {
+					// An untagged structure
+					EnvelopedProfileAccount = new DareEnvelope ();
+					EnvelopedProfileAccount.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedConnectionAccount" : {
+					// An untagged structure
+					EnvelopedConnectionAccount = new DareEnvelope ();
+					EnvelopedConnectionAccount.Deserialize (JSONReader);
+ 
+					break;
+					}
+				case "EnvelopedActivationAccount" : {
+					// An untagged structure
+					EnvelopedActivationAccount = new DareEnvelope ();
+					EnvelopedActivationAccount.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
 					break;
 					}
 				}
@@ -5874,116 +6053,6 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "Key" : {
 					Key = JSONReader.ReadString ();
-					break;
-					}
-				default : {
-					base.DeserializeToken(JSONReader, Tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Wrapper for a signed AccountAssertion
-	/// </summary>
-	public partial class CatalogedApplicationAccount : CatalogedApplication {
-        /// <summary>
-        ///The account assertion
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedApplicationAccount";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogedApplicationAccount();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="Writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_Writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_Writer.WriteObjectStart ();
-				}
-			((CatalogedApplication)this).SerializeX(_Writer, false, ref _first);
-			if (EnvelopedProfileAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
-					EnvelopedProfileAccount.Serialize (_Writer, false);
-				}
-			if (_wrap) {
-				_Writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedApplicationAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
-				return null;
-				}
-			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedApplicationAccount;
-				}
-		    var Result = new CatalogedApplicationAccount ();
-			Result.Deserialize (JSONReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
-			
-			switch (Tag) {
-				case "EnvelopedProfileAccount" : {
-					// An untagged structure
-					EnvelopedProfileAccount = new DareEnvelope ();
-					EnvelopedProfileAccount.Deserialize (JSONReader);
- 
 					break;
 					}
 				default : {

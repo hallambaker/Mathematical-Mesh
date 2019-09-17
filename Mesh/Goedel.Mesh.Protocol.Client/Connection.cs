@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-            var profileMaster = ProfilePersonal.Generate(meshMachine, algorithmSign, algorithmEncrypt);
+            var profileMaster = ProfileMesh.Generate(meshMachine, algorithmSign, algorithmEncrypt);
 
 
             return Generate(meshMachine, profileMaster);
@@ -59,7 +59,7 @@ namespace Goedel.Mesh.Client {
 
         public static CatalogedAdmin Generate(
                 IMeshMachine meshMachine,
-                ProfilePersonal profileMaster ) {
+                ProfileMesh profileMaster ) {
             return new CatalogedAdmin() {
 
                 };

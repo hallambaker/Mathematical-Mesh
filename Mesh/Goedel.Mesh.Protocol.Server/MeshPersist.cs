@@ -390,9 +390,9 @@ namespace Goedel.Mesh.Server {
 
         public override string _PrimaryKey => ServiceID;
 
-        public ProfilePersonal ProfileMesh => profileMesh ??
-                ProfilePersonal.Decode(SignedProfileMesh).CacheValue(out profileMesh);
-        ProfilePersonal profileMesh;
+        public ProfileMesh ProfileMesh => profileMesh ??
+                ProfileMesh.Decode(SignedProfileMesh).CacheValue(out profileMesh);
+        ProfileMesh profileMesh;
 
 
         public ProfileAccount AssertionAccount => assertionAccount ?? 

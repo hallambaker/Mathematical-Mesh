@@ -45,8 +45,13 @@ namespace Goedel.Mesh {
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+        
         ///<summary>Enumerate the catalog as CatalogEntryDevice instances.</summary>
         public AsCatalogEntryDevice AsCatalogEntryDevice => new AsCatalogEntryDevice(this);
+
+
+
+
 
 
         /// <summary>
@@ -89,9 +94,9 @@ namespace Goedel.Mesh {
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionDevice AssertionDeviceConnection => assertionDeviceConnection ??
-            ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out assertionDeviceConnection);
-        ConnectionDevice assertionDeviceConnection = null;
+        public ConnectionDevice ConnectionDevice => connectionDevice ??
+            ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
+        ConnectionDevice connectionDevice = null;
 
 
         public ProfileDevice ProfileDevice => profileDevice ??

@@ -145,7 +145,7 @@
 				|device administration application profiles.
 
 
-	Structure ProfilePersonal
+	Structure ProfileMesh
 		Inherits Profile
 		Description 
 			|Describes the long term parameters associated with a personal profile.
@@ -311,7 +311,10 @@
 		String AccountUDF
 			Description
 				|The UDF of the account
-		Struct DareEnvelope EnvelopedAssertionAccountConnection
+		Struct DareEnvelope EnvelopedProfileAccount
+			Description
+				|The enveloped profile account
+		Struct DareEnvelope EnvelopedConnectionAccount
 			Description
 				|The account connection assertion
 		Struct KeyComposite KeyEncryption
@@ -416,10 +419,6 @@
 		Inherits CatalogedEntry
 		Description
 			|Public device entry, indexed under the device ID
-		String AccountUDFs
-			Multiple
-			Description
-				|The accounts to which this device is bound.
 		String UDF
 			Description
 				|UDF of the signature key of the device in the Mesh
@@ -434,7 +433,25 @@
 				|The public assertion demonstrating connection of the Device to the Mesh
 		Struct DareEnvelope EnvelopedActivationDevice
 			Description
-				|The device profile
+				|The activations of the device within the Mesh
+		Struct DeviceAccount Accounts
+			Multiple
+			Description
+				|The accounts that this device is connected to
+
+	Structure DeviceAccount
+		String AccountUDF
+			Description
+				|UDF of the account profile
+		Struct DareEnvelope EnvelopedProfileAccount
+			Description
+				|The account profile
+		Struct DareEnvelope EnvelopedConnectionAccount	
+			Description
+				|The connection of this device to the account
+		Struct DareEnvelope EnvelopedActivationAccount	
+			Description
+				|The activation data for this device to the account
 
 
 	Structure CatalogedCredential
@@ -501,13 +518,7 @@
 		String Key
 
 
-	Structure CatalogedApplicationAccount
-		Description
-			|Wrapper for a signed AccountAssertion
-		Inherits CatalogedApplication
-		Struct DareEnvelope EnvelopedProfileAccount
-			Description
-				|The account assertion
+
 
 	Structure CatalogedMember
 		String UDF
