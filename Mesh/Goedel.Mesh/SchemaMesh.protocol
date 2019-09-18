@@ -317,11 +317,15 @@
 		Struct DareEnvelope EnvelopedConnectionAccount
 			Description
 				|The account connection assertion
-		Struct KeyComposite KeyEncryption
+		Struct KeyComposite KeyGroup
 			Description
 				|The key contribution for the decryption key for the device. NB this is 
 				|NOT an overlay on the device signature key, it is an overlay on the 
 				|corresponding recryption key.
+		Struct KeyOverlay KeyEncryption
+			Description
+				|The key overlay used to generate the account encryption key from the
+				|device encryption key 		
 		Struct KeyOverlay KeyAuthentication
 			Description
 			Description
@@ -434,12 +438,12 @@
 		Struct DareEnvelope EnvelopedActivationDevice
 			Description
 				|The activations of the device within the Mesh
-		Struct DeviceAccount Accounts
+		Struct AccountEntry Accounts
 			Multiple
 			Description
 				|The accounts that this device is connected to
 
-	Structure DeviceAccount
+	Structure AccountEntry
 		String AccountUDF
 			Description
 				|UDF of the account profile

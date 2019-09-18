@@ -84,7 +84,14 @@ namespace Goedel.Mesh.Client {
             ActivationAccount = activationAccount;
 
             // Set up the crypto keys so that we can open the application catalog
-            KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
+
+            var KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
+
+
+            //MeshMachine.KeyCollection.LocatePrivate(contextMesh.CatalogedDevice.ProfileDevice.UDF);
+            //KeySignature = activationAccount.KeySignature.GetPrivate(keySignatureDevice);
+
+
             KeyEncryption = activationAccount.KeyEncryption.GetPrivate(MeshMachine);
             KeyAuthentication = activationAccount.KeyAuthentication.GetPrivate(MeshMachine);
             KeyCollection.Add(KeyEncryption);

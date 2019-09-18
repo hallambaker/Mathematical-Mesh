@@ -66,11 +66,35 @@ namespace Goedel.Mesh {
 
             }
 
-        public static new ProfileDevice Decode(DareEnvelope message) {
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+        public static new ProfileDevice Decode(DareEnvelope envelope) {
+            if (envelope == null) {
+                return null;
+                }
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
             return result;
             }
+
+
+        public override void ToBuilder(StringBuilder builder, int indent) {
+
+            builder.AppendIndent(indent, $"Profile Device");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+
+            if (KeysOnlineSignature != null) {
+                foreach (var online in KeysOnlineSignature) {
+                    builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
+                    }
+                }
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
+
+            }
+
+
 
         }
 
@@ -105,20 +129,24 @@ namespace Goedel.Mesh {
             KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
 
 
-            Console.WriteLine($"Created new device private key");
-            Console.WriteLine($"   Device Sig  {profileDevice.KeyOfflineSignature.UDF} -> {KeySignature.UDF}");
-            Console.WriteLine($"   Device Enc  {profileDevice.KeyEncryption.UDF} -> {KeyEncryption.UDF}");
-            Console.WriteLine($"   Device Auth {profileDevice.KeyAuthentication.UDF} -> {KeyAuthentication.UDF}");
+            //Console.WriteLine($"Created new device private key");
+            //Console.WriteLine($"   Device Sig  {profileDevice.KeyOfflineSignature.UDF} -> {KeySignature.UDF}");
+            //Console.WriteLine($"   Device Enc  {profileDevice.KeyEncryption.UDF} -> {KeyEncryption.UDF}");
+            //Console.WriteLine($"   Device Auth {profileDevice.KeyAuthentication.UDF} -> {KeyAuthentication.UDF}");
             }
 
-        public static new ActivationDevice Decode(DareEnvelope message) {
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+        public static new ActivationDevice Decode(DareEnvelope envelope) {
+            if (envelope == null) {
+                return null;
+                }
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
             return result;
             }
 
         public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
                 FromJSON(message.GetBodyReader(), true);
+
 
         // is failing here because the device entry is not being written back to the catalog after the update.
         // fix this and then some skyrim.
@@ -136,6 +164,19 @@ namespace Goedel.Mesh {
             return null;
             }
 
+
+        public override void ToBuilder(StringBuilder builder, int indent) {
+            builder.AppendIndent(indent, $"Activation Device");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            builder.AppendIndent(indent, $"KeySignature:        {KeySignature.UDF} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
+
+            }
+
+
         }
 
     public partial class ConnectionDevice {
@@ -150,14 +191,35 @@ namespace Goedel.Mesh {
             KeyEncryption = new PublicKey(assertionDevicePrivate.KeyEncryption.KeyPair);
             KeyAuthentication = new PublicKey(assertionDevicePrivate.KeyAuthentication.KeyPair);
 
-            Console.WriteLine($"Created new device connection assertion");
-            Console.WriteLine($"   Sig  {KeySignature.UDF}");
-            Console.WriteLine($"   Enc  {KeyEncryption.UDF}");
-            Console.WriteLine($"   Auth {KeyAuthentication.UDF}");
+            //Console.WriteLine($"Created new device connection assertion");
+            //Console.WriteLine($"   Sig  {KeySignature.UDF}");
+            //Console.WriteLine($"   Enc  {KeyEncryption.UDF}");
+            //Console.WriteLine($"   Auth {KeyAuthentication.UDF}");
             }
 
-        public static new ConnectionDevice Decode(DareEnvelope message) =>
-                FromJSON(message.GetBodyReader(), true);
+
+        public static new ConnectionDevice Decode(DareEnvelope envelope) {
+            if (envelope == null) {
+                return null;
+                }
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
+            return result;
+            }
+
+        public override void ToBuilder(StringBuilder builder, int indent) {
+
+            builder.AppendIndent(indent, $"Connection Device");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            builder.AppendIndent(indent, $"KeySignature:        {KeySignature.UDF} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
+
+            }
+
+
         }
 
 

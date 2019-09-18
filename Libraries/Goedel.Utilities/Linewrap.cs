@@ -9,6 +9,22 @@ namespace Goedel.Utilities {
     public static class Linewrap {
 
         /// <summary>
+        /// Append <paramref name="text"/> to the string builder <paramref name="builder"/> prefixed
+        /// by <paramref name="indent"/> indents of two spaces each.
+        /// </summary>
+        /// <param name="builder">The string builder to append to.</param>
+        /// <param name="text">The text to write.</param>
+        /// <param name="indent">The number of two space indents to prepend.</param>
+        public static void AppendIndent(this StringBuilder builder, int indent, string text) {
+            for (var i = 0; i < indent; i++) {
+                builder.Append("  ");
+                }
+            builder.AppendLine(text);
+
+            }
+
+
+        /// <summary>
         /// Wrap text to fit a line without breaking words.
         /// </summary>
         /// <param name="Input">The input string.</param>

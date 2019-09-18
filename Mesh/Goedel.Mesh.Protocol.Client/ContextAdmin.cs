@@ -208,136 +208,64 @@ namespace Goedel.Mesh.Client {
             var profileAccount = ProfileAccount.Generate(MeshMachine, ProfileMesh,
                         algorithmSign, algorithmEncrypt);
 
-            var activationAccount = profileAccount.ConnectDevice(MeshMachine, ConnectionDevice, null);
+            var activationAccount = profileAccount.ConnectDevice(MeshMachine, CatalogedDevice, null);
             UpdateDevice(CatalogedDevice);
 
             var contextAccount = new ContextAccount(this, activationAccount);
+
+            Directory.CreateDirectory(contextAccount.DirectoryAccount);
+
             return contextAccount;
-
-
-
-
-
-
-            //// Generate the AssertionAccount
-            //algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-            //var keyEncrypt = MeshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.ExportableStored, keyUses: KeyUses.Encrypt);
-
-            //var assertionAccount = new ProfileAccount() {
-            //    MeshProfileUDF = ProfileMesh.UDF,
-            //    KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic())
-            //    };
-
-            //Sign(assertionAccount);
-
-
-            //var activationAccount = new ActivationAccount(MeshMachine, CatalogedDevice, assertionAccount);
-
-
-
-            //// Add this device to the new account and update the admin device entry.
-            //var contextAccount = new ContextAccount(this, activationAccount);
-            //CatalogedDevice.ActivateAccount(contextAccount.ProfileAccount, null);
-            //UpdateDevice(CatalogedDevice);
-
-
-            //return contextAccount;
-
-
-
-            //// At this point we need to read back the device catalog of the Mesh and add the
-            //// account to each entry. At some point we need to put some sort
-            //// of filter capability on thism
-
-            //ActivationAccount activationAccount = null;
-
-
-            //var catalogChanges = new List<CatalogUpdate>();
-
-
-            //"Gotta do stuff here".TaskFunctionality();
-
-
-            // create the account context first
-            // create the account connection for this device using the context
-            // now update the host record CatalogedAdmin
-
-
-
-
-
-            //foreach (var device in GetCatalogDevice().AsCatalogEntryDevice) {
-            //    catalogChanges.Add(new CatalogUpdate(CatalogAction.Update, device));
-            //    if (device.DeviceUDF == AdminConnection.DeviceUDF) {
-
-            //        activationAccount = AddDevice(assertionAccount, device, keyEncrypt as KeyPairAdvanced);
-            //        }
-            //    else {
-            //        AddDevice(assertionAccount, device, keyEncrypt as KeyPairAdvanced);
-            //        }
-
-            //    }
-
-            //var catalogDevice = GetCatalogDevice();
-            //catalogDevice.Transact(catalogDevice,catalogChanges);
-
-
-            // can't do it this way because the catalog entries are being modified inside the loop.
-            // need to build a to-do list and then apply the changes.
-
-
-
-
             }
 
         #endregion
 
         #region // Add regular device
 
-        public ActivationAccount AddDevice(
-                    ProfileAccount  assertionAccount,
-                    Mesh.CatalogedDevice catalogEntryDevice, 
-                    KeyPairAdvanced keyEncryptionMaster) {
-            // Decrypt EncryptedDevicePrivate using the Master profile decryption key
+        //public ActivationAccount AddDevice(
+        //            ProfileAccount  assertionAccount,
+        //            Mesh.CatalogedDevice catalogEntryDevice, 
+        //            KeyPairAdvanced keyEncryptionMaster) {
+        //    // Decrypt EncryptedDevicePrivate using the Master profile decryption key
 
-            var encryptedDevicePrivate = catalogEntryDevice.EnvelopedActivationDevice;
+        //    var encryptedDevicePrivate = catalogEntryDevice.EnvelopedActivationDevice;
 
-            var devicePrivate = ActivationDevice.Decode(
-                                MeshMachine, encryptedDevicePrivate);
-            var profileDevice = catalogEntryDevice.ProfileDevice;
+        //    var devicePrivate = ActivationDevice.Decode(
+        //                        MeshMachine, encryptedDevicePrivate);
+        //    var profileDevice = catalogEntryDevice.ProfileDevice;
 
-            var keyEncryption = new KeyComposite(keyEncryptionMaster);
-            var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeyOfflineSignature);
-            var keyAuthentication = new KeyOverlay(MeshMachine, profileDevice.KeyAuthentication);
+        //    var keyEncryption = new KeyComposite(keyEncryptionMaster);
+        //    var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeyOfflineSignature);
+        //    var keyAuthentication = new KeyOverlay(MeshMachine, profileDevice.KeyAuthentication);
 
-            var assertionAccountConnection = new ConnectionAccount() {
-                KeySignature = new PublicKey(keySignature.KeyPair),
-                KeyEncryption = new PublicKey(keyEncryption.KeyPair),
-                KeyAuthentication = new PublicKey(keyAuthentication.KeyPair)
-                };
+        //    var assertionAccountConnection = new ConnectionAccount() {
+        //        KeySignature = new PublicKey(keySignature.KeyPair),
+        //        KeyEncryption = new PublicKey(keyEncryption.KeyPair),
+        //        KeyAuthentication = new PublicKey(keyAuthentication.KeyPair)
+        //        };
 
-            Sign(assertionAccountConnection);
+        //    Sign(assertionAccountConnection);
 
-            // Create the activation for this device
-            var activationAccount = new ActivationAccount() {
-                AccountUDF = assertionAccount.UDF,
-                EnvelopedConnectionAccount = assertionAccountConnection.DareEnvelope,
-                KeyEncryption = keyEncryption,
-                KeySignature = keySignature,
-                KeyAuthentication = keyAuthentication
-                };
+        //    // Create the activation for this device
+        //    var activationAccount = new ActivationAccount() {
+        //        AccountUDF = assertionAccount.UDF,
+        //        EnvelopedConnectionAccount = assertionAccountConnection.DareEnvelope,
+        //        KeyEncryption = keyEncryption,
+        //        KeySignature = keySignature,
+        //        KeyAuthentication = keyAuthentication
+        //        };
 
-            // Add it to the account
-            devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
-            devicePrivate.Activations.Add(activationAccount);
+        //    // Add it to the account
+        //    devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
+        //    devicePrivate.Activations.Add(activationAccount);
 
-            catalogEntryDevice.EnvelopedActivationDevice = 
-                devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
-                        ProfileMesh.KeyEncryption.KeyPair);
+        //    catalogEntryDevice.EnvelopedActivationDevice = 
+        //        devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
+        //                ProfileMesh.KeyEncryption.KeyPair);
 
 
-            return activationAccount;
-            }
+        //    return activationAccount;
+        //    }
 
         #endregion 
 

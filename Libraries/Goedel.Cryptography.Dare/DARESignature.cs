@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
     public partial class DareSignature {
@@ -25,6 +27,8 @@ namespace Goedel.Cryptography.Dare {
         public DareSignature(KeyPair SignerKey, byte[] DigestValue,
                     CryptoAlgorithmID DigestId, KeyDerive KeyDerive=null) {
             SignatureValue = SignerKey.SignHash(DigestValue, DigestId);
+            KeyIdentifier = SignerKey.UDF;
+            Alg = SignerKey.SignatureAlgorithmID(DigestId).ToJoseID();
 
             if (KeyDerive != null) {
                 WitnessValue = KeyDerive.Derive(SignatureValue);

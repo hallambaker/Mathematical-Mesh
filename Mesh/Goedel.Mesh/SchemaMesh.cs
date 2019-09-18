@@ -91,7 +91,7 @@ namespace Goedel.Mesh {
 			{"Task", Task._Factory},
 			{"CatalogedEntry", CatalogedEntry._Factory},
 			{"CatalogedDevice", CatalogedDevice._Factory},
-			{"DeviceAccount", DeviceAccount._Factory},
+			{"AccountEntry", AccountEntry._Factory},
 			{"CatalogedCredential", CatalogedCredential._Factory},
 			{"CatalogedNetwork", CatalogedNetwork._Factory},
 			{"CatalogedContact", CatalogedContact._Factory},
@@ -3279,7 +3279,13 @@ namespace Goedel.Mesh {
         ///corresponding recryption key.
         /// </summary>
 
-		public virtual KeyComposite						KeyEncryption  {get; set;}
+		public virtual KeyComposite						KeyGroup  {get; set;}
+        /// <summary>
+        ///The key overlay used to generate the account encryption key from the
+        ///device encryption key 		
+        /// </summary>
+
+		public virtual KeyOverlay						KeyEncryption  {get; set;}
         /// <summary>
         ///The key overlay used to generate the account authentication key from the
         ///device authentication key 		
@@ -3351,6 +3357,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EnvelopedConnectionAccount", 1);
 					EnvelopedConnectionAccount.Serialize (_Writer, false);
 				}
+			if (KeyGroup != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyGroup", 1);
+					KeyGroup.Serialize (_Writer, false);
+				}
 			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("KeyEncryption", 1);
@@ -3417,9 +3428,16 @@ namespace Goedel.Mesh {
  
 					break;
 					}
+				case "KeyGroup" : {
+					// An untagged structure
+					KeyGroup = new KeyComposite ();
+					KeyGroup.Deserialize (JSONReader);
+ 
+					break;
+					}
 				case "KeyEncryption" : {
 					// An untagged structure
-					KeyEncryption = new KeyComposite ();
+					KeyEncryption = new KeyOverlay ();
 					KeyEncryption.Deserialize (JSONReader);
  
 					break;
@@ -4827,7 +4845,7 @@ namespace Goedel.Mesh {
         ///The accounts that this device is connected to
         /// </summary>
 
-		public virtual List<DeviceAccount>				Accounts  {get; set;}
+		public virtual List<AccountEntry>				Accounts  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4979,12 +4997,12 @@ namespace Goedel.Mesh {
 				case "Accounts" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
-					Accounts = new List <DeviceAccount> ();
+					Accounts = new List <AccountEntry> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  DeviceAccount ();
+						var _Item = new  AccountEntry ();
 						_Item.Deserialize (JSONReader);
-						// var _Item = new DeviceAccount (JSONReader);
+						// var _Item = new AccountEntry (JSONReader);
 						Accounts.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
@@ -5003,7 +5021,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class DeviceAccount : MeshItem {
+	public partial class AccountEntry : MeshItem {
         /// <summary>
         ///UDF of the account profile
         /// </summary>
@@ -5033,13 +5051,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DeviceAccount";
+		public new const string __Tag = "AccountEntry";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DeviceAccount();
+		public static new JSONObject _Factory () => new AccountEntry();
 
 
         /// <summary>
@@ -5098,15 +5116,15 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DeviceAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
+        public static new AccountEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
 			if (JSONReader == null) {
 				return null;
 				}
 			if (Tagged) {
 				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
-				return Out as DeviceAccount;
+				return Out as AccountEntry;
 				}
-		    var Result = new DeviceAccount ();
+		    var Result = new AccountEntry ();
 			Result.Deserialize (JSONReader);
 			Result.PostDecode();
 			return Result;

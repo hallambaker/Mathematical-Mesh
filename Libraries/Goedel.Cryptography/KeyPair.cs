@@ -51,9 +51,9 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
         /// </summary>
-        /// <param name="base">The base identifier.</param>
+        /// <param name="baseID">The base identifier.</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
-        public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID @base) => @base;
+        public virtual CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID baseID) => baseID;
 
         /// <summary>
         /// Encrypt a bulk key.

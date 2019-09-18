@@ -55,22 +55,61 @@ namespace Goedel.Mesh {
 
         public ActivationAccount ConnectDevice (
                         IMeshMachine meshMachine,
-                        ConnectionDevice connectionDevice,
+                        CatalogedDevice catalogedDevice,
                         List<Permission> permissions
                         ) {
             // Get an online signature key if not already found
             KeySignOnline = KeySignOnline ?? meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
 
             // Create a new activation and entry
-            var activationAccount = new ActivationAccount(meshMachine, connectionDevice, this, permissions);
+            var activationAccount = new ActivationAccount(meshMachine, catalogedDevice, this, permissions);
             
             // Sign the activation
-            activationAccount.EnvelopedConnectionAccount = activationAccount.ConnectionAccount.Sign(KeySignOnline);
+            var envelopedConnectionAccount = activationAccount.ConnectionAccount.Sign(KeySignOnline);
+            activationAccount.EnvelopedConnectionAccount = envelopedConnectionAccount;
+
+            activationAccount.Sign(KeySignOnline);
+            "Need to encrypt the data under the device connection key".TaskFunctionality();
+
 
             // Encrypt to the device
+            var accountEntry = new AccountEntry() {
+                EnvelopedProfileAccount = DareEnvelope,
+                EnvelopedConnectionAccount = envelopedConnectionAccount,
+                EnvelopedActivationAccount = activationAccount.DareEnvelope
+                };
+
+            catalogedDevice.Accounts = catalogedDevice.Accounts ?? new List<AccountEntry>();
+            catalogedDevice.Accounts.Add(accountEntry);
 
 
             return activationAccount;
+            }
+
+
+        public override void ToBuilder(StringBuilder builder, int indent) {
+
+            builder.AppendIndent(indent, $"Profile Account");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+            builder.AppendIndent(indent, $"MeshProfileUDF:      {MeshProfileUDF}");
+            if (KeysOnlineSignature != null) {
+                foreach (var online in KeysOnlineSignature) {
+                    builder.AppendIndent(indent, $"KeysOnlineSignature: {online.UDF} ");
+                    }
+                }
+            if (ServiceIDs != null) {
+                foreach (var serviceID in ServiceIDs) {
+                    builder.AppendIndent(indent, $"ServiceID : {serviceID} ");
+                    }
+                }
+            else {
+                builder.AppendIndent(indent, $"ServiceID : [None]");
+                }
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+
             }
 
         /// <summary>
@@ -79,6 +118,9 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The envelope to decode.</param>
         /// <returns>The decoded ProfileAccount.</returns>
         public static new ProfileAccount Decode(DareEnvelope envelope) {
+            if (envelope == null) {
+                return null;
+                }
             var result = FromJSON(envelope.GetBodyReader(), true);
             result.DareEnvelope = envelope;
             return result;
@@ -111,15 +153,17 @@ namespace Goedel.Mesh {
 
         public ActivationAccount (
                         IMeshMachine meshMachine,
-                        ConnectionDevice connectionDevice,
+                        CatalogedDevice catalogedDevice,
                         ProfileAccount  profileAccount,
                         List<Permission> permissions) {
 
+            var profileDevice = catalogedDevice.ProfileDevice;
             EnvelopedProfileAccount = profileAccount.DareEnvelope;
 
-            KeySignature = new KeyOverlay(meshMachine, connectionDevice.KeySignature);
-            //KeyEncryption = new KeyComposite(meshMachine, connectionDevice.KeyEncryption);
-            KeyAuthentication = new KeyOverlay(meshMachine, connectionDevice.KeyAuthentication);
+            AccountUDF = profileAccount.UDF;
+            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
+            KeyEncryption = new KeyOverlay(meshMachine, profileDevice.KeyEncryption);
+            KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
 
             connectionAccount = new ConnectionAccount() {
                 SubjectUDF = KeySignature.KeyPair.UDF,
@@ -131,6 +175,35 @@ namespace Goedel.Mesh {
 
             }
 
+        public override void ToBuilder(StringBuilder builder, int indent) {
+
+            builder.AppendIndent(indent, $"Activation Account");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            
+
+
+            builder.AppendIndent(indent, $"KeySignature:       {KeySignature?.UDF} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication?.UDF} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption?.UDF} ");
+            builder.AppendIndent(indent, $"KeyGroup:       {KeyGroup?.UDF} ");
+            }
+
+
+        /// <summary>
+        /// Decode from DareEnvelope
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <returns>The decoded ProfileAccount.</returns>
+        public static new ActivationAccount Decode(DareEnvelope envelope) {
+            if (envelope == null) {
+                return null;
+                }
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
+            return result;
+            }
 
         }
 
@@ -138,9 +211,28 @@ namespace Goedel.Mesh {
     public partial class ConnectionAccount {
 
 
+        public override void ToBuilder(StringBuilder builder, int indent) {
 
+            builder.AppendIndent(indent, $"Connection Account");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            //builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+
+            //if (KeysOnlineSignature != null) {
+            //    foreach (var online in KeysOnlineSignature) {
+            //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
+            //        }
+            //    }
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
+
+            }
 
         public static new ConnectionAccount Decode(DareEnvelope message) {
+            if (message == null) {
+                return null;
+                }
             var result = FromJSON(message.GetBodyReader(), true);
             result.DareEnvelope = message;
             return result;

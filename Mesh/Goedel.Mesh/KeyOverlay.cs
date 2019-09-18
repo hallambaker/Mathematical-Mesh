@@ -51,8 +51,8 @@ namespace Goedel.Mesh {
             }
 
 
-        public KeyOverlay(IMeshMachine meshMachine, PublicKey baseKey) : 
-                    this(meshMachine, baseKey.KeyPair as KeyPairAdvanced ) {
+        public KeyOverlay(IMeshMachine meshMachine, PublicKey baseKey) :
+                    this(meshMachine, baseKey.KeyPair as KeyPairAdvanced) {
             }
         public KeyOverlay(IMeshMachine meshMachine, KeyPairAdvanced baseKey) {
 
@@ -88,5 +88,11 @@ namespace Goedel.Mesh {
             return combined;
             }
 
+
+        //public KeyPairAdvanced GetPrivate(IMeshMachine meshMachine, string baseUDF) {
+        //    var keyContribution = meshMachine.KeyCollection.LocatePrivate(baseUDF);
+        //    return 
+
+        //    }
         }
     }

@@ -155,6 +155,16 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
+        /// Alternative print routine for formatted output.
+        /// </summary>
+        /// <param name="builder">A string builder to direct the output to.</param>
+        /// <param name="indent">Number of indents to be emitted at the start of each line.</param>
+        public virtual void ToBuilder(StringBuilder builder, int indent) {
+            builder.AppendLine($"[{_Tag}]");
+            }
+
+
+        /// <summary>
         /// Convert object to string in JSON form.
         /// </summary>
         /// <returns>Data as string.</returns>

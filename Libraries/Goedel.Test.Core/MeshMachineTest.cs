@@ -101,11 +101,25 @@ namespace Goedel.Test.Core {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
             var contextAdmin = ContextMeshAdmin.CreateMesh(result);
+
+            Console.WriteLine("Created new Mesh");
+            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+
             contextAccount = contextAdmin.CreateAccount(localName);
+
+
+            Console.WriteLine("Added Account");
+            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
             contextAccount.AddService(accountId);
+
+            Console.WriteLine("Bound account to Service");
+            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
 
             return result;
             }
+
+        public override string ToString() => $"TestMachine:{Name}";
+
 
         public static ContextMeshPending Connect(
             TestEnvironmentCommon testEnvironmentCommon,
@@ -142,9 +156,10 @@ namespace Goedel.Test.Core {
 
 
         public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
-            base(testEnvironmentPerTest.MachinePath(name)) =>
-                TestEnvironmentCommon = testEnvironmentPerTest;
-
+                    base(testEnvironmentPerTest.MachinePath(name)) {
+            Name = name;
+            TestEnvironmentCommon = testEnvironmentPerTest;
+            }
 
         public MeshMachineTest(MeshMachineTest existing) :
             base (existing.DirectoryMaster) =>

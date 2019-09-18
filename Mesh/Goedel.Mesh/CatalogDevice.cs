@@ -103,13 +103,59 @@ namespace Goedel.Mesh {
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
-
+        public ActivationDevice ActivationDevice => activationDevice ??
+                ActivationDevice.Decode(EnvelopedActivationDevice).CacheValue(out activationDevice);
+        ActivationDevice activationDevice;
 
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
         public CatalogedDevice() {
             }
+
+
+
+        public override string ToString() {
+            var builder = new StringBuilder();
+            ToBuilder(builder, 0);
+            return builder.ToString();
+            }
+
+        public override void ToBuilder(StringBuilder builder, int indent)  {
+
+            builder.AppendIndent(indent, $"ContextDevice");
+
+            indent++;
+            builder.AppendIndent(indent, $"Base UDF {DeviceUDF}");
+            builder.AppendIndent(indent, $"Mesh UDF {UDF}");
+            DareEnvelope.Report(builder);
+
+            ProfileDevice.ToBuilder (builder, indent,  "[Profile Device Missing]");
+            ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
+            ActivationDevice.ToBuilder(builder, indent, "[Activation Device Missing]");
+
+            if (Accounts == null) {
+                builder.AppendIndent(indent, $"Accounts: None");
+                }
+            else {
+                builder.AppendIndent(indent, $"Accounts: {Accounts.Count}");
+                indent++;
+                foreach (var account in Accounts) {
+                    builder.AppendIndent(indent, $"Account Entry {account.AccountUDF}");
+
+                    account.ProfileAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    //account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    account.ActivationAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    }
+
+                }
+
+
+
+
+            
+            }
+
 
 
 
