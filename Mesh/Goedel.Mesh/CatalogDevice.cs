@@ -63,10 +63,14 @@ namespace Goedel.Mesh {
         /// <param name="containerName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-        public CatalogDevice(string directory, string containerName=null,
-            CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
-            base(directory, containerName?? Label, cryptoParameters, keyCollection) {
+        public CatalogDevice(
+                    string directory, 
+                    string containerName=null,
+                    CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null, 
+                    bool decrypt=true,
+                    bool create=true) :
+            base(directory, containerName?? Label, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
 
@@ -78,6 +82,17 @@ namespace Goedel.Mesh {
 
             return base.Transact(catalog, updates);
             
+            }
+
+
+        public string Report() {
+
+            var builder = new StringBuilder();
+            foreach (var catalog in AsCatalogEntryDevice) {
+                catalog.ToBuilder(builder, 1);
+                }
+
+            return builder.ToString();
             }
 
 
@@ -121,7 +136,7 @@ namespace Goedel.Mesh {
             return builder.ToString();
             }
 
-        public override void ToBuilder(StringBuilder builder, int indent)  {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"ContextDevice");
 

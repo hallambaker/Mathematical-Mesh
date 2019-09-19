@@ -96,7 +96,9 @@ namespace Goedel.Mesh.Server {
             // Identify the relevant device record
             // return it.
 
-            using (var container = new CatalogDevice(AccountEntry.Directory, ProfileMesh.UDF)) {
+            Container.ToConsole(Store.FileName(AccountEntry.Directory, CatalogDevice.Label));
+
+            using (var container = new CatalogDevice(AccountEntry.Directory, decrypt:false)) {
                 return container.Get(deviceUDF);
                 }
 

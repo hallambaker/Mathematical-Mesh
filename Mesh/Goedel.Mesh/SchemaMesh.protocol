@@ -311,12 +311,6 @@
 		String AccountUDF
 			Description
 				|The UDF of the account
-		Struct DareEnvelope EnvelopedProfileAccount
-			Description
-				|The enveloped profile account
-		Struct DareEnvelope EnvelopedConnectionAccount
-			Description
-				|The account connection assertion
 		Struct KeyComposite KeyGroup
 			Description
 				|The key contribution for the decryption key for the device. NB this is 

@@ -67,6 +67,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Constructor, creates an entry for the specified container header, data and previous relationship.
         /// </summary>
+        /// <param name="container">Container to create the entry in.</param>
         /// <param name="dareEnvelope">The envelope entry.</param>
         /// <param name="previous">Link to previous value of this object</param>
         /// <param name="item">The JSONObject representation.</param>
@@ -78,8 +79,6 @@ namespace Goedel.Cryptography.Dare {
             jsonObject = item;
 
             ContainerHeader = dareEnvelope.Header as DareHeader;
-            //DareEnvelope = dareEnvelope;
-
             Previous = previous;
             First = previous?.First ?? this;
             }

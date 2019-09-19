@@ -50,7 +50,14 @@ namespace Goedel.Mesh {
 
             }
 
-
+        /// <summary>
+        /// Generate a new profile.
+        /// </summary>
+        /// <param name="meshMachine">Machine context for persisting keys.</param>
+        /// <param name="algorithmSign">The signature algorithm</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm</param>
+        /// <param name="algorithmAuthenticate">The authentication algorithm</param>
+        /// <returns>The generated, signed profile.</returns>
         public static ProfileDevice Generate(
                     IMeshMachine meshMachine,
                     CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -66,6 +73,11 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Decode an enveloped profile device.
+        /// </summary>
+        /// <param name="envelope">The enveloped profile.</param>
+        /// <returns>The decoded profile.</returns>
         public static new ProfileDevice Decode(DareEnvelope envelope) {
             if (envelope == null) {
                 return null;
@@ -75,8 +87,12 @@ namespace Goedel.Mesh {
             return result;
             }
 
-
-        public override void ToBuilder(StringBuilder builder, int indent) {
+        /// <summary>
+        /// Formatted print routine.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="indent"></param>
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Profile Device");
             indent++;
@@ -165,7 +181,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public override void ToBuilder(StringBuilder builder, int indent) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
             builder.AppendIndent(indent, $"Activation Device");
             indent++;
             DareEnvelope.Report(builder, indent);
@@ -186,15 +202,9 @@ namespace Goedel.Mesh {
             }
 
         public ConnectionDevice(ActivationDevice assertionDevicePrivate) {
-
             KeySignature = new PublicKey(assertionDevicePrivate.KeySignature.KeyPair);
             KeyEncryption = new PublicKey(assertionDevicePrivate.KeyEncryption.KeyPair);
             KeyAuthentication = new PublicKey(assertionDevicePrivate.KeyAuthentication.KeyPair);
-
-            //Console.WriteLine($"Created new device connection assertion");
-            //Console.WriteLine($"   Sig  {KeySignature.UDF}");
-            //Console.WriteLine($"   Enc  {KeyEncryption.UDF}");
-            //Console.WriteLine($"   Auth {KeyAuthentication.UDF}");
             }
 
 
@@ -207,7 +217,7 @@ namespace Goedel.Mesh {
             return result;
             }
 
-        public override void ToBuilder(StringBuilder builder, int indent) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Connection Device");
             indent++;

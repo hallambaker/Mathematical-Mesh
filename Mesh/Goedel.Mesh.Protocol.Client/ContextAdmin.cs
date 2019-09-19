@@ -208,12 +208,15 @@ namespace Goedel.Mesh.Client {
             var profileAccount = ProfileAccount.Generate(MeshMachine, ProfileMesh,
                         algorithmSign, algorithmEncrypt);
 
-            var activationAccount = profileAccount.ConnectDevice(MeshMachine, CatalogedDevice, null);
+            var accountEntry = profileAccount.ConnectDevice(MeshMachine, CatalogedDevice, null);
             UpdateDevice(CatalogedDevice);
 
-            var contextAccount = new ContextAccount(this, activationAccount);
+            var contextAccount = new ContextAccount(this, accountEntry);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
+            contextAccount.AddDevice(CatalogedDevice);
+
+
 
             return contextAccount;
             }

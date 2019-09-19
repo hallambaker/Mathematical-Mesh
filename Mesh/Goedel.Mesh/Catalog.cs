@@ -36,14 +36,12 @@ namespace Goedel.Mesh {
 
         }
 
-    public delegate bool CatalogTransactDelegate (Catalog catalog, List<CatalogUpdate> updates);
+    //public delegate bool CatalogTransactDelegate (Catalog catalog, List<CatalogUpdate> updates);
 
     public class Catalog : Store, IEnumerable<CatalogedEntry> {
 
         public ContainerPersistenceStore ContainerPersistence = null;
 
-
-        //public CatalogTransactDelegate TransactDelegate;
 
         protected override void Disposing() {
             ContainerPersistence?.Dispose();
@@ -56,34 +54,31 @@ namespace Goedel.Mesh {
         //public Catalog(IMeshMachine machine, string containerName) : this(machine.DirectoryMesh, containerName) { }
 
 
+        /// <summary>
+        /// Constuctor
+        /// </summary>
+        /// <param name="directory">Directory to create the catalog in.</param>
+        /// <param name="containerName">Container name.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters.</param>
+        /// <param name="keyCollection">Key collection to use for decryption.</param>
+        /// <param name="readContainer">If true, read the container.</param>
+        /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
+        /// <param name="create">If true, create a container if it does not already exist.</param>
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, bool readContainer = true, bool decrypt=true) :
-                base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt) {
+                    KeyCollection keyCollection = null, 
+                    bool readContainer = true, 
+                    bool decrypt=true,
+                    bool create = true) :
+                base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+            if (!create & Container == null) {
+                return;
+                }
+
+
             ContainerPersistence = new ContainerPersistenceStore(Container, readContainer);
             //TransactDelegate = Transact;
             }
-
-        //public DareEnvelope ContainerEntry(CatalogedEntry catalogEntry, string eventID) {
-
-        //    var body = catalogEntry.GetBytes(tagged: true);
-
-        //    var header = new ContentInfo() {
-        //        Event = eventID,
-        //        UniqueID = catalogEntry._PrimaryKey,
-        //        KeyValues = catalogEntry._KeyValues.ToKeyValues()
-        //        };
-
-        //    // here au
-        //    throw new NYI();
-        //    //return new DareEnvelope() {
-        //    //    Header = header,
-        //    //    Body = body
-        //    //    };
-
-        //    }
-
-
 
 
         public static ContainerStatus Status(string directory, string containerName) {
@@ -97,19 +92,6 @@ namespace Goedel.Mesh {
             }
 
 
-
-        DareEnvelope MakeFrame(
-                ContentMeta containerHeader,
-                JSONObject item) {
-
-            throw new NYI();
-
-            //return  new DareEnvelope() {
-            //    Header = containerHeader,
-            //    Body = item?.GetBytes(ContainerPersistence.Encoding, true)
-            //    };
-
-            }
 
         public List<DareEnvelope> Prepare(List<CatalogUpdate> updates) {
             //"Commit changes AFTER they have been accepted by the service".TaskFunctionality();

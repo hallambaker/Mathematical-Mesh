@@ -13,13 +13,13 @@ namespace Goedel.Mesh {
         //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
 
-        public static void ToBuilder(this JSONObject jSONObject, StringBuilder builder,
+        public static void ToBuilder(this MeshItem meshItem, StringBuilder builder,
                 int indent, string nullText) {
-            if (jSONObject == null) {
+            if (meshItem == null) {
                 builder.AppendLine(nullText);
                 }
             else {
-                jSONObject.ToBuilder(builder, indent);
+                meshItem.ToBuilder(builder, indent);
                 }
             }
 

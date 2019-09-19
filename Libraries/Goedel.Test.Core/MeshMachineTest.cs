@@ -107,9 +107,14 @@ namespace Goedel.Test.Core {
 
             contextAccount = contextAdmin.CreateAccount(localName);
 
+            Console.WriteLine("Device Catalog");
 
-            Console.WriteLine("Added Account");
-            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+
+            var catalogDevice = contextAccount.GetCatalogDevice();
+            Console.WriteLine(catalogDevice.Report());
+
+            //Console.WriteLine("Added Account");
+            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
             contextAccount.AddService(accountId);
 
             Console.WriteLine("Bound account to Service");

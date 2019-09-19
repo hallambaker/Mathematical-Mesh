@@ -3264,16 +3264,6 @@ namespace Goedel.Mesh {
 
 		public virtual string						AccountUDF  {get; set;}
         /// <summary>
-        ///The enveloped profile account
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
-        /// <summary>
-        ///The account connection assertion
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedConnectionAccount  {get; set;}
-        /// <summary>
         ///The key contribution for the decryption key for the device. NB this is 
         ///NOT an overlay on the device signature key, it is an overlay on the 
         ///corresponding recryption key.
@@ -3347,16 +3337,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("AccountUDF", 1);
 					_Writer.WriteString (AccountUDF);
 				}
-			if (EnvelopedProfileAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
-					EnvelopedProfileAccount.Serialize (_Writer, false);
-				}
-			if (EnvelopedConnectionAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedConnectionAccount", 1);
-					EnvelopedConnectionAccount.Serialize (_Writer, false);
-				}
 			if (KeyGroup != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("KeyGroup", 1);
@@ -3412,20 +3392,6 @@ namespace Goedel.Mesh {
 			switch (Tag) {
 				case "AccountUDF" : {
 					AccountUDF = JSONReader.ReadString ();
-					break;
-					}
-				case "EnvelopedProfileAccount" : {
-					// An untagged structure
-					EnvelopedProfileAccount = new DareEnvelope ();
-					EnvelopedProfileAccount.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "EnvelopedConnectionAccount" : {
-					// An untagged structure
-					EnvelopedConnectionAccount = new DareEnvelope ();
-					EnvelopedConnectionAccount.Deserialize (JSONReader);
- 
 					break;
 					}
 				case "KeyGroup" : {

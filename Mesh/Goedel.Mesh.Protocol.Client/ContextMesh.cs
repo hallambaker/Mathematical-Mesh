@@ -36,12 +36,12 @@ namespace Goedel.Mesh.Client {
         /////<summary>The device profile to which the signature key is bound</summary>
         //public ProfileDevice profileDevice { get; }
 
-        ActivationDevice AssertionDevicePrivate => assertionDevicePrivate ??
-            ActivationDevice.Decode(
-                MeshMachine, CatalogedDevice.EnvelopedActivationDevice).CacheValue(
-                    out assertionDevicePrivate);
+        //ActivationDevice AssertionDevicePrivate => assertionDevicePrivate ??
+        //    ActivationDevice.Decode(
+        //        MeshMachine, CatalogedDevice.EnvelopedActivationDevice).CacheValue(
+        //            out assertionDevicePrivate);
 
-        ActivationDevice assertionDevicePrivate = null;
+        //ActivationDevice assertionDevicePrivate = null;
 
         ///<summary>The context as an administration context.</summary>
         public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
@@ -66,9 +66,10 @@ namespace Goedel.Mesh.Client {
                 string localName=null,
                 string accountName = null) {
 
-            var activation = AssertionDevicePrivate.GetActivation(accountName);
+            throw new NYI();
+            //var activation = AssertionDevicePrivate.GetActivation(accountName);
 
-            return new ContextAccount (this, activation);
+            //return new ContextAccount (this, activation);
 
             }
 
@@ -79,25 +80,25 @@ namespace Goedel.Mesh.Client {
             MeshMachine.Register(CatalogedMachine);
             }
 
-        public void UpdateAccount(ProfileAccount profileUpdate) {
+        //public void UpdateAccount(ProfileAccount profileUpdate) {
 
-            CatalogedMachine.EnvelopedProfileAccount = CatalogedMachine.EnvelopedProfileAccount ??
-                new List<DareEnvelope>();
+        //    CatalogedMachine.EnvelopedProfileAccount = CatalogedMachine.EnvelopedProfileAccount ??
+        //        new List<DareEnvelope>();
 
-            bool found = false;
-            foreach (var envelope in CatalogedMachine.EnvelopedProfileAccount) {
-                var profileAccount = ProfileAccount.Decode(envelope);
-                if (profileAccount.UDF == profileUpdate.UDF) {
-                    found = true;
-                    profileAccount.ServiceIDs = profileUpdate.ServiceIDs;
-                    }
-                }
-            if (!found) {
-                CatalogedMachine.EnvelopedProfileAccount.Add(profileUpdate.DareEnvelope);
-                }
+        //    bool found = false;
+        //    foreach (var envelope in CatalogedMachine.EnvelopedProfileAccount) {
+        //        var profileAccount = ProfileAccount.Decode(envelope);
+        //        if (profileAccount.UDF == profileUpdate.UDF) {
+        //            found = true;
+        //            profileAccount.ServiceIDs = profileUpdate.ServiceIDs;
+        //            }
+        //        }
+        //    if (!found) {
+        //        CatalogedMachine.EnvelopedProfileAccount.Add(profileUpdate.DareEnvelope);
+        //        }
 
-            MeshMachine.Register(CatalogedMachine);
-            }
+        //    MeshMachine.Register(CatalogedMachine);
+        //    }
 
 
 

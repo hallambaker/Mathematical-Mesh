@@ -124,14 +124,16 @@ namespace Goedel.Cryptography.Dare {
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
-                    bool readContainer = true) : this(
+                    bool readContainer = true,
+                    bool decrypt = true) : this(
                         Container.Open(
                 fileName,
                 fileStatus,
                 keyCollection ?? cryptoParameters?.KeyCollection,
                 cryptoParameters,
                 containerType,
-                contentType
+                contentType,
+                decrypt
                 ), readContainer) { }
 
 
@@ -157,6 +159,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="Stream">The stream to read</param>
+        /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
         void ReadContainer(JBCDStream Stream, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
@@ -191,8 +194,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Commit a transaction to memory.
         /// </summary>
-        /// <param name="contentInfo">The container header</param>
-        /// <param name="data">The data to commit.</param>
+        /// <param name="frameIndex">The container position</param>
+        /// <param name="jSONObject">The object being committed in deserialized form.</param>
         public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JSONObject jSONObject) {
             var contentInfo = frameIndex.Header.ContentMeta;
 
@@ -289,6 +292,13 @@ namespace Goedel.Cryptography.Dare {
 
         #region Prepare and commit transaction to container
 
+        /// <summary>
+        /// Prepare a transaction to be committed.
+        /// </summary>
+        /// <param name="contentInfo">The content metadata</param>
+        /// <param name="jsonObject">The object.</param>
+        /// <param name="transaction">The transaction context</param>
+        /// <returns>The prepared envelope.</returns>
         public DareEnvelope Prepare(
                 ContentMeta contentInfo, 
                 JSONObject jsonObject, 
@@ -307,6 +317,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="item">The object to write.</param>
         /// <param name="previous">The previous entry.</param>
+        /// <param name="dareEnvelope">The serialized persistence data.</param>
         /// <returns></returns>
         public virtual ContainerStoreEntry CommitToContainer(
                 DareEnvelope dareEnvelope,
@@ -326,6 +337,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new persistence entry.
         /// </summary>
         /// <param name="jsonObject">Object to create</param>
+        /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual DareEnvelope PrepareNew(
                 JSONObject jsonObject, Transaction transaction = null) {
 
@@ -350,6 +362,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="previous">The previous container store entry for this object</param>
         /// <param name="jsonObject">The new object value</param>
         /// <param name="create">If true, create a new value if one does not already exist</param>
+        /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual DareEnvelope PrepareUpdate(
                     out ContainerStoreEntry previous,
                     JSONObject jsonObject,
@@ -379,6 +392,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="previous">The previous container store entry for this object</param>
         /// <param name="uniqueID">The UniqueID of the object to delete</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
+        /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public DareEnvelope PrepareDelete(
             out ContainerStoreEntry previous, string uniqueID, Transaction transaction = null) {
             var Exists = ObjectIndex.TryGetValue(uniqueID, out previous);
@@ -403,6 +417,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new persistence entry.
         /// </summary>
         /// <param name="jsonObject">Object to create</param>
+        /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual IPersistenceEntry New(JSONObject jsonObject, Transaction transaction = null) {
             var envelope = PrepareNew(jsonObject, transaction);
             var ContainerStoreEntry = CommitToContainer(envelope, jsonObject);
@@ -417,6 +432,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonObject">The new object value</param>
         /// <param name="create">If true, create a new value if one does not already exist</param>
+        /// <param name="transaction">The transaction context in which to perform the update.</param>
         public virtual IPersistenceEntry Update(JSONObject jsonObject, bool create = true, Transaction transaction = null) {
 
             var envelope = PrepareUpdate(out var Previous, jsonObject, create, transaction);
@@ -432,6 +448,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <threadsafety static="true" instance="true"/>
         /// <param name="uniqueID">The UniqueID of the object to delete</param>
+        /// <param name="transaction">The transaction context in which to perform the update.</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
         public virtual bool Delete(string uniqueID, Transaction transaction = null) {
             var envelope = PrepareDelete(out var Previous, uniqueID, transaction);
@@ -517,7 +534,9 @@ namespace Goedel.Cryptography.Dare {
 
         }
 
-
+    /// <summary>
+    /// Base class for transactions.
+    /// </summary>
     public class Transaction {
 
 

@@ -182,6 +182,9 @@ namespace Goedel.Mesh.Server {
                     EnvelopedCatalogEntryDevice = null
                     };
 
+                // summarize the status here.
+
+                statusResponse.ToConsole();
 
                 return statusResponse;
                 }
@@ -240,6 +243,9 @@ namespace Goedel.Mesh.Server {
                     List<DareEnvelope> selfs) {
             //AccountHandleVerified accountEntry = null;
 
+            // report the updates to be applied here
+
+
             using (var accountEntry = GetAccountVerified(account, jpcSession)) {
                 Assert.NotNull(accountEntry);
                 if (selfs != null) {
@@ -250,10 +256,15 @@ namespace Goedel.Mesh.Server {
 
                 if (updates != null) {
                     foreach (var update in updates) {
+                        update.ToConsole();
                         accountEntry.StoreAppend(update.Container, update.Envelopes);
                         }
                     }
                 }
+
+            // report the final status of the containers here.
+
+
             }
 
         /// <summary>
@@ -298,13 +309,16 @@ namespace Goedel.Mesh.Server {
             var accountEntry = GetAccountLocked(verifiedAccount.ServiceID);
             Assert.NotNull(accountEntry);
 
-            using (var catalogDevice = new CatalogDevice(accountEntry.Directory)) {
-                foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
-                    //if (entry.AuthUDF == jpcSession.UDF) {
-                    //    return new AccountHandleVerified(accountEntry);
-                    //    }
-                    }
-                }
+            //using (var catalogDevice = new CatalogDevice(accountEntry.Directory, create:false)) {
+            //    if (catalogDevice?.ContainerPersistence != null) {
+
+            //        foreach (var entry in catalogDevice.AsCatalogEntryDevice) {
+            //            //if (entry.AuthUDF == jpcSession.UDF) {
+            //            //    return new AccountHandleVerified(accountEntry);
+            //            //    }
+            //            }
+            //        }
+            //    }
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
 

@@ -118,6 +118,10 @@ namespace Goedel.Cryptography.Dare {
                 // 
                 JBCDStream.PositionRead = TreePosition;
                 containerInfo = JBCDStream.ReadFrameHeader().ContainerInfo;
+
+                if (Index != containerInfo.Index) {
+                    }
+
                 Assert.True(Index == containerInfo.Index);
                 TreePosition = containerInfo.TreePosition;
                 }

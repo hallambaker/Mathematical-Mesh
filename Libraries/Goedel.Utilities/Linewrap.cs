@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Utilities {
+
+
+    public delegate void ToBuilderDelegate(StringBuilder builder, int indent = 0);
+
+
     /// <summary>
     /// Wrap xml output to fit within a line.
     /// </summary>
     public static class Linewrap {
+
 
         /// <summary>
         /// Append <paramref name="text"/> to the string builder <paramref name="builder"/> prefixed

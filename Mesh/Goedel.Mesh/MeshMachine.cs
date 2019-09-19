@@ -10,6 +10,8 @@ namespace Goedel.Mesh {
 
     public delegate IMeshMachine GetMachineDelegate();
 
+
+
     public static class MeshMachine {
         public static GetMachineDelegate GetMachine;
 

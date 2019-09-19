@@ -21,7 +21,7 @@
 //  
 
 using System.IO;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Utilities;
@@ -155,12 +155,24 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>
-        /// Alternative print routine for formatted output.
+        /// Pretty print the object to the string builder <paramref name="builder"/>
+        /// prefixed by <paramref name="indent"/> indent units.
         /// </summary>
-        /// <param name="builder">A string builder to direct the output to.</param>
-        /// <param name="indent">Number of indents to be emitted at the start of each line.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent) {
-            builder.AppendLine($"[{_Tag}]");
+        /// <param name="builder"></param>
+        /// <param name="indent">Number of indentation units.</param>
+        public virtual void ToBuilder(StringBuilder builder, int indent = 0) {
+            }
+
+        /// <summary>
+        /// Write the object to the console using the method defined by ToBuilder.
+        /// </summary>
+        /// <param name="indent">Number of indentation units.</param>
+        public void ToConsole(int indent = 0) {
+            var StringBuilder = new StringBuilder();
+
+            ToBuilder(StringBuilder, indent);
+
+            Console.WriteLine(StringBuilder.ToString());
             }
 
 
@@ -168,7 +180,7 @@ namespace Goedel.Protocol {
         /// Convert object to string in JSON form.
         /// </summary>
         /// <returns>Data as string.</returns>
-		public virtual string GetUTF8 () {
+        public virtual string GetUTF8 () {
             var _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, true);
             return _JSONWriter.GetUTF8;

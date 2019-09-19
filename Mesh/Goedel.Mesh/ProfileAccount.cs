@@ -53,7 +53,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public ActivationAccount ConnectDevice (
+        public AccountEntry ConnectDevice (
                         IMeshMachine meshMachine,
                         CatalogedDevice catalogedDevice,
                         List<Permission> permissions
@@ -62,11 +62,13 @@ namespace Goedel.Mesh {
             KeySignOnline = KeySignOnline ?? meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
 
             // Create a new activation and entry
-            var activationAccount = new ActivationAccount(meshMachine, catalogedDevice, this, permissions);
-            
+            var activationAccount = new ActivationAccount(meshMachine, catalogedDevice, this);
+            var connectionAccount = new ConnectionAccount(activationAccount, null);
+
+
             // Sign the activation
-            var envelopedConnectionAccount = activationAccount.ConnectionAccount.Sign(KeySignOnline);
-            activationAccount.EnvelopedConnectionAccount = envelopedConnectionAccount;
+            var envelopedConnectionAccount = connectionAccount.Sign(KeySignOnline);
+            //activationAccount.EnvelopedConnectionAccount = envelopedConnectionAccount;
 
             activationAccount.Sign(KeySignOnline);
             "Need to encrypt the data under the device connection key".TaskFunctionality();
@@ -74,6 +76,7 @@ namespace Goedel.Mesh {
 
             // Encrypt to the device
             var accountEntry = new AccountEntry() {
+                AccountUDF = UDF,
                 EnvelopedProfileAccount = DareEnvelope,
                 EnvelopedConnectionAccount = envelopedConnectionAccount,
                 EnvelopedActivationAccount = activationAccount.DareEnvelope
@@ -83,11 +86,11 @@ namespace Goedel.Mesh {
             catalogedDevice.Accounts.Add(accountEntry);
 
 
-            return activationAccount;
+            return accountEntry;
             }
 
 
-        public override void ToBuilder(StringBuilder builder, int indent) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Profile Account");
             indent++;
@@ -140,10 +143,10 @@ namespace Goedel.Mesh {
     public partial class ActivationAccount {
 
 
-        public ConnectionAccount ConnectionAccount => connectionAccount ??
-            ConnectionAccount.Decode(
-                    EnvelopedConnectionAccount).CacheValue(out connectionAccount);
-        ConnectionAccount connectionAccount;
+        //public ConnectionAccount ConnectionAccount => connectionAccount ??
+        //    ConnectionAccount.Decode(
+        //            EnvelopedConnectionAccount).CacheValue(out connectionAccount);
+        //ConnectionAccount connectionAccount;
 
 
 
@@ -154,28 +157,28 @@ namespace Goedel.Mesh {
         public ActivationAccount (
                         IMeshMachine meshMachine,
                         CatalogedDevice catalogedDevice,
-                        ProfileAccount  profileAccount,
-                        List<Permission> permissions) {
+                        ProfileAccount  profileAccount
+                        ) {
 
             var profileDevice = catalogedDevice.ProfileDevice;
-            EnvelopedProfileAccount = profileAccount.DareEnvelope;
+            //EnvelopedProfileAccount = profileAccount.DareEnvelope;
 
             AccountUDF = profileAccount.UDF;
             KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
             KeyEncryption = new KeyOverlay(meshMachine, profileDevice.KeyEncryption);
             KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
-
-            connectionAccount = new ConnectionAccount() {
-                SubjectUDF = KeySignature.KeyPair.UDF,
-                AuthorityUDF = profileAccount.UDF,
-                KeySignature = new PublicKey(KeySignature.KeyPair.KeyPairPublic()),
-                KeyAuthentication = new PublicKey(KeyAuthentication.KeyPair.KeyPairPublic()),
-                Permissions = permissions
-                };
-
             }
 
-        public override void ToBuilder(StringBuilder builder, int indent) {
+
+        public ConnectionAccount GetConnection(List<Permission> permissions) => new ConnectionAccount() {
+            SubjectUDF = KeySignature.KeyPair.UDF,
+            AuthorityUDF = AccountUDF,
+            KeySignature = new PublicKey(KeySignature.KeyPair.KeyPairPublic()),
+            KeyAuthentication = new PublicKey(KeyAuthentication.KeyPair.KeyPairPublic()),
+            Permissions = permissions
+            };
+
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Activation Account");
             indent++;
@@ -209,9 +212,18 @@ namespace Goedel.Mesh {
 
 
     public partial class ConnectionAccount {
+        public ConnectionAccount() {
+            }
 
+        public ConnectionAccount(ActivationAccount activationAccount, List<Permission> permissions) {
+            SubjectUDF = activationAccount.KeySignature.KeyPair.UDF;
+            AuthorityUDF = activationAccount.AccountUDF;
+            KeySignature = new PublicKey(activationAccount.KeySignature.KeyPair.KeyPairPublic());
+            KeyAuthentication = new PublicKey(activationAccount.KeyAuthentication.KeyPair.KeyPairPublic());
+            Permissions = permissions;
+            }
 
-        public override void ToBuilder(StringBuilder builder, int indent) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Connection Account");
             indent++;

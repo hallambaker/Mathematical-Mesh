@@ -39,13 +39,17 @@ namespace Goedel.Mesh.Client {
 
         ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
 
+        AccountEntry AccountEntry;
+
+
         ///<summary>The account activation</summary>
-        public ActivationAccount ActivationAccount;
+        public ActivationAccount ActivationAccount => AccountEntry.ActivationAccount;
 
 
-        public ProfileAccount ProfileAccount => profileAccount ??
-            ProfileAccount.Decode(ActivationAccount.EnvelopedProfileAccount).CacheValue(out profileAccount);
-        ProfileAccount profileAccount;
+        public ProfileAccount ProfileAccount => AccountEntry.ProfileAccount;
+
+        ConnectionAccount ConnectionAccount => AccountEntry.ConnectionAccount;
+
 
         ///<summary>The Machine context.</summary>
         IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
@@ -66,9 +70,8 @@ namespace Goedel.Mesh.Client {
         MeshService MeshClient;
         string ServiceID;
 
-        SyncStatus SyncStatusDevice;
 
-
+        ///<summary>The directory containing the catalogs related to the account.</summary>
         public string DirectoryAccount => directoryAccount ??
             Path.Combine(MeshMachine.DirectoryMesh, ActivationAccount.AccountUDF).CacheValue(out directoryAccount);
         string directoryAccount;
@@ -77,52 +80,49 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount(
                     ContextMesh contextMesh,
-                    ActivationAccount activationAccount
+                    AccountEntry accountEntry
                     ) {
             // Set up the basic context
             ContextMesh = contextMesh;
-            ActivationAccount = activationAccount;
+            AccountEntry = accountEntry;
 
             // Set up the crypto keys so that we can open the application catalog
 
-            var KeySignature = activationAccount.KeySignature.GetPrivate(MeshMachine);
+            var KeySignature = ActivationAccount.KeySignature.GetPrivate(MeshMachine);
 
-
-            //MeshMachine.KeyCollection.LocatePrivate(contextMesh.CatalogedDevice.ProfileDevice.UDF);
-            //KeySignature = activationAccount.KeySignature.GetPrivate(keySignatureDevice);
-
-
-            KeyEncryption = activationAccount.KeyEncryption.GetPrivate(MeshMachine);
-            KeyAuthentication = activationAccount.KeyAuthentication.GetPrivate(MeshMachine);
+            KeyEncryption = ActivationAccount.KeyEncryption.GetPrivate(MeshMachine);
+            KeyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
             KeyCollection.Add(KeyEncryption);
 
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
 
-
-            //if (assertionAccount == null) {
-            //    var CatalogApplication = GetCatalogApplication();
-            //    ProfileAccount = CatalogApplication.GetAssertionAccount(activationAccount.AccountUDF);
-
-            //    if (ProfileAccount.ServiceIDs != null && ProfileAccount.ServiceIDs?.Count > 0) {
-
-            //        ServiceID = ProfileAccount.ServiceIDs[0];
-            //        MeshClient = GetMeshClient(ServiceID);
-            //        }
-
-            //    }
-            //else {
-            //    ProfileAccount = assertionAccount;
-            //    }
-
             }
 
 
-        protected MeshService GetMeshClient(string serviceID) => MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
-                ActivationAccount.ConnectionAccount, ContextMesh.ProfileMesh);
+        protected MeshService GetMeshClient(string serviceID) => 
+                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+                ConnectionAccount, ContextMesh.ProfileMesh);
+
+        /// <summary>
+        /// Add a device to the device catalog.
+        /// </summary>
+        /// <param name="catalogedDevice"></param>
+        public void AddDevice(CatalogedDevice catalogedDevice) {
+            var catalog = GetCatalogDevice();
+            var transaction = new TransactionServiced(catalog, MeshClient);
+            transaction.Update(catalogedDevice);
+            transaction.Commit();
 
 
 
+            //GetCatalogDevice().Update(catalogedDevice);
+            }
 
+        /// <summary>
+        /// Add service to the 
+        /// </summary>
+        /// <param name="serviceID"></param>
+        /// <param name="sync"></param>
         public void AddService(
                 string serviceID,
                 bool sync = true) {
@@ -130,6 +130,7 @@ namespace Goedel.Mesh.Client {
             ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
             ProfileAccount.ServiceIDs.Add(serviceID);
             ContextMeshAdmin.Sign(ProfileAccount);
+            ServiceID = serviceID;
 
             var createRequest = new CreateRequest() {
                 ServiceID = serviceID,
@@ -137,23 +138,14 @@ namespace Goedel.Mesh.Client {
                 SignedProfileMesh = ContextMesh.ProfileMesh.DareEnvelope
                 };
 
-            // attempt to register with service in question
-
+            // Attempt to register with service in question
             MeshClient = GetMeshClient(serviceID);
             MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
-            MeshClient.JpcSession.Authenticated = true;
 
-            // Update the account assertion. This lives in CatalogApplication.
-            ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
-            ProfileAccount.ServiceIDs.Add(serviceID);
-
-            //Update the application catalog with the new version of the 
-            GetCatalogApplication().Update(ProfileAccount);
-
-            ServiceID = serviceID;
-
+            // Update all the devices connected to this profile.
+            UpdateDevices(ProfileAccount);
+            
             if (sync) {
-                //GetCatalogDevice(); ???? - notsyncing!!!
                 GetCatalogApplication();
                 GetCatalogContact();
                 GetCatalogDevice();
@@ -161,8 +153,41 @@ namespace Goedel.Mesh.Client {
                 GetCatalogBookmark();
                 GetCatalogCalendar();
                 GetCatalogNetwork();
-                // Don't sync spools as these are bound to the service
                 SyncProgressUpload();
+                }
+
+            }
+
+
+        void UpdateDevices(ProfileAccount account) {
+            var catalog = GetCatalogDevice();
+
+            var updates = new List<CatalogedDevice>();
+            foreach (var device in catalog.AsCatalogEntryDevice) {
+                bool updated = false;
+                device.Accounts = device.Accounts ?? new List<AccountEntry>();
+
+
+                foreach (var accountEntry in device.Accounts) {
+                    if (accountEntry.AccountUDF == account.UDF) {
+                        accountEntry.EnvelopedProfileAccount = account.DareEnvelope;
+                        updated = true;
+                        }
+                    }
+
+                if (!updated) {
+
+
+
+                    }
+                updates.Add(device);
+
+                }
+            foreach (var device in updates) {
+                catalog.Update(device);
+                if (device.UDF == ContextMesh.CatalogedDevice.UDF) {
+                    ContextMesh.UpdateDevice(device);
+                    }
                 }
 
             }
@@ -188,10 +213,10 @@ namespace Goedel.Mesh.Client {
             bool complete = true;
             var updates = new List<ContainerUpdate>();
 
-            // Always do the devices first (if we are an admin device)
-            if (SyncStatusDevice != null) {
-                maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
-                }
+            //// Always do the devices first (if we are an admin device)
+            //if (SyncStatusDevice != null) {
+            //    maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
+            //    }
 
             // upload all the containers here
             foreach (var store in DictionaryStores) {
@@ -521,8 +546,15 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="request">The request to accept.</param>
         void Accept(AcknowledgeConnection request) {
-            var device = ContextMeshAdmin.CreateCataloguedDevice(request.MessageConnectionRequest.ProfileDevice);
-            GetCatalogDevice().New(device);
+            // Connect the device to the Mesh
+            var device = ContextMeshAdmin.CreateCataloguedDevice(
+                            request.MessageConnectionRequest.ProfileDevice);
+
+            // Connect the device to the Account
+            ProfileAccount.ConnectDevice(MeshMachine, device, null);
+
+            // Update the local and remote catalog.
+            AddDevice(device);
             }
 
 

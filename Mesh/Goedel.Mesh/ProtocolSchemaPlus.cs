@@ -113,6 +113,31 @@ namespace Goedel.Mesh {
     public partial class StatusResponse {
         public StatusResponse(Exception exception = null) : base(exception) {
             }
+
+        public override void ToBuilder(StringBuilder builder, int indent = 0) {
+            builder.AppendIndent(indent, "Status");
+            if (ContainerStatus != null) {
+                foreach (var status in ContainerStatus) {
+                    status.ToBuilder(builder, indent + 1);
+                    }
+                }
+
+            }
+
+
+        }
+
+    public partial class ContainerStatus {
+        public override void ToBuilder(StringBuilder builder, int indent = 0) {
+            builder.AppendIndent(indent, $"{Container}:  {Index} {Digest?.ToStringBase64url()}");
+            }
+        }
+
+
+    public partial class ContainerUpdate {
+        public override void ToBuilder(StringBuilder builder, int indent = 0) {
+            builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
+            }
         }
 
     public partial class UploadResponse {

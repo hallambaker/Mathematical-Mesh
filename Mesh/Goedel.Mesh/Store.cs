@@ -42,8 +42,10 @@ namespace Goedel.Mesh {
 
 
         public Store(string directory, string containerName = null,
-            CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, bool decrypt = true) {
+                    CryptoParameters cryptoParameters = null,
+                    KeyCollection keyCollection = null, 
+                    bool decrypt = true,
+                    bool create = true) {
 
             ContainerName = containerName ?? ContainerDefault;
             var fileName = FileName(directory, ContainerName);
@@ -55,7 +57,8 @@ namespace Goedel.Mesh {
                 cryptoParameters,
                 ContainerType.MerkleTree,
                 "application/mmm-catalog", 
-                decrypt: decrypt
+                decrypt: decrypt,
+                create: create
                 );
 
             KeyCollection = keyCollection;
@@ -76,11 +79,12 @@ namespace Goedel.Mesh {
 
             if (envelopes[0].Header.ContainerInfo.Index == 0) {
                 using (var container = Container.MakeNewContainer(fileName, envelopes)) {
+                    //container.Append(envelopes);
                     }
                 }
             else {
                 // here open the existing container.
-                using (var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked)) {
+                using (var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt:false)) {
                     container.Append(envelopes);
                     }
                 }
@@ -88,7 +92,7 @@ namespace Goedel.Mesh {
             } 
 
 
-        static string FileName(string directory, string containerName = null) {
+        public static string FileName(string directory, string containerName = null) {
             return Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
             }
 
