@@ -102,7 +102,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
-        public override string _PrimaryKey => UDF;
+        public override string _PrimaryKey => DeviceUDF;
 
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
@@ -145,7 +145,7 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Mesh UDF {UDF}");
             DareEnvelope.Report(builder);
 
-            ProfileDevice.ToBuilder (builder, indent,  "[Profile Device Missing]");
+            ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
             ActivationDevice.ToBuilder(builder, indent, "[Activation Device Missing]");
 
@@ -165,11 +165,18 @@ namespace Goedel.Mesh {
 
                 }
 
-
-
-
-            
             }
+
+        public static new CatalogedDevice Decode(DareEnvelope message, KeyCollection keyCollection) {
+            if (message == null) {
+                return null;
+                }
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareEnvelope = message;
+            return result;
+            }
+
+
 
 
 

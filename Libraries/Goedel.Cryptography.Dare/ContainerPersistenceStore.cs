@@ -146,7 +146,7 @@ namespace Goedel.Cryptography.Dare {
             Container = container;
             try {
                 if (readContainer & container.JBCDStream.Length > 0) {
-                    ReadContainer(container.JBCDStream);
+                    ReadContainer();
                     }
                 }
             catch {
@@ -155,12 +155,38 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+
+        public void FastReadContainer() {
+            foreach (var frameIndex in Container) {
+                var contentMeta = frameIndex.Header.ContentMeta;
+                var containertInfo = frameIndex.Header.ContainerInfo;
+
+                var uniqueID = contentMeta.UniqueID;
+
+                ObjectIndex.TryGetValue(uniqueID, out var previous);
+                var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, previous, Container);
+
+
+                ObjectIndex.Remove(uniqueID);
+                switch (contentMeta.Event) {
+                    case EventUpdate:
+                    case EventNew: {
+                        ObjectIndex.Add(uniqueID, ContainerStoreEntry);
+                        break;
+                        }
+                    }
+
+                }
+
+            }
+
+
         /// <summary>
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="Stream">The stream to read</param>
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
-        void ReadContainer(JBCDStream Stream, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
+        void ReadContainer(ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
 
@@ -197,12 +223,12 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="frameIndex">The container position</param>
         /// <param name="jSONObject">The object being committed in deserialized form.</param>
         public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JSONObject jSONObject) {
-            var contentInfo = frameIndex.Header.ContentMeta;
+            var contentMeta = frameIndex.Header.ContentMeta;
 
-            ObjectIndex.TryGetValue(contentInfo.UniqueID, out var Previous);
+            ObjectIndex.TryGetValue(contentMeta.UniqueID, out var Previous);
             var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container, jSONObject);
 
-            switch (contentInfo.Event) {
+            switch (contentMeta.Event) {
                 case EventNew: {
                     MemoryCommitNew(ContainerStoreEntry);
                     break;

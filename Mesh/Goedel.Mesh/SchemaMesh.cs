@@ -2520,6 +2520,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ConnectionAccount : Connection {
         /// <summary>
+        ///The list of service identifiers.
+        /// </summary>
+
+		public virtual List<string>				ServiceID  {get; set;}
+        /// <summary>
         ///List of the permissions that the device has been granted.
         /// </summary>
 
@@ -2583,6 +2588,18 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Connection)this).SerializeX(_Writer, false, ref _first);
+			if (ServiceID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ServiceID", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in ServiceID) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (Permissions != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Permissions", 1);
@@ -2648,6 +2665,17 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "ServiceID" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					ServiceID = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						ServiceID.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				case "Permissions" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();

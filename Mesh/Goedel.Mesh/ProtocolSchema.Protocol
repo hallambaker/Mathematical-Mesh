@@ -209,6 +209,7 @@
 	Message StatusRequest
 		Inherits MeshRequestUser
 		String DeviceUDF
+		Binary ProfileMasterDigest
 		String Catalogs
 			Multiple
 		String Spools
@@ -220,9 +221,6 @@
 		Struct DareEnvelope EnvelopedProfileMaster
 			Description
 				|The master profile that provides the root of trust for this Mesh
-		Struct DareEnvelope EnvelopedAccountAssertion
-			Description
-				|The current account assertion
 		Struct DareEnvelope EnvelopedCatalogEntryDevice
 			Description
 				|The catalog device entry

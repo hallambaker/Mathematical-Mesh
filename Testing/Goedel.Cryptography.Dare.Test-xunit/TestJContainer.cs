@@ -261,7 +261,7 @@ namespace Goedel.XUnit {
                         var Test = MakeConstant("Test ", ((Record) % MaxSize));
 
                         Headers.Add(ContainerDataReader.Header);
-                        var FrameData = ContainerDataReader.GetData(XContainer);
+                        var FrameData = ContainerDataReader.GetBody(XContainer);
 
                         Utilities.Assert.True(FrameData.IsEqualTo(Test));
                         }

@@ -46,6 +46,9 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The frame index within the container</summary>
         public ContainerFrameIndex FrameIndex;
         
+
+
+
         #endregion
         #region // Related records
 
@@ -105,6 +108,14 @@ namespace Goedel.Cryptography.Dare {
 
             Previous = previous;
             First = previous?.First ?? this;
+            }
+
+
+
+        public DareEnvelope Envelope() {
+
+            throw new NYI();
+
             }
 
 

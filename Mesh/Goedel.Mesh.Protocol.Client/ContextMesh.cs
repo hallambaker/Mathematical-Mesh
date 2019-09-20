@@ -208,6 +208,18 @@ namespace Goedel.Mesh.Client {
             var statusResponse = MeshClient.Complete(completeRequest);
 
 
+            // OK so here we need to unpack the profile etc.
+            var catalogedEntry = CatalogedDevice.Decode(statusResponse.EnvelopedCatalogEntryDevice, MeshMachine.KeyCollection);
+            var profileMaster = ProfileMesh.Decode(statusResponse.EnvelopedProfileMaster);
+
+
+            // now create the host profile here.
+
+
+
+            // now synchronise 
+
+
             throw new NYI();
             }
 

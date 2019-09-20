@@ -129,7 +129,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
-        public byte[] GetData(Container container) => throw new NYI();
+        public byte[] GetBody(Container container) {
+            using (var input = container.JBCDStream.FramerGetReader(DataPosition, DataLength)) {
+                using (var output = new MemoryStream()) {
+                    input.CopyTo(output);
+                    return output.ToArray();
+                    }
+                }
+
+            }
 
 
         /// <summary>
@@ -142,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
             var envelope = new DareEnvelope() {
                 Header = Header,
                 Trailer = Trailer,
-                Body = GetData(container)
+                Body = GetBody(container)
                 };
 
             if (!detatched | !Header.HasExchangePosition) {

@@ -215,6 +215,13 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
+        /// Create a JSONReader for the decrypted body content according to the specified encoding.
+        /// </summary>
+        /// <returns></returns>
+        public JSONReader GetBodyReader(KeyCollection keyCollection) => throw new NYI();
+
+
+        /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
         /// <param name="writer">Output stream</param>

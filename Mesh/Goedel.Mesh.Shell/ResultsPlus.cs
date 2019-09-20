@@ -155,9 +155,6 @@ namespace Goedel.Mesh.Shell {
                 if (StatusResponse.EnvelopedProfileMaster != null) {
                     }
 
-                if (StatusResponse.EnvelopedAccountAssertion != null) {
-                    }
-
                 if (StatusResponse.EnvelopedCatalogEntryDevice != null) {
                     }
                 if (StatusResponse.ContainerStatus != null) {

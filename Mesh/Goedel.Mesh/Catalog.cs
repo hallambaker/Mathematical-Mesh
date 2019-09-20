@@ -192,6 +192,9 @@ namespace Goedel.Mesh {
         public CatalogedEntry Locate(string key) => 
             (ContainerPersistence.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogedEntry;
 
+        public ContainerStoreEntry GetEntry(string key) => ContainerPersistence.Get(key) as ContainerStoreEntry;
+
+
 
         public IEnumerator<CatalogedEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);
 

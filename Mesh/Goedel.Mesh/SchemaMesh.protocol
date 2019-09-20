@@ -250,6 +250,10 @@
 
 	Structure ConnectionAccount
 		Inherits Connection
+		String ServiceID
+			Multiple
+			Description
+				|The list of service identifiers.
 		Struct Permission Permissions
 			Multiple
 			Description

@@ -91,14 +91,14 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        public CatalogedDevice GetCatalogEntryDevice(string deviceUDF) {
+        public DareEnvelope GetCatalogEntryDevice(string deviceUDF) {
             // NYI: pull up the device catalog for the account
             // Identify the relevant device record
             // return it.
 
             Container.ToConsole(Store.FileName(AccountEntry.Directory, CatalogDevice.Label));
 
-            using (var container = new CatalogDevice(AccountEntry.Directory, decrypt:false)) {
+            using (var container = new CatalogBlind(AccountEntry.Directory, CatalogDevice.Label)) {
                 return container.Get(deviceUDF);
                 }
 

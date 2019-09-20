@@ -2013,6 +2013,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
+		public virtual byte[]						ProfileMasterDigest  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual List<string>				Catalogs  {get; set;}
         /// <summary>
         /// </summary>
@@ -2066,6 +2070,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("DeviceUDF", 1);
 					_Writer.WriteString (DeviceUDF);
+				}
+			if (ProfileMasterDigest != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ProfileMasterDigest", 1);
+					_Writer.WriteBinary (ProfileMasterDigest);
 				}
 			if (Catalogs != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2128,6 +2137,10 @@ namespace Goedel.Mesh {
 					DeviceUDF = JSONReader.ReadString ();
 					break;
 					}
+				case "ProfileMasterDigest" : {
+					ProfileMasterDigest = JSONReader.ReadBinary ();
+					break;
+					}
 				case "Catalogs" : {
 					// Have a sequence of values
 					bool _Going = JSONReader.StartArray ();
@@ -2169,11 +2182,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedProfileMaster  {get; set;}
-        /// <summary>
-        ///The current account assertion
-        /// </summary>
-
-		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
         /// <summary>
         ///The catalog device entry
         /// </summary>
@@ -2231,11 +2239,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedProfileMaster", 1);
 					EnvelopedProfileMaster.Serialize (_Writer, false);
-				}
-			if (EnvelopedAccountAssertion != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
-					EnvelopedAccountAssertion.Serialize (_Writer, false);
 				}
 			if (EnvelopedCatalogEntryDevice != null) {
 				_Writer.WriteObjectSeparator (ref _first);
@@ -2296,13 +2299,6 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					EnvelopedProfileMaster = new DareEnvelope ();
 					EnvelopedProfileMaster.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "EnvelopedAccountAssertion" : {
-					// An untagged structure
-					EnvelopedAccountAssertion = new DareEnvelope ();
-					EnvelopedAccountAssertion.Deserialize (JSONReader);
  
 					break;
 					}

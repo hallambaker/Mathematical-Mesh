@@ -144,8 +144,7 @@ namespace Goedel.Mesh.Server {
                 var statusResponse = new StatusResponse() {
                     //ContainerStatus = containerStatus,
                     EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope,
-                    EnvelopedCatalogEntryDevice = catalogEntry.DareEnvelope
+                    EnvelopedCatalogEntryDevice = catalogEntry
                     };
 
 
@@ -178,7 +177,6 @@ namespace Goedel.Mesh.Server {
                 var statusResponse = new StatusResponse() {
                     ContainerStatus = containerStatus,
                     EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope,
                     EnvelopedCatalogEntryDevice = null
                     };
 
