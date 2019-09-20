@@ -17,9 +17,9 @@ namespace Goedel.Mesh.Shell {
         public virtual IMeshMachineClient MeshMachine { get; }
 
 
-        public virtual CatalogHost CatalogHost => catalogHost ??
-            CatalogHost.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
-        CatalogHost catalogHost;
+        public virtual HostMesh CatalogHost => catalogHost ??
+            HostMesh.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
+        HostMesh catalogHost;
 
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();
@@ -203,11 +203,12 @@ namespace Goedel.Mesh.Shell {
 
 
         public virtual ContextAccount GetContextDevice(IAccountOptions options) => throw new NYI();
-            //CatalogHost.GetContextDevice();
+        //CatalogHost.GetContextDevice();
 
 
-        public KeyCollection KeyCollection(IAccountOptions options) => throw new NYI();
-                    //CatalogHost.GetKeyCollection();
+        public KeyCollection KeyCollection(IAccountOptions options) =>
+            CatalogHost.MeshMachine.KeyCollection;
+
 
 
         /// <summary>

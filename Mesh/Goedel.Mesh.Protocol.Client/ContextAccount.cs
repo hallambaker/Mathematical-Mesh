@@ -67,7 +67,10 @@ namespace Goedel.Mesh.Client {
         KeyPair KeyEncryption;
         KeyPair KeyAuthentication;
 
-        MeshService MeshClient;
+        public MeshService MeshClient => meshClient ??GetMeshClient(ServiceID).CacheValue (out meshClient);
+        MeshService meshClient;
+
+
         string ServiceID;
 
 
@@ -80,11 +83,13 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount(
                     ContextMesh contextMesh,
-                    AccountEntry accountEntry
+                    AccountEntry accountEntry,
+                    string serviceID = null
                     ) {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
+            ServiceID = serviceID?? AccountEntry.ProfileAccount?.ServiceDefault;
 
             // Set up the crypto keys so that we can open the application catalog
 
@@ -94,8 +99,8 @@ namespace Goedel.Mesh.Client {
             KeyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
             KeyCollection.Add(KeyEncryption);
 
-            ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
-
+            //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
+            ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
             }
 
 
@@ -139,7 +144,6 @@ namespace Goedel.Mesh.Client {
                 };
 
             // Attempt to register with service in question
-            MeshClient = GetMeshClient(serviceID);
             MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
 
             // Update all the devices connected to this profile.
@@ -386,6 +390,10 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
+        public void InitializeStores() {
+            Directory.CreateDirectory(DirectoryAccount);
+            }
+
 
         public Store GetStore(string name) {
 
@@ -606,7 +614,7 @@ namespace Goedel.Mesh.Client {
 
             ServiceID = ProfileAccount.ServiceIDs[0];
 
-            MeshClient = GetMeshClient(ServiceID);
+            meshClient = GetMeshClient(ServiceID);
             }
 
 

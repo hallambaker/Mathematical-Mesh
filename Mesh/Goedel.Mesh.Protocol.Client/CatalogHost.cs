@@ -14,50 +14,86 @@ namespace Goedel.Mesh.Client {
 
 
 
+    /// <summary>
+    /// Managfes the host catalog, i.e. the catalog of Meshes that the device is 
+    /// connected to.
+    /// </summary>
+    public class HostMesh : Disposable {
 
-    public class CatalogHost : Disposable {
-        IMeshMachine MeshMachine;
-        PersistConnection ContainerProfile;
+        #region // fields and properties
+        IMeshMachine meshMachine;
+        CatalogHost containerProfile;
+        
+        ///<summary>The Key Collection of the Mesh Machine.</summary>
+        public KeyCollection KeyCollection => meshMachine.KeyCollection;
+        #endregion
+        #region // Boilerplate for disposal etc.
+        ///<summary>Disposal routine.</summary>
+        protected override void Disposing() => containerProfile.Dispose();
+        #endregion
+        #region // Constructors and factories
 
-        public virtual void Register(ConnectionItem profileEntry, bool create = true) =>
-            ContainerProfile.Update(profileEntry, create);
-        public virtual void Delete(ConnectionItem profile) =>
-                ContainerProfile.Delete(profile._PrimaryKey);
-
-       
-
-        static CatalogHost() {
-            _ = ConnectionItem.Initialize;
-            _ = MeshItem.Initialize;
+        /// <summary>
+        /// Get the host catalog from the specified mesh machine.
+        /// </summary>
+        /// <param name="meshMachine">The Mesh Machine.</param>
+        /// <param name="containerHost">The host catalog.</param>
+        public HostMesh(CatalogHost containerHost, IMeshMachine meshMachine) {
+            this.meshMachine = meshMachine;
+            containerProfile = containerHost;
             }
-
-        protected override void Disposing() {
-            ContainerProfile.Dispose();
-            }
-
 
         /// <summary>
         /// Get the host catalog from the specified mesh machine.
         /// </summary>
         /// <param name="meshMachine"></param>
-        public CatalogHost(PersistConnection containerHost, IMeshMachine meshMachine) {
-            MeshMachine = meshMachine;
-            ContainerProfile = containerHost;
-            }
-
-        public CatalogedMachine GetConnection(string local = null) => ContainerProfile.GetConnection(local);
-        //public AccountEntry GetAccount(string local = null) => ContainerProfile.GetAccount(local);
-        public CatalogedPending GetPending(string local = null) => ContainerProfile.GetPending(local);
-
-
-        /// <summary>
-        /// Get the host catalog from the specified mesh machine.
-        /// </summary>
-        /// <param name="meshMachine"></param>
-        public static CatalogHost GetCatalogHost(IMeshMachine meshMachine) {
+        public static HostMesh GetCatalogHost(IMeshMachine meshMachine) {
             var meshMachineClient = meshMachine as IMeshMachineClient;
             return meshMachineClient.CatalogHost;
 
             }
+
+        #endregion
+        #region // Convenience Methods
+
+        /// <summary>
+        /// Convenience routine to return a host description of a mesh connection.
+        /// </summary>
+        /// <param name="id">The mesh short name or master profile UDF.</param>
+        /// <returns>The mesh host description (if found)</returns>
+        public CatalogedMachine GetMeshConnection(string id = null) => 
+                containerProfile.GetConnection(id);
+
+        /// <summary>
+        /// Convenience routine to return a host description of a pending mesh connection request.
+        /// </summary>
+        /// <param name="id">The mesh short name or master profile UDF.</param>
+        /// <returns>The mesh connection request description (if found)</returns>
+        public CatalogedPending GetPending(string local = null) => 
+                containerProfile.GetPending(local);
+
+
+        #endregion
+        #region // Methods
+
+
+        /// <summary>
+        /// Register <paramref name="catalogItem"/> in the host catalog.
+        /// </summary>
+        /// <param name="catalogItem">The item to be created.</param>
+        /// <param name="create">If true, a new item will be created if it does not
+        /// already exist.</param>
+        public virtual void Register(HostCatalogItem catalogItem, bool create = true) =>
+                containerProfile.Update(catalogItem, create);
+
+
+        /// <summary>
+        /// Delete <paramref name="profile"/> from the host catalog.
+        /// </summary>
+        /// <param name="profile">The profile to delete</param>
+        public virtual void Delete(HostCatalogItem profile) => 
+                containerProfile.Delete(profile._PrimaryKey);
+        #endregion
+
         }
     }

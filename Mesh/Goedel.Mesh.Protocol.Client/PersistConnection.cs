@@ -26,7 +26,7 @@ namespace Goedel.Mesh.Client {
     /// Container persisting entries for the connection catalog. This is the only type of catalog that
     /// is never synchronized to a service under any circumstance.
     /// </summary>
-    public class PersistConnection : ContainerPersistenceStore {
+    public class CatalogHost : ContainerPersistenceStore {
 
         ///<summary></summary>
         public CatalogedMachine DefaultEntry { get; private set; }
@@ -37,9 +37,9 @@ namespace Goedel.Mesh.Client {
         Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new Dictionary<string, CatalogedMachine>();
 
         ///<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
-        static PersistConnection() {
+        static CatalogHost() {
             _ = MeshItem.Initialize;
-            _ = ConnectionItem.Initialize;
+            _ = HostCatalogItem.Initialize;
             _ = MeshProtocol.Initialize;
             }
 
@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
-        public PersistConnection(string fileName, string type = null,
+        public CatalogHost(string fileName, string type = null,
                     string comment = null, bool readOnly = false,
                     FileStatus fileStatus = FileStatus.ConcurrentLocked,
                     ContainerType containerType = ContainerType.Chain,

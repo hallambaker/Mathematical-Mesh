@@ -13,9 +13,9 @@ namespace Goedel.Mesh.Client {
     public class KeyCollectionClient : KeyCollection {
 
         KeyCollection KeyCollectionBase;
-        CatalogHost CatalogHost;
+        HostMesh CatalogHost;
 
-        public KeyCollectionClient(CatalogHost catalogHost, KeyCollection keyCollection) {
+        public KeyCollectionClient(HostMesh catalogHost, KeyCollection keyCollection) {
             KeyCollectionBase = keyCollection;
             CatalogHost = catalogHost;
             }

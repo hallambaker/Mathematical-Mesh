@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
 
                 var Decoder = Header.GetDecoder(
                             input, out var Reader,
-                            KeyCollection: KeyCollection);
+                            keyCollection: KeyCollection);
 
                 using (var output = new MemoryStream()) {
                     Reader.CopyTo(output);

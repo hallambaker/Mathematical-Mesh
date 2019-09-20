@@ -31,19 +31,6 @@ namespace Goedel.Mesh.Client {
         public ConnectionDevice ConnectionDevice =>
             CatalogedDevice.ConnectionDevice;
 
-
-
-        /////<summary>The device profile to which the signature key is bound</summary>
-        //public ProfileDevice profileDevice { get; }
-
-        //ActivationDevice AssertionDevicePrivate => assertionDevicePrivate ??
-        //    ActivationDevice.Decode(
-        //        MeshMachine, CatalogedDevice.EnvelopedActivationDevice).CacheValue(
-        //            out assertionDevicePrivate);
-
-        //ActivationDevice assertionDevicePrivate = null;
-
-        ///<summary>The context as an administration context.</summary>
         public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
 
 
@@ -64,14 +51,9 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount GetContextAccount(
                 string localName=null,
-                string accountName = null) {
+                string accountName = null) => new ContextAccount(
+                    this, CatalogedDevice.GetAccount(localName, accountName));
 
-            throw new NYI();
-            //var activation = AssertionDevicePrivate.GetActivation(accountName);
-
-            //return new ContextAccount (this, activation);
-
-            }
 
 
         public void UpdateDevice(CatalogedDevice catalogedDevice) {
@@ -79,28 +61,6 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine.CatalogedDevice = catalogedDevice;
             MeshMachine.Register(CatalogedMachine);
             }
-
-        //public void UpdateAccount(ProfileAccount profileUpdate) {
-
-        //    CatalogedMachine.EnvelopedProfileAccount = CatalogedMachine.EnvelopedProfileAccount ??
-        //        new List<DareEnvelope>();
-
-        //    bool found = false;
-        //    foreach (var envelope in CatalogedMachine.EnvelopedProfileAccount) {
-        //        var profileAccount = ProfileAccount.Decode(envelope);
-        //        if (profileAccount.UDF == profileUpdate.UDF) {
-        //            found = true;
-        //            profileAccount.ServiceIDs = profileUpdate.ServiceIDs;
-        //            }
-        //        }
-        //    if (!found) {
-        //        CatalogedMachine.EnvelopedProfileAccount.Add(profileUpdate.DareEnvelope);
-        //        }
-
-        //    MeshMachine.Register(CatalogedMachine);
-        //    }
-
-
 
         }
 
@@ -195,6 +155,8 @@ namespace Goedel.Mesh.Client {
         /// to the connected account. Otherwise, a null value is returned.</returns>
         public ContextAccount Complete() {
 
+            "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
+
             KeyAuthentication = KeyAuthentication ?? MeshMachine.KeyCollection.LocatePrivate(
                         ProfileDevice.KeyAuthentication.UDF);
 
@@ -215,12 +177,23 @@ namespace Goedel.Mesh.Client {
 
             // now create the host profile here.
 
+            var catalogedStandard = new CatalogedStandard() {
+                ID = ProfileDevice.UDF,
+                CatalogedDevice = catalogedEntry,
+                EnvelopedProfileMaster = statusResponse.EnvelopedProfileMaster
+                };
+
+            MeshMachine.Register(catalogedStandard);
 
 
-            // now synchronise 
+            var contextMesh = new ContextMesh(MeshMachine, catalogedStandard);
 
 
-            throw new NYI();
+            var contextAccount = contextMesh.GetContextAccount(accountName:ServiceID);
+
+            contextAccount.InitializeStores();
+
+            return contextAccount;
             }
 
 

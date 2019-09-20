@@ -213,23 +213,23 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return a decoder for the specified data source.
         /// </summary>
-        /// <param name="JBCDFrameReader">The data source.</param>
-        /// <param name="Reader">The stream to read the decoded data from.</param>
-        /// <param name="KeyCollection">Key collection to be used to resolve private
+        /// <param name="stream">The data source.</param>
+        /// <param name="reader">The stream to read the decoded data from.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve private
         /// keys.</param>
         /// <returns>The decoder. </returns>
         public CryptoStackStream GetDecoder(
-                        Stream JBCDFrameReader,
-                        out Stream Reader,
-                       KeyCollection KeyCollection = null) {
+                        Stream stream,
+                        out Stream reader,
+                       KeyCollection keyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
             CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
-                Recipients, Signatures, KeyCollection) {
+                Recipients, Signatures, keyCollection) {
                 Salt = Salt
                 };
-            return CryptoStack.GetDecoder(JBCDFrameReader, out Reader);
+            return CryptoStack.GetDecoder(stream, out reader);
 
             }
 

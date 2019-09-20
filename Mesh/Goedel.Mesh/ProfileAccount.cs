@@ -15,6 +15,10 @@ namespace Goedel.Mesh {
         ///<summary>The UDF of the account</summary>
         public string UDF => KeyOfflineSignature.UDF;
 
+
+        public string ServiceDefault => ServiceIDs == null ? null : ServiceIDs[0];
+
+
         KeyPair KeySignOffline;
         KeyPair KeySignOnline;
 
@@ -127,6 +131,25 @@ namespace Goedel.Mesh {
             var result = FromJSON(envelope.GetBodyReader(), true);
             result.DareEnvelope = envelope;
             return result;
+            }
+
+
+        /// <summary>
+        /// Convenience routine reporting if the profile is serviced by the specified provider.
+        /// </summary>
+        /// <param name="service"></param>
+        /// <returns></returns>
+        public int MatchService(string service) {
+            int id=0;
+
+            foreach (var serviceID in ServiceIDs) {
+
+                if (service == serviceID) {
+                    return id;
+                    }
+                id++;
+                }
+            return -1;
             }
 
 

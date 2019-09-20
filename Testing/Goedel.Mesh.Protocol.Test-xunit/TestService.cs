@@ -170,7 +170,7 @@ namespace Goedel.XUnit {
             Console.WriteLine(catalogDevice.Report());
             
             // New Device
-            var contextAccount2 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
+            var contextAccount2Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: PIN.PIN);
 
             // Admin Device
@@ -184,12 +184,17 @@ namespace Goedel.XUnit {
             Console.WriteLine(catalogDevice.Report());
             // Device has been added but the device connection lacks the account information!
 
-            contextAccount2.Complete();
+            var catalogDevice2 = contextAccountAlice.GetCatalogDevice();
+
+            var contextAccount2 = contextAccount2Pending.Complete();
             Console.WriteLine();
             Console.WriteLine("**** Synchronized 2nd device");
-            Console.WriteLine(catalogDevice.Report());
+            Console.WriteLine(catalogDevice2.Report());
 
-
+            contextAccount2.Sync();
+            Console.WriteLine();
+            Console.WriteLine("**** Synchronized 2nd device");
+            Console.WriteLine(catalogDevice2.Report());
             }
 
         /// <summary>
@@ -202,15 +207,17 @@ namespace Goedel.XUnit {
                 out var contextAccountAlice, AccountAlice);
 
             // New Device
-            var contextAccount3 = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+            var contextAccount3Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
                     AccountAlice);
 
             // Admin Device
+            contextAccountAlice.Sync();
             var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
             contextAccountAlice.Process(connectRequest);
 
             // New Device
-            contextAccount3.Complete();
+            var contextAccount3 = contextAccount3Pending.Complete();
+            contextAccount3.Sync();
             }
 
         [Fact]

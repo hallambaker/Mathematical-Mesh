@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -17,8 +17,8 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="HostCatalog.cs">
-      <DependentUpon>HostCatalog.protocol</DependentUpon>
+    <Compile Update="HostSchema.cs">
+      <DependentUpon>HostSchema.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -29,8 +29,8 @@
       <LastGenOutput>Exceptions.cs</LastGenOutput>
       <Generator>exceptional</Generator>
     </None>
-    <None Update="HostCatalog.protocol">
-      <LastGenOutput>HostCatalog.cs</LastGenOutput>
+    <None Update="HostSchema.protocol">
+      <LastGenOutput>HostSchema.cs</LastGenOutput>
       <Generator>Protogen</Generator>
     </None>
   </ItemGroup>

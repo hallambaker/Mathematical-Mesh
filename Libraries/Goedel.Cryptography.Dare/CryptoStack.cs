@@ -422,18 +422,19 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Construct a stream decoder from the cryptographic data provided.
+        /// Construct a stream decoder from the cryptographic data provided. Data is read
+        /// from <paramref name="inputStream"/> 
         /// </summary>
-        /// <param name="JBCDFrameReader">The stream to decode from.</param>
+        /// <param name="inputStream">The input stream.</param>
         /// <param name="ContentLength">The content length if known or -1 if variable length
         /// encoding is to be used.</param>
-        /// <param name="Reader">The stream to read to obtain the decrypted data.</param>
-        /// <param name="SaltSuffix">Additional value to be added to the end of the 
+        /// <param name="outputStream">The stream to read to obtain the decrypted data.</param>
+        /// <param name="SaltSuffix">Additional value to be added to the beginning of the 
         /// message salt to vary it</param>
         /// <returns>The decoder.</returns>
         public CryptoStackStream GetDecoder(
-                        Stream JBCDFrameReader,
-                        out Stream Reader,
+                        Stream inputStream,
+                        out Stream outputStream,
                         long ContentLength = -1,
                         byte[] SaltSuffix = null
                         ) {
@@ -442,8 +443,8 @@ namespace Goedel.Cryptography.Dare {
             CalculateParameters(false, SaltSuffix, out var TransformEncrypt,
                 out var TransformMac, out var TransformDigest);
 
-            var Result = new CryptoStackJBCDStreamReader(JBCDFrameReader, TransformMac, TransformDigest);
-            Reader = TransformEncrypt == null ? (Stream)Result :
+            var Result = new CryptoStackJBCDStreamReader(inputStream, TransformMac, TransformDigest);
+            outputStream = TransformEncrypt == null ? (Stream)Result :
                 new CryptoStream(Result, TransformEncrypt, CryptoStreamMode.Read);
 
             return Result;

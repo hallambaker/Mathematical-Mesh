@@ -130,6 +130,10 @@ namespace Goedel.Test.Core {
         /// <param name="Service">The service to get the service from.</param> 
         /// <returns>The service instance</returns>
         public override MeshService GetService(string serviceID) {
+            if (serviceID == null) {
+                return null;
+                }
+
             serviceID.SplitAccountIDService(out var Service, out var Account);
 
             var Session = new TestSession(this, MeshServiceHost, serviceID);

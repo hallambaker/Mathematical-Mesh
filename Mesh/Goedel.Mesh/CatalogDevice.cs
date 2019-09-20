@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Utilities;
+using Goedel.Protocol;
 using System.Threading;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography;
@@ -171,13 +172,43 @@ namespace Goedel.Mesh {
             if (message == null) {
                 return null;
                 }
-            var result = FromJSON(message.GetBodyReader(), true);
+
+            var plaintext = message.GetPayload(keyCollection);
+
+            Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), true);
             result.DareEnvelope = message;
             return result;
             }
 
 
+        /// <summary>
+        /// Match the specified account entry.
+        /// </summary>
+        /// <param name="localName">Local name to match</param>
+        /// <param name="accountName">Service identifier to match</param>
+        /// <returns>The account if found, otherwise null.</returns>
+        public AccountEntry GetAccount(string localName = null,
+                string accountName = null) {
 
+            if (Accounts == null || Accounts.Count == 0) {
+                return null;
+                }
+
+
+            if (accountName == null) {
+                return Accounts[0];
+
+                }
+
+            foreach (var account in Accounts) {
+                if (account.ProfileAccount.MatchService(accountName) >= 0) {
+                    return account;
+                    }
+                }
+
+            return null;
+            }
 
 
 

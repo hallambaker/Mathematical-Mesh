@@ -9,10 +9,10 @@ using Goedel.Mesh;
 namespace Goedel.Mesh.Client {
 
 
-    public partial class ConnectionItem {
+    public partial class HostCatalogItem {
         public static object Initialize => null;
 
-        static ConnectionItem() => AddDictionary(ref _TagDictionary);
+        static HostCatalogItem() => AddDictionary(ref _TagDictionary);
         }
 
     public partial class CatalogedMachine {

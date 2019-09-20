@@ -82,7 +82,7 @@ namespace Goedel.Mesh {
 
         #region // Properties
 
-        public CatalogHost CatalogHost { get; }
+        public HostMesh CatalogHost { get; }
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
         #endregion
@@ -95,7 +95,7 @@ namespace Goedel.Mesh {
         #endregion
 
 
-        public CatalogedMachine GetConnection(string local = null) => CatalogHost.GetConnection(local);
+        public CatalogedMachine GetConnection(string local = null) => CatalogHost.GetMeshConnection(local);
         public CatalogedPending GetPending(string local = null) => CatalogHost.GetPending(local);
 
 
@@ -107,7 +107,7 @@ namespace Goedel.Mesh {
         /// <returns>Context for administering the Mesh</returns>
         public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
 
-            var entry = CatalogHost.GetConnection(localName);
+            var entry = CatalogHost.GetMeshConnection(localName);
             switch (entry) {
                 case CatalogedAdmin adminEntry: return new ContextMeshAdmin(this, adminEntry);
                 default:  return new ContextMesh(this, entry);
@@ -122,11 +122,11 @@ namespace Goedel.Mesh {
 
         protected MeshMachineCore(string directory) : base (directory) {
             // Now read the container to get the directories.
-            var containerHost = new PersistConnection(FileNameHost, FileTypeHost,
+            var containerHost = new CatalogHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
                 containerType: ContainerType.MerkleTree);
 
-            CatalogHost = new CatalogHost(containerHost, this);
+            CatalogHost = new HostMesh(containerHost, this);
             }
 
         #region // Convenience accessors
@@ -243,10 +243,10 @@ namespace Goedel.Mesh {
 
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 
-        public virtual void Register(ConnectionItem catalogItem) =>
+        public virtual void Register(HostCatalogItem catalogItem) =>
                 CatalogHost.Register(catalogItem);
 
-        public virtual void Delete(ConnectionItem catalogItem) =>
+        public virtual void Delete(HostCatalogItem catalogItem) =>
                 CatalogHost.Delete(catalogItem);
 
 

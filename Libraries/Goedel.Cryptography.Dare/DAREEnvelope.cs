@@ -320,6 +320,22 @@ namespace Goedel.Cryptography.Dare {
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
             }
 
+
+        public byte[] GetPayload(KeyCollection keyCollection) {
+
+            using (var inputStream = new MemoryStream(Body)) {
+                using (var outputStream = new MemoryStream()) {
+                    var Decoder = Header.GetDecoder(
+                            inputStream, out var Reader,
+                            keyCollection: keyCollection);
+                    Reader.CopyTo(outputStream);
+                    Decoder.Close();
+                    return outputStream.ToArray();
+                    }
+                }
+
+            }
+
         /// <summary>
         /// Deserialize 
         /// </summary>

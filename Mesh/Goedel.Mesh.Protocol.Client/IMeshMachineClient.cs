@@ -11,7 +11,7 @@ using System.IO;
 namespace Goedel.Mesh.Client {
     public interface IMeshMachineClient : IMeshMachine {
         ///<summary>Direct access to the Catalog, should remove this</summary>
-        CatalogHost CatalogHost { get; }
+        HostMesh CatalogHost { get; }
 
         /// <summary>
         /// Return an administration profile with local name <paramref name="local"/>.

@@ -287,18 +287,18 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override bool CanWrite => false;
 
-        Stream JBCDFrameReader;
+        Stream inputStream;
 
         /// <summary>
         /// Create a CryptoStack
         /// </summary>
-        /// <param name="Stream"></param>
+        /// <param name="inputStream"></param>
         /// <param name="Mac"></param>
         /// <param name="Digest"></param>
         public CryptoStackJBCDStreamReader(
-                    Stream Stream,
+                    Stream inputStream,
                     HashAlgorithm Mac,
-                    HashAlgorithm Digest) : base(Mac, Digest) => JBCDFrameReader = Stream;
+                    HashAlgorithm Digest) : base(Mac, Digest) => this.inputStream = inputStream;
 
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Goedel.Cryptography.Dare {
         /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) {
-            var length = JBCDFrameReader.Read(buffer, offset, count);
+            var length = inputStream.Read(buffer, offset, count);
 
             //Console.WriteLine($"Read {buffer} bytes");
             return length;
