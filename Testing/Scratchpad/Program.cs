@@ -18,49 +18,15 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            //TestContainers.Test().ContainerTest1();
 
-            //TestPersist.Test().TestPersistenceStoreAdd();
+            // The tests we need to clear to write the 3.0 docs.
 
-            //ShellTests.Test().TestFilePlain();
-
-            //TestService.Test().MeshCatalogAccount();
-
-
-            //TestService.Test().MeshDeviceConnectApprove();
-
-
-            ShellTests.Test().TestFilePlain();
-
-
-
-
-
-
-
-
-
-
-            //ShellTests.Test().TestProfileConnectEARL();
-
-            // Catalog 
-            //ShellTests.Test().TestProfileContact();
-            //ShellTests.Test().TestProfileCalendar();
-            //ShellTests.Test().TestProfileNetwork();
-            //ShellTests.Test().TestProfileCalendar();
-            //ShellTests.Test().TestMessageGroup();
-
-            //// Application Catalog
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
-
-            //// Two messaging apps right now
+            //ShellTests.Test().TestHello();
+            ShellTests.Test().TestProfileConnect();
+            //ShellTests.Test().TestProfilePassword();
             //ShellTests.Test().TestMessageContact();
-            //ShellTests.Test().TestMessageConfirmation();
 
             }
-
 
 
         public static void Find(

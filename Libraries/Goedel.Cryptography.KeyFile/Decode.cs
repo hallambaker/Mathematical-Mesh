@@ -25,8 +25,9 @@ namespace Goedel.Cryptography.KeyFile {
         /// <returns>List of authorized keys</returns>
         public static List<AuthorizedKey> DecodeAuthHost(string FileName) {
             using (var TextReader = FileName.OpenFileReadShared()) {
-                LexReader LexReader = new LexReader(TextReader);
-                return DecodeAuthHost(LexReader);
+                using (LexReader LexReader = new LexReader(TextReader)) {
+                    return DecodeAuthHost(LexReader);
+                    }
                 }
             }
 
@@ -39,13 +40,14 @@ namespace Goedel.Cryptography.KeyFile {
             List<AuthorizedKey> Result = new List<AuthorizedKey>();
 
             try {
-                var Lexer = new AuthKeysFileLex(LexReader);
+                using (var Lexer = new AuthKeysFileLex(LexReader)) {
 
-                var Token = Lexer.GetToken();
-                while (Token == AuthKeysFileLex.Token.Data) {
-                    var TaggedData = Lexer.GetTaggedData();
-                    Result.Add(TaggedData);
-                    Token = Lexer.GetToken();
+                    var Token = Lexer.GetToken();
+                    while (Token == AuthKeysFileLex.Token.Data) {
+                        var TaggedData = Lexer.GetTaggedData();
+                        Result.Add(TaggedData);
+                        Token = Lexer.GetToken();
+                        }
                     }
                 }
             catch (System.Exception Inner) {
@@ -99,35 +101,35 @@ namespace Goedel.Cryptography.KeyFile {
         /// the value of <paramref name="keySecurity"/></param>
         public static KeyPair DecodePEM(LexReader LexReader,
                     KeySecurity keySecurity, KeyCollection keyCollection) {
-            var Lexer = new KeyFileLex(LexReader);
-            var Token = Lexer.GetToken();
+            using (var Lexer = new KeyFileLex(LexReader)) {
+                var Token = Lexer.GetToken();
 
-            if (Token == KeyFileLex.Token.Data) {
-                var TaggedData = Lexer.GetTaggedData();
-                if (!TaggedData.Strict) {
-                    //Console.WriteLine("Some yukky data here");
+                if (Token == KeyFileLex.Token.Data) {
+                    var TaggedData = Lexer.GetTaggedData();
+                    if (!TaggedData.Strict) {
+                        //Console.WriteLine("Some yukky data here");
+                        }
+
+                    if (TaggedData.Tag == "RSAPRIVATEKEY") {
+                        // is ASN.1 format DER modulus/exponent etc.
+
+                        var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                        return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
+                        }
+                    else if (TaggedData.Tag == "RSAPUBLICKEY") {
+                        // is ASN.1 format DER modulus/exponent
+                        var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                        return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
+                        }
+                    else if (TaggedData.Tag == "SSH2PUBLICKEY") {
+                        var SSH_Public_Key = SSHData.Decode(TaggedData.Data);
+                        return SSH_Public_Key.KeyPair;
+                        }
                     }
 
-                if (TaggedData.Tag == "RSAPRIVATEKEY") {
-                    // is ASN.1 format DER modulus/exponent etc.
-
-                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
-                    }
-                else if (TaggedData.Tag == "RSAPUBLICKEY") {
-                    // is ASN.1 format DER modulus/exponent
-                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
-                    return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
-                    }
-                else if (TaggedData.Tag == "SSH2PUBLICKEY") {
-                    var SSH_Public_Key = SSHData.Decode (TaggedData.Data);
-                    return SSH_Public_Key.KeyPair;
-                    }
+                return null;
                 }
-
-            return null;
             }
-
 
         }
     }

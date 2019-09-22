@@ -69,8 +69,7 @@ namespace Goedel.Cryptography.Dare {
         public byte[] GetPayLoad() {
             using (var input = jbcdStream.FramerGetReader(DataPosition, DataLength)) {
 
-                var Decoder = Header.GetDecoder(
-                            input, out var Reader,
+                var Decoder = Header.GetDecoder(input, out var Reader,
                             keyCollection: KeyCollection);
 
                 using (var output = new MemoryStream()) {
@@ -183,9 +182,7 @@ namespace Goedel.Cryptography.Dare {
         /// Copy the payload data to file.
         /// </summary>
         /// <param name="file"></param>
-        public void CopyToFile(string file) {
-            throw new NYI();
-            }
+        public void CopyToFile(string file) => throw new NYI();
 
         }
 

@@ -71,36 +71,35 @@ namespace Goedel.Protocol {
             try {
                 var BaseAddress = new Uri(URI);
 
-                var HTTPClient = new HttpClient() {
-                    
-                    };
+                using (
+                    var HTTPClient = new HttpClient()) {
 
-                HTTPClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue() {
-                    NoStore = true
-                    };
+                    HTTPClient.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue() {
+                        NoStore = true
+                        };
 
-
-                byte[] buffer = Content.ToArray();
-                var HTTPContent = new ByteArrayContent(buffer);
-                HTTPContent.Headers.ContentType = new MediaTypeHeaderValue ("application/json");
+                    byte[] buffer = Content.ToArray();
+                    var HTTPContent = new ByteArrayContent(buffer);
+                    HTTPContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
 
-                var ResponseTask =  HTTPClient.PostAsync(new Uri(URI), HTTPContent);
-                ResponseTask.Wait();
-                var HTTPResponse = ResponseTask.Result;
+                    var ResponseTask = HTTPClient.PostAsync(new Uri(URI), HTTPContent);
+                    ResponseTask.Wait();
+                    var HTTPResponse = ResponseTask.Result;
 
-                var Code = (int) HTTPResponse.StatusCode;
+                    var Code = (int)HTTPResponse.StatusCode;
 
-                //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
+                    //Trace.WriteLine("Got a response {0} {1}", Code, WebResponse.StatusDescription);
 
-                if (Code > 399) {
-                    throw new Exception(HTTPResponse.ReasonPhrase);
+                    if (Code > 399) {
+                        throw new Exception(HTTPResponse.ReasonPhrase);
+                        }
+
+                    var ContentTask = HTTPResponse.Content.ReadAsStreamAsync();
+                    ContentTask.Wait();
+
+                    return ContentTask.Result;
                     }
-
-                var ContentTask = HTTPResponse.Content.ReadAsStreamAsync();
-                ContentTask.Wait();
-
-                return ContentTask.Result;
                 }
             catch {
                 throw new ConnectionFail(new ExceptionData() {String = URI});

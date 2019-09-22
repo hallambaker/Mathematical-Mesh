@@ -178,7 +178,7 @@ namespace Goedel.Protocol {
             var Length = count < 0 ? buffer.Length : count;
             Output.Write("\"");
             Output.Write(BaseConvert.ToStringBase64url(buffer, offset, Length, ConversionFormat,
-                OutputCol: OutputCol, OutputMax:63));
+                outputCol: OutputCol, outputMax:63));
             Output.Write("\"");
             }
 

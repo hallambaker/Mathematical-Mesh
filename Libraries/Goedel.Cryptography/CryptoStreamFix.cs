@@ -36,7 +36,8 @@ namespace Goedel.Cryptography {
             get => Output.Position;
             set => Output.Position = value; }
 
-        Stream Output;
+        ///<summary>Declare this stream as a property so as to prevent warnings when it is not disposed.</summary>
+        Stream Output { get; set; }
 
         /// <summary>
         /// Create a dummy stream whose sole purpose is to stop the idiot

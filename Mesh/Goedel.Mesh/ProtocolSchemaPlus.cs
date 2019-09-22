@@ -128,16 +128,14 @@ namespace Goedel.Mesh {
         }
 
     public partial class ContainerStatus {
-        public override void ToBuilder(StringBuilder builder, int indent = 0) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0) => 
             builder.AppendIndent(indent, $"{Container}:  {Index} {Digest?.ToStringBase64url()}");
-            }
         }
 
 
     public partial class ContainerUpdate {
-        public override void ToBuilder(StringBuilder builder, int indent = 0) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0) => 
             builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
-            }
         }
 
     public partial class UploadResponse {

@@ -196,15 +196,10 @@ namespace Goedel.Cryptography.Dare {
         public void Add(
                 byte[] Data,
             CryptoParameters CryptoParameters,
-            ContentMeta ContentInfo = null) {
-
-
-            Container.Append(
+            ContentMeta ContentInfo = null) => Container.Append(
                     Data,
                     CryptoParameters,
                     ContentInfo);
-
-            }
 
         /// <summary>
         /// Add a file entry

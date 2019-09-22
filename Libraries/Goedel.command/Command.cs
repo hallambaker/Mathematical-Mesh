@@ -143,6 +143,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Dispatch">The command to describe.</param>
         public static void DescribeValues(Dispatch Dispatch) {
+            Dispatch.Keep();
             // NYI: This may not be required.
             }
 

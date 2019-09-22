@@ -81,6 +81,12 @@ namespace Goedel.Mesh.Client {
 
         Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
 
+
+        protected override void Disposing() {
+            spoolInbound.Dispose();
+            }
+
+
         public ContextAccount(
                     ContextMesh contextMesh,
                     AccountEntry accountEntry,
@@ -207,10 +213,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Dictionary used to cache stores to avoid need to re-open them repeatedly.</summary>
 
-        public bool SyncProgress(int maxEnvelopes = -1) {
-            return SyncProgressUpload(maxEnvelopes);
-
-            }
+        public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
 
 
         public bool SyncProgressUpload(int maxEnvelopes = -1) {
@@ -390,9 +393,7 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-        public void InitializeStores() {
-            Directory.CreateDirectory(DirectoryAccount);
-            }
+        public void InitializeStores() => _ = Directory.CreateDirectory(DirectoryAccount);
 
 
         public Store GetStore(string name) {
@@ -596,13 +597,9 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void ContactRequest(string serviceID) {
-            throw new NYI();
-            }
+        public void ContactRequest(string serviceID) => throw new NYI();
 
-        public void ConfirmationRequest(string serviceID, string messageText) {
-            throw new NYI();
-            }
+        public void ConfirmationRequest(string serviceID, string messageText) => throw new NYI();
 
         void Connect() {
             if (MeshClient != null) {
@@ -618,10 +615,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void SendMessage(Message MeshMessage) {
-            Connect();
-
-            }
+        public void SendMessage(Message MeshMessage) => Connect();
 
         /// <summary>
         /// Send a message signed using the mesh administration key.
@@ -642,12 +636,8 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public CatalogedGroup CreateGroup(string groupName) {
-            throw new NYI();
-            }
-        public CatalogMember GetCatalogGroup(string groupName) {
-            throw new NYI();
-            }
+        public CatalogedGroup CreateGroup(string groupName) => throw new NYI();
+        public CatalogMember GetCatalogGroup(string groupName) => throw new NYI();
         }
 
     }

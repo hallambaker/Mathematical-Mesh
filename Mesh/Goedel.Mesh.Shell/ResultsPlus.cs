@@ -161,7 +161,7 @@ namespace Goedel.Mesh.Shell {
                     foreach (var containerStatus in StatusResponse.ContainerStatus) {
 
                         var digest = containerStatus.Digest == null ? "" :
-                            containerStatus.Digest.ToStringBase32(Format: ConversionFormat.Dash4, OutputMax: 120);
+                            containerStatus.Digest.ToStringBase32(format: ConversionFormat.Dash4, outputMax: 120);
 
 
                         Builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");

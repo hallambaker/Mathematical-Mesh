@@ -5,7 +5,7 @@ using System.Text;
 namespace Goedel.Utilities {
 
 
-    public delegate void ToBuilderDelegate(StringBuilder builder, int indent = 0);
+    //public delegate void ToBuilderDelegate(StringBuilder builder, int indent = 0);
 
 
     /// <summary>

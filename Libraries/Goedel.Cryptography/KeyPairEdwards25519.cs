@@ -272,8 +272,9 @@ namespace Goedel.Cryptography {
 
             AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
             if (AlgorithmID == CryptoAlgorithmID.Ed25519ph) {
-                var sha512 = SHA512.Create();
-                Data = sha512.ComputeHash(Data);
+                using (var sha512 = SHA512.Create()) {
+                    Data = sha512.ComputeHash(Data);
+                    }
                 }
 
             return PrivateKey.Sign(Data, Dom2 (AlgorithmID, Context));
@@ -295,8 +296,9 @@ namespace Goedel.Cryptography {
                 byte[] Context = null) {
             AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
             if (AlgorithmID == CryptoAlgorithmID.Ed25519ph) {
-                var sha512 = SHA512.Create();
-                Data = sha512.ComputeHash(Data);
+                using (var sha512 = SHA512.Create()) {
+                    Data = sha512.ComputeHash(Data);
+                    }
                 }
 
             return PublicKey.Verify(Data, Signature, Dom2(AlgorithmID, Context));

@@ -20,13 +20,9 @@ namespace Goedel.XUnit {
         public static TestContainers Test() => new TestContainers();
 
         [Fact]
-        public void ContainerTestList0() {
-            TestContainer($"ContainerList", ContainerType.List, 0);
-            }
+        public void ContainerTestList0() => TestContainer($"ContainerList", ContainerType.List, 0);
         [Fact]
-        public void ContainerTestList1() {
-            TestContainer($"ContainerList", ContainerType.List, 1);
-            }
+        public void ContainerTestList1() => TestContainer($"ContainerList", ContainerType.List, 1);
 
 
         [Fact]
@@ -89,14 +85,10 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void ContainerTestTree1() {
-            TestContainer($"ContainerTree", ContainerType.Tree, 1);
-            }
+        public void ContainerTestTree1() => TestContainer($"ContainerTree", ContainerType.Tree, 1);
 
         [Fact]
-        public void ContainerTestTree10() {
-            TestContainer($"ContainerTree", ContainerType.Tree, 10);
-            }
+        public void ContainerTestTree10() => TestContainer($"ContainerTree", ContainerType.Tree, 10);
 
         [Fact]
         public void ContainerTestMerkleTree() {

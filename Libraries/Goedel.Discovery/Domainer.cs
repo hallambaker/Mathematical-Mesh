@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Collections.Generic;
+#pragma warning disable IDE0060
 namespace Goedel.Discovery {
 
     /// <summary>DNS management interface class.</summary>	

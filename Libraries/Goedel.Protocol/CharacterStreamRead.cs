@@ -253,47 +253,48 @@ namespace Goedel.Protocol {
         /// <param name="Stream">The stream to read from</param>
         /// <returns>The decoded data</returns>
         public static byte[] GetBinaryBase64(ICharacterStream Stream) {
-            var Buffer = new MemoryStream();
-            int Count = 0;
-            int Last = 0;
+            using (var Buffer = new MemoryStream()) {
+                int Count = 0;
+                int Last = 0;
 
-            while (!Stream.EOF) {
-                var c = Stream.ReadChar();
+                while (!Stream.EOF) {
+                    var c = Stream.ReadChar();
 
-                //Console.Write ( $".{c}");
+                    //Console.Write ( $".{c}");
 
 
-                if (c < 127) {
-                    var v = BaseConvert.BASE64Value[(int)c];
-                    if (v < 64) {
-                        if (Count == 0) {
-                            Last = v; // 6 bits over
-                            Count = 1;
+                    if (c < 127) {
+                        var v = BaseConvert.BASE64Value[(int)c];
+                        if (v < 64) {
+                            if (Count == 0) {
+                                Last = v; // 6 bits over
+                                Count = 1;
+                                }
+                            else if (Count == 1) {
+                                Buffer.Write((byte)((Last << 2) | (v >> 4)));
+                                Last = v & 0xf; // 4 bits over
+                                Count = 2;
+                                }
+                            else if (Count == 2) {
+                                Buffer.Write((byte)((Last << 4) | (v >> 2)));
+                                Last = v & 0x3; // 2 bits over
+                                Count = 3;
+                                }
+                            else if (Count == 3) {
+                                Buffer.Write((byte)((Last << 6) | v));
+                                Last = 0; // 0 bits over
+                                Count = 0;
+                                }
                             }
-                        else if (Count == 1) {
-                            Buffer.Write((byte)((Last << 2) | (v >> 4)));
-                            Last = v & 0xf; // 4 bits over
-                            Count = 2;
-                            }
-                        else if (Count == 2) {
-                            Buffer.Write((byte)((Last << 4) | (v >> 2)));
-                            Last = v & 0x3; // 2 bits over
-                            Count = 3;
-                            }
-                        else if (Count == 3) {
-                            Buffer.Write((byte)((Last << 6) | v));
-                            Last = 0; // 0 bits over
-                            Count = 0;
+                        else if (c == '\"') {
+                            return Buffer.ToArray();
                             }
                         }
-                    else if (c == '\"') {
-                        return Buffer.ToArray();
-                        }
+
                     }
 
+                return Buffer.ToArray();
                 }
-
-            return Buffer.ToArray();
             }
 
         /// <summary>
@@ -305,39 +306,40 @@ namespace Goedel.Protocol {
         /// <param name="Stream">The stream to read from</param>
         public static void GetBase64String(ICharacterStream Stream, byte[] Result,
                         int Start = 0) {
-            var Buffer = new MemoryStream();
-            int Count = 0;
-            int Last = 0;
-            int i = Start;
+            using (var Buffer = new MemoryStream()) {
+                int Count = 0;
+                int Last = 0;
+                int i = Start;
 
-            while (!Stream.EOF) {
-                var c = Stream.ReadChar();
+                while (!Stream.EOF) {
+                    var c = Stream.ReadChar();
 
-                if (c < 127) {
-                    var v = BaseConvert.BASE64Value[(int)c];
-                    if (v < 64) {
-                        if (Count == 0) {
-                            Last = v; // 6 bits over
-                            Count = 1;
+                    if (c < 127) {
+                        var v = BaseConvert.BASE64Value[(int)c];
+                        if (v < 64) {
+                            if (Count == 0) {
+                                Last = v; // 6 bits over
+                                Count = 1;
+                                }
+                            else if (Count == 1) {
+                                Result[i++] = (byte)((Last << 2) | (v >> 4));
+                                Last = v & 0xf; // 4 bits over
+                                Count = 2;
+                                }
+                            else if (Count == 2) {
+                                Result[i++] = (byte)((Last << 4) | (v >> 2));
+                                Last = v & 0x3; // 2 bits over
+                                Count = 3;
+                                }
+                            else if (Count == 3) {
+                                Result[i++] = (byte)((Last << 6) | v);
+                                Last = 0; // 0 bits over
+                                Count = 0;
+                                }
                             }
-                        else if (Count == 1) {
-                            Result[i++] = (byte)((Last << 2) | (v >> 4));
-                            Last = v & 0xf; // 4 bits over
-                            Count = 2;
+                        else if (c == '\"') {
+                            return;
                             }
-                        else if (Count == 2) {
-                            Result[i++] = (byte)((Last << 4) | (v >> 2));
-                            Last = v & 0x3; // 2 bits over
-                            Count = 3;
-                            }
-                        else if (Count == 3) {
-                            Result[i++] = (byte)((Last << 6) | v);
-                            Last = 0; // 0 bits over
-                            Count = 0;
-                            }
-                        }
-                    else if (c == '\"') {
-                        return;
                         }
                     }
                 }

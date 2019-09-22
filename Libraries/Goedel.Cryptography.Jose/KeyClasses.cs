@@ -139,12 +139,12 @@ namespace Goedel.Cryptography.Jose {
 
     public partial class KeyContainer {
 
-        /// <summary>
-        /// The Key data
-        /// </summary>
-        public Key Key => Key.FromJSON(new JSONReader (KeyData.ToUTF8()));
+        ///// <summary>
+        ///// The Key data
+        ///// </summary>
+        //public Key Key => Key.FromJSON(new JSONReader (KeyData.ToUTF8()));
 
-        string KeyText  => KeyData.ToUTF8(); 
+        //string KeyText  => KeyData.ToUTF8(); 
 
         /// <summary>
         /// Default Constructor

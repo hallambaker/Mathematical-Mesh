@@ -19,19 +19,20 @@ namespace Goedel.Command {
         /// <param name="Text">The command line to split.</param>
         /// <returns>The command line split into entries.</returns>
         public static string[] Split (string Text) {
-            var CommandSplitLex = new CommandSplitLex();
-            CommandSplitLex.GetToken(Text);
-            return CommandSplitLex.Value.ToArray();
+            using (var CommandSplitLex = new CommandSplitLex()) {
+                CommandSplitLex.GetToken(Text);
+                return CommandSplitLex.Value.ToArray();
+                }
             }
 
-        LexStringReader LexStringReader;
+        LexStringReader lexStringReader;
 
         /// <summary>
         /// Construct a parser to read from a string to be specified in GetToken (data)
         /// </summary>
         public CommandSplitLex () {
-            LexStringReader = new LexStringReader(null);
-            Reader = LexStringReader;
+            lexStringReader = new LexStringReader(null);
+            Reader = lexStringReader;
             }
 
         /// <summary>
@@ -41,7 +42,7 @@ namespace Goedel.Command {
         /// <param name="Data">The string to parse.</param>
         /// <returns>The token value.</returns>
         public Token GetToken (string Data) {
-            LexStringReader.String = Data;
+            lexStringReader.String = Data;
             Reset();
             return GetToken();
             }
@@ -52,28 +53,28 @@ namespace Goedel.Command {
         /// </summary>
         public List<string> Value {
             get {
-                if (Pending) {
+                if (pending) {
                     AddParam();
-                    Pending = false;
+                    pending = false;
                     }
-                return Arguments;
+                return arguments;
                 }
             }
 
         // Private variables
-        bool Pending = false; // if true, there is an incomplete value to be added.
-        int EscapeCount = 0;
-        List<string> Arguments = new List<string>();
-        StringBuilder BuildValue = new StringBuilder();
+        bool pending = false; // if true, there is an incomplete value to be added.
+        int escapeCount = 0;
+        List<string> arguments = new List<string>();
+        StringBuilder buildValue = new StringBuilder();
 
         /// <summary>
         /// Reset the value buffers to start a new parse.
         /// </summary>
         public override void Reset () {
-            Arguments.Clear();
-            BuildValue.Clear();
-            Pending = false;
-            EscapeCount = 0;
+            arguments.Clear();
+            buildValue.Clear();
+            pending = false;
+            escapeCount = 0;
             }
 
         /// <summary>
@@ -84,17 +85,17 @@ namespace Goedel.Command {
 
         void AddParam () {
             // Add any pending escape characters
-            for (var i = 0; i < EscapeCount; i++) {
-                BuildValue.Append('\\');
+            for (var i = 0; i < escapeCount; i++) {
+                buildValue.Append('\\');
                 }
             // Add the parameter to the build string
-            var Text = BuildValue.ToString();
-            if (Pending) {
-                Arguments.Add(Text);
+            var Text = buildValue.ToString();
+            if (pending) {
+                arguments.Add(Text);
                 }
             // Reset all buffers
-            EscapeCount = 0;
-            BuildValue.Clear();
+            escapeCount = 0;
+            buildValue.Clear();
             }
 
         /// <summary>
@@ -109,16 +110,16 @@ namespace Goedel.Command {
         /// Start a quoted parameter, this can be null
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void BeginValue(int c) => Pending = true;
+        public virtual void BeginValue(int c) => pending = true;
 
         /// <summary>
         /// Add a character to the value buffer
         /// </summary>
         /// <param name="c">The character read</param>
         public virtual void AddValue (int c) {
-            EscapeCount = 0;
-            Pending = true;
-            BuildValue.Append((char)c);
+            escapeCount = 0;
+            pending = true;
+            buildValue.Append((char)c);
             }
 
         /// <summary>
@@ -126,8 +127,8 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="c">The character read</param>
         public virtual void AddEscape (int c) {
-            Pending = true;
-            EscapeCount++;
+            pending = true;
+            escapeCount++;
             }
 
         /// <summary>
@@ -140,21 +141,21 @@ namespace Goedel.Command {
         public virtual void AddEscapedValue (int c) {
 
             if (c == '\"') {
-                while (EscapeCount > 1) {
-                    EscapeCount -= 2;
-                    BuildValue.Append('\\');
+                while (escapeCount > 1) {
+                    escapeCount -= 2;
+                    buildValue.Append('\\');
                     }
-                if (EscapeCount == 1) {
-                    BuildValue.Append('\"');
+                if (escapeCount == 1) {
+                    buildValue.Append('\"');
                     }
                 }
             else {
-                for (var i = 0; i < EscapeCount; i++) {
-                    BuildValue.Append('\\');
+                for (var i = 0; i < escapeCount; i++) {
+                    buildValue.Append('\\');
                     }
-                BuildValue.Append((char)c);
+                buildValue.Append((char)c);
                 }
-            EscapeCount = 0;
+            escapeCount = 0;
 
             }
 

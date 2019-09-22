@@ -59,12 +59,9 @@ namespace Goedel.Mesh.Client {
 
         public static CatalogedAdmin Generate(
                 IMeshMachine meshMachine,
-                ProfileMesh profileMaster ) {
-            return new CatalogedAdmin() {
+                ProfileMesh profileMaster) => new CatalogedAdmin() {
 
-                };
-
-            }
+                    };
 
 
         }

@@ -89,12 +89,10 @@ namespace Goedel.Mesh {
                     }
                 }
 
-            } 
-
-
-        public static string FileName(string directory, string containerName = null) {
-            return Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
             }
+
+
+        public static string FileName(string directory, string containerName = null) => Path.Combine(directory, Path.ChangeExtension(containerName, ".dcat"));
 
 
         public static Store Factory(

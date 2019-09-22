@@ -173,12 +173,11 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public bool AssertAccount(int count = -1, string account = null, bool exists = true) {
-            throw new NYI();
-            }
+        public bool AssertAccount(int count = -1, string account = null, bool exists = true) => throw new NYI();
 
         public bool FailPasswordResult(string site) {
             var result = Dispatch($"password get {site}", fail: true) as ResultEntry;
+            result.Future();
             return true;
             }
 

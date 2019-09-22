@@ -227,9 +227,10 @@ namespace Goedel.IO {
         /// <param name="data">The data that was read</param>
         /// <returns>The text reader.</returns>
         public static void OpenReadToEnd(this string filename, out byte[] data) {
-            var fileStream = filename.OpenFileRead();
-            data = new byte[fileStream.Length];
-            fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
+            using (var fileStream = filename.OpenFileRead()) {
+                data = new byte[fileStream.Length];
+                fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
+                }
             }
 
         /// <summary>

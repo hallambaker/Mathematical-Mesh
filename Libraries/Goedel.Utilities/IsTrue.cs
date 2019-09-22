@@ -10,6 +10,20 @@ namespace Goedel.Utilities {
     public static partial class Extension {
 
         /// <summary>
+        /// Tell compiler that an object is reserved for future use.
+        /// </summary>
+        /// <param name="o">Object to reserve.</param>
+        /// <returns>true if the object is not null, false otherwise.</returns>
+        public static bool Keep(this object o) => o != null;
+
+        /// <summary>
+        /// Tell compiler that an object is reserved for future use.
+        /// </summary>
+        /// <param name="o">Object to reserve.</param>
+        /// <returns>true if the object is not null, false otherwise.</returns>
+        public static bool Future(this object o) => o != null;
+
+        /// <summary>
         /// You might think this code is unnecessary but it is actually very 
         /// important. Don't tamper with it unless you understand how the
         /// different storage classes affect the moves permitted by the optimizer.

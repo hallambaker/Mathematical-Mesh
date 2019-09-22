@@ -25,15 +25,16 @@ namespace Goedel.XUnit {
             for (var i =0; i <66000; i+= 100) {
                 Test.Shared = Platform.GetRandomBytes(i);
                 var Encode = Test.DER();
+                Encode.Keep();
                 }
 
             }
 
 
 
-        void TestDH (System.Numerics.BigInteger Count) {
+        //void TestDH (System.Numerics.BigInteger Count) {
 
-            }
+        //    }
 
         }
     }

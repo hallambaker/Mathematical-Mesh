@@ -1,5 +1,6 @@
 ﻿using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
+using Goedel.Utilities;
 
 using System.Collections.Generic;
 
@@ -54,6 +55,7 @@ namespace ExampleGenerator {
             ConfirmRequest = testCLIBob1.Example($"message confirm {AliceService1} \"{BobPurchase}\"");
             ConfirmPending = testCLIAlice1.Example($"message pending");
             var confirmPending = (ConfirmPending[0].Result as ResultPending);
+            confirmPending.Keep();
             id1 = "tbs";//confirmPending.Messages[0].MessageID;
             id2 = "tbs";//confirmPending.Messages[1].MessageID;
 

@@ -15,6 +15,10 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestFilePlain() => TestFile("Hello world");
 
+
+        ///<summary>This is failing because the shell command profile create has been changed.
+        ///Need to also work out what the process for the account key is.</summary>
+
         [Fact]
         public void TestFileEncrypt() {
             var account = "alice@example.com";

@@ -213,6 +213,7 @@ namespace Goedel.Cryptography.Dare {
         /// created.</param>
         /// <param name="decrypt">If true, enable decryption of container payload,
         /// otherwise return payload contents as plaintext.</param>
+        /// <param name="create">If true, create a container file if none already exists</param>
         /// <returns>The new container.</returns>
         public static Container Open(
                         string fileName,
@@ -288,6 +289,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileStatus">The file status.</param>
         /// <param name="keyCollection">The key collection to be used to decrypt the contents
         /// of the container.</param>
+        /// <param name="decrypt">If true configure to enable decryption of bodies.</param>
         /// <returns>The container object if found. Otherwise, an exception is thrown.</returns>
         public static Container OpenExisting(
                 string fileName,
@@ -1022,9 +1024,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frame">The index of the frame to be returned.</param>
         /// <returns>The requested header.</returns>
-        public DareHeader GetHeader(int frame) {
-            throw new NYI();
-            }
+        public DareHeader GetHeader(int frame) => throw new NYI();
 
 
         /// <summary>
@@ -1149,7 +1149,10 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope ReadDirect() => JBCDStream.ReadDareEnvelope();
 
 
-
+        /// <summary>
+        /// Pretty print the container specified to the console
+        /// </summary>
+        /// <param name="fileName">The container file.</param>
         public static void ToConsole(string fileName) {
             var builder = new StringBuilder();
             ToBuilder(fileName, builder, 0);
@@ -1160,41 +1163,34 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Pretty print the container specified.
         /// </summary>
-        /// <param name="fileName"></param>
-        /// <param name="builder"></param>
-        /// <param name="indent"></param>
+        /// <param name="fileName">The container file.</param>
+        /// <param name="builder">The stringbuilder to use.</param>
+        /// <param name="indent">The indent level.</param>
         public static void ToBuilder(string fileName, StringBuilder builder, int indent) {
-            var jbcdStream = new JBCDStream(fileName, fileStatus: FileStatus.Read);
+            using (var jbcdStream = new JBCDStream(fileName, fileStatus: FileStatus.Read)) {
 
-            var positionRead = jbcdStream.PositionRead;
-            var  envelope = jbcdStream.ReadDareEnvelope();
-            while (envelope != null) {
-                if (envelope?.Header?.ContainerInfo is var containerInfo) {
-                    builder.AppendIndent(indent, $"[{containerInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
-                    builder.AppendIndent(indent + 1, $"Tree Position:{containerInfo.TreePosition}");
+                var positionRead = jbcdStream.PositionRead;
+                var envelope = jbcdStream.ReadDareEnvelope();
+                while (envelope != null) {
+                    if (envelope?.Header?.ContainerInfo is var containerInfo) {
+                        builder.AppendIndent(indent, $"[{containerInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
+                        builder.AppendIndent(indent + 1, $"Tree Position:{containerInfo.TreePosition}");
+                        }
+                    else {
+                        builder.AppendIndent(indent + 1, $"No Container header");
+                        }
+
+                    builder.AppendIndent(indent + 1, $"Body Length:{envelope.Body?.Length}");
+
+                    if (envelope.Trailer is var trailer) {
+                        builder.AppendIndent(indent + 1, $"Payload: {trailer.PayloadDigest?.ToStringBase64url()}");
+                        builder.AppendIndent(indent + 1, $"Tree:    {trailer.TreeDigest?.ToStringBase64url()}");
+                        }
+
+                    positionRead = jbcdStream.PositionRead;
+                    envelope = jbcdStream.ReadDareEnvelope();
                     }
-                else {
-                    builder.AppendIndent(indent + 1, $"No Container header");
-                    }
-
-                builder.AppendIndent(indent + 1, $"Body Length:{envelope.Body?.Length}");
-
-                if (envelope.Trailer is var trailer) {
-                    builder.AppendIndent(indent + 1, $"Payload: {trailer.PayloadDigest?.ToStringBase64url()}");
-                    builder.AppendIndent(indent + 1, $"Tree:    {trailer.TreeDigest?.ToStringBase64url()}");
-                    }
-
-                
-
-
-
-                positionRead = jbcdStream.PositionRead;
-                envelope = jbcdStream.ReadDareEnvelope();
-                
-
-                } 
-
-
+                }
             }
 
         #endregion

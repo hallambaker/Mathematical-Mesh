@@ -272,8 +272,9 @@ namespace Goedel.Cryptography {
 
             AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
             if (AlgorithmID == CryptoAlgorithmID.Ed448ph) {
-                var shake256 = new SHAKE256(64 * 8);
-                Data = shake256.ComputeHash(Data);
+                using (var shake256 = new SHAKE256(64 * 8)) {
+                    Data = shake256.ComputeHash(Data);
+                    }
                 }
 
             return PrivateKey.Sign(Data, Dom4 (AlgorithmID, Context)); ;
@@ -298,8 +299,9 @@ namespace Goedel.Cryptography {
 
             AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
             if (AlgorithmID == CryptoAlgorithmID.Ed448ph) {
-                var shake256 = new SHAKE256(64 * 8);
-                Data = shake256.ComputeHash(Data);
+                using (var shake256 = new SHAKE256(64 * 8)) {
+                    Data = shake256.ComputeHash(Data);
+                    }
                 }
             return PublicKey.Verify(Signature, Data, Dom4(AlgorithmID, Context));
             }

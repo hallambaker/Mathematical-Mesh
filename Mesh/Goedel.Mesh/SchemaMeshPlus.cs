@@ -50,9 +50,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="builder">A string builder to direct the output to.</param>
         /// <param name="indent">Number of indents to be emitted at the start of each line.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine=null) {
-            builder.AppendLine($"[{_Tag}]");
-            }
+        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) => 
+            _ = builder.AppendLine($"[{_Tag}]");
 
 
         }

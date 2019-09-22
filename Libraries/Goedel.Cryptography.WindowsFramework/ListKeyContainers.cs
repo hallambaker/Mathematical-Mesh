@@ -99,6 +99,7 @@ namespace Goedel.Cryptography.Windows {
                 var RSA = new RSACryptoServiceProvider(CSP) {
                     PersistKeyInCsp = false
                     };
+                RSA.Dispose();
                 }
             catch {
 

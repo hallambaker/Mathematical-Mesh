@@ -378,15 +378,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="message">The message to be wrapped by the envelope</param>
         /// <returns>The signed message.</returns>
-        DareEnvelope Envelope(Message message) {
-
-
-
-
-            return DareEnvelope.Encode(message.GetBytes());
-
-
-            }
+        DareEnvelope Envelope(Message message) => DareEnvelope.Encode(message.GetBytes());
 
 
 

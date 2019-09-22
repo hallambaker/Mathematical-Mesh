@@ -489,7 +489,7 @@ namespace Goedel.Cryptography {
                     int bits = 0) {
             bits = bits == 0 ? DefaultBits : bits;
             var Length = (bits + 4) / 5;
-            return buffer.ToStringBase32(Format: ConversionFormat.Dash4, OutputMax: Length);
+            return buffer.ToStringBase32(format: ConversionFormat.Dash4, outputMax: Length);
             }
 
 

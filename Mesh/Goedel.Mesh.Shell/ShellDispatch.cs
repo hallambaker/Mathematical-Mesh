@@ -17,6 +17,9 @@ namespace Goedel.Mesh.Shell {
         public virtual IMeshMachineClient MeshMachine { get; }
 
 
+ 
+
+
         public virtual HostMesh CatalogHost => catalogHost ??
             HostMesh.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
         HostMesh catalogHost;
@@ -35,9 +38,9 @@ namespace Goedel.Mesh.Shell {
 
         public string MeshID { get; set; }
 
-        TextWriter Output;
+        TextWriter output;
 
-        public Shell(TextWriter output = null) => Output = output ?? Console.Out;
+        public Shell(TextWriter output = null) => this.output = output ?? Console.Out;
 
         public CryptoAlgorithmID AlgorithmSign          = CryptoAlgorithmID.Ed448;
         public CryptoAlgorithmID AlgorithmAuthenticate  = CryptoAlgorithmID.Ed448;
@@ -63,14 +66,14 @@ namespace Goedel.Mesh.Shell {
 
                 }
 
-            if (options is IMailOptions MailOptions) {
-                }
+            //if (options is IMailOptions MailOptions) {
+            //    }
 
-            if (options is IPublicKeyOptions PublicKeyOptions) {
-                }
+            //if (options is IPublicKeyOptions PublicKeyOptions) {
+            //    }
 
-            if (options is IPrivateKeyOptions PrivateKeyOptions) {
-                }
+            //if (options is IPrivateKeyOptions PrivateKeyOptions) {
+            //    }
 
             }
 
@@ -128,13 +131,13 @@ namespace Goedel.Mesh.Shell {
             if (Json) {
                 // Only report the results in JSON format and without
                 // additional text.
-                Output.Write(shellResult.GetJson(false));
+                output.Write(shellResult.GetJson(false));
                 }
             else if (Verbose) {
-                Output.Write(shellResult.Verbose());
+                output.Write(shellResult.Verbose());
                 }
             else {
-                Output.Write(shellResult.ToString());
+                output.Write(shellResult.ToString());
                 }
             }
 
@@ -150,51 +153,13 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The shell options.</param>
         /// <returns>The device context</returns>
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) {
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
 
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) => MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
 
-            return MeshMachine.GetContextMesh(admin:true) as ContextMeshAdmin;
-
-
-            //if (!options.DeviceNew.Value) {
-            //    var deviceUDF = options.DeviceUDF.Value;context
-            //    var deviceID = options.DeviceID.Value;
-
-            //    var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
-            //    if(result != null) {
-            //        return result;
-            //        }
-            //    }
-            //var deviceDescription = options.DeviceDescription.Value;
-            //return ContextDevice.Generate(MeshMachine, description: deviceDescription);
-
-            }
-
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) {
-
-
-            return MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
-
-
-            //if (!options.DeviceNew.Value) {
-            //    var deviceUDF = options.DeviceUDF.Value;context
-            //    var deviceID = options.DeviceID.Value;
-
-            //    var result = ContextDevice.GetContextDevice(MeshMachine, deviceUDF, deviceID);
-            //    if(result != null) {
-            //        return result;
-            //        }
-            //    }
-            //var deviceDescription = options.DeviceDescription.Value;
-            //return ContextDevice.Generate(MeshMachine, description: deviceDescription);
-
-            }
-
-
-        //public virtual ContextMaster GetContextMaster(IMasterProfileInfo options) {
-        //    }
 
         public virtual ContextAccount GetContextAccount(IAccountOptions options) {
+            options.Future();
             var contextMesh = MeshMachine.GetContextMesh();
 
             return contextMesh.GetContextAccount();
@@ -202,12 +167,20 @@ namespace Goedel.Mesh.Shell {
 
 
 
-        public virtual ContextAccount GetContextDevice(IAccountOptions options) => throw new NYI();
-        //CatalogHost.GetContextDevice();
+        public virtual ContextAccount GetContextDevice(IAccountOptions options) {
+            options.Future();
+            throw new NYI();
+            //CatalogHost.GetContextDevice();
+            }
 
 
-        public KeyCollection KeyCollection(IAccountOptions options) =>
-            CatalogHost.MeshMachine.KeyCollection;
+
+        public KeyCollection KeyCollection(IAccountOptions options) {
+
+            options.Future();
+            return CatalogHost.KeyCollection;
+
+            }
 
 
 

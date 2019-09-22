@@ -24,7 +24,7 @@ using System;
 using System.Text;
 using System.IO;
 
-namespace Goedel.Utilities  {
+namespace Goedel.Utilities {
 
     /// <summary>
     /// Interface to binary stream converter.
@@ -34,15 +34,15 @@ namespace Goedel.Utilities  {
         /// <summary>
         /// Write a sequence of bytes to the stream
         /// </summary>
-        /// <param name="Data">The data to send</param>
-        /// <param name="First">Position of first byte to send.</param>
-        /// <param name="Length">Position of last byte to send. If less than zero, read to end.</param>
-        void Write (byte[] Data, int First = 0, int Length = -1);
+        /// <param name="data">The data to send</param>
+        /// <param name="first">Position of first byte to send.</param>
+        /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+        void Write(byte[] data, int first = 0, int length = -1);
 
         /// <summary>
         /// Complete sending bytes and reset converter to send more bytes.
         /// </summary>
-        void Final ();
+        void Final();
         }
 
     /// <summary>
@@ -53,19 +53,19 @@ namespace Goedel.Utilities  {
         /// <summary>
         /// Write string to the stream
         /// </summary>
-        /// <param name="Data">The data to send</param>
-        void Write (string Data);
+        /// <param name="data">The data to send</param>
+        void Write(string data);
 
         /// <summary>
         /// Write character to the stream
         /// </summary>
-        /// <param name="Data">The data to send</param>
-        void Write (char Data);
+        /// <param name="data">The data to send</param>
+        void Write(char data);
 
         /// <summary>
         /// Complete input and reset converter for next session.
         /// </summary>
-        void Final ();
+        void Final();
         }
 
 
@@ -84,56 +84,81 @@ namespace Goedel.Utilities  {
         /// </summary>
         private struct StreamConvertString : IStringToStream {
 
-            MemoryStream Stream;
-            public byte[] ToArray;
+            MemoryStream stream;
+            public byte[] toArray;
 
-            byte[] Table;
-            int Bits;
-            uint Register;
-            int Stride;
+            byte[] table;
+            int bits;
+            uint register;
+            int stride;
 
-            public StreamConvertString (byte[] Table, int Stride) {
-                this.Table = Table;
-                this.Stride = Stride;
-                ToArray = null;
-                Stream = new MemoryStream();
-                Bits = 0;
-                Register = 0;
+            /// <summary>
+            /// Constructore using conversion table <paramref name="table"/> with taking 
+            /// <paramref name="stride"/> bits per character.
+            /// </summary>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="stride">The number of bits corresponding to each output character.</param>
+            public StreamConvertString(byte[] table, int stride) {
+                this.table = table;
+                this.stride = stride;
+                toArray = null;
+                stream = new MemoryStream();
+                bits = 0;
+                register = 0;
                 }
 
-
-            public void Write (string Data) {
-                foreach (var c in Data) {
+            /// <summary>
+            /// Transform the string <paramref name="data"/>.
+            /// </summary>
+            /// <param name="data">String to be transformed.</param>
+            public void Write(string data) {
+                foreach (var c in data) {
                     Write(c);
                     }
                 }
 
-            public void Write (char c) {
-                if ((c < 128) && (Table[c] < 64)) {
-                    Register = (Register << Stride) | Table[c];
-                    Bits += Stride;
-                    if (Bits >= 8) {
-                        Bits -= 8;
-                        Stream.WriteByte ((Byte)(Register >> Bits));
+            /// <summary>
+            /// Transform the character <paramref name="c"/>.
+            /// </summary>
+            /// <param name="c">String to be transformed.</param>
+            public void Write(char c) {
+                if ((c < 128) && (table[c] < 64)) {
+                    register = (register << stride) | table[c];
+                    bits += stride;
+                    if (bits >= 8) {
+                        bits -= 8;
+                        stream.WriteByte((Byte)(register >> bits));
                         }
                     }
                 }
 
-            public void Final () {
-                ToArray = Stream.ToArray();
-                Stream.SetLength( 0);
-                Bits = 0;
-                Register = 0;
+            /// <summary>
+            /// Complete the transformation.
+            /// </summary>
+            public void Final() {
+                toArray = stream.ToArray();
+                stream.SetLength(0);
+                bits = 0;
+                register = 0;
                 }
 
-            public static byte[] Convert(byte[] Table, int Stride, string Data) {
-                if (Data == null) {
+            /// <summary>
+            /// Create a StreamConvertString instance using conversion table <paramref name="table"/> in 
+            /// which each character represents <paramref name="stride"/> bits and return the result
+            /// of applying it to <paramref name="data"/>.
+            /// </summary>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="stride">The number of bits corresponding to each output character.</param>
+            /// <param name="data">String to be transformed.</param>
+            /// <returns>The result of the transformation</returns>
+            public static byte[] Convert(byte[] table, int stride, string data) {
+                if (data == null) {
                     return null;
-                    } 
-                var Converter = new StreamConvertString(Table, Stride);
-                Converter.Write(Data);
+                    }
+                var Converter = new StreamConvertString(table, stride);
+                Converter.Write(data);
                 Converter.Final();
-                return Converter.ToArray;
+                return Converter.toArray;
 
                 }
 
@@ -143,112 +168,117 @@ namespace Goedel.Utilities  {
         /// Base class for byte streamed formatter
         /// </summary>
         private abstract class ByteStreamFormatter : IBytesToStream {
-            delegate void FormatCharDelegate (char c);
+            delegate void FormatCharDelegate(char c);
             FormatCharDelegate FormatChar;
 
-            char[] Table;
-            int Offset;
-            bool Terminal;
+            char[] table;
+            int offset;
+            bool terminal;
             int a;
-            int Bits;
-            int Dash;
-            ConversionFormat Format;
+            int bits;
+            int dash;
+            ConversionFormat format;
 
-            int OutputCount = 0;
-            int OutputCol = 0;
-            int OutputMax;
+            int outputCount = 0;
+            int outputCol = 0;
+            int outputMax;
 
-            //public ByteStreamFormatter (
-            //        char[] Table,
-            //        int Bits,
-            //        bool Newline = false,
-            //        bool Terminal = false) {
-            //    this.Table = Table;
-            //    this.Newline = Newline;
-            //    this.Bits = Bits;
-            //    this.Terminal = Terminal;
-            //    Offset = 0;
-            //    a = 0;
-            //    }
+            /// <summary>
+            /// Converter from binary to text form.
+            /// </summary>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="bits">The number of bits per character.</param>
+            /// <param name="format">The output conversion format to use.</param>
+            /// <param name="outputCol">The initial output column</param>
+            /// <param name="outputMax">If positive, wrap the output at the column value specified.
+            /// Otherwise, do not wrap.</param>
+            public ByteStreamFormatter(
+                    char[] table,
+                    int bits,
+                    ConversionFormat format,
+                    int outputCol = -1,
+                    int outputMax = -1) {
+                this.table = table;
+                this.bits = bits;
+                this.format = format;
+                this.outputMax = outputMax;
 
-            public ByteStreamFormatter (
-                    char[] Table,
-                    int Bits,
-                    ConversionFormat Format,
-                    int OutputCol = -1,
-                    int OutputMax = -1) {
-                this.Table = Table;
-                this.Bits = Bits;
-                this.Format = Format;
-                this.OutputMax = OutputMax;
-
-                Terminal = (Format & ConversionFormat.Terminal) > 0;
+                terminal = (format & ConversionFormat.Terminal) > 0;
 
                 // Set the output method according to the format option selected.
-                switch (Format & (ConversionFormat)0xfe) {
-                    case ConversionFormat.Draft:  {
-                            FormatChar = FormatCharDraft;
-                            this.OutputMax = OutputMax > 0 ? OutputMax : 72;
-                            this.OutputCol = OutputCol > 0 ? OutputCol : 0;
-                            break;
-                            }
+                switch (format & (ConversionFormat)0xfe) {
+                    case ConversionFormat.Draft: {
+                        FormatChar = FormatCharDraft;
+                        this.outputMax = outputMax > 0 ? outputMax : 72;
+                        this.outputCol = outputCol > 0 ? outputCol : 0;
+                        break;
+                        }
                     case ConversionFormat.Hex: {
-                            FormatChar = FormatCharHex;
-                            break;
-                            }
+                        FormatChar = FormatCharHex;
+                        break;
+                        }
                     case ConversionFormat.Dash4: {
-                            FormatChar = FormatCharDash;
-                            Dash = 4;
-                            break;
-                            }
+                        FormatChar = FormatCharDash;
+                        dash = 4;
+                        break;
+                        }
                     case ConversionFormat.Dash5: {
-                            FormatChar = FormatCharDash;
-                            Dash = 5;
-                            break;
-                            }
+                        FormatChar = FormatCharDash;
+                        dash = 5;
+                        break;
+                        }
                     default: {
-                            FormatChar = FormatCharDirect;
-                            break;
-                            }
+                        FormatChar = FormatCharDirect;
+                        break;
+                        }
                     }
 
-                Offset = 0;
+                offset = 0;
                 a = 0;
                 }
 
 
-            bool NeedOutput => (OutputMax < 0) | (OutputCount < OutputMax);
+            bool needOutput => (outputMax < 0) | (outputCount < outputMax);
 
-            public void Write (byte[] Data, int First = 0, int Length = -1) {
-                Length = Length < 0 ? Data.Length - First : Length;
-                int Last = First + Length;
+            /// <summary>
+            /// Write the specified data to the converter instance.
+            /// </summary>
+            /// <param name="data">The data buffer to write.</param>
+            /// <param name="first">The first byte to write from in the buffer.</param>
+            /// <param name="length">The number of bytes to write from the buffer.</param>
+            public void Write(byte[] data, int first = 0, int length = -1) {
+                length = length < 0 ? data.Length - first : length;
+                int Last = first + length;
 
-                for (int i = First; (i < Last) & NeedOutput ; i++) {
+                for (int i = first; (i < Last) & needOutput; i++) {
                     //if (Draft & ((i % 48) == 0)) {
                     //    WriteChar('\n');
                     //    }
 
-                    a = (a << 8) | Data[i];
-                    Offset += 8;
+                    a = (a << 8) | data[i];
+                    offset += 8;
 
-                    while ((Offset >= Bits) & NeedOutput) {
-                        Offset -= Bits;
+                    while ((offset >= bits) & needOutput) {
+                        offset -= bits;
 
-                        int n = a >> Offset;
-                        FormatChar(Table[n]);
-                        a &= (0xff >> (8 - Offset));
+                        int n = a >> offset;
+                        FormatChar(table[n]);
+                        a &= (0xff >> (8 - offset));
                         }
                     }
                 }
 
-            public void Final () {
-                if ((Offset > 0) & NeedOutput) {
-                    FormatChar(Table[a << (Bits - Offset)]);
+            /// <summary>
+            /// Complete writing from the buffer.
+            /// </summary>
+            public void Final() {
+                if ((offset > 0) & needOutput) {
+                    FormatChar(table[a << (bits - offset)]);
                     // No trailing = characters in Base64URL encoding.
-                    if (Terminal) {
+                    if (terminal) {
                         // The trailing characters are not always required by software but are
                         // required by the Base64 specification.
-                        if (Offset == 2) {
+                        if (offset == 2) {
                             FormatChar('='); // just one partial character
                             FormatChar('=');
                             }
@@ -256,58 +286,76 @@ namespace Goedel.Utilities  {
                             FormatChar('='); // One full, one partial character
                             }
                         }
-                    Offset = 0;
+                    offset = 0;
                     a = 0;
                     }
                 }
 
 
-
+            /// <summary>
+            /// Format output character without format considerations.
+            /// </summary>
+            /// <param name="c">The character to format.</param>
             public void FormatCharDirect(char c) => WriteChar(c);
 
-            public void FormatCharDash (char c) {
-                if (OutputMax >= 0 & (OutputCount >= OutputMax)) {
+            /// <summary>
+            /// Format output character with dash format.
+            /// </summary>
+            /// <param name="c">The character to format.</param>
+            public void FormatCharDash(char c) {
+                if (outputMax >= 0 & (outputCount >= outputMax)) {
                     return; // truncate output after n significant characters
                     }
-                if (OutputCount > 0 & OutputCount % Dash == 0) {
+                if (outputCount > 0 & outputCount % dash == 0) {
                     WriteChar('-');
                     }
                 WriteChar(c);
-                OutputCount++;
+                outputCount++;
                 }
 
-            
-            public void FormatCharDraft (char c) {
-                OutputCol++;
-                if (OutputCol > OutputMax) {
+            /// <summary>
+            /// Format output character with IETF plaintext draft format.
+            /// </summary>
+            /// <param name="c">The character to format.</param>
+            public void FormatCharDraft(char c) {
+                outputCol++;
+                if (outputCol > outputMax) {
                     WriteChar('\n');
                     WriteChar(' ');
                     WriteChar(' ');
-                    OutputCol = 2;
+                    outputCol = 2;
                     }
 
                 WriteChar(c);
                 }
 
-            public void FormatCharHex (char c) {
-                if ((OutputCount % 32) == 0) {
+            /// <summary>
+            /// Format hexadecimal character..
+            /// </summary>
+            /// <param name="c">The character to format.</param>
+            public void FormatCharHex(char c) {
+                if ((outputCount % 32) == 0) {
                     WriteChar('\n');
                     WriteChar(' ');
                     WriteChar(' ');
                     }
-                else if ((OutputCount % 8) == 0) {
+                else if ((outputCount % 8) == 0) {
                     WriteChar(' ');
                     WriteChar(' ');
                     }
-                else if ((OutputCount % 2) == 0) {
+                else if ((outputCount % 2) == 0) {
                     WriteChar(' ');
                     }
 
-                OutputCount++;
+                outputCount++;
                 WriteChar(c);
                 }
 
-            public abstract void WriteChar (char c);
+            /// <summary>
+            /// Write the character to the output stream.
+            /// </summary>
+            /// <param name="c">The character to write.</param>
+            public abstract void WriteChar(char c);
             }
 
 
@@ -316,17 +364,27 @@ namespace Goedel.Utilities  {
         /// </summary>
         private class StreamConvertBits : ByteStreamFormatter {
 
-            Stream Output;
+            Stream output;
 
+            /// <summary>
+            /// Constructor for stream converter.
+            /// </summary>
+            /// <param name="output">The output stream.</param>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="bits">The number of bits per character.</param>
+            /// <param name="format">The output conversion format to use.</param>
+            /// <param name="outputCol">The initial output column</param>
+            /// <param name="outputMax">If positive, wrap the output at the column value specified.
+            /// Otherwise, do not wrap.</param>
             public StreamConvertBits(
-                    Stream Output,
-                    char[] Table,
-                    int Bits,
-                    ConversionFormat Format,
-                    int OutputCol = -1,
-                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) => this.Output = Output;
+                    Stream output,
+                    char[] table,
+                    int bits,
+                    ConversionFormat format,
+                    int outputCol = -1,
+                    int outputMax = -1) : base(table, bits, format, outputCol, outputMax) => this.output = output;
 
-            public override void WriteChar(char c) => Output.WriteByte((byte)c);
+            public override void WriteChar(char c) => output.WriteByte((byte)c);
             }
 
 
@@ -336,46 +394,91 @@ namespace Goedel.Utilities  {
         /// </summary>
         private class StringBuilderConvertBits : ByteStreamFormatter {
 
-            StringBuilder Output;
+            StringBuilder output;
 
+            /// <summary>
+            /// Constructor for converter from binary to string form.
+            /// </summary>
+            /// <param name="output">The output string builder</param>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="bits">The number of bits per character.</param>
+            /// <param name="format">The output conversion format to use.</param>
+            /// <param name="outputCol">The initial output column</param>
+            /// <param name="outputMax">If positive, wrap the output at the column value specified.
+            /// Otherwise, do not wrap.</param>
             public StringBuilderConvertBits(
-                    StringBuilder Output,
-                    char[] Table,
-                    int Bits,
-                    ConversionFormat Format,
-                    int OutputCol = -1,
-                    int OutputMax = -1) : base(Table, Bits, Format, OutputCol, OutputMax) => this.Output = Output;
+                    StringBuilder output,
+                    char[] table,
+                    int bits,
+                    ConversionFormat format,
+                    int outputCol = -1,
+                    int outputMax = -1) : base(table, bits, format, outputCol, outputMax) => this.output = output;
 
-            public static string Convert (
-                    char[] Table,
-                    int Bits,
-                    ConversionFormat Format, byte[] Data = null, int First = 0,
-                    int Length = -1,
-                    int OutputCol = -1,
-                    int OutputMax = -1) {
+            /// <summary>
+            /// One shot convenience wrapper, creates a converter, uses it to convert <paramref name="data"/>
+            /// according to the parameters specified and returns the output. Is almost invariably called
+            /// from another wrapper specifying <paramref name="table"/>, <paramref name="bits"/>, etc.
+            /// </summary>
+            /// <param name="data">The data to convert.</param>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="bits">The number of bits per character.</param>
+            /// <param name="format">The output conversion format to use.</param>
+            /// <param name="first">Position of first byte to send.</param>
+            /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            /// <param name="outputCol">The initial output column</param>
+            /// <param name="outputMax">If positive, wrap the output at the column value specified.
+            /// Otherwise, do not wrap.</param>
+            /// <returns></returns>
+            public static string Convert(
+                    byte[] data,
+                    char[] table,
+                    int bits,
+                    ConversionFormat format,
+                    int first = 0,
+                    int length = -1,
+                    int outputCol = -1,
+                    int outputMax = -1) {
 
                 var Output = new StringBuilder();
-                var Converter = new StringBuilderConvertBits(Output, Table, Bits, Format, OutputCol, OutputMax);
-                Converter.Write(Data, First, Length);
+                var Converter = new StringBuilderConvertBits(Output, table, bits, format, outputCol, outputMax);
+                Converter.Write(data, first, length);
                 Converter.Final();
                 return Output.ToString();
                 }
 
-            public static void Append (
-                    StringBuilder Output,
-                    char[] Table,
-                    int Bits,
-                    ConversionFormat Format, byte[] Data = null, int First = 0,
-                    int Length = -1,
-                    int OutputCol = -1,
-                    int OutputMax = -1) {
+            /// <summary>
+            /// One shot convenience wrapper, creates a converter, uses it to convert <paramref name="data"/>
+            /// according to the parameters specified appending the result to <paramref name="output"/>. 
+            /// Is almost invariably called from another wrapper specifying <paramref name="table"/>, 
+            /// <paramref name="bits"/>, etc.
+            /// </summary>
+            /// <param name="data">The data to convert.</param>
+            /// <param name="table">The conversion table.</param>
+            /// <param name="bits">The number of bits per character.</param>
+            /// <param name="format">The output conversion format to use.</param>
+            /// <param name="output"></param>
+            /// <param name="first">Position of first byte to send.</param>
+            /// <param name="length">Position of last byte to send. If less than zero, read to end.</param>
+            /// <param name="outputCol">The initial output column</param>
+            /// <param name="outputMax">If positive, wrap the output at the column value specified.
+            /// Otherwise, do not wrap.</param>
+            public static void Append(
+                    byte[] data,
+                    char[] table,
+                    int bits,
+                    ConversionFormat format,
+                    StringBuilder output,
+                    int first = 0,
+                    int length = -1,
+                    int outputCol = -1,
+                    int outputMax = -1) {
 
-                var Converter = new StringBuilderConvertBits(Output, Table, Bits, Format, OutputCol, OutputMax);
-                Converter.Write(Data, First, Length);
+                var Converter = new StringBuilderConvertBits(output, table, bits, format, outputCol, outputMax);
+                Converter.Write(data, first, length);
                 Converter.Final();
                 }
 
-            public override void WriteChar(char c) => Output.Append(c);
+            public override void WriteChar(char c) => output.Append(c);
             }
         }
     }

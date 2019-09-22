@@ -5,6 +5,9 @@
 #using Goedel.Mesh.Test
 #using Goedel.Cryptography
 #using Goedel.Cryptography.Dare
+#% #pragma warning disable IDE0022
+#% #pragma warning disable IDE0060
+#% #pragma warning disable IDE1006
 #xclass ExampleGenerator CreateExamples
 #% public static CreateExamples Instance (StreamWriter output) => new CreateExamples () {_Output = output};
 #method MakeArchitectureExamples CreateExamples Example

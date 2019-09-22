@@ -90,14 +90,14 @@ namespace Goedel.XUnit {
         public void BaseConversionFormatting () {
             var Bytes = TestFormat1.FromBase16();
 
-            var ResultDraft = Bytes.ToStringBase64(Format: ConversionFormat.Draft);
+            var ResultDraft = Bytes.ToStringBase64(format: ConversionFormat.Draft);
             CheckExact(ResultDraft, TestFormat1Draft, "Draft formatting failed");
 
             var ResultHex = Bytes.ToStringBase16FormatHex();
             CheckExact(ResultHex, TestFormat1Hex, "Hex formatting failed");
             var ResultDash4 = Bytes.ToStringBase32hs(20);
             CheckExact(ResultDash4, TestFormat1Dash6, "Dash 4 formatting failed");
-            var ResultDash5 = Bytes.ToStringBase32(Format: ConversionFormat.Dash5, OutputMax: 25);
+            var ResultDash5 = Bytes.ToStringBase32(format: ConversionFormat.Dash5, outputMax: 25);
             CheckExact(ResultDash5, TestFormat1Dash5, "Dash 5 formatting failed");
 
             }
@@ -175,7 +175,7 @@ namespace Goedel.XUnit {
             CheckTrim(Vector.Base16, Vector.Data.ToStringBase16(Format: ConversionFormat.None));
             CheckTrim(Vector.Base32, Vector.Data.ToStringBase32());
             CheckTrim(Vector.Base32Hex, Vector.Data.ToStringBase32Hex());
-            CheckTrim(Vector.Base64, Vector.Data.ToStringBase64(Format: ConversionFormat.Terminal));
+            CheckTrim(Vector.Base64, Vector.Data.ToStringBase64(format: ConversionFormat.Terminal));
             CheckTrim(Vector.Base64Url, Vector.Data.ToStringBase64url());
             }
 

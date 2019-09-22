@@ -248,11 +248,14 @@ namespace Goedel.Protocol {
         /// whose sole purpose is to prevent 'new' causing issues in derived
         /// classes.
         /// </summary>
-        /// <param name="Writer">Writer to serialize the data to</param>
+        /// <param name="writer">Writer to serialize the data to</param>
         /// <param name="first">This is the first field in the object being serialized. This 
         /// value is set to false on exit.</param>
         /// <param name="wrap">Wrap the objects for formatting.</param>
-		public void SerializeX(Writer Writer, bool wrap, ref bool first) {
+		public void SerializeX(Writer writer, bool wrap, ref bool first) {
+            writer.Keep();
+            wrap.Keep();
+            first.Keep();
             }
 
         /// <summary>
@@ -260,16 +263,23 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="data">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(byte[] data) =>
-                FromJSON(data.JSONReader(), true);
+        public static JSONObject From(byte[] data) {
+            using (var reader = data.JSONReader()) {
+                return FromJSON(reader, true);
+                }
+            }
 
         /// <summary>
         /// Factory method to construct object from string data.
         /// </summary>
         /// <param name="input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(string input) =>
-                FromJSON(input.JSONReader(), true);
+        public static JSONObject From(string input) {
+            using (var reader = input.JSONReader()) {
+                return FromJSON(reader, true);
+                }
+            }
+
 
         /// <summary>
         /// Deserialize a tagged stream. This method should never be called.
@@ -285,29 +295,29 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>
-        /// <param name="_Input">Input string</param>
-        public virtual void Deserialize (string _Input) {
-            StringReader _Reader = new StringReader(_Input);
-            JSONReader JSONReader = new JSONReader(_Reader);
-            Deserialize(JSONReader);
+        /// <param name="input">Input string</param>
+        public virtual void Deserialize (string input) {
+            var reader = new StringReader(input);
+            var jsonReader = new JSONReader(reader);
+            Deserialize(jsonReader);
             }
 
         /// <summary>
         /// Deserialize the input string to populate this object
         /// </summary>
-        /// <param name="JSONReader">Input data</param>
-        public virtual void Deserialize (JSONReader JSONReader) {
+        /// <param name="jsonReader">Input data</param>
+        public virtual void Deserialize (JSONReader jsonReader) {
 
-            bool Going = JSONReader.StartObject();
-            while (Going) {
-                string Token = JSONReader.ReadToken();
+            bool going = jsonReader.StartObject();
+            while (going) {
+                string Token = jsonReader.ReadToken();
                 if (Token == null) {
-                    Going = false;
+                    going = false;
                     }
                 else {
-                    DeserializeToken(JSONReader, Token);
+                    DeserializeToken(jsonReader, Token);
+                    going = jsonReader.NextObject();
                     }
-                Going = JSONReader.NextObject();
                 }
             PostDecode();
 
@@ -318,9 +328,9 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Deserialize the input stream to populate this object having recieved the specified tag.
         /// </summary>
-        /// <param name="JSONReader">Input data</param>
+        /// <param name="jsonReader">Input data</param>
         /// <param name="Tag">Input tag</param>
-        public virtual void DeserializeToken (JSONReader JSONReader, string Tag) {
+        public virtual void DeserializeToken (JSONReader jsonReader, string Tag) {
             }
 
 
@@ -376,9 +386,5 @@ namespace Goedel.Protocol {
                 Base.AddSafe(Entry.Key, Entry.Value);
                 }
             }
-
-
-
-
         }
     }

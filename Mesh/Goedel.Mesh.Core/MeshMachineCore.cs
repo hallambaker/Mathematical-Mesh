@@ -89,9 +89,7 @@ namespace Goedel.Mesh {
 
 
         #region // Disposing
-        protected override void Disposing() {
-            CatalogHost.Dispose();
-            }
+        protected override void Disposing() => CatalogHost.Dispose();
         #endregion
 
 
@@ -138,9 +136,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileEntry">The entry to add or update.</param>
         /// <param name="create">Report an error if the object identifier does not already exist.</param>
-        public void Register(CatalogedMachine profileEntry, bool create = true) {
-            CatalogHost.Register(profileEntry, create);
-            }
+        public void Register(CatalogedMachine profileEntry, bool create = true) => CatalogHost.Register(profileEntry, create);
 
         /// <summary>
         /// Create a new Mesh master profile without account or service
@@ -211,9 +207,7 @@ namespace Goedel.Mesh {
                 string PIN = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
-            }
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
 
         #endregion
 

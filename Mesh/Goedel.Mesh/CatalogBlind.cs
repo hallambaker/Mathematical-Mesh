@@ -17,7 +17,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => throw new NYI();
-        
+
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="containerName"/> in directory
@@ -29,15 +29,12 @@ namespace Goedel.Mesh {
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         public CatalogBlind(
-                    string directory, 
+                    string directory,
                     string containerName,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
-            base(directory, containerName, cryptoParameters, keyCollection, 
-                readContainer:false, decrypt: false, create: false) {
-
-            ContainerPersistence.FastReadContainer();
-            }
+            base(directory, containerName, cryptoParameters, keyCollection,
+                readContainer: false, decrypt: false, create: false) => ContainerPersistence.FastReadContainer();
 
 
         public DareEnvelope Get(string key) => GetEntry(key).FrameIndex.GetEnvelope(Container);

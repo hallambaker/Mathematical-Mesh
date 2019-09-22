@@ -168,12 +168,12 @@ namespace Goedel.Mesh {
 
             }
 
-        public static new CatalogedDevice Decode(DareEnvelope message, KeyCollection keyCollection) {
+        public static CatalogedDevice Decode(DareEnvelope message, KeyCollection keyCollection) {
             if (message == null) {
                 return null;
                 }
 
-            var plaintext = message.GetPayload(keyCollection);
+            var plaintext = message.GetPlaintext(keyCollection);
 
             Console.WriteLine(plaintext.ToUTF8());
             var result = FromJSON(plaintext.JSONReader(), true);

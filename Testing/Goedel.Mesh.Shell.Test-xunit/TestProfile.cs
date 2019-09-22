@@ -17,7 +17,7 @@ namespace Goedel.XUnit {
 
             var testCLI = GetTestCLI();
 
-            var result = testCLI.Dispatch("profile hello");
+            var result = testCLI.Dispatch("account hello");
 
             }
 
@@ -58,27 +58,27 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile create {accountA}");
+            device1.Dispatch($"mesh create {accountA}");
 
             device2.Dispatch($"device request {accountA}");
-            device2.Dispatch($"profile sync", fail: true);
+            device2.Dispatch($"account sync", fail: true);
 
             var result2 = device1.Dispatch($"device pending");
             var message = (result2 as ResultPending).Messages[0] as AcknowledgeConnection;
             var witness = message.Witness;
 
             device1.Dispatch($"device accept {witness}");
-            device2.Dispatch($"profile sync");
+            device2.Dispatch($"account sync");
 
             device3.Dispatch($"device request {accountA}  /new");
-            device3.Dispatch($"profile sync", fail: true);
+            device3.Dispatch($"account sync", fail: true);
 
             var result3 = device1.Dispatch($"device pending");
 
             message = (result3 as ResultPending).Messages[0] as AcknowledgeConnection;
             witness = message.Witness;
             device1.Dispatch($"device reject {witness}");
-            device3.Dispatch($"profile sync", fail: true);
+            device3.Dispatch($"account sync", fail: true);
             }
 
 

@@ -5,6 +5,9 @@ using  Goedel.Utilities;
 using  Goedel.Cryptography;
 using  Goedel.Cryptography.Dare;
 using  Goedel.Mesh.Shell;
+ #pragma warning disable IDE0022
+ #pragma warning disable IDE0060
+ #pragma warning disable IDE1006
 using System;
 using System.IO;
 using System.Collections.Generic;

@@ -131,9 +131,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Close the write stream.
         /// </summary>
-        public void StreamClose() {
-            ContainerHeader.CloseBodyWriter(out DareTrailer);
-            }
+        public void StreamClose() => ContainerHeader.CloseBodyWriter(out DareTrailer);
 
         /// <summary>
         /// Write a fixed length body.

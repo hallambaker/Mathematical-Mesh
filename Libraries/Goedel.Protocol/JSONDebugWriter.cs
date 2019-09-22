@@ -89,8 +89,8 @@ namespace Goedel.Protocol {
 
             Output.Write("\"");
             Output.Write(BaseConvert.ToStringBase64url(
-                    Data, offset, Length, Format: ConversionFormat.Draft,
-                    OutputCol: OutputCol, OutputMax: 66));
+                    Data, offset, Length, format: ConversionFormat.Draft,
+                    outputCol: OutputCol, outputMax: 66));
 
 
             //if (Data.Length < Threshold) {

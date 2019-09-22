@@ -87,7 +87,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// 
+        /// Constructor, creates an entry for the specified container header, data and previous relationship.
         /// </summary>
         /// <param name="frameIndex">The position of the entry within the container frame.</param>
         /// <param name="previous">Link to previous value of this object</param>
@@ -109,15 +109,6 @@ namespace Goedel.Cryptography.Dare {
             Previous = previous;
             First = previous?.First ?? this;
             }
-
-
-
-        public DareEnvelope Envelope() {
-
-            throw new NYI();
-
-            }
-
 
         }
 

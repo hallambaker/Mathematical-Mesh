@@ -88,6 +88,7 @@ namespace ExampleGenerator {
             //// AdvancedRecovery 
             //var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
             var Secret = new Secret(AdvancedRecoveryMaster);
+            Secret.Keep();
             //var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
             //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
             //AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];

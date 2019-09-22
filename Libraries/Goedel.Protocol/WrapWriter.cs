@@ -33,13 +33,13 @@ namespace Goedel.Protocol {
     /// the output.
     /// </summary>
     public class WrapWriter : TextWriter {
-        TextWriter Output;
+        TextWriter Output { get; set; }
 
         /// <summary>
         /// Construct a new WrapWriter.
         /// </summary>
-        /// <param name="Output">Base textwriter stream to write output to.</param>
-        public WrapWriter(TextWriter Output) => this.Output = Output;
+        /// <param name="output">Base textwriter stream to write output to.</param>
+        public WrapWriter(TextWriter output) => Output = output;
 
         //
         // The following declarations override the base class to 
@@ -52,20 +52,21 @@ namespace Goedel.Protocol {
         /// <param name="input">The input string</param>
         /// <returns>The wrapped output string</returns>
         static public string Wrap(string input) { 
-            StringWriter StringWriter = new StringWriter ();
-            WrapWriter WrapWriter = new WrapWriter (StringWriter);
-            WrapWriter.Write (input);
-            WrapWriter.Flush ();
-            string result = StringWriter.ToString ();
+            var StringWriter = new StringWriter ();
+            using (var WrapWriter = new WrapWriter(StringWriter)) {
+                WrapWriter.Write(input);
+                WrapWriter.Flush();
+                string result = StringWriter.ToString();
 
-            return result;
+                return result;
+                }
             }
 
 
-        string Buffer = "";
-        string BreakBuffer = "";
-        string SpaceBuffer = "";
-        string Leading = "";        
+        string buffer = "";
+        string breakBuffer = "";
+        string spaceBuffer = "";
+        string leading = "";        
         
         /// <summary>
         /// Line count.
@@ -75,7 +76,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Column count.
         /// </summary>
-        public int Column => Leading.Length + Buffer.Length + SpaceBuffer.Length + BreakBuffer.Length;
+        public int Column => leading.Length + buffer.Length + spaceBuffer.Length + breakBuffer.Length;
 
         /// <summary>
         /// Column width.
@@ -108,9 +109,9 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Dispose method.
         /// </summary>
-        /// <param name="Disposing"></param>
-        protected override void Dispose(bool Disposing) {
-            if (Disposing) {
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
                 Flush();
                 }
             }
@@ -119,7 +120,7 @@ namespace Goedel.Protocol {
         /// Force write of all characters to the output.
         /// </summary>
         public override void Flush() {
-            if ((Buffer != "") | (BreakBuffer != "" )) {
+            if ((buffer != "") | (breakBuffer != "" )) {
                 EndLine();
                 }
             Output.Flush();
@@ -154,35 +155,35 @@ namespace Goedel.Protocol {
         //
 
         void EndLine() {
-            Output.Write (Leading);
-            Output.Write (Buffer);
-            Output.Write (SpaceBuffer);
-            Output.WriteLine (BreakBuffer);
+            Output.Write (leading);
+            Output.Write (buffer);
+            Output.Write (spaceBuffer);
+            Output.WriteLine (breakBuffer);
             Line ++;
-            Buffer = "";
-            BreakBuffer = "";
-            SpaceBuffer = "";
-            Leading = "";
+            buffer = "";
+            breakBuffer = "";
+            spaceBuffer = "";
+            leading = "";
             state = 0;
             }
 
         void BreakLine() {
             string Minimum = MinLeading ; 
 
-            Output.Write(Leading);
-            if (Buffer != "") {
-                Output.WriteLine(Buffer);
-                Buffer = "";
+            Output.Write(leading);
+            if (buffer != "") {
+                Output.WriteLine(buffer);
+                buffer = "";
                 }
             else { // Line has no break point
-                Output.WriteLine (BreakBuffer);
-                BreakBuffer = "";
+                Output.WriteLine (breakBuffer);
+                breakBuffer = "";
                 Minimum += WrappedLeading;
                 }
             Line++;
-            SpaceBuffer = "";
-            if (Leading.Length <= MinLeading.Length) {
-                Leading = Minimum;
+            spaceBuffer = "";
+            if (leading.Length <= MinLeading.Length) {
+                leading = Minimum;
                 }
             }
 
@@ -224,7 +225,7 @@ namespace Goedel.Protocol {
                     return;
                     }
                 else {
-                    BreakBuffer += c;
+                    breakBuffer += c;
                     state = 1;
                     return;
                     }
@@ -234,16 +235,16 @@ namespace Goedel.Protocol {
             if (c == ' ') {
                 switch (state) {
                     case 0:
-                        Leading += c;
+                        leading += c;
                         break;
                     case 1:
-                        Buffer = Buffer + SpaceBuffer + BreakBuffer;
-                        BreakBuffer = c.ToString ();
-                        SpaceBuffer = " ";
+                        buffer = buffer + spaceBuffer + breakBuffer;
+                        breakBuffer = c.ToString ();
+                        spaceBuffer = " ";
                         state = 2;
                         break;
                     case 2:
-                        SpaceBuffer += " ";
+                        spaceBuffer += " ";
                         break;
                     case 3:
                         // Ignore surplus spaces afer break
@@ -253,18 +254,18 @@ namespace Goedel.Protocol {
             else {
                 switch (state) {
                     case 0:
-                        BreakBuffer = c.ToString ();
+                        breakBuffer = c.ToString ();
                         state = 1;
                         break;
                     case 1:
-                        BreakBuffer += c;
+                        breakBuffer += c;
                         break;
                     case 2:
-                        BreakBuffer = c.ToString ();
+                        breakBuffer = c.ToString ();
                         state = 1;
                         break;
                     case 3:
-                        BreakBuffer = c.ToString ();
+                        breakBuffer = c.ToString ();
                         state = 1;
                         break;
                     }

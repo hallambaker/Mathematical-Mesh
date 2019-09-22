@@ -64,9 +64,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Header">Final frame header</param>
         /// <param name="FirstPosition">Position of frame 1</param>
         /// <param name="PositionLast">Position of the last frame</param>
-        protected override void FillDictionary(ContainerInfo Header, long FirstPosition, long PositionLast) {
-            base.FillDictionary(Header, FirstPosition, PositionLast);
-            }
+        protected override void FillDictionary(ContainerInfo Header, long FirstPosition, long PositionLast) => base.FillDictionary(Header, FirstPosition, PositionLast);
 
 
         /// <summary>

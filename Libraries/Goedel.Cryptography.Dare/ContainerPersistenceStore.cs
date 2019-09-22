@@ -117,6 +117,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
+        /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
         public ContainerPersistenceStore(string fileName, string contentType = null,
                     string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
@@ -155,7 +156,9 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-
+        /// <summary>
+        /// Read the container contents in fast mode generating indexes only without reading contents.
+        /// </summary>
         public void FastReadContainer() {
             foreach (var frameIndex in Container) {
                 var contentMeta = frameIndex.Header.ContentMeta;
@@ -184,7 +187,6 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Read a container from the first frame to the last.
         /// </summary>
-        /// <param name="Stream">The stream to read</param>
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
         void ReadContainer(ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
@@ -209,10 +211,7 @@ namespace Goedel.Cryptography.Dare {
         /// Apply the specified message to the container.
         /// </summary>
         /// <param name="dareMessage"></param>
-        public virtual void Apply(DareEnvelope dareMessage) {
-            Container.Append(dareMessage);
-
-            }
+        public virtual void Apply(DareEnvelope dareMessage) => Container.Append(dareMessage);
 
 
         #region Commit transaction to memory
