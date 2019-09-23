@@ -16,11 +16,11 @@ namespace Goedel.Mesh {
         public string UDF => KeyOfflineSignature.UDF;
 
 
-        public string ServiceDefault => ServiceIDs == null ? null : ServiceIDs[0];
+        public string ServiceDefault => ServiceIDs?[0];
 
 
-        KeyPair KeySignOffline;
-        KeyPair KeySignOnline;
+        KeyPair keySignOffline;
+        KeyPair keySignOnline;
 
         /// <summary>
         /// Generate a new ProfileAccount with a unique signature and encryption key.
@@ -63,7 +63,7 @@ namespace Goedel.Mesh {
                         List<Permission> permissions
                         ) {
             // Get an online signature key if not already found
-            KeySignOnline = KeySignOnline ?? meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
+            keySignOnline = keySignOnline ?? meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
 
             // Create a new activation and entry
             var activationAccount = new ActivationAccount(meshMachine, catalogedDevice, this);
@@ -71,10 +71,10 @@ namespace Goedel.Mesh {
 
 
             // Sign the activation
-            var envelopedConnectionAccount = connectionAccount.Sign(KeySignOnline);
+            var envelopedConnectionAccount = connectionAccount.Sign(keySignOnline);
             //activationAccount.EnvelopedConnectionAccount = envelopedConnectionAccount;
 
-            activationAccount.Sign(KeySignOnline);
+            activationAccount.Sign(keySignOnline);
             "Need to encrypt the data under the device connection key".TaskFunctionality();
 
 
@@ -155,8 +155,8 @@ namespace Goedel.Mesh {
 
         public DareEnvelope Sign(
                     IMeshMachine meshMachine) {
-            KeySignOffline = KeySignOffline ?? meshMachine.KeyCollection.LocatePrivate(KeyOfflineSignature.UDF);
-            return Sign(KeySignOffline);
+            keySignOffline = keySignOffline ?? meshMachine.KeyCollection.LocatePrivate(KeyOfflineSignature.UDF);
+            return Sign(keySignOffline);
             }
 
         }

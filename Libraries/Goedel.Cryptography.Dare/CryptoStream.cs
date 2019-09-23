@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The externally accessible stream.
         /// </summary>
-        protected Stream Stream;
+        protected Stream Stream { get;  }
 
         /// <summary>
         /// The Massage Authentication Code Transform.
@@ -223,20 +223,20 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override bool CanWrite => false;
 
-        JSONBCDReader JSONBCDReader;
+        JSONBCDReader jbcdReader;
 
         /// <summary>
         /// Create a CryptoStack
         /// </summary>
-        /// <param name="Stream"></param>
-        /// <param name="Mac"></param>
-        /// <param name="Digest"></param>
+        /// <param name="stream"></param>
+        /// <param name="mac"></param>
+        /// <param name="digest"></param>
         public CryptoStackStreamReader(
-                    JSONBCDReader Stream,
-                    HashAlgorithm Mac,
-                    HashAlgorithm Digest) : base(Mac, Digest) {
-            this.JSONBCDReader = Stream;
-            Stream.ReadBinaryToken();
+                    JSONBCDReader stream,
+                    HashAlgorithm mac,
+                    HashAlgorithm digest) : base(mac, digest) {
+            this.jbcdReader = stream;
+            stream.ReadBinaryToken();
             }
 
 
@@ -254,7 +254,7 @@ namespace Goedel.Cryptography.Dare {
         /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) =>
-            JSONBCDReader.ReadBinaryData(buffer, offset, count);
+            jbcdReader.ReadBinaryData(buffer, offset, count);
             
 
 
@@ -354,13 +354,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override bool CanWrite => true;
 
-        CryptoStream StreamMac;
-        CryptoStream StreamDigest;
-        Stream Output;
-        PackagingFormat PackagingFormat;
-        long PayloadLength;
-        CryptoStream CryptoStream = null;
-        //JSONBWriter JSONWriter;
+        CryptoStream streamMac;
+        CryptoStream streamDigest;
+        Stream output;
+        PackagingFormat packagingFormat;
+        long payloadLength;
+        CryptoStream CryptoStream { get; set; }
+
 
         /// <summary>
         /// The stream writer.
@@ -373,45 +373,45 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a CryptoStack
         /// </summary>
-        /// <param name="Output">The target stream to be written to. This is wrapped in a pipe to prevent
+        /// <param name="output">The target stream to be written to. This is wrapped in a pipe to prevent
         /// it being closed when the encryption stream is closed.</param>
-        /// <param name="Mac">The Message Authentication Code Transform.</param>
-        /// <param name="Digest">The Digest Transform.</param>
-        /// <param name="PackagingFormat">The packing format to use on the output.</param>
-        /// <param name="PayloadLength">The payload length including cryptographic
+        /// <param name="mac">The Message Authentication Code Transform.</param>
+        /// <param name="digest">The Digest Transform.</param>
+        /// <param name="packagingFormat">The packing format to use on the output.</param>
+        /// <param name="payloadLength">The payload length including cryptographic
         /// enhancements.</param>
         public CryptoStackStreamWriter(
-                    Stream Output,
-                    PackagingFormat PackagingFormat,
-                    HashAlgorithm Mac,
-                    HashAlgorithm Digest,
-                    long PayloadLength) : base (Mac, Digest) {
+                    Stream output,
+                    PackagingFormat packagingFormat,
+                    HashAlgorithm mac,
+                    HashAlgorithm digest,
+                    long payloadLength) : base (mac, digest) {
 
             //this.JSONWriter = JSONWriter;
 
 
             //Console.Write($"Payload length is {PayloadLength}");
 
-            this.PackagingFormat = PackagingFormat;
+            this.packagingFormat = packagingFormat;
 
             Writer = this;
 
-            this.PayloadLength = PayloadLength;
-            if (PayloadLength >= 0 & PackagingFormat != PackagingFormat.Direct) {
-                JSONBWriter.WriteTag(Output, JSONBCD.DataTerm, PayloadLength);
+            this.payloadLength = payloadLength;
+            if (payloadLength >= 0 & packagingFormat != PackagingFormat.Direct) {
+                JSONBWriter.WriteTag(output, JSONBCD.DataTerm, payloadLength);
                 //Console.Write($"Written tag for {PayloadLength}");
                 }
 
-            StreamMac = Mac== null ? null : new CryptoStream(new CryptoStackStream(), Mac, CryptoStreamMode.Write);
+            streamMac = mac== null ? null : new CryptoStream(new CryptoStackStream(), mac, CryptoStreamMode.Write);
 
             
 
-            if (Digest != null) {
-                StreamDigest = new CryptoStream(
-                new CryptoStackStream(Output), Digest, CryptoStreamMode.Write);
-                Output = StreamDigest;
+            if (digest != null) {
+                streamDigest = new CryptoStream(
+                new CryptoStackStream(output), digest, CryptoStreamMode.Write);
+                output = streamDigest;
                 }
-            this.Output = Output;
+            this.output = output;
 
             }
 
@@ -431,7 +431,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) => throw new NotImplementedException();
 
-        bool Final = false;
+        bool final = false;
         /// <summary>
         /// Write data to the output stream.
         /// </summary>
@@ -441,18 +441,18 @@ namespace Goedel.Cryptography.Dare {
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param>
         public override void Write(byte[] buffer, int offset, int count) {
-            StreamMac?.Write(buffer, offset, count);
+            streamMac?.Write(buffer, offset, count);
 
-            if (PayloadLength > 0 | PackagingFormat == PackagingFormat.Direct) {
-                PayloadLength -= count;
-                Output.Write(buffer, offset, count);
+            if (payloadLength > 0 | packagingFormat == PackagingFormat.Direct) {
+                payloadLength -= count;
+                output.Write(buffer, offset, count);
 
                 //Console.Write($"  Have {count} bytes to stream");
                 }
             else {
-                JSONBWriter.WriteTag(Output, Final ?JSONBCD.DataTerm: JSONBCD.DataChunk,
+                JSONBWriter.WriteTag(output, final ?JSONBCD.DataTerm: JSONBCD.DataChunk,
                     count);
-                Output.Write(buffer, offset, count);
+                output.Write(buffer, offset, count);
 
                 //Console.Write($"  Have {count} chunk (final:{Final}) to stream");
                 }
@@ -462,11 +462,11 @@ namespace Goedel.Cryptography.Dare {
         /// Clears all buffers for this stream and causes any buffered data to be written 
         /// to the underlying device.
         /// </summary>
-        public override void Flush() => Output?.Flush();
+        public override void Flush() => output?.Flush();
 
         readonly static byte[] Empty = new byte[0];
 
-        bool Closed = false;
+        bool closed = false;
 
         /// <summary>
         /// Closes the current stream, completes calculation of cryptographic values (MAC/Digest)
@@ -474,12 +474,12 @@ namespace Goedel.Cryptography.Dare {
         /// be stupid.
         /// </summary>
         public override void Close() {
-            if (Closed) {
+            if (closed) {
                 return;
                 }
-            Closed = true;
+            closed = true;
 
-            Final = true;
+            final = true;
             if (CryptoStream == null) {
                 Writer.Write(Empty, 0, 0);
                 //Console.Write($"  Written end marker");
@@ -489,8 +489,8 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             if (Digest != null) {
-                StreamDigest?.Dispose();
-                StreamDigest = null;
+                streamDigest?.Dispose();
+                streamDigest = null;
                 DigestValue = Digest?.Hash;
                 Digest?.Dispose();
                 Digest = null;
@@ -498,12 +498,12 @@ namespace Goedel.Cryptography.Dare {
 
 
             if (Mac != null) {
-                StreamMac?.Dispose();
-                StreamMac = null;
+                streamMac?.Dispose();
+                streamMac = null;
                 MacValue = Mac?.Hash;
                 Mac?.Dispose();
-                if (PackagingFormat == PackagingFormat.EDS) {
-                    JSONBWriter.WriteBinary(Output, MacValue);
+                if (packagingFormat == PackagingFormat.EDS) {
+                    JSONBWriter.WriteBinary(output, MacValue);
                     }
                 }
             }

@@ -50,7 +50,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>If true, the frame has a payload section</summary>
         public bool HasPayload => throw new NYI();
 
-        KeyCollection KeyCollection;
+        KeyCollection keyCollection;
 
         ///<summary>The envelope body</summary>
         public byte[] Payload => GetPayLoad().CacheValue(out payload);
@@ -70,7 +70,7 @@ namespace Goedel.Cryptography.Dare {
             using (var input = jbcdStream.FramerGetReader(DataPosition, DataLength)) {
 
                 var Decoder = Header.GetDecoder(input, out var Reader,
-                            keyCollection: KeyCollection);
+                            keyCollection: keyCollection);
 
                 using (var output = new MemoryStream()) {
                     Reader.CopyTo(output);
@@ -89,7 +89,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Position">The position in the file.</param>
         public ContainerFrameIndex(JBCDStream jsonStream, KeyCollection keyCollection, long Position = -1) {
 
-            KeyCollection = keyCollection;
+            this.keyCollection = keyCollection;
             jbcdStream = jsonStream;
 
             var length = jsonStream.FramerOpen(Position);

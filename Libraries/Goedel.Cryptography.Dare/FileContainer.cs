@@ -46,87 +46,87 @@ namespace Goedel.Cryptography.Dare {
     /// 
     /// </summary>
     public class FileContainerWriter : FileContainer {
-        Container Container=null;
+        Container container=null;
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
         protected override void Disposing() {
-            Container?.Dispose();
-            JBCDStream.Dispose();
+            container?.Dispose();
+            jbcdStream.Dispose();
             }
 
 
-        JBCDStream JBCDStream = null;
+        JBCDStream jbcdStream = null;
 
 
         /// <summary>
         /// Open a new file container for write access.
         /// </summary>
-        /// <param name="FileName">The file name to create</param>
-        /// <param name="Archive">If true, the container is intended to be used to create a multi-file
+        /// <param name="fileName">The file name to create</param>
+        /// <param name="archive">If true, the container is intended to be used to create a multi-file
         /// archive.</param>
-        /// <param name="Digest">If true, construct a digest </param>
-        /// <param name="FileStatus">The mode to open the file in, this must be a mode
+        /// <param name="digest">If true, construct a digest </param>
+        /// <param name="fileStatus">The mode to open the file in, this must be a mode
         /// that permits write access.</param>
-        /// <param name="ContainerType">The container type to use. If unspecified,
+        /// <param name="containerType">The container type to use. If unspecified,
         /// a type appropriate for the type of use will be selected.</param>
         /// <returns>File Container instance</returns>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <returns>The newly constructed container.</returns>
         public FileContainerWriter(
-                string FileName,
-                CryptoParameters CryptoParameters,
-                bool Archive = false,
-                bool Digest = true,
-                FileStatus FileStatus = FileStatus.Overwrite,
-                ContainerType ContainerType = ContainerType.Unknown)  {
+                string fileName,
+                CryptoParameters cryptoParameters,
+                bool archive = false,
+                bool digest = true,
+                FileStatus fileStatus = FileStatus.Overwrite,
+                ContainerType containerType = ContainerType.Unknown)  {
 
-            JBCDStream = new JBCDStream(FileName, FileStatus);
-            Container = BindContainer(JBCDStream, CryptoParameters, Archive, Digest, ContainerType);
+            jbcdStream = new JBCDStream(fileName, fileStatus);
+            container = BindContainer(jbcdStream, cryptoParameters, archive, digest, containerType);
             }
 
 
         /// <summary>
         /// Open a new file container for write access.
         /// </summary>
-        /// <param name="JBCDStream">The stream to use to write the container.</param>
-        /// <param name="Archive">If true, the container is intended to be used to create a multi-file
+        /// <param name="jbcdStream">The stream to use to write the container.</param>
+        /// <param name="archive">If true, the container is intended to be used to create a multi-file
         /// archive.</param>
-        /// <param name="Digest">If true, construct a digest </param>
+        /// <param name="digest">If true, construct a digest </param>
 
-        /// <param name="ContainerType">The container type to use. If unspecified,
+        /// <param name="containerType">The container type to use. If unspecified,
         /// a type appropriate for the type of use will be selected.</param>
         /// <returns>File Container instance</returns>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         public FileContainerWriter(
-                JBCDStream JBCDStream,
-                CryptoParameters CryptoParameters,
-                bool Archive = false,
-                bool Digest = true,
-                ContainerType ContainerType = ContainerType.Unknown) => Container = BindContainer(
-                    JBCDStream, CryptoParameters, Archive, Digest, ContainerType);
+                JBCDStream jbcdStream,
+                CryptoParameters cryptoParameters,
+                bool archive = false,
+                bool digest = true,
+                ContainerType containerType = ContainerType.Unknown) => container = BindContainer(
+                    jbcdStream, cryptoParameters, archive, digest, containerType);
 
         Container BindContainer(
-                    JBCDStream JBCDStream,
-                    CryptoParameters CryptoParameters,
-                    bool Archive = false,
-                    bool Digest = true,
-                    ContainerType ContainerType = ContainerType.Unknown) {
+                    JBCDStream jbcdStream,
+                    CryptoParameters cryptoParameters,
+                    bool archive = false,
+                    bool digest = true,
+                    ContainerType containerType = ContainerType.Unknown) {
 
-            if (ContainerType == ContainerType.Unknown) {
-                ContainerType = Digest ? Archive ? ContainerType.MerkleTree : ContainerType.Chain :
-                    Archive ? ContainerType.Tree : ContainerType.List;
+            if (containerType == ContainerType.Unknown) {
+                containerType = digest ? archive ? ContainerType.MerkleTree : ContainerType.Chain :
+                    archive ? ContainerType.Tree : ContainerType.List;
                 }
 
-            if (JBCDStream.Length == 0) {
-                return Container.NewContainer(JBCDStream, CryptoParameters, ContainerType);
+            if (jbcdStream.Length == 0) {
+                return Container.NewContainer(jbcdStream, cryptoParameters, containerType);
 
                 }
             else {
-                return Container.Open(JBCDStream, null);
+                return Container.Open(jbcdStream, null);
                 }
             }
 
@@ -134,28 +134,28 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Open a new file container for write access and write a single file entry.
         /// </summary>
-        /// <param name="FileName">The file name to create</param>
-        /// <param name="Data">The content data</param>
-        /// <param name="ContentMeta">The content metadata</param>
-        /// <param name="FileStatus">The mode to open the file in, this must be a mode
+        /// <param name="fileName">The file name to create</param>
+        /// <param name="data">The content data</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="fileStatus">The mode to open the file in, this must be a mode
         /// that permits write access.</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <returns>File Container instance</returns>
         public static void File (
-                string FileName,
-                CryptoParameters CryptoParameters,
-                byte[] Data,
-                ContentMeta ContentMeta =null,
-                FileStatus FileStatus = FileStatus.Overwrite
+                string fileName,
+                CryptoParameters cryptoParameters,
+                byte[] data,
+                ContentMeta contentMeta =null,
+                FileStatus fileStatus = FileStatus.Overwrite
                 ) {
 
             using (var Writer = new FileContainerWriter(
-                        FileName, CryptoParameters,
-                        Archive: false, 
-                        Digest: false,
-                        FileStatus: FileStatus, ContainerType: ContainerType.List)) {
-                Writer.Add(Data, CryptoParameters, ContentMeta);
+                        fileName, cryptoParameters,
+                        archive: false, 
+                        digest: false,
+                        fileStatus: fileStatus, containerType: ContainerType.List)) {
+                Writer.Add(data, cryptoParameters, contentMeta);
                 }
             }
 
@@ -163,23 +163,23 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Open a new file container for write access and write a single file entry.
         /// </summary>
-        /// <param name="DataIn">The content data</param>
-        /// <param name="ContentMeta">The content metadata</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="dataIn">The content data</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <returns>File Container instance</returns>
         public static byte[] Data (
-                byte[] DataIn,
-                ContentMeta ContentMeta =null,
-                CryptoParameters CryptoParameters=null
+                byte[] dataIn,
+                ContentMeta contentMeta =null,
+                CryptoParameters cryptoParameters=null
                 ) {
 
             var Stream = new MemoryStream();
             var JBCDStream = new JBCDStream(null, Stream);
 
-            using (var Writer = new FileContainerWriter(JBCDStream, CryptoParameters, Archive: false, Digest: false,
-                            ContainerType: ContainerType.List)) {
-                Writer.Add(DataIn, CryptoParameters, ContentMeta);
+            using (var Writer = new FileContainerWriter(JBCDStream, cryptoParameters, archive: false, digest: false,
+                            containerType: ContainerType.List)) {
+                Writer.Add(dataIn, cryptoParameters, contentMeta);
                 }
 
             return Stream.ToArray();
@@ -189,69 +189,68 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Append a file entry.
         /// </summary>
-        /// <param name="Data">The content data</param>
-        /// <param name="ContentInfo">The content metadata</param>
-        /// <param name="CryptoParameters">Specifies the cryptographic enhancements to
+        /// <param name="data">The content data</param>
+        /// <param name="contentInfo">The content metadata</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         public void Add(
-                byte[] Data,
-            CryptoParameters CryptoParameters,
-            ContentMeta ContentInfo = null) => Container.Append(
-                    Data,
-                    CryptoParameters,
-                    ContentInfo);
+                byte[] data,
+                CryptoParameters cryptoParameters,
+                ContentMeta contentInfo = null) => container.Append(
+                    data,
+                    cryptoParameters,
+                    contentInfo);
 
         /// <summary>
         /// Add a file entry
         /// </summary>
-        /// <param name="File">The file to add</param>
-        /// <param name="Path">The path name attribute to give the file in the container</param>
-        public void Add(FileInfo File, string Path=null) => Add(File.FullName, Path);
+        /// <param name="file">The file to add</param>
+        /// <param name="path">The path name attribute to give the file in the container</param>
+        public void Add(
+                FileInfo file, 
+                string path=null) => Add(file.FullName, path);
 
         /// <summary>
         /// Add a file entry
         /// </summary>
-        /// <param name="File">The file to add</param>
-        /// <param name="Path">The path name attribute to give the file in the container</param>
-        public void Add(string File, string Path = null) {
+        /// <param name="file">The file to add</param>
+        /// <param name="path">The path name attribute to give the file in the container</param>
+        public void Add(
+                string file, 
+                string path = null) {
 
 
             var contentInfo = new ContentMeta() {
-                Filename = File,
-                Paths = new List<string> { Path }
+                Filename = file,
+                Paths = new List<string> { path }
                 };
 
-            Container.AppendFile(File, contentInfo);
+            container.AppendFile(file, contentInfo);
             }
 
         /// <summary>
-        /// Add a file entry
+        /// Delete a file entry
         /// </summary>
-        /// <param name="Path">The path name attribute to give the file in the container</param>
-        public void Delete(string Path) {
-            }
-
+        /// <param name="path">The path name attribute to give the file in the container</param>
+        public void Delete(string path) => throw new NYI();
 
         /// <summary>
         /// Read a container data entry from one container and add it to this one.
         /// </summary>Add 
-        /// <param name="ContainerDataReader">Frame reader from which the
+        /// <param name="containerDataReader">Frame reader from which the
         /// container data is to be read.</param>
         /// <param name="CryptoParameters">The new crypto parameters to be used to 
         /// write the container data.</param>
-        public void Add(ContainerFrameIndex ContainerDataReader,
+        public void Add(ContainerFrameIndex containerDataReader,
                 CryptoParameters CryptoParameters = null) => throw new NYI();
-        //Container.AppendFromStream(ContainerDataReader, ContainerDataReader.Length,
-        //        ContainerDataReader.Header.ContentInfo, CryptoParameters);
+
 
         /// <summary>
         /// Append an archive frame to the container.
         /// </summary>
-        /// <param name="Signatures">List of JWS signatures. Since this is the first block, the signature
+        /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
         /// is always over the payload data only.</param>
-        public void AddIndex (List<KeyPair> Signatures = null) {
-
-            }
+        public void AddIndex (List<KeyPair> signatures = null) => throw new NYI();
 
 
         }
@@ -262,24 +261,24 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class FileContainerReader : FileContainer, IEnumerable<ContainerFrameIndex> {
 
-        Container Container = null;
+        Container container = null;
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected override void Disposing() => Container?.Dispose();
+        protected override void Disposing() => container?.Dispose();
 
         /// <summary>
         /// The number of entries in the container. Note that this will have to be 
         /// changed when entries spanning multiple frames are supported.
         /// </summary>
-        public long Count => Container.FrameCount;
+        public long Count => container.FrameCount;
 
         /// <summary>
         /// Enumerate over the archive contents.
         /// </summary>
         /// <returns>The enumerator</returns>
-        public IEnumerator<ContainerFrameIndex> GetEnumerator() => Container.GetEnumerator();
+        public IEnumerator<ContainerFrameIndex> GetEnumerator() => container.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => throw new NotImplementedException();
 
 
@@ -297,7 +296,7 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JBCDStream(FileName, FileStatus);
-            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
+            container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
             }
 
 
@@ -312,7 +311,7 @@ namespace Goedel.Cryptography.Dare {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JBCDStream(Stream, null);
-            Container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
+            container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
 
             }
 
@@ -330,8 +329,8 @@ namespace Goedel.Cryptography.Dare {
                 out ContentMeta ContentMeta) {
 
             using (var Reader = new FileContainerReader(FileName, KeyCollection)) {
-                var ContainerDataReader = Reader.Container.GetContainerFrameIndex(
-                            position: Reader.Container.PositionFinalFrameStart);
+                var ContainerDataReader = Reader.container.GetContainerFrameIndex(
+                            position: Reader.container.PositionFinalFrameStart);
                 Data = ContainerDataReader.Payload;
                 ContentMeta = ContainerDataReader?.Header.ContentMeta;
                 }
@@ -369,7 +368,7 @@ namespace Goedel.Cryptography.Dare {
                 int Index = -1,
                 string Path = null) {
 
-            var ContainerDataReader = Container.GetContainerFrameIndex(Index);
+            var ContainerDataReader = container.GetContainerFrameIndex(Index);
             Data = ContainerDataReader.Payload;
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
 
@@ -387,7 +386,7 @@ namespace Goedel.Cryptography.Dare {
                 string OutputFile = null,
                 int Index = -1,
                 string Path = null) {
-            var ContainerDataReader = Container.GetContainerFrameIndex(Index);
+            var ContainerDataReader = container.GetContainerFrameIndex(Index);
             ContainerDataReader.CopyToFile(OutputFile);
             }
 
@@ -402,7 +401,7 @@ namespace Goedel.Cryptography.Dare {
             string OutputDirectory,
             string Selector = null) {
 
-            foreach (var ContainerDataReader in Container) {
+            foreach (var ContainerDataReader in container) {
                 //Console.WriteLine($"Found entry");
 
                 if (ContainerDataReader.HasPayload) {
@@ -424,7 +423,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="FileContainerWriter">The container to be written to.</param>
         public void CopyArchive(FileContainerWriter FileContainerWriter) {
-            foreach (var ContainerDataReader in Container) {
+            foreach (var ContainerDataReader in container) {
                 FileContainerWriter.Add(ContainerDataReader);
 
                 }

@@ -20,7 +20,7 @@ namespace Goedel.XUnit {
                         + "f69f2445df4f9b17ad2b417be66c3710.").FromBase16();
 
 
-        List<TestVectorAES> TestVectors_AES_NIST = new List<TestVectorAES>() {
+        List<TestVectorAES> testVectors_AES_NIST = new List<TestVectorAES>() {
             // TestCase 2:1/2
             new TestVectorAES() {
                 ID = CryptoAlgorithmID.AES128CBCNone,
@@ -219,7 +219,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestAES_NIST() {
-            foreach (var TestVector in TestVectors_AES_NIST) {
+            foreach (var TestVector in testVectors_AES_NIST) {
 
                 if ((TestVector.ID == CryptoAlgorithmID.AES128CBCNone) |
                         (TestVector.ID == CryptoAlgorithmID.AES256CBCNone)) {
@@ -236,7 +236,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestAES_NIST_Streaming() {
-            foreach (var TestVector in TestVectors_AES_NIST) {
+            foreach (var TestVector in testVectors_AES_NIST) {
 
                 if ((TestVector.ID == CryptoAlgorithmID.AES128CBCNone) |
                         (TestVector.ID == CryptoAlgorithmID.AES256CBCNone)) {

@@ -105,15 +105,9 @@ namespace Goedel.IO {
         /// <param name="fileName">The file name</param>
         /// <param name="fileStatus">The file status</param>
         /// <returns>The result</returns>
-        public static FileStream FileStream(this string fileName, FileStatus fileStatus) {
-
-            var fileMode = fileStatus.FileMode();
-            var fileAccess = fileStatus.FileAccess();
-            var fileShare = fileStatus.FileShare();
-
-            return new FileStream(fileName, fileStatus.FileMode(), fileStatus.FileAccess(),
+        public static FileStream FileStream(this string fileName, FileStatus fileStatus) =>
+            new FileStream(fileName, fileStatus.FileMode(), fileStatus.FileAccess(),
                 fileStatus.FileShare());
-            }
 
         /// <summary>
         /// Return the file mode corresponding to the specified status.
@@ -202,8 +196,9 @@ namespace Goedel.IO {
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
         public static TextReader OpenTextReader(this string filename) {
-            var FileStream = filename.OpenFileRead();
-            return new StreamReader(FileStream);
+            using (var fileStream = filename.OpenFileRead()) {
+                return new StreamReader(fileStream);
+                }
             }
 
 
@@ -214,8 +209,11 @@ namespace Goedel.IO {
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
         public static string OpenReadToEnd(this string filename) {
-            var fileStream = filename.OpenFileRead();
-            return new StreamReader(fileStream).ReadToEnd();
+            using (var fileStream = filename.OpenFileRead()) {
+                using (var reader = new StreamReader(fileStream)) {
+                    return reader.ReadToEnd();
+                    }
+                }
             }
 
 

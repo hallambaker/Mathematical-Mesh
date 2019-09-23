@@ -21,7 +21,7 @@ namespace Goedel.Mesh.Shell {
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
                 }
 
             return new ResultFile() {
@@ -41,14 +41,14 @@ namespace Goedel.Mesh.Shell {
             var CryptoParameters = new CryptoParameters();
 
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
 
                 // Hack: This functionality should be pushed into FileContainerWriter and made recursive, etc.
 
                 var directoryInfo = new DirectoryInfo(inputFile);
                 if (directoryInfo.Exists) {
                     foreach (var fileInfo in directoryInfo.EnumerateFiles()) {
-                        Writer.Add(fileInfo, Path: fileInfo.Name);
+                        Writer.Add(fileInfo, path: fileInfo.Name);
                         }
                     }
                 Writer.AddIndex(); // Hack: is not currently indexed.
@@ -70,8 +70,8 @@ namespace Goedel.Mesh.Shell {
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
-                Writer.Add(inputFile, Path: inputFile);
+                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
+                Writer.Add(inputFile, path: inputFile);
                 }
 
             return new ResultFile() {
@@ -91,7 +91,7 @@ namespace Goedel.Mesh.Shell {
 
             var CryptoParameters = new CryptoParameters();
             using (var Writer = new FileContainerWriter(
-                    outputFile, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                    outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
                 Writer.Delete(inputFile);
                 }
 

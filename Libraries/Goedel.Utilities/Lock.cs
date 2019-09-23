@@ -10,12 +10,12 @@ namespace Goedel.Utilities {
     public class LockGlobal : Disposable {
 
 
-        Mutex WriteLock;
+        Mutex writeLock;
         //Semaphore ReadLock;
 
-        bool HaveWrite = false;
+        bool haveWrite = false;
         //bool HaveRead = false;
-        int MillisecondsTimeout;
+        int millisecondsTimeout;
 
         ///<summary>Maximum number of readers</summary>
         public int MaxRead { get; private set; }
@@ -24,11 +24,11 @@ namespace Goedel.Utilities {
         /// Dispose the lock releasing all mutexes and disposing the resources correctly.
         /// </summary>
         protected override void Disposing() {
-            if (HaveWrite) {
-                WriteLock?.ReleaseMutex();
+            if (haveWrite) {
+                writeLock?.ReleaseMutex();
                 }
 
-            WriteLock.Dispose();
+            writeLock.Dispose();
             }
 
         /// <summary>
@@ -38,20 +38,20 @@ namespace Goedel.Utilities {
         /// <param name="resource">The resource to lock.</param>
         /// <param name="millisecondsTimeout">The timeout value (it less than zero wait forever).</param>
         public LockGlobal(string resource, int millisecondsTimeout = -1) {
-            MillisecondsTimeout = millisecondsTimeout;
+            this.millisecondsTimeout = millisecondsTimeout;
             //MaxRead = maxRead;
 
             try {
-                WriteLock = Mutex.OpenExisting(resource);
+                writeLock = Mutex.OpenExisting(resource);
                 }
             catch (WaitHandleCannotBeOpenedException) {
-                WriteLock = new Mutex(false, resource);
+                writeLock = new Mutex(false, resource);
                 }
             catch (AbandonedMutexException) {
                 // When an AbandonedMutexException is raised, this means that a previous thread aborted
                 // without releasing the lock. Since the thread cannot access the container, we can simply
                 // reissue the request.
-                WriteLock = new Mutex(false, resource);
+                writeLock = new Mutex(false, resource);
                 }
             catch (Exception exception) {
                 throw exception;
@@ -64,18 +64,18 @@ namespace Goedel.Utilities {
         /// Enter the lock.
         /// </summary>
         public void Enter() {
-            if (HaveWrite) {
+            if (haveWrite) {
                 return; // Do not try to reacquire the lock.
                 }
-            WriteLock.WaitOne();
+            writeLock.WaitOne(millisecondsTimeout);
             }
 
         /// <summary>
         /// Exit the lock.
         /// </summary>
         public void Exit() {
-            if (HaveWrite) {
-                WriteLock.ReleaseMutex();
+            if (haveWrite) {
+                writeLock.ReleaseMutex();
                 }
             }
 

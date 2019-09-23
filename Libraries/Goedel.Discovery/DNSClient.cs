@@ -118,16 +118,16 @@ namespace Goedel.Discovery {
         public DNSClient DNSClient = Platform.DNSClient;
 
         /// <summary>Scoreboard of current requests.</summary>
-        List<DNSRequest> PendingRequests = new List<DNSRequest>();
+        List<DNSRequest> pendingRequests = new List<DNSRequest>();
 
         /// <summary>The timeout value</summary>
-        int Timeout;
-        int Retry;
+        int timeout;
+        int retry;
 
-        CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+        CancellationTokenSource CancellationTokenSource { get; set; }  = new CancellationTokenSource();
 
-        Task TaskRetry; // A task that expires when it is time to retry requests
-        Task TaskTimeout ; // A task that expires when it is time to give up
+        Task taskRetry; // A task that expires when it is time to retry requests
+        Task taskTimeout ; // A task that expires when it is time to give up
 
         /// <summary>
         /// A task listening on the DNS port
@@ -137,7 +137,7 @@ namespace Goedel.Discovery {
         /// <summary>
         /// If true there are pending requests and the context has not timed out
         /// </summary>
-        public bool Pending=> Active & (PendingRequests.Count > 0); 
+        public bool Pending=> Active & (pendingRequests.Count > 0); 
 
 
         /// <summary>
@@ -145,25 +145,29 @@ namespace Goedel.Discovery {
         /// </summary>
         public bool Active = true;
 
-        ushort IDCounter;
+        ushort iDCounter;
         ushort NextID { get {
-                IDCounter = (ushort)(((int)IDCounter + 1) & 0xffff);
-                return IDCounter;
+                iDCounter = (ushort)(((int)iDCounter + 1) & 0xffff);
+                return iDCounter;
                 } }
 
+        /// <summary>
+        /// Dispose allocated resources.
+        /// </summary>
+        protected override void Disposing() => CancellationTokenSource?.Dispose();
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="Timeout">The maximum length of time to wait for a query to be satisfied</param>
-        /// <param name="Retry">Retry interval.</param>
-        public DNSContext (int Timeout=5000, int Retry=1000) {
-            this.Timeout = Timeout;
-            this.Retry = Retry;
-            IDCounter = Platform.GetRandom16();
+        /// <param name="timeout">The maximum length of time to wait for a query to be satisfied</param>
+        /// <param name="retry">Retry interval.</param>
+        public DNSContext (int timeout=5000, int retry=1000) {
+            this.timeout = timeout;
+            this.retry = retry;
+            iDCounter = Platform.GetRandom16();
 
-            TaskTimeout = Task.Delay(Timeout);
-            TaskRetry = Task.Delay(Retry);
+            taskTimeout = Task.Delay(this.timeout);
+            taskRetry = Task.Delay(this.retry);
             
             }
 
@@ -201,16 +205,16 @@ namespace Goedel.Discovery {
         public virtual async Task<DNSResponse> NextAsync() {
 
             while (Active) {
-                await Task.WhenAny(TaskListen, TaskTimeout);
+                await Task.WhenAny(TaskListen, taskTimeout);
 
                 if (TaskListen.IsCompleted) {
                     var Data = TaskListen.Result;
                     TaskListen = GetResponseRawAsync();
                     var Response = new DNSResponse(Data);
 
-                    for (var i = 0; i < PendingRequests.Count; i++) {
-                        if (PendingRequests[i].ID == Response.ID) {
-                            PendingRequests.RemoveAt(i);
+                    for (var i = 0; i < pendingRequests.Count; i++) {
+                        if (pendingRequests[i].ID == Response.ID) {
+                            pendingRequests.RemoveAt(i);
                             return Response;
                             }
                         }
@@ -219,13 +223,13 @@ namespace Goedel.Discovery {
                 else {
                     Debug.WriteLine("Problem");
                     }
-                if (TaskTimeout.IsCompleted) { // query has expired
+                if (taskTimeout.IsCompleted) { // query has expired
                     Active = false;
                     return null;
                     }
 
-                if (TaskRetry.IsCompleted) { // attempt a retransmit of the query
-                    TaskRetry = Task.Delay(Retry);
+                if (taskRetry.IsCompleted) { // attempt a retransmit of the query
+                    taskRetry = Task.Delay(retry);
                     }
                 }
             return null;
@@ -238,7 +242,7 @@ namespace Goedel.Discovery {
         /// <param name="Request">DNS request set</param>
         /// <returns>Task instance.</returns>
         public void QueueRequest(DNSRequest Request) {
-            PendingRequests.Add(Request); // always add to the queue first
+            pendingRequests.Add(Request); // always add to the queue first
             SendRequest(Request);            
             }
 

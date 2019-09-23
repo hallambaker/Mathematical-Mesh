@@ -176,8 +176,9 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            var contextMeshAdmin = CreateMesh(localName);
-            return contextMeshAdmin.CreateAccount(localName);
+            using (var contextMeshAdmin = CreateMesh(localName)) {
+                return contextMeshAdmin.CreateAccount(localName);
+                }
             }
 
         /// <summary>
@@ -190,10 +191,11 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            var contextMeshAdmin = CreateMesh(localName);
-            var contextAccount = contextMeshAdmin.CreateAccount(localName);
-            contextAccount.AddService(accountName ?? localName);
-            return contextAccount;
+            using (var contextMeshAdmin = CreateMesh(localName)) {
+                var contextAccount = contextMeshAdmin.CreateAccount(localName);
+                contextAccount.AddService(accountName ?? localName);
+                return contextAccount;
+                }
             }
 
 

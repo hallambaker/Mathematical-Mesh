@@ -21,10 +21,10 @@ namespace Goedel.Test.Core {
     public class MeshMachineTest : MeshMachineCore {
 
 
-        TestEnvironmentCommon TestEnvironmentCommon;
+        TestEnvironmentCommon testEnvironmentCommon;
 
         public string Name;
-        public string Path => System.IO.Path.Combine(TestEnvironmentCommon.Path, Name);
+        public string Path => System.IO.Path.Combine(testEnvironmentCommon.Path, Name);
 
 
 
@@ -47,7 +47,7 @@ namespace Goedel.Test.Core {
                 KeyPair keyAuthentication,
                 ConnectionAccount assertionAccountConnection,
                 Profile profile = null) =>
-            TestEnvironmentCommon.MeshLocalPortal.GetService(serviceID);
+            testEnvironmentCommon.MeshLocalPortal.GetService(serviceID);
 
 
         public readonly static Contact ContactAlice = new Contact() {
@@ -75,7 +75,7 @@ namespace Goedel.Test.Core {
 
         // Convenience routines 
         public ContextAccount GetContextAccount(string localName=null, string accountName = null) {
-            var machine = new MeshMachineTest(TestEnvironmentCommon, DirectoryMaster);
+            var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
             var contextMesh = machine.GetContextMesh(localName);
             return contextMesh.GetContextAccount (localName, accountName);
             }
@@ -153,7 +153,7 @@ namespace Goedel.Test.Core {
 
 
 
-        Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
+        Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
 
 
 
@@ -163,22 +163,22 @@ namespace Goedel.Test.Core {
         public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :
                     base(testEnvironmentPerTest.MachinePath(name)) {
             Name = name;
-            TestEnvironmentCommon = testEnvironmentPerTest;
+            testEnvironmentCommon = testEnvironmentPerTest;
             }
 
         public MeshMachineTest(MeshMachineTest existing) :
             base (existing.DirectoryMaster) =>
-            TestEnvironmentCommon = existing.TestEnvironmentCommon;
+            testEnvironmentCommon = existing.testEnvironmentCommon;
 
 
         public void Persist(KeyPair keyPair) {
-            DictionaryKeyPairByUDF.Remove(keyPair.UDF);
-            DictionaryKeyPairByUDF.Add(keyPair.UDF, keyPair);
+            dictionaryKeyPairByUDF.Remove(keyPair.UDF);
+            dictionaryKeyPairByUDF.Add(keyPair.UDF, keyPair);
             }
 
 
         public KeyPair GetPrivate(string UDF) {
-            DictionaryKeyPairByUDF.TryGetValue(UDF, out var Result);
+            dictionaryKeyPairByUDF.TryGetValue(UDF, out var Result);
             return Result;
             }
 
@@ -194,12 +194,12 @@ namespace Goedel.Test.Core {
 
 
     public class KeyCollectionTest : KeyCollectionCore {
-        MeshMachineTest MeshMachine;
+        MeshMachineTest meshMachine;
 
-        public override string DirectoryKeys => MeshMachine.DirectoryKeys;
+        public override string DirectoryKeys => meshMachine.DirectoryKeys;
 
 
-        public KeyCollectionTest(MeshMachineTest meshMachine) => MeshMachine = meshMachine;
+        public KeyCollectionTest(MeshMachineTest meshMachine) => this.meshMachine = meshMachine;
 
 
 

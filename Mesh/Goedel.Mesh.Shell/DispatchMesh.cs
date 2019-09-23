@@ -27,6 +27,7 @@ namespace Goedel.Mesh.Shell {
 
                 if (account != null) {
                     var contextAccount = contextMesh.CreateAccount(account);
+                    contextAccount.AddService(account);
                     }
 
                 return new ResultCreatePersonal() {

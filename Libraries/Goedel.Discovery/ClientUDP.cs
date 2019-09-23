@@ -10,43 +10,51 @@ namespace Goedel.Discovery {
     /// </summary>
     public class ClientUDP : Disposable {
 
-        IPEndPoint EndPoint;
-        UdpClient UdpClient=null;
-        Thread ListenerThread;
-        int MaxRead;
+        IPEndPoint endPoint;
+        UdpClient udpClient=null;
+        Thread listenerThread;
+        int maxRead;
+
+        ///<summary>The last data read.</summary>
+        public byte[] Data;
+        
+        ///<summary>The number of reads</summary>
+        public int ReadCount = 0;
+
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="Address">IP Address to bind to</param>
-        /// <param name="Port">UDP Port to bind to.</param>
-        /// <param name="TimeOut">Optional timeout value, if zero reads will not timeout.</param>
-        /// <param name="MaxRead">Maximum number of data values to accept</param>
-        public ClientUDP (IPAddress Address, int Port, int TimeOut = 0, int MaxRead = 0) {
-            EndPoint = new IPEndPoint(Address, Port);
-            UdpClient = new UdpClient(Goedel.Discovery.Platform.GetRandomPort());
-            UdpClient.Connect(EndPoint);
+        /// <param name="address">IP Address to bind to</param>
+        /// <param name="port">UDP Port to bind to.</param>
+        /// <param name="timeOut">Optional timeout value, if zero reads will not timeout.</param>
+        /// <param name="maxRead">Maximum number of data values to accept</param>
+        public ClientUDP (IPAddress address, int port, int timeOut = 0, int maxRead = 0) {
+            endPoint = new IPEndPoint(address, port);
+            udpClient = new UdpClient(Goedel.Discovery.Platform.GetRandomPort());
+            udpClient.Connect(endPoint);
 
-            if (TimeOut > 0) {
-                UdpClient.Client.ReceiveTimeout = TimeOut;
+            if (timeOut > 0) {
+                udpClient.Client.ReceiveTimeout = timeOut;
                 }
-            this.MaxRead = MaxRead;
+            this.maxRead = maxRead;
 
             // Start the listener
-            ListenerThread = new Thread(Listen);
-            ListenerThread.Start();
+            listenerThread = new Thread(Listen);
+            listenerThread.Start();
             }
 
 
-        bool Active = true;
-        int ReadCount = 0;
+        bool active = true;
+        
+
 
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
         protected override void Disposing() {
-            UdpClient?.Dispose();
-            UdpClient = null;
+            udpClient?.Dispose();
+            udpClient = null;
             }
 
         /// <summary>
@@ -55,9 +63,9 @@ namespace Goedel.Discovery {
         private void Listen () {
 
 
-            while (Active) {
-                var ThisEndPoint = EndPoint;
-                var Data = UdpClient.Receive(ref ThisEndPoint);
+            while (active) {
+                var ThisEndPoint = endPoint;
+                Data = udpClient.Receive(ref ThisEndPoint);
                 ReadCount++;
 
 

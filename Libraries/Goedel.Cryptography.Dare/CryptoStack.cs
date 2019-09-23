@@ -96,9 +96,9 @@ namespace Goedel.Cryptography.Dare {
             set => digestID = digestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : digestID;
             }
 
-        int KeySize;
-        int BlockSize;
-        int BlockSizeByte => BlockSize / 8;
+        int keySize;
+        int blockSize;
+        int BlockSizeByte => blockSize / 8;
 
         /// <summary>
         /// Calculate the ciphertext length for a specified plaintext length.
@@ -123,8 +123,8 @@ namespace Goedel.Cryptography.Dare {
                 Salt = Platform.GetRandomBits(128);
                 EncryptionAlgorithm = EncryptID.ToJoseID();
 
-                (KeySize, BlockSize) = EncryptID.GetKeySize();
-                MasterSecret = Platform.GetRandomBits(KeySize);
+                (keySize, blockSize) = EncryptID.GetKeySize();
+                MasterSecret = Platform.GetRandomBits(keySize);
 
                 Recipients = Recipients ?? new List<DareRecipient>();
                 foreach (var EncryptionKey in cryptoParameters.EncryptionKeys) {
@@ -152,7 +152,7 @@ namespace Goedel.Cryptography.Dare {
                 Salt = Platform.GetRandomBits(128);
                 EncryptionAlgorithm = EncryptID.ToJoseID();
 
-                (KeySize, BlockSize) = EncryptID.GetKeySize();
+                (keySize, blockSize) = EncryptID.GetKeySize();
                 MasterSecret = Parent.MasterSecret;
                 }
             }
@@ -166,7 +166,7 @@ namespace Goedel.Cryptography.Dare {
                 Secret secret,
                 CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default) {
             encryptID = EncryptID.DefaultBulk(CryptoAlgorithmID.AES256CBC);
-            (KeySize, BlockSize) = EncryptID.GetKeySize();
+            (keySize, blockSize) = EncryptID.GetKeySize();
             MasterSecret = secret.Key;
             Salt = Platform.GetRandomBits(128);
             }
@@ -200,7 +200,7 @@ namespace Goedel.Cryptography.Dare {
                 ) {
             this.EncryptID = EncryptID;
             this.DigestID = Digest;
-            (KeySize, BlockSize) = EncryptID.GetKeySize();
+            (keySize, blockSize) = EncryptID.GetKeySize();
 
             KeyCollection = KeyCollection ?? KeyCollection.Default;
 
@@ -226,8 +226,8 @@ namespace Goedel.Cryptography.Dare {
                     ) {
             var KDF = new KeyDeriveHKDF(MasterSecret, ThisSalt, CryptoAlgorithmID.HMAC_SHA_2_256);
             KeyEncrypt = KDF.Derive(InfoKeyEncrypt, 256);
-            KeyMac = KDF.Derive(InfoKeyMAC, KeySize);
-            IV = KDF.Derive(InfoKeyIV, BlockSize);
+            KeyMac = KDF.Derive(InfoKeyMAC, keySize);
+            IV = KDF.Derive(InfoKeyIV, blockSize);
             }
 
 

@@ -96,7 +96,7 @@ namespace Goedel.Mesh.Test {
         }
 
     public partial class TestCLI : CommandLineInterpreter {
-        TestShell Shell;
+        public TestShell Shell;
 
         public List<Result> Results = new List<Result>();
         public Result Last => Results[Results.Count - 1];
@@ -165,11 +165,24 @@ namespace Goedel.Mesh.Test {
 
         public Result Dispatch(string command, bool fail = false) {
             var Args = command.Split(' ');
-            Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
-            var result = Shell.ShellResult as Result;
 
-            (result.Success != fail).AssertTrue();
-            return result;
+            if (!fail) {
+                Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+                var result = Shell.ShellResult as Result;
+                result.Success.AssertTrue();
+                return result;
+                }
+            else {
+                try {
+                    Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+                    var result = Shell.ShellResult as Result;
+                    result.Success.AssertFalse();
+                    return result;
+                    }
+                catch {
+                    return Shell.ShellResult as Result;
+                    }
+                }
             }
 
 

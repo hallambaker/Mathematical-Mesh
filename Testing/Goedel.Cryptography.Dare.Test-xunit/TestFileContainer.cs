@@ -181,7 +181,7 @@ namespace Goedel.XUnit {
 
 
             using (var Writer = new FileContainerWriter(
-                    Filename, CryptoParameters, true, FileStatus: FileStatus.Overwrite)) {
+                    Filename, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
                 for (var i = 0; i < Entries; i++) {
                     Writer.Add(TestData[i], CryptoParameters);
                     }

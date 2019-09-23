@@ -14,19 +14,16 @@ namespace Goedel.Mesh.Client {
 
     public partial class ContextMeshAdmin : ContextMesh {
 
-        //protected override void Disposing() {
-        //    //catalogDevice?.Dispose();
-        //    }
 
         ///<summary>The host catalog entry as a CatalogedAdmin entry.</summary>
         public CatalogedAdmin CatalogedAdmin => CatalogedMachine as CatalogedAdmin;
 
 
         ///<summary>The master keys for administration.</summary>
-        KeyPair KeyMasterSignature;
-        KeyPair KeyAdministratorSignature;
+        KeyPair keyMasterSignature;
+        KeyPair keyAdministratorSignature;
 
-        CryptoParameters ContainerCryptoParameters => new CryptoParameters();
+        //CryptoParameters ContainerCryptoParameters => new CryptoParameters();
 
         KeyCollection KeyCollection => MeshMachine.KeyCollection;
 
@@ -41,7 +38,7 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine = catalogedAdmin;
 
             // Join the composite keys to recover the signature key so we can perform admin functions
-            KeyAdministratorSignature = catalogedAdmin.SignatureKey.GetPrivate(MeshMachine);
+            keyAdministratorSignature = catalogedAdmin.SignatureKey.GetPrivate(MeshMachine);
             }
 
         /// <summary>
@@ -167,7 +164,7 @@ namespace Goedel.Mesh.Client {
 
             var assertionDeviceConnection = new ConnectionDevice(assertionDevicePrivate);
 
-            KeyMasterSignature = KeyMasterSignature ??
+            keyMasterSignature = keyMasterSignature ??
                     MeshMachine.KeyCollection.LocatePrivate(ProfileMesh.UDF);
             Sign(assertionDeviceConnection);
 
@@ -276,7 +273,7 @@ namespace Goedel.Mesh.Client {
         /// Sign the specified assertion under this device's administration key
         /// </summary>
         /// <param name="assertion">The assertion to sign.</param>
-        public DareEnvelope Sign(Assertion assertion) => assertion.Sign(KeyAdministratorSignature);
+        public DareEnvelope Sign(Assertion assertion) => assertion.Sign(keyAdministratorSignature);
 
 
         #region // Escrow and recovery from escrow

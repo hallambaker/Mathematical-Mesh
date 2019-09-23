@@ -31,15 +31,12 @@ namespace Goedel.Mesh.Client {
 
     public class ContextAccount : Disposable {
 
-        ///<summary>The device profile to which the signature key is bound</summary>
-        //public ProfileDevice ProfileDevice { get; }
-
         ///<summary>The enclosing machine context.</summary>
         public ContextMesh ContextMesh;
 
         ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
 
-        AccountEntry AccountEntry;
+        public AccountEntry AccountEntry { get; private set; }
 
 
         ///<summary>The account activation</summary>
@@ -56,22 +53,22 @@ namespace Goedel.Mesh.Client {
         KeyCollection KeyCollection => MeshMachine.KeyCollection;
 
         ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
-        CryptoParameters ContainerCryptoParameters;
+        CryptoParameters containerCryptoParameters;
 
 
-        public string KeySignatureUDF => KeySignature.UDF;
-        public string KeyEncryptionUDF => KeyEncryption.UDF;
-        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
+        public string KeySignatureUDF => keySignature.UDF;
+        public string KeyEncryptionUDF => keyEncryption.UDF;
+        public string KeyAuthenticationUDF => keyAuthentication.UDF;
 
-        KeyPair KeySignature;
-        KeyPair KeyEncryption;
-        KeyPair KeyAuthentication;
+        KeyPair keySignature;
+        KeyPair keyEncryption;
+        KeyPair keyAuthentication;
 
         public MeshService MeshClient => meshClient ??GetMeshClient(ServiceID).CacheValue (out meshClient);
         MeshService meshClient;
 
 
-        string ServiceID;
+        public string ServiceID { get; private set; }
 
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
@@ -79,12 +76,10 @@ namespace Goedel.Mesh.Client {
             Path.Combine(MeshMachine.DirectoryMesh, ActivationAccount.AccountUDF).CacheValue(out directoryAccount);
         string directoryAccount;
 
-        Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
+        Dictionary<string, SyncStatus> dictionaryStores = new Dictionary<string, SyncStatus>();
 
 
-        protected override void Disposing() {
-            spoolInbound.Dispose();
-            }
+        protected override void Disposing() => spoolInbound?.Dispose();
 
 
         public ContextAccount(
@@ -99,19 +94,19 @@ namespace Goedel.Mesh.Client {
 
             // Set up the crypto keys so that we can open the application catalog
 
-            var KeySignature = ActivationAccount.KeySignature.GetPrivate(MeshMachine);
+            keySignature = ActivationAccount.KeySignature.GetPrivate(MeshMachine);
 
-            KeyEncryption = ActivationAccount.KeyEncryption.GetPrivate(MeshMachine);
-            KeyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
-            KeyCollection.Add(KeyEncryption);
+            keyEncryption = ActivationAccount.KeyEncryption.GetPrivate(MeshMachine);
+            keyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
+            KeyCollection.Add(keyEncryption);
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
-            ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
+            containerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
             }
 
 
         protected MeshService GetMeshClient(string serviceID) => 
-                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+                    MeshMachine.GetMeshClient(serviceID, keyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
         /// <summary>
@@ -226,7 +221,7 @@ namespace Goedel.Mesh.Client {
             //    }
 
             // upload all the containers here
-            foreach (var store in DictionaryStores) {
+            foreach (var store in dictionaryStores) {
                 maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
                 }
 
@@ -398,7 +393,7 @@ namespace Goedel.Mesh.Client {
 
         public Store GetStore(string name) {
 
-            if (DictionaryStores.TryGetValue(name, out var syncStore)) {
+            if (dictionaryStores.TryGetValue(name, out var syncStore)) {
                 return syncStore.Store;
                 }
             //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
@@ -411,24 +406,24 @@ namespace Goedel.Mesh.Client {
             syncStore = new SyncStatus(store);
 
  
-            DictionaryStores.Add(name, syncStore);
+            dictionaryStores.Add(name, syncStore);
 
             return syncStore.Store;
             }
 
         Store MakeStore(string name) {
             switch (name) {
-                case Spool.SpoolInbound: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case Spool.SpoolOutbound: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case Spool.SpoolArchive: return new Spool(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case Spool.SpoolInbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case Spool.SpoolOutbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case Spool.SpoolArchive: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
 
-                case CatalogCredential.Label: return new CatalogCredential(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogContact.Label: return new CatalogContact(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogCalendar.Label: return new CatalogCalendar(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
-                case CatalogDevice.Label: return new CatalogDevice(DirectoryAccount, name, ContainerCryptoParameters, KeyCollection);
+                case CatalogCredential.Label: return new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogContact.Label: return new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogCalendar.Label: return new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
+                case CatalogDevice.Label: return new CatalogDevice(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
                 }
 
             throw new NYI();

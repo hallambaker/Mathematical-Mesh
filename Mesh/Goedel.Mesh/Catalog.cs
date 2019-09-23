@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
             }
 
         //public Dictionary<string, CatalogEntry> EntriesByUniqueId = new Dictionary<string, CatalogEntry>();
-        private readonly object CatalogLock = new object();
+        //private readonly object CatalogLock = new object();
 
         //public Catalog(IMeshMachine machine, string containerName) : this(machine.DirectoryMesh, containerName) { }
 
@@ -205,16 +205,16 @@ namespace Goedel.Mesh {
 
     #region // Enumerators and associated classes
     public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
-        IEnumerator<ContainerStoreEntry> BaseEnumerator;
+        IEnumerator<ContainerStoreEntry> baseEnumerator;
 
-        public CatalogedEntry Current => BaseEnumerator.Current.JsonObject as CatalogedEntry;
+        public CatalogedEntry Current => baseEnumerator.Current.JsonObject as CatalogedEntry;
         object IEnumerator.Current => Current;
-        public void Dispose() => BaseEnumerator.Dispose();
-        public bool MoveNext() => BaseEnumerator.MoveNext();
+        public void Dispose() => baseEnumerator.Dispose();
+        public bool MoveNext() => baseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
         public EnumeratorCatalogEntry(ContainerPersistenceStore container) => 
-            BaseEnumerator = container.GetEnumerator();
+            baseEnumerator = container.GetEnumerator();
         }
 
 

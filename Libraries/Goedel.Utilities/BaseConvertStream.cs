@@ -85,7 +85,7 @@ namespace Goedel.Utilities {
         private struct StreamConvertString : IStringToStream {
 
             MemoryStream stream;
-            public byte[] toArray;
+            public byte[] ToArray;
 
             byte[] table;
             int bits;
@@ -101,7 +101,7 @@ namespace Goedel.Utilities {
             public StreamConvertString(byte[] table, int stride) {
                 this.table = table;
                 this.stride = stride;
-                toArray = null;
+                ToArray = null;
                 stream = new MemoryStream();
                 bits = 0;
                 register = 0;
@@ -136,7 +136,7 @@ namespace Goedel.Utilities {
             /// Complete the transformation.
             /// </summary>
             public void Final() {
-                toArray = stream.ToArray();
+                ToArray = stream.ToArray();
                 stream.SetLength(0);
                 bits = 0;
                 register = 0;
@@ -158,7 +158,7 @@ namespace Goedel.Utilities {
                 var Converter = new StreamConvertString(table, stride);
                 Converter.Write(data);
                 Converter.Final();
-                return Converter.toArray;
+                return Converter.ToArray;
 
                 }
 
@@ -169,7 +169,7 @@ namespace Goedel.Utilities {
         /// </summary>
         private abstract class ByteStreamFormatter : IBytesToStream {
             delegate void FormatCharDelegate(char c);
-            FormatCharDelegate FormatChar;
+            FormatCharDelegate formatChar;
 
             char[] table;
             int offset;
@@ -177,7 +177,6 @@ namespace Goedel.Utilities {
             int a;
             int bits;
             int dash;
-            ConversionFormat format;
 
             int outputCount = 0;
             int outputCol = 0;
@@ -200,7 +199,6 @@ namespace Goedel.Utilities {
                     int outputMax = -1) {
                 this.table = table;
                 this.bits = bits;
-                this.format = format;
                 this.outputMax = outputMax;
 
                 terminal = (format & ConversionFormat.Terminal) > 0;
@@ -208,27 +206,27 @@ namespace Goedel.Utilities {
                 // Set the output method according to the format option selected.
                 switch (format & (ConversionFormat)0xfe) {
                     case ConversionFormat.Draft: {
-                        FormatChar = FormatCharDraft;
+                        formatChar = FormatCharDraft;
                         this.outputMax = outputMax > 0 ? outputMax : 72;
                         this.outputCol = outputCol > 0 ? outputCol : 0;
                         break;
                         }
                     case ConversionFormat.Hex: {
-                        FormatChar = FormatCharHex;
+                        formatChar = FormatCharHex;
                         break;
                         }
                     case ConversionFormat.Dash4: {
-                        FormatChar = FormatCharDash;
+                        formatChar = FormatCharDash;
                         dash = 4;
                         break;
                         }
                     case ConversionFormat.Dash5: {
-                        FormatChar = FormatCharDash;
+                        formatChar = FormatCharDash;
                         dash = 5;
                         break;
                         }
                     default: {
-                        FormatChar = FormatCharDirect;
+                        formatChar = FormatCharDirect;
                         break;
                         }
                     }
@@ -238,7 +236,7 @@ namespace Goedel.Utilities {
                 }
 
 
-            bool needOutput => (outputMax < 0) | (outputCount < outputMax);
+            bool NeedOutput => (outputMax < 0) | (outputCount < outputMax);
 
             /// <summary>
             /// Write the specified data to the converter instance.
@@ -250,7 +248,7 @@ namespace Goedel.Utilities {
                 length = length < 0 ? data.Length - first : length;
                 int Last = first + length;
 
-                for (int i = first; (i < Last) & needOutput; i++) {
+                for (int i = first; (i < Last) & NeedOutput; i++) {
                     //if (Draft & ((i % 48) == 0)) {
                     //    WriteChar('\n');
                     //    }
@@ -258,11 +256,11 @@ namespace Goedel.Utilities {
                     a = (a << 8) | data[i];
                     offset += 8;
 
-                    while ((offset >= bits) & needOutput) {
+                    while ((offset >= bits) & NeedOutput) {
                         offset -= bits;
 
                         int n = a >> offset;
-                        FormatChar(table[n]);
+                        formatChar(table[n]);
                         a &= (0xff >> (8 - offset));
                         }
                     }
@@ -272,18 +270,18 @@ namespace Goedel.Utilities {
             /// Complete writing from the buffer.
             /// </summary>
             public void Final() {
-                if ((offset > 0) & needOutput) {
-                    FormatChar(table[a << (bits - offset)]);
+                if ((offset > 0) & NeedOutput) {
+                    formatChar(table[a << (bits - offset)]);
                     // No trailing = characters in Base64URL encoding.
                     if (terminal) {
                         // The trailing characters are not always required by software but are
                         // required by the Base64 specification.
                         if (offset == 2) {
-                            FormatChar('='); // just one partial character
-                            FormatChar('=');
+                            formatChar('='); // just one partial character
+                            formatChar('=');
                             }
                         else {
-                            FormatChar('='); // One full, one partial character
+                            formatChar('='); // One full, one partial character
                             }
                         }
                     offset = 0;

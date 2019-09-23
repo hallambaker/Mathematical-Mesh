@@ -296,7 +296,7 @@
 		Command DeviceRequestConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
 			Parameter ServiceID "account" String
-				Brief "New portal account"
+				Brief "The Mesh Service Account"
 			Option PIN "pin" String
 				Brief "One time use authenticator"
 			Include Reporting
@@ -305,6 +305,11 @@
 
 		Command DevicePending "pending"
 			Brief "Get list of pending connection requests"
+			Include AccountOptions
+			Include Reporting
+
+		Command DeviceComplete "complete"
+			Brief "Complete a pending request"
 			Include AccountOptions
 			Include Reporting
 

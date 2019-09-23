@@ -12,12 +12,12 @@ using Goedel.Cryptography.PKIX;
 namespace Goedel.Mesh.Client {
     public class KeyCollectionClient : KeyCollection {
 
-        KeyCollection KeyCollectionBase;
-        HostMesh CatalogHost;
+        KeyCollection keyCollectionBase;
+        HostMesh catalogHost;
 
         public KeyCollectionClient(HostMesh catalogHost, KeyCollection keyCollection) {
-            KeyCollectionBase = keyCollection;
-            CatalogHost = catalogHost;
+            keyCollectionBase = keyCollection;
+            this.catalogHost = catalogHost;
             }
 
 
@@ -27,11 +27,11 @@ namespace Goedel.Mesh.Client {
         /// <param name="privateKey"></param>
         /// <param name="Exportable"></param>
         public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
-            KeyCollectionBase.Persist(udf, privateKey, Exportable);
+            keyCollectionBase.Persist(udf, privateKey, Exportable);
 
 
         public override KeyPair TryMatchRecipient(string keyID) => 
-                    KeyCollectionBase.TryMatchRecipient(keyID);
+                    keyCollectionBase.TryMatchRecipient(keyID);
 
 
 
@@ -48,13 +48,13 @@ namespace Goedel.Mesh.Client {
             //    }
 
             // Check the Contacts file 
-
+            keyID.Keep();
 
             // Check the Omnibroker service
 
 
             // last gasp - check on the platform
-            return KeyCollectionBase.GetByAccountEncrypt(keyID);
+            return keyCollectionBase.GetByAccountEncrypt(keyID);
             }
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Goedel.Mesh.Client {
             //    }
 
             // Check the Contacts file 
-
+            keyID.Keep();
 
             // Check the Omnibroker service
 
 
             // last gasp - check on the platform
-            return KeyCollectionBase.GetByAccountSign(keyID);
+            return keyCollectionBase.GetByAccountSign(keyID);
             }
 
         }

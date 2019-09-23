@@ -58,7 +58,11 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create {accountA}");
+            device1.Dispatch($"mesh create /account={accountA}");
+
+            // Fail: Because the Account is not being added to the CatalgedDevice as it should
+            device1.Dispatch($"account sync");
+
 
             device2.Dispatch($"device request {accountA}");
             device2.Dispatch($"account sync", fail: true);
@@ -68,6 +72,9 @@ namespace Goedel.XUnit {
             var witness = message.Witness;
 
             device1.Dispatch($"device accept {witness}");
+            device2.Dispatch($"device complete");
+
+
             device2.Dispatch($"account sync");
 
             device3.Dispatch($"device request {accountA}  /new");

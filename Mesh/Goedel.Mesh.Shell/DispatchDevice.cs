@@ -33,6 +33,28 @@ namespace Goedel.Mesh.Shell {
             }
 
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DeviceComplete(DeviceComplete Options) {
+            var serviceID = Options.ServiceID.Value;
+
+            // here need to pull up an account context for the pending connection.
+
+            //var contextAccount = contextAccountPending.Complete();
+
+            //var result = new ResultConnect() {
+            //    CatalogedMachine = contextAccount.CatalogedMachine
+            //    };
+
+            //return result;
+
+            throw new NYI();
+
+            }
+
         public override ShellResult DevicePending(DevicePending Options) {
             using (var contextAccount = GetContextAccount(Options)) {
 
