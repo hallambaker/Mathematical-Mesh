@@ -47,6 +47,9 @@ namespace Goedel.Mesh {
         public override string ContainerDefault => Label;
         public AsCatalogEntryCredential AsCatalogEntryCredential => new AsCatalogEntryCredential(this);
 
+        protected override void Dispose(bool disposing) => base.Dispose(disposing);
+
+
         /// <summary>
         /// Locate credential matching the specified service name, ignoring the protocol value.
         /// </summary>
@@ -68,8 +71,9 @@ namespace Goedel.Mesh {
 
         public CatalogCredential(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
-            base(directory, ContainerName, cryptoParameters, keyCollection) {
+                    KeyCollection keyCollection = null,
+                    bool create = true) :
+            base(directory, ContainerName, cryptoParameters, keyCollection, create: create) {
             }
 
         public static Store Factory(string directory, string containerName = null) =>

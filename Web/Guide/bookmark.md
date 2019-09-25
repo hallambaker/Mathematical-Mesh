@@ -89,5 +89,4 @@ The new device now has access to the Bookmarks catalog:
 
 ````
 Alice2> bookmark list
-ERROR - The feature has not been implemented
 ````

@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ConnectionItem";
+		public new const string __Tag = "HostCatalogItem";
 
 		/// <summary>
         /// Dictionary mapping tags to factory methods
@@ -116,11 +116,6 @@ namespace Goedel.Mesh.Client {
         /// </summary>
 
 		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
-        /// <summary>
-        ///The accounts to which this Mesh is connected
-        /// </summary>
-
-		public virtual List<DareEnvelope>				EnvelopedProfileAccount  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -189,23 +184,6 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("CatalogedDevice", 1);
 					CatalogedDevice.Serialize (_Writer, false);
 				}
-			if (EnvelopedProfileAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedProfileAccount", 1);
-				_Writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in EnvelopedProfileAccount) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
-					}
-				_Writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -263,20 +241,6 @@ namespace Goedel.Mesh.Client {
 					CatalogedDevice = new CatalogedDevice ();
 					CatalogedDevice.Deserialize (JSONReader);
  
-					break;
-					}
-				case "EnvelopedProfileAccount" : {
-					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
-					EnvelopedProfileAccount = new List <DareEnvelope> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareEnvelope ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new DareEnvelope (JSONReader);
-						EnvelopedProfileAccount.Add (_Item);
-						_Going = JSONReader.NextArray ();
-						}
 					break;
 					}
 				default : {
@@ -519,6 +483,11 @@ namespace Goedel.Mesh.Client {
 
 		public virtual string						DeviceUDF  {get; set;}
         /// <summary>
+        ///The device profile presented to the service.
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileDevice  {get; set;}
+        /// <summary>
         ///The response returned by the service when the registration was requested.
         /// </summary>
 
@@ -577,6 +546,11 @@ namespace Goedel.Mesh.Client {
 				_Writer.WriteToken ("DeviceUDF", 1);
 					_Writer.WriteString (DeviceUDF);
 				}
+			if (EnvelopedProfileDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedProfileDevice", 1);
+					EnvelopedProfileDevice.Serialize (_Writer, false);
+				}
 			if (EnvelopedMessageConnectionResponse != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedMessageConnectionResponse", 1);
@@ -622,6 +596,13 @@ namespace Goedel.Mesh.Client {
 			switch (Tag) {
 				case "DeviceUDF" : {
 					DeviceUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "EnvelopedProfileDevice" : {
+					// An untagged structure
+					EnvelopedProfileDevice = new DareEnvelope ();
+					EnvelopedProfileDevice.Deserialize (JSONReader);
+ 
 					break;
 					}
 				case "EnvelopedMessageConnectionResponse" : {

@@ -11,14 +11,14 @@ using System.IO;
 namespace Goedel.Mesh.Client {
     public interface IMeshMachineClient : IMeshMachine {
         ///<summary>Direct access to the Catalog, should remove this</summary>
-        HostMesh CatalogHost { get; }
+        MeshHost MeshHost { get; }
 
         /// <summary>
         /// Return an administration profile with local name <paramref name="local"/>.
         /// </summary>
         /// <param name="local">The profile to return.</param>
         /// <returns>The entry for the specified profile.</returns>
-       CatalogedMachine GetConnection(string local = null);
+        CatalogedMachine GetConnection(string local = null);
 
         /// <summary>
         /// Return an pending connection request with local name <paramref name="local"/>.
@@ -63,21 +63,6 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh</returns>
         ContextMesh GetContextMesh(string localName = null, bool admin = true);
 
-
-        ///// <summary>
-        ///// Create a new Mesh
-        ///// </summary>
-        ///// <param name="localName"></param>
-        ///// <param name="algorithmSign"></param>
-        ///// <param name="algorithmEncrypt"></param>
-        ///// <param name="algorithmAuthenticate"></param>
-        ///// <returns></returns>
-        //ContextMeshAdmin CreateDevice(
-        //        string localName,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
-
         /// <summary>
         /// Create a new Mesh
         /// </summary>
@@ -114,5 +99,14 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
+
+        /// <summary>
+        /// Create a new Mesh master profile and account and bind to a service
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        ContextAccount Complete(
+                string serviceID,
+                string localName = null);
+
         }
     }

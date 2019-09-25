@@ -57,8 +57,9 @@ namespace Goedel.Mesh {
 
         public CatalogContact(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
-            base(directory, ContainerName, cryptoParameters, keyCollection) {
+                    KeyCollection keyCollection = null,
+                    bool create = true) :
+            base(directory, ContainerName, cryptoParameters, keyCollection, create: create) {
             }
 
         public CatalogedContact Add(DareEnvelope contact, bool self = false) {

@@ -29,12 +29,6 @@
 				|The cataloged device profile
 
 
-	Structure CatalogAccount
-		Struct DareEnvelope EnvelopedProfileAccount
-			Description
-				|The account profile
-		struct DareEnvelope EnvelopedCatalogedAccount
-
 
 	Structure CatalogedStandard
 		Inherits CatalogedMachine
@@ -62,6 +56,9 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|The device profile presented to the service.
 		Struct DareEnvelope EnvelopedMessageConnectionResponse
 			Description
 				|The response returned by the service when the registration was requested.

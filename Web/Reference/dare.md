@@ -63,18 +63,18 @@ file name is the input file name with the additional extension `.dare`.
 
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
-ERROR - The feature has not been implemented
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ````
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultFile:
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A /json
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA /json
 {
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
+  "ResultFile": {
+    "Success": true,
+    "Filename": "TestFile1.dare",
+    "TotalBytes": 14}}
 ````
 
 
@@ -102,14 +102,14 @@ with the extension `.undare` otherwise.
 
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A /json
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA /json
 {
   "Result": {
     "Success": false,
@@ -136,14 +136,14 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ERROR - The option  is not known.
 ````
 
 Specifying the /json option returns a result of type Result:
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A /json
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA /json
 {
   "Result": {
     "Success": false,

@@ -82,19 +82,19 @@ namespace Goedel.Mesh {
 
         #region // Properties
 
-        public HostMesh CatalogHost { get; }
+        public MeshHost MeshHost { get; }
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
         #endregion
 
 
         #region // Disposing
-        protected override void Disposing() => CatalogHost.Dispose();
+        protected override void Disposing() => MeshHost.Dispose();
         #endregion
 
 
-        public CatalogedMachine GetConnection(string local = null) => CatalogHost.GetMeshConnection(local);
-        public CatalogedPending GetPending(string local = null) => CatalogHost.GetPending(local);
+        public CatalogedMachine GetConnection(string local = null) => MeshHost.GetMeshConnection(local);
+        public CatalogedPending GetPending(string local = null) => MeshHost.GetPending(local);
 
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Goedel.Mesh {
         /// <returns>Context for administering the Mesh</returns>
         public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
 
-            var entry = CatalogHost.GetMeshConnection(localName);
+            var entry = MeshHost.GetMeshConnection(localName);
             switch (entry) {
                 case CatalogedAdmin adminEntry: return new ContextMeshAdmin(this, adminEntry);
                 default:  return new ContextMesh(this, entry);
@@ -113,6 +113,18 @@ namespace Goedel.Mesh {
 
             
             }
+
+
+        public ContextAccount Complete(
+                string serviceID,
+                string localName = null) {
+            var catalogedPending = GetPending(serviceID);
+
+            var contextPending = new ContextMeshPending(this, catalogedPending);
+            return contextPending.Complete();
+
+            }
+
 
 
         public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
@@ -124,7 +136,7 @@ namespace Goedel.Mesh {
                 fileStatus: FileStatus.ConcurrentLocked,
                 containerType: ContainerType.MerkleTree);
 
-            CatalogHost = new HostMesh(containerHost, this);
+            MeshHost = new MeshHost(containerHost, this);
             }
 
         #region // Convenience accessors
@@ -136,7 +148,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileEntry">The entry to add or update.</param>
         /// <param name="create">Report an error if the object identifier does not already exist.</param>
-        public void Register(CatalogedMachine profileEntry, bool create = true) => CatalogHost.Register(profileEntry, create);
+        public void Register(CatalogedMachine profileEntry, bool create = true) => MeshHost.Register(profileEntry, create);
 
         /// <summary>
         /// Create a new Mesh master profile without account or service
@@ -240,10 +252,10 @@ namespace Goedel.Mesh {
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 
         public virtual void Register(HostCatalogItem catalogItem) =>
-                CatalogHost.Register(catalogItem);
+                MeshHost.Register(catalogItem);
 
         public virtual void Delete(HostCatalogItem catalogItem) =>
-                CatalogHost.Delete(catalogItem);
+                MeshHost.Delete(catalogItem);
 
 
         /// <summary>

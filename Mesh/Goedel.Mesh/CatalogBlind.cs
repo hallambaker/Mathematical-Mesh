@@ -34,7 +34,7 @@ namespace Goedel.Mesh {
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
             base(directory, containerName, cryptoParameters, keyCollection,
-                readContainer: false, decrypt: false, create: false) => ContainerPersistence.FastReadContainer();
+                readContainer: false, decrypt: false, create: false) => ContainerPersistence?.FastReadContainer();
 
 
         public DareEnvelope Get(string key) => GetEntry(key).FrameIndex.GetEnvelope(Container);

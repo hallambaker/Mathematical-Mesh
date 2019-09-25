@@ -145,14 +145,19 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="readContainer"></param>
         public ContainerPersistenceStore(Container container, bool readContainer = true) {
             Container = container;
-            try {
-                if (readContainer & container.JBCDStream.Length > 0) {
-                    ReadContainer();
-                    }
+
+            if (readContainer & container.JBCDStream.Length > 0) {
+                ReadContainer();
                 }
-            catch {
-                Disposing();
-                }
+
+            //try {
+            //    if (readContainer & container.JBCDStream.Length > 0) {
+            //        ReadContainer();
+            //        }
+            //    }
+            //catch {
+            //    Disposing();
+            //    }
             }
 
 

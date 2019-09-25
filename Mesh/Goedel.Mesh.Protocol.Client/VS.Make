@@ -25,12 +25,12 @@ LinkFiles = \
 
 ToolTargets = \
 	Exceptions.cs\
-	HostCatalog.cs
+	HostSchema.cs
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
-HostCatalog.cs : HostCatalog.protocol 
-	protogen HostCatalog.protocol  /cs  HostCatalog.cs
+HostSchema.cs : HostSchema.protocol 
+	protogen HostSchema.protocol  /cs  HostSchema.cs
 
 
 

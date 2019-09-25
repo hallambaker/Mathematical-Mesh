@@ -18,7 +18,7 @@ namespace Goedel.Mesh.Client {
     /// Managfes the host catalog, i.e. the catalog of Meshes that the device is 
     /// connected to.
     /// </summary>
-    public class HostMesh : Disposable {
+    public class MeshHost : Disposable {
 
         #region // fields and properties
         IMeshMachine meshMachine;
@@ -38,7 +38,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="meshMachine">The Mesh Machine.</param>
         /// <param name="containerHost">The host catalog.</param>
-        public HostMesh(CatalogHost containerHost, IMeshMachine meshMachine) {
+        public MeshHost(CatalogHost containerHost, IMeshMachine meshMachine) {
             this.meshMachine = meshMachine;
             containerProfile = containerHost;
             }
@@ -47,9 +47,9 @@ namespace Goedel.Mesh.Client {
         /// Get the host catalog from the specified mesh machine.
         /// </summary>
         /// <param name="meshMachine"></param>
-        public static HostMesh GetCatalogHost(IMeshMachine meshMachine) {
+        public static MeshHost GetCatalogHost(IMeshMachine meshMachine) {
             var meshMachineClient = meshMachine as IMeshMachineClient;
-            return meshMachineClient.CatalogHost;
+            return meshMachineClient.MeshHost;
 
             }
 

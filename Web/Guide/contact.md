@@ -21,7 +21,7 @@ a file.
 Alice> contact add email carol@example.com
 {
   "Self": false,
-  "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
+  "Key": "NA5Z-VZJT-23CT-M2HT-2SBK-YACV-PJLG",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
@@ -41,7 +41,7 @@ details:
 Alice> contact self email alice@example.com
 {
   "Self": true,
-  "Key": "NA7T-AUB2-CVFC-SDEV-7TKX-BL3X-5ZY7",
+  "Key": "NCLV-ZOH4-TINU-ZUK2-77ET-BNWX-ODPS",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
@@ -74,17 +74,15 @@ A complete list of contacts is obtained using the  `contact list` command:
 Alice> contact list
 {
   "Self": true,
-  "Key": "NA7T-AUB2-CVFC-SDEV-7TKX-BL3X-5ZY7",
-  "EnvelopedContact": [{
-      "Index": 0},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
-  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Key": "NCLV-ZOH4-TINU-ZUK2-77ET-BNWX-ODPS",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
-  "EnvelopedContact": [{
-      "Index": 0},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
-  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  "Key": "NA5Z-VZJT-23CT-M2HT-2SBK-YACV-PJLG",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 ## Deleting contacts
 

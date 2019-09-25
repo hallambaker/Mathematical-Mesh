@@ -25,22 +25,39 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection);
 
     public class Store : Disposable {
+        ///<summary>The default name for the container</summary>
         public virtual string ContainerDefault => throw new NYI();
+        
+        ///<summary>The container</summary>
         public virtual Container Container { get; }
+
+        ///<summary>The frame count (returns -1 if no container has been created)</summary>
+        public long FrameCount => Container == null ? -1 : Container.FrameCount;
+
+
         //protected override void Disposing() => Container?.Dispose();
 
+        ///<summary>The cryptographic parameters</summary>
         protected CryptoParameters CryptoParameters;
+        
+        ///<summary>The key collection used for decryption</summary>
         protected KeyCollection KeyCollection;
 
         ///<summary>The container identifier. Must be unique within a given account.</summary>
         public string ContainerName;
 
-
-        public long FrameCount => Container.FrameCount;
-
+        ///<summary>The disposal routing</summary>
         protected override void Disposing() => Container?.Dispose();
 
-
+        /// <summary>
+        /// The constructor
+        /// </summary>
+        /// <param name="directory"></param>
+        /// <param name="containerName"></param>
+        /// <param name="cryptoParameters"></param>
+        /// <param name="keyCollection"></param>
+        /// <param name="decrypt"></param>
+        /// <param name="create"></param>
         public Store(string directory, string containerName = null,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null, 

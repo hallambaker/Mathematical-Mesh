@@ -26,7 +26,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
-        public CatalogedDevice CatalogedDevice => CatalogedMachine.CatalogedDevice;
+        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine.CatalogedDevice;
 
         public ConnectionDevice ConnectionDevice =>
             CatalogedDevice.ConnectionDevice;
@@ -72,6 +72,7 @@ namespace Goedel.Mesh.Client {
         RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 
         ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
+
 
         KeyPair KeyAuthentication;
 
@@ -139,6 +140,7 @@ namespace Goedel.Mesh.Client {
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
                 EnvelopedProfileMaster = response.EnvelopedProfileMaster,
+                EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };
 
@@ -191,7 +193,7 @@ namespace Goedel.Mesh.Client {
 
             var contextAccount = contextMesh.GetContextAccount(accountName:ServiceID);
 
-            contextAccount.InitializeStores();
+            contextAccount.InitializeStores(statusResponse);
 
             return contextAccount;
             }

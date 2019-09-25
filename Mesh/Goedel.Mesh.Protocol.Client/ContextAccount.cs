@@ -220,11 +220,14 @@ namespace Goedel.Mesh.Client {
             //    maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
             //    }
 
-            // upload all the containers here
-            foreach (var store in dictionaryStores) {
-                maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
+            try {
+                // upload all the containers here
+                foreach (var store in dictionaryStores) {
+                    maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
+                    }
                 }
-
+            catch {
+                }
 
 
             if (updates.Count > 0) {
@@ -388,20 +391,77 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-        public void InitializeStores() => _ = Directory.CreateDirectory(DirectoryAccount);
+        public void InitializeStores(StatusResponse statusResponse) {
+            Directory.CreateDirectory(DirectoryAccount);
+            Sync();
+            }
 
+        public ConstraintsSelect GetStoreStatus(ContainerStatus statusRemote) {
+            if (dictionaryStores.TryGetValue(statusRemote.Container, out var syncStore)) {
+                var storeLocal = syncStore.Store;
 
-        public Store GetStore(string name) {
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount+1
+
+                        };
+
+                }
+
+            else {
+                using (var storeLocal = new Store (DirectoryAccount, statusRemote.Container,
+                            decrypt:false, create:false)) {
+                    Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+                    return storeLocal.FrameCount >= statusRemote.Index ? null :
+                        new ConstraintsSelect() {
+                            Container = statusRemote.Container,
+                            IndexMax = statusRemote.Index,
+                            IndexMin = (int)storeLocal.FrameCount + 1
+
+                            };
+
+                    }
+                }
+            }
+
+        public int UpdateStore(ContainerUpdate containerUpdate) {
+            int count = 0;
+            if (dictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
+                var store = syncStore.Store;
+                foreach (var entry in containerUpdate.Envelopes) {
+                    count++;
+                    store.AppendDirect(entry);
+                    }
+                return count;
+                }
+
+            else {
+                Store.Append(DirectoryAccount, containerUpdate.Envelopes, containerUpdate.Container);
+                return containerUpdate.Envelopes.Count;
+                }
+            
+            }
+
+        public Store GetStore(string name, bool blind=false) {
 
             if (dictionaryStores.TryGetValue(name, out var syncStore)) {
+                if (!blind & (syncStore.Store is CatalogBlind)) {
+                    // if we have a blind store from a sync operation but need a populated one,
+                    // remake it.
+                    syncStore.Store.Dispose();
+                    syncStore.Store = MakeStore(name);
+                    }
                 return syncStore.Store;
+
                 }
+
+
+
             //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
-            var store = MakeStore(name);
-            //if (store is Catalog catalog) {
-            //    catalog.TransactDelegate = Transact;
-            //    }
+            var store = blind ? new CatalogBlind (DirectoryAccount, name) : MakeStore(name);
 
             syncStore = new SyncStatus(store);
 
@@ -493,20 +553,9 @@ namespace Goedel.Mesh.Client {
             var constraintsSelects = new List<ConstraintsSelect>();
 
             foreach (var container in status.ContainerStatus) {
-                var store = GetStore(container.Container);
-
-
-                //Console.WriteLine($"Container {container.Container}, items {container.Index} [{store.Container.FrameCount}]");
-
-                if (store.Container.FrameCount < container.Index) {
-                    var constraintsSelect = new ConstraintsSelect() {
-                        Container = container.Container,
-                        IndexMin = container.Index + 1,
-                        IndexMax = (int)store.Container.FrameCount
-
-                        };
+                var constraintsSelect = GetStoreStatus(container);
+                if (constraintsSelect != null) {
                     constraintsSelects.Add(constraintsSelect);
-
                     }
                 }
 
@@ -519,16 +568,13 @@ namespace Goedel.Mesh.Client {
                 Select = constraintsSelects
                 };
 
+            // what is it with the ranges here? make sure they are all correct.
+            // Then check that the remote versions are correct.
+
             var download = MeshClient.Download(downloadRequest);
 
             foreach (var update in download.Updates) {
-                var store = GetStore(update.Container);
-
-                foreach (var entry in update.Envelopes) {
-                    count++;
-                    store.AppendDirect(entry);
-                    }
-
+                count += UpdateStore(update);
                 }
 
 

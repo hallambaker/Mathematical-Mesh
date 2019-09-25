@@ -53,6 +53,21 @@ namespace Goedel.Utilities {
             }
 
         /// <summary>
+        /// Returns the string <paramref name="accountID"/> if it is a well formed account identifier
+        /// and null otherwise.
+        /// </summary>
+        /// <param name="accountID">The string to test.</param>
+        /// <returns><paramref name="accountID"/> if it is a well formed account identifier
+        /// and null otherwise.</returns>
+        public static string IsAccountID(this string accountID) {
+            if (accountID == null) {
+                return null;
+                }
+            return accountID.LastIndexOf('@') < 0 ? null : accountID;
+            }
+
+
+        /// <summary>
         /// Extract the Account and Portal components from the specified AccountID.
         /// </summary>
         /// <param name="AccountID">The AccountID to split.</param>

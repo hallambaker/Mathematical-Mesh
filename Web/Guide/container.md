@@ -80,6 +80,7 @@ the files are extracted by default:
 
 ````
 Alice> container extract Container.dcon TestOut
+ERROR - The feature has not been implemented
 ````
 
 Alternatively, the `/file` option may be used to extract a specific file:
@@ -113,6 +114,7 @@ marking an entry as deleted:
 
 ````
 Alice> container delete Container.dcon  TestFile2.txt
+ERROR - The feature has not been implemented
 ````
 
 Marking an entry for deletion does not cause the entry itself to be modified.

@@ -21,13 +21,24 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshCreate(MeshCreate Options) {
-            var account = Options.NewAccountID.Value;
+
+            var service = Options.NewServiceID.Value;
+
+            var account = Options.NewAccountID.Value ?? service;
+
+
+
+            // here we need to decide if this is a local name or an account name.
+
 
             using (var contextMesh = MeshMachine.CreateMesh("main")) {
 
+                
                 if (account != null) {
-                    var contextAccount = contextMesh.CreateAccount(account);
-                    contextAccount.AddService(account);
+                    var contextAccount = contextMesh.CreateAccount(service);
+                    if (service != null) {
+                        contextAccount.AddService(service);
+                        }
                     }
 
                 return new ResultCreatePersonal() {

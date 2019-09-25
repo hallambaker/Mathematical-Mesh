@@ -20,9 +20,9 @@ namespace Goedel.Mesh.Shell {
  
 
 
-        public virtual HostMesh CatalogHost => catalogHost ??
-            HostMesh.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
-        HostMesh catalogHost;
+        public virtual MeshHost CatalogHost => catalogHost ??
+            MeshHost.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
+        MeshHost catalogHost;
 
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();

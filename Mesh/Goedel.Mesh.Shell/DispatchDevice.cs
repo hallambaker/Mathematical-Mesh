@@ -43,16 +43,13 @@ namespace Goedel.Mesh.Shell {
 
             // here need to pull up an account context for the pending connection.
 
-            //var contextAccount = contextAccountPending.Complete();
+            var contextAccount = MeshMachine.Complete(serviceID);
 
-            //var result = new ResultConnect() {
-            //    CatalogedMachine = contextAccount.CatalogedMachine
-            //    };
+            var result = new ResultConnect() {
+                CatalogedMachine = contextAccount.ContextMesh.CatalogedMachine
+                };
 
-            //return result;
-
-            throw new NYI();
-
+            return result;
             }
 
         public override ShellResult DevicePending(DevicePending Options) {
@@ -102,14 +99,18 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DeviceReject(DeviceReject Options) =>
             ProcessRequest(Options, Options.CompletionCode.Value, false);
 
-
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
             using (var contextAccount = GetContextAccount(Options)) {
 
+                // Hack: should be able to accept, reject specific requests, not just
+                // the last one.
+                var message = contextAccount.GetPendingMessageConnectionRequest();
+                contextAccount.Process(message, accept);
+
+                // Hack: need to obtain the actual result.
                 var result = new ResultConnectProcess() {
 
                     };
-                "".TaskFunctionality();
                 return result;
                 }
 

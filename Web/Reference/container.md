@@ -139,16 +139,17 @@ to files.
 
 ````
 Alice> container extract Container.dcon TestOut
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultFile:
+Specifying the /json option returns a result of type Result:
 
 ````
 Alice> container extract Container.dcon TestOut /json
 {
-  "ResultFile": {
-    "Success": true,
-    "Filename": "Container.dcon"}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # container append
@@ -203,15 +204,17 @@ container but does not erase the data from the file.
 
 ````
 Alice> container delete Container.dcon  TestFile2.txt
+ERROR - The feature has not been implemented
 ````
 
-Specifying the /json option returns a result of type ResultFile:
+Specifying the /json option returns a result of type Result:
 
 ````
 Alice> container delete Container.dcon  TestFile2.txt /json
 {
-  "ResultFile": {
-    "Success": true}}
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
 ````
 
 # container index

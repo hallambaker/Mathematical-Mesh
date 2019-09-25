@@ -221,9 +221,9 @@ namespace Goedel.Cryptography.Dare {
                     LockGlobal.Enter();
                     }
 
-                var FrameLength = (FrameHeader == null ? 0 : TotalLength(FrameHeader.Length)) +
-                                    (FrameData1 == null ? 0 : TotalLength(FrameData1.Length)) +
-                                    (FrameData2 == null ? 0 : TotalLength(FrameData2.Length));
+                var FrameLength = (FrameHeader == null ? 2 : TotalLength(FrameHeader.Length)) +
+                                    (FrameData1 == null ? 2 : TotalLength(FrameData1.Length)) +
+                                    (FrameData2 == null ? 2 : TotalLength(FrameData2.Length));
 
                 WriteTag(BFrame, FrameLength);
 
@@ -231,11 +231,20 @@ namespace Goedel.Cryptography.Dare {
                 if (FrameHeader != null) {
                     WriteFrame(FrameHeader);
                     }
+                else {
+                    WriteTag(UFrame, 0);
+                    }
                 if (FrameData1 != null) {
                     WriteFrame(FrameData1);
                     }
+                else {
+                    WriteTag(UFrame, 0);
+                    }
                 if (FrameData2 != null) {
                     WriteFrame(FrameData2);
+                    }
+                else {
+                    WriteTag(UFrame, 0);
                     }
 
                 Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);

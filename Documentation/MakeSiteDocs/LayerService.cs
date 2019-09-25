@@ -58,8 +58,11 @@ namespace ExampleGenerator {
             ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             ResultHello = ProfileHello[0].Result as ResultHello;
 
+
+            //JSONReader.Trace = true;
+
             // here add the service
-            CommandsAddServiceAlice = testCLIAlice1.Example($"account register {AliceService1}");
+            CommandsAddServiceAlice = testCLIAlice1.ExampleNoCatch($"account register {AliceService1}");
             ProfileSync = testCLIAlice1.Example($"account sync");
 
 
@@ -68,7 +71,7 @@ namespace ExampleGenerator {
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
 
             ConnectRequest = testCLIAlice2.Example($"device request {AliceService1}");
-            ConnectPending = testCLIAlice1.Example($"device pending");
+            ConnectPending = testCLIAlice1.ExampleNoCatch($"device pending");
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
@@ -77,7 +80,8 @@ namespace ExampleGenerator {
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
             ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceService1}");
-            ConnectSync = testCLIAlice2.Example($"account sync");
+
+            ConnectSync = testCLIAlice2.Example($"device complete",$"account sync");
 
             ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
@@ -127,8 +131,12 @@ namespace ExampleGenerator {
             CalendarAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /calendar ");
             NetworkAuth = testCLIAlice1.Example($"device auth {AliceDevice2} /network");
 
+
+            // These are all failing because the container is being initialized before it is 
+            // synchronized on the device.
+            
             ContactList2 = testCLIAlice2.Example($"contact list");
-            BookmarkList2 = testCLIAlice2.Example($"bookmark list");
+            BookmarkList2 = testCLIAlice2.ExampleNoCatch($"bookmark list");
             PasswordList2 = testCLIAlice2.Example($"password list");
             CalendarList2 = testCLIAlice2.Example($"calendar list");
             NetworkList2 = testCLIAlice2.Example($"network list");

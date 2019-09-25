@@ -49,8 +49,9 @@ namespace Goedel.Mesh {
 
         public CatalogBookmark(string directory, string ContainerName=null,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
-            base(directory, ContainerName, cryptoParameters, keyCollection) {
+                    KeyCollection keyCollection = null,
+                    bool create = true) :
+            base(directory, ContainerName, cryptoParameters, keyCollection, create: create) {
             }
 
         }

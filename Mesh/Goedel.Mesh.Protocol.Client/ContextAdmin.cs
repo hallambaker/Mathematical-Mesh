@@ -220,54 +220,6 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-        #region // Add regular device
-
-        //public ActivationAccount AddDevice(
-        //            ProfileAccount  assertionAccount,
-        //            Mesh.CatalogedDevice catalogEntryDevice, 
-        //            KeyPairAdvanced keyEncryptionMaster) {
-        //    // Decrypt EncryptedDevicePrivate using the Master profile decryption key
-
-        //    var encryptedDevicePrivate = catalogEntryDevice.EnvelopedActivationDevice;
-
-        //    var devicePrivate = ActivationDevice.Decode(
-        //                        MeshMachine, encryptedDevicePrivate);
-        //    var profileDevice = catalogEntryDevice.ProfileDevice;
-
-        //    var keyEncryption = new KeyComposite(keyEncryptionMaster);
-        //    var keySignature  = new KeyOverlay(MeshMachine, profileDevice.KeyOfflineSignature);
-        //    var keyAuthentication = new KeyOverlay(MeshMachine, profileDevice.KeyAuthentication);
-
-        //    var assertionAccountConnection = new ConnectionAccount() {
-        //        KeySignature = new PublicKey(keySignature.KeyPair),
-        //        KeyEncryption = new PublicKey(keyEncryption.KeyPair),
-        //        KeyAuthentication = new PublicKey(keyAuthentication.KeyPair)
-        //        };
-
-        //    Sign(assertionAccountConnection);
-
-        //    // Create the activation for this device
-        //    var activationAccount = new ActivationAccount() {
-        //        AccountUDF = assertionAccount.UDF,
-        //        EnvelopedConnectionAccount = assertionAccountConnection.DareEnvelope,
-        //        KeyEncryption = keyEncryption,
-        //        KeySignature = keySignature,
-        //        KeyAuthentication = keyAuthentication
-        //        };
-
-        //    // Add it to the account
-        //    devicePrivate.Activations = devicePrivate.Activations ?? new List<Activation>();
-        //    devicePrivate.Activations.Add(activationAccount);
-
-        //    catalogEntryDevice.EnvelopedActivationDevice = 
-        //        devicePrivate.Encode(catalogEntryDevice.ProfileDevice.KeyEncryption.KeyPair, 
-        //                ProfileMesh.KeyEncryption.KeyPair);
-
-
-        //    return activationAccount;
-        //    }
-
-        #endregion 
 
         /// <summary>
         /// Sign the specified assertion under this device's administration key

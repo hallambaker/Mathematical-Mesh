@@ -163,6 +163,36 @@ namespace Goedel.Mesh.Test {
             }
 
 
+        public List<ExampleResult> ExampleNoCatch(params string[] commands) {
+            var result = new List<ExampleResult>();
+
+            //var Args = command.Split(' ');
+            //Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
+            //result.Add(new ExampleResult(command, Shell.ShellResult as Result));
+
+            foreach (var cmd in commands) {
+                Count++;
+                CountTotal++;
+                var portalTest = Shell.MeshPortalDirect as MeshPortalTest;
+
+
+
+                if (portalTest != null) {
+                    portalTest.MeshProtocolMessages = null;
+                    }
+
+
+                Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
+                result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
+                    Traces = portalTest?.MeshProtocolMessages
+                    });
+
+                }
+
+            return result;
+            }
+
+
         public Result Dispatch(string command, bool fail = false) {
             var Args = command.Split(' ');
 

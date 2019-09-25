@@ -11,7 +11,6 @@ The `dare encode` command is used to encode files as DARE Messages:
 
 ````
 Alice> dare encode TestFile1.txt
-ERROR - The feature has not been implemented
 ````
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
@@ -23,8 +22,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
-ERROR - The feature has not been implemented
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ````
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -32,8 +30,8 @@ encoded:
 
 
 ````
-Alice> dare encode TestDir1 /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
-ERROR - The feature has not been implemented
+Alice> dare encode TestDir1 /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
+ERROR - Access to the path 'C:\Users\hallam\Test\WorkingDirectory\TestDir1' is denied.
 ````
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
@@ -44,7 +42,6 @@ public encryption key.
 
 ````
 Alice> dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
-ERROR - The feature has not been implemented
 ````
 
 
@@ -73,7 +70,7 @@ level otherwise.
 
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ERROR - The option  is not known.
 ````
 
@@ -91,14 +88,14 @@ The `dare decode` command is used to decode and verify DARE Messages:
 
 ````
 Alice> dare decode TestFile1.txt.dare
-ERROR - The feature has not been implemented
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 ````
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=ECP4-ID66-OU4Y-DQ56-MLXK-SCB6-GA5A
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDUW-5ARW-ILWA-MOQ7-NKLM-IQXA-HMQA
 ERROR - The option  is not known.
 ````
 
@@ -108,7 +105,7 @@ the necessary decryption key(s) automatically:
 
 ````
 Alice> dare decode TestFile1.txt.mesh.dare
-ERROR - The feature has not been implemented
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 ````
 
 

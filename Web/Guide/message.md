@@ -29,7 +29,6 @@ using the `message contact` command:
 
 ````
 Bob> message contact alice@example.com
-ERROR - The feature has not been implemented
 ````
 
 Alice reviews her pending messages using the `message pending` command:
@@ -53,17 +52,15 @@ Bob's contact information has been added to Alice's address book:
 Alice> contact list
 {
   "Self": true,
-  "Key": "NA7T-AUB2-CVFC-SDEV-7TKX-BL3X-5ZY7",
-  "EnvelopedContact": [{
-      "Index": 0},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
-  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Key": "NCLV-ZOH4-TINU-ZUK2-77ET-BNWX-ODPS",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NA62-GE4Y-CSG5-6VUT-7YNY-HA7Y-BNEI",
-  "EnvelopedContact": [{
-      "Index": 0},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3NlcyI6IFt7CiAgI
-  CAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  "Key": "NA5Z-VZJT-23CT-M2HT-2SBK-YACV-PJLG",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
@@ -121,7 +118,6 @@ a confirmation request `Purchase equipment for $6,000?` using the
 
 ````
 Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
-ERROR - The feature has not been implemented
 ````
 
 Alice reviews her pending messages using the using the `message pending` command:
