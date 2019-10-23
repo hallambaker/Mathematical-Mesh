@@ -346,6 +346,13 @@ namespace Goedel.Mesh.Client {
             GetPendingMessage(RequestContact.__Tag);
 
         /// <summary>
+        /// Return the latest unprocessed MessageContactRequest that was received.
+        /// </summary>
+        /// <returns>The latest unprocessed MessageContactRequest</returns>
+        public Message GetPendingMessageContactReply() =>
+            GetPendingMessage(ReplyContact.__Tag);
+
+        /// <summary>
         /// Return the latest unprocessed MessageConfirmationRequest that was received.
         /// </summary>
         /// <returns>The latest unprocessed MessageConfirmationRequest</returns>
@@ -369,9 +376,13 @@ namespace Goedel.Mesh.Client {
             var completed = new Dictionary<string, Message>();
 
             foreach (var message in GetSpoolInbound().Select(1, true)) {
-                var meshMessage = Message.FromJSON(message.GetBodyReader());
-                if (!completed.ContainsKey(meshMessage.MessageID)) {
-                    if (meshMessage._Tag == tag) {
+                var contentMeta = message.Header.ContentMeta;
+
+
+                if (!completed.ContainsKey(contentMeta.UniqueID)) {
+                    var meshMessage = Message.FromJSON(message.GetBodyReader());
+
+                    if (contentMeta.MessageType == tag) {
                         return meshMessage;
                         }
                     switch (meshMessage) {
@@ -418,7 +429,7 @@ namespace Goedel.Mesh.Client {
                         new ConstraintsSelect() {
                             Container = statusRemote.Container,
                             IndexMax = statusRemote.Index,
-                            IndexMin = (int)storeLocal.FrameCount + 1
+                            IndexMin = (int)storeLocal.FrameCount
 
                             };
 
@@ -438,6 +449,8 @@ namespace Goedel.Mesh.Client {
                 }
 
             else {
+                // we have zero envelopes being returned in this update.
+
                 Store.Append(DirectoryAccount, containerUpdate.Envelopes, containerUpdate.Container);
                 return containerUpdate.Envelopes.Count;
                 }
@@ -631,16 +644,100 @@ namespace Goedel.Mesh.Client {
                     Accept(connection);
                     break;
                     }
+                case ReplyContact replyContact: {
+                    break;
+                    }
+                case RequestContact requestContact: {
+                    ContactReply(requestContact.Sender);
+                    break;
+                    }
 
+                case RequestConfirmation requestConfirmation: {
+                    ConfirmationResponse(requestConfirmation, true);
+
+
+                    break;
+                    }
+                case ResponseConfirmation responseConfirmation: {
+                    break;
+                    }
+                case RequestTask requestTask: {
+                    break;
+                    }
+                case OfferGroup offerGroup: {
+                    break;
+                    }
 
                 default: throw new NYI();
                 }
             }
 
+        public void ContactReply(string serviceID) {
+            // prepare the contact request
 
-        public void ContactRequest(string serviceID) => throw new NYI();
+            var message = new ReplyContact() {
+                Recipient = serviceID,
+                Subject = serviceID
+                };
 
-        public void ConfirmationRequest(string serviceID, string messageText) => throw new NYI();
+            SendMessage(message, serviceID);
+
+            // send it to the service
+
+
+
+
+            }
+
+        public void ContactRequest(string serviceID) {
+            // prepare the contact request
+
+            var message = new RequestContact() {
+                Recipient = serviceID,
+                Subject = serviceID
+                };
+
+            SendMessage(message, serviceID);
+
+            // send it to the service
+
+
+
+
+            }
+
+
+
+        public void ConfirmationRequest(string serviceID, string messageText) {
+            // prepare the contact request
+
+            var message = new RequestConfirmation() {
+                Recipient = serviceID,
+                Text = messageText
+                };
+
+            SendMessage(message, serviceID);
+
+            // send it to the service
+
+            }
+        public void ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
+            // prepare the contact request
+
+            var recipient = requestConfirmation.Sender;
+
+            var message = new ResponseConfirmation() {
+                Recipient = recipient,
+                Accept = response,
+                Request = requestConfirmation
+                };
+
+            SendMessage(message, recipient);
+
+            // send it to the service
+
+            }
+
 
         void Connect() {
             if (MeshClient != null) {
@@ -655,8 +752,29 @@ namespace Goedel.Mesh.Client {
             meshClient = GetMeshClient(ServiceID);
             }
 
+        public void SendMessage(Message MeshMessage, string recipient) =>
+            SendMessage(MeshMessage, new List<string> { recipient });
 
-        public void SendMessage(Message MeshMessage) => Connect();
+
+        public void SendMessage(Message MeshMessage, List<string> recipients ) {
+            Connect();
+
+            MeshMessage.Sender = ServiceID;
+
+            var message = DareEnvelope.Encode(MeshMessage.GetBytes());
+            message.Header.ContentMeta = new ContentMeta() {
+                UniqueID = UDF.Nonce(),
+                MessageType = MeshMessage._Tag
+
+                };
+            var postRequest = new PostRequest() {
+                Accounts = recipients,
+                Message = new List<DareEnvelope>() { message }
+                };
+
+
+            MeshClient.Post(postRequest);
+            }
 
         /// <summary>
         /// Send a message signed using the mesh administration key.
@@ -666,6 +784,13 @@ namespace Goedel.Mesh.Client {
             Connect();
 
             var message = DareEnvelope.Encode(MeshMessage.GetBytes());
+            message.Header.ContentMeta = new ContentMeta() {
+                UniqueID = UDF.Nonce (),
+                MessageType = MeshMessage._Tag
+
+                };
+
+
 
             var postRequest = new PostRequest() {
                 Self = new List<DareEnvelope>() { message }

@@ -356,7 +356,6 @@
 		Description
 			|
 
-
 	Transaction Public Connect ConnectRequest ConnectResponse
 		Description
 			|Request information necessary to begin making a connection request.

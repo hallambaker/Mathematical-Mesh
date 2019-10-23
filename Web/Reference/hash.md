@@ -108,8 +108,8 @@ true returned if and only if it matches the value specified.
 
 ````
 Alice> hash mac TestFile1.txt
-ABST-MWA6-4DUM-TNRC-QEXL-K54D-S3XU
-NBDY-GEEO-PG4Q-E6HH-F774-FUWL-FYBE
+ABN6-PSN5-U7FW-CC5Q-FVEJ-C6BJ-IRPF
+NDPA-OC65-N54O-P5K3-S5TA-ENP3-7XFO
 ````
 
 Specifying the /json option returns a result of type ResultDigest:
@@ -119,7 +119,7 @@ Alice> hash mac TestFile1.txt /json
 {
   "ResultDigest": {
     "Success": true,
-    "Digest": "ABST-MWA6-4DUM-TNRC-QEXL-K54D-S3XU",
-    "Key": "NBDY-GEEO-PG4Q-E6HH-F774-FUWL-FYBE"}}
+    "Digest": "ABN6-PSN5-U7FW-CC5Q-FVEJ-C6BJ-IRPF",
+    "Key": "NDPA-OC65-N54O-P5K3-S5TA-ENP3-7XFO"}}
 ````
 

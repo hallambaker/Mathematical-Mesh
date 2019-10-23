@@ -47,7 +47,7 @@ namespace Goedel.XUnit {
 
 
         public Result CreateAccount(string account) =>
-            Dispatch($"profile create  {account}");
+            Dispatch($"mesh create /service={account}");
 
         public string GetFileUDF(string filename) {
             var result = Dispatch($"hash udf {filename}");

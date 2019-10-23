@@ -89,4 +89,5 @@ The new device now has access to the Bookmarks catalog:
 
 ````
 Alice2> bookmark list
+ERROR - Object reference not set to an instance of an object.
 ````

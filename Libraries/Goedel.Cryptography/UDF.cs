@@ -52,8 +52,42 @@ namespace Goedel.Cryptography {
         OID = 112,
 
         ///<summary>Type code for Shamir secret</summary>
-        ShamirSecret = 144
+        ShamirSecret = 144,
+
+        ///<summary>Type code for derived key</summary>
+        DerivedKey = 200
         }
+
+
+    public enum UDFAlgorithmIdentifier {
+
+        ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
+        Any = 0,
+
+        ///<summary>X25519 keypair as described in RFC7748</summary>
+        X25519 = 1,
+        ///<summary>X448 keypair as described in RFC7748</summary>
+        X448 = 2,
+        ///<summary>Ed25519 keypair as described in RFC8032</summary>
+        Ed25519 = 3,
+        ///<summary>Ed448 keypair as described in RFC8032</summary>
+        Ed448 = 4,
+        ///<summary>NIST curve P-256</summary>
+        P256 = 5,
+        ///<summary>NIST curve P-384</summary>
+        P384 = 6,
+        ///<summary>NIST curve P-521</summary>
+        P521 = 7,
+        ///<summary>2048 bit RSA keypair</summary>
+        RSA2048 = 8,
+        ///<summary>3072 bit RSA keypair</summary>
+        RSA3072 = 9,
+        ///<summary>4096 bit RSA keypair</summary>
+        RSA4096 = 10       
+        }
+
+
+
 
     /// <summary>
     /// Constants used in building UDF values.
@@ -758,119 +792,40 @@ namespace Goedel.Cryptography {
 
 
 
+        public static byte[] KeySpecifier(UDFAlgorithmIdentifier algorithmIdentifier) {
+
+            var result = new byte[2];
+
+            result[1] = (byte) ((int)algorithmIdentifier & 0xff);
+            result[0] = (byte)((int)algorithmIdentifier>>8 & 0xff);
+            return result;
+
+
+            }
 
 
 
+        public static string DerivedKey(UDFAlgorithmIdentifier algorithmIdentifier,
+                    int length=128, byte[] data = null) {
 
-        #region // old compression
+            var keySpecifier = KeySpecifier(algorithmIdentifier);
+            data = data ?? CryptoCatalog.GetBits(length);
 
-        ///// <summary>
-        ///// Calculate a UDF fingerprint with specified precision.
-        ///// </summary>
-        ///// <param name="buffer">The prepared data buffer.</param>
-        ///// <param name="bits">Precision, must be a multiple of 25 bits.</param>
-        ///// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
-        ///// the hash value.</param>
-        ///// <param name="key">Optional key used to create a keyed fingerprint.</param>
-        ///// <returns>The binary UDF fingerprint.</returns>
-        //public static byte[] BufferDigestToUDF(
-        //            byte[] buffer,
-        //            int bits = 0,
-        //            CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
-        //            string key =null) {
-        //    byte[] UDFData;
+            var result = new byte [keySpecifier.Length + data.Length];
 
-        //    int versionID;
-        //    int compress = 0;
-        //    // process the data and set the first byte
+            result[0] = keySpecifier[1];
+            result[1] = keySpecifier[0];
+            Buffer.BlockCopy(data, 0, result, 2, data.Length);
 
-        //    if (key == null) {
-        //        UDFData = buffer.GetDigest(cryptoAlgorithmID);
-        //        compress = CountZeros(UDFData);
-        //        switch (cryptoAlgorithmID) {
-        //            case CryptoAlgorithmID.SHA_2_512: {
-        //                versionID = (byte)UDFTypeIdentifier.DigestAlgSHA_2_512;
-        //                break;
-        //                }
-        //            case CryptoAlgorithmID.SHA_3_512: {
-        //                versionID = (byte)UDFTypeIdentifier.DigestSHA_3_512;
-        //                break;
-        //                }
-        //            default: {
-        //                throw new InvalidAlgorithm();
-        //                }
-        //            }
-        //        }
-        //    else {
-        //        switch (cryptoAlgorithmID) {
-        //            case CryptoAlgorithmID.SHA_2_512: {
-        //                var macKey = KeyStringToKey(key, 512);
-        //                UDFData = buffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-        //                versionID = (byte)UDFTypeIdentifier.AuthenticatorHMAC_SHA_2_512;
-        //                break;
-        //                }
-        //            default: {
-        //                throw new InvalidAlgorithm();
-        //                }
-        //            }
-        //        }
+            var bits = result.Length * 8;
+            return TypeBDSToString(UDFTypeIdentifier.DerivedKey, result, bits + 8);
+            }
 
-        //    // Create the empty output buffer
-        //    var TotalBits = bits == 0 ? DefaultBits : bits;
-        //    var FullBytes = (TotalBits+7) / 8;
+        public static byte[] DerivedKey(string udf) {
+            var result = Parse(udf, out var code);
+            return code == (byte)UDFTypeIdentifier.DerivedKey ? result : null;
+            }
 
-        //    byte[] Output = new byte[FullBytes+1];
-        //    Output[0] = (byte) ((compress > 0) ? versionID + compress - MinCompress : versionID);
-        //    for (var j = 0; j < FullBytes; j++) {
-        //        Output[j + 1] = UDFData[j+ compress];
-        //        }
-
-
-        //    return Output;
-        //    }
-
-
-        //const int MinCompress = 2;
-        //const int MaxCompress = 7;
-        //static int CountZeros(byte[] data) {
-        //    for (var i = 0; i < MaxCompress; i++) {
-        //        if (data[i] != 0) {
-        //            return i > MinCompress ? i : 0;
-        //            }
-        //        }
-        //    return MaxCompress;
-        //    }
-        ///// <summary>
-        ///// Count leading zero bits in a data array.
-        ///// </summary>
-        ///// <param name="Data">Input array.</param>
-        ///// <returns>The number of leading zero bits, counting the MSB of each byte first.</returns>
-        //public static int CountLeadingZeros(byte[] Data) {
-        //    int Result = 0;
-
-        //    for (var i = 0; i < Data.Length; i++) {
-        //        if (Data[i] != 0) {
-        //            return Result + CountLeadingZeros(Data[i]);
-        //            }
-        //        Result += 8;
-        //        }
-
-        //    return Result;
-        //    }
-
-        //static int CountLeadingZeros(int Data) {
-        //    int Result = 0;
-        //    for (var i = 0; i < 8; i++) {
-        //        if (Data >= 0x80) {
-        //            return Result;
-        //            }
-        //        Result++;
-        //        Data = Data << 1;
-        //        }
-
-        //    return Result;
-        //    }
-        #endregion
 
         }
 

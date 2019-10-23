@@ -129,8 +129,11 @@ namespace ExampleGenerator {
 
             GitHub = false;
 
-            MakeArchitectureExamples(this);
+
             MakeUDFExamples(this);
+
+            MakeArchitectureExamples(this);
+
 
             MakeDareExamples(this);
             MakeSchemaExamples(this);

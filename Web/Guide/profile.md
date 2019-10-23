@@ -14,8 +14,8 @@ a description of the service parameters.
 ````
 Alice> account hello alice@example.com
 MeshService 3.0
-   Service UDF = MB5Q-BQTT-MWD7-2EDY-KGNJ-RC6M-XK5N
-   Host UDF = MC6X-EJ2Q-TOKR-F3MY-ALUH-CBEO-XU7E
+   Service UDF = MAUW-BTRJ-CEQI-WYSO-PCWV-YBGH-WYPM
+   Host UDF = MCGZ-A4GY-377T-KC5F-X6DO-FGSX-64BA
 ````
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
@@ -40,8 +40,8 @@ The `profile create` command creates a profile:
 
 ````
 Alice> mesh create
-Device Profile UDF=MA2C-HETK-HOFV-UTKE-LPDJ-TA73-OO2Q
-Personal Profile UDF=MAMM-XWMN-ZTWV-F32Q-LCDS-7TDM-VH2Y
+Device Profile UDF=MAGM-3MHR-ATTA-EKIR-2AED-4FKB-RFO5
+Personal Profile UDF=MDMD-6XEI-KFBS-OOCE-UJ4X-PM5J-YUC4
 ````
 
 

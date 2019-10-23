@@ -131,22 +131,28 @@ namespace Goedel.XUnit {
 
             // **** Contact testing
             contextAccountBob.ContactRequest(AccountAlice);
+            var sync = contextAccountAlice_1_a.Sync();
             var contactRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
             contextAccountAlice_1_a.Process(contactRequest);
 
             // Get the response back
+            sync = contextAccountBob.Sync();
             var contactResponseBob = contextAccountBob.GetPendingMessageConnectionRequest();
-            contextAccountAlice_1_a.Process(contactResponseBob);
+            
+            contextAccountBob.Process(contactResponseBob);
 
 
             // **** Confirmation testing
 
             // Ask Alice to add our credential
             contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
+
+            sync = contextAccountAlice_1_a.Sync();
             var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
             contextAccountAlice_1_a.Process(confirmRequest);
 
             // Get the response back
+            sync = contextAccountBob.Sync();
             var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
             contextAccountAlice_1_a.Process(confirmResponseBob);
             }
@@ -265,11 +271,15 @@ namespace Goedel.XUnit {
             contextAccountBob.ContactRequest(AccountAlice);
 
             // Alice ---> Bob
-            var fromBob = contextAccountAlice.GetPendingMessageConnectionRequest();
+            var sync = contextAccountAlice.Sync();
+
+            var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
             contextAccountAlice.Process(fromBob);
 
             // Bob
-            var fromAlice = contextAccountBob.GetPendingMessageConnectionRequest();
+            var syncBob = contextAccountBob.Sync();
+
+            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
             contextAccountAlice.Process(fromAlice);
             }
 
@@ -283,13 +293,15 @@ namespace Goedel.XUnit {
                 out var contextAccountBob, AccountBob);
 
             // Bob ---> Alice
-            contextAccountBob.ContactRequest(AccountAlice);
+            contextAccountBob.ConfirmationRequest(AccountAlice, "Open the pod bay doors");
 
             // Alice ---> Bob
+            var sync = contextAccountAlice.Sync();
             var fromBob = contextAccountAlice.GetPendingMessageConfirmationRequest();
             contextAccountAlice.Process(fromBob);
 
             // Bob
+            var syncBob = contextAccountBob.Sync();
             var fromAlice = contextAccountBob.GetPendingMessageConfirmationResponse();
             contextAccountAlice.Process(fromAlice);
             }

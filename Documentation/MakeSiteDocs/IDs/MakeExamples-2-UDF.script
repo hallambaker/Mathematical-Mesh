@@ -31,6 +31,10 @@
 #% UDFDigestResolution(Example);
 #% UDFEncryptedResolution(Example);
 #% UDFAuthenticator(Example);
+#% UDFDeriveCFRG(Example);
+#% UDFDeriveNIST(Example);
+#% UDFDeriveRSA(Example);
+#% UDFDeriveAny(Example);
 #end method
 
 
@@ -126,7 +130,7 @@ udf:#{Example.ResultDigestSHA2.Digest}
 
 #file UDFDigestLocator "Examples\\UDFDigestLocator.md" CreateExamples Example
 ~~~~
-udf://#{Example.ResultDigestSHA2.Digest}
+udf://example.com/#{Example.ResultDigestSHA2.Digest}
 ~~~~
 #end file
 
@@ -190,6 +194,173 @@ Alice is an employee of Example Inc., she uses three email addresses:
 <dd>A strong email address that is backwards incompatible.
 </dl>
 
+
+#end file
+
+#file UDFDeriveCFRG "Examples\\UDFDeriveCFRG.md" CreateExamples Example
+
+An X25519 key may be derived as follows:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.X25519.UDF}
+
+IKM =
+    #{Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex()}
+
+salt =
+    #{Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex()}
+
+PRK =
+    #{Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex()}
+
+OKM =
+    #{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
+	
+Key = 
+    #{Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex()}
+~~~~
+
+Derivation of an X448 key:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.X448.UDF}
+	
+Key = 
+    #{Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex()}
+~~~~
+
+Derivation of an Ed25519 key:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.Ed25519.UDF}
+	
+Key = 
+    #{Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex()}
+~~~~
+
+Derivation of an Ed448 key:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.Ed448.UDF}
+	
+Key = 
+    #{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
+~~~~
+
+#end file
+
+#file UDFDeriveNIST "Examples\\UDFDeriveNIST.md" CreateExamples Example
+
+A P-256 key may be derived as follows:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.P256.UDF}
+
+IKM =
+    #{Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex()}
+
+salt =
+    #{Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex()}
+
+PRK =
+    #{Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex()}
+
+OKM =
+    #{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
+	
+Key = 
+    #{Example.UDFResults.Derive.P256.Key}
+~~~~
+
+Derivation of a P-384 key:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.P384.UDF}
+	
+Key = 
+    #{Example.UDFResults.Derive.P384.Key}
+~~~~
+
+Derivation of a P-521 key:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.P521.UDF}
+	
+Key = 
+    #{Example.UDFResults.Derive.P521.Key}
+~~~~
+
+#end file
+
+#file UDFDeriveRSA "Examples\\UDFDeriveRSA.md" CreateExamples Example
+
+An RSA-2048 may be derived as follows:
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.RSA2048.UDF}
+
+IKM =
+    #{Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex()}
+
+salt =
+    #{Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex()}
+
+[Generation of the PRK as before]
+
+Info(p) = 
+    #{Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex()}
+
+OKM(p) =
+    #{Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex()}
+
+Info(q) = 
+    #{Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex()}
+
+OKM(q) =
+    #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
+	
+Key P = 
+    #{Example.UDFResults.Derive.RSA2048.P}
+
+Key Q = 
+    #{Example.UDFResults.Derive.RSA2048.Q}
+~~~~
+
+#end file
+
+#file UDFDeriveAny "Examples\\UDFDeriveAny.md" CreateExamples Example
+
+~~~~
+Fingerprint =
+    #{Example.UDFResults.Derive.Any_RSA2048.UDF}
+
+To generate an RSA-2048 key
+
+salt =
+    #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+	
+Key P = 
+    #{Example.UDFResults.Derive.Any_RSA2048.P}
+
+Key Q = 
+    #{Example.UDFResults.Derive.Any_RSA2048.Q}
+
+To generate an X25519 key
+
+salt =
+    #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
+
+Key = 
+    #{Example.UDFResults.Derive.Any_x25519.Key}
+~~~~
 
 #end file
 

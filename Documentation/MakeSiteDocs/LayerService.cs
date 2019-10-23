@@ -71,15 +71,20 @@ namespace ExampleGenerator {
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.
 
             ConnectRequest = testCLIAlice2.Example($"device request {AliceService1}");
+            ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceService1}");
+
             ConnectPending = testCLIAlice1.ExampleNoCatch($"device pending");
 
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
             var id1 = resultPending.Messages[0].MessageID;
-            var id2 = "tbs";// resultPending.Messages[1].MessageID;
+            
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
-            ConnectRequestMallet = testCLIMallet1.Example($"device request {AliceService1}");
+
+
+
+            var id2 = resultPending.Messages[1].MessageID;
 
             ConnectSync = testCLIAlice2.Example($"device complete",$"account sync");
 
@@ -136,7 +141,7 @@ namespace ExampleGenerator {
             // synchronized on the device.
             
             ContactList2 = testCLIAlice2.Example($"contact list");
-            BookmarkList2 = testCLIAlice2.ExampleNoCatch($"bookmark list");
+            BookmarkList2 = testCLIAlice2.Example($"bookmark list");
             PasswordList2 = testCLIAlice2.Example($"password list");
             CalendarList2 = testCLIAlice2.Example($"calendar list");
             NetworkList2 = testCLIAlice2.Example($"network list");

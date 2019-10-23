@@ -21,10 +21,11 @@ namespace Scratchpad {
 
             // The tests we need to clear to write the 3.0 docs.
 
-            TestService.Test().MeshDeviceConnectApprove();
-
-
+            // Working
+            TestService.Test().MeshServiceFull();
             //ShellTests.Test().TestHello();
+
+            // Not working
             //ShellTests.Test().TestProfileConnect();
             //ShellTests.Test().TestProfilePassword();
             //ShellTests.Test().TestMessageContact();

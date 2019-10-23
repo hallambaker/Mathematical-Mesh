@@ -58,7 +58,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create /account={accountA}");
+            device1.Dispatch($"mesh create /service={accountA}");
 
             // Fail: Because the Account is not being added to the CatalgedDevice as it should
             device1.Dispatch($"account sync");
@@ -67,7 +67,8 @@ namespace Goedel.XUnit {
             device2.Dispatch($"device request {accountA}");
             device2.Dispatch($"account sync", fail: true);
 
-            var result2 = device1.Dispatch($"device pending");
+            device1.Dispatch($"account sync");
+            var result2 = device1.Dispatch($"message pending");
             var message = (result2 as ResultPending).Messages[0] as AcknowledgeConnection;
             var witness = message.Witness;
 

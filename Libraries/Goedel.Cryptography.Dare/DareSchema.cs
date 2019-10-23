@@ -423,6 +423,11 @@ namespace Goedel.Cryptography.Dare {
 	/// </summary>
 	public partial class DareHeader : DareTrailer {
         /// <summary>
+        ///Unique identifier
+        /// </summary>
+
+		public virtual string						EnvelopeID  {get; set;}
+        /// <summary>
         ///The encryption algorithm as specified in JWE
         /// </summary>
 
@@ -536,6 +541,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteObjectStart ();
 				}
 			((DareTrailer)this).SerializeX(_Writer, false, ref _first);
+			if (EnvelopeID != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopeID", 1);
+					_Writer.WriteString (EnvelopeID);
+				}
 			if (EncryptionAlgorithm != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("enc", 1);
@@ -655,6 +665,10 @@ namespace Goedel.Cryptography.Dare {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "EnvelopeID" : {
+					EnvelopeID = JSONReader.ReadString ();
+					break;
+					}
 				case "enc" : {
 					EncryptionAlgorithm = JSONReader.ReadString ();
 					break;
@@ -761,6 +775,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual List<KeyValue>				KeyValues  {get; set;}
+        /// <summary>
+        ///The mesh message type
+        /// </summary>
+
+		public virtual string						MessageType  {get; set;}
         /// <summary>
         ///The content type field as specified in JWE
         /// </summary>
@@ -888,6 +907,11 @@ namespace Goedel.Cryptography.Dare {
 				_Writer.WriteArrayEnd ();
 				}
 
+			if (MessageType != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("MessageType", 1);
+					_Writer.WriteString (MessageType);
+				}
 			if (ContentType != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("cty", 1);
@@ -995,6 +1019,10 @@ namespace Goedel.Cryptography.Dare {
 						KeyValues.Add (_Item);
 						_Going = JSONReader.NextArray ();
 						}
+					break;
+					}
+				case "MessageType" : {
+					MessageType = JSONReader.ReadString ();
 					break;
 					}
 				case "cty" : {

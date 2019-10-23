@@ -594,13 +594,19 @@
 				|
 
 
+	Structure OfferGroup
+		Inherits Message
+
 	Structure RequestContact
 		Inherits Message
 		Boolean Reply
+		String Subject
 		Struct DareEnvelope Self
 			Description
 				|The contact data.
-
+	
+	Structure ReplyContact
+		Inherits RequestContact
 
 	Structure RequestConfirmation
 		Inherits Message
@@ -609,7 +615,7 @@
 
 	Structure ResponseConfirmation
 		Inherits Message
-		String ResponseID
+		Struct RequestConfirmation Request
 		Boolean Accept
 
 	Structure RequestTask

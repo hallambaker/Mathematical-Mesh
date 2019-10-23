@@ -100,7 +100,9 @@ namespace Goedel.Mesh.Client {
                     break;
                     }
                 case CatalogedMachine adminEntry: {
-                    DefaultEntry = adminEntry.Default ? adminEntry : DefaultEntry ?? adminEntry;
+                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.ID == adminEntry.ID) {
+                        DefaultEntry = adminEntry;
+                        }
                     break;
                     }
                 }

@@ -52,12 +52,12 @@ Bob's contact information has been added to Alice's address book:
 Alice> contact list
 {
   "Self": true,
-  "Key": "NCLV-ZOH4-TINU-ZUK2-77ET-BNWX-ODPS",
+  "Key": "NBPF-4GB4-72MA-2CPF-U2NR-5KBX-GFPK",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NA5Z-VZJT-23CT-M2HT-2SBK-YACV-PJLG",
+  "Key": "NDZH-TUDS-B6TS-R2YL-VQYH-E6F4-ULN5",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````

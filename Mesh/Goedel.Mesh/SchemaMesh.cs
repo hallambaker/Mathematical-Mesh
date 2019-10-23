@@ -109,7 +109,9 @@ namespace Goedel.Mesh {
 			{"MessagePIN", MessagePIN._Factory},
 			{"RequestConnection", RequestConnection._Factory},
 			{"AcknowledgeConnection", AcknowledgeConnection._Factory},
+			{"OfferGroup", OfferGroup._Factory},
 			{"RequestContact", RequestContact._Factory},
+			{"ReplyContact", ReplyContact._Factory},
 			{"RequestConfirmation", RequestConfirmation._Factory},
 			{"ResponseConfirmation", ResponseConfirmation._Factory},
 			{"RequestTask", RequestTask._Factory}			};
@@ -7223,6 +7225,97 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
+	public partial class OfferGroup : Message {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "OfferGroup";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new OfferGroup();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Message)this).SerializeX(_Writer, false, ref _first);
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new OfferGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as OfferGroup;
+				}
+		    var Result = new OfferGroup ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
 	public partial class RequestContact : Message {
 		bool								__Reply = false;
 		private bool						_Reply;
@@ -7233,6 +7326,10 @@ namespace Goedel.Mesh {
 			get => _Reply;
 			set {_Reply = value; __Reply = true; }
 			}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Subject  {get; set;}
         /// <summary>
         ///The contact data.
         /// </summary>
@@ -7287,6 +7384,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("Reply", 1);
 					_Writer.WriteBoolean (Reply);
 				}
+			if (Subject != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Subject", 1);
+					_Writer.WriteString (Subject);
+				}
 			if (Self != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Self", 1);
@@ -7329,6 +7431,10 @@ namespace Goedel.Mesh {
 					Reply = JSONReader.ReadBoolean ();
 					break;
 					}
+				case "Subject" : {
+					Subject = JSONReader.ReadString ();
+					break;
+					}
 				case "Self" : {
 					// An untagged structure
 					Self = new DareEnvelope ();
@@ -7336,6 +7442,97 @@ namespace Goedel.Mesh {
  
 					break;
 					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ReplyContact : RequestContact {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ReplyContact";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ReplyContact();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((RequestContact)this).SerializeX(_Writer, false, ref _first);
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ReplyContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ReplyContact;
+				}
+		    var Result = new ReplyContact ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -7457,7 +7654,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual string						ResponseID  {get; set;}
+		public virtual RequestConfirmation						Request  {get; set;}
 		bool								__Accept = false;
 		private bool						_Accept;
         /// <summary>
@@ -7511,10 +7708,10 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Message)this).SerializeX(_Writer, false, ref _first);
-			if (ResponseID != null) {
+			if (Request != null) {
 				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ResponseID", 1);
-					_Writer.WriteString (ResponseID);
+				_Writer.WriteToken ("Request", 1);
+					Request.Serialize (_Writer, false);
 				}
 			if (__Accept){
 				_Writer.WriteObjectSeparator (ref _first);
@@ -7554,8 +7751,11 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "ResponseID" : {
-					ResponseID = JSONReader.ReadString ();
+				case "Request" : {
+					// An untagged structure
+					Request = new RequestConfirmation ();
+					Request.Deserialize (JSONReader);
+ 
 					break;
 					}
 				case "Accept" : {

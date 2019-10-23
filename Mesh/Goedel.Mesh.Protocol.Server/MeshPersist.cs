@@ -171,7 +171,8 @@ namespace Goedel.Mesh.Server {
                     accountHandle.GetStatusCatalog (CatalogDevice.Label),
                     accountHandle.GetStatusCatalog (CatalogContact.Label),
                     accountHandle.GetStatusCatalog (CatalogApplication.Label),
-                    accountHandle.GetStatusCatalog (CatalogCredential.Label)
+                    accountHandle.GetStatusCatalog (CatalogBookmark.Label),
+                    accountHandle.GetStatusCatalog (CatalogCalendar.Label)
                     };
 
                 var statusResponse = new StatusResponse() {
@@ -286,13 +287,12 @@ namespace Goedel.Mesh.Server {
         public string MessagePost(JpcSession jpcSession, string account, DareEnvelope dareMessage) {
 
             using (var accountUnverified = GetAccountUnverified(account)) {
-                throw new NYI();
-                //// calculate the identifier her
-                //var identifier = "fred";
-                //dareMessage.Header.UniqueID = identifier;
-                //Assert.NotNull(accountUnverified);
-                //accountUnverified.Post(dareMessage);
-                //return identifier;
+                dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??
+                    new ContentMeta();
+                var identifier = UDF.Nonce();
+                dareMessage.Header.ContentMeta.UniqueID = identifier;
+                accountUnverified.Post(dareMessage);
+                return identifier;
                 }
             }
 

@@ -25,7 +25,7 @@ namespace Goedel.Mesh.Shell {
                     Reply = true
                     };
 
-                contextAccount.SendMessage(message);
+                contextAccount.SendMessage(message, recipient);
 
 
                 var result = new ResultSent() {
@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Shell {
                     Text = text
                     };
 
-                contextAccount.SendMessage(message);
+                contextAccount.SendMessage(message, recipient);
 
 
                 var result = new ResultSent() {
@@ -70,6 +70,10 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult MessagePending(MessagePending Options) {
 
             using (var contextAccount = GetContextAccount(Options)) {
+
+                // this is failing to read in the inbound messages as it should.
+                // The 
+
 
                 contextAccount.Sync();
 
@@ -153,7 +157,7 @@ namespace Goedel.Mesh.Shell {
                     Accept = accept
                     };
 
-                contextAccount.SendMessage(message);
+                contextAccount.SendMessage(message, recipient);
 
                 var result = new ResultSent() {
                     Success = true,

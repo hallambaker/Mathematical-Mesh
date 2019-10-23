@@ -79,6 +79,9 @@
 		Description
 			|A DARE Message Header. Since any field that is present in a trailer MAY be 
 			|placed in a header instead, the message header inherits from the trailer.
+		String EnvelopeID
+			Description 
+				|Unique identifier
 		String EncryptionAlgorithm
 			Tag "enc"
 			Description
@@ -154,6 +157,9 @@
 			Multiple
 			Description
 				|List of key/value pairs describing the payload of the frame.
+		String MessageType
+			Description
+				|The mesh message type
 		String ContentType
 			Tag "cty"
 			Description

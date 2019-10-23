@@ -599,6 +599,7 @@ namespace Goedel.Cryptography.Dare {
 
 
             var container = MakeNewContainer(jbcdStream, envelopes[0].Header);
+            container.DisposeJBCDStream = jbcdStream;
             container.Append(envelopes);
 
             return container;

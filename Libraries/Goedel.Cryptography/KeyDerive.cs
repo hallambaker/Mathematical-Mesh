@@ -133,6 +133,14 @@ namespace Goedel.Cryptography {
 
         static readonly byte[] NullKey = new byte[0];
 
+
+        public static byte[] Random( byte[] ikm, int length=128, byte[] salt = null) {
+            var prk = Extract(CryptoAlgorithmID.Default, salt);
+            return Expand(CryptoAlgorithmID.Default, prk, length);
+
+            }
+
+
         /// <summary>
         /// The extraction function
         /// </summary>
@@ -188,5 +196,9 @@ namespace Goedel.Cryptography {
 
             return result;
             }
+
+
+
+
         }
     }

@@ -41,6 +41,10 @@ namespace ExampleGenerator {
 			 UDFDigestResolution(Example);
 			 UDFEncryptedResolution(Example);
 			 UDFAuthenticator(Example);
+			 UDFDeriveCFRG(Example);
+			 UDFDeriveNIST(Example);
+			 UDFDeriveRSA(Example);
+			 UDFDeriveAny(Example);
 			}
 		
 
@@ -193,7 +197,7 @@ namespace ExampleGenerator {
 			using (var _Output = new StreamWriter ("Examples\\UDFDigestLocator.md")) {
 				var _Indent = ""; 
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("udf://{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
+				_Output.Write ("udf://example.com/{1}\n{0}", _Indent, Example.ResultDigestSHA2.Digest);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				}
 			}
@@ -284,6 +288,201 @@ namespace ExampleGenerator {
 				_Output.Write ("<dd>A strong email address that is backwards incompatible.\n{0}", _Indent);
 				_Output.Write ("</dl>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDeriveCFRG
+		//
+		public static void UDFDeriveCFRG (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDeriveCFRG.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("An X25519 key may be derived as follows:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.UDF);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("IKM =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.IKM.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("salt =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Salt.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("PRK =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.PRK.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("OKM =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex());
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Derivation of an X448 key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.UDF);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Derivation of an Ed25519 key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.UDF);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Derivation of an Ed448 key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.UDF);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex());
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDeriveNIST
+		//
+		public static void UDFDeriveNIST (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDeriveNIST.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("A P-256 key may be derived as follows:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.UDF);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("IKM =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.IKM.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("salt =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Salt.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("PRK =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.PRK.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("OKM =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex());
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Derivation of a P-384 key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.UDF);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Derivation of a P-521 key:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.UDF);
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDeriveRSA
+		//
+		public static void UDFDeriveRSA (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDeriveRSA.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("An RSA-2048 may be derived as follows:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.UDF);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("IKM =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.IKM.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("salt =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Salt.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[Generation of the PRK as before]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Info(p) = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Info_P.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("OKM(p) =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_P.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Info(q) = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Info_Q.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("OKM(q) =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex());
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key P = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.P);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Key Q = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.Q);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				}
+			}
+		
+
+		//
+		// UDFDeriveAny
+		//
+		public static void UDFDeriveAny (CreateExamples Example) { /* File  */
+			using (var _Output = new StreamWriter ("Examples\\UDFDeriveAny.md")) {
+				var _Indent = ""; 
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("~~~~\n{0}", _Indent);
+				_Output.Write ("Fingerprint =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.UDF);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To generate an RSA-2048 key\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("salt =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
+				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("Key P = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.P);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Key Q = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Q);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("To generate an X25519 key\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("salt =\n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("Key = \n{0}", _Indent);
+				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_x25519.Key);
+				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				}
 			}
