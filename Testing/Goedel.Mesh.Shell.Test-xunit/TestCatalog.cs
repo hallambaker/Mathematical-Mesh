@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Xunit;
 using Goedel.Mesh.Shell;
 using Goedel.Cryptography;
-using Goedel.Mesh.Test;
+using Goedel.Mesh;
 using Goedel.Test.Core;
 using Goedel.Test;
 using Goedel.Utilities;
@@ -75,28 +75,30 @@ namespace Goedel.XUnit {
             FailContactResult(contact1);
 
             // Add a single entry and check that it is correctly registered.
-            Dispatch($"contact add {contact1}");
-            CheckContactResult(contact1);
+            var contactID1 = GetContactKey(Dispatch($"contact add {contact1}"));
+            CheckContactResult(contactID1, contactID1);
+
+
 
             // Add a second entry, check that the first and second are correctly registered,
-            Dispatch($"contact add {contact2}");
-            CheckContactResult(contact1);
-            CheckContactResult(contact2);
+            var contactID2 = GetContactKey(Dispatch($"contact add {contact2}"));
+            CheckContactResult(contactID1, contact1);
+            CheckContactResult(contactID2, contact2);
 
             // Delete the second entry, check that only the first is still there.
-            Dispatch($"contact delete {contact2}");
-            CheckContactResult(contact1);
+            Dispatch($"contact delete {contactID2}");
+            CheckContactResult(contactID1, contact1);
 
-            FailContactResult(contact2);
+            FailContactResult(contactID1);
             // Update the first entry, check that it is correctly updated.
-            Dispatch($"contact add {contact3}");
-            CheckContactResult(contact3);
+            var contactID3 = GetContactKey(Dispatch($"contact add {contact3}"));
+            CheckContactResult(contactID3, contact3);
 
             FailContactResult(contact2);
             // Re-add the second entry, check that it is correctly registered.
-            Dispatch($"contact add {contact2}");
-            CheckContactResult(contact2);
-            CheckContactResult(contact3);
+            var contactID14 = GetContactKey(Dispatch($"contact add {contact2}"));
+            CheckContactResult(contactID14, contact2);
+            CheckContactResult(contactID3, contact3);
             }
 
 
@@ -138,26 +140,36 @@ namespace Goedel.XUnit {
             CheckBookmarkResult(path3, uri3, title3);
             }
 
+        string GetTaskKey(ShellResult result) =>
+            ((result as ResultEntry).CatalogEntry as CatalogedTask).Key;
+        string GetContactKey(ShellResult result) =>
+            ((result as ResultEntry).CatalogEntry as CatalogedContact).Key;
+
+
         [Fact]
         public void TestProfileCalendar() {
             var account = "alice@example.com";
 
-            string task1 = "task1", title1 = "title1", title1a = "title1a";
-            string task2 = "task2", title2 = "title2";
+            string title1 = "title1", title1a = "title1a";
+            string title2 = "title2";
             string title3 = "title3";
 
             CreateAccount(account);
 
             // Check that looking for a non existent entry fails
             // This makes sure that we don't end up picking up stale results from prior tests etc.
-            FailTaskResult(task1);
+            FailTaskResult("NYI");
 
             // Add a single entry and check that it is correctly registered.
-            Dispatch($"calendar add {task1} {title1}");
+            var result1 = Dispatch($"calendar add {title1}");
+            var task1 = GetTaskKey(result1);
+
             CheckTaskResult(task1, title1);
 
             // Add a second entry, check that the first and second are correctly registered,
-            Dispatch($"calendar add {task2} {title2}");
+            var result2 = Dispatch($"calendar add {title2}");
+            var task2 = GetTaskKey(result2);
+
             CheckTaskResult(task1, title1);
             CheckTaskResult(task2, title2);
 
@@ -167,11 +179,11 @@ namespace Goedel.XUnit {
 
             FailTaskResult(task2);
             // Update the first entry, check that it is correctly updated.
-            Dispatch($"calendar add {task1} {title1a}");
+            Dispatch($"calendar add {title1a} /id={task1} ");
             CheckTaskResult(task1, title1a);
 
             // Re-add the second entry, check that it is correctly registered.
-            Dispatch($"calendar add {task2} {title3}");
+            Dispatch($"calendar add  {title3} /id={task2} ");
             CheckTaskResult(task2, title3);
             CheckTaskResult(task1, title1a);
             }

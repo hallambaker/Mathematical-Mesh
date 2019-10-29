@@ -34,6 +34,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>The enclosing machine context.</summary>
         public ContextMesh ContextMesh;
 
+
+        public MeshHost MeshHost => MeshMachine.MeshHost;
+
         ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
 
         public AccountEntry AccountEntry { get; private set; }
@@ -377,11 +380,13 @@ namespace Goedel.Mesh.Client {
 
             foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = message.Header.ContentMeta;
+                
 
+                
 
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
                     var meshMessage = Message.FromJSON(message.GetBodyReader());
-
+                    Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
                     if (contentMeta.MessageType == tag) {
                         return meshMessage;
                         }
@@ -458,6 +463,7 @@ namespace Goedel.Mesh.Client {
             }
 
         public Store GetStore(string name, bool blind=false) {
+
 
             if (dictionaryStores.TryGetValue(name, out var syncStore)) {
                 if (!blind & (syncStore.Store is CatalogBlind)) {
@@ -802,8 +808,15 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public CatalogedGroup CreateGroup(string groupName) => throw new NYI();
-        public CatalogMember GetCatalogGroup(string groupName) => throw new NYI();
+        public CatalogedGroup CreateGroup(string groupName) {
+
+            throw new NYI();
+            }
+
+        public CatalogMember GetCatalogGroup(string groupName) {
+
+            throw new NYI();
+            }
         }
 
     }

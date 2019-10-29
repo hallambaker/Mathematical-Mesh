@@ -15,9 +15,11 @@ namespace Goedel.Mesh.Shell {
         //CommandLineInterpreter CommandLineInterpreter;
 
         public virtual IMeshMachineClient MeshMachine { get; }
+        public MeshHost MeshHost => MeshMachine.MeshHost;
 
 
- 
+
+
 
 
         public virtual MeshHost CatalogHost => catalogHost ??
@@ -153,14 +155,14 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The shell options.</param>
         /// <returns>The device context</returns>
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
 
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) => MeshMachine.GetContextMesh(admin: true) as ContextMeshAdmin;
+        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
 
 
         public virtual ContextAccount GetContextAccount(IAccountOptions options) {
             options.Future();
-            var contextMesh = MeshMachine.GetContextMesh();
+            var contextMesh = MeshHost.GetContextMesh();
 
             return contextMesh.GetContextAccount();
             }
@@ -176,6 +178,8 @@ namespace Goedel.Mesh.Shell {
 
 
         public KeyCollection KeyCollection(IAccountOptions options) {
+
+            // here need to pull the account details and the contact catalogs from each account?
 
             options.Future();
             return CatalogHost.KeyCollection;

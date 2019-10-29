@@ -31,7 +31,7 @@ namespace Goedel.Mesh.Shell {
             // here we need to decide if this is a local name or an account name.
 
 
-            using (var contextMesh = MeshMachine.CreateMesh("main")) {
+            using (var contextMesh = MeshHost.CreateMesh("main")) {
 
                 
                 if (account != null) {

@@ -25,12 +25,12 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");
             var machineAliceRecover = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin Recovered");
 
-            var deviceAdmin = machineAliceAdmin.CreateMesh("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateMesh("main");
 
             var (escrow, shares) = deviceAdmin.Escrow(3, 2);
             var recoverShares = new List<string> { shares[0].UDFKey, shares[2].UDFKey };
 
-            var deviceAdminRecovered = machineAliceRecover.RecoverMesh("main", escrow: escrow, shares: recoverShares);
+            var deviceAdminRecovered = machineAliceRecover.MeshHost.RecoverMesh("main", escrow: escrow, shares: recoverShares);
 
             }
 
@@ -39,7 +39,7 @@ namespace Goedel.Mesh.Test {
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
 
-            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
 
             using (var catalog = deviceAdmin.GetCatalogCredential()) {
 
@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Test {
             var machineAliceLaptop = new MeshMachineTest(testEnvironmentCommon, name: "Alice Laptop");
             var machineAlicePhone = new MeshMachineTest(testEnvironmentCommon, name: "Alice Phone");
 
-            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
 
             var catalog = deviceAdmin.GetCatalogDevice();
 
@@ -169,7 +169,7 @@ namespace Goedel.Mesh.Test {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
-            var deviceAdmin = machineAliceAdmin.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
 
 
             var catalog = deviceAdmin.GetCatalogContact();

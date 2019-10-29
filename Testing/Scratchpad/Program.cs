@@ -22,15 +22,50 @@ namespace Scratchpad {
             // The tests we need to clear to write the 3.0 docs.
 
             // Working
-            TestService.Test().MeshServiceFull();
+            //TestService.Test().MeshServiceFull();
             //ShellTests.Test().TestHello();
 
-            // Not working
+            // Working (sort of)
             //ShellTests.Test().TestProfileConnect();
+            //ShellTests.Test().TestMessageConfirmation();
             //ShellTests.Test().TestProfilePassword();
-            //ShellTests.Test().TestMessageContact();
+            //ShellTests.Test().TestProfileBookmark();
+            //ShellTests.Test().TestProfileCalendar();
+            //ShellTests.Test().TestProfileNetwork();
+
+
+            // Not working
+
+            ShellTests.Test().TestFileEncrypt();
+
+            //ShellTests.Test().TestFileSignEncrypt();
+            //ShellTests.Test().TestContainerArchive();
+            //ShellTests.Test().TestContainerCatalogEncrypt();
+
+            //ShellTests.Test().TestMessageGroup();
+
+
 
             }
+
+
+        /*
+         * Need to have a better theory of how MessagIDs are processed and some specific tests
+         * 
+         * message status {accountA} has to be fixed up
+         *  - detect completion of connection
+         *  - detect outstanding connection requests
+         * 
+         * May well be something strange going on with the handling/enumeration of spools
+         *  - Is it possible to traverse in reverse
+         * 
+         * Track read / unread messages
+         * 
+         * Correct bug when connecting a third device to a profile - getting just the original
+         * request.
+         * 
+         * 
+         */
 
 
         public static void Find(

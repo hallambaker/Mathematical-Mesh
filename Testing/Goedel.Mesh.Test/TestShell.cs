@@ -215,6 +215,8 @@ namespace Goedel.Mesh.Test {
                 }
             }
 
+        public Result CreateAccount(string account) => Dispatch($"mesh create /service={account}");
+
 
         public bool AssertAccount(int count = -1, string account = null, bool exists = true) => throw new NYI();
 
@@ -239,7 +241,7 @@ namespace Goedel.Mesh.Test {
             return true;
             }
 
-        public bool CheckContactResult(string key) {
+        public bool CheckContactResult(string key, string email) {
             var result = Dispatch($"contact get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedContact;
 
@@ -282,9 +284,10 @@ namespace Goedel.Mesh.Test {
 
         public bool CheckNetworkResult(string key, string password) {
             var result = Dispatch($"network get {key}") as ResultEntry;
-            var entry = result.CatalogEntry as CatalogedTask;
+            var entry = result.CatalogEntry as CatalogedNetwork;
 
-            (key == entry.Key).AssertTrue();
+            (key == entry.Service).AssertTrue();
+            (password == entry.Password).AssertTrue();
             return true;
             }
 

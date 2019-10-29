@@ -81,7 +81,11 @@ namespace Goedel.Mesh {
 
     public partial class CatalogedNetwork {
         ///<summary>The primary key is protocol:site </summary>
-        public override string _PrimaryKey => $"{Protocol??""}:{Service??""}";
+        public override string _PrimaryKey => PrimaryKey (Protocol,Service);
+
+        public static string PrimaryKey(string protocol, string service) =>
+            $"{protocol ?? ""}:{service ?? ""}";
+
 
         //public override List<string> _Keys => base._Keys;
         //List<string> keys = new List<string> { "Service" };

@@ -68,17 +68,17 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        Dictionary<string, ContainerStoreEntry> ObjectIndex = new Dictionary<string, ContainerStoreEntry>();
+        public Dictionary<string, ContainerStoreEntry> ObjectIndex = new Dictionary<string, ContainerStoreEntry>();
 
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        Dictionary<string, ContainerStoreEntry> DeletedObjects = new Dictionary<string, ContainerStoreEntry>();
+        public Dictionary<string, ContainerStoreEntry> DeletedObjects = new Dictionary<string, ContainerStoreEntry>();
 
         /// <summary>
         /// Dictionary mapping keywords to index for that keyword.
         /// </summary>
-        Dictionary<string, ContainerStoreIndex> IndexDictionary =
+        public Dictionary<string, ContainerStoreIndex> IndexDictionary =
                                 new Dictionary<string, ContainerStoreIndex>();
 
         #region --- IEnumerable Implementation 
@@ -149,15 +149,6 @@ namespace Goedel.Cryptography.Dare {
             if (readContainer & container.JBCDStream.Length > 0) {
                 ReadContainer();
                 }
-
-            //try {
-            //    if (readContainer & container.JBCDStream.Length > 0) {
-            //        ReadContainer();
-            //        }
-            //    }
-            //catch {
-            //    Disposing();
-            //    }
             }
 
 

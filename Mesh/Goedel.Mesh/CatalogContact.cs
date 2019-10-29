@@ -41,10 +41,15 @@ namespace Goedel.Mesh {
 
 
     public class CatalogContact : Catalog {
+        
+        
+        
         public const string Label = "mmm_Contact";
 
         public CatalogedContact Self;
 
+        public Dictionary<string, CatalogedContact> DictionaryByEmail = 
+                    new Dictionary<string, CatalogedContact>();
 
 
         public override string ContainerDefault => Label;
@@ -61,6 +66,19 @@ namespace Goedel.Mesh {
                     bool create = true) :
             base(directory, ContainerName, cryptoParameters, keyCollection, create: create) {
             }
+
+
+        protected override void UpdateEntry(CatalogedEntry catalogedEntry) {
+            var CatalogedContact = catalogedEntry as CatalogedContact;
+            var Contact = CatalogedContact.Contact;
+
+
+            DictionaryByEmail.AddSafe(Contact.Email, CatalogedContact);
+
+
+            }
+
+
 
         public CatalogedContact Add(DareEnvelope contact, bool self = false) {
             var entry = new CatalogedContact(contact) {
@@ -90,11 +108,26 @@ namespace Goedel.Mesh {
 
         public CatalogedContact(Contact contact) : this() => EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
                     contentType: "application/mmm");
+
+
+
+        public Contact Contact => Contact.Decode(EnvelopedContact);
+
         }
+
 
     public partial class Contact {
 
+        public static new Contact Decode(DareEnvelope message) {
+            if (message == null) {
+                return null;
+                }
+            var result = FromJSON(message.GetBodyReader(), true);
+            result.DareEnvelope = message;
+            return result;
+            }
 
         }
+
 
     }

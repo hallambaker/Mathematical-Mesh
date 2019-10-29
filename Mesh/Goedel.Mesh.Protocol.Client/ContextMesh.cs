@@ -50,16 +50,17 @@ namespace Goedel.Mesh.Client {
         // The account activation was not added to activations.
 
         public ContextAccount GetContextAccount(
-                string localName=null,
-                string accountName = null) => new ContextAccount(
-                    this, CatalogedDevice.GetAccount(localName, accountName));
-
+                string localName = null,
+                string accountName = null) {
+            var account = CatalogedDevice.GetAccount(localName, accountName);
+            return new ContextAccount(this, account);
+            }
 
 
         public void UpdateDevice(CatalogedDevice catalogedDevice) {
 
             CatalogedMachine.CatalogedDevice = catalogedDevice;
-            MeshMachine.Register(CatalogedMachine);
+            MeshMachine.MeshHost.Register(CatalogedMachine);
             }
 
         }
@@ -144,7 +145,7 @@ namespace Goedel.Mesh.Client {
                 EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };
 
-            meshMachine.Register(connection);
+            meshMachine.MeshHost.Register(connection);
 
             return new ContextMeshPending(meshMachine, connection);
 
@@ -185,7 +186,7 @@ namespace Goedel.Mesh.Client {
                 EnvelopedProfileMaster = statusResponse.EnvelopedProfileMaster
                 };
 
-            MeshMachine.Register(catalogedStandard);
+            MeshMachine.MeshHost.Register(catalogedStandard);
 
 
             var contextMesh = new ContextMesh(MeshMachine, catalogedStandard);

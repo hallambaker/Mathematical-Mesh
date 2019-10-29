@@ -21,8 +21,12 @@ namespace Goedel.Mesh.Shell {
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
+            // we are getting the wrong one here. we want the encryption recipients from the contacts file.
 
             var keyCollection = KeyCollection(Options);
+
+
+
             var cryptoParameters = GetCryptoParameters(keyCollection, Options);
 
             var ContentInfo = new ContentMeta() {

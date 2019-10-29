@@ -23,7 +23,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
             var serviceID = Options.ServiceID.Value;
             var pin = Options.PIN.Value;
-            var contextMeshPending = MeshMachine.Connect(serviceID, PIN:pin);
+            var contextMeshPending = MeshHost.Connect(serviceID, PIN:pin);
 
             var result = new ResultConnect() {
                 CatalogedMachine = contextMeshPending.CatalogedMachine
@@ -43,7 +43,7 @@ namespace Goedel.Mesh.Shell {
 
             // here need to pull up an account context for the pending connection.
 
-            var contextAccount = MeshMachine.Complete(serviceID);
+            var contextAccount = MeshHost.Complete(serviceID);
 
             var result = new ResultConnect() {
                 CatalogedMachine = contextAccount.ContextMesh.CatalogedMachine

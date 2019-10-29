@@ -76,7 +76,7 @@ namespace Goedel.Test.Core {
         // Convenience routines 
         public ContextAccount GetContextAccount(string localName=null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
-            var contextMesh = machine.GetContextMesh(localName);
+            var contextMesh = machine.MeshHost.GetContextMesh(localName);
             return contextMesh.GetContextAccount (localName, accountName);
             }
 
@@ -134,7 +134,7 @@ namespace Goedel.Test.Core {
             string PIN=null) {
 
             var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
-            return machine.Connect(accountId, PIN: PIN);
+            return machine.MeshHost.Connect(accountId, PIN: PIN);
             }
 
         public static ContextAccount Connect(

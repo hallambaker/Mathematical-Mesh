@@ -198,6 +198,62 @@
 				|The enveloped profile of the host.
 
 
+	//Create account
+	Transaction Admin CreateAccount CreateRequest CreateResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Attempt 
+
+	Message CreateRequest
+		Description
+			|Request binding of an account to a service address.
+		Inherits MeshRequest
+		String ServiceID
+			Description
+				|The service account to bind to.
+		Struct DareEnvelope SignedProfileMesh
+			Description
+				|The persistent profile that will be used to validate changes to the
+				|account assertion.
+		Struct DareEnvelope SignedAssertionAccount
+			Description
+				|The signed assertion describing the account.
+
+	Message CreateResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Create transaction.
+		String Reason
+			Description
+				|Text explaining the status of the creation request.
+		String URL
+			Description
+				|A URL to which the user is directed to complete the account creation 
+				|request.
+
+
+
+	//Delete account
+	Transaction Admin DeleteAccount DeleteRequest DeleteResponse
+		Description
+			|Request deletion of a service account.
+
+	Message DeleteRequest
+		Description
+			|Request creation of a new portal account. The request specifies
+			|the requested account identifier and the Mesh profile to be associated 
+			|with the account.
+		Inherits MeshRequestUser
+
+
+	Message DeleteResponse
+		Inherits MeshResponse
+		Description
+			|Reports the success or failure of a Delete transaction.
+
+
+    // Device Connection
 	Transaction User Complete CompleteRequest StatusResponse
 
 	Message CompleteRequest
@@ -321,7 +377,7 @@
 				|of all the messages must not exceed the specified value.	
 
 
-
+	// Public requests
 
 	Transaction Public Post PostRequest PostResponse
 		Description
@@ -379,61 +435,6 @@
 				|The current account assertion
 
 
-	//Create account
-	Transaction Admin CreateAccount CreateRequest CreateResponse
-		Description
-			|Request creation of a new service account.
-		Description
-			|Attempt 
-
-	Message CreateRequest
-		Description
-			|Request binding of an account to a service address.
-		Inherits MeshRequest
-		String ServiceID
-			Description
-				|The service account to bind to.
-		Struct DareEnvelope SignedProfileMesh
-			Description
-				|The persistent profile that will be used to validate changes to the
-				|account assertion.
-		Struct DareEnvelope SignedAssertionAccount
-			Description
-				|The signed assertion describing the account.
-
-	Message CreateResponse
-		Inherits MeshResponse
-		Description
-			|Reports the success or failure of a Create transaction.
-		String Reason
-			Description
-				|Text explaining the status of the creation request.
-		String URL
-			Description
-				|A URL to which the user is directed to complete the account creation 
-				|request.
-
-
-
-	//Delete account
-	Transaction Admin DeleteAccount DeleteRequest DeleteResponse
-		Description
-			|Request deletion of a new service account.
-		Description
-			|Attempt 
-
-	Message DeleteRequest
-		Description
-			|Request creation of a new portal account. The request specifies
-			|the requested account identifier and the Mesh profile to be associated 
-			|with the account.
-		Inherits MeshRequestUser
-
-
-	Message DeleteResponse
-		Inherits MeshResponse
-		Description
-			|Reports the success or failure of a Delete transaction.
 
 
 

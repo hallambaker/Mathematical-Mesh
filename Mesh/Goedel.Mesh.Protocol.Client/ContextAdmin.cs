@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Client {
             result.UpdateDevice(catalogedDevice);
 
             // Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
-            meshMachine.Register(adminEntry);
+            meshMachine.MeshHost.Register(adminEntry);
             return result;
             }
 

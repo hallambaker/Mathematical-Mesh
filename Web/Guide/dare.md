@@ -22,7 +22,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 
 ````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EC4V-6I4H-OXYI-7GM2-GI3V-IXEN-AOIQ
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
 ````
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -30,7 +30,7 @@ encoded:
 
 
 ````
-Alice> dare encode TestDir1 /encrypt=EC4V-6I4H-OXYI-7GM2-GI3V-IXEN-AOIQ
+Alice> dare encode TestDir1 /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
 ERROR - Access to the path 'C:\Users\hallam\Test\WorkingDirectory\TestDir1' is denied.
 ````
 
@@ -70,7 +70,7 @@ level otherwise.
 
 
 ````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EC4V-6I4H-OXYI-7GM2-GI3V-IXEN-AOIQ
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
 ERROR - The option  is not known.
 ````
 
@@ -95,7 +95,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 
 ````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EC4V-6I4H-OXYI-7GM2-GI3V-IXEN-AOIQ
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
 ERROR - The option  is not known.
 ````
 

@@ -147,14 +147,17 @@ namespace Goedel.Mesh {
                 switch (update.Action) {
                     case CatalogAction.New: {
                         catalog.ContainerPersistence.New(update.CatalogEntry);
+                        NewEntry(update.CatalogEntry);
                         break;
                         }
                     case CatalogAction.Update: {
                         catalog.ContainerPersistence.Update(update.CatalogEntry);
+                        UpdateEntry(update.CatalogEntry);
                         break;
                         }
                     case CatalogAction.Delete: {
                         catalog.ContainerPersistence.Delete(update.PrimaryKey);
+                        DeleteEntry(update.PrimaryKey);
                         break;
                         }
                     }
@@ -165,9 +168,18 @@ namespace Goedel.Mesh {
             }
 
 
+        protected virtual void NewEntry(CatalogedEntry catalogedEntry) {
+            }
+
+        protected virtual void UpdateEntry(CatalogedEntry catalogedEntry) {
+            }
+
+        protected virtual void DeleteEntry(string Key) {
+            }
+
 
         // Test: Check what happens when an attempt is made to perform conflicting updates to a store.
-        public  void Apply(DareEnvelope dareMessage) => ContainerPersistence.Apply(dareMessage);
+        public void Apply(DareEnvelope dareMessage) => ContainerPersistence.Apply(dareMessage);
 
 
 

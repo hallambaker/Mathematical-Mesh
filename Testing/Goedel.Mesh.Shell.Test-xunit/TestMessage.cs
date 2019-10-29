@@ -23,20 +23,20 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("MachineBob");
 
-            deviceA.Dispatch($"profile create {accountA}");
-            deviceB.Dispatch($"profile create {accountB}");
+            deviceA.Dispatch($"mesh create /service={accountA}");
+            deviceB.Dispatch($"mesh create /service={accountB}");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 
             deviceB.Dispatch($"message contact {accountA}");
 
-            deviceB.Dispatch($"message status {accountA}");
+            //deviceB.Dispatch($"message status {accountA}");
 
             var result2 = deviceA.Dispatch("message pending") as ResultPending;
 
             deviceA.Dispatch("message accept {}");
 
-            deviceB.Dispatch("message status {accountA}");
+            //deviceB.Dispatch("message status {accountA}");
 
             }
 
@@ -50,20 +50,20 @@ namespace Goedel.XUnit {
             var deviceA = GetTestCLI("MachineAlice");
             var deviceB = GetTestCLI("MachineBob");
 
-            deviceA.Dispatch($"profile create {accountA}");
-            deviceB.Dispatch($"profile create {accountB}");
+            deviceA.Dispatch($"mesh create /service={accountA}");
+            deviceB.Dispatch($"mesh create /service={accountB}");
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
 
             deviceB.Dispatch("message confirm {accountA} start");
 
-            deviceB.Dispatch("message status {accountA}");
+            //deviceB.Dispatch("message status {accountA}");
 
             var result2 = deviceA.Dispatch("message pending") as ResultPending;
 
             deviceA.Dispatch("message accept {}");
 
-            deviceB.Dispatch("message status {accountA}");
+            //deviceB.Dispatch("message status {accountA}");
 
             }
 

@@ -342,6 +342,7 @@
 
 	Structure Contact
 		Inherits Assertion
+		String Email
 		String Identifier
 		String FullName
 		String Title
@@ -507,6 +508,7 @@
 		Struct DareEnvelope EnvelopedTask
 		// Calendar entry
 		// Geolocation entry
+		String Title
 		String Key
 			Description
 				|Unique key.

@@ -20,10 +20,11 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult NetworkAdd(NetworkAdd Options) {
             using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
-
+                var password = Options.Password.Value;
 
                 var entry = new CatalogedNetwork() {
-                    Service = identifier
+                    Service = identifier,
+                    Password = password
                     };
                 using (var catalog = contextAccount.GetCatalogNetwork()) {
                     catalog.Update(entry);
@@ -44,9 +45,9 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult NetworkDelete(NetworkDelete Options) {
             using (var contextAccount = GetContextAccount(Options)) {
                 var identifier = Options.Identifier.Value;
-
+                var key = CatalogedNetwork.PrimaryKey(null, identifier);
                 using (var catalog = contextAccount.GetCatalogNetwork()) {
-                    var result = catalog.Locate(identifier);
+                    var result = catalog.Locate(key);
                     catalog.Delete(result);
 
                     return new ResultEntry() {
@@ -66,8 +67,9 @@ namespace Goedel.Mesh.Shell {
             using (var contextAccount = GetContextAccount(Options)) {
                 using (var catalog = contextAccount.GetCatalogNetwork()) {
                     var identifier = Options.Identifier.Value;
+                    var key = CatalogedNetwork.PrimaryKey(null, identifier);
 
-                    var result = catalog.Locate(identifier);
+                    var result = catalog.Locate(key);
 
                     return new ResultEntry() {
                         Success = result != null,

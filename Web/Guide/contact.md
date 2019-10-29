@@ -21,7 +21,7 @@ a file.
 Alice> contact add email carol@example.com
 {
   "Self": false,
-  "Key": "NDZH-TUDS-B6TS-R2YL-VQYH-E6F4-ULN5",
+  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
@@ -41,7 +41,7 @@ details:
 Alice> contact self email alice@example.com
 {
   "Self": true,
-  "Key": "NBPF-4GB4-72MA-2CPF-U2NR-5KBX-GFPK",
+  "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
@@ -74,12 +74,12 @@ A complete list of contacts is obtained using the  `contact list` command:
 Alice> contact list
 {
   "Self": true,
-  "Key": "NBPF-4GB4-72MA-2CPF-U2NR-5KBX-GFPK",
+  "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDZH-TUDS-B6TS-R2YL-VQYH-E6F4-ULN5",
+  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````

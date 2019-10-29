@@ -717,10 +717,17 @@
 	CommandSet Calendar "calendar"
 		Brief "Manage calendar catalogs connected to an account"
 
-		Command CalendarAdd "add"
+		Command CalendarImport "import"
 			Brief "Add calendar entry from file"
 			Parameter File "in" ExistingFile
-			Parameter Identifier "id" String
+			Option Identifier "id" String
+			Include AccountOptions
+			Include Reporting
+
+		Command CalendarAdd "add"
+			Brief "Add calendar entry"
+			Parameter Title "title" String
+			Option Identifier "id" String
 			Include AccountOptions
 			Include Reporting
 
@@ -745,10 +752,17 @@
 	CommandSet Network "network"
 		Brief "Manage network profile settings"
 
-		Command NetworkAdd "add"
+		Command NetworkImport "import"
 			Brief "Add calendar entry from file"
 			Parameter File "in" ExistingFile
-			Parameter Identifier "id" String
+			Option Identifier "id" String
+			Include AccountOptions
+			Include Reporting
+
+		Command NetworkAdd "add"
+			Brief "Add calendar entry from file"
+			Parameter Identifier "ssid" String
+			Parameter Password "password" ExistingFile
 			Include AccountOptions
 			Include Reporting
 
@@ -1020,3 +1034,4 @@
 			Include Reporting
 			Parameter Container "in" ExistingFile
 				Brief "Container to read"
+

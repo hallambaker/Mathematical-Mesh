@@ -3469,6 +3469,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
+		public virtual string						Email  {get; set;}
+        /// <summary>
+        /// </summary>
+
 		public virtual string						Identifier  {get; set;}
         /// <summary>
         /// </summary>
@@ -3558,6 +3562,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (Email != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Email", 1);
+					_Writer.WriteString (Email);
+				}
 			if (Identifier != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Identifier", 1);
@@ -3706,6 +3715,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Email" : {
+					Email = JSONReader.ReadString ();
+					break;
+					}
 				case "Identifier" : {
 					Identifier = JSONReader.ReadString ();
 					break;
@@ -5863,6 +5876,10 @@ namespace Goedel.Mesh {
 
 		public virtual DareEnvelope						EnvelopedTask  {get; set;}
         /// <summary>
+        /// </summary>
+
+		public virtual string						Title  {get; set;}
+        /// <summary>
         ///Unique key.
         /// </summary>
 
@@ -5916,6 +5933,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("EnvelopedTask", 1);
 					EnvelopedTask.Serialize (_Writer, false);
 				}
+			if (Title != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Title", 1);
+					_Writer.WriteString (Title);
+				}
 			if (Key != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Key", 1);
@@ -5959,6 +5981,10 @@ namespace Goedel.Mesh {
 					EnvelopedTask = new DareEnvelope ();
 					EnvelopedTask.Deserialize (JSONReader);
  
+					break;
+					}
+				case "Title" : {
+					Title = JSONReader.ReadString ();
 					break;
 					}
 				case "Key" : {

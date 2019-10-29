@@ -170,7 +170,7 @@ namespace Goedel.Test.Core {
         public override Stream Post(MemoryStream Data) {
             MeshPortalTest.MeshProtocolMessages = MeshPortalTest.MeshProtocolMessages ??
                 new List<Trace>();
-            var requestBytes= Data.GetBuffer();
+            var requestBytes= Data.ToArray();
 
             var JSONReader = new JSONReader(requestBytes);
             var result = Host.Dispatch(this, JSONReader);

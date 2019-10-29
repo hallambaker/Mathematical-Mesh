@@ -296,6 +296,24 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
+        /// <summary>
+        /// Create a message envelope for a message originated by the service. The message is
+        /// always signed under the service key and encrypted under the keys of at least
+        /// one recipient.
+        /// </summary>
+        /// <param name="message">The message to be wrapped by the envelope</param>
+        /// <returns>The signed message.</returns>
+        DareEnvelope Envelope(Message message) {
+
+            var result = DareEnvelope.Encode(message.GetBytes());
+            result.Header.ContentMeta = result.Header.ContentMeta ??
+                    new ContentMeta();
+            result.Header.ContentMeta.UniqueID = UDF.Nonce();
+            result.Header.ContentMeta.MessageType = message._Tag;
+
+            return result;
+            }
+
 
         /// <summary>
         /// Get access to an account record for an authenticated request.
@@ -371,14 +389,7 @@ namespace Goedel.Mesh.Server {
 
 
 
-        /// <summary>
-        /// Create a message envelope for a message originated by the service. The message is
-        /// always signed under the service key and encrypted under the keys of at least
-        /// one recipient.
-        /// </summary>
-        /// <param name="message">The message to be wrapped by the envelope</param>
-        /// <returns>The signed message.</returns>
-        DareEnvelope Envelope(Message message) => DareEnvelope.Encode(message.GetBytes());
+
 
 
 

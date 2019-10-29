@@ -144,7 +144,7 @@ namespace ExampleGenerator {
 
             }
 
-        public bool All = true;
+        public bool All = false;
 
 
         public void MakeClean() {

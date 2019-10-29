@@ -16,9 +16,41 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
+
         public override ShellResult CalendarAdd(CalendarAdd Options) {
             using (var contextAccount = GetContextAccount(Options)) {
-                var identifier = Options.Identifier.Value;
+                var title = Options.Title.Value;
+                var identifier = Options.Identifier.Value ?? UDF.Nonce();
+
+
+
+                var entry = new CatalogedTask() {
+                    Key = identifier,
+                    Title = title
+                    };
+                using (var catalog = contextAccount.GetCatalogCalendar()) {
+                    catalog.Update(entry);
+                    }
+
+                return new ResultEntry() {
+                    Success = true,
+                    CatalogEntry = entry
+                    };
+                }
+            }
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult CalendarImport(CalendarImport Options) {
+            using (var contextAccount = GetContextAccount(Options)) {
+
+                "Implement file import functionality".TaskFunctionality(true);
+
+                var identifier = Options.Identifier.Value ?? UDF.Nonce();
 
                 var entry = new CatalogedTask() {
                     Key = identifier

@@ -14,28 +14,6 @@ namespace Goedel.Mesh.Client {
         MeshHost MeshHost { get; }
 
         /// <summary>
-        /// Return an administration profile with local name <paramref name="local"/>.
-        /// </summary>
-        /// <param name="local">The profile to return.</param>
-        /// <returns>The entry for the specified profile.</returns>
-        CatalogedMachine GetConnection(string local = null);
-
-        /// <summary>
-        /// Return an pending connection request with local name <paramref name="local"/>.
-        /// </summary>
-        /// <param name="local">The profile to return.</param>
-        /// <returns>The entry for the specified profile.</returns>
-        CatalogedPending GetPending(string local = null);
-
-        /// <summary>
-        /// Register <paramref name="profileEntry"/> in the persistence store. An error is
-        /// reported if the entry does not exist and the <paramref name="create"/> is true.
-        /// </summary>
-        /// <param name="profileEntry">The entry to add or update.</param>
-        /// <param name="create">Report an error if the object identifier does not already exist.</param>
-        void Register(CatalogedMachine profileEntry, bool create=true);
-
-        /// <summary>
         /// Return a MeshService client for the service ID <paramref name="serviceID"/>
         /// using the authentication key <paramref name="keyAuthentication"/> and credential
         /// <paramref name="assertionAccountConnection"/>. 
@@ -55,58 +33,83 @@ namespace Goedel.Mesh.Client {
             ConnectionAccount assertionAccountConnection,
             Profile profile = null);
 
-        /// <summary>
-        /// Create a new management context for the specified Mesh profile.
-        /// </summary>
-        /// <param name="localName">The friendly name for the profile</param>
-        /// <param name="admin">Enable administration privileges (if available).</param>
-        /// <returns>Context for administering the Mesh</returns>
-        ContextMesh GetContextMesh(string localName = null, bool admin = true);
 
-        /// <summary>
-        /// Create a new Mesh
-        /// </summary>
-        /// <param name="localName"></param>
-        /// <param name="algorithmSign"></param>
-        /// <param name="algorithmEncrypt"></param>
-        /// <param name="algorithmAuthenticate"></param>
-        /// <returns></returns>
-        ContextMeshAdmin CreateMesh(
-                string localName,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) ;
+        ///// <summary>
+        ///// Return an administration profile with local name <paramref name="local"/>.
+        ///// </summary>
+        ///// <param name="local">The profile to return.</param>
+        ///// <returns>The entry for the specified profile.</returns>
+        //CatalogedMachine GetConnection(string local = null);
 
-        /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account via the service</returns>
-        ContextAccount CreateService(
-                string localName,
-                string accountName = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
+        ///// <summary>
+        ///// Return an pending connection request with local name <paramref name="local"/>.
+        ///// </summary>
+        ///// <param name="local">The profile to return.</param>
+        ///// <returns>The entry for the specified profile.</returns>
+        //CatalogedPending GetPending(string local = null);
 
-        /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account via the service</returns>
-        ContextMeshPending Connect(
-                string serviceID,
-                string localName = null,
-                string PIN = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
+        ///// <summary>
+        ///// Register <paramref name="profileEntry"/> in the persistence store. An error is
+        ///// reported if the entry does not exist and the <paramref name="create"/> is true.
+        ///// </summary>
+        ///// <param name="profileEntry">The entry to add or update.</param>
+        ///// <param name="create">Report an error if the object identifier does not already exist.</param>
+        //void Register(CatalogedMachine profileEntry, bool create=true);
 
-        /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account via the service</returns>
-        ContextAccount Complete(
-                string serviceID,
-                string localName = null);
+
+
+        /////// <summary>
+        /////// Create a new management context for the specified Mesh profile.
+        /////// </summary>
+        /////// <param name="localName">The friendly name for the profile</param>
+        /////// <param name="admin">Enable administration privileges (if available).</param>
+        /////// <returns>Context for administering the Mesh</returns>
+        ////ContextMesh GetContextMesh(string localName = null, bool admin = true);
+
+        ///// <summary>
+        ///// Create a new Mesh
+        ///// </summary>
+        ///// <param name="localName"></param>
+        ///// <param name="algorithmSign"></param>
+        ///// <param name="algorithmEncrypt"></param>
+        ///// <param name="algorithmAuthenticate"></param>
+        ///// <returns></returns>
+        //ContextMeshAdmin CreateMesh(
+        //        string localName,
+        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) ;
+
+        ///// <summary>
+        ///// Create a new Mesh master profile and account and bind to a service
+        ///// </summary>
+        ///// <returns>Context for administering the Mesh account via the service</returns>
+        //ContextAccount CreateService(
+        //        string localName,
+        //        string accountName = null,
+        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
+
+        ///// <summary>
+        ///// Create a new Mesh master profile and account and bind to a service
+        ///// </summary>
+        ///// <returns>Context for administering the Mesh account via the service</returns>
+        //ContextMeshPending Connect(
+        //        string serviceID,
+        //        string localName = null,
+        //        string PIN = null,
+        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default);
+
+        ///// <summary>
+        ///// Create a new Mesh master profile and account and bind to a service
+        ///// </summary>
+        ///// <returns>Context for administering the Mesh account via the service</returns>
+        //ContextAccount Complete(
+        //        string serviceID,
+        //        string localName = null);
 
         }
     }

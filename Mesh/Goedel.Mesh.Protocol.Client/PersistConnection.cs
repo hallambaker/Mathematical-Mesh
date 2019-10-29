@@ -99,15 +99,24 @@ namespace Goedel.Mesh.Client {
                     DefaultPendingEntry = pendingEntry.Default ? pendingEntry : DefaultPendingEntry ?? pendingEntry;
                     break;
                     }
+                case CatalogedStandard adminEntry: {
+                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.ID == adminEntry.ID) {
+                        DefaultEntry = adminEntry;
+                        }
+                    break;
+                    }
                 case CatalogedMachine adminEntry: {
                     if (DefaultEntry == null || adminEntry.Default || DefaultEntry.ID == adminEntry.ID) {
                         DefaultEntry = adminEntry;
                         }
                     break;
                     }
+
+
+
                 }
 
-
+            base.MemoryCommitUpdate(containerStoreEntry);
             }
 
         /// <summary>

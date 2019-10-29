@@ -27,8 +27,9 @@ namespace Goedel.XUnit {
 
             var filename = "Hello world".ToFileUnique();
 
-            deviceA.Dispatch($"profile master /new {accountA}");
-            deviceB.Dispatch($"profile master /new {accountB}");
+
+            deviceA.CreateAccount(accountA);
+            deviceB.CreateAccount(accountB);
 
             deviceA.Dispatch($"group create {accountR}");
             var result1 = Dispatch($"dare encode {filename} /encrypt {accountR}") as ResultFile;

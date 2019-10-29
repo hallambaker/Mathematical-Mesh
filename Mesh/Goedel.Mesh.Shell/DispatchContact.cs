@@ -22,8 +22,10 @@ namespace Goedel.Mesh.Shell {
                 var email = Options.Email.Value;
 
                 var contact = new Contact() {
+                    Email = email,
                     Addresses = new List<Address>() {
                         new Address () {
+                            
                             URI = "mailto:{email}"
                             }
                         }
