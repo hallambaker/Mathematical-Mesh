@@ -420,7 +420,7 @@ namespace Goedel.Mesh.Client {
                     new ConstraintsSelect() {
                         Container = statusRemote.Container,
                         IndexMax = statusRemote.Index,
-                        IndexMin = (int)storeLocal.FrameCount+1
+                        IndexMin = (int)storeLocal.FrameCount
 
                         };
 

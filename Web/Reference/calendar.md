@@ -4,40 +4,26 @@
 
 ````
 calendar    Manage calendar catalogs connected to an account
-    add   Add calendar entry from file
+    add   Add calendar entry
     delete   Delete calendar entry
     dump   List calendar entries
     get   Lookup calendar entry
+    import   Add calendar entry from file
 ````
 
 
 # calendar add
 
 ````
-add   Add calendar entry from file
+add   Add calendar entry
        <Unspecified>
-       <Unspecified>
+    /id   <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> calendar add CalendarEntry1.json CalID1
-{
-  "Key": "CalID1"}````
-
-Specifying the /json option returns a result of type ResultEntry:
-
-````
-Alice> calendar add CalendarEntry1.json CalID1 /json
-{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Key": "CalID1"}}}
-````
+**Missing Example***
 
 # calendar delete
 
@@ -49,22 +35,7 @@ delete   Delete calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> calendar delete CalID1
-{
-  "Key": "CalID1"}````
-
-Specifying the /json option returns a result of type ResultEntry:
-
-````
-Alice> calendar delete CalID1 /json
-{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Key": "CalID1"}}}
-````
+**Missing Example***
 
 # calendar get
 
@@ -76,22 +47,7 @@ get   Lookup calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> calendar get CalID1
-{
-  "Key": "CalID1"}````
-
-Specifying the /json option returns a result of type ResultEntry:
-
-````
-Alice> calendar get CalID1 /json
-{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Key": "CalID1"}}}
-````
+**Missing Example***
 
 # calendar dump
 
@@ -102,20 +58,6 @@ dump   List calendar entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> calendar list
-ERROR - The command  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> calendar list /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-````
+**Missing Example***
 
 

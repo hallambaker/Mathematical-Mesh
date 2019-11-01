@@ -77,12 +77,14 @@ namespace Goedel.Mesh {
 			{"Permission", Permission._Factory},
 			{"ConnectionDevice", ConnectionDevice._Factory},
 			{"ConnectionAccount", ConnectionAccount._Factory},
+			{"ConnectionGroup", ConnectionGroup._Factory},
 			{"ConnectionService", ConnectionService._Factory},
 			{"ConnectionHost", ConnectionHost._Factory},
 			{"ConnectionApplication", ConnectionApplication._Factory},
 			{"Activation", Activation._Factory},
 			{"ActivationDevice", ActivationDevice._Factory},
 			{"ActivationAccount", ActivationAccount._Factory},
+			{"ActivationGroup", ActivationGroup._Factory},
 			{"Contact", Contact._Factory},
 			{"Role", Role._Factory},
 			{"Address", Address._Factory},
@@ -1893,6 +1895,11 @@ namespace Goedel.Mesh {
 	/// administrators over time.
 	/// </summary>
 	public partial class ProfileGroup : Profile {
+        /// <summary>
+        ///Key currently used to encrypt data under this profile
+        /// </summary>
+
+		public virtual PublicKey						KeyEncryption  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1937,6 +1944,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_Writer, false, ref _first);
+			if (KeyEncryption != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1970,6 +1982,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new PublicKey ();
+					KeyEncryption.Deserialize (JSONReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;
@@ -2725,6 +2744,116 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Describes the connection of a member to a group.
+	/// </summary>
+	public partial class ConnectionGroup : Connection {
+        /// <summary>
+        ///The decryption key for the user within the group
+        /// </summary>
+
+		public virtual PublicKey						KeyEncryption  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ConnectionGroup";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ConnectionGroup();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Connection)this).SerializeX(_Writer, false, ref _first);
+			if (KeyEncryption != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ConnectionGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ConnectionGroup;
+				}
+		    var Result = new ConnectionGroup ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new PublicKey ();
+					KeyEncryption.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
 	/// </summary>
 	public partial class ConnectionService : Connection {
 		
@@ -3449,6 +3578,128 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					KeySignature = new KeyOverlay ();
 					KeySignature.Deserialize (JSONReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(JSONReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ActivationGroup : Activation {
+        /// <summary>
+        ///The UDF of the group
+        /// </summary>
+
+		public virtual string						GroupUDF  {get; set;}
+        /// <summary>
+        ///The key overlay that compliments the member's group decryption key.		
+        /// </summary>
+
+		public virtual KeyOverlay						KeyEncryption  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ActivationGroup";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ActivationGroup();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Activation)this).SerializeX(_Writer, false, ref _first);
+			if (GroupUDF != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("GroupUDF", 1);
+					_Writer.WriteString (GroupUDF);
+				}
+			if (KeyEncryption != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ActivationGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
+			if (JSONReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				return Out as ActivationGroup;
+				}
+		    var Result = new ActivationGroup ();
+			Result.Deserialize (JSONReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+			
+			switch (Tag) {
+				case "GroupUDF" : {
+					GroupUDF = JSONReader.ReadString ();
+					break;
+					}
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new KeyOverlay ();
+					KeyEncryption.Deserialize (JSONReader);
  
 					break;
 					}

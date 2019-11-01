@@ -26,7 +26,7 @@ namespace Goedel.Mesh.Client {
     /// Container persisting entries for the connection catalog. This is the only type of catalog that
     /// is never synchronized to a service under any circumstance.
     /// </summary>
-    public class CatalogHost : ContainerPersistenceStore {
+    public class PersistHost : ContainerPersistenceStore {
 
         ///<summary></summary>
         public CatalogedMachine DefaultEntry { get; private set; }
@@ -37,7 +37,7 @@ namespace Goedel.Mesh.Client {
         Dictionary<string, CatalogedMachine> DictionaryLocal2Connection = new Dictionary<string, CatalogedMachine>();
 
         ///<summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
-        static CatalogHost() {
+        static PersistHost() {
             _ = MeshItem.Initialize;
             _ = HostCatalogItem.Initialize;
             _ = MeshProtocol.Initialize;
@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="fileStatus">The file status in which to open the container.</param>
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
-        public CatalogHost(string fileName, string type = null,
+        public PersistHost(string fileName, string type = null,
                     string comment = null, bool readOnly = false,
                     FileStatus fileStatus = FileStatus.ConcurrentLocked,
                     ContainerType containerType = ContainerType.Chain,
@@ -127,17 +127,17 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        /// <summary>
-        /// Return a connection from the catalog by local name.
-        /// </summary>
-        /// <param name="local"></param>
-        /// <returns></returns>
-        public CatalogedMachine GetConnection(string local = null) =>
-            (local == null) ? DefaultEntry : DictionaryLocal2Connection.GetValue(local, null);
+        ///// <summary>
+        ///// Return a connection from the catalog by local name.
+        ///// </summary>
+        ///// <param name="local"></param>
+        ///// <returns></returns>
+        //public CatalogedMachine GetConnection(string local = null) =>
+        //    (local == null) ? DefaultEntry : DictionaryLocal2Connection.GetValue(local, null);
             
 
-        public CatalogedPending GetPending(string local = null) =>
-            (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as CatalogedPending);
+        //public CatalogedPending GetPending(string local = null) =>
+        //    (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as CatalogedPending);
 
 
         }

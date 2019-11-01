@@ -80,7 +80,7 @@ namespace Goedel.XUnit {
         void TestEd25519 (SignatureTest Test) {
 
             var Private = new CurveEdwards25519Private(Test.SecretKey);
-            var Public = Private.PublicKey;
+            var Public = Private.Public;
 
             Public.Encoding.AssertEqual(Test.PublicKey);
 

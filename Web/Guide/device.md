@@ -10,12 +10,7 @@ The `device request` command is used on the new device
 to request connection to the user's profile. Alice need only specify 
 the mesh service account alice@example.com to which connection is requested:
 
-
-````
-Alice2> device request alice@example.com
-   Witness value = S6SB-IQ4N-25DX-47HG-ZC77-MA2I-5QMT
-   Personal Mesh = MAZM-EQPB-Y6BY-B3W4-6QZS-CJES-QLTR
-````
+**Missing Example***
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -30,57 +25,34 @@ complete the connection process.
 The `device pending` command gives a list of pending connection
 messages.
 
-
-````
-Alice> device pending
-````
+**Missing Example***
 
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
-
-````
-Alice> device accept NAWO-FRYR-JFVG-EBIU-FCOZ-B7KC-KDBY
-````
+**Missing Example***
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
-
-````
-Alice> device reject NBUA-WD3V-JRBN-POQF-BKKQ-V7PN-4GGN
-````
+**Missing Example***
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-
-````
-Alice2> device complete
-ERROR - Object reference not set to an instance of an object.
-Alice2> account sync
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 ##Managing connected devices
 
 The `device list` command gives a list of devices in the device 
 catalog:
 
-
-````
-Alice> device list
-````
+**Missing Example***
 
 The `device delete` command removes a device from the catalog:
 
-
-````
-Alice> device delete NAWO-FRYR-JFVG-EBIU-FCOZ-B7KC-KDBY
-ERROR - The feature has not been implemented
-Alice> device list
-````
+**Missing Example***
 
 
 ## Requesting a connection using a PIN
@@ -95,29 +67,17 @@ Connection requests may be authenticated by means of a PIN created on an
 administration device. The `device pin` command generates
 a new PIN code:
 
-
-````
-Alice> account pin
-PIN=NBX5-GMRE-5IAI-S3U2-NY (Expires=2019-10-24T17:49:15Z)
-````
+**Missing Example***
 
 The pin code can now be used to authenticate the connection request:
 
-
-````
-Alice3> device request alice@example.com /pin=NBX5-GMRE-5IAI-S3U2-NY
-   Witness value = ADQM-XS4H-IV7T-XDGY-YAGW-BWCX-6WMV
-   Personal Mesh = MAZM-EQPB-Y6BY-B3W4-6QZS-CJES-QLTR
-````
+**Missing Example***
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-
-````
-Alice> device pending
-````
+**Missing Example***
 
 
 ### Requesting a connection using an EARL
@@ -151,20 +111,12 @@ connection to a user account, the device requests connection to a special purpos
 account established for the purpose of providing a hailing account for enabling
 this type of device connection.
 
-
-````
-Alice4> device pre devices@example.com /key=udf://example.com/ECVF-M7ZO-BIJT-OVPQ-BAG2-ZDTH-K4JW-EV
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 The device can attempt to complete the connection whenever it is provided with power 
 and network connectivity using the `profile sync` command.
 
-
-````
-Alice4> account sync
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -179,21 +131,13 @@ smart phone camera.
 A QR code or other scanning application can use the meshman tool to resolve the EARL 
 and retrieve the data using the `device earl` command:
 
-
-````
-Alice> device earl udf://example.com/ECVF-M7ZO-BIJT-OVPQ-BAG2-ZDTH-K4JW-EV
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
-
-````
-Alice4> account sync
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 

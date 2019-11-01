@@ -12,7 +12,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-
+    // Today - cache all account contexts so only have one context per account!!!!
 
 
     /// <summary>
@@ -26,8 +26,8 @@ namespace Goedel.Mesh.Client {
     public class MeshHost : Disposable {
 
         #region // fields and properties
-        public IMeshMachine MeshMachine;
-        CatalogHost containerProfile;
+        public IMeshMachineClient MeshMachine;
+        PersistHost containerProfile;
         
         ///<summary>The Key Collection of the Mesh Machine.</summary>
         public KeyCollection KeyCollection => keyCollection  ?? 
@@ -47,12 +47,29 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="meshMachine">The Mesh Machine.</param>
         /// <param name="containerHost">The host catalog.</param>
-        public MeshHost(CatalogHost containerHost, IMeshMachine meshMachine) {
+        public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
             this.MeshMachine = meshMachine;
             containerProfile = containerHost;
 
             foreach (var entry in containerHost.ObjectIndex) {
-
+                var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
+                switch (catalogedMachine) {
+                    case CatalogedAdmin adminEntry: {
+                        var context = new ContextMeshAdmin(this, adminEntry);
+                        Register(context);
+                        break;
+                        }
+                    case CatalogedStandard standardEntry: {
+                        var context = new ContextMesh(this, standardEntry);
+                        Register(context);
+                        break;
+                        }
+                    case CatalogedPending pendingEntry: {
+                        var context = new ContextMesh(this, pendingEntry);
+                        Register(context);
+                        break;
+                        }
+                    }
                 Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
                 }
 
@@ -69,27 +86,40 @@ namespace Goedel.Mesh.Client {
             }
 
         #endregion
-        #region // Convenience Methods
-
-        /// <summary>
-        /// Convenience routine to return a host description of a mesh connection.
-        /// </summary>
-        /// <param name="id">The mesh short name or master profile UDF.</param>
-        /// <returns>The mesh host description (if found)</returns>
-        public CatalogedMachine GetMeshConnection(string id = null) => 
-                containerProfile.GetConnection(id);
-
-        /// <summary>
-        /// Convenience routine to return a host description of a pending mesh connection request.
-        /// </summary>
-        /// <param name="id">The mesh short name or master profile UDF.</param>
-        /// <returns>The mesh connection request description (if found)</returns>
-        public CatalogedPending GetPending(string local = null) => 
-                containerProfile.GetPending(local);
-
-
-        #endregion
         #region // Methods
+
+
+
+        ///<summary>Dictionary mapping mesh UDF to Context.</summary>
+        protected Dictionary<string, ContextMesh> DictionaryUDFContextMesh = new Dictionary<string, ContextMesh>();
+
+        ///<summary>Dictionary mapping mesh local name to Context.</summary>
+        protected Dictionary<string, ContextMesh> DictionaryLocalContextMesh = new Dictionary<string, ContextMesh>();
+
+        void Register(ContextMesh contextMesh) {
+            var machine = contextMesh.CatalogedMachine;
+            DictionaryUDFContextMesh.AddSafe(machine.ID, contextMesh);
+            if (machine.Local != null) {
+                DictionaryLocalContextMesh.AddSafe(machine.Local, contextMesh);
+                }
+            }
+
+        /// <summary>
+        /// Locate context by UDF or localname. The context acquired is owned by the MeshHost instance
+        /// and MUST NOT be disposed of by the caller.
+        /// </summary>
+        /// <param name="key">The UDF or name to resolve.</param>
+        /// <returns>The context, if a matching context is found. Otherwise null.</returns>
+        public ContextMesh LocateMesh(string key) {
+            ContextMesh context;
+            if (DictionaryUDFContextMesh.TryGetValue(key, out context)) {
+                return context;
+                }
+            if (DictionaryLocalContextMesh.TryGetValue(key, out context)) {
+                return context;
+                }
+            return null;
+            }
 
 
         /// <summary>
@@ -111,6 +141,30 @@ namespace Goedel.Mesh.Client {
         #endregion
 
 
+
+
+
+        /// <summary>
+        /// Create a new Mesh master profile without account or service.
+        /// </summary>
+        /// <returns>Context for administering the Mesh</returns>
+        public ContextMeshAdmin CreateMesh(
+                string localName,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+
+            var context = ContextMeshAdmin.CreateMesh(
+                    this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+
+            Register(context);
+            Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
+
+            return context;
+
+            }
+
+
         /// <summary>
         /// Create a new management context for the specified Mesh profile.
         /// </summary>
@@ -118,41 +172,28 @@ namespace Goedel.Mesh.Client {
         /// <param name="admin">Enable administration privileges (if available).</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
-
-            var entry = GetMeshConnection(localName);
-            switch (entry) {
-                case CatalogedAdmin adminEntry: return new ContextMeshAdmin(MeshMachine as IMeshMachineClient, adminEntry);
-                default: return new ContextMesh(MeshMachine as IMeshMachineClient, entry);
-                }
-
-
+            var key = localName ?? containerProfile.DefaultEntry.ID;
+            return LocateMesh(key);
             }
-
-
-        public ContextAccount Complete(
-                string serviceID,
-                string localName = null) {
-            var catalogedPending = GetPending(serviceID);
-
-            var contextPending = new ContextMeshPending(MeshMachine as IMeshMachineClient, catalogedPending);
-            return contextPending.Complete();
-
-            }
-
 
         /// <summary>
-        /// Create a new Mesh master profile without account or service
+        /// Attempt to complete the connection to a Mesh profile. If successful. update the local host persistence store
+        /// and return a context for the newly acquired connection. Otherwise return null.
         /// </summary>
-        /// <returns>Context for administering the Mesh</returns>
-        public ContextMeshAdmin CreateMesh(
-                string localName,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => ContextMeshAdmin.CreateMesh(
-                    MeshMachine as IMeshMachineClient, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+        /// <param name="serviceID"></param>
+        /// <param name="localName"></param>
+        /// <returns></returns>
+        public ContextAccount Complete(
+                string localName = null) {
+
+            var key = localName ?? containerProfile.DefaultPendingEntry.ID;
+            var contextPending = LocateMesh(key) as ContextMeshPending;
+            return contextPending.Complete();
+            }
+
 
         /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
+        /// Begin connection to a service.
         /// </summary>
         /// <returns>Context for administering the Mesh account via the service</returns>
         public ContextMeshPending Connect(
@@ -162,7 +203,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => 
-            ContextMeshPending.ConnectService(MeshMachine as IMeshMachineClient, serviceID, localName, PIN);
+            ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
 
 
 
@@ -180,38 +221,32 @@ namespace Goedel.Mesh.Client {
                 ) {
             var secret = new Secret(shares);
             return ContextMeshAdmin.RecoverMesh(
-                     MeshMachine as IMeshMachineClient, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+                     this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
             }
 
         /// <summary>
         /// Create a new Mesh master profile and account without binding to a service
         /// </summary>
         /// <returns>Context for administering the Mesh account</returns>
-        public ContextAccount CreateAccount(
+        public ContextAccount CreateMeshWithAccount(
                 string localName,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            using (var contextMeshAdmin = CreateMesh(localName)) {
-                return contextMeshAdmin.CreateAccount(localName);
-                }
+            var contextMeshAdmin = CreateMesh(localName);
+            return contextMeshAdmin.CreateAccount(localName);
+
             }
 
-        /// <summary>
-        /// Create a new Mesh master profile and account and bind to a service
-        /// </summary>
-        /// <returns>Context for administering the Mesh account via the service</returns>
-        public ContextAccount CreateService(
-                string localName,
-                string accountName = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            using (var contextMeshAdmin = CreateMesh(localName)) {
-                var contextAccount = contextMeshAdmin.CreateAccount(localName);
-                contextAccount.AddService(accountName ?? localName);
-                return contextAccount;
-                }
+
+        public ContextAccount AddAccount(
+                    ContextMesh contextMesh, AccountEntry accountEntry,
+                    string serviceID = null) {
+
+            var contextAccount = new ContextAccount(contextMesh, accountEntry, serviceID);
+
+
+            return contextAccount;
             }
 
 

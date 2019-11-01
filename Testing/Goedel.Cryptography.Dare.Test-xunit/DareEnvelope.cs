@@ -8,6 +8,7 @@ using Goedel.Test.Core;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -19,7 +20,39 @@ namespace Goedel.XUnit {
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 
 
+        [Fact]
+        public void MessageGroup() {
+            var Test1 = Platform.GetRandomBytes(1000);
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var machine = new MeshMachineTest(testEnvironmentCommon, "admin");
 
+            // Generate a recryption group
+            var profileGroup = ProfileGroup.Generate(machine);
+
+            profileGroup.AddMember(machine, out var connectionGroup, out var activationGroup);
+
+
+
+
+            throw new NYI();
+
+            
+
+            // Encrypt to the group
+
+            // Decrypt using admin key
+
+            // Create a member entry
+
+            // Perform the remote decrypt
+
+            // Combine the results
+
+
+            // Decrypt the message
+
+
+            }
 
         [Fact]
         public void MessagePlaintextJSON() {

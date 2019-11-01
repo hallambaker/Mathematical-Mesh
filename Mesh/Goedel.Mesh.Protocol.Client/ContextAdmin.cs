@@ -33,8 +33,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedAdmin"></param>
         public ContextMeshAdmin(
-                IMeshMachineClient meshMachine,
-                CatalogedAdmin catalogedAdmin) : base(meshMachine, catalogedAdmin) {
+                MeshHost meshHost,
+                CatalogedAdmin catalogedAdmin) : base(meshHost, catalogedAdmin) {
             CatalogedMachine = catalogedAdmin;
 
             // Join the composite keys to recover the signature key so we can perform admin functions
@@ -51,48 +51,48 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
         /// <returns>An administration context instance for the created profile.</returns>
         public static ContextMeshAdmin CreateMesh(
-                IMeshMachineClient meshMachine,
+                MeshHost meshHost,
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
             // Create the master profile.
-            var profileMaster = ProfileMesh.Generate(meshMachine);
-            profileDevice = profileDevice ?? ProfileDevice.Generate(meshMachine,
+            var profileMaster = ProfileMesh.Generate(meshHost.MeshMachine);
+            profileDevice = profileDevice ?? ProfileDevice.Generate(meshHost.MeshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
 
-            return CreateMesh(meshMachine, profileMaster, profileDevice);
+            return CreateMesh(meshHost, profileMaster, profileDevice);
             }
 
         /// <summary>
         /// Create a new personal mesh.
         /// </summary>
-        /// <param name="meshMachine">The machine context that the mesh is going to be created on.</param>
+        /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
         /// <param name="profileDevice">The device profile.</param>
         /// <param name="profileMaster">The mesh profile.</param>
         /// <returns>An administration context instance for the created profile.</returns>
         public static ContextMeshAdmin CreateMesh(
-            IMeshMachineClient meshMachine,
+            MeshHost meshHost,
             ProfileMesh profileMaster,
             ProfileDevice profileDevice) {
 
             Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
 
             // Add this device to the profile as an administrator device by adding the necessary activation.
-            var assertionDevicePrivate = new ActivationDevice(meshMachine, profileDevice);
-            var adminEntry = AddAdministrator(meshMachine, profileMaster, profileDevice, assertionDevicePrivate);
+            var assertionDevicePrivate = new ActivationDevice(meshHost.MeshMachine, profileDevice);
+            var adminEntry = AddAdministrator(meshHost.MeshMachine, profileMaster, profileDevice, assertionDevicePrivate);
 
             // Create an administration context
-            var result = new ContextMeshAdmin(meshMachine, adminEntry);
+            var result = new ContextMeshAdmin(meshHost, adminEntry);
 
             // Use the administration context to create a connection for this device and add to the record
             var catalogedDevice = result.CreateCataloguedDevice(profileDevice, assertionDevicePrivate);
             result.UpdateDevice(catalogedDevice);
 
             // Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
-            meshMachine.MeshHost.Register(adminEntry);
+            meshHost.Register(adminEntry);
             return result;
             }
 
@@ -208,7 +208,7 @@ namespace Goedel.Mesh.Client {
             var accountEntry = profileAccount.ConnectDevice(MeshMachine, CatalogedDevice, null);
             UpdateDevice(CatalogedDevice);
 
-            var contextAccount = new ContextAccount(this, accountEntry);
+            var contextAccount = MeshHost.AddAccount(this, accountEntry);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.AddDevice(CatalogedDevice);
@@ -260,7 +260,7 @@ namespace Goedel.Mesh.Client {
             }
 
         public static ContextMeshAdmin RecoverMesh(
-                IMeshMachineClient meshMachine,
+                MeshHost meshHost,
                 Secret secret,
                 ProfileDevice profileDevice = null,
                 DareEnvelope escrow = null,
@@ -272,13 +272,13 @@ namespace Goedel.Mesh.Client {
 
 
             var escrowedKeySet = EscrowedKeySet.FromJSON(escrow.GetBodyReader(secret), true);
-            var keySign = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Device, keyCollection: meshMachine.KeyCollection);
-            var keyEncrypt = escrowedKeySet.MasterEncryptionKey.GetKeyPair(KeySecurity.Device, keyCollection: meshMachine.KeyCollection);
+            var keySign = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Device, keyCollection: meshHost.KeyCollection);
+            var keyEncrypt = escrowedKeySet.MasterEncryptionKey.GetKeyPair(KeySecurity.Device, keyCollection: meshHost.KeyCollection);
 
             var profileMaster = new ProfileMesh(keySign, null, keyEncrypt);
 
 
-            return CreateMesh(meshMachine, profileMaster, profileDevice);
+            return CreateMesh(meshHost, profileMaster, profileDevice);
             }
 
         #endregion

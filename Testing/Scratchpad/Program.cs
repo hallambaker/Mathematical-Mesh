@@ -18,33 +18,36 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            // The tests we need to clear to get the group encryption stuff going:
+            TestDare.Test().MessageGroup();
+            //TestService.Test().MeshCatalogGroup();
 
-            // The tests we need to clear to write the 3.0 docs.
-
-            // Working
-            //TestService.Test().MeshServiceFull();
-            //ShellTests.Test().TestHello();
-
-            // Working (sort of)
-            //ShellTests.Test().TestProfileConnect();
-            //ShellTests.Test().TestMessageConfirmation();
-            //ShellTests.Test().TestProfilePassword();
-            //ShellTests.Test().TestProfileBookmark();
-            //ShellTests.Test().TestProfileCalendar();
-            //ShellTests.Test().TestProfileNetwork();
-
-
-            // Not working
-
-            ShellTests.Test().TestFileEncrypt();
-
+            // From the command line:
+            //ShellTests.Test().TestFileEncrypt();
             //ShellTests.Test().TestFileSignEncrypt();
-            //ShellTests.Test().TestContainerArchive();
-            //ShellTests.Test().TestContainerCatalogEncrypt();
-
             //ShellTests.Test().TestMessageGroup();
 
+            // Archive related shell commands
+            //ShellTests.Test().TestContainerArchive();
+            //ShellTests.Test().TestContainerCatalogBase();
+            //ShellTests.Test().TestContainerCatalogEncrypt();
 
+            // Application related shell commands
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
+
+            // Shell connect tests
+            //ShellTests.Test().TestProfileConnect();
+            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestProfileConnectAuthAdmin();
+            //ShellTests.Test().TestProfileConnectAuthAll();
+            //ShellTests.Test().TestProfileConnectEARL();
+            //ShellTests.Test().TestProfileConnectPin();
+
+
+            // The whole Escrow thing
+            //ShellTests.Test().TestProfileEscrow();
 
             }
 

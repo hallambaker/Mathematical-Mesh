@@ -30,7 +30,7 @@ namespace ExampleGenerator {
             GenerateKeys();
             GoDareEnvelope();
             GoDareContainer();
-            GoAdvanced();
+            //GoAdvanced();
 
             DoCommandsKey();
             DoCommandsHash();

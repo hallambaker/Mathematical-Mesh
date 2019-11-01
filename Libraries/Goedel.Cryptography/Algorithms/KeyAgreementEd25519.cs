@@ -382,7 +382,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Private = new CurveEdwards25519Private();
 
             return new CurveEdwards25519Result() {
-                EphemeralPublicValue = Private.PublicKey,
+                EphemeralPublicValue = Private.Public,
                 Agreement = Private.Agreement(this)
                 };
             }
@@ -483,7 +483,7 @@ namespace Goedel.Cryptography.Algorithms {
         byte[] HashPrefix { get; }
 
         /// <summary>The corresponding public key</summary>
-        public CurveEdwards25519Public PublicKey { get; }
+        public CurveEdwards25519Public Public { get; }
 
         /// <summary>The wire encoding. Null if the key is not exportable</summary>
         public byte[] Encoding { get; }
@@ -518,7 +518,7 @@ namespace Goedel.Cryptography.Algorithms {
             Private = ExtractPrivate(PreSecret);
 
             var PublicPoint = CurveEdwards25519.GetPublic(Private);
-            PublicKey = new CurveEdwards25519Public(PublicPoint);
+            Public = new CurveEdwards25519Public(PublicPoint);
             if (exportable) {
                 Encoding = secret;
                 }
@@ -535,7 +535,7 @@ namespace Goedel.Cryptography.Algorithms {
             Secret = privateKey.ToByteArray();
 
             var PublicPoint = CurveEdwards25519.GetPublic(privateKey);
-            PublicKey = new CurveEdwards25519Public(PublicPoint);
+            Public = new CurveEdwards25519Public(PublicPoint);
 
             if (exportable) {
                 Encoding = Secret;
@@ -567,7 +567,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             // Calculate the public point
             var PublicPoint = CurveEdwards25519.GetPublic(Private);
-            PublicKey = new CurveEdwards25519Public(PublicPoint);
+            Public = new CurveEdwards25519Public(PublicPoint);
 
             // Calculate the witness value
             witness = CurveEdwards25519.GetPublic(SecretLocal);
@@ -659,7 +659,7 @@ namespace Goedel.Cryptography.Algorithms {
             var R = CurveEdwards25519.Base.Multiply(r);
             var Rs = R.Encode();
 
-            var k = CurveEdwards25519.HashModQ(context, Rs, PublicKey.Encoding, message);
+            var k = CurveEdwards25519.HashModQ(context, Rs, Public.Encoding, message);
             var S = (r + k * Private) % CurveEdwards25519.Q;
 
             var Bs = S.ToByteArrayLittleEndian();
@@ -742,7 +742,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
         public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
-            Combine(contribution as DiffeHellmanPrivate);
+            Combine(contribution as CurveEdwards25519Private);
         #endregion
         }
 

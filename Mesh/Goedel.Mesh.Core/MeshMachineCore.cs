@@ -93,38 +93,12 @@ namespace Goedel.Mesh {
         #endregion
 
 
-        //public CatalogedMachine GetConnection(string local = null) => MeshHost.GetMeshConnection(local);
-        //public CatalogedPending GetPending(string local = null) => MeshHost.GetPending(local);
-
-
-        ///// <summary>
-        ///// Create a new management context for the specified Mesh profile.
-        ///// </summary>
-        ///// <param name="localName">The friendly name for the profile</param>
-        ///// <param name="admin">Enable administration privileges (if available).</param>
-        ///// <returns>Context for administering the Mesh</returns>
-        //public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
-
-        //    var entry = MeshHost.GetMeshConnection(localName);
-        //    switch (entry) {
-        //        case CatalogedAdmin adminEntry: return new ContextMeshAdmin(this, adminEntry);
-        //        default:  return new ContextMesh(this, entry);
-        //        }
-
-            
-        //    }
-
-
-
-
-
-
         public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
             }
 
         protected MeshMachineCore(string directory) : base (directory) {
             // Now read the container to get the directories.
-            var containerHost = new CatalogHost(FileNameHost, FileTypeHost,
+            var containerHost = new PersistHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
                 containerType: ContainerType.MerkleTree);
 
@@ -134,112 +108,11 @@ namespace Goedel.Mesh {
         #region // Convenience accessors
 
 
-        ///// <summary>
-        ///// Register <paramref name="profileEntry"/> in the persistence store. An error is
-        ///// reported if the entry does not exist and the <paramref name="create"/> is true.
-        ///// </summary>
-        ///// <param name="profileEntry">The entry to add or update.</param>
-        ///// <param name="create">Report an error if the object identifier does not already exist.</param>
-        //public void Register(CatalogedMachine profileEntry, bool create = true) => MeshHost.Register(profileEntry, create);
-
-        ///// <summary>
-        ///// Create a new Mesh master profile without account or service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh</returns>
-        //public ContextMeshAdmin CreateMesh(
-        //        string localName,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => ContextMeshAdmin.CreateMesh(
-        //            this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-
-
-        ///// <summary>
-        ///// Create a new Mesh master profile without account or service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh</returns>
-        //public ContextMeshAdmin RecoverMesh(
-        //        string localName,
-        //        DareEnvelope escrow = null,
-        //        IEnumerable<string> shares = null,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
-        //        ) {
-        //    var secret = new Secret(shares);
-        //    return ContextMeshAdmin.RecoverMesh(
-        //            this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-        //    }
-
-        ///// <summary>
-        ///// Create a new Mesh master profile and account without binding to a service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh account</returns>
-        //public ContextAccount CreateAccount(
-        //        string localName,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-        //    using (var contextMeshAdmin = CreateMesh(localName)) {
-        //        return contextMeshAdmin.CreateAccount(localName);
-        //        }
-        //    }
-
-        ///// <summary>
-        ///// Create a new Mesh master profile and account and bind to a service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh account via the service</returns>
-        //public ContextAccount CreateService(
-        //        string localName,
-        //        string accountName=null,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-        //    using (var contextMeshAdmin = CreateMesh(localName)) {
-        //        var contextAccount = contextMeshAdmin.CreateAccount(localName);
-        //        contextAccount.AddService(accountName ?? localName);
-        //        return contextAccount;
-        //        }
-        //    }
-
-
-        ///// <summary>
-        ///// Create a new Mesh master profile and account and bind to a service
-        ///// </summary>
-        ///// <returns>Context for administering the Mesh account via the service</returns>
-        //public ContextMeshPending Connect(
-        //        string serviceID,
-        //        string localName = null,
-        //        string PIN = null,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
-
+ 
         #endregion
 
 
         #region // Implementation
-
-        ///// <summary>
-        ///// Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
-        ///// KeyCollection of the machine instance.
-        ///// </summary>
-        ///// <param name="algorithmID">The type of keypair to create.</param>
-        ///// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
-        ///// <param name="keySecurity">The key security model</param>
-        ///// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
-        ///// the value of <paramref name="keySecurity"/></param>
-        ///// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
-        ///// <returns>The created key pair</returns>
-        //public KeyPair CreateKeyPair(
-        //            CryptoAlgorithmID algorithmID,
-        //            KeySecurity keySecurity,
-        //            int keySize = 0,
-        //            KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
-        //                KeyCollection, keySize, keyUses);
-
-
-
 
         public static  IMeshMachine GetMachine() => new MeshMachineCore();
 

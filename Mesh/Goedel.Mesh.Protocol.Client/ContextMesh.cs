@@ -12,7 +12,11 @@ namespace Goedel.Mesh.Client {
 
     public partial class ContextMesh : Disposable {
         ///<summary>The Machine context.</summary>
-        public IMeshMachineClient MeshMachine { get; }
+        public IMeshMachineClient MeshMachine => MeshHost?.MeshMachine;
+
+
+        public MeshHost MeshHost { get; }
+
 
         ///<summary>The master profile</summary>
         public ProfileMesh ProfileMesh { get; }
@@ -26,7 +30,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
-        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine.CatalogedDevice;
+        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
 
         public ConnectionDevice ConnectionDevice =>
             CatalogedDevice.ConnectionDevice;
@@ -37,10 +41,10 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public ContextMesh(IMeshMachineClient meshMachine, CatalogedMachine deviceConnection) {
+        public ContextMesh(MeshHost meshHost, CatalogedMachine deviceConnection) {
             Assert.AssertNotNull(deviceConnection, NYI.Throw);
 
-            MeshMachine = meshMachine;
+            MeshHost = meshHost;
             CatalogedMachine = deviceConnection;
 
             ProfileMesh = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
@@ -80,31 +84,31 @@ namespace Goedel.Mesh.Client {
         public string ServiceID => MessageConnectionRequest?.ServiceID;
         public MeshService MeshClient;
 
-        public ContextMeshPending(IMeshMachineClient meshMachine, CatalogedMachine deviceConnection) :
-                    base(meshMachine, deviceConnection) {
+        public ContextMeshPending(MeshHost meshHost, CatalogedMachine deviceConnection) :
+                    base(meshHost, deviceConnection) {
             }
 
 
 
         public static ContextMeshPending ConnectService(
-                IMeshMachineClient meshMachine,
+                MeshHost meshHost,
                 string serviceID,
                 string localName = null,
                 string PIN = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            var profileDevice = ProfileDevice.Generate(meshMachine,
+            var profileDevice = ProfileDevice.Generate(meshHost.MeshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
 
-            return ConnectService(meshMachine, profileDevice, serviceID, localName, PIN);
+            return ConnectService(meshHost, profileDevice, serviceID, localName, PIN);
             }
 
         
 
         public static ContextMeshPending ConnectService(
-                IMeshMachineClient meshMachine,
+                MeshHost meshHost,
                 ProfileDevice profileDevice,
                 string serviceID,
                 string localName = null,
@@ -120,13 +124,13 @@ namespace Goedel.Mesh.Client {
 
             
 
-            var keyAuthentication = meshMachine.KeyCollection.LocatePrivate(
+            var keyAuthentication = meshHost.KeyCollection.LocatePrivate(
                         profileDevice.KeyAuthentication.UDF);
 
             var messageConnectionRequestClientEncoded = messageConnectionRequestClient.Encode(keyAuthentication);
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
-            var meshClient = meshMachine.GetMeshClient(serviceID, keyAuthentication, null);
+            var meshClient = meshHost.MeshMachine.GetMeshClient(serviceID, keyAuthentication, null);
 
             var connectRequest = new ConnectRequest() {
                 MessageConnectionRequestClient = messageConnectionRequestClientEncoded
@@ -145,9 +149,9 @@ namespace Goedel.Mesh.Client {
                 EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };
 
-            meshMachine.MeshHost.Register(connection);
+            meshHost.Register(connection);
 
-            return new ContextMeshPending(meshMachine, connection);
+            return new ContextMeshPending(meshHost, connection);
 
             }
 
@@ -189,7 +193,7 @@ namespace Goedel.Mesh.Client {
             MeshMachine.MeshHost.Register(catalogedStandard);
 
 
-            var contextMesh = new ContextMesh(MeshMachine, catalogedStandard);
+            var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
 
 
             var contextAccount = contextMesh.GetContextAccount(accountName:ServiceID);

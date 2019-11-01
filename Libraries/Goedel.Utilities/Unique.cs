@@ -17,7 +17,9 @@ namespace Goedel.Utilities {
         public static string Next() {
 
             var code = Interlocked.Increment(ref Counter);
-            return code.ToString();
+            var id = Thread.CurrentThread.ManagedThreadId;
+
+            return $"{code}-{id}";
             }
 
 

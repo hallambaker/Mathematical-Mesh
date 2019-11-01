@@ -61,21 +61,7 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-
-````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
-````
-
-Specifying the /json option returns a result of type ResultFile:
-
-````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA /json
-{
-  "ResultFile": {
-    "Success": true,
-    "Filename": "TestFile1.dare",
-    "TotalBytes": 14}}
-````
+**Missing Example***
 
 
 # dare decode
@@ -100,21 +86,7 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
-
-````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
-ERROR - The option  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The option  is not known."}}
-````
+**Missing Example***
 
 # dare verify
 
@@ -134,21 +106,7 @@ currently active key collection and reports success or failure.
 The active key collection may be overriden using the `/mesh` option.
 
 
-
-````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
-ERROR - The option  is not known.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The option  is not known."}}
-````
+**Missing Example***
 
 # dare earl
 
@@ -185,19 +143,5 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-
-````
-Alice> dare earl TestFile1.txt
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> dare earl TestFile1.txt /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
+**Missing Example***
 

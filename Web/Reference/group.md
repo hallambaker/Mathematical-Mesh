@@ -23,21 +23,7 @@ create   Create recryption group
     /json   Report output in JSON format
     /alg   List of algorithm specifiers
 ````
-
-````
-Alice> group create groupw@example.com
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> group create groupw@example.com /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
+**Missing Example***
 
 # group add
 
@@ -50,21 +36,7 @@ add   Add user to recryption group
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> group add groupw@example.com bob@example.com
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> group add groupw@example.com bob@example.com /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
+**Missing Example***
 
 # group delete
 
@@ -77,21 +49,7 @@ delete   Remove user from recryption group
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> group delete groupw@example.com bob@example.com
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> group delete groupw@example.com bob@example.com /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
+**Missing Example***
 
 # group list
 
@@ -103,19 +61,5 @@ list   List members of a recryption group
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> group list groupw@example.com
-ERROR - The feature has not been implemented
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> group list groupw@example.com /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-````
+**Missing Example***
 

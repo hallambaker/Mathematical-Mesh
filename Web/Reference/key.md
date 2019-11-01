@@ -31,21 +31,7 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-
-````
-Alice> key nonce
-ND2P-DLUX-XDDF-PJT7-EXCF-53MH-XVQA
-````
-
-Specifying the /json option returns a result of type ResultKey:
-
-````
-Alice> key nonce /json
-{
-  "ResultKey": {
-    "Success": true,
-    "Key": "ND2P-DLUX-XDDF-PJT7-EXCF-53MH-XVQA"}}
-````
+**Missing Example***
 
 # key secret
 
@@ -60,21 +46,7 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
 
-
-````
-Alice> key secret
-EB3H-ZVVR-OK27-PKF5-R7CD-CIHT-YGBQ
-````
-
-Specifying the /json option returns a result of type ResultKey:
-
-````
-Alice> key secret /json
-{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EB3H-ZVVR-OK27-PKF5-R7CD-CIHT-YGBQ"}}
-````
+**Missing Example***
 
 
 # key earl
@@ -91,23 +63,7 @@ earl   Return a randomized secret value and locator as UDFs
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-
-````
-Alice> key earl
-ECJR-7UEO-WOPB-2RVE-GN2T-CNOU-PHTL-OR
-MB5O-NJ2N-ISQD-KUAZ-KH5B-6LZR-QIWL-SQXD-BBOD-PUNQ-P7EQ-WIHP-5G2E-ATKF
-````
-
-Specifying the /json option returns a result of type ResultKey:
-
-````
-Alice> key earl /json
-{
-  "ResultKey": {
-    "Success": true,
-    "Key": "ECJR-7UEO-WOPB-2RVE-GN2T-CNOU-PHTL-OR",
-    "Identifier": "MB5O-NJ2N-ISQD-KUAZ-KH5B-6LZR-QIWL-SQXD-BBOD-PUNQ-P7EQ-WIHP-5G2E-ATKF"}}
-````
+**Missing Example***
 
 # key share
 
@@ -126,29 +82,7 @@ share   Split a secret value according to the specified shares and quorum
 The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-
-````
-Alice> key share
-EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
-MB3Z-TBR3-C5ZH-FUGN-DZJ5-IPQF-7UJH-WJD7-R4A6-DBY5-MM6Q-FONE-Q7WQ
-SAQI-USPH-MIWN-NXQV-M3QE-XCOO-DGCI-M
-SAQQ-UYYG-2HUM-3TEQ-VW3T-4DR6-TTBH-C
-SARI-U7BG-IGSM-JOYL-6SHD-BEVP-EAAI-6
-````
-
-Specifying the /json option returns a result of type ResultKey:
-
-````
-Alice> key share /json
-{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA",
-    "Identifier": "MB3Z-TBR3-C5ZH-FUGN-DZJ5-IPQF-7UJH-WJD7-R4A6-DBY5-MM6Q-FONE-Q7WQ",
-    "Shares": ["SAQI-USPH-MIWN-NXQV-M3QE-XCOO-DGCI-M",
-      "SAQQ-UYYG-2HUM-3TEQ-VW3T-4DR6-TTBH-C",
-      "SARI-U7BG-IGSM-JOYL-6SHD-BEVP-EAAI-6"]}}
-````
+**Missing Example***
 
 
 # key recover
@@ -171,20 +105,6 @@ recover   Recover a secret value from the shares provided
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-
-````
-Alice> key recover SAQI-USPH-MIWN-NXQV-M3QE-XCOO-DGCI-M SARI-U7BG-IGSM-JOYL-6SHD-BEVP-EAAI-6
-EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA
-````
-
-Specifying the /json option returns a result of type ResultKey:
-
-````
-Alice> key recover SAQI-USPH-MIWN-NXQV-M3QE-XCOO-DGCI-M SARI-U7BG-IGSM-JOYL-6SHD-BEVP-EAAI-6 /json
-{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EAFD-BR7S-ODP6-7GRA-BFMQ-KXMW-IZUA"}}
-````
+**Missing Example***
 
 

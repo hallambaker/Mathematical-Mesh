@@ -87,7 +87,7 @@ namespace Goedel.Test.Core {
                     out ContextAccount contextAccount) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextMeshAdmin.CreateMesh(result);
+            var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
             contextAccount = contextAdmin.CreateAccount(localName);
             return result;
             }
@@ -100,7 +100,7 @@ namespace Goedel.Test.Core {
                     string accountId) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextMeshAdmin.CreateMesh(result);
+            var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
 
             Console.WriteLine("Created new Mesh");
             Console.WriteLine(contextAdmin.CatalogedDevice.ToString());

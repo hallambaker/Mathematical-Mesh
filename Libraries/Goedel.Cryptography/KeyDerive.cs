@@ -106,19 +106,6 @@ namespace Goedel.Cryptography {
             PRK = Extract(Algorithm, ikm, salt);
             }
 
-        ///// <summary>
-        ///// Construct a KDF instance for the specified keying material
-        ///// </summary>
-        ///// <param name="ikm">The input Keying material</param>
-        ///// <param name="salt">A salt to vary the key derivation by application</param>
-        ///// <param name="provider">Provider for the MAC algorithm to use</param>
-        //public KeyDeriveHKDF(byte[] ikm, byte[] salt,
-        //        CryptoProviderAuthentication provider) {
-
-        //    this.Provider = provider;
-        //    PRK = Extract(provider, ikm, salt);
-        //    }
-
         /// <summary>
         /// Key Derivation function
         /// </summary>
@@ -133,9 +120,38 @@ namespace Goedel.Cryptography {
 
         static readonly byte[] NullKey = new byte[0];
 
+        /// <summary>
+        /// Construct a HKDF instance for algorithm <paramref name="algorithm"/>, generate
+        /// a PRK from the values <paramref name="ikm"/> and <paramref name="salt"/>,
+        /// then use it to generate an output value od <paramref name="length"/> bits
+        /// with additional input <paramref name="info"/>.
+        /// </summary>
+        /// <param name="ikm"></param>
+        /// <param name="salt"></param>
+        /// <param name="info"></param>
+        /// <param name="length"></param>
+        /// <param name="algorithm"></param>
+        /// <returns></returns>
+        public static byte[] Derive(
+                byte[] ikm, byte[] salt = null, byte[] info = null, int length = 0,
+                CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) {
+            var kdf = new KeyDeriveHKDF(ikm, salt, algorithm);
+            return kdf.Derive(info, length);
+            }
 
+
+        /// <summary>
+        /// Generate <paramref name="length"/> random bits using <paramref name="ikm"/> as a seed value and
+        /// <paramref name="salt"/> as a salt.
+        /// <para>This function is intended to be used to provide a pseudo-random number 
+        /// generator for testing purposes and to securely generate nonces.</para>
+        /// </summary>
+        /// <param name="ikm">The initial keying material.</param>
+        /// <param name="length">The number of bits to return.</param>
+        /// <param name="salt">Optional salt value.</param>
+        /// <returns>The pseudo-random output.</returns>
         public static byte[] Random( byte[] ikm, int length=128, byte[] salt = null) {
-            var prk = Extract(CryptoAlgorithmID.Default, salt);
+            var prk = Extract(CryptoAlgorithmID.Default, ikm, salt);
             return Expand(CryptoAlgorithmID.Default, prk, length);
 
             }

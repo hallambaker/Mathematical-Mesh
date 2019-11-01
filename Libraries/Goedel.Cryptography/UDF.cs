@@ -813,8 +813,8 @@ namespace Goedel.Cryptography {
 
             var result = new byte [keySpecifier.Length + data.Length];
 
-            result[0] = keySpecifier[1];
-            result[1] = keySpecifier[0];
+            result[0] = keySpecifier[0];
+            result[1] = keySpecifier[1];
             Buffer.BlockCopy(data, 0, result, 2, data.Length);
 
             var bits = result.Length * 8;
@@ -826,6 +826,25 @@ namespace Goedel.Cryptography {
             return code == (byte)UDFTypeIdentifier.DerivedKey ? result : null;
             }
 
+        public static KeyPair DeriveKey(string udf,
+                    KeySecurity keyType = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any) {
+
+            var binaryData = Parse(udf, out var code);
+            (code == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
+
+            var algorithm = (UDFAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
+            var salt = KeySpecifier(algorithm);
+
+
+            switch (algorithm) {
+                case UDFAlgorithmIdentifier.Ed25519: {
+                    return new KeyPairEd25519(binaryData, salt, keyType, keyUses);
+                    }
+
+                }
+            throw new NYI();
+            }
 
         }
 

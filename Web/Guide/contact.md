@@ -16,15 +16,7 @@ interfaces rather than a tool designed for daily use.
 The `contact add` command adds a contact entry to a catalog from
 a file. 
 
-
-````
-Alice> contact add email carol@example.com
-{
-  "Self": false,
-  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+**Missing Example***
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -36,63 +28,31 @@ JSON format:
 The `/self` option is used to mark the contact as being the user's own contact
 details:
 
-
-````
-Alice> contact self email alice@example.com
-{
-  "Self": true,
-  "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+**Missing Example***
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-
-````
-Alice> message accept tbs
-````
+**Missing Example***
 
 ## Finding contacts
 
 The `contact get` command retreives a contact by the contact's 
 email address or label:
 
-
-````
-Alice> contact get carol@example.com
-Empty
-````
+**Missing Example***
 
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
-
-````
-Alice> contact list
-{
-  "Self": true,
-  "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
-  "Self": false,
-  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+**Missing Example***
 
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
-
-````
-Alice> contact delete carol@example.com
-ERROR - Object reference not set to an instance of an object.
-````
+**Missing Example***
 
 
 

@@ -23,19 +23,7 @@ namespace ExampleGenerator {
 
 
     public partial class CreateExamples {
-
-        public void PlatformCrypto() {
-            // To do - write the code to create examples for the 'advanced' section
-            // These will need to include examples of the internals of shamir secret sharing, 
-            // co-generation, recryption, etc.
-
-
-            }
-
-
-
-
-
+        #region //stuff
         //KeyExchangeClient KeyExchangeClient;
         //KeyExchangePortalTraced KeyExchangePortalTraced;
 
@@ -82,13 +70,58 @@ namespace ExampleGenerator {
         public byte[][] AdvancedQuantumPrivate;
         public byte[] AdvancedQuantumPublic;
         public string AdvancedQuantumPublicUDF;
+        #endregion      
+        public AdvancedCrypto AdvancedCrypto;
+        public void PlatformCrypto() {
+            // To do - write the code to create examples for the 'advanced' section
+            // These will need to include examples of the internals of shamir secret sharing, 
+            // co-generation, recryption, etc.
+            AdvancedCrypto = new AdvancedCrypto();
 
-        void GoAdvanced() {
+            }
+        }
+
+    public class AdvancedCrypto {
+
+        public string SeedAliceDevice;
+        public string SeedAliceOverlay;
+
+        public KeyPairEd25519 KeyPairDevice;
+        public KeyPairEd25519 KeyPairOverlay;
+
+        public byte[] KeyPairDevicePrivate => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
+        public byte[] KeyPairOverlayPrivate => (KeyPairOverlay.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
+
+        public KeyPairEd25519 CombinedPrivate;
+        public KeyPairEd25519 CombinedPublic;
+
+        public BigInteger SecretScalarDevice => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+        public BigInteger SecretScalarOverlay => (KeyPairOverlay.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+        public BigInteger SecretScalarComposite => (CombinedPrivate.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+
+        public AdvancedCrypto() {
+
+
+            var seed = "AliceDevice1".ToUTF8();
+            var random1 = KeyDeriveHKDF.Random(seed, 128, "Signature".ToUTF8());
+            var random2 = KeyDeriveHKDF.Random(seed, 128, "OverlaySignature".ToUTF8());
+
+            SeedAliceDevice = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: random1);
+            SeedAliceOverlay = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: random2);
+
+            KeyPairDevice = UDF.DeriveKey(SeedAliceDevice, KeySecurity.Exportable) as KeyPairEd25519;
+            KeyPairOverlay = UDF.DeriveKey(SeedAliceOverlay, KeySecurity.Exportable) as KeyPairEd25519;
+
+            CombinedPrivate = KeyPairDevice.Combine(KeyPairDevice) as KeyPairEd25519;
+            CombinedPublic = KeyPairDevice.CombinePublic(KeyPairDevice) as KeyPairEd25519;
+            }
+
+            //            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
 
             //// AdvancedRecovery 
             //var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
-            var Secret = new Secret(AdvancedRecoveryMaster);
-            Secret.Keep();
+            //var Secret = new Secret(AdvancedRecoveryMaster);
+            //Secret.Keep();
             //var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
             //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
             //AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];
@@ -172,7 +205,7 @@ namespace ExampleGenerator {
             //AdvancedQuantumPublic = XMSS.Public;
             //AdvancedQuantumPublicUDF = XMSS.UDF;
 
-            }
+
 
 
 

@@ -52,7 +52,7 @@ namespace Goedel.Test.Core {
 
             var Secret = Platform.GetRandomBytes(32);
             var PrivateKey = new CurveEdwards25519Private();
-            var Ephemeralpublic = PrivateKey.PublicKey;
+            var Ephemeralpublic = PrivateKey.Public;
             var PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(Ephemeralpublic.Encoding);
             var PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(Secret, PKIXPublicKeyECDH);
             EphemeralPrivate = new PrivateKeyECDH(PKIXPrivateKeyECDH);
@@ -60,7 +60,7 @@ namespace Goedel.Test.Core {
             var PublicKeyEd = PublicKey as KeyPairEd25519;
 
             var result = new CurveEdwards25519Result() {
-                EphemeralPublicValue = PrivateKey.PublicKey,
+                EphemeralPublicValue = PrivateKey.Public,
                 Agreement = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
                 };
 

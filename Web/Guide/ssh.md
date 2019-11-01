@@ -46,11 +46,7 @@ appear in the <tt>known_hosts</tt> file.</dd>
 
 The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
-
-````
-Alice> ssh create
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 Since the command creates a new application catalog, the command must be given to 
 an administration device.
@@ -64,20 +60,12 @@ public and/or private keys to be extracted in a format supported by the applicat
 The `ssh private` command extracts the private key required top configure
 an SSH client:
 
-
-````
-Alice> ssh private ssh-key.public
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 The `ssh public` command extracts the public key required top configure
 an SSH client:
 
-
-````
-Alice> ssh public ssh-key.public
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 If a script is being used to automate this process, the best practice is for the
 script to first generate a random nonce and request that the private key file
@@ -93,18 +81,12 @@ For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
 (`alice@example.com.mm--ssss`), the corresponding profile is fetched and the 
 corresponding SSH device public keys added:
 
-
-````
-Alice> ssh merge client
-````
+**Missing Example***
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
 the listed hosts to the user's ssh catalog.
 
-
-````
-Alice> ssh merge host
-````
+**Missing Example***
 
 ## Client Key management
 
@@ -112,34 +94,22 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 `ssh add client`  command.
 
 
-
-````
-Alice> ssh add client
-````
+**Missing Example***
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
-
-````
-Alice> ssh show client
-````
+**Missing Example***
 
 ## Host Key Management
 
 The `ssh add host`  command adds specific host entries to the user's SSH profile.
 
-
-````
-Alice> ssh add host
-````
+**Missing Example***
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
 command.
 
-
-````
-Alice> ssh show host
-````
+**Missing Example***
 
 ## Additional Devices
 
@@ -152,15 +122,9 @@ can be focused on those from the compromised device alone.
 The `device auth /ssh`  command is used *from an administration device* to 
 enable use of ssh on the machine:
 
-
-````
-Alice> device auth Alice2 /ssh
-````
+**Missing Example***
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
-
-````
-Alice> ssh show host
-````
+**Missing Example***
 

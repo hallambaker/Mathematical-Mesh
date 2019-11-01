@@ -207,6 +207,10 @@
 			|Describes a group. Note that while a group is created by one person who
 			|becomes its first administrator, control of the group may pass to other
 			|administrators over time.
+		Struct PublicKey KeyEncryption
+			Description
+				|Key currently used to encrypt data under this profile
+
 
 	Structure ProfileHost
 		Inherits Profile
@@ -267,6 +271,15 @@
 		Struct PublicKey KeyAuthentication
 			Description
 				|The authentication key for use of the device under the profile
+
+	Structure ConnectionGroup
+		Description
+			|Describes the connection of a member to a group.
+		Inherits Connection
+		Struct PublicKey KeyEncryption
+			Description
+				|The decryption key for the user within the group
+
 
 	Structure ConnectionService
 		Inherits Connection
@@ -333,6 +346,17 @@
 			Description
 				|The key overlay used to generate the account signature key from the
 				|device signature key 
+
+
+	Structure ActivationGroup
+		Inherits Activation
+		String GroupUDF
+			Description
+				|The UDF of the group
+		Struct KeyOverlay KeyEncryption
+			Description
+				|The key overlay that compliments the member's group decryption key.		
+
 
 	Section 2 "Cataloged items"
 

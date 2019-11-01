@@ -1,6 +1,7 @@
 ﻿#using System.Text
 #using Goedel.Mesh
 #using Goedel.Protocol
+#using Goedel.Utilities
 #% #pragma warning disable IDE0022
 #% #pragma warning disable IDE0060
 #% #pragma warning disable IDE1006
@@ -15,13 +16,21 @@
 
 #file ExamplesAdvancedCoGeneration "Examples\\ExamplesAdvancedCoGeneration.md" CreateExamples Example
 ####Example: Provisioning the Confirmation Service
+#% var Section = Example.AdvancedCrypto;
 
 For example, Alice provisions the confirmation service to her watch. The device profile
 of the watch specifies an Ed25519 signature key. Note that for production use, Ed448 is
 almost certainly prefered but Ed25519 has the advantage of more compact presentation.
 
 ~~~~
-TBS: #{Example.AdvancedCogenDeviceProfile}
+Device Key
+
+UDF Seed:       #{Section.SeedAliceDevice}
+Private Key:#{Section.KeyPairDevicePrivate.ToStringBase16FormatHex()}
+Secret Scalar:
+#{Section.SecretScalarDevice}
+Public Key:#{Section.KeyPairDevice.PublicData.ToStringBase16FormatHex()}
+Fingerprint:    #{Section.KeyPairDevice.UDF}
 ~~~~
 
 The provisioning device could generate a signature key for the device and encrypt it
@@ -30,35 +39,40 @@ to the watch with absolute certainty as the provisioning device has had knowledg
 watch signature key. Nor do we wish to use the device signature key for the confirmation
 service.
 
-Instead, the provisioning device generates a companion keypair. A random seed is generated.
+Instead, the provisioning device generates an overlay keypair:
 
 ~~~~
-TBS: #{Example.AdvancedCogenPrivateKeySeed}
-~~~~
+Device Key
 
-A key derrivation function (HKDF) is used to derrive a 255 bit secret scalar.
-
-~~~~
-TBS: #{Example.AdvancedCogenPrivateKeyValue}
+UDF Seed:       #{Section.SeedAliceOverlay}
+Private Key:#{Section.KeyPairOverlayPrivate.ToStringBase16FormatHex()}
+Secret Scalar:
+#{Section.SecretScalarOverlay}
+Public Key:#{Section.KeyPairOverlay.PublicData.ToStringBase16FormatHex()}
+Fingerprint:    #{Section.KeyPairOverlay.UDF}
 ~~~~
 
 The provisioning device can calculate the public key of the composite keypair
 by adding the public keys of the device profile and the companion public key:
 
 ~~~~
-TBS: #{Example.AdvancedCogenCompositeKey}
+Composite public key = Device + Overlay:#{Section.CombinedPublic.PublicData.ToStringBase16FormatHex()}
+Fingerprint:    #{Section.CombinedPublic.UDF}
 ~~~~
 
-The provisioning device encrypts the private key of the comanion keypair under the encryption
-key of the device. 
-
-~~~~
-TBS: #{Example.AdvancedCogenPrivateKeySeedEncrypted}
-~~~~
+The provisioning device encrypts the private key of the comanion keypair (or the seed from which it
+was generated) under the encryption key of the device. 
 
 The provisioning device calculates the private key of the composite keypair by 
-adding the two private key values and verifies that scalar multiplication of
-the base point returns the composite public key value.
+adding the two private key values modulo the order of the group and verifies that scalar 
+multiplication of the base point returns the composite public key value.
+
+~~~~
+Composite Secret Scalar = Device + Overlay:
+#{Section.SecretScalarComposite}
+Fingerprint:    #{Section.CombinedPrivate.UDF}
+~~~~
+
 
 #end file
 

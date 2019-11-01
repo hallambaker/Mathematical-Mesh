@@ -91,53 +91,62 @@ namespace ExampleGenerator {
         string outputPath;
 
         public void Examples() {
+
             outputPath = Directory.GetCurrentDirectory();
             TestEnvironment = new TestEnvironmentCommon();
-            //var t= Directory.GetCurrentDirectory();
 
-            testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice2 = GetTestCLI(AliceDevice2);
-            testCLIAlice3 = GetTestCLI(AliceDevice3);
-            testCLIAlice4 = GetTestCLI(AliceDevice4);
-            testCLIBob1 = GetTestCLI("Bob");
-            testCLIMallet1 = GetTestCLI("Mallet");
-
-            Directory.CreateDirectory(TestDir1);
-            TestFile1.WriteFileNew(TestText1.ToString());
-            TestFile2.WriteFileNew(TestText2.ToString());
-            TestFile3.WriteFileNew(TestText3.ToString());
-            TestFile4.WriteFileNew(TestText4.ToString());
-            TestFile5.WriteFileNew(TestText5.ToString());
-            //var t2 = Directory.GetCurrentDirectory();
-
-            GitHub = true;
-
-            PlatformUDF();
             PlatformCrypto();
-            PlatformDare();
 
-            LayerDevice();
-            LayerAccount();
-            LayerService();
-            LayerMessage();
+            if (false) {
+
+                //var t= Directory.GetCurrentDirectory();
+
+                testCLIAlice1 = GetTestCLI(AliceDevice1);
+                testCLIAlice2 = GetTestCLI(AliceDevice2);
+                testCLIAlice3 = GetTestCLI(AliceDevice3);
+                testCLIAlice4 = GetTestCLI(AliceDevice4);
+                testCLIBob1 = GetTestCLI("Bob");
+                testCLIMallet1 = GetTestCLI("Mallet");
+
+                Directory.CreateDirectory(TestDir1);
+                TestFile1.WriteFileNew(TestText1.ToString());
+                TestFile2.WriteFileNew(TestText2.ToString());
+                TestFile3.WriteFileNew(TestText3.ToString());
+                TestFile4.WriteFileNew(TestText4.ToString());
+                TestFile5.WriteFileNew(TestText5.ToString());
+                //var t2 = Directory.GetCurrentDirectory();
+
+                GitHub = true;
+
+                PlatformUDF();
+                PlatformCrypto();
+                PlatformDare();
+
+                LayerDevice();
+                LayerAccount();
+                LayerService();
+                LayerMessage();
+                }
 
             Directory.SetCurrentDirectory(outputPath);
-            var CreateExamples = new CreateExamples();
-            CreateExamples.WebDocs(this);
+            //var CreateExamples = new CreateExamples();
+            //WebDocs(this);
 
             Directory.SetCurrentDirectory("../Release/Documents");
-
             GitHub = false;
 
+            if (false) {
 
-            MakeUDFExamples(this);
+                MakeUDFExamples(this);
 
-            MakeArchitectureExamples(this);
+                MakeArchitectureExamples(this);
 
 
-            MakeDareExamples(this);
-            MakeSchemaExamples(this);
-            MakeProtocolExamples(this);
+                MakeDareExamples(this);
+                MakeSchemaExamples(this);
+                MakeProtocolExamples(this);
+                }
+
             MakeCryptographyExamples(this);
 
             MakeDocs();

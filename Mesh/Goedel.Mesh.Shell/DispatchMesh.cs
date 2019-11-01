@@ -31,24 +31,23 @@ namespace Goedel.Mesh.Shell {
             // here we need to decide if this is a local name or an account name.
 
 
-            using (var contextMesh = MeshHost.CreateMesh("main")) {
+            var contextMesh = MeshHost.CreateMesh("main");
 
-                
-                if (account != null) {
-                    var contextAccount = contextMesh.CreateAccount(service);
-                    if (service != null) {
-                        contextAccount.AddService(service);
-                        }
+
+            if (account != null) {
+                var contextAccount = contextMesh.CreateAccount(service);
+                if (service != null) {
+                    contextAccount.AddService(service);
                     }
-
-                return new ResultCreatePersonal() {
-                    Success = true,
-                    ProfileMesh = contextMesh.ProfileMesh,
-                    CatalogedDevice = contextMesh.CatalogedDevice,
-                    MeshUDF = contextMesh.ProfileMesh.UDF,
-                    DeviceUDF = contextMesh.CatalogedDevice.UDF
-                    };
                 }
+
+            return new ResultCreatePersonal() {
+                Success = true,
+                ProfileMesh = contextMesh.ProfileMesh,
+                CatalogedDevice = contextMesh.CatalogedDevice,
+                MeshUDF = contextMesh.ProfileMesh.UDF,
+                DeviceUDF = contextMesh.CatalogedDevice.UDF
+                };
             }
 
 
@@ -58,22 +57,22 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshEscrow(MeshEscrow Options) {
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-                var file = Options.File.Value ?? contextMesh.ProfileMesh.UDF + ".escrow";
+            var contextMesh = GetContextMeshAdmin(Options);
+            var file = Options.File.Value ?? contextMesh.ProfileMesh.UDF + ".escrow";
 
-                (var escrow, var shares) = contextMesh.Escrow(3, 2);
-                escrow.ToFile(file);
-                var textShares = new List<string>();
-                foreach (var share in shares) {
-                    textShares.Add(share.UDFKey);
-                    }
-
-                return new ResultEscrow() {
-                    Success = true,
-                    Shares = textShares,
-                    Filename = file
-                    };
+            (var escrow, var shares) = contextMesh.Escrow(3, 2);
+            escrow.ToFile(file);
+            var textShares = new List<string>();
+            foreach (var share in shares) {
+                textShares.Add(share.UDFKey);
                 }
+
+            return new ResultEscrow() {
+                Success = true,
+                Shares = textShares,
+                Filename = file
+                };
+
             }
 
         void AddIfPresent(List<string> Keys, String Parameter) {
@@ -82,7 +81,7 @@ namespace Goedel.Mesh.Shell {
                 }
             }
 
-        
+
         /// <summary>
         /// Dispatch method
         /// </summary>
@@ -90,7 +89,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshRecover(MeshRecover Options) {
             var file = Options.File.Value;
-            
+
             var recoverShares = new List<string>();
             AddIfPresent(recoverShares, Options.Share1);
             AddIfPresent(recoverShares, Options.Share2);
@@ -113,18 +112,17 @@ namespace Goedel.Mesh.Shell {
                 }
 
 
-            using (var contextMesh = ContextMeshAdmin.RecoverMesh(
-                MeshMachine, secret, escrow: escrow)) {
+            var contextMesh = ContextMeshAdmin.RecoverMesh(MeshHost, secret, escrow: escrow);
 
-                "recover subordinate accounts, etc.".TaskFunctionality();
-                return new ResultRecover() {
-                    Success = true,
-                    ProfileMesh = contextMesh.ProfileMesh,
-                    CatalogedDevice = contextMesh.CatalogedDevice,
-                    MeshUDF = contextMesh.ProfileMesh.UDF,
-                    DeviceUDF = contextMesh.CatalogedDevice.UDF
-                    };
-                }
+            "recover subordinate accounts, etc.".TaskFunctionality();
+            return new ResultRecover() {
+                Success = true,
+                ProfileMesh = contextMesh.ProfileMesh,
+                CatalogedDevice = contextMesh.CatalogedDevice,
+                MeshUDF = contextMesh.ProfileMesh.UDF,
+                DeviceUDF = contextMesh.CatalogedDevice.UDF
+                };
+
             }
 
         #region // Data dump, import and export of profiles - punt on this for now

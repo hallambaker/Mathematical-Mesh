@@ -22,20 +22,7 @@ create   Generate a new SSH public keypair for the current machine and add to th
     /alg   List of algorithm specifiers
     /id   Key identifier
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh private
 
@@ -49,20 +36,7 @@ private   Extract the private key for this device
     /password   Password to encrypt private key
     /file   Output file
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh public
 
@@ -75,20 +49,7 @@ public   Extract the public key for this device
     /format   File format
     /file   Output file
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh host
 
@@ -100,20 +61,7 @@ host   Add one or more hosts to the known_hosts file
     /json   Report output in JSON format
     /application   The application format
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh host
 
@@ -126,20 +74,7 @@ host   Add one or more hosts to the known_hosts file
     /json   Report output in JSON format
     /application   The application format
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh client
 
@@ -152,20 +87,7 @@ client   Add one or more keys to the authorized_keys file
     /json   Report output in JSON format
     /application   The application format
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh host
 
@@ -177,20 +99,7 @@ host   List the known SSH sites (aka known hosts)
     /json   Report output in JSON format
     /application   The application format
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 # ssh client
 
@@ -202,19 +111,6 @@ client   List the authorized device keys (aka authorized_keys)
     /json   Report output in JSON format
     /application   The application format
 ````
-
-````
-Alice> mesh list
-````
-
-Specifying the /json option returns a result of type ResultMachine:
-
-````
-Alice> mesh list /json
-{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-````
+**Missing Example***
 
 

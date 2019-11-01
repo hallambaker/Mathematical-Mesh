@@ -48,11 +48,7 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the `group create` command:
 
-
-````
-Alice> group create groupw@example.com
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 This command creates the group groupw@example.com. Since Alice created the
 account she is the administrator.
@@ -60,22 +56,12 @@ account she is the administrator.
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-
-````
-Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupw@example.com
-ERROR - The command  is not known.
-Bob> dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-````
+**Missing Example***
 
 Since Alice is the group administrator, she can decrypt the file using her 
 administrator key:
 
-
-````
-Alice> dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-````
+**Missing Example***
 
 
 ## Adding users
@@ -84,29 +70,17 @@ The `group add` command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-
-````
-Alice> group add groupw@example.com bob@example.com
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 Bob can now decrypt the file.
 
-
-````
-Alice> dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-````
+**Missing Example***
 
 ## Reporting users
 
 The `connect ` command returns a list of group members:
 
-
-````
-Alice> group list groupw@example.com
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 The group currently has one administrator and one member.
 
@@ -114,18 +88,10 @@ The group currently has one administrator and one member.
 
 Users may be removed from a recryption group using the `group delete` command:
 
-
-````
-Alice> group delete groupw@example.com bob@example.com
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-
-````
-Alice> dare decode  TestFile1-group.dare
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-````
+**Missing Example***
 
 

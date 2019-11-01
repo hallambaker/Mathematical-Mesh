@@ -10,13 +10,7 @@ Mesh profiles.
 The `profile hello` command contacts a Mesh service and returns
 a description of the service parameters.
 
-
-````
-Alice> account hello alice@example.com
-MeshService 3.0
-   Service UDF = MA6M-HBCC-C2KT-RIH7-VFYC-XI5W-2TWY
-   Host UDF = MCGG-6KZX-DJAD-SLNV-L46H-PGSO-HRW7
-````
+**Missing Example***
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
 at the associated domain. It is not necessary for the account to be registered
@@ -37,12 +31,7 @@ This includes the steps of:
 
 The `profile create` command creates a profile:
 
-
-````
-Alice> mesh create
-Device Profile UDF=MAYU-SLRH-VTBR-V26K-JGH2-VDVU-CS2T
-Personal Profile UDF=MAZM-EQPB-Y6BY-B3W4-6QZS-CJES-QLTR
-````
+**Missing Example***
 
 
 
@@ -52,18 +41,12 @@ Personal Profile UDF=MAZM-EQPB-Y6BY-B3W4-6QZS-CJES-QLTR
 The `profile list` command lists all the profiles available on the 
 machine:
 
-
-````
-Alice> mesh list
-````
+**Missing Example***
 
 The `profile dump` command provides a more detailed description of 
 a profile:
 
-
-````
-Alice> mesh get
-````
+**Missing Example***
 
 ## Escrowing Profile Master Keys
 
@@ -76,11 +59,7 @@ pictures of their children when they were five years old.
 The `profile ` command escrows the signature and encryption keys
 of the user's master profile and returns a set of recovery shares. 
 
-
-````
-Alice> mesh escrow
-ERROR - The cryptographic provider does not permit export of the private key parameters
-````
+**Missing Example***
 
 By default, three recovery shares are created such that two shares are required to
 recover the master keys.
@@ -88,11 +67,7 @@ recover the master keys.
 Recovery of the master keys is performed by the `profile recover`
 command.
 
-
-````
-Alice> mesh recover $TBS $TBS /verify
-ERROR - The feature has not been implemented
-````
+**Missing Example***
 
 The `/verify` flag causes the tool to check that the keys can be correctly recovered
 without actually installing on the machine.
@@ -102,16 +77,10 @@ without actually installing on the machine.
 
 A Mesh profile may be exported as a file using the `profile ` command:
 
-
-````
-Alice> mesh export profile.dare
-````
+**Missing Example***
 
 The `profile ` profile can then be used to import the file on another 
 machine:
 
-
-````
-Alice4> mesh import profile.dare
-````
+**Missing Example***
 

@@ -23,30 +23,7 @@ add   Add contact entry from file
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> contact add email carol@example.com
-{
-  "Self": false,
-  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
-
-Specifying the /json option returns a result of type ResultEntry:
-
-````
-Alice> contact add email carol@example.com /json
-{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Self": false,
-      "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-      "EnvelopedContact": [{},
-        "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}}}
-````
+**Missing Example***
 
 # contact delete
 
@@ -58,21 +35,7 @@ delete   Delete contact entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> contact delete carol@example.com
-ERROR - Object reference not set to an instance of an object.
-````
-
-Specifying the /json option returns a result of type Result:
-
-````
-Alice> contact delete carol@example.com /json
-{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-````
+**Missing Example***
 
 # contact get
 
@@ -85,20 +48,7 @@ get   Lookup contact entry
     /json   Report output in JSON format
     /encrypt   Encrypt the contact under the specified key
 ````
-
-````
-Alice> contact get carol@example.com
-Empty
-````
-
-Specifying the /json option returns a result of type ResultEntry:
-
-````
-Alice> contact get carol@example.com /json
-{
-  "ResultEntry": {
-    "Success": false}}
-````
+**Missing Example***
 
 # contact list
 
@@ -109,39 +59,5 @@ list   List contact entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-
-````
-Alice> contact list
-{
-  "Self": true,
-  "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
-  "Self": false,
-  "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
-
-Specifying the /json option returns a result of type ResultDump:
-
-````
-Alice> contact list /json
-{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "Self": true,
-        "Key": "NDTX-ZU63-2WJJ-CFJ2-CZLK-V33F-HJE7",
-        "EnvelopedContact": [{},
-          "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]},
-      {
-        "Self": false,
-        "Key": "NAB3-WBKU-NAVH-K5BW-AKDW-YET2-2LNF",
-        "EnvelopedContact": [{},
-          "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}]}}
-````
+**Missing Example***
 

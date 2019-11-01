@@ -39,7 +39,7 @@ namespace Goedel.Mesh.Test {
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
 
-            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
             using (var catalog = deviceAdmin.GetCatalogCredential()) {
 
@@ -110,7 +110,7 @@ namespace Goedel.Mesh.Test {
             var machineAliceLaptop = new MeshMachineTest(testEnvironmentCommon, name: "Alice Laptop");
             var machineAlicePhone = new MeshMachineTest(testEnvironmentCommon, name: "Alice Phone");
 
-            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
             var catalog = deviceAdmin.GetCatalogDevice();
 
@@ -169,7 +169,7 @@ namespace Goedel.Mesh.Test {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
-            var deviceAdmin = machineAliceAdmin.MeshHost.CreateAccount("main");
+            var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
 
             var catalog = deviceAdmin.GetCatalogContact();

@@ -72,16 +72,35 @@ namespace Goedel.Cryptography {
                 }
             else {
                 EncodedPrivateKey = key;
-                PrivateKey = new CurveEdwards25519Private(key);
-                PublicKey = PrivateKey.PublicKey;
+                var exportable = keyType.IsExportable();
+                PrivateKey = new CurveEdwards25519Private(key, exportable);
+                PublicKey = PrivateKey.Public;
                 PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
-                if (keyType.IsExportable()) {
+                if (exportable) {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(key, PKIXPublicKeyECDH);
                     }
                 }
             
             }
 
+
+        /// <summary>
+        /// Construct a key via parameters presented to KDF-HMAC-SHA-2-512. 
+        /// <para>The values <paramref name="ikm"/> and <paramref name="salt"/> are used to
+        /// generate the key data value as specified by RFC8032.</para>
+        /// </summary>
+        /// <param name="ikm">The initial keying material.</param>
+        /// <param name="salt">Salt value.</param>
+        /// <param name="keyType">The key type.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+        /// in signature operations.</param>
+        public KeyPairEd25519(byte[] ikm, byte[] salt,
+                    KeySecurity keyType = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
+            }
 
         /// <summary>
         /// Construct a KeyPairEd25519 instance for a secret scalar. This is used to create
@@ -97,6 +116,8 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
             PrivateKey = privateKey;
+            PublicKey = privateKey.Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
             KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
@@ -115,6 +136,9 @@ namespace Goedel.Cryptography {
             PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
 
             }
+
+
+
 
         /// <summary>
         /// Generate a new private key.
