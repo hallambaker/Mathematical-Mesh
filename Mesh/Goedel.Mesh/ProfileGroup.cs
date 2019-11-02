@@ -46,21 +46,40 @@ namespace Goedel.Mesh {
             }
 
 
-        public void AddMember(
-                    IMeshMachine meshMachine, 
-                    out ConnectionGroup connectionGroup,
-                    out ActivationGroup activationGroup) {
+        public DeviceRecryptionKey AddMember(
+                    IMeshMachine meshMachine,
+                    Contact user) {
 
 
-            meshMachine.KeyCollection.LocatePrivate(KeyEncryption.UDF);
+            var key = meshMachine.KeyCollection.LocatePrivate(KeyEncryption.UDF) as KeyPairAdvanced;
+            throw new NYI();
 
-            connectionGroup = new ConnectionGroup() {
-                };
+            //key.GenerateRecryptionPair(out var serviceKey, out var deviceKey);
 
-            activationGroup = new ActivationGroup() {
-                };
+            ////var keyComposite = new KeyComposite(deviceKey);
+            //var deviceRecryptionKey = new DeviceRecryptionKey(user, serviceKey, deviceKey);
 
+
+            //// need to encrypt to the user's encryption key
+
+            //return deviceRecryptionKey;
             }
 
         }
+
+
+    public partial class DeviceRecryptionKey {
+        public DeviceRecryptionKey() {
+            }
+
+        public DeviceRecryptionKey(Contact user, KeyPair serviceKey, KeyPair deviceKey) {
+            }
+
+
+        public GroupInvitation MakeInvitation(Contact user) {
+            throw new NYI();
+            }
+
+        }
+
     }

@@ -17,7 +17,8 @@ namespace Goedel.Cryptography {
 
         ///<summary>The public key value.</summary>
         public CurveX25519Public PublicKey;
-        CurveX25519Private PrivateKey;
+        ///<summary>The private key value</summary>
+        public CurveX25519Private PrivateKey;
 
 
         #region //Properties
@@ -97,7 +98,7 @@ namespace Goedel.Cryptography {
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.X25519);
-            PrivateKey = privateKey;
+            this.PrivateKey = privateKey;
             KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
@@ -132,32 +133,20 @@ namespace Goedel.Cryptography {
             }
 
         /// <summary>
-        /// Generate a key co-generation contribution and return the new composite public
-        /// key and the private key contribution.
-        /// </summary>
-        /// <param name="privateKey">The private key contribution.</param>
-        /// <returns>The composite public key.</returns>
-        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
-            privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
-            var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as CurveX25519Public);
-            return new KeyPairX25519(combinedKey, CryptoAlgorithmID);
-            }
-
-        /// <summary>
         /// Factory method to produce a key pair from key parameters.
         /// </summary>
-        /// <param name="PrivateKey">The private key</param>
+        /// <param name="privateKey">The private key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey) =>
-            new KeyPairX25519((CurveX25519Private)PrivateKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey) =>
+            new KeyPairX25519((CurveX25519Private)privateKey);
 
         /// <summary>
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
-        /// <param name="PublicKey">The public key</param>
+        /// <param name="publicKey">The public key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey) =>
-            new KeyPairX25519((CurveX25519Public)PublicKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey) =>
+            new KeyPairX25519((CurveX25519Public)publicKey);
 
 
         /// <summary>
@@ -267,10 +256,13 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyPairX448 : KeyPairECDH {
 
-        CurveX448Public PublicKey;
-        CurveX448Private PrivateKey;
-
         #region //Properties
+        ///<summary>The public key value.</summary>
+        public CurveX448Public PublicKey;
+
+        ///<summary>The implementation private key value (if exportable)</summary>
+        public CurveX448Private PrivateKey;
+
         ///<summary>The implementation public key value</summary>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
 
@@ -366,17 +358,17 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
             new KeyPairX448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
-        /// <summary>
-        /// Generate a key co-generation contribution and return the new composite public
-        /// key and the private key contribution.
-        /// </summary>
-        /// <param name="privateKey">The private key contribution.</param>
-        /// <returns>The composite public key.</returns>
-        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
-            privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
-            var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as CurveX448Public);
-            return new KeyPairX448(combinedKey, CryptoAlgorithmID);
-            }
+        ///// <summary>
+        ///// Generate a key co-generation contribution and return the new composite public
+        ///// key and the private key contribution.
+        ///// </summary>
+        ///// <param name="privateKey">The private key contribution.</param>
+        ///// <returns>The composite public key.</returns>
+        //public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
+        //    privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
+        //    var combinedKey = PublicKey.Combine(privateKey.IKeyAdvancedPublic as CurveX448Public);
+        //    return new KeyPairX448(combinedKey, CryptoAlgorithmID);
+        //    }
 
         /// <summary>
         /// Construct class from a public key value

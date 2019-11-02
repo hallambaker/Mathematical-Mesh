@@ -90,20 +90,21 @@ namespace Goedel.Test.Core {
 
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
-        public void AddEncrypt(string AccountId, bool Register = true) {
+        public void AddEncrypt(string accountId, bool register = true) {
             EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
 
-            var Keypair = new KeyPairDH();
-            var Pub = Keypair.KeyPairPublic();
-            var PublicKeyKeypair = Keypair.KeyPairPublic();
-            EncryptionKeys.Add(PublicKeyKeypair);
+            var keypair = new KeyPairEd25519() {
+                Locator = accountId
+                };
+            var publicKeyKeypair = keypair.KeyPairPublic();
+            EncryptionKeys.Add(publicKeyKeypair);
 
             //Console.WriteLine($"Keypair is {Keypair.UDF}");
             //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
-            if (Register) {
-                KeyCollection.Add(Keypair);
+            if (register) {
+                KeyCollection.Add(keypair);
                 }
 
             }

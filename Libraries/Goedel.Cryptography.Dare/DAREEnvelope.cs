@@ -121,37 +121,6 @@ namespace Goedel.Cryptography.Dare {
             Trailer = trailer;
             }
 
-        ///// <summary>
-        ///// Create a DARE Message instance.
-        ///// </summary>
-        ///// <param name="cryptoParameters">Specifies the cryptographic enhancements to
-        ///// be applied to this message.</param>
-        ///// <param name="outputStream">The stream to which the output will be written.</param>
-        ///// <param name="contentMeta">The content metadata</param>
-        ///// <param name="contentLength">The content length. This value is ignored if the Plaintext
-        ///// parameter is not null. If the value is less than 0, chunked encoding
-        ///// will be used for the payload data. </param>
-        ///// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
-        ///// create the message body. Otherwise the body is specified by calls to the Process method.</param>
-        ///// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
-        ///// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        /////     as an EDSS header entry.</param>
-        //public DareEnvelope(
-        //            CryptoParameters cryptoParameters,
-        //            Stream outputStream,
-        //            ContentMeta contentMeta,
-        //            byte[] plaintext = null,
-        //            long contentLength = -1,
-        //            byte[] cloaked = null,
-        //            List<byte[]> dataSequences = null
-        //            ) {
-
-        //    var cryptoStack = cryptoParameters.GetCryptoStack();
-
-        //    Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
-        //    JSONBWriter = new JSONBWriter(outputStream);
-        //    }
-
         /// <summary>
         /// Create a new DARE Message from the specified parameters.
         /// </summary>
@@ -161,8 +130,6 @@ namespace Goedel.Cryptography.Dare {
         public static DareEnvelope Encode(
                     byte[] plaintext,
                     string contentType) => Encode(plaintext, contentMeta: new ContentMeta() { ContentType = contentType });
-
-
 
         /// <summary>
         /// Create a new DARE Message from the specified parameters.
@@ -417,6 +384,38 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
+        /// Decode a streamed message
+        /// </summary>
+        /// <param name="inputData">The input data</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
+        /// be applied to this message.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        /// <param name="chunk">The maximum chunk size. If unspecified, the default
+        /// system chunk size (2048) is used.</param>
+        /// <returns>The serialized encoding of the data.</returns>
+        public static byte[] Encode(
+                CryptoParameters cryptoParameters,
+                byte[] inputData,
+                ContentMeta contentMeta = null,
+                byte[] cloaked = null,
+                List<byte[]> dataSequences = null,
+                int chunk = -1) {
+            using (var outputStream = new MemoryStream()) {
+                using (var inputStream = new MemoryStream(inputData)) {
+                    Encode(cryptoParameters, inputStream, outputStream, inputStream.Length,
+                        contentMeta, cloaked, dataSequences, chunk);
+                    return outputStream.ToArray();
+                    }
+                }
+
+            }
+
+
+
+        /// <summary>
         /// Encode data received on the input stream to the output stream with the specified
         /// security enhancements. If the input stream supports the seek operation, and
         /// the maximum chunk size is less than 1, the output file will be written as a 
@@ -453,6 +452,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             }
+
 
         /// <summary>
         /// Decode a streamed message

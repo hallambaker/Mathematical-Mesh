@@ -628,7 +628,16 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
 
-
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public KeyAgreementResult Agreement(KeyPair keyPair) {
+            var publicKey = (keyPair as KeyPairEd448).PublicKey;
+            var agreement = Agreement(publicKey);
+            return new CurveEdwards448Result() { Agreement = agreement };
+            }
 
 
         /// <summary>
@@ -693,6 +702,28 @@ namespace Goedel.Cryptography.Algorithms {
             return Result;
 
             }
+
+        /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) {
+            BigInteger Accumulator = 0;
+
+            foreach (var share in Shares) {
+                var key = share as KeyPairEd448;
+                var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards448Private);
+
+                Accumulator = (Accumulator + privateKey.Private).Mod(CurveEdwards448.Q);
+                }
+
+            return new CurveEdwards25519Private(
+                (CurveEdwards448.Q + Private - Accumulator).Mod(CurveEdwards448.Q)) {
+                IsRecryption = true
+                };
+            }
+
 
         /// <summary>
         /// Combine the two public keys to create a composite public key.

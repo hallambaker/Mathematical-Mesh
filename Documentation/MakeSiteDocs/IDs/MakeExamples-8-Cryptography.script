@@ -16,7 +16,7 @@
 
 #file ExamplesAdvancedCoGeneration "Examples\\ExamplesAdvancedCoGeneration.md" CreateExamples Example
 ####Example: Provisioning the Confirmation Service
-#% var Section = Example.AdvancedCrypto;
+#% var Section = Example.CryptoCombine;
 
 For example, Alice provisions the confirmation service to her watch. The device profile
 of the watch specifies an Ed25519 signature key. Note that for production use, Ed448 is
@@ -77,91 +77,57 @@ Fingerprint:    #{Section.CombinedPrivate.UDF}
 #end file
 
 #file ExamplesAdvancedRecryption "Examples\\ExamplesAdvancedRecryption.md" CreateExamples Example
+#% var Section = Example.CryptoGroup;
 ####Example: Messaging group
 
-Alice creates a recryption group. The group encryption and signature key parameters are:
+NB: The current code implements encryption in the Elliptic Curve Ed25519, not the Montgomery
+Curve X.25519 as it should. This will be lifted in the near future.
+
+Alice creates an encryption keypair.
 
 ~~~~
-TBS: #{Example.AdvancedRecryptionGroup}
+Group Key:#{Section.KeyPairGroupPrivate.ToStringBase16FormatHex()}
+Value:
+#{Section.KeyPairGroupPrivateInt}
 ~~~~
 
 To verify the proper function of the group, Alice creates a test message and 
 encrypts it under the group key.
 
 ~~~~
-TBS: #{Example.AdvancedRecryptionMessagePlaintext}
-TBS: #{Example.AdvancedRecryptionMessageEncrypted}
+Message = #{Section.PlaintextText} as UTF8:#{Section.Plaintext.ToStringBase16FormatHex()}
+
+#{Section.Envelope}
 ~~~~
 
-Alice decides to add Bob to the group. Bob's recryption profile is:
-
-~~~~
-TBS: #{Example.AdvancedRecryptionBobProfile}
-~~~~
-
+Alice decides to add Bob to the group. She creates an encryption key for Bob:
 The decryption key is specified in the same way as any other Ed25519 private key
 using the hash of a private key seed value:
 
 ~~~~
-TBS: #{Example.AdvancedRecryptionBobDecryptionKey}
+Bob's Member Key:#{Section.KeyPairDevicePrivate.ToStringBase16FormatHex()}
+Value:
+#{Section.KeyPairDevicePrivateInt}
 ~~~~
 
-The the recryption key is the group secret scalar minus  (mod p)  the secret scalar of Bob's
+The the recryption key is the group secret scalar minus  (mod p) the secret scalar of Bob's
 private key:
 
 ~~~~
-TBS: #{Example.AdvancedRecryptionBobRecryptionKey}
+Bob's Service Key:
+   [Not specified as a digest input value]
+Value:
+#{Section.KeyPairServicePrivateInt}
 ~~~~
 
-The Recryption entry consists of Bob's address, the recryption key and the decryption
-key encrypted under Bob's encryption key:
-
+To decrypt:
 
 ~~~~
-TBS: #{Example.AdvancedRecryptionBobRecryptionEntry}
-~~~~
+Member Agreement Value:#{Section.KeyPairDeviceWrapped.PartialDeviceEncoded.ToStringBase16FormatHex()}
 
-The group administration tool creates a notification request to tell Bob that
-he has been made a member of the new group and signs it using the group signature
-key. The recryption entry and the notification are then sent to the recryption
-service:
+Service Agreement Value:#{Section.KeyPairDeviceWrapped.PartialServiceEncoded.ToStringBase16FormatHex()}
 
-~~~~
-TBS: #{Example.AdvancedRecryptionRecryptionAddMemberRequest}
-~~~~
-
-The notification message contains a link to the test message. When he accepts
-membership of the group, Bob clicks on the link to test that his membership
-has been fully provisioned. Providing an explicit test mechanism avoids the problem
-that might otherwise occur in which the message spool fills up with test messages 
-being posted.
-
-Bob's Web browser requests the recryption data for the test message. The request is 
-authenticated and encrypted under Bob's device keys. The plaintext of the message is:
-
-~~~~
-TBS: #{Example.AdvancedRecryptionRecryptionRecryptionRequest}
-~~~~
-
-The plaintext of the response contains the additional information Bob's Web browser
-needs to complete the decryption process:
-
-~~~~
-TBS: #{Example.AdvancedRecryptionRecryptionRecryptionResponse}
-~~~~
-
-The Web browser decrypts the private key and uses it to calculate the decryption 
-value:
-
-~~~~
-TBS: #{Example.AdvancedRecryptionDecryptionValue}
-~~~~
-
-The key agreement value is obtained by point addition of the recryption and decryption
-values:
-
-~~~~
-TBS: #{Example.AdvancedRecryptionKeyAgreementValue}
+Key Agreement IKM:#{Section.KeyPairDeviceWrapped.Result.ToStringBase16FormatHex()}
 ~~~~
 
 This value allows the test message to be decrypted.
@@ -210,5 +176,53 @@ in at least one multi-party notary scheme.
 
 #end file
 
+#file Blahhh "Examples\\Blahhh.md" CreateExamples Example
+The Recryption entry consists of Bob's address, the recryption key and the decryption
+key encrypted under Bob's encryption key:
+
+
+~~~~
+TBS: #{Example.AdvancedRecryptionBobRecryptionEntry}
+~~~~
+
+The group administration tool creates a notification request to tell Bob that
+he has been made a member of the new group and signs it using the group signature
+key. The recryption entry and the notification are then sent to the recryption
+service:
+
+~~~~
+TBS: #{Example.AdvancedRecryptionRecryptionAddMemberRequest}
+~~~~
+
+The notification message contains a link to the test message. When he accepts
+membership of the group, Bob clicks on the link to test that his membership
+has been fully provisioned. Providing an explicit test mechanism avoids the problem
+that might otherwise occur in which the message spool fills up with test messages 
+being posted.
+
+Bob's Web browser requests the recryption data for the test message. The request is 
+authenticated and encrypted under Bob's device keys. The plaintext of the message is:
+
+~~~~
+TBS: #{Example.AdvancedRecryptionRecryptionRecryptionRequest}
+~~~~
+
+The plaintext of the response contains the additional information Bob's Web browser
+needs to complete the decryption process:
+
+~~~~
+TBS: #{Example.AdvancedRecryptionRecryptionRecryptionResponse}
+~~~~
+
+The Web browser decrypts the private key and uses it to calculate the decryption 
+value:
+
+~~~~
+TBS: #{Example.AdvancedRecryptionDecryptionValue}
+~~~~
+
+The key agreement value is obtained by point addition of the recryption and decryption
+values:
+#end file
 #end xclass
 

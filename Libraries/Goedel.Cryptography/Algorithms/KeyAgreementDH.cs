@@ -252,6 +252,17 @@ namespace Goedel.Cryptography.Algorithms {
         #region // Key Agreement methods
 
         /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public KeyAgreementResult Agreement(KeyPair keyPair) {
+            var agreement = Agreement((keyPair as KeyPairAdvanced).IKeyAdvancedPublic);
+            return new ResultDiffieHellman() { Agreement = agreement };
+            }
+
+
+        /// <summary>
         /// Perform a Diffie Hellman Key Agreement to this private key
         /// </summary>
         /// <param name="Public">Set of newly created DH parameters for Alice</param>
@@ -297,6 +308,29 @@ namespace Goedel.Cryptography.Algorithms {
                 };
             return Result;
             }
+
+        /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) {
+            BigInteger Accumulator = 0;
+
+            foreach (var share in Shares) {
+                var key = share as KeyPairDH;
+                var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards448Private);
+
+                Accumulator = (Accumulator + privateKey.Private).Mod(Modulus - 1);
+                }
+
+            return new DiffeHellmanPrivate(
+                (Modulus - 1 + Private - Accumulator).Mod(Modulus - 1)) {
+                IsRecryption = true
+                };
+            }
+
+
 
         /// <summary>
         /// Combine the two public keys to create a composite public key.

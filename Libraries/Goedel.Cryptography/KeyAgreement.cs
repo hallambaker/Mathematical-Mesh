@@ -32,12 +32,27 @@ namespace Goedel.Cryptography {
         /// <returns>Array shares.</returns>
         IKeyAdvancedPrivate[] MakeRecryptionKeySet(int Shares);
 
+
+        /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares);
+
         /// <summary>
         /// Combine two private keys to obtain a new public key.
         /// </summary>
         /// <param name="Contribution">The private key contribution.</param>
         /// <returns>The new public key.</returns>
         IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution);
+
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        KeyAgreementResult Agreement(KeyPair keyPair);
         }
 
 
@@ -52,7 +67,7 @@ namespace Goedel.Cryptography {
         public abstract IKeyAdvancedPublic IKeyAdvancedPublic { get; }
 
 
-        ///<summary>The external public key parameters.</summary>
+        ///<summary>The implementation private key value (if exportable)</summary>
         public abstract IKeyAdvancedPrivate IKeyAdvancedPrivate { get; }
 
         /// <summary>
@@ -80,44 +95,31 @@ namespace Goedel.Cryptography {
         public static KeyPair FindLocalAdvanced(string UDF) => Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
 
         /// <summary>
-        /// Split the private key into a number of recryption keys.
-        /// <para>
-        /// Since the
-        /// typical use case for recryption requires both parts of the generated machine
-        /// to be used on a machine that is not the machine on which they are created, the
-        /// key security level is always to permit export.</para>
+        /// Perform a partial key agreement.
         /// </summary>
-        /// <param name="Shares">The number of keys to create.</param>
-        /// <returns>The created keys</returns>
-        public virtual KeyPair[] GenerateRecryptionSet(int Shares) {
-            var Private = IKeyAdvancedPrivate.MakeRecryptionKeySet(Shares);
-
-            var Result = new KeyPair[Shares];
-            for (var i = 0; i < Shares; i++) {
-                Result[i] = KeyPair(Private[i]);
-                }
-
-            return Result;
-            }
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public KeyAgreementResult Agreement(KeyPair keyPair) => IKeyAdvancedPrivate.Agreement(keyPair);
 
         /// <summary>
-        /// Split the private key into a recryption pair. This is a convenience function
-        /// to support the most common use case in an implementation.
-        /// <para>
-        /// Since the
-        /// typical use case for recryption requires both parts of the generated machine
-        /// to be used on a machine that is not the machine on which they are created, the
-        /// key security level is always to permit export.</para>
+        /// Calculate and return the partial private key such that its value plus the value of 
+        /// <paramref name="partialKey"/> equals the value of this key.
         /// </summary>
-        /// <param name="Recryption">The private key for use by the recryption provider.</param>
-        /// <param name="Completion">The private key to be used to complete the decryption
-        /// operation.</param>
-        public virtual void GenerateRecryptionPair(out KeyPair Recryption, out KeyPair Completion) {
-            var Keys = GenerateRecryptionSet(2);
-            Recryption = Keys[0];
-            Completion = Keys[1];
-            }
+        /// <param name="partialKey">The existing key part.</param>
+        /// <returns>The computed key</returns>
+        public virtual KeyPairAdvanced GenerateRecryptionKey(KeyPair partialKey) =>
+            GenerateRecryptionKey(new List<KeyPair> { partialKey });
 
+        /// <summary>
+        /// Calculate and return the partial private key such that its value plus the value of 
+        /// the sum of <paramref name="partialKeys"/> equals the value of this key.
+        /// </summary>
+        /// <param name="partialKeys">The existing key parts.</param>
+        /// <returns>The computed key</returns>
+        public virtual KeyPairAdvanced GenerateRecryptionKey(IEnumerable<KeyPair> partialKeys) {
+            var Private = IKeyAdvancedPrivate.CompleteRecryptionKeySet(partialKeys);
+            return KeyPair(Private);
+            }
 
         /// <summary>
         /// Combine the public parameters with another public key to create the composite public key pair
@@ -139,14 +141,16 @@ namespace Goedel.Cryptography {
             return KeyPair(PrivateKey);
             }
 
-        /// <summary>
-        /// Generate a key co-generation contribution and return the new composite public
-        /// key and the private key contribution.
-        /// </summary>
-        /// <param name="privateKey">The private key contribution.</param>
-        /// <returns>The composite public key.</returns>
-        public abstract KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey);
+        ///// <summary>
+        ///// Generate a key co-generation contribution and return the new composite public
+        ///// key and the private key contribution.
+        ///// </summary>
+        ///// <param name="privateKey">The private key contribution.</param>
+        ///// <returns>The composite public key.</returns>
+        //public abstract KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey);
         }
+
+
 
 
 

@@ -51,6 +51,21 @@
 			Description
 				|Service holding the additional contribution
 
+	Structure DeviceRecryptionKey
+		String UDF
+			Description
+				|The fingerprint of the encryption key
+		Struct Contact Contact
+			Description
+				|The User's Mesh contact information
+		Struct PublicKey RecryptionKey
+			Description
+				|The recryption key
+		Struct DareEnvelope EnvelopedRecryptionKeyDevice
+			Description
+				|The decryption key encrypted under the user's device key.	
+
+
 	Structure KeyOverlay
 		String UDF
 			Description
@@ -76,16 +91,7 @@
 			Description
 				|The escrowed master escrow keys.
 
-	Structure DeviceRecryptionKey
-		String UDF
-			Description
-				|The fingerprint of the encryption key
-		Struct PublicKey RecryptionKey
-			Description
-				|The recryption key
-		Struct DareEnvelope EnvelopedRecryptionKeyDevice
-			Description
-				|The decryption key encrypted under the user's device key.	
+
 
 	Section 2 "Assertion classes"
 		Description
@@ -276,7 +282,7 @@
 		Description
 			|Describes the connection of a member to a group.
 		Inherits Connection
-		Struct PublicKey KeyEncryption
+		Struct KeyComposite KeyEncryption
 			Description
 				|The decryption key for the user within the group
 
@@ -364,8 +370,20 @@
 		Description
 			|Classes describing data used in cataloged data.
 
+
+	Structure ContactMesh
+		String UDF
+		String ServiceID
+			Multiple
+
 	Structure Contact
 		Inherits Assertion
+
+		Struct DareEnvelope MeshAccounts
+			Multiple
+			Description
+				|The Mesh Account Connection - the main event really
+
 		String Email
 		String Identifier
 		String FullName
@@ -516,6 +534,8 @@
 
 	Structure CatalogedContactRecryption
 		Inherits CatalogedContact
+
+
 		// Recryption group user has accepted membership of
 		// Describe document stores, chat groups, etc accessible
 
@@ -633,6 +653,11 @@
 	
 	Structure ReplyContact
 		Inherits RequestContact
+
+	Structure GroupInvitation
+		Inherits Message
+		String Text
+		Struct DareEnvelope EncryptedPartDecrypt
 
 	Structure RequestConfirmation
 		Inherits Message

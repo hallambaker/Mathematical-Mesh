@@ -85,14 +85,14 @@ namespace Goedel.Cryptography {
         public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyECDH.SubjectPublicKeyInfo();
 
 
-        /// <summary>
-        /// Perform an ECDH Key Agreement to a private key
-        /// </summary>
-        /// <param name="Public">Public key parameters</param>
-        /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
-        /// <returns>The key agreement value ZZ</returns>
-        public ResultECDH Agreement(KeyPairECDH Public, ResultDiffieHellman Carry = null) =>
-            throw new NotImplementedException();
+        ///// <summary>
+        ///// Perform an ECDH Key Agreement to a private key
+        ///// </summary>
+        ///// <param name="Public">Public key parameters</param>
+        ///// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
+        ///// <returns>The key agreement value ZZ</returns>
+        //public ResultECDH Agreement(KeyPairECDH Public, ResultECDH Carry = null) =>
+        //    throw new NotImplementedException();
 
         /// <summary>
         /// Generate a key pair for the specified algorithm and key size.

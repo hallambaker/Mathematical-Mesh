@@ -16,10 +16,14 @@ namespace Goedel.Cryptography {
     /// </summary>
     public class KeyPairEd448 : KeyPairECDH {
 
-        CurveEdwards448Public PublicKey;
-        CurveEdwards448Private PrivateKey;
 
-        #region //Properties
+        #region // Properties and fields 
+        ///<summary>The implementation public key value</summary>
+        public CurveEdwards448Public PublicKey;
+
+        ///<summary>The implementation private key value (if exportable)</summary>
+        public CurveEdwards448Private PrivateKey;
+
         ///<summary>The implementation public key value</summary>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
 
@@ -45,7 +49,7 @@ namespace Goedel.Cryptography {
         #endregion
 
 
-        byte[] EncodedPrivateKey = null;
+        byte[] encodedPrivateKey = null;
 
         /// <summary>
         /// Construct a KeyPairEd25519 instance for the specified key data in interchange 
@@ -70,7 +74,7 @@ namespace Goedel.Cryptography {
                 PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
                 }
             else {
-                EncodedPrivateKey = key;
+                encodedPrivateKey = key;
                 var exportable = keyType.IsExportable();
                 PrivateKey = new CurveEdwards448Private(key, exportable);
                 PublicKey = PrivateKey.Public;
@@ -108,15 +112,15 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Construct class from a public key value
         /// </summary>
-        /// <param name="Public">The public key value</param>
+        /// <param name="publicKey">The public key value</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
-        public KeyPairEd448(IKeyAdvancedPublic Public,
+        public KeyPairEd448(IKeyAdvancedPublic publicKey,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID == CryptoAlgorithmID.Default ?
                 CryptoAlgorithmID.Ed448 : cryptoAlgorithmID;
-            PublicKey = Public as CurveEdwards448Public;
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
+            this.PublicKey = publicKey as CurveEdwards448Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(this.PublicKey.Encoding);
             }
 
         /// <summary>
@@ -132,33 +136,23 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
             new KeyPairEd448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
-        /// <summary>
-        /// Generate a key co-generation contribution and return the new composite public
-        /// key and the private key contribution.
-        /// </summary>
-        /// <param name="privateKey">The private key contribution.</param>
-        /// <returns>The composite public key.</returns>
-        public override KeyPairAdvanced Cogenerate(out KeyPairAdvanced privateKey) {
-            privateKey = Generate(KeySecurity.Exportable, KeyUses, CryptoAlgorithmID);
-            var combinedKey = PublicKey.Combine (privateKey.IKeyAdvancedPublic as CurveEdwards448Public);
-            return new KeyPairEd448(combinedKey, CryptoAlgorithmID);
-            }
+
 
         /// <summary>
         /// Factory method to produce a key pair from key parameters.
         /// </summary>
-        /// <param name="PrivateKey">The private key</param>
+        /// <param name="privateKey">The private key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey) =>
-            new KeyPairEd448((CurveEdwards448Private)PrivateKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey) =>
+            new KeyPairEd448((CurveEdwards448Private)privateKey);
 
         /// <summary>
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
-        /// <param name="PublicKey">The public key</param>
+        /// <param name="publicKey">The public key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey) =>
-            new KeyPairEd448((CurveEdwards448Public)PublicKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey) =>
+            new KeyPairEd448((CurveEdwards448Public)publicKey);
 
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.
@@ -167,12 +161,12 @@ namespace Goedel.Cryptography {
         public override KeyPair KeyPairPublic() => new KeyPairEd448(PublicKey);
 
         /// <summary>
-        /// Persist the key to a key collection. Note that it is only possible to store a 
+        /// Persist the key to a key collection.
         /// </summary>
         /// <param name="keyCollection"></param>
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(PersistPending);
-            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(EncodedPrivateKey, PKIXPublicKeyECDH) { };
+            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(encodedPrivateKey, PKIXPublicKeyECDH) { };
             keyCollection.Persist(UDF, pkix, KeySecurity.IsExportable());
             }
 
@@ -180,18 +174,18 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
         /// </summary>
-        /// <param name="Public">Public key parameters</param>
-        /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
+        /// <param name="publicKey">Public key parameters</param>
+        /// <param name="carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
-        ResultECDH Agreement(KeyPairEd448 Public, CurveEdwards448Result Carry = null) {
+        ResultECDH Agreement(KeyPairEd448 publicKey, CurveEdwards448Result carry = null) {
             Assert.True(KeyUses.HasFlag (KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
 
             CurveEdwards448 Agreement;
-            if (Carry == null) {
-                Agreement = PrivateKey.Agreement(Public.PublicKey);
+            if (carry == null) {
+                Agreement = PrivateKey.Agreement(publicKey.PublicKey);
                 }
             else {
-                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.Agreement);
+                Agreement = PrivateKey.Agreement(publicKey.PublicKey, carry.Agreement);
                 }
             return new CurveEdwards448Result() { Agreement = Agreement };
             }
@@ -200,36 +194,36 @@ namespace Goedel.Cryptography {
         /// Encrypt a bulk key.
         /// </summary>
         /// <returns>The encoder</returns>
-        /// <param name="Key">The key to encrypt.</param>
-        /// <param name="Ephemeral">The ephemeral key to use for the exchange (if used)</param>
-        /// <param name="Exchange">The private key to use for the exchange.</param>
-        /// <param name="Salt">Optional salt value for use in key derivation.</param>
-        public override void Encrypt(byte[] Key,
-            out byte[] Exchange,
-            out KeyPair Ephemeral,
-            byte[] Salt = null) => PublicKey.Agreement().Encrypt(Key, out Exchange, out Ephemeral, Salt);
+        /// <param name="key">The key to encrypt.</param>
+        /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
+        /// <param name="exchange">The private key to use for the exchange.</param>
+        /// <param name="salt">Optional salt value for use in key derivation.</param>
+        public override void Encrypt(byte[] key,
+            out byte[] exchange,
+            out KeyPair ephemeral,
+            byte[] salt = null) => PublicKey.Agreement().Encrypt(key, out exchange, out ephemeral, salt);
 
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="EncryptedKey">The encrypted session</param>
-        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <param name="Partial">Partial key agreement carry in (for recryption)</param>
-        /// <param name="Salt">Optional salt value for use in key derivation. If specified
+        /// <param name="encryptedKey">The encrypted session</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
         /// must match the salt used to encrypt.</param>        
         /// <returns>The decoded data instance</returns>
-        public override byte[] Decrypt(byte[] EncryptedKey,
-            KeyPair Ephemeral = null,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-            KeyAgreementResult Partial = null, byte[] Salt = null) {
+        public override byte[] Decrypt(byte[] encryptedKey,
+            KeyPair ephemeral = null,
+            CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+            KeyAgreementResult partial = null, byte[] salt = null) {
 
-            var KeyPairEd448 = Ephemeral as KeyPairEd448;
+            var KeyPairEd448 = ephemeral as KeyPairEd448;
             Assert.NotNull(KeyPairEd448, KeyTypeMismatch.Throw);
 
-            var Agreementx = Agreement(KeyPairEd448, Partial as CurveEdwards448Result);
-            return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);
+            var Agreementx = Agreement(KeyPairEd448, partial as CurveEdwards448Result);
+            return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
             }
 
         static byte[] Dom4(CryptoAlgorithmID cryptoAlgorithm, byte[] y) {
@@ -261,50 +255,51 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Sign a precomputed digest
         /// </summary>
-        /// <param name="Data">The data to sign.</param>
-        /// <param name="AlgorithmID">The algorithm to use.</param>
-        /// <param name="Context">Additional data added to the signature scope
+        /// <param name="digest">The data to sign.</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="context">Additional data added to the signature scope
         /// for protocol isolation.</param>
         /// <returns>The signature data</returns>
-        public override byte[] SignHash(byte[] Data,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                byte[] Context = null) {
+        public override byte[] SignHash(
+                byte[] digest,
+                CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                byte[] context = null) {
             Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-            AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
-            if (AlgorithmID == CryptoAlgorithmID.Ed448ph) {
+            algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
+            if (algorithmID == CryptoAlgorithmID.Ed448ph) {
                 using (var shake256 = new SHAKE256(64 * 8)) {
-                    Data = shake256.ComputeHash(Data);
+                    digest = shake256.ComputeHash(digest);
                     }
                 }
 
-            return PrivateKey.Sign(Data, Dom4 (AlgorithmID, Context)); ;
+            return PrivateKey.Sign(digest, Dom4 (algorithmID, context)); ;
             }
 
 
         /// <summary>
         /// Verify a signature over the purported data digest.
         /// </summary>
-        /// <param name="Signature">The signature blob value.</param>
-        /// <param name="AlgorithmID">The signature and hash algorithm to use.</param>
-        /// <param name="Context">Additional data added to the signature scope
+        /// <param name="signature">The signature blob value.</param>
+        /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+        /// <param name="context">Additional data added to the signature scope
         /// for protocol isolation.</param>
-        /// <param name="Data">The digest value to be verified.</param>
+        /// <param name="digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
         public override bool VerifyHash(
-            byte[] Data,
-            byte[] Signature,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
-                byte[] Context = null) {
+            byte[] digest,
+            byte[] signature,
+            CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                byte[] context = null) {
             Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-            AlgorithmID = AlgorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : AlgorithmID;
-            if (AlgorithmID == CryptoAlgorithmID.Ed448ph) {
+            algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
+            if (algorithmID == CryptoAlgorithmID.Ed448ph) {
                 using (var shake256 = new SHAKE256(64 * 8)) {
-                    Data = shake256.ComputeHash(Data);
+                    digest = shake256.ComputeHash(digest);
                     }
                 }
-            return PublicKey.Verify(Signature, Data, Dom4(AlgorithmID, Context));
+            return PublicKey.Verify(signature, digest, Dom4(algorithmID, context));
             }
 
 

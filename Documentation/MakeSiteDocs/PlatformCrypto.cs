@@ -71,17 +71,195 @@ namespace ExampleGenerator {
         public byte[] AdvancedQuantumPublic;
         public string AdvancedQuantumPublicUDF;
         #endregion      
-        public AdvancedCrypto AdvancedCrypto;
+        public CryptoCombine CryptoCombine;
+        public CryptoGroup CryptoGroup;
+
         public void PlatformCrypto() {
             // To do - write the code to create examples for the 'advanced' section
             // These will need to include examples of the internals of shamir secret sharing, 
             // co-generation, recryption, etc.
-            AdvancedCrypto = new AdvancedCrypto();
+            CryptoCombine = new CryptoCombine();
+            CryptoGroup = new CryptoGroup();
 
             }
         }
 
-    public class AdvancedCrypto {
+
+    //public class CryptoParametersTest : CryptoParameters {
+
+
+    //    public CryptoParametersTest(
+    //                List<KeyPair> encryptionKeys = null,
+    //                List<KeyPair> signerKeys = null,
+    //                CryptoAlgorithmID encryptID = CryptoAlgorithmID.Default,
+    //                CryptoAlgorithmID digestID = CryptoAlgorithmID.Null) :
+    //        base(new KeyCollectionCore(),  encryptID: encryptID, digestID: digestID) {
+
+    //        EncryptionKeys = encryptionKeys;
+    //        SignerKeys = signerKeys;
+
+    //        }
+
+
+    //    protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
+
+    //    public void AddEncrypt(string accountId, bool register = true) {
+    //        EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+
+    //        var udf = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: accountId.ToUTF8());
+    //        var keypair = UDF.DeriveKey(udf, keyType: KeySecurity.Exportable) as KeyPairEd25519;
+    //        keypair.Locator = accountId;
+
+    //        var publicKeyKeypair = keypair.KeyPairPublic();
+    //        EncryptionKeys.Add(publicKeyKeypair);
+
+    //        //Console.WriteLine($"Keypair is {Keypair.UDF}");
+    //        //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
+    //        //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
+
+    //        if (register) {
+    //            KeyCollection.Add(keypair);
+    //            }
+
+    //        }
+    //    }
+    public partial class KeyPairPartialTest : KeyPairPartial {
+
+        public string IdGroup;
+        public string IdMember;
+        public KeyPair PrivateKey;
+        public KeyPairAdvanced KeyPairService;
+        public KeyAgreementResult PartialService;
+        public byte[] PartialServiceEncoded => (PartialService as CurveEdwards25519Result).Agreement.Encode();
+        public KeyAgreementResult PartialDevice;
+        public byte[] PartialDeviceEncoded => (PartialDevice as CurveEdwards25519Result).Agreement.Encode();
+        public byte[] Result;
+
+        public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
+                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) {
+            KeyPairService = keyPairService;
+            }
+
+        /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="encryptedKey">The encrypted session</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>        
+        /// <returns>The decoded data instance</returns>
+        public override byte[] Decrypt(
+                    byte[] encryptedKey,
+                    KeyPair ephemeral = null,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult partial = null,
+                    byte[] salt = null) {
+
+            PartialService = KeyPairService.Agreement(ephemeral);
+            PartialDevice = KeyPartial.Agreement(ephemeral);
+
+            var keyPartial = KeyPartial as KeyPairEd25519;
+
+
+            Result = keyPartial.Agreement(
+                ephemeral as KeyPairEd25519, PartialService as CurveEdwards25519Result).Agreement.Encode();
+            return KeyPartial.Decrypt(encryptedKey, ephemeral, algorithmID, PartialService, salt); ;
+            }
+
+        }
+    public class CryptoGroup {
+
+        public readonly string PlaintextText = "This is a test";
+        public byte[] Plaintext => PlaintextText.ToUTF8();
+
+        public string KeyUDFGroup;
+        public string KeyUDFDevice;
+
+        public KeyPairEd25519 KeyPairGroup;
+        public KeyPairEd25519 KeyPairDevice;
+        public KeyPairEd25519 KeyPairService;
+
+
+        public byte[] KeyPairGroupPrivate => (KeyPairGroup.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
+        public byte[] KeyPairDevicePrivate => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Encoding;
+
+        public BigInteger KeyPairDevicePrivateInt => (KeyPairDevice.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+
+        public BigInteger KeyPairGroupPrivateInt => (KeyPairGroup.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+
+        public BigInteger KeyPairServicePrivateInt => (KeyPairService.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
+
+
+        public DareEnvelope Envelope;
+        public KeyPairPartialTest KeyPairDeviceWrapped;
+
+        public string GroupName = "GroupW@example.com";
+        public string UserName = "Bob@example.com";
+
+        public CryptoGroup() {
+
+            KeyUDFGroup = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: GroupName.ToUTF8());
+            KeyUDFDevice = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: UserName.ToUTF8());
+
+
+
+            KeyPairGroup = UDF.DeriveKey(KeyUDFGroup, keyType: KeySecurity.Exportable) as KeyPairEd25519;
+            KeyPairGroup.Locator = KeyUDFGroup;
+
+
+            //var RecipientsGroup = new List<KeyPair> { KeyPairGroup };
+            var CryptoParametersGroup = new CryptoParameters(recipient: KeyPairGroup);
+
+
+            KeyPairDevice = UDF.DeriveKey(KeyUDFDevice, keyType: KeySecurity.Exportable) as KeyPairEd25519;
+
+            KeyPairService = KeyPairGroup.GenerateRecryptionKey(KeyPairDevice) as KeyPairEd25519;
+
+
+            Envelope = new DareEnvelope(CryptoParametersGroup, Plaintext);
+
+
+
+            KeyPairDeviceWrapped = new KeyPairPartialTest(KeyPairGroup, KeyPairDevice, KeyPairService) {
+                IdGroup = GroupName,
+                IdMember = UserName
+                };
+
+            var keyCollectionDevice = new KeyCollectionCore();
+            keyCollectionDevice.Add(KeyPairDeviceWrapped);
+
+
+
+            CheckDecode(Envelope, Plaintext, keyCollectionDevice);
+
+            }
+
+
+        static void CheckDecode(
+                    DareEnvelope envelope,
+                    byte[] plaintext,
+                    KeyCollection keyCollection
+                    ) {
+
+            var cryptoStack = envelope.Header.GetCryptoStack(keyCollection);
+            byte[] decrypt;
+
+
+            using (var input = new MemoryStream(envelope.Body)) {
+                using (var output = new MemoryStream()) {
+                    var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
+                    plaintextStream.CopyTo(output);
+                    decrypt = output.ToArray();
+                    decrypt.IsEqualTo(plaintext).AssertTrue();
+                    }
+                }
+
+            }
+
+        }
+    public class CryptoCombine {
 
         public string SeedAliceDevice;
         public string SeedAliceOverlay;
@@ -99,7 +277,7 @@ namespace ExampleGenerator {
         public BigInteger SecretScalarOverlay => (KeyPairOverlay.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
         public BigInteger SecretScalarComposite => (CombinedPrivate.IKeyAdvancedPrivate as CurveEdwards25519Private).Private;
 
-        public AdvancedCrypto() {
+        public CryptoCombine() {
 
 
             var seed = "AliceDevice1".ToUTF8();

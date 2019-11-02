@@ -78,6 +78,14 @@ namespace Goedel.Cryptography.Algorithms {
         public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) => throw new NotImplementedException();
 
         /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) => throw new NotImplementedException();
+
+
+        /// <summary>
         /// Construct provider from private key data.
         /// </summary>
         /// <param name="encoding">The encoded private key value.</param>
@@ -98,6 +106,18 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The key agreement value ZZ</returns>
         public CurveMontgomery25519 Agreement(CurveX25519Public Public) =>
             throw new NotImplementedException();
+
+
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public KeyAgreementResult Agreement(KeyPair keyPair) {
+            var publicKey = (keyPair as KeyPairX25519).PublicKey;
+            var agreement = Agreement(publicKey);
+            return new CurveX25519Result() { Agreement = agreement };
+            }
 
 
         /// <summary>
@@ -185,6 +205,13 @@ namespace Goedel.Cryptography.Algorithms {
         public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) => throw new NotImplementedException();
 
         /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) => throw new NotImplementedException();
+
+        /// <summary>
         /// Construct provider from private key data.
         /// </summary>
         /// <param name="encoding">The encoded private key value.</param>
@@ -197,6 +224,17 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="exportable">If true, the private key is exportable</param>
         public CurveX448Private(bool exportable=false) => throw new NotImplementedException();
 
+
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public KeyAgreementResult Agreement(KeyPair keyPair) {
+            var publicKey = (keyPair as KeyPairX448).PublicKey;
+            var agreement = Agreement(publicKey);
+            return new CurveX448Result() { Agreement = agreement };
+            }
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a public key

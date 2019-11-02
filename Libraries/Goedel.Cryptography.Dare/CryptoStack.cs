@@ -124,6 +124,9 @@ namespace Goedel.Cryptography.Dare {
                 EncryptionAlgorithm = EncryptID.ToJoseID();
 
                 (keySize, blockSize) = EncryptID.GetKeySize();
+
+                (keySize >= 128).AssertTrue(NYI.Throw, "Key size insufficient");
+
                 MasterSecret = Platform.GetRandomBits(keySize);
 
                 Recipients = Recipients ?? new List<DareRecipient>();

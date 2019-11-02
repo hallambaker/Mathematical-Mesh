@@ -7,7 +7,7 @@ using Goedel.Protocol;
 using Goedel.Test.Core;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Core;
 using Goedel.Mesh;
 using Xunit;
 
@@ -22,34 +22,49 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MessageGroup() {
-            var Test1 = Platform.GetRandomBytes(1000);
+            var plaintext = Platform.GetRandomBytes(1000);
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var machine = new MeshMachineTest(testEnvironmentCommon, "admin");
 
-            // Generate a recryption group
-            var profileGroup = ProfileGroup.Generate(machine);
+            var groupName = "GroupW@example.com";
+            var userName = "Alice@example.com";
 
-            profileGroup.AddMember(machine, out var connectionGroup, out var activationGroup);
+            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, "admin");
+            var machineMember = new MeshMachineTest(testEnvironmentCommon, "admin");
 
+            var RecipientsGroup = new List<string> { groupName };
+            var CryptoParametersGroup = new CryptoParametersTest(
+                        recipients: RecipientsGroup);
+            var keyGroup = CryptoParametersGroup.KeyCollection.TryMatchRecipient(groupName) as KeyPairAdvanced;
 
-
-
-            throw new NYI();
-
-            
-
-            // Encrypt to the group
-
-            // Decrypt using admin key
-
-            // Create a member entry
-
-            // Perform the remote decrypt
-
-            // Combine the results
+            //var RecipientsAlice = new List<string> { userName };
+            //var CryptoParametersAlice = new CryptoParametersTest(
+            //            recipients: RecipientsAlice);
+            //var keyAlice = CryptoParametersAlice.KeyCollection.TryMatchRecipient(userName) as KeyPairAdvanced;
 
 
-            // Decrypt the message
+
+            var envelopedData = DareEnvelope.Encode(CryptoParametersGroup, plaintext);
+            var envelope= new DareEnvelope(CryptoParametersGroup, plaintext);
+
+            var keyAliceDevice = new KeyPairEd25519() {
+                Locator = groupName
+                };
+
+            // The service decryption key
+            var keyService = keyGroup.GenerateRecryptionKey(keyAliceDevice);
+
+            // The partial key
+            var keyPairPartialTest = new KeyPairPartialTest(keyGroup, keyAliceDevice, keyService) {
+                IdGroup = groupName,
+                IdMember = userName
+                };
+
+            var keyCollectionDevice = new KeyCollectionCore();
+            keyCollectionDevice.Add(keyPairPartialTest);
+
+            CheckDecode(envelope, plaintext, CryptoParametersGroup.KeyCollection);
+            CheckDecode(envelope, plaintext, keyCollectionDevice);
+
 
 
             }
@@ -289,6 +304,28 @@ namespace Goedel.XUnit {
             Utilities.Assert.True(Plaintext.IsEqualTo(Message.Body));
             }
 
+        static void CheckDecode(
+                    DareEnvelope envelope,
+                    byte[] plaintext,
+                    KeyCollection keyCollection
+                    ) {
+
+            var cryptoStack = envelope.Header.GetCryptoStack(keyCollection);
+            byte[] decrypt;
+
+
+            using (var input = new MemoryStream(envelope.Body)) {
+                using (var output = new MemoryStream()) {
+                    var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
+                    plaintextStream.CopyTo(output);
+                    decrypt = output.ToArray();
+                    decrypt.IsEqualTo(plaintext).AssertTrue();
+                    }
+                }
+
+            }
+
+
 
         static void CheckDecodeResult (
             DareEnvelope Message,
@@ -305,6 +342,43 @@ namespace Goedel.XUnit {
                     Utilities.Assert.True(DataSequences[i].IsEqualTo(MEDSS));
                     }
                 }
+            }
+
+        }
+
+    public partial class KeyPairPartialTest: KeyPairPartial {
+
+        public string IdGroup;
+        public string IdMember;
+        public KeyPair PrivateKey;
+        KeyPairAdvanced KeyPairService;
+
+        public KeyPairPartialTest(KeyPairAdvanced keyPairGroup, 
+                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base (keyPairGroup, keyPairPart) {
+            KeyPairService = keyPairService;
+            }
+
+        /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="encryptedKey">The encrypted session</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>        
+        /// <returns>The decoded data instance</returns>
+        public override byte[] Decrypt(
+                    byte[] encryptedKey,
+                    KeyPair ephemeral = null,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    KeyAgreementResult partial = null,
+                    byte[] salt = null) {
+
+            partial = KeyPairService.Agreement(ephemeral);
+
+            return KeyPartial.Decrypt(encryptedKey, ephemeral, algorithmID, partial, salt);
+
             }
 
         }

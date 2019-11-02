@@ -20,6 +20,7 @@ namespace Scratchpad {
 
             // The tests we need to clear to get the group encryption stuff going:
             TestDare.Test().MessageGroup();
+            //TestDare.Test().MessageEncrypted();
             //TestService.Test().MeshCatalogGroup();
 
             // From the command line:
