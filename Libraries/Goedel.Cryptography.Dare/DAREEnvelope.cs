@@ -1,11 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography;
+﻿using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.IO;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -86,7 +85,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoParameters cryptoParameters,
                     byte[] plaintext,
-                    ContentMeta contentMeta=null,
+                    ContentMeta contentMeta = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
@@ -112,7 +111,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope(
                     CryptoStack cryptoStack,
                     byte[] plaintext,
-                    ContentMeta contentMeta=null,
+                    ContentMeta contentMeta = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
                     ) {
@@ -269,7 +268,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(byte[] data, bool tagged = true,
-                bool decrypt = false, KeyCollection keyCollection = null) {
+                bool decrypt = false, IKeyLocate keyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(data);
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
             }
@@ -280,7 +279,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         /// <returns>The plaintext payload.</returns>
-        public byte[] GetPlaintext(KeyCollection keyCollection) {
+        public byte[] GetPlaintext(IKeyLocate keyCollection) {
 
             using (var inputStream = new MemoryStream(Body)) {
                 using (var outputStream = new MemoryStream()) {
@@ -303,7 +302,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(Stream stream, bool tagged = true,
-                bool decrypt = false, KeyCollection keyCollection = null) {
+                bool decrypt = false, IKeyLocate keyCollection = null) {
             var JSONBCDReader = new JSONBCDReader(stream); // Hack: should merge this with GetPlaintext
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
             }
@@ -317,7 +316,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>		
         public static DareEnvelope FromJSON(JSONBCDReader jsonReader, bool tagged = true,
-                bool decrypt = false, KeyCollection keyCollection = null) {
+                bool decrypt = false, IKeyLocate keyCollection = null) {
             Assert.False(tagged, NYI.Throw);
 
 
@@ -462,8 +461,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         public static long Decode(
                 string inputFile,
-                string outputFile=null,
-                KeyCollection keyCollection = null) {
+                string outputFile = null,
+                IKeyLocate keyCollection = null) {
 
             using (var input = inputFile.OpenFileRead()) {
                 return Decode(input, null, outputFile, keyCollection);
@@ -481,7 +480,7 @@ namespace Goedel.Cryptography.Dare {
                 Stream inputStream,
                 Stream outputStream,
                 string outputFile = null,
-                KeyCollection keyCollection = null) {
+                IKeyLocate keyCollection = null) {
             long length = -1;
             keyCollection = keyCollection ?? KeyCollection.Default;
 
@@ -518,7 +517,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         public static bool Verify(
                 string inputFile,
-                KeyCollection keyCollection = null) {
+                IKeyLocate keyCollection = null) {
             using (var inputStream = inputFile.OpenFileRead()) {
                 return Verify(inputStream, keyCollection);
                 }
@@ -531,7 +530,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">The key collection to be used to resolve identifiers to keys.</param>
         public static bool Verify(
                 Stream inputStream,
-                KeyCollection keyCollection = null) {
+                IKeyLocate keyCollection = null) {
 
             keyCollection = keyCollection ?? KeyCollection.Default;
 

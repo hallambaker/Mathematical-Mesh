@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
+﻿using Goedel.ASN;
+
 using System.Linq;
-using System.Threading.Tasks;
-using Goedel.ASN;
+using System.Numerics;
 
 namespace Goedel.Cryptography.PKIX {
 
-	public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
+    public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
         /// <summary>
         /// The shared domain parameters
         /// </summary>
@@ -25,7 +23,7 @@ namespace Goedel.Cryptography.PKIX {
 
         }
 
-	public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
+    public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
         /// <summary>
         /// The shared domain parameters
         /// </summary>
@@ -126,7 +124,7 @@ namespace Goedel.Cryptography.PKIX {
         public BigInteger BigIntegerP {
             get {
                 _BigIntegerP = _BigIntegerP ?? Modulus.ToBigInteger();
-                return (BigInteger) _BigIntegerP;
+                return (BigInteger)_BigIntegerP;
                 }
             }
         BigInteger? _BigIntegerP;
@@ -145,9 +143,9 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Returns the size of the modulus.
         /// </summary>
-        public int KeySize => (Modulus.Length-1) * 8;
+        public int KeySize => (Modulus.Length - 1) * 8;
 
-        DHDomain(string Text) : this (Text.HexToBigInteger(), new BigInteger(2)) {
+        DHDomain(string Text) : this(Text.HexToBigInteger(), new BigInteger(2)) {
             }
 
         /// <summary>
@@ -168,7 +166,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="ID">The byte code identifier.</param>
         /// <returns>The domain parameter.</returns>
-        public static DHDomain GetByUDF (byte[] ID) {
+        public static DHDomain GetByUDF(byte[] ID) {
             if (DHDomain2048.Match(ID)) {
                 return DHDomain2048;
                 }

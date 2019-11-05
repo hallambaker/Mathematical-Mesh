@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
 using Goedel.Protocol;
+
+using System.Text;
 namespace Goedel.Mesh {
 
     public partial class MeshItem {
@@ -50,14 +47,14 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="builder">A string builder to direct the output to.</param>
         /// <param name="indent">Number of indents to be emitted at the start of each line.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) => 
+        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) =>
             _ = builder.AppendLine($"[{_Tag}]");
 
 
         }
 
     public partial class Assertion {
-        public virtual DareEnvelope Encode (KeyPair keyPair) {
+        public virtual DareEnvelope Encode(KeyPair keyPair) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(tag: true),
                 signingKey: keyPair);
             return DareEnvelope;

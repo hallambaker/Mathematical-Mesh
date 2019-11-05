@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goedel.Utilities {
 
@@ -131,7 +127,7 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="Array">Byte array to set, MUST be sufficiently large for input</param>
         /// <param name="Data">Data value to set</param>
-        public static void SetBigEndian (this byte[] Array, int Data) {
+        public static void SetBigEndian(this byte[] Array, int Data) {
             Array[0] = Data.Byte3();
             Array[1] = Data.Byte2();
             Array[2] = Data.Byte1();

@@ -1,6 +1,6 @@
-﻿using System.Numerics;
+﻿using Goedel.Cryptography;
+
 using Xunit;
-using Goedel.Cryptography;
 
 namespace Goedel.XUnit {
 

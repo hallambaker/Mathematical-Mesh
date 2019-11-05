@@ -20,7 +20,7 @@
 //  
 //  
 
-using GCP=Goedel.Cryptography.PKIX;
+using GCP = Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
 
@@ -46,7 +46,7 @@ namespace Goedel.Cryptography {
         /// Register a certificate in the default Windows store and location
         /// for that type of certificate.
         /// </summary>
-        protected delegate void RegisterDelegate (GCP.Certificate Certificate) ;
+        protected delegate void RegisterDelegate(GCP.Certificate Certificate);
 
         /// <summary>
         /// The delegate for Register(GCP.Certificate Certificate)

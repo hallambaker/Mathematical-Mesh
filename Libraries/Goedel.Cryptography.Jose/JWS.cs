@@ -20,11 +20,10 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -36,10 +35,11 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public virtual byte[] Data {
             get => Payload;
-            set => Payload = value; }
+            set => Payload = value;
+            }
 
         /// <summary>The JSONReader.</summary>
-        public virtual JSONReader JSONReader  => new JSONReader(Data);
+        public virtual JSONReader JSONReader => new JSONReader(Data);
 
 
         /// <summary>Caches the CryptoData instance</summary>
@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public JoseWebSignature () { }
+        public JoseWebSignature() { }
 
         /// <summary>
         /// Sign JSON object.
@@ -70,12 +70,12 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ContentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
         /// <param name="Algorithm">The signature and encryption algorithm</param>
-        public JoseWebSignature (JSONObject JSONObject,
-                    DataEncoding Encoding  = DataEncoding.JSON,
+        public JoseWebSignature(JSONObject JSONObject,
+                    DataEncoding Encoding = DataEncoding.JSON,
                     KeyPair SigningKey = null,
                     string ContentType = null,
                     CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
-                this (JSONObject.GetBytes(Encoding), SigningKey, ContentType, Algorithm) {
+                this(JSONObject.GetBytes(Encoding), SigningKey, ContentType, Algorithm) {
             }
 
         /// <summary>
@@ -86,10 +86,10 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ContentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
         /// <param name="Algorithm">The signature and encryption algorithm</param>
-        public JoseWebSignature (byte [] Data, 
-                    KeyPair SigningKey = null, 
-                    string ContentType = null, 
-                    CryptoAlgorithmID Algorithm=CryptoAlgorithmID.Default) {
+        public JoseWebSignature(byte[] Data,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
 
             var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
             _CryptoDataDigest = Encoder.Process(Data);
@@ -111,11 +111,11 @@ namespace Goedel.Cryptography.Jose {
         /// Omitted if null</param>
         /// <param name="Algorithm">The signature and encryption algorithm</param>
         public JoseWebSignature(
-                    string Text, 
-                    KeyPair SigningKey=null,
-                    string ContentType = null, 
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) : 
-                this (System.Text.Encoding.UTF8.GetBytes(Text),
+                    string Text,
+                    KeyPair SigningKey = null,
+                    string ContentType = null,
+                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                this(System.Text.Encoding.UTF8.GetBytes(Text),
                         SigningKey, ContentType, Algorithm) { }
 
 
@@ -127,7 +127,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ProviderAlgorithm">The provider algorithm</param>
         /// <returns>The signature instance.</returns>
         public Signature AddSignature(KeyPair SignerKey,
-                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default, 
+                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default,
                 string ContentType = null) {
 
             Signatures = Signatures ?? new List<Signature>();
@@ -166,12 +166,12 @@ namespace Goedel.Cryptography.Jose {
 
 
 
-        private void Bind (CryptoData Data,
+        private void Bind(CryptoData Data,
                 string ContentType = null
                 ) {
             var DigestID = Data.AlgorithmIdentifier.Digest();
 
-            Unprotected =  new Header() {
+            Unprotected = new Header() {
                 Dig = DigestID.ToJoseID()
                 };
             }

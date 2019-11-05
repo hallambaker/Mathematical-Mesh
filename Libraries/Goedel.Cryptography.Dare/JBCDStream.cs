@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-using Goedel.IO;
+﻿using Goedel.IO;
 using Goedel.Utilities;
-using Goedel.Protocol;
+
+using System;
+using System.IO;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -26,8 +26,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public Stream StreamRead;
 
-        Stream DisposeStreamRead=null;
-        Stream DisposeStreamWrite=null;
+        Stream DisposeStreamRead = null;
+        Stream DisposeStreamWrite = null;
 
         /// <summary>
         /// The current position within the stream.
@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileName">The file to open.</param>
         /// <param name="fileStatus">The file access mode.</param>
         /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
-        public JBCDStream (string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
+        public JBCDStream(string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
 
             if (fileStatus == FileStatus.ConcurrentLocked) {
                 LockGlobal = new LockGlobal(UDF.LockName(fileName));
@@ -87,7 +87,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="StreamRead">The underlying stream. This must support the seek operation.</param>
         /// <param name="StreamWrite">The underlying stream. This must support the seek operation.</param>
-        public JBCDStream (Stream StreamRead, Stream StreamWrite) {
+        public JBCDStream(Stream StreamRead, Stream StreamWrite) {
             this.StreamRead = StreamRead;
             this.StreamWrite = StreamWrite;
             StreamWrite?.Seek(0, SeekOrigin.End);
@@ -147,7 +147,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Set the write pointer to the end of the container.
         /// </summary>
-        public virtual void SeekWrite () {
+        public virtual void SeekWrite() {
             if (StreamWrite != null) {
                 StreamWrite.Seek(0, SeekOrigin.End);
                 }
@@ -167,7 +167,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Buffer">An array of bytes. This method copies count bytes from buffer to the current stream.</param>
         /// <param name="Offset">The zero-based byte offset in buffer at which to begin copying bytes to the current stream.</param>
         /// <param name="Count">The number of bytes to be written to the current stream.</param>
-        public virtual void Write (byte[] Buffer, int Offset = 0, int Count = -1) {
+        public virtual void Write(byte[] Buffer, int Offset = 0, int Count = -1) {
             Count = Count < 0 ? Buffer.Length : Count;
             StreamWrite.Write(Buffer, Offset, Count);
             }
@@ -203,7 +203,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public virtual int ReadByteReverse () {
+        public virtual int ReadByteReverse() {
             Assert.True(PositionRead > 0, InvalidFileFormatException.Throw);
             Seek(-1, SeekOrigin.Current);
             var Value = ReadByte();

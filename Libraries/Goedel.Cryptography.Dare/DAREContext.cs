@@ -1,7 +1,6 @@
 ﻿//using System;
-using System.Collections.Generic;
-using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -18,7 +17,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Default constructor. Used for serializatrion.
         /// </summary>
-        public DareRecipient () {
+        public DareRecipient() {
             }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="MasterKey">The master key</param>
         /// <param name="PublicKey">The recipient public key.</param>
         /// <returns>The recipient informatin object.</returns>
-        public DareRecipient (byte[] MasterKey, KeyPair PublicKey) {
+        public DareRecipient(byte[] MasterKey, KeyPair PublicKey) {
             //var ExchangeProvider = PublicKey.ExchangeProvider();
             //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 

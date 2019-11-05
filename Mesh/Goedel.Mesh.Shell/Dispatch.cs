@@ -1,24 +1,24 @@
-﻿using System;
+﻿using Goedel.Protocol;
+
+using System;
 using System.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
 
 
 namespace Goedel.Mesh.Shell {
 
     public partial class ShellDispatch {
 
-        public bool     Verbose { get; set; }
-        public bool     Report { get; set; }
-        public bool     Json { get; set; }
+        public bool Verbose { get; set; }
+        public bool Report { get; set; }
+        public bool Json { get; set; }
 
-        public string   AccountID { get; set; }
-        public string   UDF { get; set; }
+        public string AccountID { get; set; }
+        public string UDF { get; set; }
 
-        public bool     DeviceNew  { get; set; }
-        public string   DeviceUDF { get; set; }
-        public string   DeviceID { get; set; }
-        public string   DeviceDescription { get; set; }
+        public bool DeviceNew { get; set; }
+        public string DeviceUDF { get; set; }
+        public string DeviceID { get; set; }
+        public string DeviceDescription { get; set; }
 
         TextWriter Output;
 

@@ -20,10 +20,8 @@
 //  
 //  
 
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Goedel.Protocol {
     //
@@ -48,9 +46,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Output">Output buffer</param>
         /// <param name="TagDictionary">Tag dictionary to ues for compression</param>
-        public JSONCWriter(Stream Output = null, 
+        public JSONCWriter(Stream Output = null,
                     Dictionary<string, int> TagDictionary = null) {
-            this.Output = Output  ?? new MemoryStream();
+            this.Output = Output ?? new MemoryStream();
             this.TagDictionary = TagDictionary ?? new Dictionary<string, int>();
             }
 

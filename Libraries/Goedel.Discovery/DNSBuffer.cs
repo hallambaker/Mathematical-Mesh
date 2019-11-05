@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using Goedel.Utilities;
 
 namespace Goedel.Discovery {
 
@@ -11,13 +12,13 @@ namespace Goedel.Discovery {
     /// </summary>
     public class DNSBuffer {
         /// <summary>The buffer data</summary>
-        public byte []      Buffer;
-        
+        public byte[] Buffer;
+
         /// <summary>The maximum buffer length</summary>
-        public int          MaxLength;
-        
+        public int MaxLength;
+
         /// <summary>The current buffer length.</summary>
-        public int          Length;
+        public int Length;
         //public int          Pointer;
 
         /// <summary>
@@ -25,27 +26,27 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="Start">Starting buffer size.</param>
         /// <param name="Max">Maximum buffer size.</param>
-        public DNSBuffer (int Start, int Max) {
+        public DNSBuffer(int Start, int Max) {
             //Pointer = 0;
             Length = Start;
             MaxLength = Max;
             Buffer = new byte[Length];
             }
-        
+
         /// <summary>
         /// Create buffer from received data buffer and length specification.
         /// </summary>
         /// <param name="data">Input data</param>
         /// <param name="LengthIn">Length of message received.</param>
-        public DNSBuffer (byte[] data, int LengthIn) {
+        public DNSBuffer(byte[] data, int LengthIn) {
             //Pointer = 0;
             Buffer = data;
             Length = LengthIn;
             }
 
         /// <summary>Default constructor.</summary>
-        public DNSBuffer () : this (256, 4096) { }        
-        
+        public DNSBuffer() : this(256, 4096) { }
+
         }
 
     /// <summary>Buffer class for DNS operations using a portion of a 
@@ -55,30 +56,30 @@ namespace Goedel.Discovery {
     public class DNSBufferIndex {
 
         /// <summary>The underlying buffer.</summary>
-        public DNSBuffer           Buffer;
+        public DNSBuffer Buffer;
 
-        ASCIIEncoding ASCIIEncoding = new ASCIIEncoding ();
+        ASCIIEncoding ASCIIEncoding = new ASCIIEncoding();
 
         /// <summary>Return the buffer data window as a byte array.</summary>
         public byte[] Bytes {
-            get  {
-                byte [] result = new byte[Pointer];
-                Array.Copy (Buffer.Buffer, result, Pointer);
+            get {
+                byte[] result = new byte[Pointer];
+                Array.Copy(Buffer.Buffer, result, Pointer);
                 return result;
                 }
             }
         /// <summary>Current read/write pointer.</summary>
-        public int          Pointer;
+        public int Pointer;
         /// <summary>Maximum number of bytes to be buffered.</summary>
-        public int          MaxRead;
+        public int MaxRead;
 
         /// <summary>
         /// Constructor from existing data set
         /// </summary>
         /// <param name="data">Binary data.</param>
         /// <param name="LengthIn">Number of bytes</param>
-        public DNSBufferIndex (byte[] data, int LengthIn) {
-            Buffer = new DNSBuffer (data, LengthIn);
+        public DNSBufferIndex(byte[] data, int LengthIn) {
+            Buffer = new DNSBuffer(data, LengthIn);
             Pointer = 0;
             MaxRead = LengthIn;
             }
@@ -87,7 +88,7 @@ namespace Goedel.Discovery {
         /// Constructor from existing data set
         /// </summary>
         /// <param name="Data">Binary data.</param>
-        public DNSBufferIndex (byte [] Data) : this (Data, Data.Length) {
+        public DNSBufferIndex(byte[] Data) : this(Data, Data.Length) {
             }
 
         /// <summary>
@@ -102,24 +103,24 @@ namespace Goedel.Discovery {
         /// <param name="BufferIn">Data buffer</param>
         /// <param name="PointerIn">Starting point of buffer window.</param>
         /// <param name="LengthIn">Length of buffer window.</param>
-        public DNSBufferIndex (DNSBuffer BufferIn, int PointerIn, int LengthIn) {
+        public DNSBufferIndex(DNSBuffer BufferIn, int PointerIn, int LengthIn) {
             Buffer = BufferIn;
             Pointer = PointerIn;
             MaxRead = PointerIn + LengthIn;
             //Pointer = Buffer.Pointer;
             }
         /// <summary>Default constructor.</summary>
-        public DNSBufferIndex () : this (new DNSBuffer ()) { }
+        public DNSBufferIndex() : this(new DNSBuffer()) { }
 
 
 
         // Check to see if there is space in the buffer, resize if possible otherwise throw 
         // exception
-        void CheckSpaceWrite (int bytes) {
-            Assert.False (( Pointer + bytes ) > Buffer.MaxLength , BufferWriteOverflow.Throw);
+        void CheckSpaceWrite(int bytes) {
+            Assert.False((Pointer + bytes) > Buffer.MaxLength, BufferWriteOverflow.Throw);
 
-            if (( Pointer + bytes ) > Buffer.Length) {
-                Array.Resize (ref Buffer.Buffer, Buffer.MaxLength);
+            if ((Pointer + bytes) > Buffer.Length) {
+                Array.Resize(ref Buffer.Buffer, Buffer.MaxLength);
                 }
             }
 
@@ -143,11 +144,11 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="Length">Length of the buffer</param>
         /// <returns>The remaining bytes.</returns>
-        public int Remainder (int Length) => Length - (Pointer - _Start);
+        public int Remainder(int Length) => Length - (Pointer - _Start);
 
 
 
-        byte Read () {
+        byte Read() {
             byte b = Buffer.Buffer[Pointer++];
             //Buffer.Pointer = Pointer;
             return b;
@@ -162,45 +163,45 @@ namespace Goedel.Discovery {
         /// <param name="data">Data to write</param>
         public void WriteString(string data) {
             foreach (char c in data) {
-                WriteByte ((byte) c);
+                WriteByte((byte)c);
                 }
             }
         /// <summary>Write string value with 8 bit length prefix</summary>
         /// <param name="data">Data to write</param>
-        public void WriteString8 (string data) {
-            WriteByte ((byte)data.Length);
+        public void WriteString8(string data) {
+            WriteByte((byte)data.Length);
             WriteString(data);
             }
 
         /// <summary>Write byte value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteByte (byte data) {
-            CheckSpaceWrite (1);
-            Write (data);
+        public void WriteByte(byte data) {
+            CheckSpaceWrite(1);
+            Write(data);
             }
 
         /// <summary>Write IPv4 Address value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteIPv4 (IPAddress data) {
-            byte [] bytes = data.GetAddressBytes();
+        public void WriteIPv4(IPAddress data) {
+            byte[] bytes = data.GetAddressBytes();
             Assert.True(bytes.Length == 4, InvalidIPv4.Throw);
-            WriteData (bytes);
+            WriteData(bytes);
             }
 
         /// <summary>Write IPv6 value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteIPv6 (IPAddress data) {
-            byte [] bytes = data.GetAddressBytes();
+        public void WriteIPv6(IPAddress data) {
+            byte[] bytes = data.GetAddressBytes();
             Assert.True(bytes.Length == 16, InvalidIPv6.Throw);
-            WriteData (bytes);
+            WriteData(bytes);
             }
 
         /// <summary>Write 16 bit integer value.value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt16 (UInt16 data) {
-            CheckSpaceWrite (2);
-            Write ((byte) ((data & 0xff00) >> 8));
-            Write ((byte) (data & 0xff));
+        public void WriteInt16(UInt16 data) {
+            CheckSpaceWrite(2);
+            Write((byte)((data & 0xff00) >> 8));
+            Write((byte)(data & 0xff));
             }
 
         /// <summary>Write DNS code value</summary>
@@ -221,38 +222,38 @@ namespace Goedel.Discovery {
 
         /// <summary>Write int 32 value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt32 (UInt32 data) {
-            CheckSpaceWrite (4);
-            Write ((byte) ((data & 0xff000000) >> 24));
-            Write ((byte) ((data & 0xff0000) >> 16));
-            Write ((byte) ((data & 0xff00) >> 8));
-            Write ((byte) (data & 0xff));
+        public void WriteInt32(UInt32 data) {
+            CheckSpaceWrite(4);
+            Write((byte)((data & 0xff000000) >> 24));
+            Write((byte)((data & 0xff0000) >> 16));
+            Write((byte)((data & 0xff00) >> 8));
+            Write((byte)(data & 0xff));
             }
 
         /// <summary>Write int 48 value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt48 (ulong data) {
-            CheckSpaceWrite (6);
-            Write ((byte) ((data & 0xff0000000000) >> 40));
-            Write ((byte) ((data & 0xff00000000) >> 32));
-            Write ((byte) ((data & 0xff000000) >> 24));
-            Write ((byte) ((data & 0xff0000) >> 16));
-            Write ((byte) ((data & 0xff00) >> 8));
-            Write ((byte) (data & 0xff));
+        public void WriteInt48(ulong data) {
+            CheckSpaceWrite(6);
+            Write((byte)((data & 0xff0000000000) >> 40));
+            Write((byte)((data & 0xff00000000) >> 32));
+            Write((byte)((data & 0xff000000) >> 24));
+            Write((byte)((data & 0xff0000) >> 16));
+            Write((byte)((data & 0xff00) >> 8));
+            Write((byte)(data & 0xff));
             }
 
         /// <summary>Write int 64 value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteInt64 (ulong data) {
-            CheckSpaceWrite (8);
-            Write ((byte) ((data & 0xff00000000000000) >> 56));
-            Write ((byte) ((data & 0xff000000000000) >> 48));
-            Write ((byte) ((data & 0xff0000000000) >> 40));
-            Write ((byte) ((data & 0xff00000000) >> 32));
-            Write ((byte) ((data & 0xff000000) >> 24));
-            Write ((byte) ((data & 0xff0000) >> 16));
-            Write ((byte) ((data & 0xff00) >> 8));
-            Write ((byte) (data & 0xff));
+        public void WriteInt64(ulong data) {
+            CheckSpaceWrite(8);
+            Write((byte)((data & 0xff00000000000000) >> 56));
+            Write((byte)((data & 0xff000000000000) >> 48));
+            Write((byte)((data & 0xff0000000000) >> 40));
+            Write((byte)((data & 0xff00000000) >> 32));
+            Write((byte)((data & 0xff000000) >> 24));
+            Write((byte)((data & 0xff0000) >> 16));
+            Write((byte)((data & 0xff00) >> 8));
+            Write((byte)(data & 0xff));
             }
 
         /// <summary>Write domain name value</summary>
@@ -265,13 +266,13 @@ namespace Goedel.Discovery {
 
         /// <summary>Write DNS name value</summary>
         /// <param name="Name">Data to write</param>
-        public void WriteName (String Name) {
+        public void WriteName(String Name) {
             int offset = Pointer, label = 0;
 
-            WriteByte (0);
-            for (int i=0; i <= Name.Length; i++) {
+            WriteByte(0);
+            for (int i = 0; i <= Name.Length; i++) {
                 char n = i == Name.Length ? '.' : Name[i];
-                UInt16 nn = (UInt16)n;
+                UInt16 nn = n;
                 //Console.WriteLine ("   {0:d3} {1:s}", i, n);
                 if (n == '.') {
                     if (label != 0) { //Ignore zero length labels
@@ -301,33 +302,33 @@ namespace Goedel.Discovery {
 
         /// <summary>Write Tag value</summary>
         /// <param name="Tag">Data to write</param>
-        public void WriteTag (String Tag) {
-            CheckSpaceWrite (Tag.Length);
-            Assert.False(Tag.Length>255, TagTooLong.Throw);
+        public void WriteTag(String Tag) {
+            CheckSpaceWrite(Tag.Length);
+            Assert.False(Tag.Length > 255, TagTooLong.Throw);
             foreach (char c in Tag) {
-                Write ((byte)( c & 0x7f ));
+                Write((byte)(c & 0x7f));
                 }
             }
 
         /// <summary>Write data value with byte length prefix value</summary>
         /// <param name="data">Data to write</param>
-        public void WriteL8Data (byte[] data) {
-            WriteByte ((byte)data.Length);
-            WriteData (data);
+        public void WriteL8Data(byte[] data) {
+            WriteByte((byte)data.Length);
+            WriteData(data);
             }
 
         /// <summary>Write value with 2 byte length prefix.</summary>
         /// <param name="data">Data to write</param>                  
-        public void WriteL16Data (byte[] data) {
-            WriteInt16 ((UInt16)data.Length);
-            WriteData (data);
+        public void WriteL16Data(byte[] data) {
+            WriteInt16((UInt16)data.Length);
+            WriteData(data);
             }
 
         /// <summary>Write value with no length prefix</summary>
         /// <param name="data">Data to write</param>
-        public void WriteData (byte[] data) {
-            CheckSpaceWrite (data.Length);
-            Array.Copy (data, 0, Buffer.Buffer, Pointer, data.Length);
+        public void WriteData(byte[] data) {
+            CheckSpaceWrite(data.Length);
+            Array.Copy(data, 0, Buffer.Buffer, Pointer, data.Length);
             Pointer += data.Length;
             //Buffer.Pointer = Pointer;
             }
@@ -336,9 +337,9 @@ namespace Goedel.Discovery {
 
         /// <summary>Read byte value</summary>
         /// <returns>The value read</returns>
-        public byte ReadByte () {
-            CheckSpaceRead (1);
-            return Read ();
+        public byte ReadByte() {
+            CheckSpaceRead(1);
+            return Read();
             }
 
         /// <summary>Read byte value</summary>
@@ -347,10 +348,10 @@ namespace Goedel.Discovery {
 
         /// <summary>Read 16 bit integer value</summary>
         /// <returns>The value read</returns>
-        public UInt16 ReadInt16 () {
-            CheckSpaceRead (2);
+        public UInt16 ReadInt16() {
+            CheckSpaceRead(2);
             // Using bitwise operators for speed
-            return (UInt16)( ( Read () << 8 ) | Read () );
+            return (UInt16)((Read() << 8) | Read());
             }
 
         /// <summary>Read 16 bit integer value</summary>
@@ -371,21 +372,21 @@ namespace Goedel.Discovery {
 
         /// <summary>Read 16 bit integer value</summary>
         /// <param name="data">Data read</param>
-        public void ReadInt16(out int data) => data = (int)ReadInt16();
+        public void ReadInt16(out int data) => data = ReadInt16();
 
         /// <summary>Read 32 bit integer value</summary>
         /// <returns>The value read</returns>
-        public UInt32 ReadInt32 () {
-            CheckSpaceRead (4);
-            return (UInt32)( ( Read () << 24 ) | (Read () << 16) | (Read () << 8) | Read () );
+        public UInt32 ReadInt32() {
+            CheckSpaceRead(4);
+            return (UInt32)((Read() << 24) | (Read() << 16) | (Read() << 8) | Read());
             }
 
         /// <summary>Read 64 bit integer value</summary>
         /// <returns>The value read</returns>
-        public UInt64 ReadInt64 () {
-            CheckSpaceRead (4);
-            return (UInt64)( ( Read () << 56 ) | (Read () << 48) | (Read () << 40) | Read () << 32|
-                ( Read () << 24 ) | (Read () << 16) | (Read () << 8) | Read () );
+        public UInt64 ReadInt64() {
+            CheckSpaceRead(4);
+            return (UInt64)((Read() << 56) | (Read() << 48) | (Read() << 40) | Read() << 32 |
+                (Read() << 24) | (Read() << 16) | (Read() << 8) | Read());
             }
 
         /// <summary>Read 32 bit integer value</summary>
@@ -402,8 +403,8 @@ namespace Goedel.Discovery {
 
         /// <summary>Read Node identifier value</summary>
         /// <returns>The value read</returns>
-        public UInt64 ReadNodeID () {
-            ReadInt64 (out var data);
+        public UInt64 ReadNodeID() {
+            ReadInt64(out var data);
             return data;
             }
 
@@ -441,7 +442,7 @@ namespace Goedel.Discovery {
                                 // do not support recursive compression
                                 }
                             else {
-                                if(!First) {
+                                if (!First) {
                                     StringBuilder.Append('.');
                                     }
                                 First = false;
@@ -462,7 +463,7 @@ namespace Goedel.Discovery {
                         StringBuilder.Append('.');
                         }
                     First = false;
-                    StringBuilder.Append(ReadString((int)b0));
+                    StringBuilder.Append(ReadString(b0));
                     //name = name + ReadString((int)b0) + ".";
                     //Console.WriteLine("   {0}", name);
                     }
@@ -474,23 +475,23 @@ namespace Goedel.Discovery {
 
         /// <summary>Read tag value</summary>
         /// <returns>The value read</returns>
-        public String ReadTag () {
+        public String ReadTag() {
             Byte length = ReadByte();
-            return ReadString (length);
+            return ReadString(length);
             }
 
         /// <summary>Read string value with 8 bit length prefix</summary>
         /// <returns>The value read</returns>
-        public byte[] ReadL8Data () {
+        public byte[] ReadL8Data() {
             Byte length = ReadByte();
-            return ReadData (length);
+            return ReadData(length);
             }
 
         /// <summary>Read string value with 16 bit length prefix</summary>
         /// <returns>The value read</returns>
         public byte[] ReadL16Data() {
             UInt16 length = ReadInt16();
-            return ReadData (length);
+            return ReadData(length);
             }
 
         /// <summary>Read data value with 16 bit length delimeter.</summary>
@@ -513,10 +514,10 @@ namespace Goedel.Discovery {
         /// <summary>Read remainder of the buffer as binary data value</summary>
         /// <param name="Length">Number of bytes to read</param>
         /// <returns>The value read</returns>
-        public byte[] ReadData (int Length) {
-            CheckSpaceRead (Length);
-            byte[] data = new byte [Length];
-            Array.Copy (Buffer.Buffer, Pointer, data, 0, Length);
+        public byte[] ReadData(int Length) {
+            CheckSpaceRead(Length);
+            byte[] data = new byte[Length];
+            Array.Copy(Buffer.Buffer, Pointer, data, 0, Length);
             Pointer += Length;
 
             return data;
@@ -527,17 +528,17 @@ namespace Goedel.Discovery {
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
         public String ReadString() {
-            int length = ReadByte ();
-            return ReadString (length);
+            int length = ReadByte();
+            return ReadString(length);
             }
 
         /// <summary>Read string value with specified length.</summary>
         /// <param name="length">Number of bytes to read.</param>
         /// <returns>The value read</returns>
-        public String ReadString (int length) {
-            CheckSpaceRead (length);
+        public String ReadString(int length) {
+            CheckSpaceRead(length);
 
-            string result = ASCIIEncoding.GetString (Buffer.Buffer, Pointer, length);
+            string result = ASCIIEncoding.GetString(Buffer.Buffer, Pointer, length);
             Pointer += length;
 
             return result;
@@ -548,7 +549,7 @@ namespace Goedel.Discovery {
         /// <returns>Null list, this is a stub</returns>
         /// <remarks>Not yet implemented.</remarks>
         public List<String> ReadStrings(int Extent) {
-            List<String> ListString = new List<string> ();
+            List<String> ListString = new List<string>();
             //int length = ReadByte ();
             while (Pointer < MaxRead) {
                 var Text = ReadString();
@@ -561,22 +562,22 @@ namespace Goedel.Discovery {
         // TBS
         /// <summary>Read IPv4 address value</summary>
         /// <returns>The value read</returns>
-        public IPAddress ReadIPv4 () {
-            byte [] Address = new byte [4];
+        public IPAddress ReadIPv4() {
+            byte[] Address = new byte[4];
             for (int i = 0; i < 4; i++) {
-                Address [i] = ReadByte ();
+                Address[i] = ReadByte();
                 }
-            return new IPAddress (Address) ;
+            return new IPAddress(Address);
             }
 
         /// <summary>Read value</summary>
         /// <returns>The value read</returns>
-        public IPAddress ReadIPv6 () {
-            byte [] Address = new byte [16];
+        public IPAddress ReadIPv6() {
+            byte[] Address = new byte[16];
             for (int i = 0; i < 16; i++) {
-                Address [i] = ReadByte ();
+                Address[i] = ReadByte();
                 }
-            return new IPAddress (Address) ;
+            return new IPAddress(Address);
             }
 
         /// <summary>Read value</summary>

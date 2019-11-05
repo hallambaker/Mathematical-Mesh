@@ -19,13 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using Goedel.Utilities;
+
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Standard {
     /// <summary>
@@ -34,45 +31,45 @@ namespace Goedel.Cryptography.Standard {
     /// class was necessary as a means of enabling the use of different providers. It is
     /// now redundant and will be removed in due course.
     /// </summary>
-    public abstract class CryptoProviderEncryption : 
+    public abstract class CryptoProviderEncryption :
                 Goedel.Cryptography.CryptoProviderEncryption {
 
         /// <summary>
         /// The type of algorithm
         /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.Encryption; 
+        public override CryptoAlgorithmClasses AlgorithmClass => CryptoAlgorithmClasses.Encryption;
 
         /// <summary>
         /// The .NET cryptographic provider (for use by sub classes).
         /// </summary>
         protected SymmetricAlgorithm Provider { get; set; }
-        
+
         //ICryptoTransform Transform = null;
         //bool Encrypting;
 
         /// <summary>
         /// The size of the required key
         /// </summary>
-        public override int KeySize  => Provider.KeySize; 
+        public override int KeySize => Provider.KeySize;
 
         /// <summary>
         /// The size of the required IV. If zero, no IV is required.
         /// </summary>
-        public override int IVSize  => Provider.IV.Length * 8; 
+        public override int IVSize => Provider.IV.Length * 8;
 
-        /// <summary>
-        /// If set to true, the initialization vector (if used) will be prepended to the
-        /// beginning of the output byte stream.
-        /// </summary>
-        public bool AppendIV = false;
+        ///// <summary>
+        ///// If set to true, the initialization vector (if used) will be prepended to the
+        ///// beginning of the output byte stream.
+        ///// </summary>
+        //public bool AppendIV { get; set; } = false;
 
-        /// <summary>
-        /// If set to true, the authentication code (if created) will be appended to the
-        /// end of the output byte stream.
-        /// 
-        /// Since we don't currently have a GCM mode, this isn't currently used.
-        /// </summary>
-        public bool AppendIntegrity = false;
+        ///// <summary>
+        ///// If set to true, the authentication code (if created) will be appended to the
+        ///// end of the output byte stream.
+        ///// 
+        ///// Since we don't currently have a GCM mode, this isn't currently used.
+        ///// </summary>
+        //public bool AppendIntegrity { get; set; } = false;
 
 
         /// <summary>
@@ -81,7 +78,7 @@ namespace Goedel.Cryptography.Standard {
         /// <remarks>Only implemented for PKCS#7 padding.</remarks>
         /// <param name="Input">The input length in bytes</param>
         /// <returns>The output length in bytes.</returns>
-        public override long OutputLength (long Input) {
+        public override long OutputLength(long Input) {
             if (Provider.Padding == PaddingMode.PKCS7) {
                 var Bytes = Provider.BlockSize / 8;
                 var Blocks = (Input / Bytes) + 1;
@@ -122,7 +119,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="CipherMode">Cipher mode to use</param>
         ///<param name="PaddingMode">Padding mode to use</param>
         protected CryptoProviderEncryption(SymmetricAlgorithm SymmetricAlgorithm,
-                int KeySize, CipherMode CipherMode, 
+                int KeySize, CipherMode CipherMode,
                 PaddingMode PaddingMode = PaddingMode.PKCS7) {
             this.Provider = SymmetricAlgorithm;
             Provider.KeySize = KeySize;
@@ -220,7 +217,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="IV">The Initialization Vector</param>
         /// <param name="Key">The key</param>
         /// <returns>The result of the cryptographic operation.</returns>
-        public override byte[] Encrypt(byte[] Data, 
+        public override byte[] Encrypt(byte[] Data,
                         byte[] Key = null, byte[] IV = null) {
 
             Key = Key ?? Provider.Key;
@@ -265,9 +262,9 @@ namespace Goedel.Cryptography.Standard {
             }
 
 
-        byte[] Process (byte[] Data, ICryptoTransform Transform) { 
+        byte[] Process(byte[] Data, ICryptoTransform Transform) {
             byte[] Result;
-            using (var Output = new MemoryStream ()) {
+            using (var Output = new MemoryStream()) {
                 using (var Input = new CryptoStream(Output, Transform, CryptoStreamMode.Write)) {
                     Input.Write(Data, 0, Data.Length);
                     }
@@ -277,7 +274,7 @@ namespace Goedel.Cryptography.Standard {
             }
 
 
-        
+
 
         /// <summary>
         /// Complete processing at the end of an encoding or decoding operation
@@ -300,9 +297,9 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => (Provider.KeySize == 128) ? 
+        public override CryptoAlgorithmID CryptoAlgorithmID => (Provider.KeySize == 128) ?
                     CryptoAlgorithmID.AES128CBC : CryptoAlgorithmID.AES256CBC;
-            
+
 
         ///// <summary>
         ///// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -353,7 +350,7 @@ namespace Goedel.Cryptography.Standard {
                     return new CryptoProviderEncryptAES(128);
                     }
                 case CryptoAlgorithmID.AES128CBC: {
-                    return new CryptoProviderEncryptAES(128, 
+                    return new CryptoProviderEncryptAES(128,
                             CipherMode.CBC, PaddingMode.PKCS7);
                     }
                 case CryptoAlgorithmID.AES128CTS: {
@@ -405,7 +402,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="KeySize">Key Size in bits.</param>
         /// <param name="CipherMode">The cipher mode to use (CBC or CTS).</param>
         /// <param name="PaddingMode">The Padding Mode to use (PKCS or None).</param>
-        public CryptoProviderEncryptAES(int KeySize, 
+        public CryptoProviderEncryptAES(int KeySize,
                         CipherMode CipherMode = CipherMode.CBC,
                         PaddingMode PaddingMode = PaddingMode.PKCS7)
             : base(new AesManaged(), KeySize, CipherMode, PaddingMode) {

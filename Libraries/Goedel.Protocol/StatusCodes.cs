@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Goedel.Protocol {
+﻿namespace Goedel.Protocol {
 
     /// <summary>
     /// Define extension codes for checking HTTP/SMTP/FTP style status return values
     /// </summary>
-    public  static partial class Extensions {
+    public static partial class Extensions {
 
         /// <summary>
         /// Extension method to report the success or failure of transaction.

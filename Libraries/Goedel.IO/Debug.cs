@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 
 namespace Goedel.IO {
     /// <summary>
@@ -61,7 +60,7 @@ namespace Goedel.IO {
         /// 
         /// </summary>
         /// <param name="message"></param>
-        public override void Write(string message) => Console.Write (message);
+        public override void Write(string message) => Console.Write(message);
 
         /// <summary>
         /// 

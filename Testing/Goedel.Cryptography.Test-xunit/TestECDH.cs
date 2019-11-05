@@ -1,10 +1,10 @@
-﻿using System.Numerics;
-using System.Collections.Generic;
-using Xunit;
-using Goedel.Utilities;
-using Goedel.Test;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Utilities;
+
+using System.Numerics;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
@@ -85,7 +85,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void Ed448RecoverX () {
+        public void Ed448RecoverX() {
             BigInteger Curve448BaseY = (
                 "298819210078481492676017930443930673437544040154080242095928241" +
                 "372331506189835876003536878655418784733982303233503462500531545" +
@@ -102,7 +102,7 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void TestDHEd448Decode () {
+        public void TestDHEd448Decode() {
 
             var SecretKey = ("6c82a562cb808d10d632be89c8513ebf" +
                         "6c929f34ddfa8c9f63c9960ef6e348a3" +
@@ -200,13 +200,13 @@ namespace Goedel.XUnit {
             var KeyACurve = KeyAPublic.Public.Copy();
 
             var Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue(); 
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue(); 
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue(); 
+            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
 
             Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue(); 
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue(); 
+            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
             (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
 
             var Pub3 = Base.Multiply(KeyAPrivate - 1);

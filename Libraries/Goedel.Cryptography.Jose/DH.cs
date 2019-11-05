@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
@@ -13,13 +10,13 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PublicKeyDH () { }
+        public PublicKeyDH() { }
 
         /// <summary>
         /// Construct from the specified DH Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
-        public PublicKeyDH(KeyPairBaseDH KeyPair) : this (KeyPair.PKIXPublicKeyDH) {
+        public PublicKeyDH(KeyPairBaseDH KeyPair) : this(KeyPair.PKIXPublicKeyDH) {
             }
 
         /// <summary>
@@ -37,10 +34,10 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyDH PKIXParameters  => new PKIXPublicKeyDH() {
-                Public = Public,
-                Domain = DHDomain.GetByUDF(Domain)
-                };
+        public virtual PKIXPublicKeyDH PKIXParameters => new PKIXPublicKeyDH() {
+            Public = Public,
+            Domain = DHDomain.GetByUDF(Domain)
+            };
 
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.
@@ -64,13 +61,13 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PrivateKeyDH () { }
+        public PrivateKeyDH() { }
 
         /// <summary>
         /// Construct from the specified RSA Key
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
-        public PrivateKeyDH (KeyPairBaseDH KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
+        public PrivateKeyDH(KeyPairBaseDH KeyPair) : this(KeyPair.PKIXPrivateKeyDH) {
             }
 
         /// <summary>
@@ -90,10 +87,10 @@ namespace Goedel.Cryptography.Jose {
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
         public virtual PKIXPrivateKeyDH DHPrivateKey => new PKIXPrivateKeyDH() {
-                Public = Public,
-                Private = Private,
-                Domain = DHDomain.GetByUDF(Domain)
-                };
+            Public = Public,
+            Private = Private,
+            Domain = DHDomain.GetByUDF(Domain)
+            };
 
 
         /// <summary>

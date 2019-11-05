@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
+
+using System;
 
 namespace Goedel.Cryptography.Jose {
     public partial class PublicKeyECDH {
@@ -47,7 +46,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(
-                KeySecurity keySecurity, 
+                KeySecurity keySecurity,
                 KeyCollection keyCollection = null) {
 
             var keyUses = Use.GetUses();
@@ -74,7 +73,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Public">The public key value to combine</param>
         /// <returns>The composite public key.</returns>
-        public virtual PublicKeyECDH CombinePublic (PublicKeyECDH Public) => throw new NYI();
+        public virtual PublicKeyECDH CombinePublic(PublicKeyECDH Public) => throw new NYI();
 
         }
 
@@ -118,7 +117,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="Private"></param>
         /// <returns></returns>
-        public PrivateKeyECDH CombinePrivate (PrivateKeyECDH Private) => throw new NYI();
+        public PrivateKeyECDH CombinePrivate(PrivateKeyECDH Private) => throw new NYI();
 
 
         /// <summary>

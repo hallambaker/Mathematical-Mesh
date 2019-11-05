@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goedel.Cryptography {
 
@@ -104,7 +101,7 @@ namespace Goedel.Cryptography {
         /// <param name="ID">CryptoAlgorithmID Identifier</param>
         /// <param name="OID">OID</param>
         /// <param name="XML">XML Signature and Encryption algorithm identifier</param>
-        public static void Add(CryptoAlgorithmID ID, string OID=null, string XML=null) {
+        public static void Add(CryptoAlgorithmID ID, string OID = null, string XML = null) {
             if (OID != null) {
                 IDToOID.Add(ID, OID);
                 OIDToID.Add(OID, ID);
@@ -119,10 +116,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get the CryptoAlgorithmID corresponding to an XML DigSig URL
         /// </summary>
-        /// <param name="URL">XML Signature and Encryption algorithm identifier</param>
+        /// <param name="id">XML Signature and Encryption algorithm identifier</param>
         /// <returns>Algorithm Identifier</returns>
-        public static CryptoAlgorithmID FromXMLID (this string URL) {
-            var Found = XMLToID.TryGetValue(URL, out var Result);
+        public static CryptoAlgorithmID FromXMLID(this string id) {
+            var Found = XMLToID.TryGetValue(id, out var Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }
 
@@ -130,30 +127,30 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get the XML DigSig URL corresponding to a CryptoAlgorithmID
         /// </summary>
-        /// <param name="ID">Algorithm Identifier</param>
+        /// <param name="id">Algorithm Identifier</param>
         /// <returns>XML Signature and Encryption algorithm identifier</returns>
-        public static string ToXMLID(this CryptoAlgorithmID ID) {
-            var Found = IDToXML.TryGetValue(ID, out var Result);
+        public static string ToXMLID(this CryptoAlgorithmID id) {
+            var Found = IDToXML.TryGetValue(id, out var Result);
             return Found ? Result : null;
             }
 
         /// <summary>
         /// Get the CryptoAlgorithmID corresponding to an XML DigSig URL
         /// </summary>
-        /// <param name="URL">XML Signature and Encryption algorithm identifier</param>
+        /// <param name="id">XML Signature and Encryption algorithm identifier</param>
         /// <returns>Algorithm Identifier</returns>
-        public static CryptoAlgorithmID FromOID(this string URL) {
-            var Found = OIDToID.TryGetValue(URL, out var Result);
+        public static CryptoAlgorithmID FromOID(this string id) {
+            var Found = OIDToID.TryGetValue(id, out var Result);
             return Found ? Result : CryptoAlgorithmID.NULL;
             }
 
         /// <summary>
         /// Get the XML DigSig URL corresponding to a CryptoAlgorithmID
         /// </summary>
-        /// <param name="ID">Algorithm Identifier</param>
+        /// <param name="id">Algorithm Identifier</param>
         /// <returns>XML Signature and Encryption algorithm identifier</returns>
-        public static string ToOID(this CryptoAlgorithmID ID) {
-            var Found = IDToOID.TryGetValue(ID, out var Result);
+        public static string ToOID(this CryptoAlgorithmID id) {
+            var Found = IDToOID.TryGetValue(id, out var Result);
             return Found ? Result : null;
             }
 
@@ -161,10 +158,10 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Get the .Net Standard Hash algorithm name.
         /// </summary>
-        /// <param name="ID">The Goedel Algorithm identifier.</param>
+        /// <param name="id">The Goedel Algorithm identifier.</param>
         /// <returns>The corresponding .Net algorithm name.</returns>
-        public static HashAlgorithmName ToHashAlgorithmName(this CryptoAlgorithmID ID) {
-            var Found = IDtoHashAlgorithmName.TryGetValue(ID.Bulk(), out var Result);
+        public static HashAlgorithmName ToHashAlgorithmName(this CryptoAlgorithmID id) {
+            var Found = IDtoHashAlgorithmName.TryGetValue(id.Bulk(), out var Result);
             return Result;
             }
 

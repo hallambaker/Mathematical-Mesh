@@ -1,10 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Threading;
+﻿using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -45,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>The frame index within the container</summary>
         public ContainerFrameIndex FrameIndex;
-        
+
 
 
 
@@ -60,7 +55,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The first object instance value for this object instance.
         /// </summary>
-        public IPersistenceEntry First { get;  }
+        public IPersistenceEntry First { get; }
 
 
 
@@ -74,10 +69,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dareEnvelope">The envelope entry.</param>
         /// <param name="previous">Link to previous value of this object</param>
         /// <param name="item">The JSONObject representation.</param>
-        public ContainerStoreEntry(Container container, 
-                    DareEnvelope dareEnvelope, 
-                    ContainerStoreEntry previous, 
-                    JSONObject item=null) {
+        public ContainerStoreEntry(Container container,
+                    DareEnvelope dareEnvelope,
+                    ContainerStoreEntry previous,
+                    JSONObject item = null) {
             Container = container;
             jsonObject = item;
 
@@ -94,8 +89,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container"></param>
         /// <param name="item">The JSONObject representation.</param>
         public ContainerStoreEntry(
-                    ContainerFrameIndex frameIndex, 
-                    ContainerStoreEntry previous, 
+                    ContainerFrameIndex frameIndex,
+                    ContainerStoreEntry previous,
                     Container container,
                     JSONObject item = null) {
             Container = container;

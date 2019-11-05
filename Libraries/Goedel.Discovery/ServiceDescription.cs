@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Goedel.Utilities;
 
-using Goedel.Utilities;
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.Discovery {
     /// <summary>
@@ -30,17 +27,17 @@ namespace Goedel.Discovery {
         public string Service { get; set; }
 
         /// <summary>The service prefix</summary>
-        public string Prefix =>  "_" + Service + "._tcp."; 
+        public string Prefix => "_" + Service + "._tcp.";
 
         /// <summary>The service address being discovered</summary>
-        public string ServiceAddress =>  (Prefix + Address).ToLower(); 
+        public string ServiceAddress => (Prefix + Address).ToLower();
 
         /// <summary>The default path for the Web Service Endpoint</summary>
-        string DefaultPath =>  "/.well-known/" + Service + "/"; 
+        string DefaultPath => "/.well-known/" + Service + "/";
 
         List<string> _TXT = new List<string>();
         /// <summary>Text policy records</summary>
-        public virtual List<string> TXT => _TXT; 
+        public virtual List<string> TXT => _TXT;
 
         int Index;
         /// <summary>Returns the next service entry</summary>
@@ -61,7 +58,7 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="Address">DNS address of service</param>
         /// <param name="Service">Service identifier (without decorations)</param>
-        public ServiceDescription (string Address, string Service) {
+        public ServiceDescription(string Address, string Service) {
             this.Service = Service;
             this.Address = Address;
             }
@@ -73,7 +70,7 @@ namespace Goedel.Discovery {
         /// <param name="Service">Service identifier (without decorations)</param>
         /// <param name="Port">IP port number</param>
         /// <param name="Fallback">Fallback mode for if no SRV record is found</param>
-        public ServiceDescription(string Address, string Service, int? Port, 
+        public ServiceDescription(string Address, string Service, int? Port,
                         DNSFallback Fallback = DNSFallback.Prefix) {
             this.Address = Address;
             this.Service = Service;
@@ -179,9 +176,12 @@ namespace Goedel.Discovery {
     public class ServiceEntry {
 
         /// <summary>The prefixed Host address</summary>
-        public string HostAddress { get {
+        public string HostAddress {
+            get {
                 var Text = ServiceDescription?.Prefix + Address;
-                return Text.ToLower(); } }
+                return Text.ToLower();
+                }
+            }
 
         string _Address;
         /// <summary>The DNS Address to resolve</summary>

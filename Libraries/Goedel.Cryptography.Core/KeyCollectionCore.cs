@@ -1,9 +1,10 @@
-﻿using System;
-using System.IO;
-using Goedel.IO;
+﻿using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Jose;
+using Goedel.IO;
 using Goedel.Protocol;
+
+using System;
+using System.IO;
 
 
 
@@ -86,7 +87,7 @@ namespace Goedel.Cryptography.Core {
 
                 fileName.OpenReadToEnd(out var data);
                 var key = Key.FromJSON(data.JSONReader(), true);
-                return key.GetKeyPair (key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
+                return key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
                 }
             catch {
                 return base.LocatePrivate(udf);
@@ -100,4 +101,4 @@ namespace Goedel.Cryptography.Core {
     }
 
 
-   
+

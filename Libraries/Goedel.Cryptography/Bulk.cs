@@ -19,13 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using Goedel.Utilities;
+
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -94,11 +91,11 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>The crypto algorithm class.</summary>
-        protected static CryptoAlgorithmClass _AlgorithmClass =
-            CryptoAlgorithmClass.Digest;
+        protected static CryptoAlgorithmClasses _AlgorithmClass =
+            CryptoAlgorithmClasses.Digest;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+        public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
 
 
         }
@@ -109,11 +106,11 @@ namespace Goedel.Cryptography {
     public abstract class CryptoProviderAuthentication : CryptoProviderDigest {
 
         /// <summary>The crypto algorithm class.</summary>
-        protected static new CryptoAlgorithmClass _AlgorithmClass =
-            CryptoAlgorithmClass.MAC;
+        protected static new CryptoAlgorithmClasses _AlgorithmClass =
+            CryptoAlgorithmClasses.MAC;
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+        public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
 
 
         /// <summary>
@@ -162,7 +159,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Input"></param>
         /// <returns></returns>
-        public abstract long OutputLength (long Input);
+        public abstract long OutputLength(long Input);
 
         /// <summary>
         /// Creates a new instance of the CryptoStream class to encrypt data under the specified
@@ -202,7 +199,7 @@ namespace Goedel.Cryptography {
         /// <param name="Key">The encryption key.</param>
         /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
         /// <returns>The transformation object instance.</returns>
-        public abstract ICryptoTransform CreateEncryptor (byte[] Key, byte[] IV);
+        public abstract ICryptoTransform CreateEncryptor(byte[] Key, byte[] IV);
 
 
         /// <summary>
@@ -212,7 +209,7 @@ namespace Goedel.Cryptography {
         /// <param name="Key">The encryption key.</param>
         /// <param name="IV">The initialization vector. Must be of a legal size for the algorithm</param>
         /// <returns>The transformation object instance.</returns>
-        public abstract ICryptoTransform CreateDecryptor (byte[] Key, byte[] IV);
+        public abstract ICryptoTransform CreateDecryptor(byte[] Key, byte[] IV);
 
         /// <summary>
         /// Encrypts the specified byte array
@@ -234,11 +231,11 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>Return the crypto algorithm class.</summary>
-        public override CryptoAlgorithmClass AlgorithmClass => _AlgorithmClass; 
+        public override CryptoAlgorithmClasses AlgorithmClass => _AlgorithmClass;
 
         /// <summary>The crypto algorithm class.</summary>
-        protected static CryptoAlgorithmClass _AlgorithmClass =
-            CryptoAlgorithmClass.Encryption;
+        protected static CryptoAlgorithmClasses _AlgorithmClass =
+            CryptoAlgorithmClasses.Encryption;
 
         /// <summary>
         /// Create an encoder for a bulk algorithm and optional key wrap or exchange.
@@ -251,7 +248,7 @@ namespace Goedel.Cryptography {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataEncoder MakeEncryptor(
                             byte[] Key = null, byte[] IV = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default, 
+                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null);
 
         /// <summary>

@@ -1,11 +1,10 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Algorithms;
+using Goedel.Utilities;
+
 using System;
-using Goedel.ASN;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -16,10 +15,10 @@ namespace Goedel.Cryptography {
 
         #region //Properties
         ///<summary>The implementation public key value</summary>
-        public CurveEdwards25519Public PublicKey;
+        public CurveEdwards25519Public PublicKey { get; set; }
 
         ///<summary>The implementation private key value (if exportable)</summary>
-        public CurveEdwards25519Private PrivateKey;
+        public CurveEdwards25519Private PrivateKey { get; set; }
 
         ///<summary>The implementation public key value</summary>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
@@ -83,7 +82,7 @@ namespace Goedel.Cryptography {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyEd25519(key, PKIXPublicKeyECDH);
                     }
                 }
-            
+
             }
 
 
@@ -124,7 +123,7 @@ namespace Goedel.Cryptography {
             KeyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
-        
+
         /// <summary>
         /// Construct class from a public key value
         /// </summary>
@@ -238,7 +237,7 @@ namespace Goedel.Cryptography {
         public override byte[] Decrypt(byte[] encryptedKey,
                 KeyPair ephemeral = null,
                 CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
-                KeyAgreementResult partial = null, 
+                KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
             var KeyPairEd25519 = ephemeral as KeyPairEd25519;
@@ -247,17 +246,17 @@ namespace Goedel.Cryptography {
             var Agreementx = Agreement(KeyPairEd25519, partial as CurveEdwards25519Result);
 
             Console.WriteLine($"Key {Agreementx.IKM.ToStringBase16FormatHex()}");
-            
+
             return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
             }
 
 
         static byte[] Dom2(
-                CryptoAlgorithmID cryptoAlgorithm, 
+                CryptoAlgorithmID cryptoAlgorithm,
                 byte[] y) {
-            byte x=0;
+            byte x = 0;
             switch (cryptoAlgorithm) {
-                case CryptoAlgorithmID.Ed25519 : return null;
+                case CryptoAlgorithmID.Ed25519: return null;
                 case CryptoAlgorithmID.Ed25519ph: {
                     x = 1;
                     break;
@@ -301,7 +300,7 @@ namespace Goedel.Cryptography {
                     }
                 }
 
-            return PrivateKey.Sign(data, Dom2 (algorithmID, context));
+            return PrivateKey.Sign(data, Dom2(algorithmID, context));
             }
 
         /// <summary>

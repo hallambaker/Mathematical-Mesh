@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
@@ -44,7 +42,7 @@ namespace Goedel.Mesh {
             Console.WriteLine("  Blind transaction!");
 
             return base.Transact(catalog, updates);
-            
+
             }
 
 

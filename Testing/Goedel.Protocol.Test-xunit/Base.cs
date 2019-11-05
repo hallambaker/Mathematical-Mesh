@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Utilities;
-using System.IO;
-using Goedel.Protocol;
+﻿using Goedel.Protocol;
 using Goedel.Test.Core;
-using Xunit;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
+using System.Collections.Generic;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -81,7 +81,7 @@ namespace Goedel.XUnit {
         [Theory]
         [ClassData(typeof(JSONReadersTestData))]
         public void TestEncodeDecode(
-                    MultiInstance First, 
+                    MultiInstance First,
                     DataEncoding DataEncoding,
                     JSONReaderFactoryDelegate ReaderFactory) {
             var FirstJSON = First.GetBytes(DataEncoding, true);
@@ -99,8 +99,8 @@ namespace Goedel.XUnit {
                 yield return new object[] { TestDataArray, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
                 yield return new object[] { TestDataStruct, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
 
-                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory};
-                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory};
+                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
                 yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
                 }
 

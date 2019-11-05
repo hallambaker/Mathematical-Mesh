@@ -19,12 +19,11 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Standard;
+using Goedel.Utilities;
+
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Windows {
 
@@ -97,20 +96,20 @@ namespace Goedel.Cryptography.Windows {
         /// </summary>
         /// <param name="UDF">Fingerprint of key.</param>
         /// <returns>RSAKeyPair</returns>
-        public static  KeyPairRSA FindLocal(string UDF) //=> throw new NYI();
-            
+        public static KeyPairRSA FindLocal(string UDF) //=> throw new NYI();
+
             {
             var Provider = PlatformLocateRSAProvider(UDF);
             if (Provider == null) { return null; }
             return new KeyPairRSA(Provider);
-        }
+            }
 
-    /// <summary>
-    /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
-    /// </summary>
-    /// <param name="Base">The base algorithm</param>
-    /// <returns>The computed CryptoAlgorithmID</returns>
-    public override CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) => CryptoAlgorithmID.RSASign | Base.Bulk();
+        /// <summary>
+        /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
+        /// </summary>
+        /// <param name="Base">The base algorithm</param>
+        /// <returns>The computed CryptoAlgorithmID</returns>
+        public override CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) => CryptoAlgorithmID.RSASign | Base.Bulk();
 
 
 
@@ -159,7 +158,7 @@ namespace Goedel.Cryptography.Windows {
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="RSAParameters">The RSA parameters.</param>
-        public KeyPairRSAWindows(RSAParameters RSAParameters) : base (RSAParameters) {
+        public KeyPairRSAWindows(RSAParameters RSAParameters) : base(RSAParameters) {
             PublicParameters = RSAParameters;
 
             _Provider = new RSACryptoServiceProvider();
@@ -219,7 +218,7 @@ namespace Goedel.Cryptography.Windows {
         /// <summary>
         /// Retrieve the private key from local storage.
         /// </summary>
-        public  void GetPrivate() {
+        public void GetPrivate() {
             if (!PublicOnly) {
                 return;
                 }
@@ -236,7 +235,7 @@ namespace Goedel.Cryptography.Windows {
         /// <summary>
         /// Erase the key from the local machine
         /// </summary>
-        public  void EraseFromDevice() {
+        public void EraseFromDevice() {
             var cp = new CspParameters() {
                 KeyContainerName = ContainerFramework.Name(UDF)
                 };
@@ -247,6 +246,6 @@ namespace Goedel.Cryptography.Windows {
             _Provider.Clear();
             }
 
-         }
+        }
 
     }

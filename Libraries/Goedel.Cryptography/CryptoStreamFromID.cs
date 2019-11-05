@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Cryptography.Algorithms;
+﻿using Goedel.Cryptography.Algorithms;
 using Goedel.IO;
 using Goedel.Utilities;
+
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -216,8 +215,8 @@ namespace Goedel.Cryptography {
         /// <param name="fileName">The file containing the data to digest.</param>
         /// <param name="cryptoAlgorithmID">The digest algorithm.</param>
         /// <returns>The digest value.</returns>
-        public static byte[] GetDigestOfFile(this string fileName, 
-                CryptoAlgorithmID cryptoAlgorithmID=CryptoAlgorithmID.SHA_2_512) {
+        public static byte[] GetDigestOfFile(this string fileName,
+                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
             var hashProvider = cryptoAlgorithmID.CreateDigest();
             using (var inputStream = fileName.OpenFileRead()) {
                 using (var cryptoStream = new CryptoStream(Stream.Null, hashProvider, CryptoStreamMode.Write)) {
@@ -250,7 +249,7 @@ namespace Goedel.Cryptography {
         /// <param name="count">The number of bytes in the array to use as data. If less than 0,
         /// defaults to the remaining bytes <paramref name="data"/> after <paramref name="offset"/>.</param>
         /// <returns>The computed hash code.</returns>
-        public static byte[] GetDigest(this byte[] data, 
+        public static byte[] GetDigest(this byte[] data,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512, int offset = 0,
             int count = -1) {
             count = count < 0 ? data.Length - offset : count;
@@ -271,7 +270,7 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID"></param>
         /// <param name="key">The secret key for the MAC operation.</param>
         /// <returns>The computed hash code.</returns>
-        public static byte[] GetMAC(this byte[] data, byte[] key, 
+        public static byte[] GetMAC(this byte[] data, byte[] key,
             CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.HMAC_SHA_2_512, int offset = 0,
             int count = -1) {
             count = count < 0 ? data.Length - offset : count;

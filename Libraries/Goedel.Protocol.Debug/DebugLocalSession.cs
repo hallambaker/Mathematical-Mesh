@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-
-using Goedel.Protocol;
+﻿using System.IO;
 
 
 namespace Goedel.Protocol.Debug {
@@ -17,7 +11,7 @@ namespace Goedel.Protocol.Debug {
     /// might be the result of JSON encoding issues and to collect samples
     /// for documentation.
     /// </summary>
-    public  class DebugLocalSession :LocalRemoteSession  {
+    public class DebugLocalSession : LocalRemoteSession {
 
         /// <summary>
         /// Trace Dictionary for this session
@@ -83,7 +77,7 @@ namespace Goedel.Protocol.Debug {
                 }
 
             // Return the response as a string for disassembly
-            return ResultObject.ToString ();
+            return ResultObject.ToString();
             }
 
         }

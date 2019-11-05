@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Jose;
 using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -36,7 +35,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine.
         /// </summary>
-        protected override void Disposing () {
+        protected override void Disposing() {
             }
         #endregion
 
@@ -46,7 +45,7 @@ namespace Goedel.Cryptography.Dare {
     /// 
     /// </summary>
     public class FileContainerWriter : FileContainer {
-        Container container=null;
+        Container container = null;
 
         /// <summary>
         /// The class specific disposal routine.
@@ -81,7 +80,7 @@ namespace Goedel.Cryptography.Dare {
                 bool archive = false,
                 bool digest = true,
                 FileStatus fileStatus = FileStatus.Overwrite,
-                ContainerType containerType = ContainerType.Unknown)  {
+                ContainerType containerType = ContainerType.Unknown) {
 
             jbcdStream = new JBCDStream(fileName, fileStatus);
             container = BindContainer(jbcdStream, cryptoParameters, archive, digest, containerType);
@@ -142,17 +141,17 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <returns>File Container instance</returns>
-        public static void File (
+        public static void File(
                 string fileName,
                 CryptoParameters cryptoParameters,
                 byte[] data,
-                ContentMeta contentMeta =null,
+                ContentMeta contentMeta = null,
                 FileStatus fileStatus = FileStatus.Overwrite
                 ) {
 
             using (var Writer = new FileContainerWriter(
                         fileName, cryptoParameters,
-                        archive: false, 
+                        archive: false,
                         digest: false,
                         fileStatus: fileStatus, containerType: ContainerType.List)) {
                 Writer.Add(data, cryptoParameters, contentMeta);
@@ -168,10 +167,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <returns>File Container instance</returns>
-        public static byte[] Data (
+        public static byte[] Data(
                 byte[] dataIn,
-                ContentMeta contentMeta =null,
-                CryptoParameters cryptoParameters=null
+                ContentMeta contentMeta = null,
+                CryptoParameters cryptoParameters = null
                 ) {
 
             var Stream = new MemoryStream();
@@ -207,8 +206,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="file">The file to add</param>
         /// <param name="path">The path name attribute to give the file in the container</param>
         public void Add(
-                FileInfo file, 
-                string path=null) => Add(file.FullName, path);
+                FileInfo file,
+                string path = null) => Add(file.FullName, path);
 
         /// <summary>
         /// Add a file entry
@@ -216,7 +215,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="file">The file to add</param>
         /// <param name="path">The path name attribute to give the file in the container</param>
         public void Add(
-                string file, 
+                string file,
                 string path = null) {
 
 
@@ -250,7 +249,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="signatures">List of JWS signatures. Since this is the first block, the signature
         /// is always over the payload data only.</param>
-        public void AddIndex (List<KeyPair> signatures = null) => throw new NYI();
+        public void AddIndex(List<KeyPair> signatures = null) => throw new NYI();
 
 
         }

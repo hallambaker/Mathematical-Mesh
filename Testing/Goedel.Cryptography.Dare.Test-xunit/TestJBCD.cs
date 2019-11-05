@@ -1,11 +1,11 @@
-﻿using System;
-using System.Text;
-using Xunit;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System.Text;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -14,7 +14,7 @@ namespace Goedel.XUnit {
         public TestJBCD() => TestEnvironmentCommon.Initialize(true);
 
 
-        byte[] MakeConstant (string Text, int Repeat) {
+        byte[] MakeConstant(string Text, int Repeat) {
 
             var Builder = new StringBuilder();
             for (var i = 0; i < Repeat; i++) {
@@ -26,10 +26,10 @@ namespace Goedel.XUnit {
             }
 
         [Theory]
-        [InlineData ("JBCD0.jbcd", 0)]
+        [InlineData("JBCD0.jbcd", 0)]
         [InlineData("JBCD1.jbcd", 1)]
         [InlineData("JBCD10.jbcd", 10)]
-        public void TestJBCDStream (string FileName, int Records, int MaxSize = 0) {
+        public void TestJBCDStream(string FileName, int Records, int MaxSize = 0) {
             //ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 

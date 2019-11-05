@@ -1,12 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Goedel.Protocol;
-using Goedel.Utilities;
+﻿using Goedel.Protocol;
 
-namespace Goedel.Cryptography.Dare{
+using System.Collections.Generic;
+
+namespace Goedel.Cryptography.Dare {
 
     /// <summary>
     /// 
@@ -19,21 +15,21 @@ namespace Goedel.Cryptography.Dare{
         /// <param name="Key">The key for which the index is requested.</param>
         /// <param name="Create">If true, will create an index if none is found.</param>
         /// <returns>The index.</returns>
-        IPersistenceIndex GetIndex (string Key, bool Create = true);
+        IPersistenceIndex GetIndex(string Key, bool Create = true);
 
         /// <summary>
         /// Get object instance by unique identifier
         /// </summary>
         /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        IPersistenceEntry Get (string UniqueID);
+        IPersistenceEntry Get(string UniqueID);
 
         /// <summary>
         /// Determines if a object instance with the specified unique identifier is registered.
         /// </summary>
         /// <param name="UniqueID">The unique identifier of the object instance to locate.</param>
         /// <returns>True if found, otherwise false.</returns>
-        bool Contains (string UniqueID);
+        bool Contains(string UniqueID);
 
 
         /// <summary>
@@ -42,7 +38,7 @@ namespace Goedel.Cryptography.Dare{
         /// <param name="Key">The key</param>
         /// <param name="Value">The value to match</param>
         /// <returns>The object instance if found, otherwise false.</returns>
-        IPersistenceIndexEntry Last (string Key, string Value);
+        IPersistenceIndexEntry Last(string Key, string Value);
 
         }
 
@@ -59,7 +55,7 @@ namespace Goedel.Cryptography.Dare{
         /// <param name="Object">Object to add.</param>
         /// <param name="transaction">The transaction context under which the object is 
         /// created.</param>
-        IPersistenceEntry New (JSONObject Object,
+        IPersistenceEntry New(JSONObject Object,
                 Transaction transaction = null);
 
 
@@ -70,7 +66,7 @@ namespace Goedel.Cryptography.Dare{
         /// <param name="Create">If true, create a new value if one does not already exist</param>
         /// <param name="transaction">The transaction context under which the object is 
         /// created.</param>
-        IPersistenceEntry Update (JSONObject Object, bool Create = true,
+        IPersistenceEntry Update(JSONObject Object, bool Create = true,
                 Transaction transaction = null);
 
         /// <summary>
@@ -81,7 +77,7 @@ namespace Goedel.Cryptography.Dare{
         /// <returns>True if the object was updated, otherwise false.</returns>
         /// <param name="transaction">The transaction context under which the object is 
         /// created.</param>
-        bool Delete (string UniqueID,
+        bool Delete(string UniqueID,
                 Transaction transaction = null);
 
 
@@ -102,7 +98,7 @@ namespace Goedel.Cryptography.Dare{
         /// </summary>
         /// <param name="Value">The value to match</param>
         /// <returns>The index entry to the object instance if found, otherwise false.</returns>
-        IPersistenceIndexEntry Last (string Value);
+        IPersistenceIndexEntry Last(string Value);
 
         }
 
@@ -125,14 +121,14 @@ namespace Goedel.Cryptography.Dare{
         /// if null, starts a new list.</param>
         /// <param name="EntryData">The entry data for the new index value.</param>
         /// <returns>The new entry.</returns>
-        IPersistenceIndexEntry Insert (IPersistenceIndexEntry Existing, IPersistenceEntry EntryData);
+        IPersistenceIndexEntry Insert(IPersistenceIndexEntry Existing, IPersistenceEntry EntryData);
 
 
         /// <summary>
         /// Remove an entry from a list of index entries.
         /// </summary>
         /// <param name="Entry"></param>
-        void Remove (IPersistenceIndexEntry Entry);
+        void Remove(IPersistenceIndexEntry Entry);
 
         }
 

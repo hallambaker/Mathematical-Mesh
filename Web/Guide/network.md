@@ -8,26 +8,44 @@ a entries describing how to access particular networks.
 
 The `network add` command adds a network entry to a catalog:
 
-**Missing Example***
+
+````
+Alice> network add NetworkEntry1.json NetID1
+{Username}@{Service} = [{Password}]Alice> network add NetworkEntry2.json NetID2
+{Username}@{Service} = [{Password}]````
 
 
 ## Finding networks
 
 The `network get`  command retreives a network entry by label:
 
-**Missing Example***
+
+````
+Alice> network get NetID2
+Empty
+````
 
 ## Deleting networks
 
 Network entries may be deleted using the  `network delete` command:
 
-**Missing Example***
+
+````
+Alice> network delete NetID2
+ERROR - Object reference not set to an instance of an object.
+Alice> network list
+ERROR - The command  is not known.
+````
 
 ## Listing networks
 
 A complete list of networks is obtained using the  `network list` command:
 
-**Missing Example***
+
+````
+Alice> network list
+ERROR - The command  is not known.
+````
 
 ## Adding devices
 

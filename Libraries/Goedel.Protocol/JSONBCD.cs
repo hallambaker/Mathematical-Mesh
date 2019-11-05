@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Utilities;
-
-
-namespace Goedel.Protocol {
+﻿namespace Goedel.Protocol {
 
 
     /// <summary>Constants for tagging of JBCD encoded data</summary>

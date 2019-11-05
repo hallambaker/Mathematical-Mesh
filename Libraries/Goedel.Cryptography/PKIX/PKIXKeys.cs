@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Goedel.Cryptography.PKIX {
+﻿namespace Goedel.Cryptography.PKIX {
 
     /// <summary>
     /// Interface permitting Key classes to be managed as if they inherited from
@@ -16,7 +10,7 @@ namespace Goedel.Cryptography.PKIX {
         /// Return the DER encoding of this structure
         /// </summary>
         /// <returns>The DER encoded value.</returns>
-        byte[] DER ();
+        byte[] DER();
 
 
         /// <summary>
@@ -84,7 +78,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Return the algorithm identifier that represents this key
         /// </summary>
-        public override int[] OID  => Constants.OID__id_dh_public;
+        public override int[] OID => Constants.OID__id_dh_public;
 
 
         /// <summary>
@@ -159,7 +153,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => this; 
+        public IPKIXPublicKey PublicParameters => this;
 
         }
 

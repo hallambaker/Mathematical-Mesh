@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using Goedel.Mesh.Shell;
-using Goedel.Cryptography;
-using Goedel.Mesh.Test;
-using Goedel.Test.Core;
-using Goedel.Test;
-using Goedel.Utilities;
 using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
+using Goedel.Mesh.Shell;
 using Goedel.Protocol;
+using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Test {
 
@@ -121,7 +119,7 @@ namespace Goedel.Mesh.Test {
         //    return new ExampleResult(command, result);
         //    }
 
-        public List<ExampleResult> Example(params string [] commands) {
+        public List<ExampleResult> Example(params string[] commands) {
             var result = new List<ExampleResult>();
 
             //var Args = command.Split(' ');
@@ -135,7 +133,7 @@ namespace Goedel.Mesh.Test {
 
                 try {
 
-                    
+
                     if (portalTest != null) {
                         portalTest.MeshProtocolMessages = null;
                         }
@@ -143,7 +141,8 @@ namespace Goedel.Mesh.Test {
 
                     Dispatcher(Entries, DefaultCommand, Shell, cmd.Split(' '), 0);
                     result.Add(new ExampleResult(this, cmd, Shell.ShellResult as Result) {
-                        Traces = portalTest?.MeshProtocolMessages });
+                        Traces = portalTest?.MeshProtocolMessages
+                        });
                     }
                 catch (Exception exception) {
                     ErrorCount++;
@@ -278,7 +277,7 @@ namespace Goedel.Mesh.Test {
             }
 
         public bool FailNetworkResult(string site) {
-            var result = Dispatch($"network get {site}", fail:true) as ResultEntry;
+            var result = Dispatch($"network get {site}", fail: true) as ResultEntry;
             return true;
             }
 

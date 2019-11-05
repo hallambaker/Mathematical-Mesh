@@ -1,16 +1,10 @@
-﻿using System;
-using System.IO;
-using Goedel.Mesh.Test;
+﻿using Goedel.Cryptography;
 using Goedel.Mesh.Shell;
-using Goedel.Test.Core;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using System.Linq;
-using Goedel.Cryptography;
-using System.Numerics;
-using System.Collections.Generic;
 using Goedel.Test;
+using Goedel.Utilities;
+
+using System.Numerics;
+
 using GC = Goedel.Cryptography;
 
 namespace ExampleGenerator {
@@ -246,7 +240,7 @@ namespace ExampleGenerator {
                 UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
-            int bits=0;
+            int bits = 0;
             switch (algorithmID) {
 
                 case UDFAlgorithmIdentifier.P256: {

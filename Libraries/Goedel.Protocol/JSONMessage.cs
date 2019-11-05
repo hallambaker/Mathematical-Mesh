@@ -20,20 +20,13 @@
 //  
 //  
 
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
-
 namespace Goedel.Protocol {
 
     // Transaction Classes
     /// <summary>
     /// The base class for transaction requests
     /// </summary>
-    public abstract partial class Request   {
+    public abstract partial class Request {
 
         /// <summary>
         /// The authentication context that is set by the authentication layer.
@@ -45,14 +38,14 @@ namespace Goedel.Protocol {
     /// <summary>
     /// Base class for all responses.
     /// </summary>
-    public abstract partial class Response  {
+    public abstract partial class Response {
 
         /// <summary>
         /// Numeric status return code value
         /// </summary>
 		public virtual int StatusCode {
-            get => Status; 
-            set => Status = value; 
+            get => Status;
+            set => Status = value;
             }
 
         /// <summary>
@@ -75,7 +68,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="serviceID">The account name to be authenticated.</param>
         /// <returns>True if the account name is verified, otherwise false.</returns>
-        public virtual VerifiedAccount VerifyAccount(string serviceID) => 
+        public virtual VerifiedAccount VerifyAccount(string serviceID) =>
             new VerifiedAccount() { ServiceID = serviceID };
 
         }

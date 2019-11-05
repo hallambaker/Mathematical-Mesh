@@ -15,7 +15,7 @@
 //        /// The CryptoAlgorithmID Identifier.
 //        /// </summary>
 //        public override CryptoAlgorithmID CryptoAlgorithmID => KeyPairECDH.CryptoAlgorithmID; 
- 
+
 
 //        /// <summary>
 //        /// Return a CryptoAlgorithm structure with properties describing this provider.

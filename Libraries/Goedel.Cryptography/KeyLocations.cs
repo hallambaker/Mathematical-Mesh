@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Goedel.Cryptography {
+﻿namespace Goedel.Cryptography {
 
     ///<summary>Enumeration used to specify information requested from the platform
     ///to enable use of platform specific features.</summary>
@@ -10,7 +6,7 @@ namespace Goedel.Cryptography {
 
         ///<summary>Current user's home directory</summary>
         DirectoryPersonalHome,
-        
+
         ///<summary>Current user's home directory</summary>
         DirectoryApplicationHome,
 

@@ -1,14 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Core;
+using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Test.Core;
-using Goedel.Cryptography.Algorithms;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Core;
-using Goedel.Mesh;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.IO;
+
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -44,7 +43,7 @@ namespace Goedel.XUnit {
 
 
             var envelopedData = DareEnvelope.Encode(CryptoParametersGroup, plaintext);
-            var envelope= new DareEnvelope(CryptoParametersGroup, plaintext);
+            var envelope = new DareEnvelope(CryptoParametersGroup, plaintext);
 
             var keyAliceDevice = new KeyPairEd25519() {
                 Locator = groupName
@@ -184,7 +183,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void MessageEncrypted () {
+        public void MessageEncrypted() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -202,7 +201,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void MessageEncryptedWithData () {
+        public void MessageEncryptedWithData() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -215,7 +214,7 @@ namespace Goedel.XUnit {
 
             }
 
-        void TestMessageJSON (byte[] Plaintext,
+        void TestMessageJSON(byte[] Plaintext,
                 CryptoParameters CryptoParameters = null,
                 int Stride = -1,
                 List<byte[]> DataSequences = null,
@@ -269,7 +268,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        void TestMessageVariable(byte[] Plaintext, 
+        void TestMessageVariable(byte[] Plaintext,
                     CryptoParameters CryptoParameters = null,
                     int Stride = -1,
                     List<byte[]> DataSequences = null,
@@ -297,8 +296,8 @@ namespace Goedel.XUnit {
             List<byte[]> DataSequences = null,
             string ContentType = null) {
 
-            var Message = DareEnvelope.FromJSON(Serialization, false, 
-                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyCollection );
+            var Message = DareEnvelope.FromJSON(Serialization, false,
+                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyCollection);
             CheckDecodeResult(Message, DataSequences, ContentType);
 
             Utilities.Assert.True(Plaintext.IsEqualTo(Message.Body));
@@ -327,7 +326,7 @@ namespace Goedel.XUnit {
 
 
 
-        static void CheckDecodeResult (
+        static void CheckDecodeResult(
             DareEnvelope Message,
             List<byte[]> DataSequences = null,
             string ContentType = null) {
@@ -346,15 +345,15 @@ namespace Goedel.XUnit {
 
         }
 
-    public partial class KeyPairPartialTest: KeyPairPartial {
+    public partial class KeyPairPartialTest : KeyPairPartial {
 
         public string IdGroup;
         public string IdMember;
         public KeyPair PrivateKey;
         KeyPairAdvanced KeyPairService;
 
-        public KeyPairPartialTest(KeyPairAdvanced keyPairGroup, 
-                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base (keyPairGroup, keyPairPart) {
+        public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
+                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) {
             KeyPairService = keyPairService;
             }
 

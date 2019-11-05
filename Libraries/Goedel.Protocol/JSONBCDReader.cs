@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Goedel.Utilities;
+
+using System;
 using System.IO;
-using System.Numerics;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -26,7 +25,7 @@ namespace Goedel.Protocol {
         /// Construct a JSONReader from a byte Stream.
         /// </summary>
         /// <param name="Input">The stream to be read.</param>
-        public JSONBCDReader(Stream Input) : base(Input) {}
+        public JSONBCDReader(Stream Input) : base(Input) { }
 
         /// <summary>
         /// Construct a JSONReader from a byte array.
@@ -37,7 +36,7 @@ namespace Goedel.Protocol {
 
 
 
-        int ModifierToLength (int c) {
+        int ModifierToLength(int c) {
             var Code = c & 0x03;
             switch (Code) {
                 case 0: return 1;
@@ -54,7 +53,7 @@ namespace Goedel.Protocol {
             (c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b');
 
         /// <summary>Get the next lexical token.</summary>
-        protected override Token Lexer () {
+        protected override Token Lexer() {
 
             var b = ByteInput.PeekByte();
             while (IsWhitespace(b) & (!ByteInput.EOF)) {
@@ -76,108 +75,108 @@ namespace Goedel.Protocol {
                     }
                 switch (b & 0xFC) {
                     case JSONBCD.PositiveInteger: {
-                            return LexerInteger(b, true);
-                            }
+                        return LexerInteger(b, true);
+                        }
                     case JSONBCD.NegativeInteger: {
-                            return LexerInteger(b, false);
-                            }
+                        return LexerInteger(b, false);
+                        }
                     case JSONBCD.TagString: {
                         return LexerTag(b, true);
                         }
                     case JSONBCD.StringTerm: {
-                            return LexerString(b, true);
-                            }
+                        return LexerString(b, true);
+                        }
                     case JSONBCD.StringChunk: {
-                            return LexerString(b, false);
-                            }
+                        return LexerString(b, false);
+                        }
                     case JSONBCD.DataTerm: {
-                            return LexerBinary(b, true);
-                            }
+                        return LexerBinary(b, true);
+                        }
                     case JSONBCD.DataChunk: {
-                            return LexerBinary(b, false);
-                            }
+                        return LexerBinary(b, false);
+                        }
 
                     }
 
                 switch (b) {
 
                     case JSONBCD.True: {
-                            return Token.True;
-                            }
+                        return Token.True;
+                        }
                     case JSONBCD.False: {
-                            return Token.False;
-                            }
+                        return Token.False;
+                        }
                     case JSONBCD.Null: {
-                            return Token.Null;
-                            }
+                        return Token.Null;
+                        }
                     case JSONBCD.PositiveBigInteger: {
-                            return LexerBigInteger(true);
-                            }
+                        return LexerBigInteger(true);
+                        }
                     case JSONBCD.NegativeBigInteger: {
-                            return LexerBigInteger(false);
-                            }
+                        return LexerBigInteger(false);
+                        }
                     }
 
 
                 switch (b & 0xF4) {
                     case JSONBCD.TagCode: {
-                            return LexerTagCode(b);
-                            }
+                        return LexerTagCode(b);
+                        }
                     case JSONBCD.TagDefinition: {
-                            Dictionary = true;
-                            LexerTagDefinition(b);
-                            break;
-                            }
+                        Dictionary = true;
+                        LexerTagDefinition(b);
+                        break;
+                        }
                     case JSONBCD.TagCodeDefinition: {
-                            return LexerTagCodeDefinition(b);
-                            }
+                        return LexerTagCodeDefinition(b);
+                        }
                     case JSONBCD.TagDictionaryDefinition: {
-                            Dictionary = true;
-                            LexerDictionaryDefinition(b);
-                            break;
-                            }
+                        Dictionary = true;
+                        LexerDictionaryDefinition(b);
+                        break;
+                        }
                     case JSONBCD.DictionaryHash: {
-                            ReadDictionary();
-                            Dictionary = true;
-                            break;
-                            }
+                        ReadDictionary();
+                        Dictionary = true;
+                        break;
+                        }
 
                     }
 
 
                 switch (b) {
                     case JSONBCD.BinaryFloat16: {
-                            return LexerRealOther(2);
-                            }
+                        return LexerRealOther(2);
+                        }
                     case JSONBCD.BinaryFloat32: {
-                            return LexerReal32();
-                            }
+                        return LexerReal32();
+                        }
                     case JSONBCD.BinaryFloat64: {
-                            return LexerReal64();
-                            }
+                        return LexerReal64();
+                        }
                     case JSONBCD.BinaryFloat128: {
-                            return LexerRealOther(16);
-                            }
+                        return LexerRealOther(16);
+                        }
                     case JSONBCD.Intel80: {
-                            return LexerRealOther(10);
-                            }
+                        return LexerRealOther(10);
+                        }
                     case JSONBCD.DecimalFloat32: {
-                            return LexerRealOther(4);
-                            }
+                        return LexerRealOther(4);
+                        }
                     case JSONBCD.DecimalFloat64: {
-                            return LexerRealOther(8);
-                            }
+                        return LexerRealOther(8);
+                        }
                     case JSONBCD.DecimalFloat128: {
-                            return LexerRealOther(16);
-                            }
+                        return LexerRealOther(16);
+                        }
                     }
                 } while (Dictionary);
             throw new UnknownTag();
             }
 
         byte[] DataBuffer = new byte[16];
-        ulong GetInteger (int Code) {
-            ulong Result=0;
+        ulong GetInteger(int Code) {
+            ulong Result = 0;
 
             var Count = ModifierToLength(Code);
             for (var i = 0; i < Count; i++) {
@@ -187,7 +186,7 @@ namespace Goedel.Protocol {
             return Result;
             }
 
-        Token LexerInteger (int Code, bool Positive) {
+        Token LexerInteger(int Code, bool Positive) {
             ResultInt64 = Positive ? (long)GetInteger(Code) : -(long)GetInteger(Code);
             return Token.Integer;
             }
@@ -201,18 +200,18 @@ namespace Goedel.Protocol {
             return Token.Tag;
             }
 
-        Token LexerString (int Code, bool Terminal) {
-            var Length = (int) GetInteger(Code);
+        Token LexerString(int Code, bool Terminal) {
+            var Length = (int)GetInteger(Code);
             var Buffer = ByteInput.ReadBinary(Length);
             ResultString = Buffer.ToUTF8();
             this.Terminal = Terminal;
             return Token.String;
             }
 
-        int LengthRemainingRead=-1;
+        int LengthRemainingRead = -1;
         int BinaryBuffer = -1;
 
-        Token LexerBinary (int Code, bool Terminal) {
+        Token LexerBinary(int Code, bool Terminal) {
             LengthRemainingRead = (int)GetInteger(Code);
             this.Terminal = Terminal;
             return Token.Binary;

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Goedel.Utilities {
 
@@ -36,7 +34,7 @@ namespace Goedel.Utilities {
         /// <param name="Input">The input string.</param>
         /// <param name="Length">Maximum line length</param>
         /// <returns>The wrapped string.</returns>
-        public static string Wrap (this string Input, int Length=68) {
+        public static string Wrap(this string Input, int Length = 68) {
             var Buffer = new StringBuilder();
             var Line = new StringBuilder();
             var Space = new StringBuilder();
@@ -73,7 +71,7 @@ namespace Goedel.Utilities {
                 }
 
             if (Line.Length + Current.Length >= Length) {
-                Line.Append("\n");                
+                Line.Append("\n");
                 }
 
             Line.Append(Current);

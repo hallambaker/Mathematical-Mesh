@@ -1,11 +1,48 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
+
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.Cryptography {
+
+
+    public interface IKeyLocate {
+        /// <summary>
+        /// Attempt to find a private key for the specified recipient entry.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match</param>
+        /// <returns>True if a match is found, otherwise false.</returns>
+        KeyPair TryMatchRecipient(string keyID);
+
+
+
+        /// <summary>
+        /// Locate a private key
+        /// </summary>
+        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <returns>A KeyPair instance bound to the private key.</returns>
+        KeyPair LocatePrivate(string UDF);
+
+
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        KeyPair GetByAccountEncrypt(string keyID);
+
+        /// <summary>
+        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        KeyPair GetByAccountSign(string keyID);
+
+
+        }
 
 
     /// <summary>
@@ -17,7 +54,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
     /// </summary>
-    public abstract class KeyCollection {
+    public abstract class KeyCollection : IKeyLocate {
 
         Object ExclusiveAccess = new Object();
 
@@ -47,7 +84,7 @@ namespace Goedel.Cryptography {
         /// Add a keypair to the collection.
         /// </summary>
         /// <param name="keyPair">The key pair to add.</param>
-        public virtual void Add(KeyPair keyPair ) {
+        public virtual void Add(KeyPair keyPair) {
             lock (ExclusiveAccess) {
                 DictionaryKeyPairByUDF.AddSafe(keyPair.UDF, keyPair);
                 if (keyPair.Locator != null) {

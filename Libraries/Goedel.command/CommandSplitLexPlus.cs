@@ -1,10 +1,26 @@
-﻿using System;
+﻿
+/* Unmerged change from project 'Goedel.Command'
+Before:
+using System;
+After:
+using Goedel.FSR;
+using Goedel.Utilities;
+
+using System;
+*/
+using Goedel.FSR;
+
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System.Threading.Tasks;
 using Goedel.Utilities;
 using Goedel.FSR;
+After:
+using System.Threading.Tasks;
+*/
+
 
 namespace Goedel.Command {
 
@@ -18,7 +34,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Text">The command line to split.</param>
         /// <returns>The command line split into entries.</returns>
-        public static string[] Split (string Text) {
+        public static string[] Split(string Text) {
             using (var CommandSplitLex = new CommandSplitLex()) {
                 CommandSplitLex.GetToken(Text);
                 return CommandSplitLex.Value.ToArray();
@@ -30,7 +46,7 @@ namespace Goedel.Command {
         /// <summary>
         /// Construct a parser to read from a string to be specified in GetToken (data)
         /// </summary>
-        public CommandSplitLex () {
+        public CommandSplitLex() {
             lexStringReader = new LexStringReader(null);
             Reader = lexStringReader;
             }
@@ -41,7 +57,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Data">The string to parse.</param>
         /// <returns>The token value.</returns>
-        public Token GetToken (string Data) {
+        public Token GetToken(string Data) {
             lexStringReader.String = Data;
             Reset();
             return GetToken();
@@ -70,7 +86,7 @@ namespace Goedel.Command {
         /// <summary>
         /// Reset the value buffers to start a new parse.
         /// </summary>
-        public override void Reset () {
+        public override void Reset() {
             arguments.Clear();
             buildValue.Clear();
             pending = false;
@@ -83,7 +99,7 @@ namespace Goedel.Command {
         /// <param name="c">The character read</param>
         public virtual void AddParam(int c) => AddParam();
 
-        void AddParam () {
+        void AddParam() {
             // Add any pending escape characters
             for (var i = 0; i < escapeCount; i++) {
                 buildValue.Append('\\');
@@ -102,7 +118,7 @@ namespace Goedel.Command {
         /// Do nothing
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void Ignore (int c) {
+        public virtual void Ignore(int c) {
             }
 
 
@@ -116,7 +132,7 @@ namespace Goedel.Command {
         /// Add a character to the value buffer
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddValue (int c) {
+        public virtual void AddValue(int c) {
             escapeCount = 0;
             pending = true;
             buildValue.Append((char)c);
@@ -126,7 +142,7 @@ namespace Goedel.Command {
         /// Add a character to the value buffer
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddEscape (int c) {
+        public virtual void AddEscape(int c) {
             pending = true;
             escapeCount++;
             }
@@ -138,7 +154,7 @@ namespace Goedel.Command {
         /// of escape characters is odd.
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddEscapedValue (int c) {
+        public virtual void AddEscapedValue(int c) {
 
             if (c == '\"') {
                 while (escapeCount > 1) {

@@ -1,19 +1,18 @@
 ﻿using Goedel.Cryptography.PKIX;
+
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Cryptography {
     /// <summary>
     /// Wrapper around a partial key pair.
     /// </summary>
     public abstract class KeyPairPartial : KeyPairAdvanced {
-        
+
         ///<summary>The partial private key</summary>
-        public KeyPairAdvanced KeyPartial; 
+        public KeyPairAdvanced KeyPartial { get; set; }
 
         ///<summary>The group key of which the partial is a contribution.</summary>
-        public KeyPairAdvanced KeyGroup;
+        public KeyPairAdvanced KeyGroup { get; set; }
 
         #region //Properties
         ///<summary>The implementation public key value</summary>
@@ -44,7 +43,7 @@ namespace Goedel.Cryptography {
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
         public override IPKIXPublicKey PKIXPublicKey => KeyGroup.PKIXPublicKey;
-        
+
         ///<summary>If true, the key only has access to public key values. This is always true for 
         ///a partial key.</summary>
         public override bool PublicOnly => false;
@@ -84,7 +83,7 @@ namespace Goedel.Cryptography {
                     byte[] key,
                     out byte[] exchange,
                     out KeyPair ephemeral,
-                    byte[] salt = null) => KeyGroup.Encrypt (key, out exchange, out ephemeral, salt);
+                    byte[] salt = null) => KeyGroup.Encrypt(key, out exchange, out ephemeral, salt);
 
         #endregion
 
@@ -129,8 +128,8 @@ namespace Goedel.Cryptography {
         /// for protocol isolation.</param>
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
-                    byte[] digest, 
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default, 
+                    byte[] digest,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                     byte[] context = null) => throw new NotImplementedException();
 
         /// <summary>
@@ -145,9 +144,9 @@ namespace Goedel.Cryptography {
         /// <returns>True if the signature is valid, otherwise false.</returns>
 
         public override bool VerifyHash(
-                    byte[] digest, 
-                    byte[] signature, 
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default, 
+                    byte[] digest,
+                    byte[] signature,
+                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                     byte[] context = null) => throw new NotImplementedException();
 
         #endregion

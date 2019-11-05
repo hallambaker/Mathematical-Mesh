@@ -1,13 +1,22 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
+using System.Net.NetworkInformation;
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
 using System.Net.NetworkInformation;
 using System.Text;
 
 using System.Threading;
-
-using Goedel.Utilities;
+After:
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+*/
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 
@@ -171,7 +180,7 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="ListIPAddress">List of IP addresses to contact.</param>
         /// <param name="Port">Port number.</param>
-        public DNSContextUDP (List<IPAddress> ListIPAddress, ushort Port) {
+        public DNSContextUDP(List<IPAddress> ListIPAddress, ushort Port) {
             UdpClient = GetUDPClient(ListIPAddress[0], Port);
             TaskListen = GetResponseRawAsync();
             }
@@ -234,5 +243,5 @@ namespace Goedel.Discovery {
 
         }
 
-   
+
     }

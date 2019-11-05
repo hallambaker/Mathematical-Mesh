@@ -1,11 +1,11 @@
-﻿using System.Numerics;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Xunit;
-
-using Goedel.Utilities;
+﻿using Goedel.Cryptography;
 using Goedel.Test.Core;
-using Goedel.Cryptography;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.Diagnostics;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
@@ -182,12 +182,12 @@ namespace Goedel.XUnit {
         public byte[] Result_HMAC_512 { get; set; }
 
 
-        public void Verify (
+        public void Verify(
             global::Goedel.Cryptography.CryptoProviderAuthentication Provider, byte[] Expected) {
 
             var Result = Provider.ProcessData(Data, Key);
 
-            if (Expected.Length < Provider.Size/8) {
+            if (Expected.Length < Provider.Size / 8) {
                 System.Array.Resize(ref Result, Expected.Length);
                 }
 

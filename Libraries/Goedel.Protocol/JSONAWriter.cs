@@ -20,16 +20,15 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Goedel.Utilities;
+
+using System;
+using System.IO;
 
 namespace Goedel.Protocol {
 
 
-    
+
 
     /// <summary>
     /// JSON Writer for JSON-A, a format designed to improve human readability.
@@ -56,7 +55,7 @@ namespace Goedel.Protocol {
         /// <param name="Tag">Tag text.</param>
         /// <param name="IndentIn">Current indent level.</param>
         public override void WriteToken(string Tag, int IndentIn) {
-            NewLine ();
+            NewLine();
             Output.Write("\"");
             Output.Write(Tag);
             Output.Write("\": ");
@@ -140,7 +139,7 @@ namespace Goedel.Protocol {
         /// <summary>Mark start of array element</summary>
         public override void WriteArrayStart() {
             Output.Write("[");
-            Indent ++;
+            Indent++;
             }
 
         /// <summary>Mark middle of array element</summary>
@@ -149,7 +148,7 @@ namespace Goedel.Protocol {
         public override void WriteArraySeparator(ref bool first) {
             if (!first) {
                 Output.Write(",");
-                NewLine ();
+                NewLine();
                 }
             first = false;
             }
@@ -157,13 +156,13 @@ namespace Goedel.Protocol {
         /// <summary>Mark end of array element</summary>
         public override void WriteArrayEnd() {
             Output.Write("]");
-            Indent --;
+            Indent--;
             }
 
         /// <summary>Mark start of object element</summary>
         public override void WriteObjectStart() {
             Output.Write("{");
-            Indent ++;
+            Indent++;
             }
 
         /// <summary>Mark middle of object element</summary>
@@ -179,7 +178,7 @@ namespace Goedel.Protocol {
         /// <summary>Mark end of object element</summary>
         public override void WriteObjectEnd() {
             Output.Write("}");
-            Indent --;
+            Indent--;
             }
         }
     }

@@ -20,9 +20,10 @@
 //  
 //  
 
-using System.Collections.Generic;
 using Goedel.Protocol;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 
 namespace Goedel.Cryptography.Jose {
@@ -73,7 +74,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public JoseWebEncryption () { }
+        public JoseWebEncryption() { }
 
         /// <summary>
         /// Construct a JWE instance from JSON Object
@@ -85,7 +86,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="SigningKey">Optional signing key.</param>
         /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
         /// <param name="SignID">Composite ID for signature and digest</param>
-        public JoseWebEncryption (JSONObject JSONObject,
+        public JoseWebEncryption(JSONObject JSONObject,
                     DataEncoding Encoding = DataEncoding.JSON,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
@@ -108,7 +109,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
         /// <param name="SignID">Composite ID for signature and digest</param>
         /// <param name="KID">Key ID</param>
-        public JoseWebEncryption (byte[] Data,
+        public JoseWebEncryption(byte[] Data,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
@@ -155,7 +156,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Prefix">Key derivation prefix</param>
         /// <param name="EncryptID">Bulk ID for encryption</param>
         /// <param name="AuthenticateID">Bulk ID for authentication</param>
-        public JoseWebEncryption (byte[] Data,
+        public JoseWebEncryption(byte[] Data,
                     byte[] Secret, string Prefix = null,
                     string ContentType = null,
                     CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
@@ -196,7 +197,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Secret">The symmetric master key</param>
         /// <param name="Prefix">Key derivation prefix</param>
         /// <param name="Algorithm">Specify the Meta and Bulk algorithms</param>
-        public JoseWebEncryption (string Text,
+        public JoseWebEncryption(string Text,
                     byte[] Secret, string Prefix = null,
                     string ContentType = null,
                     CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
@@ -213,7 +214,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="EncryptionKey">Optional Encryption key.</param>
         /// <param name="SigningKey">Optional signing key.</param>
         /// <param name="Algorithm">Specify the Meta and Bulk algorithms</param>
-        public JoseWebEncryption (string Text,
+        public JoseWebEncryption(string Text,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
@@ -291,7 +292,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
         /// <param name="KID">Key ID</param>
         /// <returns>The recipient instance</returns>
-        public Recipient AddRecipient (KeyPair EncryptionKey, string KID = null,
+        public Recipient AddRecipient(KeyPair EncryptionKey, string KID = null,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
             EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
@@ -313,7 +314,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Secret">The secret.</param>
         /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
         /// <returns>The recipient instance</returns>
-        public Recipient AddRecipient (byte[] Secret, string Info = null,
+        public Recipient AddRecipient(byte[] Secret, string Info = null,
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
             var Identifier = UDF.SymmetricKeyUDF(Secret);
@@ -334,7 +335,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Finish processing of the data and write out the integrity data
         /// </summary>
-        public void Complete () {
+        public void Complete() {
             CryptoDataEncrypt.Complete();
             CipherText = _CryptoDataEncrypt.OutputData;
             JTag = _CryptoDataEncrypt.Integrity;
@@ -346,7 +347,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
 
-        static Header ProtectedHeader (CryptoData Data,
+        static Header ProtectedHeader(CryptoData Data,
                     string ContentType,
                     CryptoProviderDigest Digest) {
 
@@ -366,7 +367,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
 
-        void BindCryptoData (CryptoData Data, string ContentType,
+        void BindCryptoData(CryptoData Data, string ContentType,
                     CryptoProviderDigest Digest) {
             _CryptoDataEncrypt = Data;
 
@@ -401,8 +402,8 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="RecipientOut">The recipient entry that matched</param>
         /// <returns>The matching keypair</returns>
         /// <param name="keyCollection">The key collection that keys are to be persisted to </param>
-        public static KeyPair MatchDecryptionKey (List<Recipient> Recipients, out Recipient RecipientOut,
-            KeyCollection keyCollection=null) {
+        public static KeyPair MatchDecryptionKey(List<Recipient> Recipients, out Recipient RecipientOut,
+            KeyCollection keyCollection = null) {
             foreach (var Recipient in Recipients) {
                 var KID = Recipient.Header.Kid;
                 KID.SplitAccountID(out var Domain, out var Account);
@@ -427,7 +428,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <param name="Recipient">The recipient</param>
         /// <returns>The decrypted data</returns>
-        public byte[] Decrypt (KeyPair DecryptionKey=null, Recipient Recipient=null) {
+        public byte[] Decrypt(KeyPair DecryptionKey = null, Recipient Recipient = null) {
 
             DecryptionKey = DecryptionKey ?? MatchDecryptionKey(Recipients, out Recipient);
 
@@ -460,7 +461,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <param name="Recipient">The recipient.</param>
         /// <returns>The decrypted data</returns>
-        public byte[] Decrypt (Recipient Recipient, KeyPair DecryptionKey, KeyAgreementResult KeyAgreementResult) {
+        public byte[] Decrypt(Recipient Recipient, KeyPair DecryptionKey, KeyAgreementResult KeyAgreementResult) {
 
             var AlgorithmJose = Recipient?.Header.Alg;
             var ExchangeID = AlgorithmJose.FromJoseID();
@@ -533,9 +534,9 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Address">The address that matched.</param>
         /// <param name="UDF">The fingerprint of the matching key.</param>
         /// <returns>The recipient record that was matched.</returns>
-        public Recipient GetRecrypted (out string Address, out string UDF) {
+        public Recipient GetRecrypted(out string Address, out string UDF) {
             foreach (var Recipient in Recipients) {
-                Cryptography.UDF.ParseStrongRFC822 (Recipient.Header.Kid, out Address, out UDF) ;
+                Cryptography.UDF.ParseStrongRFC822(Recipient.Header.Kid, out Address, out UDF);
 
                 if (UDF != null) {
                     return Recipient;
@@ -563,7 +564,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public Recipient () { }
+        public Recipient() { }
 
         ///// <summary>
         ///// Encrypt to the specified key of the specified profile.

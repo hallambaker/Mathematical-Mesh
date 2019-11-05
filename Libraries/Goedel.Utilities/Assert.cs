@@ -1,9 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+/* Unmerged change from project 'Goedel.Utilities'
+Before:
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+After:
+using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+*/
+
 
 namespace Goedel.Utilities {
 
@@ -57,7 +63,7 @@ namespace Goedel.Utilities {
         /// <param name="Value">The value to be stored.</param>
         /// <param name="Store">The store that the value is to be written to.</param>
         /// <returns>The stored value.</returns>
-        public static T CacheValue <T> (this T Value, out T Store) where T : class {
+        public static T CacheValue<T>(this T Value, out T Store) where T : class {
             Store = Value;
             return Value;
             }
@@ -71,7 +77,7 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void Fail (ThrowDelegate Throw = null,
+        public static void Fail(ThrowDelegate Throw = null,
                     object Reason = null, string String = null, int Int = -1) {
 
             Reason = Reason ?? new ExceptionData() {
@@ -99,8 +105,8 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void False(bool Condition, ThrowDelegate Throw=null, 
-                    object Reason=null, string String = null, int Int = -1) {
+        public static void False(bool Condition, ThrowDelegate Throw = null,
+                    object Reason = null, string String = null, int Int = -1) {
             if (Condition) {
                 Fail(Throw, Reason, String, Int);
                 }
@@ -128,7 +134,7 @@ namespace Goedel.Utilities {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void True(bool Condition, ThrowDelegate Throw=null,
+        public static void True(bool Condition, ThrowDelegate Throw = null,
                     object Reason = null, string String = null, int Int = -1) {
             if (!Condition) {
                 Fail(Throw, Reason, String, Int);

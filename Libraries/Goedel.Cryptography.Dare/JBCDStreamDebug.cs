@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Goedel.IO;
+
+using System;
 using System.IO;
-using Goedel.IO;
-using Goedel.Utilities;
-using Goedel.Protocol;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -25,9 +24,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FileStatus">The file access mode.</param>
         /// <param name="WriteOnly">If true, the file is only opened in write mode.</param>
         /// <param name="Output">The additional output stream.</param>
-        public JBCDStreamDebug (string FileName, FileStatus FileStatus = FileStatus.Read, 
-                            bool WriteOnly = false, TextWriter Output = null) 
-            : base (FileName, FileStatus, WriteOnly) {
+        public JBCDStreamDebug(string FileName, FileStatus FileStatus = FileStatus.Read,
+                            bool WriteOnly = false, TextWriter Output = null)
+            : base(FileName, FileStatus, WriteOnly) {
             Output = Output ?? Console.Out;
 
             this.Output = Output;
@@ -37,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Stream">The underlying stream. This must support the seek operation.</param>
         /// <param name="Output">The additional output stream.</param>
-        public JBCDStreamDebug (Stream Stream, TextWriter Output=null) : base(Stream, null) {
+        public JBCDStreamDebug(Stream Stream, TextWriter Output = null) : base(Stream, null) {
             Output = Output ?? Console.Out;
 
             this.Output = Output;
@@ -48,7 +47,7 @@ namespace Goedel.Cryptography.Dare {
         /// at the end of the stream.
         /// </summary>
         /// <returns>The unsigned byte cast to an Int32, or -1 if at the end of the stream.</returns>
-        public override int ReadByte () {
+        public override int ReadByte() {
             var Result = base.ReadByte();
 
             if (Active) {
@@ -59,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
                     Output.Write("{0:x2} ", Result);
                     }
                 }
-            
+
 
             return Result;
             }
@@ -70,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public override int ReadByteReverse () {
+        public override int ReadByteReverse() {
             if (Active) {
                 Output.Write(" >");
                 }
@@ -90,10 +89,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Count">Number of bytes to read.</param>
         /// <returns>The total number of bytes read into the buffer. This can be less than the number of bytes requested 
         /// if that many bytes are not currently available, or zero (0) if the end of the stream has been reached.</returns>
-        public override int Read (byte[] Buffer, int Offset, int Count) {
+        public override int Read(byte[] Buffer, int Offset, int Count) {
             var Result = base.Read(Buffer, Offset, Count);
 
-            
+
             WriteBytes(Buffer, Offset, Count);
 
             return Result;
@@ -109,7 +108,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public int DisplayBytesSummary { get; set; } = 28;
 
-        void WriteBytes (byte[] Buffer, int Offset, int Count) {
+        void WriteBytes(byte[] Buffer, int Offset, int Count) {
 
             if (!Active) {
                 return;
@@ -145,7 +144,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Length">The length that was read</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public override bool ReadTag (out int Code, out long Length) {
+        public override bool ReadTag(out int Code, out long Length) {
             var Result = base.ReadTag(out Code, out Length);
             if (Active) {
                 Output.WriteLine();
@@ -161,7 +160,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="LengthIn">The length that was read</param>
         /// <returns>Always true. All failures trigger exceptions.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public override bool CheckReversedLength (int Code, long LengthIn) {
+        public override bool CheckReversedLength(int Code, long LengthIn) {
             var Result = base.CheckReversedLength(Code, LengthIn);
             if (Active) {
                 Output.WriteLine();

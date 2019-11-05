@@ -62,7 +62,7 @@ namespace Goedel.Cryptography.Dare {
                 return false;
                 }
             Current = Container.ReadDirectReverse();
-            if (Current==null) {
+            if (Current == null) {
                 return false;
                 }
 

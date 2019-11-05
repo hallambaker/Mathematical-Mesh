@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
-using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Protocol;
 
 
 namespace Goedel.Cryptography.Dare {
@@ -13,11 +14,11 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public static class ContainerMasterStore {
 
-        static Dictionary<string, ContainerPersistenceStoreThreadSafe> DictionaryChildren = 
+        static Dictionary<string, ContainerPersistenceStoreThreadSafe> DictionaryChildren =
                     new Dictionary<string, ContainerPersistenceStoreThreadSafe>();
 
 
-        static ContainerPersistenceStoreThreadSafe GetPersistenceStore (string ID, bool ReadOnly = false) {
+        static ContainerPersistenceStoreThreadSafe GetPersistenceStore(string ID, bool ReadOnly = false) {
 
             if (DictionaryChildren.TryGetValue(ID, out var Store)) {
                 return Store;
@@ -34,7 +35,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ReadOnly">If true, the store is opened in read-only mode. 
         /// This is a global lock and prevents any other thread opening the same store in write mode</param>
         /// <returns>A read handle for the specified persistence store.</returns>
-        public static ContainerPersistenceStoreHandleRead GetReadHandle (
+        public static ContainerPersistenceStoreHandleRead GetReadHandle(
                         string ID, bool ReadOnly = false) {
 
             var PersistenceStore = GetPersistenceStore(ID, ReadOnly);
@@ -48,7 +49,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ID">The store to obtain the handle for.</param>
         /// <returns>A read/write handle for the specified persistence store.</returns>
-        public static ContainerPersistenceStoreHandleWrite GetWriteHandle (
+        public static ContainerPersistenceStoreHandleWrite GetWriteHandle(
                 string ID) {
 
             var PersistenceStore = GetPersistenceStore(ID);
@@ -62,7 +63,7 @@ namespace Goedel.Cryptography.Dare {
         /// there is a need to free up memory.
         /// </summary>
         /// <param name="PersistenceStore"></param>
-        public static void FreedHandle (ContainerPersistenceStoreThreadSafe PersistenceStore) {
+        public static void FreedHandle(ContainerPersistenceStoreThreadSafe PersistenceStore) {
             }
 
         }
@@ -106,9 +107,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="PersistenceStore">The persistence store to create a handle for.</param>
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
-        public ContainerPersistenceStoreHandleRead (
+        public ContainerPersistenceStoreHandleRead(
                     ContainerPersistenceStoreThreadSafe PersistenceStore,
-                    bool Pinned = true) : this (Pinned) {
+                    bool Pinned = true) : this(Pinned) {
             this.PersistenceStore = PersistenceStore;
             PersistenceStore.ReaderWriterLock.TryEnterReadLock(Timeout);
             }
@@ -116,7 +117,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine. This frees the read lock on the resource
         /// </summary>
-        protected override void Disposing () {
+        protected override void Disposing() {
             PersistenceStore.ReaderWriterLock.ExitReadLock();
             ContainerMasterStore.FreedHandle(PersistenceStore);
             }
@@ -171,7 +172,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="PersistenceStore">The persistence store to create a handle for.</param>
         /// <param name="Pinned">If true, maintain the persistence store in memory
         /// even when there are no outstanding access handles.</param>
-        public ContainerPersistenceStoreHandleWrite (
+        public ContainerPersistenceStoreHandleWrite(
                 ContainerPersistenceStoreThreadSafe PersistenceStore,
                 bool Pinned = true) : base(Pinned) {
             this.PersistenceStore = PersistenceStore;
@@ -181,7 +182,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The class specific disposal routine. This frees the read lock on the resource
         /// </summary>
-        protected override void Disposing () {
+        protected override void Disposing() {
             if (ReadMode) {
                 PersistenceStore.ReaderWriterLock.ExitUpgradeableReadLock();
                 }
@@ -193,7 +194,7 @@ namespace Goedel.Cryptography.Dare {
 
 
         bool ReadMode = true;
-        void GetWrite () {
+        void GetWrite() {
             if (ReadMode) {
                 PersistenceStore.ReaderWriterLock.TryEnterWriteLock(Timeout);
                 ReadMode = false;
@@ -209,7 +210,7 @@ namespace Goedel.Cryptography.Dare {
         /// data is written in the specified transaction context allowing multiple 
         /// transactions to be staged and committed all or nothing.</param>
         /// <returns>True if the object was updated, otherwise false.</returns>
-        public bool Delete (string UniqueID,
+        public bool Delete(string UniqueID,
                 Transaction transaction = null) {
             GetWrite();
             return PersistenceStore.Delete(UniqueID);
@@ -224,7 +225,7 @@ namespace Goedel.Cryptography.Dare {
         /// data is written in the specified transaction context allowing multiple 
         /// transactions to be staged and committed all or nothing.</param>
         /// <returns>The persistence entry.</returns>
-        public IPersistenceEntry New (JSONObject Object,
+        public IPersistenceEntry New(JSONObject Object,
                 Transaction transaction = null) {
             GetWrite();
             PersistenceStore.New(Object);
@@ -241,7 +242,7 @@ namespace Goedel.Cryptography.Dare {
         /// data is written in the specified transaction context allowing multiple 
         /// transactions to be staged and committed all or nothing.</param>
         /// <returns>The persistence entry.</returns>
-        public IPersistenceEntry Update (JSONObject Object, bool Create = true,
+        public IPersistenceEntry Update(JSONObject Object, bool Create = true,
                 Transaction transaction = null) {
             GetWrite();
             PersistenceStore.Update(Object, Create);
@@ -253,7 +254,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// A persistence store with support for thread safe locking.
     /// </summary>
-    public class ContainerPersistenceStoreThreadSafe  : ContainerPersistenceStore {
+    public class ContainerPersistenceStoreThreadSafe : ContainerPersistenceStore {
 
         #region Locking Mechanism
 
@@ -280,7 +281,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="DataEncoding">The data encoding.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
-        public ContainerPersistenceStoreThreadSafe (string FileName, string Type = null,
+        public ContainerPersistenceStoreThreadSafe(string FileName, string Type = null,
                     string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain,

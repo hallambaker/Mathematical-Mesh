@@ -1,10 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+/* Unmerged change from project 'Goedel.Command'
+Before:
+using System;
+After:
+using Goedel.FSR;
+using Goedel.Utilities;
+
+using System;
+*/
+using Goedel.FSR;
+
 using System.Text;
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System.Threading.Tasks;
 using Goedel.Utilities;
 using Goedel.FSR;
+After:
+using System.Threading.Tasks;
+*/
+
 
 namespace Goedel.Command {
 
@@ -17,7 +32,7 @@ namespace Goedel.Command {
         /// <summary>
         /// Construct a parser to read from a string to be specified in GetToken (data)
         /// </summary>
-        public CommandLex () {
+        public CommandLex() {
             LexStringReader = new LexStringReader(null);
             Reader = LexStringReader;
             }
@@ -28,7 +43,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Data">The data to parse</param>
         /// <returns>The token value.</returns>
-        public Token GetToken (string Data) {
+        public Token GetToken(string Data) {
             LexStringReader.String = Data;
             Reset();
             return GetToken();
@@ -38,12 +53,12 @@ namespace Goedel.Command {
         /// <summary>
         /// Return the resulting string value
         /// </summary>
-        public string Value => BuildValue.ToString(); 
+        public string Value => BuildValue.ToString();
 
         /// <summary>
         /// Return the resulting string value
         /// </summary>
-        public string Flag  => BuildFlag.ToString(); 
+        public string Flag => BuildFlag.ToString();
 
         /// <summary>
         /// If true, flag was negated.
@@ -56,7 +71,7 @@ namespace Goedel.Command {
         /// <summary>
         /// Reset the value buffers to start a new parse.
         /// </summary>
-        public override void Reset () {
+        public override void Reset() {
             BuildValue.Clear();
             BuildFlag.Clear();
             }
@@ -71,7 +86,7 @@ namespace Goedel.Command {
         /// Do nothing
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void Ignore (int c) {
+        public virtual void Ignore(int c) {
             }
 
         /// <summary>
@@ -96,7 +111,7 @@ namespace Goedel.Command {
         /// O of possible NO flag
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void AddFlagNo (int c) {
+        public virtual void AddFlagNo(int c) {
             BuildFlag.Clear(); // delete 'no' prefix
             Not = true;
             }
@@ -104,7 +119,7 @@ namespace Goedel.Command {
         /// Abort parsing, the command cannot be read.
         /// </summary>
         /// <param name="c">The character read</param>
-        public virtual void Abort (int c) {
+        public virtual void Abort(int c) {
             }
 
 

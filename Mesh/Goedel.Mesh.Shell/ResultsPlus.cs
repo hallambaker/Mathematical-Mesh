@@ -1,6 +1,7 @@
-﻿using System.Text;
+﻿using Goedel.Mesh.Client;
 using Goedel.Utilities;
-using Goedel.Mesh.Client;
+
+using System.Text;
 
 namespace Goedel.Mesh.Shell {
 
@@ -39,7 +40,7 @@ namespace Goedel.Mesh.Shell {
             return Builder.ToString();
             }
 
-        
+
 
         }
 
@@ -110,7 +111,7 @@ namespace Goedel.Mesh.Shell {
         }
 
 
-    public partial class ResultConnect{
+    public partial class ResultConnect {
         public override string ToString() {
             var Builder = new StringBuilder();
 
@@ -124,7 +125,7 @@ namespace Goedel.Mesh.Shell {
 
                     break;
                     }
-                case CatalogedStandard  catalogedStandard: {
+                case CatalogedStandard catalogedStandard: {
                     break;
                     }
                 case CatalogedAdmin catalogedAdmin: {
@@ -166,7 +167,7 @@ namespace Goedel.Mesh.Shell {
 
                         Builder.Append($"   [{containerStatus.Container}] {containerStatus.Index}  {digest}");
 
-                        
+
 
                         Builder.AppendLine();
                         }

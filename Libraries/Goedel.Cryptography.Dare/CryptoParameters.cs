@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
-
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
+﻿using System.Collections.Generic;
 namespace Goedel.Cryptography.Dare {
 
 
@@ -18,10 +11,25 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The key collection to use to resolve names to keys</summary>
         public KeyCollection KeyCollection;
         /// <summary>The set of keys to encrypt to.</summary>
-        public List<KeyPair> EncryptionKeys;
-        /// <summary>The set of keys to use to sign</summary>
-        public List<KeyPair> SignerKeys;
+        public List<KeyPair> EncryptionKeys {
+            get => encryptionKeys;
+            set {
+                encryptionKeys = value;
+                SetEncrypt();
+                }
+            }
+        List<KeyPair> encryptionKeys;
 
+
+        /// <summary>The set of keys to use to sign</summary>
+        public List<KeyPair> SignerKeys {
+            get => signerKeys;
+            set {
+                signerKeys = value;
+                SetDigest();
+                }
+            }
+        List<KeyPair> signerKeys;
 
         /// <summary>The authentication algorithm to use</summary>
         public CryptoAlgorithmID DigestID;
@@ -84,27 +92,21 @@ namespace Goedel.Cryptography.Dare {
             this.KeyCollection = keyCollection;
 
             if (recipients != null) {
-                SetEncrypt();
-
                 EncryptionKeys = new List<KeyPair>();
                 foreach (var Entry in recipients) {
                     AddEncrypt(Entry);
                     }
                 }
             else if (recipient != null) {
-                SetEncrypt();
                 EncryptionKeys = new List<KeyPair>() { recipient };
                 }
             if (signers != null) {
-                SetDigest();
-
                 SignerKeys = new List<KeyPair>();
                 foreach (var Entry in signers) {
                     AddSign(Entry);
                     }
                 }
             else if (signer != null) {
-                SetDigest();
                 SignerKeys = new List<KeyPair>() { signer };
                 }
             }

@@ -1,15 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-using Goedel.Mesh.Client;
-using Goedel.IO;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Protocol;
+using Goedel.Mesh.Client;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -133,7 +127,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshList(MeshList Options) {
-            var catalogedMachines = new List<CatalogedMachine> ();
+            var catalogedMachines = new List<CatalogedMachine>();
             "extract hosts from machine".TaskFunctionality();
 
             return new ResultMachine() {

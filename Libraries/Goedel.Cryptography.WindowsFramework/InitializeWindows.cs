@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Goedel.Cryptography.Windows;
+
 using System.Threading;
-using Goedel.Utilities;
-using Goedel.Cryptography.Windows;
 
 
 

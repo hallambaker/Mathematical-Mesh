@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
     public static class Constants {

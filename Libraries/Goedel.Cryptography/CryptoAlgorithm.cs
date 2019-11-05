@@ -19,12 +19,9 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Goedel.Utilities;
+
+using System.Text;
 
 namespace Goedel.Cryptography {
 
@@ -71,7 +68,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return the type of algorithm.
         /// </summary>
-        public CryptoAlgorithmClass AlgorithmClass { get; set; }
+        public CryptoAlgorithmClasses AlgorithmClass { get; set; }
 
         /// <summary>
         /// ASN.1 Object Identifier
@@ -95,11 +92,11 @@ namespace Goedel.Cryptography {
         /// <param name="AlgorithmClass">Algorithm type.</param>
         /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
         /// <param name="KeySize">Default algorithm key size.</param>
-        public CryptoAlgorithm (
+        public CryptoAlgorithm(
                     CryptoAlgorithmID CryptoAlgorithmID,
-            CryptoAlgorithmClass AlgorithmClass,
+            CryptoAlgorithmClasses AlgorithmClass,
             CryptoProviderFactoryDelegate CryptoProviderFactory,
-            int KeySize=0) {
+            int KeySize = 0) {
             this.CryptoAlgorithmID = CryptoAlgorithmID;
             this.KeySize = KeySize;
             this.AlgorithmClass = AlgorithmClass;
@@ -116,7 +113,7 @@ namespace Goedel.Cryptography {
         public CryptoProviderEncryption CryptoProviderEncryption(int KeySize = 0) {
             KeySize = KeySize == 0 ? this.KeySize : KeySize;
 
-            Assert.True(AlgorithmClass == CryptoAlgorithmClass.Encryption,
+            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Encryption,
                     CryptographicException.Throw);
             return CryptoProviderFactory(KeySize, CryptoAlgorithmID.NULL) as
                 CryptoProviderEncryption;
@@ -130,7 +127,7 @@ namespace Goedel.Cryptography {
         /// <returns>An authentication provider.</returns>
         public CryptoProviderAuthentication CryptoProviderAuthentication(int KeySize = 0) {
             KeySize = KeySize == 0 ? this.KeySize : KeySize;
-            Assert.True(AlgorithmClass == CryptoAlgorithmClass.MAC,
+            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.MAC,
                     CryptographicException.Throw);
             return CryptoProviderFactory(KeySize, CryptoAlgorithmID.NULL) as
                 CryptoProviderAuthentication;
@@ -143,7 +140,7 @@ namespace Goedel.Cryptography {
         /// <returns>An authentication provider.</returns>
         public CryptoProviderDigest CryptoProviderDigest(int OutputSize = 0) {
             OutputSize = OutputSize == 0 ? this.KeySize : OutputSize;
-            Assert.True(AlgorithmClass == CryptoAlgorithmClass.Digest,
+            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
             return CryptoProviderFactory(0, CryptoAlgorithmID.NULL) as
                 CryptoProviderDigest;
@@ -157,7 +154,7 @@ namespace Goedel.Cryptography {
         /// /// <param name="Key">The key to apply</param>
         /// <returns>Result of digest operation.</returns>
         public byte[] Process(byte[] Buffer, byte[] Key = null) {
-            Assert.True(AlgorithmClass == CryptoAlgorithmClass.Digest,
+            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
             var Provider = CryptoProviderFactory(0, CryptoAlgorithmID.NULL) as CryptoProviderDigest;
             Assert.NotNull(Provider, CryptographicException.Throw);

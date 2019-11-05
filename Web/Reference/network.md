@@ -23,7 +23,22 @@ add   Add calendar entry from file
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> network add NetworkEntry1.json NetID1
+{Username}@{Service} = [{Password}]````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> network add NetworkEntry1.json NetID1 /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Service": "NetworkEntry1.json",
+      "Password": "NetID1"}}}
+````
 
 # network delete
 
@@ -35,7 +50,21 @@ delete   Delete calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> network delete NetID2
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> network delete NetID2 /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # network get
 
@@ -47,7 +76,20 @@ get   Lookup calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> network get NetID2
+Empty
+````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> network get NetID2 /json
+{
+  "ResultEntry": {
+    "Success": false}}
+````
 
 # network dump
 
@@ -58,5 +100,19 @@ dump   List network entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> network list
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> network list /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
 

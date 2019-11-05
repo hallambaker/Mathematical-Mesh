@@ -19,11 +19,12 @@
 //  THE SOFTWARE.
 //  
 //  
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -46,7 +47,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key value
         /// </summary>
-        public byte[] Key;
+        public byte[] Key { get; set; }
 
         /// <summary>
         /// The Key Value as a Base32 encoded string.
@@ -54,7 +55,7 @@ namespace Goedel.Cryptography {
         public virtual string UDFKey => Cryptography.UDF.SymmetricKey(Key);
 
         ///<summary>The UDF identifier of the secret value.</summary>
-        public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits:KeyBits*2);
+        public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
 
         /// <summary>
         /// Create a new random secret with the specified number of bits.
@@ -167,7 +168,7 @@ namespace Goedel.Cryptography {
 
             index = (bits + 31) / 32;
             exponent = BigInteger.Pow(2, 32 * index);
-            return exponent + new BigInteger(PrimeValues[index-1]);
+            return exponent + new BigInteger(PrimeValues[index - 1]);
             }
 
 
@@ -222,7 +223,7 @@ namespace Goedel.Cryptography {
                 for (int i = 0; i < n; i++) {
                     var d = PolyMod(i + 1, polynomial, modulus);
                     if (d < secretMax) {
-                        keyShares[i] = new KeyShare((k * 16) + i, d, 4*shareChunks);
+                        keyShares[i] = new KeyShare((k * 16) + i, d, 4 * shareChunks);
                         Console.WriteLine("Share {0} = {1}", i, d);
                         }
                     else {
@@ -294,7 +295,7 @@ namespace Goedel.Cryptography {
                 accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
                 }
 
-            return accum.ToByteArrayBigEndian(shareChunks*4);
+            return accum.ToByteArrayBigEndian(shareChunks * 4);
             }
 
 

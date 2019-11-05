@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Goedel.Registry;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Registry;
-using Goedel.IO;
 
 namespace Goedel.Tool.Version {
     class Program {
@@ -11,11 +11,11 @@ namespace Goedel.Tool.Version {
 
         public Distribution Distribution = new Distribution();
 
-        static void Main () {
+        static void Main() {
             var _ = new Program();
             }
 
-        public Program(){
+        public Program() {
             var Directories = Directory.GetDirectories(PathDistribution);
             foreach (var Directory in Directories) {
                 //Console.WriteLine($"Directory {Directory}");
@@ -30,7 +30,7 @@ namespace Goedel.Tool.Version {
 
 
 
-        public void ParseManifest (string Path) {
+        public void ParseManifest(string Path) {
             var inputfile = Path + "\\Manifest.txt";
             var Parse = new Release() {
                 };
@@ -48,7 +48,7 @@ namespace Goedel.Tool.Version {
                         Distribution.Stable = Distribution.Stable ?? Version;
                         }
                     if (Version > Distribution.Latest) {
-                        if (Distribution.Latest!=null) {
+                        if (Distribution.Latest != null) {
                             Distribution.Versions.Add(Distribution.Latest);
                             }
                         Distribution.Latest = Version;
@@ -72,7 +72,7 @@ namespace Goedel.Tool.Version {
 
         }
 
-    public partial class Version : IComparer<Version>  {
+    public partial class Version : IComparer<Version> {
         public int Major = 0;
         public int Minor = 8;
         public int Revision = 0;
@@ -80,7 +80,7 @@ namespace Goedel.Tool.Version {
 
         public bool Stable = false;
 
-        public void Parse () {
+        public void Parse() {
             var Digits = Code.Split('.');
 
             Major = Convert.ToInt32(Digits[0]);
@@ -105,7 +105,7 @@ namespace Goedel.Tool.Version {
 
         public int Compare(Version x, Version y) => Version.CompareV(x, y);
 
-        public static int CompareV (Version x, Version y) {
+        public static int CompareV(Version x, Version y) {
             if (y == null) {
                 return 1;
                 }
@@ -113,7 +113,7 @@ namespace Goedel.Tool.Version {
                 return 0;
                 }
             if (x.Major != y.Major) {
-                return x.Major > y.Major ? 1: -1;
+                return x.Major > y.Major ? 1 : -1;
                 }
             if (x.Minor != y.Minor) {
                 return x.Minor > y.Minor ? 1 : -1;
@@ -125,8 +125,8 @@ namespace Goedel.Tool.Version {
             }
 
 
-        public static bool operator < (Version left, Version right) => (CompareV(left, right) < 0);
-        public static bool operator > (Version left, Version right) => (CompareV(left, right) > 0);
+        public static bool operator <(Version left, Version right) => (CompareV(left, right) < 0);
+        public static bool operator >(Version left, Version right) => (CompareV(left, right) > 0);
         }
 
 
@@ -140,7 +140,7 @@ namespace Goedel.Tool.Version {
         public string PlatformName;
         public List<File> Files = new List<File>();
 
-        public void Parse () {
+        public void Parse() {
             MapPlatform.TryGetValue(Name, out PlatformName);
             foreach (var Entry in Entries) {
                 var File = Entry as File;

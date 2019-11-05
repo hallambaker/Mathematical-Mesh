@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-using Goedel.Protocol;
+
+using System.Collections.Generic;
+using System.Text;
 
 namespace Goedel.Mesh {
     public partial class ProfileAccount {
@@ -57,7 +56,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public AccountEntry ConnectDevice (
+        public AccountEntry ConnectDevice(
                         IMeshMachine meshMachine,
                         CatalogedDevice catalogedDevice,
                         List<Permission> permissions
@@ -140,7 +139,7 @@ namespace Goedel.Mesh {
         /// <param name="service"></param>
         /// <returns></returns>
         public int MatchService(string service) {
-            int id=0;
+            int id = 0;
 
             foreach (var serviceID in ServiceIDs) {
 
@@ -177,10 +176,10 @@ namespace Goedel.Mesh {
             }
 
 
-        public ActivationAccount (
+        public ActivationAccount(
                         IMeshMachine meshMachine,
                         CatalogedDevice catalogedDevice,
-                        ProfileAccount  profileAccount
+                        ProfileAccount profileAccount
                         ) {
 
             var profileDevice = catalogedDevice.ProfileDevice;
@@ -207,7 +206,7 @@ namespace Goedel.Mesh {
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
-            
+
 
 
             builder.AppendIndent(indent, $"KeySignature:       {KeySignature?.UDF} ");

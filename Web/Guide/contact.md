@@ -16,7 +16,15 @@ interfaces rather than a tool designed for daily use.
 The `contact add` command adds a contact entry to a catalog from
 a file. 
 
-**Missing Example***
+
+````
+Alice> contact add email carol@example.com
+{
+  "Self": false,
+  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -28,31 +36,63 @@ JSON format:
 The `/self` option is used to mark the contact as being the user's own contact
 details:
 
-**Missing Example***
+
+````
+Alice> contact self email alice@example.com
+{
+  "Self": true,
+  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-**Missing Example***
+
+````
+Alice> message accept tbs
+````
 
 ## Finding contacts
 
 The `contact get` command retreives a contact by the contact's 
 email address or label:
 
-**Missing Example***
+
+````
+Alice> contact get carol@example.com
+Empty
+````
 
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
-**Missing Example***
+
+````
+Alice> contact list
+{
+  "Self": true,
+  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
+  "Self": false,
+  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "EnvelopedContact": [{},
+    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
 
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
-**Missing Example***
+
+````
+Alice> contact delete carol@example.com
+ERROR - Object reference not set to an instance of an object.
+````
 
 
 

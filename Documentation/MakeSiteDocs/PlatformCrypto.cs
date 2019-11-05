@@ -1,23 +1,17 @@
-﻿using System;
-
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Numerics;
-using Goedel.Mesh;
-using Goedel.Utilities;
-using Goedel.Protocol.Debug;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-
-using Goedel.IO;
-using Goedel.Command;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Test;
 using Goedel.Cryptography.Core;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
+using Goedel.Protocol.Debug;
+using Goedel.Test;
 using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System;
+using System.IO;
+using System.Numerics;
 
 namespace ExampleGenerator {
 
@@ -294,94 +288,94 @@ namespace ExampleGenerator {
             CombinedPublic = KeyPairDevice.CombinePublic(KeyPairDevice) as KeyPairEd25519;
             }
 
-            //            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
+        //            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
 
-            //// AdvancedRecovery 
-            //var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
-            //var Secret = new Secret(AdvancedRecoveryMaster);
-            //Secret.Keep();
-            //var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
-            //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
-            //AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];
-            //AdvancedRecoverySharesHex = new byte[AdvancedRecoveryCount][];
-            //AdvancedRecoveryBase32 = new string[AdvancedRecoveryCount];
+        //// AdvancedRecovery 
+        //var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
+        //var Secret = new Secret(AdvancedRecoveryMaster);
+        //Secret.Keep();
+        //var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
+        //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
+        //AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];
+        //AdvancedRecoverySharesHex = new byte[AdvancedRecoveryCount][];
+        //AdvancedRecoveryBase32 = new string[AdvancedRecoveryCount];
 
-            //for (var i = 0; i < AdvancedRecoveryCount; i++) {
-            //    AdvancedRecoveryShareValues[i] = AdvancedRecoveryShares[i].Value;
-            //    AdvancedRecoverySharesHex[i] = AdvancedRecoveryShares[i].Key;
-            //    AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].UDFKey;
-            //    }
+        //for (var i = 0; i < AdvancedRecoveryCount; i++) {
+        //    AdvancedRecoveryShareValues[i] = AdvancedRecoveryShares[i].Value;
+        //    AdvancedRecoverySharesHex[i] = AdvancedRecoveryShares[i].Key;
+        //    AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].UDFKey;
+        //    }
 
-            // AdvancedCogen
-            //AdvancedCogenDeviceProfile = new DeviceProfile(
-            //            "AliceWatch", "A wearable watch computer",
-            //            CryptoAlgorithmID.Ed25519,
-            //            CryptoAlgorithmID.XEd25519);
-
-
-            //var AdvancedCogenDeviceSignPublic =
-            //    (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
-            //var AdvancedCogenDeviceSignPrivate =
-            //    (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
-
-            //AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
-            //var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
-
-            //AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
-            //AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
-
-            //AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
+        // AdvancedCogen
+        //AdvancedCogenDeviceProfile = new DeviceProfile(
+        //            "AliceWatch", "A wearable watch computer",
+        //            CryptoAlgorithmID.Ed25519,
+        //            CryptoAlgorithmID.XEd25519);
 
 
-            //AdvancedRecryption
-            //var AliceProfile = MakeProfile("", out var AliceKeyCollection);
-            //var BobProfile = MakeProfile("", out var BobKeyCollection);
+        //var AdvancedCogenDeviceSignPublic =
+        //    (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
+        //var AdvancedCogenDeviceSignPrivate =
+        //    (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
 
-            //AddMessage(AliceProfile);
-            //AddMessage(BobProfile);
+        //AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
+        //var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
 
-            //var RecryptionGroup = new RecryptionGroup ("recrypt@example.com");
-            //RecryptionGroup.AddAdmin(AliceProfile);
-            //RecryptionGroup.AddMember(BobProfile);
+        //AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
+        //AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
 
-            //AdvancedRecryptionMessagePlaintext = $"Welcome to the group {AdvancedRecryptionGroupID}";
-            //AdvancedRecryptionMessageEncrypted = RecryptionGroup.Encrypt(AdvancedRecryptionMessagePlaintext);
-
-            //BobKeyCollection.Decrypt(AdvancedRecryptionMessageEncrypted);
+        //AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
 
 
-            //public ApplicationProfile AdvancedRecryptionGroup;
-            //public string AdvancedRecryptionMessagePlaintext;
-            //public DAREMessage AdvancedRecryptionMessageEncrypted;
-            //public ApplicationProfile AdvancedRecryptionBobProfile;
-            //public Key AdvancedRecryptionBobDecryptionKey;
-            //public Key AdvancedRecryptionBobRecryptionKey;
-            //public Key AdvancedRecryptionBobRecryptionEntry;
-            //public Object AdvancedRecryptionRecryptionAddMemberRequest;
-            //public Object AdvancedRecryptionRecryptionRecryptionRequest;
-            //public Object AdvancedRecryptionRecryptionRecryptionResponse;
-            //public Object AdvancedRecryptionDecryptionValue;
-            //public Object AdvancedRecryptionKeyAgreementValue;
+        //AdvancedRecryption
+        //var AliceProfile = MakeProfile("", out var AliceKeyCollection);
+        //var BobProfile = MakeProfile("", out var BobKeyCollection);
+
+        //AddMessage(AliceProfile);
+        //AddMessage(BobProfile);
+
+        //var RecryptionGroup = new RecryptionGroup ("recrypt@example.com");
+        //RecryptionGroup.AddAdmin(AliceProfile);
+        //RecryptionGroup.AddMember(BobProfile);
+
+        //AdvancedRecryptionMessagePlaintext = $"Welcome to the group {AdvancedRecryptionGroupID}";
+        //AdvancedRecryptionMessageEncrypted = RecryptionGroup.Encrypt(AdvancedRecryptionMessagePlaintext);
+
+        //BobKeyCollection.Decrypt(AdvancedRecryptionMessageEncrypted);
 
 
+        //public ApplicationProfile AdvancedRecryptionGroup;
+        //public string AdvancedRecryptionMessagePlaintext;
+        //public DAREMessage AdvancedRecryptionMessageEncrypted;
+        //public ApplicationProfile AdvancedRecryptionBobProfile;
+        //public Key AdvancedRecryptionBobDecryptionKey;
+        //public Key AdvancedRecryptionBobRecryptionKey;
+        //public Key AdvancedRecryptionBobRecryptionEntry;
+        //public Object AdvancedRecryptionRecryptionAddMemberRequest;
+        //public Object AdvancedRecryptionRecryptionRecryptionRequest;
+        //public Object AdvancedRecryptionRecryptionRecryptionResponse;
+        //public Object AdvancedRecryptionDecryptionValue;
+        //public Object AdvancedRecryptionKeyAgreementValue;
 
 
 
-            // AdvancedQuantum
-
-            //var XMSS = new XMSS();
-            //AdvancedQuantumMasterSecret = XMSS.MasterSecret;
-            //var AdvancedQuantumKeyShares = Secret.Split(AdvancedRecoveryThreshold,
-            //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
-            //AdvancedQuantumShares = new string[AdvancedRecoveryCount];
-            //for (var i = 0; i < AdvancedRecoveryCount; i++) {
-            //    AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].UDFKey;
-            //    }
 
 
-            //AdvancedQuantumPrivate = XMSS.Private;
-            //AdvancedQuantumPublic = XMSS.Public;
-            //AdvancedQuantumPublicUDF = XMSS.UDF;
+        // AdvancedQuantum
+
+        //var XMSS = new XMSS();
+        //AdvancedQuantumMasterSecret = XMSS.MasterSecret;
+        //var AdvancedQuantumKeyShares = Secret.Split(AdvancedRecoveryThreshold,
+        //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
+        //AdvancedQuantumShares = new string[AdvancedRecoveryCount];
+        //for (var i = 0; i < AdvancedRecoveryCount; i++) {
+        //    AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].UDFKey;
+        //    }
+
+
+        //AdvancedQuantumPrivate = XMSS.Private;
+        //AdvancedQuantumPublic = XMSS.Public;
+        //AdvancedQuantumPublicUDF = XMSS.UDF;
 
 
 

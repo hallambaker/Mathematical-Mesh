@@ -7,7 +7,7 @@ namespace Goedel.Command {
         public DateTime Started = DateTime.Now;
 
         /// <summary>Calculate elapsed time.</summary>
-        public TimeSpan Elapsed  => DateTime.Now - Started;
+        public TimeSpan Elapsed => DateTime.Now - Started;
 
         /// <summary>Command type data</summary>
         public virtual Type[] _Data { get; set; }

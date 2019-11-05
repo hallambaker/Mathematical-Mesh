@@ -18,7 +18,7 @@
 //        /// The CryptoAlgorithmID Identifier.
 //        /// </summary>
 //        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
- 
+
 
 //        /// <summary>
 //        /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -75,7 +75,7 @@
 //        /// ~\.Mesh\Keys\DH on U*ix based systems.
 //        /// </remarks>
 //        public override string UDF  => DHKeyPair.UDF; 
- 
+
 
 //        KeyPairDH DHKeyPair;
 

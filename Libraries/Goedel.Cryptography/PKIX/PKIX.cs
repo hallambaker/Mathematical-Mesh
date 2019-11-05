@@ -9,6 +9,10 @@ using Goedel.ASN;
 
 // Generate OID declarations
 #pragma warning disable IDE0022
+#pragma warning disable CA1707
+#pragma warning disable CA1051
+#pragma warning disable CA1062
+
 namespace Goedel.ASN {  // default namespace
 
 	}
@@ -17,7 +21,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// id_pkix =  iso(1)  identified_organization(3)  dod(6)  internet(1)  security(5)  mechanisms(5)  pkix(7) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// id_pkix as integer sequence
 		/// </summary>
@@ -229,7 +233,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// id_at =  joint_iso_ccitt(2)  ds(5)  at(4) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// id_at as integer sequence
 		/// </summary>
@@ -408,7 +412,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// rsadsi =  iso(1)  member_body(2)  us(840)  rsadsi(113549) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// rsadsi as integer sequence
 		/// </summary>
@@ -719,7 +723,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// id_ce =  joint_iso_ccitt(2)  ds(5)  ce(29) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// id_ce as integer sequence
 		/// </summary>
@@ -997,7 +1001,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// holdInstruction =  joint_iso_itu_t(2)  member_body(2)  us(840)  x9cm(10040)  holdInstruction(2) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// holdInstruction as integer sequence
 		/// </summary>
@@ -1044,7 +1048,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// nistalgorithm =  joint_iso_itu_t(2)  country(16)  us(840)  organization(1)  gov(101)  csor(3)  nistalgorithm(4) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// nistalgorithm as integer sequence
 		/// </summary>
@@ -1322,7 +1326,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// dod_arc =  iso(1)  identified_organization(3)  dod(6)  internet(1)  private(4)  enterprise(1)  number(6449)  certificates(1)  categories(3)  certified_delivery(5) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// dod_arc as integer sequence
 		/// </summary>
@@ -1347,7 +1351,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// dds_arc =  iso(1)  identified_organization(3)  dod(6)  internet(1)  private(4)  enterprise(1)  number(35405) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// dds_arc as integer sequence
 		/// </summary>
@@ -1416,7 +1420,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// id_crfg_curve_algs =  iso(1)  identified_organization(3)  Thawte(101) 
     /// </summary>
-	public partial class Constants {
+	public static partial class Constants {
 		/// <summary>
 		/// id_crfg_curve_algs as integer sequence
 		/// </summary>

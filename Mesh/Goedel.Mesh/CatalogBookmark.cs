@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
@@ -47,7 +45,7 @@ namespace Goedel.Mesh {
         public override string ContainerDefault => Label;
         public AsCatalogEntryBookmark AsCatalogEntryBookmark => new AsCatalogEntryBookmark(this);
 
-        public CatalogBookmark(string directory, string ContainerName=null,
+        public CatalogBookmark(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool create = true) :

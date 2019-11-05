@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public static class Extensions {
@@ -44,7 +42,7 @@ namespace Goedel.Mesh {
                 if (keyPair != null) {
                     return keyPair;
                     }
-                
+
                 }
             return null;
 
@@ -59,11 +57,11 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The envelope to present.</param>
         /// <param name="builder">The string builder.</param>
         /// <param name="indent">The indentation level.</param>
-        public static void Report(this DareEnvelope envelope, StringBuilder builder, int indent=0) {
+        public static void Report(this DareEnvelope envelope, StringBuilder builder, int indent = 0) {
             if (envelope != null) {
 
-                Report(envelope.Header, builder, indent );
-                Report(envelope.Trailer, builder,indent);
+                Report(envelope.Header, builder, indent);
+                Report(envelope.Trailer, builder, indent);
                 }
             else {
                 builder.AppendIndent(indent, $"[No Envelope]");
@@ -96,7 +94,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder.</param>
         /// <param name="indent">The indentation level.</param>
         public static void Report(this DareTrailer trailer, StringBuilder builder, int indent = 0) {
-           if (trailer?.Signatures != null) {
+            if (trailer?.Signatures != null) {
                 foreach (var signature in trailer.Signatures) {
                     builder.AppendIndent(indent, $"Signed by: {signature.KeyIdentifier}");
                     }

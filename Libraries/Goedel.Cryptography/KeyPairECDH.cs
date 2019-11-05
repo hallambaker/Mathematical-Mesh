@@ -1,11 +1,7 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Algorithms;
+
 using System;
-using Goedel.ASN;
 
 namespace Goedel.Cryptography {
 
@@ -55,7 +51,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
-        public override KeyUses KeyUses { get; } 
+        public override KeyUses KeyUses { get; }
 
         /// <summary>
         /// Create a new ephemeral private key and use it to perform a key
@@ -108,7 +104,7 @@ namespace Goedel.Cryptography {
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.NULL) {
 
-            
+
 
             KeyPair keyPair = null;
 

@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Goedel.Discovery {
     class Canonicalize {
-        StringBuilder   Build;
-        public string   Text=> Build.ToString();
+        StringBuilder Build;
+        public string Text => Build.ToString();
 
         public Canonicalize(string Result) => Build = new StringBuilder(Result);
 
@@ -30,7 +30,7 @@ namespace Goedel.Discovery {
         public void IPv6(IPAddress Data) => Add(Data.ToString());
         public void Domain(Domain Data) => Add(Data.Name);
         public void Mail(string Data) => Add(Data);
-        public void NodeID (ulong Data) {
+        public void NodeID(ulong Data) {
             // Add (Data); 
             }
         public void Byte(byte Data) => Add(Data.ToString());
@@ -59,21 +59,21 @@ namespace Goedel.Discovery {
 
 
 
-        static string [] HexChars = {"0", "1", "2", "3", "4", "5", "6", "7", 
+        static string[] HexChars = {"0", "1", "2", "3", "4", "5", "6", "7",
                                   "8", "9", "A", "B", "C", "D", "E", "F"};
 
         public static string Hex(byte b) {
-                int MSN = b / 16;
-                int LSN = b & (byte) 0xf;
-            return HexChars [MSN] + HexChars [LSN];
-            }        
-        
-        public void Hex (byte[] Data) {
+            int MSN = b / 16;
+            int LSN = b & 0xf;
+            return HexChars[MSN] + HexChars[LSN];
+            }
+
+        public void Hex(byte[] Data) {
             string Hex = "";
             foreach (byte b in Data) {
-                Hex +=  Hex [b];
+                Hex += Hex[b];
                 }
-            AddBinary (Hex);
+            AddBinary(Hex);
             }
         public void Hex8(byte[] Data) => Hex(Data);
         public void Hex16(byte[] Data) => Hex(Data);

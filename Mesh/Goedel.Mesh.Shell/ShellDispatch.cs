@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
 using Goedel.Mesh.Client;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell : _Shell {
@@ -44,13 +44,13 @@ namespace Goedel.Mesh.Shell {
 
         public Shell(TextWriter output = null) => this.output = output ?? Console.Out;
 
-        public CryptoAlgorithmID AlgorithmSign          = CryptoAlgorithmID.Ed448;
-        public CryptoAlgorithmID AlgorithmAuthenticate  = CryptoAlgorithmID.Ed448;
-        public CryptoAlgorithmID AlgorithmExchange      = CryptoAlgorithmID.Ed448;
+        public CryptoAlgorithmID AlgorithmSign = CryptoAlgorithmID.Ed448;
+        public CryptoAlgorithmID AlgorithmAuthenticate = CryptoAlgorithmID.Ed448;
+        public CryptoAlgorithmID AlgorithmExchange = CryptoAlgorithmID.Ed448;
 
-        public CryptoAlgorithmID AlgorithmDigest        = CryptoAlgorithmID.Default;
-        public CryptoAlgorithmID AlgorithmMAC           = CryptoAlgorithmID.Default;
-        public CryptoAlgorithmID AlgorithmEncrypt       = CryptoAlgorithmID.Default;
+        public CryptoAlgorithmID AlgorithmDigest = CryptoAlgorithmID.Default;
+        public CryptoAlgorithmID AlgorithmMAC = CryptoAlgorithmID.Default;
+        public CryptoAlgorithmID AlgorithmEncrypt = CryptoAlgorithmID.Default;
 
         public override void _PreProcess(Command.Dispatch options) {
             if (options is IReporting Reporting) {
@@ -102,23 +102,23 @@ namespace Goedel.Mesh.Shell {
             var algClass = algID.Class();
 
             switch (algClass) {
-                case CryptoAlgorithmClass.Digest: {
+                case CryptoAlgorithmClasses.Digest: {
                     AlgorithmDigest = algID;
                     return;
                     }
-                case CryptoAlgorithmClass.Encryption: {
+                case CryptoAlgorithmClasses.Encryption: {
                     AlgorithmEncrypt = algID;
                     return;
                     }
-                case CryptoAlgorithmClass.MAC: {
+                case CryptoAlgorithmClasses.MAC: {
                     AlgorithmMAC = algID;
                     return;
                     }
-                case CryptoAlgorithmClass.Signature: {
+                case CryptoAlgorithmClasses.Signature: {
                     AlgorithmSign = algID;
                     return;
                     }
-                case CryptoAlgorithmClass.Exchange: {
+                case CryptoAlgorithmClasses.Exchange: {
                     AlgorithmExchange = algID;
                     AlgorithmAuthenticate = algID;
                     return;
@@ -207,7 +207,7 @@ namespace Goedel.Mesh.Shell {
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
                     cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256CBC);
-                    cryptoParameters.EncryptionKeys = new List<KeyPair> 
+                    cryptoParameters.EncryptionKeys = new List<KeyPair>
                         { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
                     }
 

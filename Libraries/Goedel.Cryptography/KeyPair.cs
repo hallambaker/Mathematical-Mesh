@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
@@ -36,7 +35,7 @@ namespace Goedel.Cryptography {
         /// If true, the key has been written to persistent storage and will be 
         /// locatable by UDF after the application instance has terminated.
         /// </summary>
-        public bool IsPersisted = false;
+        public bool IsPersisted { get; set; } = false;
 
         /// <summary>
         /// If true, the KeySecurity model marks the key to be persisted but the key has not
@@ -95,7 +94,7 @@ namespace Goedel.Cryptography {
                 CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                 byte[] context = null) {
 
-            var hash= algorithmID.Bulk().GetDigest(data);
+            var hash = algorithmID.Bulk().GetDigest(data);
             return SignHash(hash, algorithmID, context);
             }
 
@@ -154,11 +153,11 @@ namespace Goedel.Cryptography {
         public static KeyPair Factory(
                     CryptoAlgorithmID algorithmID,
                     KeySecurity keySecurity,
-                    KeyCollection keyCollection=null,
+                    KeyCollection keyCollection = null,
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any) {
 
-            KeyPair keyPair=null;
+            KeyPair keyPair = null;
 
             switch (algorithmID) {
                 case CryptoAlgorithmID.RSAExch: {
@@ -175,7 +174,7 @@ namespace Goedel.Cryptography {
                     break;
                     }
                 case CryptoAlgorithmID.X25519:
-                case CryptoAlgorithmID.Ed25519: 
+                case CryptoAlgorithmID.Ed25519:
                 case CryptoAlgorithmID.X448:
                 case CryptoAlgorithmID.Ed448: {
                     keyPair = KeyPairFactoryECDH(keySize, keySecurity, keyUses, algorithmID);
@@ -253,7 +252,7 @@ namespace Goedel.Cryptography {
         byte[] udfBytes = null;
 
 
-        
+
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a string.
         /// </summary>
@@ -261,7 +260,7 @@ namespace Goedel.Cryptography {
         string udf = null;
 
         ///<summary>The UDF fingerprint of this key pair.</summary>
-        public string UDFValue => Cryptography.UDF.OID (this);
+        public string UDFValue => Cryptography.UDF.OID(this);
 
 
 

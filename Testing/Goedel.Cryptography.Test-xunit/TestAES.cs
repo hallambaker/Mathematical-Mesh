@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-
+﻿using Goedel.Cryptography;
 using Goedel.Test;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
+
 using Xunit;
-using Goedel.Cryptography;
 
 namespace Goedel.XUnit {
 
@@ -227,7 +228,7 @@ namespace Goedel.XUnit {
 
                     TestVector.Verify(Provider);
                     //TestVector.Verify_Random(Provider);
-                    
+
                     // Feature: Add test for GCM
                     }
                 }
@@ -273,7 +274,7 @@ namespace Goedel.XUnit {
 
         /// <summary>Test buffered (non streamed) mode with NIST key, IV.</summary>
         /// <param name="Provider">The Cryptographic provider</param>
-        public void Verify (CryptoProviderEncryption Provider) {
+        public void Verify(CryptoProviderEncryption Provider) {
             var Encrypted = Provider.Encrypt(Plaintext, Key, IV);
             var Decrypted = Provider.Decrypt(Ciphertext, Key, IV);
 
@@ -283,7 +284,7 @@ namespace Goedel.XUnit {
 
         /// <summary>Test buffered (non streamed) mode with randomly generated Key, IV.</summary>
         /// <param name="Provider">The Cryptographic provider</param>
-        public void Verify_Streamed (CryptoProviderEncryption Provider) {
+        public void Verify_Streamed(CryptoProviderEncryption Provider) {
             var Encryptor = Provider.MakeEncryptor(Key, IV);
             Encryptor.Write(Plaintext);
             Encryptor.Complete();

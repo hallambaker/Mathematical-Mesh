@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 

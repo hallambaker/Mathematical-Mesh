@@ -1,5 +1,6 @@
-using System;
 using Goedel.Utilities;
+
+using System;
 
 
 
@@ -11,48 +12,48 @@ namespace Goedel.Command {
     /// </summary>
     public class ParserException : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The user command could not be parsed"
         /// </summary>		
-		public ParserException () : base ("The user command could not be parsed") {
-			}
-        
-		/// <summary>
+        public ParserException() : base("The user command could not be parsed") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The user command could not be parsed"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public ParserException (string Description) : base (Description) {
-			}
+        public ParserException(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParserException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public ParserException(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ParserException(Reason as string);
-				}
-			else {
-				return new ParserException();
-				}
+            if (Reason as string != null) {
+                return new ParserException(Reason as string);
+                }
+            else {
+                return new ParserException();
+                }
             }
         }
 
@@ -62,27 +63,27 @@ namespace Goedel.Command {
     /// </summary>
     public class FileReadError : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The file could not be read"
         /// </summary>		
-		public FileReadError () : base ("The file could not be read") {
-			}
-        
-		/// <summary>
+        public FileReadError() : base("The file could not be read") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The file could not be read"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public FileReadError (string Description) : base (Description) {
-			}
+        public FileReadError(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileReadError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public FileReadError(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -113,15 +114,15 @@ namespace Goedel.Command {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new FileReadError(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new FileReadError(Reason as ExceptionData);
-				}
-			else {
-				return new FileReadError();
-				}
+            if (Reason as string != null) {
+                return new FileReadError(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new FileReadError(Reason as ExceptionData);
+                }
+            else {
+                return new FileReadError();
+                }
             }
         }
 
@@ -131,27 +132,27 @@ namespace Goedel.Command {
     /// </summary>
     public class UnknownCommand : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unknown command"
         /// </summary>		
-		public UnknownCommand () : base ("Unknown command") {
-			}
-        
-		/// <summary>
+        public UnknownCommand() : base("Unknown command") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unknown command"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnknownCommand (string Description) : base (Description) {
-			}
+        public UnknownCommand(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownCommand (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownCommand(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -182,15 +183,15 @@ namespace Goedel.Command {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnknownCommand(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new UnknownCommand(Reason as ExceptionData);
-				}
-			else {
-				return new UnknownCommand();
-				}
+            if (Reason as string != null) {
+                return new UnknownCommand(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new UnknownCommand(Reason as ExceptionData);
+                }
+            else {
+                return new UnknownCommand();
+                }
             }
         }
 
@@ -200,27 +201,27 @@ namespace Goedel.Command {
     /// </summary>
     public class UnknownOption : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unknown option"
         /// </summary>		
-		public UnknownOption () : base ("Unknown option") {
-			}
-        
-		/// <summary>
+        public UnknownOption() : base("Unknown option") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unknown option"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnknownOption (string Description) : base (Description) {
-			}
+        public UnknownOption(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownOption (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownOption(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -251,15 +252,15 @@ namespace Goedel.Command {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnknownOption(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new UnknownOption(Reason as ExceptionData);
-				}
-			else {
-				return new UnknownOption();
-				}
+            if (Reason as string != null) {
+                return new UnknownOption(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new UnknownOption(Reason as ExceptionData);
+                }
+            else {
+                return new UnknownOption();
+                }
             }
         }
 
@@ -269,44 +270,44 @@ namespace Goedel.Command {
     /// </summary>
     public class NoCommand : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "No command specified"
         /// </summary>		
-		public NoCommand () : base ("No command specified") {
-			}
-        
-		/// <summary>
+        public NoCommand() : base("No command specified") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "No command specified"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public NoCommand (string Description) : base (Description) {
-			}
+        public NoCommand(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NoCommand (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public NoCommand(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NoCommand(Reason as string);
-				}
-			else {
-				return new NoCommand();
-				}
+            if (Reason as string != null) {
+                return new NoCommand(Reason as string);
+                }
+            else {
+                return new NoCommand();
+                }
             }
         }
 
@@ -316,46 +317,46 @@ namespace Goedel.Command {
     /// </summary>
     public class InvalidOption : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The option value was incorrectly formatted"
         /// </summary>		
-		public InvalidOption () : base ("The option value was incorrectly formatted") {
-			}
-        
-		/// <summary>
+        public InvalidOption() : base("The option value was incorrectly formatted") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The option value was incorrectly formatted"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InvalidOption (string Description) : base (Description) {
-			}
+        public InvalidOption(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidOption (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InvalidOption(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidOption(Reason as string);
-				}
-			else {
-				return new InvalidOption();
-				}
+            if (Reason as string != null) {
+                return new InvalidOption(Reason as string);
+                }
+            else {
+                return new InvalidOption();
+                }
             }
         }
 
 
-	}
+    }

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
 using System.IO;
 using System.Text;
-
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -84,13 +83,13 @@ namespace Goedel.Protocol {
         /// <returns>Integer value.</returns>
         public static int HexCharToInt(this char c) {
             if ((c >= '0') & (c <= '9')) {
-                return ((int)c - (int)'0');
+                return (c - '0');
                 }
             if ((c >= 'a') & (c <= 'f')) {
-                return (10 + (int)c - (int)'a');
+                return (10 + c - 'a');
                 }
             if ((c >= 'A') & (c <= 'F')) {
-                return (10 + (int)c - (int)'A');
+                return (10 + c - 'A');
                 }
             return -1;
             }
@@ -153,7 +152,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The stream to read from</param>
         /// <returns>The measured length of the string.</returns>
-        public static int GetJSONStringLength( ICharacterStream Stream) {
+        public static int GetJSONStringLength(ICharacterStream Stream) {
             int Length = 0;
 
             for (; !Stream.EOF; Length++) {
@@ -178,7 +177,7 @@ namespace Goedel.Protocol {
         /// <param name="Stream">The stream to read from</param>
         /// <param name="StringBuilder">Stringbuilder to be used to assemble the string.</param>
         /// <returns>The decoded string</returns>
-        public static string GetStringJSON( ICharacterStream Stream, StringBuilder StringBuilder = null) {
+        public static string GetStringJSON(ICharacterStream Stream, StringBuilder StringBuilder = null) {
             StringBuilder = StringBuilder ?? new StringBuilder();
 
             long Length = 0;
@@ -212,7 +211,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The stream to read from</param>
         /// <returns>The decoded string</returns>
-        public static string GetJSONStringBuffered( ICharacterBufferedStream Stream) {
+        public static string GetJSONStringBuffered(ICharacterBufferedStream Stream) {
             Stream.Mark();
             var Length = GetJSONStringLength(Stream);
             Stream.Restore();
@@ -226,7 +225,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The stream to read from</param>
         /// <returns>The decoded data</returns>
-        public static long GetBase64StringLength( ICharacterStream Stream) {
+        public static long GetBase64StringLength(ICharacterStream Stream) {
             long Length = 0;
             int Count = 0;
 
@@ -264,7 +263,7 @@ namespace Goedel.Protocol {
 
 
                     if (c < 127) {
-                        var v = BaseConvert.BASE64Value[(int)c];
+                        var v = BaseConvert.BASE64Value[c];
                         if (v < 64) {
                             if (Count == 0) {
                                 Last = v; // 6 bits over
@@ -315,7 +314,7 @@ namespace Goedel.Protocol {
                     var c = Stream.ReadChar();
 
                     if (c < 127) {
-                        var v = BaseConvert.BASE64Value[(int)c];
+                        var v = BaseConvert.BASE64Value[c];
                         if (v < 64) {
                             if (Count == 0) {
                                 Last = v; // 6 bits over

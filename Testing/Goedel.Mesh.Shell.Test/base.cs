@@ -1,6 +1,4 @@
-﻿using System;
-using Goedel.Mesh.Shell;
-using MT=Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Goedel.Mesh.Shell.Test {
     [MT.TestClass]

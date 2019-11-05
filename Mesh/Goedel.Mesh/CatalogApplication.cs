@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
@@ -13,7 +11,7 @@ namespace Goedel.Mesh {
 
 
 
-    public class AsCatalogEntryApplication: IEnumerable<CatalogedApplication> {
+    public class AsCatalogEntryApplication : IEnumerable<CatalogedApplication> {
         CatalogContact Catalog;
 
         public AsCatalogEntryApplication(CatalogContact catalog) => Catalog = catalog;
@@ -65,7 +63,7 @@ namespace Goedel.Mesh {
         public CatalogedApplication LocateBySite(string Key) => Locate(Key) as CatalogedApplication;
 
 
-        public CatalogApplication(string directory, string ContainerName=null,
+        public CatalogApplication(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool create = true) :

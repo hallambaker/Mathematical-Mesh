@@ -1,11 +1,4 @@
-﻿using System;
-using System.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Jose;
-using Goedel.IO;
-using System.Threading;
-using Goedel.Utilities;
+﻿using Goedel.IO;
 
 namespace Goedel.Cryptography {
 
@@ -23,7 +16,7 @@ namespace Goedel.Cryptography {
         /// allow use of shared libraries for cross-platform support. If an implementation
         /// is linked to multiple platform packages, the platform specific initialization must
         /// be called for each.</remarks>
-        public static void Initialize(bool TestMode = false) => 
+        public static void Initialize(bool TestMode = false) =>
             Initialize(ref Flag, InitializationCore, TestMode);
 
         /// <summary>

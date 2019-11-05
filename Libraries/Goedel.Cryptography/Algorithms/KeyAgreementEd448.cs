@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
-using System.Numerics;
 using System.IO;
-using Goedel.ASN;
-using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
+using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -20,17 +18,17 @@ namespace Goedel.Cryptography.Algorithms {
         readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
 
         ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        public override BigInteger Prime  => P; 
+        public override BigInteger Prime => P;
 
 
         ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD  => D; 
+        public override BigInteger CurveConstrantD => D;
 
         ///<summary>The Curve Constant d</summary>
-        public static readonly BigInteger D = P-39081;
+        public static readonly BigInteger D = P - 39081;
 
         ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1  => SqrtMinus1Value; 
+        public override BigInteger SqrtMinus1 => SqrtMinus1Value;
         readonly static BigInteger SqrtMinus1Value = P.SqrtMinus1();
 
         ///<summary>The small order subgroup q</summary>
@@ -53,13 +51,13 @@ namespace Goedel.Cryptography.Algorithms {
         static readonly CurveEdwards448 BasePoint = new CurveEdwards448(Curve448BaseY, false); // { X = Curve448BaseX, Y = Curve448BaseY, Z = 1 };
 
         /// <summary>The base point for the subgroup</summary>
-        public static CurveEdwards448 Base  => BasePoint.Copy(); 
+        public static CurveEdwards448 Base => BasePoint.Copy();
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        static readonly CurveEdwards448 NeutralPoint = new CurveEdwards448()  { X=0, Y= 1 , Z=1};
+        static readonly CurveEdwards448 NeutralPoint = new CurveEdwards448() { X = 0, Y = 1, Z = 1 };
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
-        public static CurveEdwards448 Neutral  => NeutralPoint.Copy(); 
+        public static CurveEdwards448 Neutral => NeutralPoint.Copy();
 
         /// <summary>The number of bits to multiply</summary>
         public const int Bits = 448;
@@ -124,7 +122,7 @@ namespace Goedel.Cryptography.Algorithms {
                 if (BitIndex.Up()) {
                     Q.Accumulate(P);
                     }
-                P.Double();
+                P.DoublePoint();
 
                 //Console.WriteLine($"{Q.Z}");
                 }
@@ -137,7 +135,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Replace the current point value with the current value added to itself
         /// (used to implement multiply)
         /// </summary>
-        public override void Double() {
+        public override void DoublePoint() {
             var x1s = (X * X).Mod(P);
             var y1s = (Y * Y).Mod(P);
             var z1s = (Z * Z).Mod(P);
@@ -173,7 +171,7 @@ namespace Goedel.Cryptography.Algorithms {
             var F = B - E;
             var G = B + E;
             var H = (P1.X + P1.Y) * (P2.X + P2.Y);
-            X3 = (A * F * (H - C - D)) .Mod(P);
+            X3 = (A * F * (H - C - D)).Mod(P);
             Y3 = (A * G * (D - C)).Mod(P);
             Z3 = (F * G).Mod(P);
             }
@@ -357,7 +355,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// for protocol isolation.</param>
         /// <param name="Digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
-        public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) => 
+        public bool Verify(byte[] Signature, byte[] Digest, byte[] Context = null) =>
                     Public.VerifySignature(Encoding, Digest, Signature, Context);
 
         /// <summary>
@@ -496,7 +494,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="witness">The point [s-SHA512(n)]B where s is the secret key.</param>
         /// <param name="exportable">If true, the private key is exportable</param>
         public CurveEdwards448Private(
-                    byte[] blind, 
+                    byte[] blind,
                     out CurveEdwards448 witness,
                     bool exportable = false) {
 
@@ -645,7 +643,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards448 Agreement(CurveEdwards448Public publicKey) => (CurveEdwards448)publicKey.Public.Multiply(Private);
+        public CurveEdwards448 Agreement(CurveEdwards448Public publicKey) => publicKey.Public.Multiply(Private);
 
 
         /// <summary>
@@ -656,7 +654,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveEdwards448 Agreement(CurveEdwards448Public publicKey, CurveEdwards448 carry) {
-            var Result = (CurveEdwards448)publicKey.Public.Multiply(Private);
+            var Result = publicKey.Public.Multiply(Private);
             Result.Accumulate(carry);
 
             return Result;
@@ -754,7 +752,7 @@ namespace Goedel.Cryptography.Algorithms {
     public class CurveEdwards448Result : ResultECDH {
 
         /// <summary>The key agreement result</summary>
-        public CurveEdwards448 Agreement;
+        public CurveEdwards448 Agreement { get; set; }
 
         /// <summary>
         /// The DER encoding of the data. This is the IKM octet sequence.
@@ -764,7 +762,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         /// <summary>The key agreement result as a byte array</summary>
-        public override byte[] IKM  => Agreement.Encode();
+        public override byte[] IKM => Agreement.Encode();
 
         /// <summary>
         /// The Ephemeral public key

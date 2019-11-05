@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Utilities;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace Goedel.Cryptography {
 
@@ -131,14 +129,14 @@ namespace Goedel.Cryptography {
         /// <param name="Kek">The key encryption key</param>
         /// <param name="Ciphertext">The encrypted key to unwrap</param>
         /// <returns>The unwrapped key</returns>
-        public static byte[] UnwrapKey (byte[] Kek, byte[] Ciphertext) {
+        public static byte[] UnwrapKey(byte[] Kek, byte[] Ciphertext) {
 
             //Console.WriteLine($"Kek    {Kek.ToStringBase16()}");
             //Console.WriteLine($"Ciphertext {Ciphertext.ToStringBase16()}");
 
             var Decryptor = Platform.BlockProviderFactoryAes(Kek, false);
 
-            int n = (Ciphertext.Length / 8) -1;
+            int n = (Ciphertext.Length / 8) - 1;
             var R = new Block[n + 1];
 
             //TraceX.WriteLine("Kek {0}", BaseConvert.ToBase16String(Kek));
@@ -150,7 +148,7 @@ namespace Goedel.Cryptography {
             //    For i = 1 to n
             //        R[i] = C[i]
 
-            for (var i = 0; i < n+1; i++) {
+            for (var i = 0; i < n + 1; i++) {
                 R[i] = new Block(Ciphertext, i);
                 }
 
@@ -189,7 +187,7 @@ namespace Goedel.Cryptography {
             //        P[i] = R[i]
             //Else
             //    Return an error
-            Assert.True (R[0].Verify(0xA6), UnwrapFailed.Throw);
+            Assert.True(R[0].Verify(0xA6), UnwrapFailed.Throw);
             //TraceX.WriteLine("Sentry {0}", R[0].ToString());
 
             var Result = Block.ToByte(R, 1);
@@ -204,15 +202,15 @@ namespace Goedel.Cryptography {
         /// Debug aid
         /// </summary>
         /// <param name="R">Write out the register set</param>
-        public void Trace (Block[] R) {
+        public void Trace(Block[] R) {
             var Builder = new StringBuilder();
-            for (var i=0; i<R.Length; i++) {
+            for (var i = 0; i < R.Length; i++) {
                 Builder.Append(R[i].ToString());
                 Builder.Append("  ");
                 }
             Debug.WriteLine(Builder.ToString());
             }
-        
+
 
         }
 
@@ -232,9 +230,9 @@ namespace Goedel.Cryptography {
         /// Constructor from integer data.
         /// </summary>
         /// <param name="Value">Data value to initialize the value field.</param>
-        public Block (int Value) {
+        public Block(int Value) {
             this.Data = new byte[8];
-            for (var i=0; i<8; i++) {
+            for (var i = 0; i < 8; i++) {
                 Data[i] = (byte)(Value & 0xff);
                 }
             }
@@ -245,7 +243,7 @@ namespace Goedel.Cryptography {
         /// <param name="Source">The source value.</param>
         /// <param name="Index">Offset within the block.</param>
         public Block(byte[] Source, int Index) {
-            Data = new byte [8];
+            Data = new byte[8];
             Array.Copy(Source, Index * 8, Data, 0, 8);
             }
 
@@ -254,7 +252,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Value">The sentry value to check.</param>
         /// <returns>True if the sentry value is correct, false otherwise.</returns>
-        public bool Verify (int Value) {
+        public bool Verify(int Value) {
             foreach (var Byte in Data) {
                 if (Byte != Value) {
                     return false;
@@ -270,21 +268,21 @@ namespace Goedel.Cryptography {
         /// <param name="Left">The MSB</param>
         /// <param name="Right">The LSB</param>
         /// <param name="Result">The array to write the result to.</param>
-        public static void Concat (Block Left, Block Right, byte[]Result) {
+        public static void Concat(Block Left, Block Right, byte[] Result) {
             Array.Copy(Left.Data, 0, Result, 0, 8);
             Array.Copy(Right.Data, 0, Result, 8, 8);
-            return ;
+            return;
             }
 
         /// <summary>
         /// Update the block value with the specified mask value.
         /// </summary>
         /// <param name="Mask">XOR mask value</param>
-        public void XOR (long Mask) {
+        public void XOR(long Mask) {
 
             //var Result = new byte[8];
             for (var i = 0; i < 8; i++) {
-                Data[i] = (byte) (Data[i] ^ (Mask >> 56));
+                Data[i] = (byte)(Data[i] ^ (Mask >> 56));
                 Mask <<= 8;
                 }
             }
@@ -310,9 +308,9 @@ namespace Goedel.Cryptography {
         /// <param name="Offset">Offset from start of array</param>
         /// <returns>The converted blocks.</returns>
         public static byte[] ToByte(Block[] Blocks, int Offset = 0) {
-            var Result = new byte[(Blocks.Length- Offset) * 8];
+            var Result = new byte[(Blocks.Length - Offset) * 8];
             for (var i = Offset; i < Blocks.Length; i++) {
-                Array.Copy(Blocks[i].Data, 0, Result, 8 * ( i- Offset), 8);
+                Array.Copy(Blocks[i].Data, 0, Result, 8 * (i - Offset), 8);
                 }
             return Result;
             }

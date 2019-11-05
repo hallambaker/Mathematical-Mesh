@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
+﻿using Goedel.Utilities;
 
-using Goedel.Utilities;
+using System;
+using System.Numerics;
 
 namespace Goedel.Cryptography.PKIX {
     public partial class RFC2631OtherInfo {
@@ -22,7 +20,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="KeyBits">The number of bits in the generated key</param>
         /// <param name="Count">Counter, this is initially 1 and increases with
         /// each call.</param>
-        public RFC2631OtherInfo(int AgreedBits, BigInteger Agrement, 
+        public RFC2631OtherInfo(int AgreedBits, BigInteger Agrement,
                     int[] OID, int KeyBits, byte[] Nonce = null, int Count = 1) {
             this.Count = Count;
             AgreementData = Agrement.ToByteArray();
@@ -41,7 +39,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Increment the counter value to obtain the next agreement.
         /// </summary>
-        public void Next () {
+        public void Next() {
             Count++;
             KeyInfo.Counter.SetBigEndian(Count);
             }

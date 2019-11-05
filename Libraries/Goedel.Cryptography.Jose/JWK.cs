@@ -20,13 +20,6 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using Goedel.Protocol;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
-
-
 namespace Goedel.Cryptography.Jose {
 
     /// <summary>
@@ -36,7 +29,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public KeyData () { }
+        public KeyData() { }
 
         /// <summary>
         /// Builds a KeyData object from a key.

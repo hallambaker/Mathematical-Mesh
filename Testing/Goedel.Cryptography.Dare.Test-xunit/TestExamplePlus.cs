@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.XUnit {
 
@@ -48,7 +48,8 @@ namespace Goedel.XUnit {
         /// Container header corresponding to persistence store entry
         /// </summary>
         public DareHeader ContainerHeader {
-            get => _Metadata as DareHeader; set => _Metadata = value; }
+            get => _Metadata as DareHeader; set => _Metadata = value;
+            }
         }
 
 
@@ -71,10 +72,10 @@ namespace Goedel.XUnit {
         /// <param name="ContainerType">The Container type.</param>
         /// <param name="FileStatus">The file status in which to open the container.</param>
         public TestItemContainerPersistenceStore(string FileName, string Type = null,
-                    string Comment = null, 
+                    string Comment = null,
                     FileStatus FileStatus = FileStatus.OpenOrCreate,
                     ContainerType ContainerType = ContainerType.Chain) : base(
-                        FileName, Type, Comment, FileStatus, ContainerType) => 
+                        FileName, Type, Comment, FileStatus, ContainerType) =>
                         IndexKeyUserProfileUDF = GetIndex(TestItem.KeyUserProfileUDF);
 
         TestItem Get(IPersistenceEntry DataItem) => DataItem.JsonObject as TestItem;
@@ -85,7 +86,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="AccountID">The account identifier</param>
         /// <returns>The test item if found, otherwise null.</returns>
-        public TestItem GetAccountID (string AccountID) {
+        public TestItem GetAccountID(string AccountID) {
             var Entry = Get(AccountID);
             return Entry != null ? Get(Entry) : null;
             }
@@ -95,7 +96,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="UserProfileUDF">The user profile UDF</param>
         /// <returns>The test item</returns>
-        public TestItem GetUserProfileUDF (string UserProfileUDF) {
+        public TestItem GetUserProfileUDF(string UserProfileUDF) {
             var IndexEntry = IndexKeyUserProfileUDF.Last(UserProfileUDF);
             var DataItem = IndexEntry.Data;
             return Get(DataItem);

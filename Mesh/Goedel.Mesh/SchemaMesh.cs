@@ -1915,6 +1915,11 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class ProfileGroup : Profile {
         /// <summary>
+        ///Service address(es).
+        /// </summary>
+
+		public virtual List<string>				ServiceIDs  {get; set;}
+        /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
 
@@ -1963,6 +1968,18 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_Writer, false, ref _first);
+			if (ServiceIDs != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ServiceIDs", 1);
+				_Writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in ServiceIDs) {
+					_Writer.WriteArraySeparator (ref _firstarray);
+					_Writer.WriteString (_index);
+					}
+				_Writer.WriteArrayEnd ();
+				}
+
 			if (KeyEncryption != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("KeyEncryption", 1);
@@ -2001,6 +2018,17 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "ServiceIDs" : {
+					// Have a sequence of values
+					bool _Going = JSONReader.StartArray ();
+					ServiceIDs = new List <string> ();
+					while (_Going) {
+						string _Item = JSONReader.ReadString ();
+						ServiceIDs.Add (_Item);
+						_Going = JSONReader.NextArray ();
+						}
+					break;
+					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
@@ -6648,6 +6676,10 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class CatalogedGroup : CatalogedApplication {
+        /// <summary>
+        /// </summary>
+
+		public virtual ProfileGroup						Profile  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -6692,6 +6724,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((CatalogedApplication)this).SerializeX(_Writer, false, ref _first);
+			if (Profile != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Profile", 1);
+					Profile.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -6725,6 +6762,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
+				case "Profile" : {
+					// An untagged structure
+					Profile = new ProfileGroup ();
+					Profile.Deserialize (JSONReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(JSONReader, Tag);
 					break;

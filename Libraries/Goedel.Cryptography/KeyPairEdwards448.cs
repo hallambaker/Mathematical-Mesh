@@ -1,11 +1,8 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Algorithms;
-using System;
-using Goedel.ASN;
+using Goedel.Utilities;
+
+using System.IO;
 
 namespace Goedel.Cryptography {
 
@@ -19,10 +16,10 @@ namespace Goedel.Cryptography {
 
         #region // Properties and fields 
         ///<summary>The implementation public key value</summary>
-        public CurveEdwards448Public PublicKey;
+        public CurveEdwards448Public PublicKey { get; set; }
 
         ///<summary>The implementation private key value (if exportable)</summary>
-        public CurveEdwards448Private PrivateKey;
+        public CurveEdwards448Private PrivateKey { get; set; }
 
         ///<summary>The implementation public key value</summary>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;
@@ -178,7 +175,7 @@ namespace Goedel.Cryptography {
         /// <param name="carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
         ResultECDH Agreement(KeyPairEd448 publicKey, CurveEdwards448Result carry = null) {
-            Assert.True(KeyUses.HasFlag (KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
+            Assert.True(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
 
             CurveEdwards448 Agreement;
             if (carry == null) {
@@ -273,7 +270,7 @@ namespace Goedel.Cryptography {
                     }
                 }
 
-            return PrivateKey.Sign(digest, Dom4 (algorithmID, context)); ;
+            return PrivateKey.Sign(digest, Dom4(algorithmID, context)); ;
             }
 
 

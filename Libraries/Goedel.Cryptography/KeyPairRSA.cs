@@ -19,11 +19,11 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
+
+using System;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography {
 
@@ -112,7 +112,7 @@ namespace Goedel.Cryptography {
 
             if (keyType.IsExportable()) {
                 var PrivateParameters = Provider.ExportParameters(true);
-                PKIXPrivateKeyRSA= PrivateParameters.RSAPrivateKey();
+                PKIXPrivateKeyRSA = PrivateParameters.RSAPrivateKey();
                 }
             }
 
@@ -163,13 +163,13 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) {
             keySize = keySize == 0 ? 2048 : keySize;
 
-            var cspParameters = new CspParameters() { Flags= CspProviderFlags.CreateEphemeralKey };
+            var cspParameters = new CspParameters() { Flags = CspProviderFlags.CreateEphemeralKey };
             var rsa = new RSACryptoServiceProvider(keySize, cspParameters);
             return new KeyPairRSA(rsa, keySecurity, keyUses);
             }
 
 
-        static RSACryptoServiceProvider GetRSA (RSAParameters RSAParameters) {
+        static RSACryptoServiceProvider GetRSA(RSAParameters RSAParameters) {
             var rsa = new RSACryptoServiceProvider();
             rsa.ImportParameters(RSAParameters);
             return rsa;
@@ -228,7 +228,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
-                    int keySize=2048) =>
+                    int keySize = 2048) =>
                     throw new NotImplementedException();
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="PKIXParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairPublicFactory (PKIXPublicKeyRSA PKIXParameters) {
+        public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyRSA PKIXParameters) {
             var RSAParameters = PKIXParameters.RSAParameters();
             return new KeyPairRSA(RSAParameters);
             }
@@ -248,7 +248,7 @@ namespace Goedel.Cryptography {
         /// <param name="keySecurity">The key security model</param>
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairPrivateFactory (
+        public static new KeyPair KeyPairPrivateFactory(
                 PKIXPrivateKeyRSA PKIXParameters,
         KeySecurity keySecurity, KeyCollection keyCollection) {
             var RSAParameters = PKIXParameters.RSAParameters();
@@ -268,7 +268,7 @@ namespace Goedel.Cryptography {
         /// <param name="Salt">Optional salt value for use in key derivation.</param>
         public override void Encrypt(byte[] Key, out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null) {
             Ephemeral = null;
-            Exchange = Provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1); 
+            Exchange = Provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
             }
 
         /// <summary>

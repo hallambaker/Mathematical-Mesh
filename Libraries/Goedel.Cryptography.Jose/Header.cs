@@ -20,12 +20,6 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
-using Goedel.Cryptography;
-
 namespace Goedel.Cryptography.Jose {
 
 
@@ -34,7 +28,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public Header () { }
+        public Header() { }
 
         /// <summary>
         /// Initialize the alg parameter to match the specified provider.
@@ -72,5 +66,5 @@ namespace Goedel.Cryptography.Jose {
 
 
     //    }
-    
+
     }

@@ -20,12 +20,13 @@
 //  
 //  
 
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Numerics;
-using Goedel.Utilities;
+using System.Text;
 
 namespace Goedel.Protocol {
 
@@ -109,22 +110,22 @@ namespace Goedel.Protocol {
             if (c == ':') { return CharType.Colon; }
             if (c == ',') { return CharType.Comma; }
             if (c == '-') { return CharType.Minus; }
-            if (c == '\\') {return CharType.Solidus; }
-            if (c == '+') {return CharType.Plus;      }      
-            if ((c == 'e') | (c == 'E')) {return CharType.Ee;}
-            if (c == 'u') {return CharType.L_u;}
-            if  ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b'))  {return CharType.Escaped;}
-            if ((c >= 'a') & (c <= 'f')) {return CharType.Hex;}
-            if ((c >= 'A') & (c <= 'F')) {return CharType.Hex;}
-            if ((c >= 'a') & (c <= 'z')) {return CharType.Lower;  }
-            if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) {return CharType.WS;}
-            if (c == 0x1e) {return CharType.EOR;}
+            if (c == '\\') { return CharType.Solidus; }
+            if (c == '+') { return CharType.Plus; }
+            if ((c == 'e') | (c == 'E')) { return CharType.Ee; }
+            if (c == 'u') { return CharType.L_u; }
+            if ((c == '/') | (c == 't') | (c == 'r') | (c == 'n') | (c == 'f') | (c == 'b')) { return CharType.Escaped; }
+            if ((c >= 'a') & (c <= 'f')) { return CharType.Hex; }
+            if ((c >= 'A') & (c <= 'F')) { return CharType.Hex; }
+            if ((c >= 'a') & (c <= 'z')) { return CharType.Lower; }
+            if ((c == ' ') | (c == '\t') | (c == '\r') | (c == '\n') | (c == '\f') | (c == '\b')) { return CharType.WS; }
+            if (c == 0x1e) { return CharType.EOR; }
             return CharType.Other;
             }
 
         /// <summary>State transition table</summary>
-        protected int [,] States  = 
-            
+        protected int[,] States =
+
             {
                 // ",  {,  },  [,  ],  \,  0, 19,  .,  :,  ,,  -,  +, Ee,  u,esc,hex, az, WS, EOR, *   
                 { 15,  1,  2,  3,  4, -1,  7,  9, -1, 16,  6,  8, -1,  5,  5,  5,  5,  5,  0, 18, -1}, //  0 Start - eat WS
@@ -178,7 +179,7 @@ namespace Goedel.Protocol {
             }
 
         /// <summary>Actions to perform on transitions</summary>
-        protected Action [] Actions = {
+        protected Action[] Actions = {
             Action.Ignore,          //  0
             Action.Complete,     //  1
             Action.Complete,     //  2
@@ -245,7 +246,7 @@ namespace Goedel.Protocol {
             /// <summary>The string litteral true</summary>
             True,
             /// <summary>The string litteral false</summary>
-            False, 
+            False,
             /// <summary>The string litteral null</summary>
             Null,
             /// <summary>End of record</summary>
@@ -253,13 +254,13 @@ namespace Goedel.Protocol {
             /// <summary>Binary data</summary>
             Binary,
             /// <summary>JSON-BCD extended tag, for internal use</summary>
-            JSONBCD, 
+            JSONBCD,
             /// <summary></summary>
             Empty
             }
 
         /// <summary>Tokens to be returned if the FSR stops in the specified state.</summary>
-        protected Token [] Tokens = {
+        protected Token[] Tokens = {
             Token.Empty,                //  0
             Token.StartObject,          //  1
             Token.EndObject,            //  2
@@ -302,20 +303,20 @@ namespace Goedel.Protocol {
         protected virtual byte[] ResultBinary { get; set; }
 
         /// <summary>Last Real32/single precision floating point value.</summary>
-        public float        ResultFloat;
+        public float ResultFloat;
 
         /// <summary>Last Real64/double precision floating point value.</summary>
-        public double       ResultDouble;
+        public double ResultDouble;
 
         /// <summary>Last integer value.</summary>
-        public long         ResultInt64;
+        public long ResultInt64;
 
         /// <summary>Last big integer value.</summary>
-        public BigInteger   ResultBigInteger;
+        public BigInteger ResultBigInteger;
 
 
         /// <summary>The last token type read</summary>
-        public Token  TokenType = Token.Invalid;
+        public Token TokenType = Token.Invalid;
 
         /// <summary>If true, have reached the end of the current record.</summary>
         public bool EOF => CharacterInput.EOF;
@@ -326,8 +327,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Delegate method for creating structured readers
         /// </summary>
-        public static JSONReaderFactoryDelegate JSONReaderFactory => _JSONReaderFactoryByte ;
-        static JSONReader _JSONReaderFactoryByte(byte[] Data)=> new JSONReader(Data);
+        public static JSONReaderFactoryDelegate JSONReaderFactory => _JSONReaderFactoryByte;
+        static JSONReader _JSONReaderFactoryByte(byte[] Data) => new JSONReader(Data);
 
 
         StringBuilder StringBuilder = new StringBuilder();
@@ -365,7 +366,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// If true, the last token returned was a non-terminal, i.e. chunked production.
         /// </summary>
-        public bool Terminal { get; protected set; }  = true;
+        public bool Terminal { get; protected set; } = true;
 
 
         /// <summary>Get the next token.</summary>
@@ -385,7 +386,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// If true, there is additional data to be collected.
         /// </summary>
-        protected bool Incomplete=false;
+        protected bool Incomplete = false;
 
         /// <summary>Get the next token.</summary>
         public virtual void GetToken(bool Binary = false) {
@@ -425,7 +426,7 @@ namespace Goedel.Protocol {
 
             //string In = "";
             while (Going & !EOF) {
-                char c =(char) CharacterInput.PeekByte();
+                char c = (char)CharacterInput.PeekByte();
                 //In = In + c;
 
                 if (State == 0 & c > 127) {
@@ -457,9 +458,9 @@ namespace Goedel.Protocol {
                         }
                     ResultString = StringBuilder.ToString();
                     return Token;
-                    
+
                     }
-                
+
                 Token = Tokens[State];
 
                 CharacterInput.ReadByte(); // Consume character
@@ -496,16 +497,16 @@ namespace Goedel.Protocol {
         /// <returns>True if there is an object start item, otherwise 
         /// false</returns> 
         public override bool StartObject() {
-            GetToken ();
-            if ((TokenType == Token.EndRecord) | EOF ){
+            GetToken();
+            if ((TokenType == Token.EndRecord) | EOF) {
                 return false;
                 }
 
             if (TokenType != Token.StartObject) {
-                throw new Exception ("Expected {");
+                throw new Exception("Expected {");
                 }
 
-            PeekToken ();
+            PeekToken();
             if (TokenType == Token.EndObject) {
                 GetToken();
                 return false;
@@ -549,7 +550,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The token read.</returns>
         public override string ReadToken() {
-            GetToken ();
+            GetToken();
             switch (TokenType) {
                 case Token.EndObject:
                     return null;
@@ -572,7 +573,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The data read</returns>
         public override int ReadInteger32() {
-            GetToken ();
+            GetToken();
             switch (TokenType) {
                 case Token.Number:
                     return Convert.ToInt32(ResultString);
@@ -602,14 +603,14 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The data read</returns>
         public override bool ReadBoolean() {
-            GetToken ();
+            GetToken();
             if (TokenType == Token.True) {
                 return true;
                 }
             if (TokenType == Token.False) {
                 return false;
                 }
-            throw new Exception ("Expected true or false");
+            throw new Exception("Expected true or false");
             }
 
         /// <summary>
@@ -632,8 +633,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Chunk">The data read.</param>
         /// <returns>True if there is more data to be read</returns>
-        public override bool ReadBinaryIncremental (out byte[] Chunk) {
-            Chunk= ReadBinary();
+        public override bool ReadBinaryIncremental(out byte[] Chunk) {
+            Chunk = ReadBinary();
             return false;
             }
 
@@ -650,9 +651,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The data read</returns>
         public override string ReadString() {
-            GetToken ();
+            GetToken();
             if (TokenType != Token.String) {
-                throw new Exception ("Expected \"String\"");
+                throw new Exception("Expected \"String\"");
                 }
             return ResultString;
             }
@@ -662,9 +663,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The data read</returns>
         public override DateTime ReadDateTime() {
-            GetToken ();
+            GetToken();
             if (TokenType != Token.String) {
-                throw new Exception ("Expected \"DateTime\"");
+                throw new Exception("Expected \"DateTime\"");
                 }
             return ResultString.FromRFC3339();
             }
@@ -675,9 +676,9 @@ namespace Goedel.Protocol {
         /// <returns>True if there is an array start token, otherwise 
         /// false</returns>
         public override bool StartArray() {
-            GetToken ();
+            GetToken();
             if (TokenType != Token.StartArray) {
-                throw new Exception ("Expected [");
+                throw new Exception("Expected [");
                 }
             PeekToken();
             if (TokenType == Token.EndArray) {
@@ -693,7 +694,7 @@ namespace Goedel.Protocol {
         /// <returns>True if there is a following array item, otherwise 
         /// false</returns>
         public override bool NextArray() {
-            GetToken ();
+            GetToken();
             if (TokenType == Token.Comma) {
                 return true; // another tag to come
                 }
@@ -721,7 +722,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
         /// <returns>The deserialized object.</returns>
-        public JSONObject ReadTaggedObject (
+        public JSONObject ReadTaggedObject(
                     Dictionary<string, JSONFactoryDelegate> TagDictionary) {
 
             Assert.NotNull(TagDictionary, DictionaryInitialization.Throw);
@@ -746,4 +747,3 @@ namespace Goedel.Protocol {
 
 
     }
-   

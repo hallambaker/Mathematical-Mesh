@@ -1,7 +1,8 @@
 ﻿using Goedel.Utilities;
+
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Command {
 
@@ -11,7 +12,7 @@ namespace Goedel.Command {
     /// <param name="Dispatch">The command description.</param>
     /// <param name="args">The set of arguments.</param>
     /// <param name="index">The first unparsed argument.</param>
-    public delegate void HandleDelegate (DispatchShell Dispatch, string[] args, int index);
+    public delegate void HandleDelegate(DispatchShell Dispatch, string[] args, int index);
 
 
     /// <summary>
@@ -30,8 +31,8 @@ namespace Goedel.Command {
         /// <param name="Description">The command description</param>
         /// <param name="Entries">The command entries</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
-        public static void Brief (
-                    string Description, 
+        public static void Brief(
+                    string Description,
                     DescribeCommandEntry DefaultCommand,
                     SortedDictionary<string, DescribeCommand> Entries,
                     TextWriter Output = null) {
@@ -124,12 +125,12 @@ namespace Goedel.Command {
                 }
             }
 
-        static void SetValue (Type Data, string Value) {
-            Data.Parameter(Value); 
+        static void SetValue(Type Data, string Value) {
+            Data.Parameter(Value);
             Data.ByDefault = false; // Has been set explicitly
             }
 
-        static DescribeEntry Match (List<DescribeEntry> Entries, string Flag) {
+        static DescribeEntry Match(List<DescribeEntry> Entries, string Flag) {
             foreach (var Entry in Entries) {
                 if (Entry.Key.ToLower() == Flag.ToLower()) {
                     return Entry;
@@ -150,7 +151,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Text">Text to test.</param>
         /// <returns>Result of the test.</returns>
-        public static bool IsFlagged (string Text) {
+        public static bool IsFlagged(string Text) {
             if (Text == null) {
                 return false;
                 }
@@ -168,7 +169,7 @@ namespace Goedel.Command {
         /// <param name="Dispatch">The command description.</param>
         /// <param name="Args">The set of arguments.</param>
         /// <param name="Index">The first unparsed argument.</param>
-        public void Dispatcher (SortedDictionary<string, DescribeCommand> Entries,
+        public void Dispatcher(SortedDictionary<string, DescribeCommand> Entries,
                 DescribeCommandEntry DefaultCommand,
                 DispatchShell Dispatch, string[] Args, int Index) {
             // NYI: This should really be set up to take a Command set description
@@ -238,10 +239,10 @@ namespace Goedel.Command {
         /// <param name="FlagIndicator">The flag indicator to use when printing the description.</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
         /// <param name="PrefixCommands">If true, prefix command tags with the flag.</param>
-        public abstract void Describe (
+        public abstract void Describe(
                     char FlagIndicator,
                     TextWriter Output = null,
-                    bool PrefixCommands=true);
+                    bool PrefixCommands = true);
         }
 
     /// <summary>
@@ -263,7 +264,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Tag">The tag text</param>
         /// <returns>The default value if it exists, null otherwise.</returns>
-        public string GetDefault (string Tag) {
+        public string GetDefault(string Tag) {
             foreach (var Entry in Entries) {
                 if (Entry.Key == Tag) {
                     return Entry.Default;
@@ -277,7 +278,7 @@ namespace Goedel.Command {
         /// </summary>
         /// <param name="Tag">The tag text</param>
         /// <param name="Default">The value to set as the default.</param>
-        public void SetDefault (string Tag, string Default) {
+        public void SetDefault(string Tag, string Default) {
             foreach (var Entry in Entries) {
                 if (Entry.Key == Tag) {
                     Entry.Default = Default;
@@ -292,7 +293,7 @@ namespace Goedel.Command {
         /// <param name="FlagIndicator">The flag indicator to use in display.</param>
         /// <param name="Output">The output stream (defaults to Console)</param>
         /// <param name="PrefixCommands">If true, add prefix to command descriptions</param>
-        public override void Describe (
+        public override void Describe(
                     char FlagIndicator,
                     TextWriter Output = null,
                     bool PrefixCommands = true) {
@@ -333,7 +334,7 @@ namespace Goedel.Command {
     /// Describe a command set.
     /// </summary>
     public class DescribeCommandSet : DescribeCommand {
-        
+
         /// <summary>Dictionary of command entries.</summary>
         public SortedDictionary<string, DescribeCommand> Entries;
 
@@ -410,7 +411,7 @@ namespace Goedel.Command {
     /// <summary>
     /// Describe a shell.
     /// </summary>
-    public abstract class DispatchShell : Dispatch{
+    public abstract class DispatchShell : Dispatch {
 
         /// <summary>
         /// Method called before acommand is dispatched.

@@ -20,19 +20,17 @@
 //  
 //  
 
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Cryptography.Jose {
     partial class Constants {
 
         public static string[] JoseTags = {
-            "alg", "jku", "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit", 
+            "alg", "jku", "jwk", "kid", "x5u", "x5c", "x5t", "x5t#S256", "typ", "cty", "crit",
             "enc", "zip", "kty", "use", "key_ops", "sig", "sign", "verify", "encrypt", "decrypt",
-            "wrapKey", "unwrapKey", "deriveKey", "deriveBits", 
+            "wrapKey", "unwrapKey", "deriveKey", "deriveBits",
             "HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512",
-            "PS256", "PS384", "PS512", "none", "RSA1_5", "RSA-OAEP", "RSA-OAEP-256", 
+            "PS256", "PS384", "PS512", "none", "RSA1_5", "RSA-OAEP", "RSA-OAEP-256",
             "A128KW", "A192KW", "A256KW", "dir", "ECDH-ES", "ECDH-ES+A128KW", "ECDH-ES+A192KW",
             "ECDH-ES+A256KW", "A128GCMKW", "A192GCMKW", "A256GCMKW", "PBES2-HS256+A128KW",
             "PBES2-HS384+A192KW", "PBES2-HS512+A256KW", "A128CBC-HS256", "A192CBC-HS384",
@@ -45,7 +43,7 @@ namespace Goedel.Cryptography.Jose {
         public static Dictionary<string, int> MakeDictionary(string[] Tags) {
             var Result = new Dictionary<string, int>(Tags.Length);
 
-            for (var i = 0; i<Tags.Length; i++) {
+            for (var i = 0; i < Tags.Length; i++) {
                 Result.Add(Tags[i], i);
                 }
 

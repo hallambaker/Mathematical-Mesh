@@ -112,8 +112,14 @@ Namespace Goedel.Cryptography
 				|The specified key did not have a valid cryptographic
 				|provider. This may be because the key algorithm is 
 				|not supported or the key parameters were found to be invalid.
-
-
+		Exception NullKeyValue
+			Console "The key value must not be null"
+			Description
+				|The key value must not be null
+		Exception NullParameter
+			Console "The parameter value must not be null"
+			Description
+				|The parameter value must not be null
 		Exception KeySizeNotSupported
 			Console "The requested key size is not supported"
 			Description

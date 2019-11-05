@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using System.IO;
 
 namespace Goedel.IO {
 
@@ -17,7 +15,7 @@ namespace Goedel.IO {
         /// <summary>Create new file overwriting any existing file. (Alias for New.)</summary>
         Overwrite,
         /// <summary>Create new file overwriting any existing file. (Alias for Overwrite.)</summary>
-        Create=Overwrite,
+        Create = Overwrite,
         /// <summary>Open existing file, abort if file does not exist</summary>
         Existing,
         /// <summary>Open existing file or create new if it does not exist</summary>
@@ -262,7 +260,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileWriteShare(this string filename) => 
+        public static FileStream OpenFileWriteShare(this string filename) =>
             new FileStream(filename, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
 
@@ -272,7 +270,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileAppend(this string filename) => 
+        public static FileStream OpenFileAppend(this string filename) =>
             new FileStream(filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.Read);
 
@@ -282,7 +280,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="Filename">The file to write to.</param>
         /// <returns>File stream to write to the file.</returns>
-        public static FileStream OpenFileAppendShare(this string Filename) => 
+        public static FileStream OpenFileAppendShare(this string Filename) =>
             new FileStream(Filename, System.IO.FileMode.Append, System.IO.FileAccess.Write,
                 System.IO.FileShare.ReadWrite);
 
@@ -309,7 +307,7 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file to write to.</param>
         /// <returns>The text writer.</returns>
-        public static TextWriter OpenTextWriterNew (this string filename) {
+        public static TextWriter OpenTextWriterNew(this string filename) {
             var fileStream = filename.OpenFileNew();
             return new StreamWriter(fileStream);
             }

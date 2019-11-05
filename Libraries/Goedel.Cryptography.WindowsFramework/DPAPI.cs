@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Runtime.InteropServices;
+﻿using Goedel.Utilities;
+
+using System;
 using System.ComponentModel;
-using Goedel.Utilities;
+using System.Runtime.InteropServices;
 
 namespace Goedel.Cryptography.Windows {
 
@@ -12,7 +12,7 @@ namespace Goedel.Cryptography.Windows {
     /// Provide access to the Windows Data Protection API. This binds data to the user's
     /// public key so that th user's password is required to unlock it.
     /// </summary>
-    public class NativeMethods  {
+    public class NativeMethods {
 
         // Wrapper for DPAPI CryptProtectData function.
         [DllImport("crypt32.dll", SetLastError = true, CharSet = CharSet.Auto)]
@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.Windows {
 
             cbData = data.Length;
             pbData = Marshal.AllocHGlobal(data.Length);
-            Assert.False(pbData == IntPtr.Zero, InsufficientMemory.Throw); 
+            Assert.False(pbData == IntPtr.Zero, InsufficientMemory.Throw);
             cbData = data.Length;
             Marshal.Copy(data, 0, pbData, data.Length);
 
@@ -84,7 +84,7 @@ namespace Goedel.Cryptography.Windows {
             }
 
         // Null values
-        static IntPtr NullPtr = ((IntPtr)((int)(0)));
+        static IntPtr NullPtr = ((IntPtr)0);
         static DATA_BLOB NullBlob = new DATA_BLOB();
         readonly byte[] EmptyBytes = new byte[0];
 
@@ -109,7 +109,7 @@ namespace Goedel.Cryptography.Windows {
         /// <param name="Description">Description of the stored data</param>
         /// <returns>The encrypted data.</returns>
         public static byte[] Encrypt(byte[] PlainTextBytes,
-                                KeyType KeyType=KeyType.UserKey,
+                                KeyType KeyType = KeyType.UserKey,
                                 string Description = null,
                                 byte[] EntropyBytes = null
                                 ) {

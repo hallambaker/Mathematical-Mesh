@@ -1,11 +1,6 @@
-﻿using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Algorithms;
-using System;
-using Goedel.ASN;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -16,9 +11,9 @@ namespace Goedel.Cryptography {
     public class KeyPairX25519 : KeyPairECDH {
 
         ///<summary>The public key value.</summary>
-        public CurveX25519Public PublicKey;
+        public CurveX25519Public PublicKey { get; set; }
         ///<summary>The private key value</summary>
-        public CurveX25519Private PrivateKey;
+        public CurveX25519Private PrivateKey { get; set; }
 
 
         #region //Properties
@@ -258,10 +253,10 @@ namespace Goedel.Cryptography {
 
         #region //Properties
         ///<summary>The public key value.</summary>
-        public CurveX448Public PublicKey;
+        public CurveX448Public PublicKey { get; set; }
 
         ///<summary>The implementation private key value (if exportable)</summary>
-        public CurveX448Private PrivateKey;
+        public CurveX448Private PrivateKey { get; set; }
 
         ///<summary>The implementation public key value</summary>
         public override IKeyAdvancedPublic IKeyAdvancedPublic => PublicKey;

@@ -1,7 +1,8 @@
-﻿using System;
-using Goedel.XUnit;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Utilities;
+using Goedel.XUnit;
+
+using System;
 
 
 namespace Scratchpad {
@@ -19,9 +20,14 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
             // The tests we need to clear to get the group encryption stuff going:
-            TestDare.Test().MessageGroup();
+
+
+
+            //TestDare.Test().MessageGroup();
             //TestDare.Test().MessageEncrypted();
-            //TestService.Test().MeshCatalogGroup();
+
+            //TestService.Test().MeshCatalogAccount();
+            TestService.Test().MeshCatalogGroup();
 
             // From the command line:
             //ShellTests.Test().TestFileEncrypt();
@@ -80,7 +86,7 @@ namespace Scratchpad {
                 if ((i % 1000) == 0) {
                     Console.WriteLine(i);
                     }
-                
+
                 var document = $"UDF Compressed Document {i}";
                 var contentType = "text/plain";
                 var utf8 = document.ToUTF8();

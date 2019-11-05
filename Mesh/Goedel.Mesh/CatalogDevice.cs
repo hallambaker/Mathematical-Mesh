@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh {
 
@@ -46,7 +45,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
-        
+
         ///<summary>Enumerate the catalog as CatalogEntryDevice instances.</summary>
         public AsCatalogEntryDevice AsCatalogEntryDevice => new AsCatalogEntryDevice(this);
 
@@ -65,13 +64,13 @@ namespace Goedel.Mesh {
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         public CatalogDevice(
-                    string directory, 
-                    string containerName=null,
+                    string directory,
+                    string containerName = null,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, 
-                    bool decrypt=true,
-                    bool create=true) :
-            base(directory, containerName?? Label, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    KeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+            base(directory, containerName ?? Label, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
 
@@ -82,7 +81,7 @@ namespace Goedel.Mesh {
             Console.WriteLine("  Device transaction!");
 
             return base.Transact(catalog, updates);
-            
+
             }
 
 
@@ -99,11 +98,14 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class CatalogedDevice{
+    public partial class CatalogedDevice {
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
         public override string _PrimaryKey => DeviceUDF;
+
+        KeyCollection keyCollection;
+
 
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
@@ -119,8 +121,9 @@ namespace Goedel.Mesh {
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
-        public ActivationDevice ActivationDevice => activationDevice ??
-                ActivationDevice.Decode(EnvelopedActivationDevice).CacheValue(out activationDevice);
+        public ActivationDevice GetActivationDevice(KeyCollection keyCollection) =>
+            activationDevice ?? (keyCollection == null ? null :
+                ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
         ActivationDevice activationDevice;
 
         /// <summary>
@@ -148,7 +151,7 @@ namespace Goedel.Mesh {
 
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
-            ActivationDevice.ToBuilder(builder, indent, "[Activation Device Missing]");
+            GetActivationDevice(machine?.KeyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             if (Accounts == null) {
                 builder.AppendIndent(indent, $"Accounts: None");
@@ -159,25 +162,26 @@ namespace Goedel.Mesh {
                 foreach (var account in Accounts) {
                     builder.AppendIndent(indent, $"Account Entry {account.AccountUDF}");
 
-                    account.ProfileAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    account.ProfileAccount.ToBuilder(builder, indent, "[Profile Account Missing]");
                     //account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
-                    account.ActivationAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    //account.ActivationAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
                     }
 
                 }
 
             }
 
-        public static CatalogedDevice Decode(DareEnvelope message, KeyCollection keyCollection) {
-            if (message == null) {
+        public static CatalogedDevice Decode(DareEnvelope envelope, KeyCollection keyCollection) {
+            if (envelope == null) {
                 return null;
                 }
 
-            var plaintext = message.GetPlaintext(keyCollection);
+            var plaintext = envelope.GetPlaintext(keyCollection);
 
             Console.WriteLine(plaintext.ToUTF8());
             var result = FromJSON(plaintext.JSONReader(), true);
-            result.DareEnvelope = message;
+            result.DareEnvelope = envelope;
+            result.keyCollection = keyCollection;
             return result;
             }
 

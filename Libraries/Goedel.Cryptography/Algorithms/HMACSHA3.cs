@@ -23,25 +23,24 @@
 // Modified 2018, Phillip Hallam-Baker.
 // Imported into Goedel libraries.
 
-using System;
+using Goedel.Utilities;
+
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
-    /// <summary>
-    /// 
-    /// </summary>
-    [ComVisible(true)]
+	/// <summary>
+	/// 
+	/// </summary>
+	[ComVisible(true)]
 	public class HMACSHA3 : HMAC {
 
-		//static HMACSHA3() {
-		//	SHA3 sha = SHA3.Create();
-		//}
 
 		/// <summary>
-		/// 
+		/// Constructor for an HMACSHA3 HMAC.
 		/// </summary>
-		/// <param name="hashBitLength"></param>
+		/// <param name="hashBitLength">The hash bit length, must be 224, 256, 384 or 512</param>
 		public HMACSHA3(int hashBitLength = 512) : this(Utilities.GenerateRandom(0x80), hashBitLength) { }
 
 		/// <summary>
@@ -50,15 +49,12 @@ namespace Goedel.Cryptography.Algorithms {
 		/// <param name="key"></param>
 		/// <param name="hashBitLength"></param>
 		public HMACSHA3(byte[] key, int hashBitLength = 512) {
-			base.HashName = "SHA3Managed";
-			SetHashBitLength(hashBitLength);
-			SetHMACBlockSize();
-			Initialize();
-			base.Key = (byte[])key.Clone();
-		}
+			Contract.Requires(key != null);
 
-		private void SetHMACBlockSize() {
-			switch (base.HashSizeValue) {
+			key.AssertNotNull(NullKeyValue.Throw);
+			base.HashName = "SHA3Managed";
+
+			switch (hashBitLength) {
 				case 224:
 					base.BlockSizeValue = 144;
 					break;
@@ -71,20 +67,13 @@ namespace Goedel.Cryptography.Algorithms {
 				case 512:
 					base.BlockSizeValue = 72;
 					break;
+				default:
+					throw new KeySizeNotSupported();
+				}
+			base.HashSizeValue = hashBitLength;
+			Initialize();
+			base.Key = (byte[])key.Clone();
 			}
+
 		}
-
-		private void SetHashBitLength(int hashBitLength) {
-			if (hashBitLength != 512) {
-                throw new NotImplementedException("HMAC-SHA3 is only implemented for 512bits hashes.");
-                }
-
-            if (hashBitLength != 224 && hashBitLength != 256 && hashBitLength != 384 && hashBitLength != 512) {
-                throw new ArgumentException("Hash bit length must be 224, 256, 384, or 512", "hashBitLength");
-                }
-
-            base.HashSizeValue = hashBitLength;
-		}
-
 	}
-}

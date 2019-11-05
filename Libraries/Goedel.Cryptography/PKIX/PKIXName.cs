@@ -19,9 +19,7 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
 using System.Collections.Generic;
-using Goedel.Cryptography;
 
 namespace Goedel.Cryptography.PKIX {
     public partial class Name {
@@ -56,7 +54,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="CryptoProvider">The key to fingerprint</param>
         public Name(CryptoProvider CryptoProvider) :
-                this (CryptoProvider.UDF) {
+                this(CryptoProvider.UDF) {
             }
 
 
@@ -113,7 +111,7 @@ namespace Goedel.Cryptography.PKIX {
     /// <summary>
     /// Encoding of X.500 text string.
     /// </summary>
-    public partial class AnyString  {
+    public partial class AnyString {
         /// <summary>
         /// Construct from StringType enumeration.
         /// </summary>
@@ -139,7 +137,7 @@ namespace Goedel.Cryptography.PKIX {
                     }
                 }
             }
-        }    
-    
-    
+        }
+
+
     }

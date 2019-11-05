@@ -20,13 +20,13 @@
 //  
 //  
 
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Text;
-using System.Diagnostics;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -87,7 +87,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="URI">HTTP URI to register.</param>
         /// <param name="Host">Service Provider to register.</param>
-        public HTTPPortRegistration (string URI, InterfaceRegistration Host) {
+        public HTTPPortRegistration(string URI, InterfaceRegistration Host) {
             this.URI = URI;
             this.Interface = Host;
             }
@@ -129,7 +129,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Interface">The provider interface.</param>
         /// <param name="ProviderRegistration">The provider.</param>
-        public InterfaceRegistration (JPCInterface Interface, 
+        public InterfaceRegistration(JPCInterface Interface,
                     ProviderRegistration ProviderRegistration) {
             this.Interface = Interface;
             this.ProviderRegistration = ProviderRegistration;
@@ -223,8 +223,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Interface">Interface to add,</param>
         /// <returns>Registration of interface.</returns>
-        public InterfaceRegistration Add (JPCInterface Interface) {
-            var InterfaceRegistration = new InterfaceRegistration (Interface, this);
+        public InterfaceRegistration Add(JPCInterface Interface) {
+            var InterfaceRegistration = new InterfaceRegistration(Interface, this);
             Interfaces.Add(InterfaceRegistration);
 
             return InterfaceRegistration;
@@ -233,7 +233,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Register connected ports.
         /// </summary>
-        public  void Open() {
+        public void Open() {
             foreach (var Interface in Interfaces) {
                 Interface.Open();
                 }
@@ -242,7 +242,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Deregister connected ports.
         /// </summary>
-        public  void Close() {
+        public void Close() {
             foreach (var Interface in Interfaces) {
                 Interface.Close();
                 }
@@ -317,7 +317,7 @@ namespace Goedel.Protocol {
 
             }
 
-        private PortRegistration GetPort (List<PortRegistration> Ports, Uri URI) {
+        private PortRegistration GetPort(List<PortRegistration> Ports, Uri URI) {
             foreach (var Port in Ports) {
                 var HTTPPort = Port as HTTPPortRegistration;
                 if (URI.AbsoluteUri == HTTPPort.URI) {
@@ -328,8 +328,8 @@ namespace Goedel.Protocol {
             }
 
 
-        private void Handle (HttpListenerContext Context) {
-            Stream RequestStream = null, ResponseStream=null;
+        private void Handle(HttpListenerContext Context) {
+            Stream RequestStream = null, ResponseStream = null;
             try {
                 // Get request data
 
@@ -341,7 +341,7 @@ namespace Goedel.Protocol {
                 var Encoding = Request.ContentEncoding;
                 RequestStream = Request.InputStream;
 
-                var Port = GetPort  (Ports, Request.Url);   
+                var Port = GetPort(Ports, Request.Url);
 
                 //var Reader = new StreamReader(RequestStream, Encoding);
                 //var RequestBody = Reader.ReadToEnd();
@@ -387,7 +387,7 @@ namespace Goedel.Protocol {
         /// Start the server. Note that the server runs in a separate
         /// thread and so control returns to the main loop.
         /// </summary>
-        public void StartAsync () {
+        public void StartAsync() {
 
             }
 

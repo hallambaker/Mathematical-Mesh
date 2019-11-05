@@ -11,26 +11,48 @@ implemented and a placeholder format is implemented instead.
 
 The `password add` command adds a calendar entry to a catalog:
 
-**Missing Example***
+
+````
+Alice> calendar add CalendarEntry1.json CalID1
+{
+  "Title": "CalendarEntry1.json",
+  "Key": "NCVX-HLBU-5L23-VYYD-WUBR-4DPF-I2BE"}Alice> calendar add CalendarEntry2.json CalID2
+{
+  "Title": "CalendarEntry2.json",
+  "Key": "NCZY-AL4V-HQST-IL5X-JQFE-5UGF-3VIW"}````
 
 
 ## Finding calendars
 
 The `password get`  command retreives a calendar entry by label:
 
-**Missing Example***
+
+````
+Alice> calendar get CalID1
+Empty
+````
 
 ## Deleting calendars
 
 Calendar entries may be deleted using the  `calendar delete` command:
 
-**Missing Example***
+
+````
+Alice> calendar delete CalID1
+ERROR - Object reference not set to an instance of an object.
+Alice> calendar list
+ERROR - The command  is not known.
+````
 
 ## Listing calendars
 
 A complete list of calendars is obtained using the  `calendar list` command:
 
-**Missing Example***
+
+````
+Alice> calendar list
+ERROR - The command  is not known.
+````
 
 ## Adding devices
 

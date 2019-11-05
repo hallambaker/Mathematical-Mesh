@@ -1,12 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -22,10 +16,10 @@ namespace Goedel.Mesh.Shell {
 
             using (var contextAccount = GetContextAccount(Options)) {
 
-                var CataloguedGroup = contextAccount.CreateGroup(groupID);
+                var contextGroup = contextAccount.CreateGroup(groupID);
 
                 var result = new ResultEntry() {
-                    CatalogEntry = CataloguedGroup
+                    CatalogEntry = contextGroup.CatalogedGroup
                     };
                 return result;
                 }
@@ -40,12 +34,12 @@ namespace Goedel.Mesh.Shell {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
             using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetCatalogGroup(groupID)) {
+                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
 
                     //Contact contact = null;
                     "Implement pulling contact from contacts catalog".TaskFunctionality(false);
 
-                    var entryMember = catalog.Add(memberID);
+                    var entryMember = contextGroup.Add(memberID);
 
                     var result = new ResultEntry() {
                         CatalogEntry = entryMember
@@ -65,8 +59,8 @@ namespace Goedel.Mesh.Shell {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
             using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetCatalogGroup(groupID)) {
-                    var member = catalog.Locate(memberID);
+                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
+                    var member = contextGroup.Locate(memberID);
 
                     var result = new ResultEntry() {
                         Success = member != null,
@@ -86,10 +80,10 @@ namespace Goedel.Mesh.Shell {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
             using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetCatalogGroup(groupID)) {
-                   
-                    var member = catalog.Locate(memberID);
-                    catalog.Delete(member);
+                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
+
+                    var member = contextGroup.Locate(memberID);
+                    contextGroup.Delete(member);
 
                     var result = new ResultEntry() {
                         Success = member != null,
@@ -110,7 +104,7 @@ namespace Goedel.Mesh.Shell {
             var groupID = Options.GroupID.Value;
 
             using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetCatalogGroup(groupID)) {
+                using (var catalog = contextAccount.GetContextGroup(groupID)) {
                     var catalogedEntries = new List<CatalogedEntry>();
 
                     "Fill in the member entries".TaskFunctionality();

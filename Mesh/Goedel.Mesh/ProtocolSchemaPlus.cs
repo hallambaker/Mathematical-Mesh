@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Cryptography.Dare;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Goedel.Mesh {
 
@@ -34,7 +34,7 @@ namespace Goedel.Mesh {
         /// Default constructor
         /// </summary>
 
-        public MeshResponse(Exception exception=null) {
+        public MeshResponse(Exception exception = null) {
             if (exception == null) {
                 StatusCode = 201;
                 StatusDescriptionCode = "Operation completed successfully";
@@ -128,13 +128,13 @@ namespace Goedel.Mesh {
         }
 
     public partial class ContainerStatus {
-        public override void ToBuilder(StringBuilder builder, int indent = 0) => 
+        public override void ToBuilder(StringBuilder builder, int indent = 0) =>
             builder.AppendIndent(indent, $"{Container}:  {Index} {Digest?.ToStringBase64url()}");
         }
 
 
     public partial class ContainerUpdate {
-        public override void ToBuilder(StringBuilder builder, int indent = 0) => 
+        public override void ToBuilder(StringBuilder builder, int indent = 0) =>
             builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
         }
 

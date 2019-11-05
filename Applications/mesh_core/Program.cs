@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Goedel.Cryptography;
 using Goedel.Mesh.Shell;
-using Goedel.Cryptography;
 
 namespace mesh_core {
     class Program {

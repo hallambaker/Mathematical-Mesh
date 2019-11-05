@@ -1,9 +1,9 @@
-﻿using System.Numerics;
-using System.Collections.Generic;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Algorithms;
+using Goedel.Utilities;
+
 using System;
+using System.Numerics;
 
 namespace Goedel.Cryptography {
 
@@ -87,12 +87,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The internal Public DH parameters
         /// </summary>
-        public DiffeHellmanPublic PublicKey;
+        public DiffeHellmanPublic PublicKey { get; set; }
 
         /// <summary>
         /// The internal Private DH parameters
         /// </summary>
-        public DiffeHellmanPrivate PrivateKey;
+        public DiffeHellmanPrivate PrivateKey { get; set; }
 
         #region // Properties
 
@@ -354,8 +354,8 @@ namespace Goedel.Cryptography {
         /// for protocol isolation.</param>
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
-            byte[] Data, 
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, 
+            byte[] Data,
+            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
             byte[] Context = null) => throw new NotImplementedException();
 
         /// <summary>
@@ -368,8 +368,8 @@ namespace Goedel.Cryptography {
         /// <param name="Digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
         public override bool VerifyHash(
-            byte[] Digest, 
-            byte[] Signature, 
+            byte[] Digest,
+            byte[] Signature,
             CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) => throw new NotImplementedException();
 
 

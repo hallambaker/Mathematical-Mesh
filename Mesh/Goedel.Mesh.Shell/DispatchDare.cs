@@ -1,12 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
+
+using System.IO;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -35,7 +30,7 @@ namespace Goedel.Mesh.Shell {
                 };
 
 
-            var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile, 
+            var Length = DareEnvelope.Encode(cryptoParameters, inputFile, outputFile,
                 contentMeta: ContentInfo);
 
             return new ResultFile() {

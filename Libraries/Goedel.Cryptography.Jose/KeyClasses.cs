@@ -20,19 +20,16 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Protocol;
 
 namespace Goedel.Cryptography.Jose {
 
     public partial class Key {
 
         /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
-        public virtual KeyPair KeyPair => GetKeyPair (KeySecurity.Bound);
+        public virtual KeyPair KeyPair => GetKeyPair(KeySecurity.Bound);
 
 
         /// <summary>
@@ -43,8 +40,8 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <returns>The extracted key pair</returns>
         public virtual KeyPair GetKeyPair(
-                    KeySecurity keySecurity, 
-                    KeyCollection keyCollection = null) => 
+                    KeySecurity keySecurity,
+                    KeyCollection keyCollection = null) =>
             throw new InternalError("GetKeyPair method not implemented in child class");
 
 
@@ -87,15 +84,15 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory (IPKIXPublicKey pkixKey) {
+        public static Key Factory(IPKIXPublicKey pkixKey) {
 
             switch (pkixKey) {
-                case PKIXPrivateKeyRSA PKIXPrivateKeyRSA:   return new PrivateKeyRSA(PKIXPrivateKeyRSA);
-                case PKIXPrivateKeyDH PKIXPrivateKeyDH:     return new PrivateKeyDH(PKIXPrivateKeyDH);
+                case PKIXPrivateKeyRSA PKIXPrivateKeyRSA: return new PrivateKeyRSA(PKIXPrivateKeyRSA);
+                case PKIXPrivateKeyDH PKIXPrivateKeyDH: return new PrivateKeyDH(PKIXPrivateKeyDH);
                 case PKIXPrivateKeyECDH PKIXPrivateKeyECDH: return new PrivateKeyECDH(PKIXPrivateKeyECDH);
-                case PKIXPublicKeyRSA PKIXPublicKeyRSA:     return new PublicKeyRSA(PKIXPublicKeyRSA);
-                case PKIXPublicKeyDH PKIXPublicKeyDH:       return new PublicKeyDH(PKIXPublicKeyDH);
-                case PKIXPublicKeyECDH PKIXPublicKeyECDH:   return new PublicKeyECDH(PKIXPublicKeyECDH);
+                case PKIXPublicKeyRSA PKIXPublicKeyRSA: return new PublicKeyRSA(PKIXPublicKeyRSA);
+                case PKIXPublicKeyDH PKIXPublicKeyDH: return new PublicKeyDH(PKIXPublicKeyDH);
+                case PKIXPublicKeyECDH PKIXPublicKeyECDH: return new PublicKeyECDH(PKIXPublicKeyECDH);
                 }
             return null;
             }
@@ -122,7 +119,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
         /// <param name="keyPair">Key pair to convert</param>
         /// <returns>JOSE private Key value</returns>
-        public static Key FactoryPrivate (KeyPair keyPair) {
+        public static Key FactoryPrivate(KeyPair keyPair) {
             var PKIX = keyPair?.PKIXPrivateKey;
             return Factory(PKIX);
             }
@@ -130,7 +127,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>Create public key from Goedel.Cryptography.KeyPair.</summary>
         /// <param name="keyPair">Key pair to convert</param>
         /// <returns>JOSE public Key value</returns>
-        public static Key FactoryPublic (KeyPair keyPair) {
+        public static Key FactoryPublic(KeyPair keyPair) {
             var PKIX = keyPair?.PKIXPublicKey;
             return Factory(PKIX);
             }
@@ -149,7 +146,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public KeyContainer () { }
+        public KeyContainer() { }
 
         /// <summary>
         /// Construct a Key Container with the specified Key security level.
@@ -157,7 +154,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="key">The key to constrruct the container for.</param>
         /// <param name="keySecurity">The key security level.</param>
         public KeyContainer(Key key, KeySecurity keySecurity) :
-                    this (key.ToJson(true), keySecurity){
+                    this(key.ToJson(true), keySecurity) {
             }
 
 
@@ -166,7 +163,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="keyData">The key to constrruct the container for.</param>
         /// <param name="keySecurity">The key security level.</param>
-        public KeyContainer (byte[] keyData, KeySecurity keySecurity) {
+        public KeyContainer(byte[] keyData, KeySecurity keySecurity) {
             Exportable = keySecurity.IsExportable();
             this.KeyData = keyData;
             }
@@ -179,14 +176,14 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the Goedel.Cryptography result.
         /// </summary>
-        public virtual KeyAgreementResult KeyAgreementResult { get;}
+        public virtual KeyAgreementResult KeyAgreementResult { get; }
 
         /// <summary>
         /// Obtain a Key agreement provider for the specified key agreement result.
         /// </summary>
         /// <param name="keyAgreementResult">The result to return a provider for.</param>
         /// <returns>The provider (if found).</returns>
-        public static KeyAgreement Factory (KeyAgreementResult keyAgreementResult) {
+        public static KeyAgreement Factory(KeyAgreementResult keyAgreementResult) {
             switch (keyAgreementResult) {
                 case ResultDiffieHellman result: {
                     return new KeyAgreementDH(result);
@@ -209,13 +206,13 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public override KeyAgreementResult KeyAgreementResult =>
               new ResultDiffieHellman() {
-                  Agreement = Result.BigIntegerLittleEndian ()
+                  Agreement = Result.BigIntegerLittleEndian()
                   };
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public KeyAgreementDH () {
+        public KeyAgreementDH() {
             }
 
         /// <summary>
@@ -234,9 +231,9 @@ namespace Goedel.Cryptography.Jose {
         /// Return the Goedel.Cryptography result.
         /// </summary>
         public override KeyAgreementResult KeyAgreementResult => throw new NYI();
-              //new ResultECDH() {
-              //    Agreement = Result.BigIntegerLittleEndian()
-              //    };
+        //new ResultECDH() {
+        //    Agreement = Result.BigIntegerLittleEndian()
+        //    };
 
         /// <summary>
         /// Default constructor

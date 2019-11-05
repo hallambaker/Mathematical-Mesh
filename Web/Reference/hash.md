@@ -30,7 +30,21 @@ The `hash udf` command returns the UDF Content digest of the specified input
 file according to the precision, IANA media type and digest algorithm specified
 with the `/bits`, `/cty` and `/alg` options.
 
-**Missing Example***
+
+````
+Alice> hash udf TestFile1.txt
+MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
+````
+
+Specifying the /json option returns a result of type ResultDigest:
+
+````
+Alice> hash udf TestFile1.txt /json
+{
+  "ResultDigest": {
+    "Success": true,
+    "Digest": "MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R"}}
+````
 
 
 # hash digest
@@ -48,7 +62,21 @@ The `hash digest` command returns the Content digest of the specified input
 file according to the digest algorithm specifiedwith the `/alg` option.
 
 
-**Missing Example***
+
+````
+Alice> hash digest TestFile1.txt
+A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
+````
+
+Specifying the /json option returns a result of type ResultDigest:
+
+````
+Alice> hash digest TestFile1.txt /json
+{
+  "ResultDigest": {
+    "Success": true,
+    "Digest": "A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69"}}
+````
 
 The `/alg` option allows the digest algorithm to be specified.
 
@@ -77,5 +105,21 @@ key is used.
 If a MAC value is specified, it is compared to the calculated value and the value
 true returned if and only if it matches the value specified.
 
-**Missing Example***
+
+````
+Alice> hash mac TestFile1.txt
+ACCK-L5KL-35Z3-CASQ-ZMGT-HRGI-Y6AB
+ND4D-ZTHE-XXND-OLPG-IHUR-ECKL-UAPP
+````
+
+Specifying the /json option returns a result of type ResultDigest:
+
+````
+Alice> hash mac TestFile1.txt /json
+{
+  "ResultDigest": {
+    "Success": true,
+    "Digest": "ACCK-L5KL-35Z3-CASQ-ZMGT-HRGI-Y6AB",
+    "Key": "ND4D-ZTHE-XXND-OLPG-IHUR-ECKL-UAPP"}}
+````
 

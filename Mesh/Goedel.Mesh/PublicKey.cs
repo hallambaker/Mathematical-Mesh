@@ -20,11 +20,12 @@
 //  
 //  
 
-using System;
 using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Cryptography.Jose;
+
+using System;
 
 namespace Goedel.Mesh {
 
@@ -92,7 +93,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="TestUDF">The fingerprint value.</param>
         /// <returns>true if the verification succeeds, false otherwise.</returns>
-        public bool Verify (string TestUDF) { 
+        public bool Verify(string TestUDF) {
             var KeyPair = GetKeyPair();
             if (KeyPair.UDF == TestUDF) {
                 _KeyPair = KeyPair;
@@ -103,24 +104,24 @@ namespace Goedel.Mesh {
             }
 
 
-        private KeyPair GetKeyPair () {
+        private KeyPair GetKeyPair() {
             if (PrivateParameters != null) {
                 return PrivateParameters.GetKeyPair(KeySecurity.Bound);
                 }
             if (PublicParameters != null) {
                 return PublicParameters.GetKeyPair(KeySecurity.Bound);
                 }
-            Assert.Fail(NYI.Throw,"Need to construct from the private parameters.");
+            Assert.Fail(NYI.Throw, "Need to construct from the private parameters.");
 
             return null;
             }
- 
+
 
 
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PublicKey () {
+        public PublicKey() {
             }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="KeyPair">The key pair to bind.</param>
         /// <returns>The generated key pair</returns>
-        public PublicKey (KeyPair KeyPair) {
+        public PublicKey(KeyPair KeyPair) {
             this.KeyPair = KeyPair;
             PublicParameters = Key.GetPublic(KeyPair);
             }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Threading;
-using Goedel.Utilities;
-using Goedel.IO;
+﻿using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Jose;
+using Goedel.IO;
 using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
+using System.IO;
 
 namespace Goedel.Cryptography.Windows {
 
@@ -24,7 +24,7 @@ namespace Goedel.Cryptography.Windows {
         const string ExportFalse = "NO-EXPORT";
         const string ExportTrue = "Exportable";
 
-        static KeyStore () {
+        static KeyStore() {
             var AppData = Environment.GetFolderPath(
                         Environment.SpecialFolder.ApplicationData);
             KeystoreUserPrivate = Path.Combine(AppData, DirectoryUserPrivate);
@@ -44,12 +44,12 @@ namespace Goedel.Cryptography.Windows {
                 return;
                 }
             var UDF = Data.UDF();
-            var Description = (KeySecurity.IsExportable() ? ExportTrue : ExportFalse) + 
+            var Description = (KeySecurity.IsExportable() ? ExportTrue : ExportFalse) +
                     " Private Key " + UDF;
             var JoseKey = Key.Factory(Data);
             var Plaintext = JoseKey.ToJson(true);
-            var CipherText = NativeMethods .Encrypt(Plaintext, Description: Description, EntropyBytes: EntropyBytes);
-            var File = FileName (UDF);
+            var CipherText = NativeMethods.Encrypt(Plaintext, Description: Description, EntropyBytes: EntropyBytes);
+            var File = FileName(UDF);
 
             var Directory = System.IO.Directory.CreateDirectory(KeystoreUserPrivate);
             File.WriteFileNew(CipherText);
@@ -81,14 +81,14 @@ namespace Goedel.Cryptography.Windows {
             Array.Copy(Data, CipherText, Length);
 
             //string Description;
-            var Plaintext = NativeMethods .Decrypt(CipherText, out var Description, EntropyBytes);
+            var Plaintext = NativeMethods.Decrypt(CipherText, out var Description, EntropyBytes);
             var PlaintextText = Plaintext.ToUTF8();
             var JoseKey = Key.FromJSON(PlaintextText.JSONReader());
 
 
             var Exportable = Description.StartsWith(ExportTrue);
 
-            return JoseKey.GetKeyPair(KeySecurity.Bound); 
+            return JoseKey.GetKeyPair(KeySecurity.Bound);
             }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Goedel.Cryptography.Windows {
             File.Delete(FilePath);
 
 
-            return false; 
+            return false;
             }
 
 

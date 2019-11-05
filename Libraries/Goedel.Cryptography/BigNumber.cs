@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Numerics;
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingUp => (UpByte < (Length-1) | UpBit <8) ;
+        public bool GoingUp => (UpByte < (Length - 1) | UpBit < 8);
 
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Goedel.Cryptography {
             UpByte = 0;
             UpBit = 0;
             BitField = Value.ToByteArrayLittleEndian(Length);
-            
+
 
             DataDown = BitField[DownByte];
             DataUp = BitField[0];
@@ -84,7 +85,7 @@ namespace Goedel.Cryptography {
             if (UpBit > 7) {
                 UpByte++;
                 UpBit = 0;
-                
+
 
                 DataUp = BitField[UpByte];
                 }
@@ -107,7 +108,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Source">The source array</param>
         /// <returns>A new array containing a copy of the elements in the source.</returns>
-        public static byte[] Duplicate (this byte[] Source) {
+        public static byte[] Duplicate(this byte[] Source) {
             var Result = new byte[Source.Length];
             Array.Copy(Source, Result, Source.Length);
             return Result;
@@ -143,7 +144,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Data">The data in little endian format.</param>
         /// <returns>The constructed integer</returns>
-        public static BigInteger BigIntegerLittleEndian (this byte[] Data) {
+        public static BigInteger BigIntegerLittleEndian(this byte[] Data) {
             if ((Data[Data.Length - 1] >> 7) == 0) {
                 return new BigInteger(Data);
                 }
@@ -165,7 +166,7 @@ namespace Goedel.Cryptography {
                 Array.Copy(Data, Extend, Data.Length);
                 }
             else {
-                Extend = new byte[Data.Length+1];
+                Extend = new byte[Data.Length + 1];
                 Array.Copy(Data, 0, Extend, 1, Data.Length);
                 }
             Array.Reverse(Extend);
@@ -350,7 +351,7 @@ namespace Goedel.Cryptography {
         /// <param name="certainty">The degree of certainty.</param>
         /// <returns>If the value <paramref name="source"/> is found to not be prime,
         /// returns false. Otherwise, returns true.</returns>
-        public static bool IsProbablePrime(this BigInteger source, int certainty=128) {
+        public static bool IsProbablePrime(this BigInteger source, int certainty = 128) {
             if (source == 2 || source == 3) {
                 return true;
                 }

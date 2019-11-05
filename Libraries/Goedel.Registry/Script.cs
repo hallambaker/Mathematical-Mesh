@@ -1,9 +1,17 @@
 ﻿using System;
+
+/* Unmerged change from project 'Goedel.Registry'
+Before:
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+After:
+using System.Collections.Generic;
+using System.IO;
+*/
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using System.Text;
 
 
 namespace Goedel.Registry {
@@ -22,8 +30,8 @@ namespace Goedel.Registry {
         /// <summary>
         /// Default constructor
         /// </summary>
-        public Script () {
-			}
+        public Script() {
+            }
 
         /// <summary>
         /// Constructor with specified output.
@@ -35,7 +43,7 @@ namespace Goedel.Registry {
         /// Set the output.
         /// </summary>
         /// <param name="Output">The output stream</param>
-        public void SetTextWriter (TextWriter Output) {
+        public void SetTextWriter(TextWriter Output) {
             Close();
             _Output = Output;
             }
@@ -44,8 +52,8 @@ namespace Goedel.Registry {
         /// Constructor with specified output file
         /// </summary>
         /// <param name="FileName">The output file </param>
-        public void SetTextWriter (string FileName) {
-            SetTextWriter (new StreamWriter(FileName));
+        public void SetTextWriter(string FileName) {
+            SetTextWriter(new StreamWriter(FileName));
             _Filename = FileName;
             }
 
@@ -54,7 +62,7 @@ namespace Goedel.Registry {
         /// </summary>
         public void Close() {
             if (_Output != null) {
-                _Output.Close ();
+                _Output.Close();
                 }
             _Filename = null;
             }
@@ -81,15 +89,15 @@ namespace Goedel.Registry {
         static System.OperatingSystem OperatingSystem = System.Environment.OSVersion;
 
         /// <summary>The operating system platform name.</summary>
-        public static string Platform => OperatingSystem.Platform.ToString (); 
- 
+        public static string Platform => OperatingSystem.Platform.ToString();
+
 
         /// <summary>The operating system version.</summary>
-        public static string PlatformVersion  => OperatingSystem.Version.ToString(); 
+        public static string PlatformVersion => OperatingSystem.Version.ToString();
 
 
         /// <summary>The assembly title.</summary>
-        public static string AssemblyTitle  => GetAssemblyTitle(EntryAssembly); 
+        public static string AssemblyTitle => GetAssemblyTitle(EntryAssembly);
 
 
         /// <summary>Get assembly title.</summary>
@@ -161,7 +169,7 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Copyright</summary>
-        public static string AssemblyCopyright  => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
+        public static string AssemblyCopyright => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
                         "Unknown";
 
 
@@ -181,7 +189,7 @@ namespace Goedel.Registry {
             }
 
         /// <summary>The Assembly Company</summary>
-        public static string AssemblyCompany  => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
+        public static string AssemblyCompany => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
                         "Unknown";
 
 
@@ -275,7 +283,7 @@ namespace Goedel.Registry {
             var Indent = _Indent + new string(' ', Spaces);
             var Builder = new StringBuilder();
 
-            Builder.Append (Indent);
+            Builder.Append(Indent);
             Builder.Append("/// <summary>\n");
 
             var Split = Text.Split('\n');

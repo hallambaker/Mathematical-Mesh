@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Utilities;
+﻿using Goedel.Utilities;
+
+using System;
 using System.IO;
 
 namespace Goedel.Protocol {
@@ -22,7 +22,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Stream">The memory stream object</param>
         /// <returns>The output data.</returns>
-        public static string GetUTF8 (this Stream Stream) {
+        public static string GetUTF8(this Stream Stream) {
             var Memory = new MemoryStream();
             Stream.CopyTo(Memory);
             return Memory.ToArray().ToUTF8();
@@ -34,7 +34,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="b">The data to write</param>
-        public static void Write (this Stream Output, byte b) {
+        public static void Write(this Stream Output, byte b) {
             var buffer = new byte[] { b };
             Output.Write(buffer, 0, 1);
             }
@@ -57,7 +57,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Output">The stream to write the output to</param>
         /// <param name="c">Character to write</param>
-        public static void Write (this Stream Output, char c) {
+        public static void Write(this Stream Output, char c) {
             if (c < 0x80) {
                 Output.Write((byte)c);
                 return;

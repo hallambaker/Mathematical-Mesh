@@ -1,12 +1,11 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Xunit;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography;
 using Goedel.IO;
 using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestPersist {
@@ -21,7 +20,7 @@ namespace Goedel.XUnit {
             Cryptography.Cryptography.Initialize();
             _ = Goedel.XUnit.TestItem.Initialize;
             }
-        
+
 
 
         public TestPersist() => TestEnvironmentCommon.Initialize(true);
@@ -89,7 +88,7 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void TestPersistenceStoreAll () {
+        public void TestPersistenceStoreAll() {
             using (var TestStore = new TestItemContainerPersistenceStore(
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
                 // retrieve by master key -fail
@@ -166,7 +165,7 @@ namespace Goedel.XUnit {
             }
 
 
-        bool CheckEqual (TestItem v1, TestItem v2) {
+        bool CheckEqual(TestItem v1, TestItem v2) {
             var t1 = (v1.AccountID == v2.AccountID);
             var t2 = (v1.Status == v2.Status);
             var t3 = (v1.Created.ToString() == v2.Created.ToString());

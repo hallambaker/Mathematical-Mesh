@@ -1,13 +1,10 @@
-﻿using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Protocol;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
 
@@ -72,7 +69,7 @@ namespace Goedel.Mesh.Client {
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool readContainer = true) : base(
-                        fileName, type, comment, 
+                        fileName, type, comment,
                         fileStatus, containerType, dataEncoding, cryptoParameters,
                         keyCollection, readContainer) {
             }
@@ -134,7 +131,7 @@ namespace Goedel.Mesh.Client {
         ///// <returns></returns>
         //public CatalogedMachine GetConnection(string local = null) =>
         //    (local == null) ? DefaultEntry : DictionaryLocal2Connection.GetValue(local, null);
-            
+
 
         //public CatalogedPending GetPending(string local = null) =>
         //    (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as CatalogedPending);

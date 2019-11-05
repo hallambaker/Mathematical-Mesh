@@ -56,7 +56,7 @@ namespace Goedel.Registry {
 
         /// <summary>General parse error</summary>
         /// <param name="Message">Message for user</param>/// 
-        public GoedelParseException (string Message)
+        public GoedelParseException(string Message)
             : base(Message) {
 
 
@@ -66,7 +66,7 @@ namespace Goedel.Registry {
         /// <summary>General parse error</summary>
         /// <param name="Message">Message for user</param>
         /// <param name="Position">position in the file</param>
-        public GoedelParseException (string Message, Position Position) :
+        public GoedelParseException(string Message, Position Position) :
             base(Message + " at Line " + Position.Ln + " Col " + Position.Col + " in file " + Position.File) {
 
             //this.Position = Position;
@@ -206,7 +206,7 @@ namespace Goedel.Registry {
             ActionType.Add      // 18
             };
 
-        static CharType Type (char c) {
+        static CharType Type(char c) {
             if (c == ' ' | c == '\t') { return CharType.WhiteSpace; }
             if (c >= '0' & c <= '9') { return CharType.Digit; }
             if ((c >= 'A' & c <= 'Z')) { return CharType.Upper; }
@@ -369,45 +369,45 @@ namespace Goedel.Registry {
                             else {
                                 switch (ActionTable[NextState]) {
                                     case ActionType.Add: {
-                                            TokenText += c;
-                                            break;
-                                            }
+                                        TokenText += c;
+                                        break;
+                                        }
                                     case ActionType.Escape: {
-                                            if (State == 8) {
-                                                TokenText += c;
-                                                }
-                                            else if (State == 10) {
-                                                switch (c) {
-                                                    case 'n':
-                                                        TokenText += '\n';
-                                                        break;
-                                                    case 'r':
-                                                        TokenText += '\r';
-                                                        break;
-                                                    case 'v':
-                                                        TokenText += '\v';
-                                                        break;
-                                                    case 't':
-                                                        TokenText += '\t';
-                                                        break;
-                                                    case '\"':
-                                                        TokenText += '\"';
-                                                        break;
-                                                    case '\'':
-                                                        TokenText += '\'';
-                                                        break;
-                                                    case '\\':
-                                                        TokenText += '\\';
-                                                        break;
-                                                    case '0':
-                                                        TokenText += '\0';
-                                                        break;
-                                                    default:
-                                                        throw new Exception("Unknown Character Escape Sequence");
-                                                    }
-                                                }
-                                            break;
+                                        if (State == 8) {
+                                            TokenText += c;
                                             }
+                                        else if (State == 10) {
+                                            switch (c) {
+                                                case 'n':
+                                                    TokenText += '\n';
+                                                    break;
+                                                case 'r':
+                                                    TokenText += '\r';
+                                                    break;
+                                                case 'v':
+                                                    TokenText += '\v';
+                                                    break;
+                                                case 't':
+                                                    TokenText += '\t';
+                                                    break;
+                                                case '\"':
+                                                    TokenText += '\"';
+                                                    break;
+                                                case '\'':
+                                                    TokenText += '\'';
+                                                    break;
+                                                case '\\':
+                                                    TokenText += '\\';
+                                                    break;
+                                                case '0':
+                                                    TokenText += '\0';
+                                                    break;
+                                                default:
+                                                    throw new Exception("Unknown Character Escape Sequence");
+                                                }
+                                            }
+                                        break;
+                                        }
                                     }
 
                                 State = NextState;
@@ -423,7 +423,7 @@ namespace Goedel.Registry {
 
                 }
             catch (System.Exception Exception) {
-                throw new GoedelParseException (Exception.Message, Position);
+                throw new GoedelParseException(Exception.Message, Position);
                 }
 
             }

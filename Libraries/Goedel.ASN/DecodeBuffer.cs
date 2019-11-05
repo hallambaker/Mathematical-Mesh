@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Goedel.Utilities;
 
 namespace Goedel.ASN {
 
@@ -89,13 +87,13 @@ namespace Goedel.ASN {
                 var Byte4 = Read();
 
                 Assert.False(Byte4 >= 0x80, InvalidLength.Throw);
-                return (Byte1 <<24) | (Byte2 << 16) | (Byte3 <<8) | Byte4;
+                return (Byte1 << 24) | (Byte2 << 16) | (Byte3 << 8) | Byte4;
                 }
 
             throw new InvalidLength();
             }
 
-        int ReadCheckedLength (bool Indefinite) {
+        int ReadCheckedLength(bool Indefinite) {
             var Length = ReadLength();
 
             Assert.False(!Indefinite & Length < 0, IndefiniteLengthInvalid.Throw);
@@ -156,7 +154,7 @@ namespace Goedel.ASN {
             Assert.False(Length > 4, IntegerOverflow.Throw);
 
             var Byte0 = Read();
-            Assert.False (Byte0 >= 0x80, Implementation.Throw);
+            Assert.False(Byte0 >= 0x80, Implementation.Throw);
             if (Length == 1) {
                 return Byte0;
                 }
@@ -198,9 +196,9 @@ namespace Goedel.ASN {
             byte[] Result;
 
             if (Byte0 == 0) {
-                Result = new byte[Length-1];
+                Result = new byte[Length - 1];
                 for (var i = 1; i < Length; i++) {
-                    Result[i-1] = Read();
+                    Result[i - 1] = Read();
                     }
                 }
             else {

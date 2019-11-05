@@ -19,10 +19,6 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography.PKIX {
 
@@ -158,7 +154,7 @@ namespace Goedel.Cryptography.PKIX {
     //    /// Sign
     //    /// </summary>
     //    DigitalSignature = 0x0001,       // EmailSignature | DataSignature | CodeSigning
-        
+
     //    /// <summary>
     //    /// If clear, signatures may be repudiated
     //    /// </summary>

@@ -1,8 +1,4 @@
-﻿using System;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Core;
-
-namespace Goedel.Mesh {
+﻿namespace Goedel.Mesh {
     public class Mesh {
 
         public static void Initialize() {

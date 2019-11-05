@@ -1,11 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Threading;
-using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Protocol;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -34,7 +31,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The enumerator</returns>
         public IEnumerator<IPersistenceIndexEntry> GetEnumerator() => throw new NotImplementedException();
 
-        IEnumerator IEnumerable.GetEnumerator () => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
         /// Enumerator class. 
@@ -46,15 +43,15 @@ namespace Goedel.Cryptography.Dare {
 
             object IEnumerator.Current => Current;
 
-            public Enumerator (IPersistenceIndexEntry First) {
+            public Enumerator(IPersistenceIndexEntry First) {
                 this.First = (ContainerStoreIndexEntry)First;
                 Current = (ContainerStoreIndexEntry)First;
                 }
 
-            public void Dispose () {
+            public void Dispose() {
                 }
 
-            public bool MoveNext () {
+            public bool MoveNext() {
                 Current = ((ContainerStoreIndexEntry)Current)?.Next;
                 return Current != null;
                 }
@@ -68,7 +65,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Existing">The entry that will becomd the Previous entry,
         /// if null, starts a new list.</param>
         /// <param name="EntryData">The entry data for the new index value.</param>
-        public ContainerStoreIndexEntry (ContainerStoreIndexEntry Existing, IPersistenceEntry EntryData) {
+        public ContainerStoreIndexEntry(ContainerStoreIndexEntry Existing, IPersistenceEntry EntryData) {
             Data = EntryData;
 
             Previous = Existing;
@@ -96,7 +93,7 @@ namespace Goedel.Cryptography.Dare {
         /// if null, starts a new list.</param>
         /// <param name="EntryData">The entry data for the new index value.</param>
         /// <returns>The new entry.</returns>
-        public IPersistenceIndexEntry Insert (IPersistenceIndexEntry Existing, IPersistenceEntry EntryData) =>
+        public IPersistenceIndexEntry Insert(IPersistenceIndexEntry Existing, IPersistenceEntry EntryData) =>
                 new ContainerStoreIndexEntry((ContainerStoreIndexEntry)Existing, EntryData);
 
 
@@ -104,7 +101,7 @@ namespace Goedel.Cryptography.Dare {
         /// Remove an entry from a list of index entries.
         /// </summary>
         /// <param name="Entry"></param>
-        public void Remove (IPersistenceIndexEntry Entry) {
+        public void Remove(IPersistenceIndexEntry Entry) {
             if (Next != null) {
                 Next.Previous = Previous;
                 }
@@ -124,7 +121,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerStoreIndex : IPersistenceIndex {
 
-        Dictionary<string, ContainerStoreIndexEntry> Dictionary = 
+        Dictionary<string, ContainerStoreIndexEntry> Dictionary =
                     new Dictionary<string, ContainerStoreIndexEntry>();
 
 
@@ -133,7 +130,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Value">The value to match</param>
         /// <returns>The object instance if found, otherwise false.</returns>
-        public IPersistenceIndexEntry Last (string Value) {
+        public IPersistenceIndexEntry Last(string Value) {
             var Found = Dictionary.TryGetValue(Value, out var Result);
             return Result;
             }
@@ -144,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContainerStoreEntry">The entry to add.</param>
         /// <param name="Value">The value to add it to</param>
-        public void Add (ContainerStoreEntry ContainerStoreEntry, string Value) {
+        public void Add(ContainerStoreEntry ContainerStoreEntry, string Value) {
             var Found = Dictionary.TryGetValue(Value, out var Existing);
             var New = new ContainerStoreIndexEntry(Existing, ContainerStoreEntry);
 
@@ -159,7 +156,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContainerStoreEntry">The entry to remove.</param>
         /// <param name="Value">The value to remove it from</param>
-        public void Delete (ContainerStoreEntry ContainerStoreEntry, string Value) {
+        public void Delete(ContainerStoreEntry ContainerStoreEntry, string Value) {
             var Found = Dictionary.TryGetValue(Value, out var Existing);
             if (!Found) {
                 return;

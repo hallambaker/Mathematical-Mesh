@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Protocol;
 
 namespace Goedel.Mesh {
     public partial class ProfileService {
@@ -18,7 +13,7 @@ namespace Goedel.Mesh {
             IMeshMachine meshMachine,
             CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
 
-            
+
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
@@ -66,7 +61,7 @@ namespace Goedel.Mesh {
             var keyAuth = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
 
-            var result = new ProfileHost(keySign,keyAuth);
+            var result = new ProfileHost(keySign, keyAuth);
             result.Sign(keySign);
             return result;
             }

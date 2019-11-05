@@ -1,13 +1,13 @@
-﻿using System;
-using System.Threading;
+﻿using Goedel.IO;
+using Goedel.Utilities;
+
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Utilities;
-using Goedel.IO;
+using System.Threading;
 namespace Goedel.Test {
     public static class Files {
 
-        static int FileCount= 0;
+        static int FileCount = 0;
 
         public static string GetFilenameUnique(string prefix = "TestData-", string suffix = ".txt") {
             var fileCount = Interlocked.Increment(ref FileCount);

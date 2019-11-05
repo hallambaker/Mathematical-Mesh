@@ -1,12 +1,14 @@
-using System;
-using Xunit;
-using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Server;
+using Goedel.Cryptography;
+using Goedel.Mesh;
 using Goedel.Mesh.Client;
-using Goedel.Utilities;
 using Goedel.Protocol;
 using Goedel.Test.Core;
-using Goedel.Mesh;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public class TestService {
@@ -39,6 +41,9 @@ namespace Goedel.XUnit {
         public string DeviceAlice2 = "Alice Device 2";
         public string DeviceAlice3 = "Alice Device 3";
         public string DeviceBobAdmin = "Bob Admin";
+
+
+        static string AccountGroup = "groupw@example.com";
 
         public Contact ContactAlice => MeshMachineTest.ContactAlice;
         public Contact ContactBob => MeshMachineTest.ContactBob;
@@ -150,7 +155,7 @@ namespace Goedel.XUnit {
             // Get the response back
             sync = contextAccountBob.Sync();
             var contactResponseBob = contextAccountBob.GetPendingMessageContactReply();
-            
+
             contextAccountBob.Process(contactResponseBob);
 
 
@@ -186,7 +191,7 @@ namespace Goedel.XUnit {
             Console.WriteLine();
             Console.WriteLine("**** Added the service, 1 device");
             Console.WriteLine(catalogDevice.Report());
-            
+
             // New Device
             var contextAccount2Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: PIN.PIN);
@@ -274,7 +279,7 @@ namespace Goedel.XUnit {
         public void MeshMessageContact() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main", 
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
                 out var contextAccountAlice, AccountAlice);
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
                 out var contextAccountBob, AccountBob);
@@ -322,31 +327,50 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshCatalogGroup() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            //var Test1 = Platform.GetRandomBytes(1000);
+            var plaintext = Platform.GetRandomBytes(1000);
 
-
-            //var profileGroup = ProfileGroup.Generate ()
-            throw new NYI();
-
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
+                out var contextAccountAlice, AccountAlice);
+            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
+                out var contextAccountBob, AccountBob);
 
             // Generate a recryption group
+            var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
+            var groupList = new List<string>() { AccountGroup };
 
             // Encrypt to the group
+            var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
+
 
             // Decrypt using admin key
-
-            // Create a member entry
-
-            // Perform the remote decrypt
-
-            // Combine the results
+            // this should succeed because the group context has the decryption key.
+            var decrypt = contextGroup.DareDecode(envelope, verify: true);
+            decrypt.IsEqualTo(plaintext).AssertTrue();
 
 
-            // Decrypt the message
+            // attempt to decrypt with Alice's key
+            // this should fail as Alice doesn't have the decryption key.
 
+            Xunit.Assert.Throws<NYI>(() =>
+              contextAccountAlice.DareDecode(envelope, verify: true));
 
-            ////var contactCatalog = contextAccountAlice.GetCatalogContact();
-            //contextAccountAlice.SetContactSelf(ContactAlice);
+            // Create a member entry for Alice
+            contextGroup.Add(AccountAlice);
+
+            // this should now succeed
+            var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt2.IsEqualTo(plaintext).AssertTrue();
+
+            Xunit.Assert.Throws<NYI>(() =>
+              contextAccountBob.DareDecode(envelope, verify: true));
+
+            // Create a member entry fo Bob
+            contextGroup.Add(AccountBob);
+
+            var decrypt3 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt3.IsEqualTo(plaintext).AssertTrue();
+
+            throw new NYI();
             }
 
 

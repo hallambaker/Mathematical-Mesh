@@ -1,15 +1,15 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Goedel.Utilities;
 
 
 namespace Goedel.Discovery {
 
-    
+
 
 
     /// <summary>DNS Fallback Options</summary>
@@ -98,7 +98,7 @@ namespace Goedel.Discovery {
         /// <param name="Port">The default DNS port number</param>
         /// <param name="Fallback">The fallback mode to use if SRV lookup fails</param> 
         /// <returns>Description of the discovered services.</returns>
-        public static async Task<ServiceDescription> ResolveServiceAsync (string Address, 
+        public static async Task<ServiceDescription> ResolveServiceAsync(string Address,
                         string Service = null,
                         int? Port = null, DNSFallback Fallback = DNSFallback.Prefix) {
 
@@ -124,10 +124,10 @@ namespace Goedel.Discovery {
         int timeout;
         int retry;
 
-        CancellationTokenSource CancellationTokenSource { get; set; }  = new CancellationTokenSource();
+        CancellationTokenSource CancellationTokenSource { get; set; } = new CancellationTokenSource();
 
         Task taskRetry; // A task that expires when it is time to retry requests
-        Task taskTimeout ; // A task that expires when it is time to give up
+        Task taskTimeout; // A task that expires when it is time to give up
 
         /// <summary>
         /// A task listening on the DNS port
@@ -137,7 +137,7 @@ namespace Goedel.Discovery {
         /// <summary>
         /// If true there are pending requests and the context has not timed out
         /// </summary>
-        public bool Pending=> Active & (pendingRequests.Count > 0); 
+        public bool Pending => Active & (pendingRequests.Count > 0);
 
 
         /// <summary>
@@ -146,10 +146,12 @@ namespace Goedel.Discovery {
         public bool Active = true;
 
         ushort iDCounter;
-        ushort NextID { get {
-                iDCounter = (ushort)(((int)iDCounter + 1) & 0xffff);
+        ushort NextID {
+            get {
+                iDCounter = (ushort)((iDCounter + 1) & 0xffff);
                 return iDCounter;
-                } }
+                }
+            }
 
         /// <summary>
         /// Dispose allocated resources.
@@ -161,14 +163,14 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="timeout">The maximum length of time to wait for a query to be satisfied</param>
         /// <param name="retry">Retry interval.</param>
-        public DNSContext (int timeout=5000, int retry=1000) {
+        public DNSContext(int timeout = 5000, int retry = 1000) {
             this.timeout = timeout;
             this.retry = retry;
             iDCounter = Platform.GetRandom16();
 
             taskTimeout = Task.Delay(this.timeout);
             taskRetry = Task.Delay(this.retry);
-            
+
             }
 
         /// <summary>
@@ -195,7 +197,7 @@ namespace Goedel.Discovery {
         /// <summary>
         /// Close the context.
         /// </summary>
-        public virtual void Close () {
+        public virtual void Close() {
             }
 
         /// <summary>
@@ -243,7 +245,7 @@ namespace Goedel.Discovery {
         /// <returns>Task instance.</returns>
         public void QueueRequest(DNSRequest Request) {
             pendingRequests.Add(Request); // always add to the queue first
-            SendRequest(Request);            
+            SendRequest(Request);
             }
 
         /// <summary>
@@ -270,7 +272,7 @@ namespace Goedel.Discovery {
         /// <param name="Fallback">Fallback mode for if no SRV record is found</param>
         /// <returns>Description of the discovered services.</returns>
         public async Task<ServiceDescription> QueryServiceAsync(string Address,
-                        string Service = null, int? Port = null, 
+                        string Service = null, int? Port = null,
                         DNSFallback Fallback = DNSFallback.Prefix) {
 
             var ServiceDescription = new ServiceDescription(Address, Service, Port, Fallback);

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Test;
 using Goedel.Utilities;
+
 using System.Numerics;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public class TestSplit {
@@ -50,7 +49,7 @@ namespace Goedel.XUnit {
         [InlineData(128)]
         [InlineData(256)]
         [InlineData(512)]
-        public void TestKeyShare(int bits, string hexData=null) {
+        public void TestKeyShare(int bits, string hexData = null) {
             var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
             var index = 1;
 
@@ -74,7 +73,7 @@ namespace Goedel.XUnit {
 
 
         [Theory]
-        [InlineData (1,1)]
+        [InlineData(1, 1)]
         [InlineData(2, 1)]
         [InlineData(2, 2)]
         [InlineData(3, 1)]
@@ -109,8 +108,8 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void TestSplitPrimes() {
-            for (int i = 32; i < 512; i+=32) {
-                
+            for (int i = 32; i < 512; i += 32) {
+
                 var exponent = BigInteger.Pow(2, i);
                 var prime = Secret.GetPrime(i, out _, out _);
                 prime.IsProbablePrime(256).AssertTrue();

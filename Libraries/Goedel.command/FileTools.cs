@@ -1,13 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+/* Unmerged change from project 'Goedel.Command'
+Before:
+using System;
+After:
+using Goedel.Registry;
+
+using System;
+*/
+using Goedel.Registry;
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System.Linq;
 using System.Text;
 using System.IO;
 using Goedel.Registry;
+After:
+using System.IO;
+using System.Linq;
+using System.Text;
+*/
+
+
+using System;
+using System.IO;
 
 namespace Goedel.Command {
 
- 
+
     /// <summary>
     /// Utility class for managing files.
     /// </summary>
@@ -81,7 +100,7 @@ namespace Goedel.Command {
         /// <param name="Extension">The default extension.</param>
         /// <param name="Default">The base file name.</param>
         /// <returns>The defaulted output file.</returns>
-        public static string DefaultFile (string Specified, string Default, string Extension) {
+        public static string DefaultFile(string Specified, string Default, string Extension) {
             if (Specified != null) {
                 return Specified;
                 }

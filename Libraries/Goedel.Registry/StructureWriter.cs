@@ -21,7 +21,7 @@ namespace Goedel.Registry {
     /// Base class for Formatting writer. Used to create output documents in multiple
     /// encoding formats.
     /// </summary>
-    public abstract class  StructureWriter {
+    public abstract class StructureWriter {
 
         /// <summary>
         /// Indent is the character string that will be written out to indent 
@@ -46,9 +46,9 @@ namespace Goedel.Registry {
                 First = false;
                 return;
                 }
-            TextWriter.WriteLine ();
+            TextWriter.WriteLine();
             for (int i = 0; i < Level; i++) {
-                TextWriter.Write (Indent);
+                TextWriter.Write(Indent);
                 }
             }
 
@@ -58,7 +58,7 @@ namespace Goedel.Registry {
         /// <param name="TextWriter">The output</param>
         /// <param name="OutputFormat">Format to write output in.</param>
         /// <returns>The created output writer.</returns>
-        public static StructureWriter GetStructureWriter (TextWriter TextWriter, OutputFormat OutputFormat) {
+        public static StructureWriter GetStructureWriter(TextWriter TextWriter, OutputFormat OutputFormat) {
             switch (OutputFormat) {
                 case Goedel.Registry.OutputFormat.Goedel:
                     return new IndentWriter(TextWriter);
@@ -86,45 +86,45 @@ namespace Goedel.Registry {
         /// Called at the start of the document.
         /// </summary>
         /// <param name="Tag">Encoding specific document preamble.</param>
-        public abstract void StartDocument (string Tag);
+        public abstract void StartDocument(string Tag);
         /// <summary>Write document preamble</summary>
         public void StartDocument() => StartDocument(null);
         /// <summary>
         /// Called at the end of the document;
         /// </summary>
         /// <param name="Tag">Encoding specific .</param>
-        public abstract void EndDocument (string Tag);
+        public abstract void EndDocument(string Tag);
         /// <summary>Write end of document.</summary>
         public void EndDocument() => EndDocument(null);
         /// <summary>Begin list</summary>
         /// <param name="Tag">Tag to write</param>
-        public abstract void StartList (string Tag);
+        public abstract void StartList(string Tag);
         /// <summary>End list</summary>
         /// <param name="Tag">Tag to write</param>
-        public abstract void EndList (string Tag);
+        public abstract void EndList(string Tag);
         /// <summary>Start element</summary>
         /// <param name="Tag">Tag to write</param>
-        public abstract void StartElement (string Tag);
+        public abstract void StartElement(string Tag);
         /// <summary>End element</summary>
         /// <param name="Tag">Tag to write</param>
-        public abstract void EndElement (string Tag);
+        public abstract void EndElement(string Tag);
 
         /// <summary>Write identifier</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public abstract void WriteId (string Tag, string Data);
+        public abstract void WriteId(string Tag, string Data);
         /// <summary>Write string attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public abstract void WriteAttribute (string Tag, string Data);
+        public abstract void WriteAttribute(string Tag, string Data);
         /// <summary>Write integer attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public abstract void WriteAttribute (string Tag, int Data);
+        public abstract void WriteAttribute(string Tag, int Data);
         /// <summary>Write float attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public abstract void WriteAttribute (string Tag, float Data);
+        public abstract void WriteAttribute(string Tag, float Data);
         }
 
     /// <summary>
@@ -170,7 +170,7 @@ namespace Goedel.Registry {
         /// <summary>End list</summary>
         /// <param name="Tag">Tag to write</param>
         public override void EndList(string Tag) { }
-        
+
         /// <summary>Start element</summary>
         /// <param name="Tag">Tag to write</param>
         public override void StartElement(string Tag) {
@@ -240,26 +240,26 @@ namespace Goedel.Registry {
         public override void EndList(string Tag) { }
         /// <summary>Start element</summary>
         /// <param name="Tag">Tag to write</param>
-        public override void StartElement (string Tag) {}
+        public override void StartElement(string Tag) { }
         /// <summary>End element</summary>
         /// <param name="Tag">Tag to write</param>
-        public override void EndElement (string Tag) {}
+        public override void EndElement(string Tag) { }
 
         /// <summary>Write identifier</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteId (string Tag, string Data) {}
+        public override void WriteId(string Tag, string Data) { }
         /// <summary>Write string attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute (string Tag, string Data) {}
+        public override void WriteAttribute(string Tag, string Data) { }
         /// <summary>Write integer attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute (string Tag, int Data) {}
+        public override void WriteAttribute(string Tag, int Data) { }
         /// <summary>Write float attribute</summary>
         /// <param name="Tag">Tag to write</param>
         /// <param name="Data">Data to write</param>
-        public override void WriteAttribute (string Tag, float Data) {}
+        public override void WriteAttribute(string Tag, float Data) { }
         }
     }

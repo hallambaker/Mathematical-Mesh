@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
 using Goedel.Utilities;
-using Goedel.Protocol;
 
 namespace Goedel.Mesh {
 
     public partial class KeyComposite {
 
         public string UDF => KeyPair.UDF;
-        public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue (out keyPair);
+        public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue(out keyPair);
         KeyPairAdvanced keyPair = null;
 
         public KeyComposite() {
@@ -23,7 +17,7 @@ namespace Goedel.Mesh {
                     this(baseKey.KeyPair as KeyPairAdvanced, service) {
             }
 
-        public KeyComposite(KeyPairAdvanced baseKey, string service=null) {
+        public KeyComposite(KeyPairAdvanced baseKey, string service = null) {
             Public = Cryptography.Jose.Key.GetPublic(baseKey);
             if (service == null) {
                 Part = Cryptography.Jose.Key.GetPrivate(baseKey);

@@ -20,9 +20,10 @@
 //  
 //  
 
+using Goedel.Utilities;
+
 using System;
 using System.IO;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -35,7 +36,7 @@ namespace Goedel.Protocol {
         /// <summary>Get start of object</summary>
         /// <returns>True if start of object found</returns>
         abstract public bool StartObject();
-        
+
         /// <summary>Get end of object</summary>
         abstract public void EndObject();
 
@@ -68,7 +69,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Chunk">The data read.</param>
         /// <returns>True if there is more data to be read</returns>
-        abstract public bool ReadBinaryIncremental (out byte[] Chunk);
+        abstract public bool ReadBinaryIncremental(out byte[] Chunk);
 
         /// <summary>Read string</summary>
         /// <returns>Value read</returns>
@@ -190,4 +191,3 @@ namespace Goedel.Protocol {
         abstract public void WriteObjectEnd();
         }
     }
-   

@@ -1,13 +1,9 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Protocol;
 
 
 namespace Goedel.Mesh {
@@ -66,9 +62,9 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a container if it does not already exist.</param>
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, 
-                    bool readContainer = true, 
-                    bool decrypt=true,
+                    KeyCollection keyCollection = null,
+                    bool readContainer = true,
+                    bool decrypt = true,
                     bool create = true) :
                 base(directory, containerName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             if (!create & Container == null) {
@@ -82,7 +78,7 @@ namespace Goedel.Mesh {
 
 
         public static ContainerStatus Status(string directory, string containerName) {
-            using (var container = new Catalog(directory, containerName, decrypt:false)) {
+            using (var container = new Catalog(directory, containerName, decrypt: false)) {
 
                 return new ContainerStatus() {
                     Index = (int)container.ContainerPersistence.FrameCount,
@@ -102,7 +98,7 @@ namespace Goedel.Mesh {
                 switch (update.Action) {
 
                     case CatalogAction.New: {
-                        
+
                         var envelope = ContainerPersistence.PrepareNew(update.CatalogEntry);
                         result.Add(envelope);
 
@@ -115,7 +111,7 @@ namespace Goedel.Mesh {
                         }
                     case CatalogAction.Delete: {
                         var envelope = ContainerPersistence.PrepareDelete(out _, update.PrimaryKey);
-                        if (envelope!= null) {
+                        if (envelope != null) {
                             result.Add(envelope);
                             }
                         break;
@@ -183,13 +179,13 @@ namespace Goedel.Mesh {
 
 
 
-        public  void New(CatalogedEntry catalogEntry) {
+        public void New(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
             Transact(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
 
-        public  void Update(CatalogedEntry catalogEntry) {
+        public void Update(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.Update, catalogEntry);
 
             Transact(this, new List<CatalogUpdate> { catalogUpdate });
@@ -201,14 +197,14 @@ namespace Goedel.Mesh {
             Transact(this, new List<CatalogUpdate> { catalogUpdate });
             }
 
-        public CatalogedEntry Locate(string key) => 
+        public CatalogedEntry Locate(string key) =>
             (ContainerPersistence.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogedEntry;
 
         public ContainerStoreEntry GetEntry(string key) => ContainerPersistence.Get(key) as ContainerStoreEntry;
 
 
 
-        public IEnumerator<CatalogedEntry> GetEnumerator() => new EnumeratorCatalogEntry (ContainerPersistence);
+        public IEnumerator<CatalogedEntry> GetEnumerator() => new EnumeratorCatalogEntry(ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
@@ -225,7 +221,7 @@ namespace Goedel.Mesh {
         public bool MoveNext() => baseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
-        public EnumeratorCatalogEntry(ContainerPersistenceStore container) => 
+        public EnumeratorCatalogEntry(ContainerPersistenceStore container) =>
             baseEnumerator = container.GetEnumerator();
         }
 

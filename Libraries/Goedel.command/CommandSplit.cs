@@ -1,19 +1,33 @@
 
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System;
-using System.Collections.Generic;
+After:
+using Goedel.FSR;
+
+using System;
+*/
+using Goedel.FSR;
+
 using System.IO;
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System.Text;
 using Goedel.FSR;
+After:
+using System.Text;
+*/
+
 
 
 // Goedel.Command
-namespace Goedel.Command{
+namespace Goedel.Command {
 
 
-	// Prototypes for the actions. These must be implemented in 
-	// the plus class
+    // Prototypes for the actions. These must be implemented in 
+    // the plus class
 
-	/*
+    /*
 	public partial class CommandSplitLex {
         public virtual void AddParam (int c) {
 			}
@@ -30,37 +44,37 @@ namespace Goedel.Command{
 		}
 	*/
 
-	public partial class CommandSplitLex : global::Goedel.FSR.Lexer {
-       /// <summary>
+    public partial class CommandSplitLex : global::Goedel.FSR.Lexer {
+        /// <summary>
         /// Create and initialize a lexical analyzer.
         /// </summary>
         /// <param name="Reader">The input source.</param>
-        public  CommandSplitLex(LexReader Reader) : base (Reader) {
+        public CommandSplitLex(LexReader Reader) : base(Reader) {
             }
 
         /// <summary>
         /// Create and initialize a lexical analyzer.
         /// </summary>
         /// <param name="Stream">The input source.</param>
-        public  CommandSplitLex(Stream Stream) : base(new LexReader(Stream)) {
+        public CommandSplitLex(Stream Stream) : base(new LexReader(Stream)) {
             }
 
         /// <summary>
         /// Create and initialize a lexical analyzer.
         /// </summary>
         /// <param name="TextReader">The input source.</param>
-        public  CommandSplitLex(TextReader TextReader) : base(new LexReader(TextReader)) {
+        public CommandSplitLex(TextReader TextReader) : base(new LexReader(TextReader)) {
             }
 
         /// <summary>
         /// Maps characters to character sets
         /// </summary>
-        public override byte[] CharacterMappings  => Character_Mapping; 
+        public override byte[] CharacterMappings => Character_Mapping;
 
         /// <summary>
         /// State transitions in response to character set
         /// </summary>
-        public override short[,] CompressedTransitions  => Compressed_Transitions;
+        public override short[,] CompressedTransitions => Compressed_Transitions;
 
         /// <summary>
         /// Get the next token from the stream
@@ -77,76 +91,76 @@ namespace Goedel.Command{
 
         /// <summary>State types</summary>
         public enum State {
-			/// <summary>ItemStart</summary>
+            /// <summary>ItemStart</summary>
             ItemStart = 0,
-			/// <summary>StartQuoted</summary>
+            /// <summary>StartQuoted</summary>
             StartQuoted = 1,
-			/// <summary>Quoted</summary>
+            /// <summary>Quoted</summary>
             Quoted = 2,
-			/// <summary>QuotedQuote</summary>
+            /// <summary>QuotedQuote</summary>
             QuotedQuote = 3,
-			/// <summary>QuotedEscape</summary>
+            /// <summary>QuotedEscape</summary>
             QuotedEscape = 4,
-			/// <summary>QuotedEscapeReturn</summary>
+            /// <summary>QuotedEscapeReturn</summary>
             QuotedEscapeReturn = 5,
-			/// <summary>Unquoted</summary>
+            /// <summary>Unquoted</summary>
             Unquoted = 6,
-			/// <summary>UnquotedQuote</summary>
+            /// <summary>UnquotedQuote</summary>
             UnquotedQuote = 7,
-			/// <summary>UnquotedEscape</summary>
+            /// <summary>UnquotedEscape</summary>
             UnquotedEscape = 8,
-			/// <summary>UnquotedEscapeReturn</summary>
+            /// <summary>UnquotedEscapeReturn</summary>
             UnquotedEscapeReturn = 9
-			};
+            };
 
-		/// <summary>Token Types</summary>
-		public enum Token {
-			/// <summary>Could not find a valid token.</summary>
-			INVALID = -1,
-			/// <summary>Empty</summary>
+        /// <summary>Token Types</summary>
+        public enum Token {
+            /// <summary>Could not find a valid token.</summary>
+            INVALID = -1,
+            /// <summary>Empty</summary>
             Empty = 0,
-			/// <summary>Value</summary>
+            /// <summary>Value</summary>
             Value = 1
-			};
+            };
 
 
-		/// <summary>Mapping of characters to character groups</summary>
-		static byte [] Character_Mapping   =  new byte [] {
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
-			1 , 0 , 2 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 3 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 
-			0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0   };
+        /// <summary>Mapping of characters to character groups</summary>
+        static byte[] Character_Mapping = new byte[] {
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 1 , 1 , 0 , 0 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
+            1 , 0 , 2 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 3 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
+            0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0   };
 
-		static short [,]  Compressed_Transitions  = new short [,]  {
-			{6 , 0 , 1 , 8 },
-			{2 , 2 , 3 , 4 },
-			{2 , 2 , 3 , 4 },
-			{2 , 0 , 2 , 4 },
-			{5 , 5 , 5 , 4 },
-			{2 , 2 , 3 , 4 },
-			{6 , 0 , 7 , 8 },
-			{6 , 0 , 7 , 8 },
-			{9 , 0 , 9 , 8 },
-			{6 , 6 , 7 , 8 }
-		};
+        static short[,] Compressed_Transitions = new short[,]  {
+            {6 , 0 , 1 , 8 },
+            {2 , 2 , 3 , 4 },
+            {2 , 2 , 3 , 4 },
+            {2 , 0 , 2 , 4 },
+            {5 , 5 , 5 , 4 },
+            {2 , 2 , 3 , 4 },
+            {6 , 0 , 7 , 8 },
+            {6 , 0 , 7 , 8 },
+            {9 , 0 , 9 , 8 },
+            {6 , 6 , 7 , 8 }
+        };
 
 
-		static Token [] Tokens = new Token [] {
-			Token.Empty,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value,
-			Token.Value
-			};
+        static Token[] Tokens = new Token[] {
+            Token.Empty,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value,
+            Token.Value
+            };
 
         /// <summary>Generated initialization method, is called automatically 
         /// the FSR to reset </summary>
@@ -163,5 +177,5 @@ namespace Goedel.Command{
                 AddEscapedValue
                 };
         }
-	}
+    }
 

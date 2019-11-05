@@ -19,29 +19,26 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using Goedel.Utilities;
+
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Standard {
     /// <summary>
     /// Provider for bulk authentication algorithms (e.g. HMAC-SHA256).
     /// </summary>
-    public abstract class CryptoProviderAuthentication : 
+    public abstract class CryptoProviderAuthentication :
                 Goedel.Cryptography.CryptoProviderAuthentication {
         /// <summary>
         /// The type of algorithm
         /// </summary>
-        public override CryptoAlgorithmClass AlgorithmClass => CryptoAlgorithmClass.MAC; 
+        public override CryptoAlgorithmClasses AlgorithmClass => CryptoAlgorithmClasses.MAC;
 
         /// <summary>
         /// Hash algorithm provider.
         /// </summary>
-        public KeyedHashAlgorithm KeyedHashAlgorithm;
+        public KeyedHashAlgorithm KeyedHashAlgorithm { get; set; }
 
 
         /// <summary>
@@ -98,7 +95,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="OutputStream">Output stream</param>
         /// <param name="Key">Encryption Key</param>
         /// <returns>Instance describing the key agreement parameters.</returns>
-        public override CryptoDataEncoder MakeAuthenticator (
+        public override CryptoDataEncoder MakeAuthenticator(
                             byte[] Key = null,
                             CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
                             Stream OutputStream = null) {
@@ -150,12 +147,12 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID=> _CryptoAlgorithmID; 
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
                     _CryptoAlgorithmID, _AlgorithmClass, Factory, 256);
@@ -202,13 +199,13 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
 
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(

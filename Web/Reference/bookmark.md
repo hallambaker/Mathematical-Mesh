@@ -24,7 +24,26 @@ add   Add bookmark
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Uri": "http://example.com/",
+      "Title": "\"Example",
+      "Path": "Folder1/1"}}}
+````
 
 # network delete
 
@@ -37,7 +56,21 @@ delete   Delete bookmark entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> bookmark delete BookmarkPath2
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> bookmark delete BookmarkPath2 /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # network get
 
@@ -49,7 +82,26 @@ get   Lookup bookmark entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> bookmark get Folder1/2
+{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> bookmark get Folder1/2 /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Uri": "http://example.net/Bananas",
+      "Title": "\"Banana",
+      "Path": "Folder1/2"}}}
+````
 
 # network list
 
@@ -60,5 +112,38 @@ list   List bookmark entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> bookmark list
+{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}{
+  "Uri": "http://example.com/Fred",
+  "Title": "\"The",
+  "Path": "Folder1/1a"}````
+
+Specifying the /json option returns a result of type ResultDump:
+
+````
+Alice> bookmark list /json
+{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "Uri": "http://example.com/",
+        "Title": "\"Example",
+        "Path": "Folder1/1"},
+      {
+        "Uri": "http://example.net/Bananas",
+        "Title": "\"Banana",
+        "Path": "Folder1/2"},
+      {
+        "Uri": "http://example.com/Fred",
+        "Title": "\"The",
+        "Path": "Folder1/1a"}]}}
+````
 

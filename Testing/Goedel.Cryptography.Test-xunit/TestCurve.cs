@@ -1,10 +1,7 @@
-﻿using System.Numerics;
-using System.Collections.Generic;
-
-using Goedel.Utilities;
-using Goedel.Test;
-using Goedel.Cryptography;
+﻿
 using Goedel.Cryptography.Algorithms;
+using Goedel.Utilities;
+
 using Xunit;
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
@@ -27,7 +24,7 @@ namespace Goedel.XUnit {
                                 "edf124769b46c7061bd6783df1e50f6c"+
                                 "d1fa1abeafe8256180").FromBase16(),
                     Message = "".FromBase16(),
-                    Signature = ("e5564300c360ac729086e2cc806e828a" + 
+                    Signature = ("e5564300c360ac729086e2cc806e828a" +
                                 "84877f1eb8e5d974d873e06522490155" +
                                 "5fb8821590a33bacc61e39701cf9b46b" +
                                 "d25bf5f0595bbe24655141438e7a100b"+
@@ -77,7 +74,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestEd448x() => TestEd448(SignatureTest.Tests448[0]);
 
-        void TestEd25519 (SignatureTest Test) {
+        void TestEd25519(SignatureTest Test) {
 
             var Private = new CurveEdwards25519Private(Test.SecretKey);
             var Public = Private.Public;

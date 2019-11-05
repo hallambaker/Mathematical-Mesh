@@ -67,9 +67,9 @@ namespace ExampleGenerator {
 		public void _SchemaDevice(CreateExamples Example) {
 
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
-				 var profileDevice = Goedel.Mesh.ProfileDevice.Decode (catalogedDevice.EnvelopedProfileDevice);
-				 var connectionDevice = ConnectionDevice.Decode (catalogedDevice.EnvelopedConnectionDevice);
-				 var privateDevice = ActivationDevice.Decode (catalogedDevice.EnvelopedActivationDevice);
+				 var profileDevice = catalogedDevice?.ProfileDevice;
+				 var connectionDevice = catalogedDevice?.ConnectionDevice;
+				 ActivationDevice privateDevice = null ; //catalogedDevice?.ActivationDevice;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice's Device Profile specifies keys for encryption, signature and exchange:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

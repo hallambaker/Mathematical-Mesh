@@ -18,7 +18,7 @@
 //        StreamReaderBounded StreamReader=null;
 //        JBCDStream JBCDStream;
 //        Stream Reader;
-        
+
 //        CryptoStackStream CryptoStackStreamReader = null;
 
 //        /// <summary></summary>

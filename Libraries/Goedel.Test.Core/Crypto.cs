@@ -1,13 +1,12 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Test.Core {
 
@@ -85,7 +84,7 @@ namespace Goedel.Test.Core {
                     List<string> signers = null,
                     CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
                     CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) :
-            base(new KeyCollectionCore(), recipients, signers, encryptID:encryptID, digestID: digestID) {
+            base(new KeyCollectionCore(), recipients, signers, encryptID: encryptID, digestID: digestID) {
             }
 
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);

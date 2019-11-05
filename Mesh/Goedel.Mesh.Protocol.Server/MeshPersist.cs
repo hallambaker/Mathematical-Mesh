@@ -1,13 +1,13 @@
 ﻿
 
-using System.Collections.Generic;
-using System.IO;
-
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh.Server {
     public partial class CatalogItem {
@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Add a new account. The account name must be unique.
         /// </summary>
-        public void AccountAdd(JpcSession jpcSession, 
+        public void AccountAdd(JpcSession jpcSession,
                         AccountEntry accountEntry) {
             ContainerStoreEntry containerEntry;
 
@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="deviceProfile">Profile of the device requesting connection.</param>
         /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
         /// <returns>The connection response.</returns>
-        public ConnectResponse Connect(JpcSession jpcSession, 
+        public ConnectResponse Connect(JpcSession jpcSession,
                         RequestConnection messageConnectionRequestClient) {
 
             using (var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID)) {
@@ -103,14 +103,14 @@ namespace Goedel.Mesh.Server {
                 var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.KeyPair.UDFBytes;
                 var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.KeyPair.UDFBytes;
 
-                var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF, 
+                var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
                     messageConnectionRequestClient.ClientNonce);
 
                 var messageConnectionRequest = new AcknowledgeConnection() {
                     EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
                     ServerNonce = serviceNonce,
                     Witness = witness,
-                    MessageID = UDF.Nonce ()
+                    MessageID = UDF.Nonce()
                     };
 
                 // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
@@ -199,8 +199,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         /// <param name="selections">The selection criteria.</param>
         public List<ContainerUpdate> AccountDownload(
-                    JpcSession jpcSession, 
-                    VerifiedAccount account, 
+                    JpcSession jpcSession,
+                    VerifiedAccount account,
                     List<ConstraintsSelect> selections) {
 
             using (var accountEntry = GetAccountVerified(account, jpcSession)) {
@@ -236,8 +236,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="updates">Entries to be added to catalogs.</param>
         /// <param name="selfs">Entries to be added to the user's inbound store.</param>
         public void AccountUpdate(
-                    JpcSession jpcSession, 
-                    VerifiedAccount account, 
+                    JpcSession jpcSession,
+                    VerifiedAccount account,
                     List<ContainerUpdate> updates,
                     List<DareEnvelope> selfs) {
             //AccountHandleVerified accountEntry = null;
@@ -338,10 +338,10 @@ namespace Goedel.Mesh.Server {
             // Goal: Allow an administrator device to regain control of the account
             // by creating Device entry public for itself.
 
-            if (jpcSession is DirectSession ) {
+            if (jpcSession is DirectSession) {
                 return new AccountHandleVerified(accountEntry);
                 }
-            if (jpcSession is LocalRemoteSession ) {
+            if (jpcSession is LocalRemoteSession) {
                 return new AccountHandleVerified(accountEntry);
                 }
             // At this point we need to examine the actual information presented and the 
@@ -410,7 +410,7 @@ namespace Goedel.Mesh.Server {
         ProfileMesh profileMesh;
 
 
-        public ProfileAccount AssertionAccount => assertionAccount ?? 
+        public ProfileAccount AssertionAccount => assertionAccount ??
             ProfileAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
         ProfileAccount assertionAccount;
 

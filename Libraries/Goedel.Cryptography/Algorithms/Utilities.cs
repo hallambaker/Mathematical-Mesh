@@ -25,26 +25,26 @@ using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
     internal static class Utilities {
-		private static volatile RNGCryptoServiceProvider _rng = null;
+        private static volatile RNGCryptoServiceProvider _rng = null;
 
-		//[MethodImpl(MethodImplOptions.InternalCall)]
-		//internal static extern bool _ProduceLegacyHmacValues();
+        //[MethodImpl(MethodImplOptions.InternalCall)]
+        //internal static extern bool _ProduceLegacyHmacValues();
 
-		internal static RNGCryptoServiceProvider StaticRandomNumberGenerator {
-			get {
-				if (_rng == null) {
-					_rng = new RNGCryptoServiceProvider();
-				}
-				return _rng;
-			}
-		}
+        internal static RNGCryptoServiceProvider StaticRandomNumberGenerator {
+            get {
+                if (_rng == null) {
+                    _rng = new RNGCryptoServiceProvider();
+                    }
+                return _rng;
+                }
+            }
 
-		internal static byte[] GenerateRandom(int keySize) {
-			byte[] data = new byte[keySize];
-			StaticRandomNumberGenerator.GetBytes(data);
-			return data;
-		}
+        internal static byte[] GenerateRandom(int keySize) {
+            byte[] data = new byte[keySize];
+            StaticRandomNumberGenerator.GetBytes(data);
+            return data;
+            }
 
 
-	}
-}
+        }
+    }

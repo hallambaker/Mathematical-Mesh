@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using Goedel.Cryptography;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
 
 namespace Goedel.Mesh.Client {
 
@@ -48,7 +41,7 @@ namespace Goedel.Mesh.Client {
             CatalogedMachine = deviceConnection;
 
             ProfileMesh = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
-            
+
             }
 
         // The account activation was not added to activations.
@@ -105,7 +98,7 @@ namespace Goedel.Mesh.Client {
             return ConnectService(meshHost, profileDevice, serviceID, localName, PIN);
             }
 
-        
+
 
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
@@ -122,7 +115,7 @@ namespace Goedel.Mesh.Client {
                 PinUDF = UDF.PIN2PinID(PIN)
                 };
 
-            
+
 
             var keyAuthentication = meshHost.KeyCollection.LocatePrivate(
                         profileDevice.KeyAuthentication.UDF);
@@ -196,7 +189,7 @@ namespace Goedel.Mesh.Client {
             var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
 
 
-            var contextAccount = contextMesh.GetContextAccount(accountName:ServiceID);
+            var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID);
 
             contextAccount.InitializeStores(statusResponse);
 

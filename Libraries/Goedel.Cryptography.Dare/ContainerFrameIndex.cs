@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.IO;
+﻿using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.Cryptography.Jose;
+
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -161,7 +159,7 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        List<DareRecipient> GetRecipients (Container container) {
+        List<DareRecipient> GetRecipients(Container container) {
             if (!Header.HasExchangePosition) {
                 return Header.Recipients;
                 }

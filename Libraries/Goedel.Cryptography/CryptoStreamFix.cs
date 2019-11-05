@@ -1,6 +1,4 @@
 ﻿using System.IO;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Cryptography {
 
@@ -34,7 +32,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override long Position {
             get => Output.Position;
-            set => Output.Position = value; }
+            set => Output.Position = value;
+            }
 
         ///<summary>Declare this stream as a property so as to prevent warnings when it is not disposed.</summary>
         Stream Output { get; set; }
@@ -68,7 +67,7 @@ namespace Goedel.Cryptography {
         /// requested if that many bytes are not currently available, or zero (0) if the end of the stream 
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) => Output.Read(buffer, offset, count);
-        
+
         /// <summary>
         /// Sets the position within the current buffered stream (not supported).
         /// </summary>

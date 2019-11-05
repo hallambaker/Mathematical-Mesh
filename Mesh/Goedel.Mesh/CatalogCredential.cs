@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
@@ -63,13 +62,13 @@ namespace Goedel.Mesh {
                 }
             return null;
             }
-            
-            
-            
-            //Locate(Key) as CatalogEntryCredential;
 
 
-        public CatalogCredential(string directory, string ContainerName=null,
+
+        //Locate(Key) as CatalogEntryCredential;
+
+
+        public CatalogCredential(string directory, string ContainerName = null,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool create = true) :
@@ -84,7 +83,7 @@ namespace Goedel.Mesh {
 
     public partial class CatalogedCredential {
         ///<summary>The primary key is protocol:site </summary>
-        public override string _PrimaryKey => $"{Protocol??""}:{Service??""}";
+        public override string _PrimaryKey => $"{Protocol ?? ""}:{Service ?? ""}";
 
         //public override List<string> _Keys => base._Keys;
         //List<string> keys = new List<string> { "Service" };

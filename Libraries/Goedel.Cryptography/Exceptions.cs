@@ -933,6 +933,102 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// The key value must not be null
+    /// </summary>
+    [Serializable]
+	public class NullKeyValue : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The key value must not be null"
+        /// </summary>		
+		public NullKeyValue () : base ("The key value must not be null") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The key value must not be null"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NullKeyValue (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NullKeyValue (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NullKeyValue(Reason as string);
+				}
+			else {
+				return new NullKeyValue();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The parameter value must not be null
+    /// </summary>
+    [Serializable]
+	public class NullParameter : CryptographicException {
+
+		/// <summary>
+        /// Construct instance for exception "The parameter value must not be null"
+        /// </summary>		
+		public NullParameter () : base ("The parameter value must not be null") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The parameter value must not be null"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public NullParameter (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public NullParameter (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new NullParameter(Reason as string);
+				}
+			else {
+				return new NullParameter();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// The implementation does not support the requested key size
     /// </summary>
     [Serializable]

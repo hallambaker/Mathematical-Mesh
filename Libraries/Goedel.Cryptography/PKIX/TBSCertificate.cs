@@ -21,9 +21,6 @@
 //  
 using System;
 using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Utilities;
-using Goedel.ASN;
 
 namespace Goedel.Cryptography.PKIX {
     public partial class TBSCertificate {
@@ -35,8 +32,8 @@ namespace Goedel.Cryptography.PKIX {
         /// <param name="SubjectName">Subject name.</param>
         public TBSCertificate(
                 CryptoProvider SubjectKey,
-                 List<Name> SubjectName) : this () {
-            
+                 List<Name> SubjectName) : this() {
+
             SetValidity();
             Subject = SubjectName;
             var KeyPair = SubjectKey.KeyPair;
@@ -116,7 +113,7 @@ namespace Goedel.Cryptography.PKIX {
 
             // Predate the certificate to 1 minute past midnight (UTC) on the date of 
             // issue to avoid clock sync issues
-            NotBefore = new DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day, 
+            NotBefore = new DateTime(NotBefore.Year, NotBefore.Month, NotBefore.Day,
                         0, 0, 1, DateTimeKind.Utc);
 
             SetValidity(NotBefore, NotAfter);
@@ -158,7 +155,7 @@ namespace Goedel.Cryptography.PKIX {
         /// Set the subject key identifier extension.
         /// </summary>
         /// <param name="ID">The key identifier</param>
-        public void SetSubjectKeyIdentifier (byte[] ID) {
+        public void SetSubjectKeyIdentifier(byte[] ID) {
             SubjectKeyIdentifier SubjectKeyIdentifier = new SubjectKeyIdentifier {
                 Value = ID
                 };
@@ -185,7 +182,7 @@ namespace Goedel.Cryptography.PKIX {
             bool CA = false;
 
             List<int[]> Uses = new List<int[]>();
-            KeyUses KeyUses = (KeyUses)0;
+            KeyUses KeyUses = 0;
 
             if ((Use & Application.ServerAuth) > 0) {
                 Uses.Add(Constants.OID__id_kp_serverAuth);

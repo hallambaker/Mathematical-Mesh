@@ -19,10 +19,7 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
 using System.IO;
-using System.Collections.Generic;
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -59,28 +56,28 @@ namespace Goedel.Cryptography {
         /// The output data value as a byte array. This is only available if the 
         /// OutputStream is a MemoryStream.
         /// </summary>
-        public byte[] OutputData => (OutputStream as MemoryStream).ToArray();  
+        public byte[] OutputData => (OutputStream as MemoryStream).ToArray();
 
         /// <summary>
         /// The Algorithm identifier used to construct this instance.
         /// This may contain entries for CryptoAlgorithmID.Default
         /// as the bulk or meta algorithm.
         /// </summary>
-        public CryptoAlgorithmID BaseAlgorithmIdentifier { get; } = 
+        public CryptoAlgorithmID BaseAlgorithmIdentifier { get; } =
             CryptoAlgorithmID.Default;
 
         /// <summary>
         /// The Algorithm identifier that was inferred from the 
         /// BaseAlgorithmIdentifier
         /// </summary>
-        public CryptoAlgorithmID AlgorithmIdentifier { get; set; } = 
+        public CryptoAlgorithmID AlgorithmIdentifier { get; set; } =
             CryptoAlgorithmID.Unknown;
 
         /// <summary>Return the meta algorithm identifier (for debugging)</summary>
-        public CryptoAlgorithmID MetaID => AlgorithmIdentifier.Meta(); 
+        public CryptoAlgorithmID MetaID => AlgorithmIdentifier.Meta();
 
         /// <summary>Return the bulk algorithm identifier (for debugging)</summary>
-        public virtual CryptoAlgorithmID BulkID  => AlgorithmIdentifier.Bulk(); 
+        public virtual CryptoAlgorithmID BulkID => AlgorithmIdentifier.Bulk();
 
         /// <summary>
         /// OID of algorithm that produced the result.
@@ -92,7 +89,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Identifier">The Goedel Cryptography identifier.</param>
         /// <param name="Bulk">Provider to use to process the bulk data</param>
-        protected CryptoData(CryptoAlgorithmID Identifier, 
+        protected CryptoData(CryptoAlgorithmID Identifier,
                             CryptoProviderBulk Bulk) {
             this.BaseAlgorithmIdentifier = Identifier;
             this.ProviderBulk = Bulk;
@@ -130,7 +127,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">The data to write</param>
         /// <param name="Count">Number of bytes to process</param>
         /// <param name="Offset">Offset to begin processing at.</param>
-        public void Write (byte[] Data, int Offset=0, int Count=-1) {
+        public void Write(byte[] Data, int Offset = 0, int Count = -1) {
             if (Count < 0) {
                 Count = Data.Length - Offset;
                 }
@@ -156,7 +153,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Crypto provider for keying operations (may be null)
         /// </summary>
-        public abstract CryptoProvider Meta { get;}
+        public abstract CryptoProvider Meta { get; }
 
         /// <summary>
         /// The bulk provider
@@ -166,7 +163,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Bulk Identifier
         /// </summary>
-        public override CryptoAlgorithmID BulkID  => BulkData.BulkID;
+        public override CryptoAlgorithmID BulkID => BulkData.BulkID;
 
         /// <summary>
         /// Create and populate a result.

@@ -20,17 +20,14 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.Mesh;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
 
 
-    public delegate meshPortal GetPortalDelegate(string serviceName, string directory=null);
+    public delegate meshPortal GetPortalDelegate(string serviceName, string directory = null);
 
 
 

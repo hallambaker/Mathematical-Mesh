@@ -1,12 +1,13 @@
+using Goedel.Cryptography;
+using Goedel.Mesh.Shell;
+using Goedel.Test;
+using Goedel.Test.Core;
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
+
 using Xunit;
-using Goedel.Mesh.Shell;
-using Goedel.Cryptography;
-using Goedel.Mesh.Test;
-using Goedel.Test.Core;
-using Goedel.Test;
-using Goedel.Utilities;
 
 namespace Goedel.XUnit {
 
@@ -64,7 +65,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestCommitmentRandom() {
-            var algs = new List<string>() { null, "sha2"};
+            var algs = new List<string>() { null, "sha2" };
 
             foreach (var test in CommitmentTests) {
                 foreach (var alg in algs) {
@@ -75,7 +76,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        ResultDigest TestCommitmentInt(string content, string key=null, string alg = null) {
+        ResultDigest TestCommitmentInt(string content, string key = null, string alg = null) {
             var testCLI = GetTestCLI();
             var filename = content.ToFileUnique();
             var keyClause = key == null ? "" : $" /key {key}";
@@ -99,7 +100,7 @@ namespace Goedel.XUnit {
             var bitsClause = bits == 0 ? "" : $" /bits {bits}";
             bits = bits == 0 ? 128 : bits;
             var length = (bits + 12) / 5;
-            length += ((length-1) / 4);
+            length += ((length - 1) / 4);
 
             var repeat = 10;
             var results = new HashSet<string>();
@@ -109,7 +110,7 @@ namespace Goedel.XUnit {
                 var result = testCLI.Dispatch($"key nonce{bitsClause}") as ResultKey; ;
                 var random = result.Key;
                 var randomData = UDF.Nonce(random);
-                randomData.Length.AssertEqual(bits/8);
+                randomData.Length.AssertEqual(bits / 8);
 
                 random.Length.AssertEqual(length);
                 results.Contains(random).AssertFalse();
@@ -191,7 +192,7 @@ namespace Goedel.XUnit {
 
         public int FindCompression() {
 
-            for (var i=0; true; i++) {
+            for (var i = 0; true; i++) {
                 if (i % 1000 == 0) {
                     Console.WriteLine(i);
                     }
@@ -222,7 +223,7 @@ namespace Goedel.XUnit {
 
 
         List<TestVectorDigest> DigestTests = new List<TestVectorDigest>() {
-            new TestVectorDigest ("abc", 
+            new TestVectorDigest ("abc",
                 "ddaf35a193617abacc417349ae20413112e6fa4e89a97ea20a9eeee64b55d39a2192992a274fc1a836ba3c23a3feebbd454d4423643ce80e2a9ac94fa54ca49f",
                 "b751850b1a57168a5693cd924b6b096e08f621827444f70d884f5d0240d2712e10e116e9192af3c91a7ec57647e3934057340b4cf408d5a56592f8274eec53f0"),
             new TestVectorDigest ("",
@@ -268,8 +269,8 @@ namespace Goedel.XUnit {
                      string data,
                 string sha2,
                 string sha3,
-                string contentType=null,
-                string key=null) {
+                string contentType = null,
+                string key = null) {
                 Data = data;
                 ContentType = contentType;
                 SHA2 = sha2;

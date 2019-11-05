@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using System.IO;
+﻿using Goedel.Cryptography;
 
 namespace Goedel.Mesh.Client {
     public interface IMeshMachineClient : IMeshMachine {

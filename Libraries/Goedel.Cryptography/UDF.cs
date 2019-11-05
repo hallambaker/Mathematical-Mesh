@@ -19,10 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
+using Goedel.Utilities;
+
 using System;
 using System.Text;
-using System.Collections.Generic;
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography {
 
@@ -83,7 +83,7 @@ namespace Goedel.Cryptography {
         ///<summary>3072 bit RSA keypair</summary>
         RSA3072 = 9,
         ///<summary>4096 bit RSA keypair</summary>
-        RSA4096 = 10       
+        RSA4096 = 10
         }
 
 
@@ -241,7 +241,7 @@ namespace Goedel.Cryptography {
             Assert.True(buffer.Length == 64);
 
             // Check for less than 20 trailing zeros
-            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61]&0b0000_1111)!=0)) {
+            if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61] & 0b0000_1111) != 0)) {
                 return 0;
                 }
 
@@ -483,7 +483,7 @@ namespace Goedel.Cryptography {
                     string data,
                     int bits = 0,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
-            bits = bits == 0 ? DefaultBits*2 : bits;
+            bits = bits == 0 ? DefaultBits * 2 : bits;
 
             //// Calculate the output precision, this is twice the input precision to a
             //// maximum od MaximumBits.
@@ -533,7 +533,7 @@ namespace Goedel.Cryptography {
         /// <param name="bits">Number of random bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
         public static string Nonce(int bits = 0) {
-            bits = bits <= 0 ? DefaultBits-8 : bits;
+            bits = bits <= 0 ? DefaultBits - 8 : bits;
 
             var Data = CryptoCatalog.GetBits(bits);
             return TypeBDSToString(UDFTypeIdentifier.Nonce, Data, bits + 8);
@@ -544,7 +544,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyPair">Number of random bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
-        public static string OID (KeyPair keyPair) {
+        public static string OID(KeyPair keyPair) {
             var Data = keyPair.KeyInfoData.DER();
             var bits = Data.Length * 8;
             return TypeBDSToString(UDFTypeIdentifier.OID, Data, bits + 8);
@@ -558,7 +558,7 @@ namespace Goedel.Cryptography {
         /// <param name="bits">Number of random bits in the string</param>
         /// <returns>A randomly generated UDF string.</returns>
         public static string SymmetricKey(int bits = 0) {
-            bits = bits <= 0 ? DefaultBits-8 : bits;
+            bits = bits <= 0 ? DefaultBits - 8 : bits;
 
             var Data = CryptoCatalog.GetBits(bits);
             return TypeBDSToString(UDFTypeIdentifier.Encryption, Data, bits + 8);
@@ -602,8 +602,8 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The binary UDF fingerprint.</returns>
         public static byte[] FromKeyInfo(
-                    byte[] Data, 
-                    int Bits = 0) => 
+                    byte[] Data,
+                    int Bits = 0) =>
             DataToUDFBinary(Data, UDFConstants.PKIXKey, Bits);
 
 
@@ -641,7 +641,7 @@ namespace Goedel.Cryptography {
         /// <returns>The key value.</returns>
         public static byte[] SymmetricKey(string udf) {
             var result = Parse(udf, out var code);
-            return code == (byte)UDFTypeIdentifier.Encryption ? result: null;
+            return code == (byte)UDFTypeIdentifier.Encryption ? result : null;
             }
 
         /// <summary>
@@ -663,21 +663,21 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="test">Expected value</param>
         /// <param name="value">Comparison value.</param>
-        public static void Validate(string test, string value) => Assert.False(test != 
+        public static void Validate(string test, string value) => Assert.False(test !=
             value, FingerprintMatchFailed.Throw);
 
         /// <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
         /// <param name="address">DNS address.</param>
         /// <param name="uDF">Fingerprint value.</param>
         /// <returns>The strong name.</returns>
-        public static string MakeStrongName(string address, string uDF) => 
+        public static string MakeStrongName(string address, string uDF) =>
             address + ".mm--" + uDF.ToLower();
 
         /// <summary>Parse an RFC822 address to extract strong name component if present.</summary>
         /// <param name="address">The Internet address.</param>
         /// <param name="in">The address to parse.</param>
         /// <param name="uDF">The strong name fingerprint (if found).</param>
-        public static void ParseStrongRFC822 (string @in, out string address, out string uDF) {
+        public static void ParseStrongRFC822(string @in, out string address, out string uDF) {
             var Split = @in.Split('@');
             uDF = null;
 
@@ -745,8 +745,8 @@ namespace Goedel.Cryptography {
         public static string MakeWitnessString(
                     byte[] fingerprint1, byte[] nonce1,
                     byte[] fingerprint2, byte[] nonce2,
-                    int bits= 0) =>
-            PresentationBase32 (MakeWitness(fingerprint1, nonce1, fingerprint2, nonce2), bits);
+                    int bits = 0) =>
+            PresentationBase32(MakeWitness(fingerprint1, nonce1, fingerprint2, nonce2), bits);
 
 
         /// <summary>
@@ -757,7 +757,7 @@ namespace Goedel.Cryptography {
         /// <param name="nonce">The nonce value</param>
         /// <returns>The corresponding witness value.</returns>
         public static byte[] MakeWitness(
-                    byte[] fingerprint, 
+                    byte[] fingerprint,
                     byte[] nonce) {
             var provider = Platform.SHA2_512.CryptoProviderDigest();
 
@@ -796,8 +796,8 @@ namespace Goedel.Cryptography {
 
             var result = new byte[2];
 
-            result[1] = (byte) ((int)algorithmIdentifier & 0xff);
-            result[0] = (byte)((int)algorithmIdentifier>>8 & 0xff);
+            result[1] = (byte)((int)algorithmIdentifier & 0xff);
+            result[0] = (byte)((int)algorithmIdentifier >> 8 & 0xff);
             return result;
 
 
@@ -806,12 +806,12 @@ namespace Goedel.Cryptography {
 
 
         public static string DerivedKey(UDFAlgorithmIdentifier algorithmIdentifier,
-                    int length=128, byte[] data = null) {
+                    int length = 128, byte[] data = null) {
 
             var keySpecifier = KeySpecifier(algorithmIdentifier);
             data = data ?? CryptoCatalog.GetBits(length);
 
-            var result = new byte [keySpecifier.Length + data.Length];
+            var result = new byte[keySpecifier.Length + data.Length];
 
             result[0] = keySpecifier[0];
             result[1] = keySpecifier[1];
@@ -859,7 +859,7 @@ namespace Goedel.Cryptography {
         /// <param name="pattern">The pattern the candidate is being tested for a match against.</param>
         /// <param name="UDF">The candidate being tested</param>
         /// <returns>True if the patterns match, otherwise false.</returns>
-        public static bool CompareUDF (this string pattern, string UDF) {
+        public static bool CompareUDF(this string pattern, string UDF) {
             if (UDF.Length < pattern.Length) {
                 return false;
                 }
@@ -876,7 +876,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">Data to be fingerprinted.</param>
         /// <param name="Bits">Precision, must be a multiple of 25 bits.</param>
         /// <returns>The UDF fingerprint.</returns>
-        public static string GetUDFContentDigest(this byte[] Data, string ContentType, int Bits =0) => 
+        public static string GetUDFContentDigest(this byte[] Data, string ContentType, int Bits = 0) =>
             UDF.ContentDigestOfDataString(Data, ContentType, Bits);
 
         }

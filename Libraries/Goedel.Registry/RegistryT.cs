@@ -15,7 +15,7 @@ namespace Goedel.Registry {
     public abstract class Parser {
 
         /// <summary>Start and elapsed time</summary>
-        public Dispatch    Options;
+        public Dispatch Options;
 
         /// <summary>
         /// Process a an input token. This is a push parser that is fed tokens
@@ -29,7 +29,7 @@ namespace Goedel.Registry {
             }
 
         /// <summary>Initialize.</summary>
-        public virtual void Init () {
+        public virtual void Init() {
             }
 
         }
@@ -40,7 +40,7 @@ namespace Goedel.Registry {
         public DateTime Started = DateTime.Now;
 
         /// <summary>Calculate elapsed time.</summary>
-        public TimeSpan Elapsed  => DateTime.Now - Started; 
+        public TimeSpan Elapsed => DateTime.Now - Started;
 
         }
 
@@ -66,13 +66,13 @@ namespace Goedel.Registry {
     /// <summary>Track position in a source file.</summary>
     public class Position {
         /// <summary>The input source</summary>
-        public Source             File;
+        public Source File;
         /// <summary>Line number</summary>
-        public int              Ln = 0;
+        public int Ln = 0;
         /// <summary>Column number</summary>
-        public int              Col = 0;
+        public int Col = 0;
         /// <summary>The current character</summary>
-        public int              Ch = 0;
+        public int Ch = 0;
 
         /// <summary>
         /// Convert position to text.
@@ -91,13 +91,13 @@ namespace Goedel.Registry {
     /// Goedel parser type and instance registry.
     /// </summary>
     /// <typeparam name="T">The parse tree type.</typeparam>
-    public class Registry <T> where T : class  {
+    public class Registry<T> where T : class {
         /// <summary>The input sources</summary>
-        public List <Source>      Files = new List<Source> ();
+        public List<Source> Files = new List<Source>();
         /// <summary>The types</summary>
-        public List <TYPE<T>>     Types = new List<TYPE<T>> ();
+        public List<TYPE<T>> Types = new List<TYPE<T>>();
         /// <summary>The identifiers.</summary>
-        public List <ID<T>>       IDs = new List<ID<T>> ();
+        public List<ID<T>> IDs = new List<ID<T>>();
 
         /// <summary>Construct new registry.</summary>
         public Registry() {
@@ -110,9 +110,9 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="file">The file name.</param>
         /// <returns>The source record.</returns>
-        public Source SetFile (string file) {
-            Source result = new Source (file);
-            Files.Add (result);
+        public Source SetFile(string file) {
+            Source result = new Source(file);
+            Files.Add(result);
             return result;
             }
 
@@ -121,12 +121,12 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Token">the type name</param>
         /// <returns>the type if found.</returns>
-        public TYPE<T> FindType (string Token) {
-            TYPE<T> result = Types.Find (
+        public TYPE<T> FindType(string Token) {
+            TYPE<T> result = Types.Find(
                 delegate (TYPE<T> TT) {
                     return TT.Label == Token;
-                    } );
-            return result;   
+                    });
+            return result;
             }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Goedel.Registry {
         private ID<T> FindID(string Token, TYPE<T> Type) {
             try {
                 ID<T> result = IDs.Find(
-                    delegate(ID<T> TT) {
+                    delegate (ID<T> TT) {
                         return TT.Label == Token;
                         });
                 return result;
@@ -153,11 +153,11 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Text">The name to find</param>
         /// <returns>The type label.</returns>
-        public TYPE<T> TYPE (string Text) {
+        public TYPE<T> TYPE(string Text) {
             TYPE<T> result = new TYPE<T>() {
                 Label = Text
                 };
-            Types.Add (result);
+            Types.Add(result);
             return result;
 
             }
@@ -170,22 +170,22 @@ namespace Goedel.Registry {
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
         /// <returns>The identifier created</returns>
-        public ID<T> ID (Position Position, string Text, TYPE<T> Type, T ObjectIn) {
+        public ID<T> ID(Position Position, string Text, TYPE<T> Type, T ObjectIn) {
             //Console.WriteLine ("Declare ID {0}", Text);
-            
-            ID<T> ID = FindID (Text, Type);
+
+            ID<T> ID = FindID(Text, Type);
 
             if (ID != null) {
                 if (ID.Declared) {
-                    throw new Exception ("Label already defined [" + Text + "]" );
+                    throw new Exception("Label already defined [" + Text + "]");
                     }
                 ID.Object = ObjectIn;
                 ID.Declared = true;
                 return ID;
                 }
             else {
-                ID = new ID<T> (Position, Text, Type, true, ObjectIn);
-                IDs.Add (ID);
+                ID = new ID<T>(Position, Text, Type, true, ObjectIn);
+                IDs.Add(ID);
                 //Type.IDs.Add (ID);
                 return ID;
                 }
@@ -199,16 +199,16 @@ namespace Goedel.Registry {
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
         /// <returns>The reference created</returns>
-        public REF<T>  REF (Position Position, string Text, TYPE<T> Type, T ObjectIn)  {
-            ID<T> ID = FindID (Text, Type);
+        public REF<T> REF(Position Position, string Text, TYPE<T> Type, T ObjectIn) {
+            ID<T> ID = FindID(Text, Type);
 
             if (ID == null) {
                 ID = new ID<T>(Position, Text, Type, false, null);
-                IDs.Add (ID);
+                IDs.Add(ID);
                 //Type.IDs.Add (ID);
                 }
-            
-            REF<T> result = new REF<T> (Position, ID, ObjectIn);
+
+            REF<T> result = new REF<T>(Position, ID, ObjectIn);
 
             return result;
             }
@@ -221,18 +221,18 @@ namespace Goedel.Registry {
         /// <param name="Type">The type</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
         /// <returns>The token created</returns>
-        public TOKEN<T> TOKEN (Position Position, string Text, TYPE<T> Type, T ObjectIn) {
-            ID<T> ID = FindID (Text, Type);
+        public TOKEN<T> TOKEN(Position Position, string Text, TYPE<T> Type, T ObjectIn) {
+            ID<T> ID = FindID(Text, Type);
 
             if (ID == null) {
                 ID = new ID<T>(Position, Text, Type, false, null);
-                IDs.Add (ID);
+                IDs.Add(ID);
                 //Type.IDs.Add (ID);
                 }
-            
-            TOKEN<T> result = new TOKEN<T> (Position, ID, ObjectIn);
 
-            return result;           
+            TOKEN<T> result = new TOKEN<T>(Position, ID, ObjectIn);
+
+            return result;
             }
         }
 
@@ -240,31 +240,31 @@ namespace Goedel.Registry {
     /// A type.
     /// </summary>
     /// <typeparam name="T">The parser output type</typeparam>
-    public class TYPE <T> where T : class  {
+    public class TYPE<T> where T : class {
         /// <summary>The type label</summary>
-        public string           Label;
+        public string Label;
         /// <summary>List of all references.</summary>
-        public List <ID <T>>        IDs = new List<ID <T>> ();
+        public List<ID<T>> IDs = new List<ID<T>>();
         }
-    
+
     /// <summary>
     /// An identifier
     /// </summary>
     /// <typeparam name="T">The parser output type</typeparam>
-    public class ID <T> where T : class  {
+    public class ID<T> where T : class {
         /// <summary>Position in the source</summary>
-        public Position         Position;
+        public Position Position;
         /// <summary>The label.</summary>
-        public string           Label;
+        public string Label;
         /// <summary>The declared type.</summary>
-        public TYPE <T>            Type;
+        public TYPE<T> Type;
         /// <summary>List of all references to this identifier</summary>
-        public List <REF<T>>       REFs;
+        public List<REF<T>> REFs;
         /// <summary>If true, the identifier has been declared in the
         /// source.</summary>
-        public bool             Declared;
+        public bool Declared;
         /// <summary>The parse tree being constructed.</summary>
-        public T           Object;
+        public T Object;
 
 
         /// <summary>
@@ -275,13 +275,13 @@ namespace Goedel.Registry {
         /// <param name="Type">The type</param>
         /// <param name="Declared">If true, this is a declaration for the ID.</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        public ID(Position Position, string Label, TYPE <T> Type, bool Declared, T ObjectIn) {
+        public ID(Position Position, string Label, TYPE<T> Type, bool Declared, T ObjectIn) {
             this.Position = Position;
             this.Label = Label;
             this.Declared = Declared;
-            REFs = new List <REF<T>> ();
+            REFs = new List<REF<T>>();
             Object = ObjectIn;
-            Type.IDs.Add (this);
+            Type.IDs.Add(this);
 
             }
 
@@ -298,16 +298,16 @@ namespace Goedel.Registry {
     /// <typeparam name="T">The parser output type</typeparam>
     public class REF<T> where T : class {
         /// <summary>Position the reference occurs in the source.</summary>
-        public Position        Position;
+        public Position Position;
         /// <summary>The identifier.</summary>
-        public ID <T>             ID;
+        public ID<T> ID;
         /// <summary>The parse tree being constructed.</summary>
-        public T           Object;
+        public T Object;
 
         /// <summary>
         /// Get the object being defined.
         /// </summary>
-        public T Definition => ID?.Object; 
+        public T Definition => ID?.Object;
 
 
         /// <summary>
@@ -323,11 +323,11 @@ namespace Goedel.Registry {
         /// <param name="Position">Position in the source.</param>
         /// <param name="ID">The identifier</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        public REF(Position Position, ID <T> ID, T ObjectIn) {
+        public REF(Position Position, ID<T> ID, T ObjectIn) {
             this.Position = Position;
             this.ID = ID;
             Object = ObjectIn;
-            this.ID.REFs.Add (this);
+            this.ID.REFs.Add(this);
             }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Goedel.Registry {
         /// <summary>
         /// Return the label value
         /// </summary>
-        public string Label  => ToString(); 
+        public string Label => ToString();
 
         }
 
@@ -347,7 +347,7 @@ namespace Goedel.Registry {
     /// Token class
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class TOKEN <T> : REF <T>  where T : class  {
+    public class TOKEN<T> : REF<T> where T : class {
 
         /// <summary>
         /// Construct a token at a position in the source. A token MAY be defined
@@ -356,7 +356,7 @@ namespace Goedel.Registry {
         /// <param name="Position">Position in the source.</param>
         /// <param name="ID">The identifier</param>
         /// <param name="ObjectIn">The parse tree being constructed.</param>
-        public TOKEN(Position Position, ID <T> ID, T ObjectIn) {
+        public TOKEN(Position Position, ID<T> ID, T ObjectIn) {
             base.Position = Position;
             base.ID = ID;
             Object = ObjectIn;

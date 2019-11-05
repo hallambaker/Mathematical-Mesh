@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Mesh {
     public partial class Message {
@@ -15,7 +14,7 @@ namespace Goedel.Mesh {
             }
         }
 
-    public partial class MessageComplete  {
+    public partial class MessageComplete {
 
         public const string Accept = "Accept";
         public const string Reject = "Reject";
@@ -26,7 +25,7 @@ namespace Goedel.Mesh {
         public MessageComplete() { }
 
         public MessageComplete(
-                    string messageID, string relationship, string responseID=null) {
+                    string messageID, string relationship, string responseID = null) {
             var reference = new Reference() {
                 MessageID = messageID,
                 Relationship = relationship,

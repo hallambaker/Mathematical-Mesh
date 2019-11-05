@@ -1,12 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Security.Cryptography;
-using Goedel.ASN;
-using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -118,7 +115,7 @@ namespace Goedel.Cryptography.Algorithms {
                 if (BitIndex.Up()) {
                     Q.Accumulate(P);
                     }
-                P.Double();
+                P.DoublePoint();
                 }
 
             return Q;
@@ -136,7 +133,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Replace the current point value with the current value added to itself
         /// (used to implement multiply)
         /// </summary>
-        public override void Double() => Accumulate(this);  // Limit, doing this the inefficient way for testing.
+        public override void DoublePoint() => Accumulate(this);  // Limit, doing this the inefficient way for testing.
 
 
         //var A = (X * X).Mod(Domain.p);
@@ -216,7 +213,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Private">The extended private key</param>
         /// <returns>The public key corresponding to Private (s.B)</returns>
-        public static CurveEdwards25519 GetPublic(BigInteger Private) => (CurveEdwards25519)Base.Multiply(Private);
+        public static CurveEdwards25519 GetPublic(BigInteger Private) => Base.Multiply(Private);
 
         /// <summary>
         /// Encode this point in the compressed buffer representation
@@ -367,7 +364,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Construct provider from public key data.
         /// </summary>
         /// <param name="encoding">The encoded public key value.</param>
-        public CurveEdwards25519Public (byte[] encoding) {
+        public CurveEdwards25519Public(byte[] encoding) {
             this.Public = CurveEdwards25519.Decode(encoding);
             this.Encoding = encoding;
             }
@@ -415,7 +412,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
         public CurveEdwards25519Public Combine(CurveEdwards25519Public contribution) {
-            var NewPublic = Public .Add( contribution.Public) ;
+            var NewPublic = Public.Add(contribution.Public);
             return new CurveEdwards25519Public((CurveEdwards25519)NewPublic);
             }
 
@@ -459,7 +456,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Signature">The encoded signature data.</param>
         /// <param name="Context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public bool Verify(byte[] Message, byte[] Signature, byte[] Context = null) => 
+        public bool Verify(byte[] Message, byte[] Signature, byte[] Context = null) =>
             Public.VerifySignature(Encoding, Message, Signature, Context);
 
 
@@ -550,7 +547,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="witness">The point [s-SHA512(n)]B where s is the secret key.</param>
         /// <param name="exportable">If true, the private key is exportable</param>
         public CurveEdwards25519Private(
-                    byte[] blind, 
+                    byte[] blind,
                     out CurveEdwards25519 witness,
                     bool exportable = false) {
 
@@ -584,7 +581,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="witness">The witness value.</param>
         /// <param name="publicKey">The resulting private key.</param>
         /// <returns>True if the value was correctly constructed using the specified witness, otherwise false.</returns>
-        public bool VerifyWitness (byte[] blind, CurveEdwards25519 witness, CurveEdwards25519 publicKey) {
+        public bool VerifyWitness(byte[] blind, CurveEdwards25519 witness, CurveEdwards25519 publicKey) {
             var SecretBlind = ExtractPrivate(blind);
             var PublicBlind = CurveEdwards25519.GetPublic(SecretBlind);
 
@@ -608,12 +605,12 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="hash">The hash value</param>
         /// <returns>The private key.</returns>
-        public byte[] ValidatePrivateBytes (byte[] hash) {
+        public byte[] ValidatePrivateBytes(byte[] hash) {
             var Copy = new byte[32];
             Array.Copy(hash, Copy, 32); // bytes 0-31
 
             Copy[0] = (byte)(Copy[0] & 0xf8);
-            Copy[31] = (byte)((Copy[31] &0x7f) | 0x40);
+            Copy[31] = (byte)((Copy[31] & 0x7f) | 0x40);
             return Copy;
             }
 
@@ -688,7 +685,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) => (CurveEdwards25519)publicKey.Public.Multiply(Private);
+        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) => publicKey.Public.Multiply(Private);
 
 
         /// <summary>
@@ -788,7 +785,7 @@ namespace Goedel.Cryptography.Algorithms {
     public class CurveEdwards25519Result : ResultECDH {
 
         /// <summary>The key agreement result</summary>
-        public CurveEdwards25519 Agreement;
+        public CurveEdwards25519 Agreement { get; set; }
 
         /// <summary>The agreement as ASN.1 DER encoding</summary>
         /// <returns>The DER encoded value.</returns>
@@ -805,7 +802,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         /// <summary>Carry from proxy recryption efforts</summary>
-        public CurveEdwards25519 Carry;
+        public CurveEdwards25519 Carry { get; set; }
 
         /// <summary>Public key generated by ephemeral key generation.</summary>
         public CurveEdwards25519Public Public => EphemeralPublicValue as CurveEdwards25519Public;

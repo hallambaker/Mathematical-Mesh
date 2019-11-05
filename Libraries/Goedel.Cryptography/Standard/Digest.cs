@@ -19,14 +19,11 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using Goedel.Utilities;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Utilities;
+
+using System.IO;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Standard {
 
@@ -41,7 +38,7 @@ namespace Goedel.Cryptography.Standard {
     /// of the cryptographic algorithm implementation. It is not necessary to 
     /// observe block boundaries when using the TransformData methods.</para>
     /// </summary>
-    public abstract class CryptoProviderDigest : 
+    public abstract class CryptoProviderDigest :
                 Goedel.Cryptography.CryptoProviderDigest {
 
 
@@ -144,9 +141,9 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Bulk">Provider to use to process the bulk data
         /// signature operations where the asymmetric operation is performed after the
         /// bulk operation completes. </param> 
-        public CryptoDataEncoderDigest(CryptoAlgorithmID Identifier, 
+        public CryptoDataEncoderDigest(CryptoAlgorithmID Identifier,
                         CryptoProviderBulk Bulk) :
-                            base (Identifier, Bulk){ 
+                            base(Identifier, Bulk) {
             }
 
         /// <summary>
@@ -167,7 +164,7 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID; 
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -254,7 +251,7 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// Default output size.
         /// </summary>
-        public override int Size => Truncate >0 ? Truncate: 512;
+        public override int Size => Truncate > 0 ? Truncate : 512;
 
         private static CryptoProvider Factory(int KeySize,
                             CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) => new CryptoProviderSHA2_512(KeySize, ID);
@@ -264,10 +261,10 @@ namespace Goedel.Cryptography.Standard {
         /// </summary>
         /// <param name="KeySize">Key size.</param>
         /// <param name="ID">Cryptgraphic algorithm.</param>
-        public CryptoProviderSHA2_512(int KeySize=512, 
+        public CryptoProviderSHA2_512(int KeySize = 512,
                     CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
 
-            if (KeySize >0 & KeySize < 512) {
+            if (KeySize > 0 & KeySize < 512) {
                 Truncate = KeySize;
                 }
             }
@@ -287,12 +284,12 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID=> _CryptoAlgorithmID; 
+        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
         /// </summary>
-        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm; 
+        public override CryptoAlgorithm CryptoAlgorithm => _CryptoAlgorithm;
 
         static CryptoAlgorithm _CryptoAlgorithm = new CryptoAlgorithm(
                     _CryptoAlgorithmID, _AlgorithmClass, Factory, 160);
@@ -366,7 +363,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Catalog">The catalog to register the provider to, if
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
-        public static new CryptoAlgorithm Register (CryptoCatalog Catalog = null) {
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
@@ -418,7 +415,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Catalog">The catalog to register the provider to, if
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
-        public static new CryptoAlgorithm Register (CryptoCatalog Catalog = null) {
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
@@ -471,7 +468,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Catalog">The catalog to register the provider to, if
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
-        public static new CryptoAlgorithm Register (CryptoCatalog Catalog = null) {
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
@@ -522,7 +519,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Catalog">The catalog to register the provider to, if
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
-        public static new CryptoAlgorithm Register (CryptoCatalog Catalog = null) {
+        public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog = Catalog ?? CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }

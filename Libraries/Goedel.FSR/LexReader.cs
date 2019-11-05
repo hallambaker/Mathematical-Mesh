@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goedel.FSR {
 
@@ -25,7 +22,7 @@ namespace Goedel.FSR {
         /// <summary>Last character read (as integer)</summary>
         public int LastInt;
         /// <summary>Last character read.</summary>
-        public char LastChar => LastInt > 0 ? (char)LastInt : '.'; 
+        public char LastChar => LastInt > 0 ? (char)LastInt : '.';
 
         /// <summary>
         /// Create new lexical analyzer
@@ -152,7 +149,7 @@ namespace Goedel.FSR {
         /// <returns>true if the action succeeded, false otherwise.</returns>
         public override bool Get() {
             if (Count < Data.Length) {
-                LastInt = (int)Data[Count];
+                LastInt = Data[Count];
                 Count++;
                 return true;
                 }

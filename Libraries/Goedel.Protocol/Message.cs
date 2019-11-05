@@ -20,14 +20,14 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Goedel.Utilities;
+
+using System;
+using System.Text;
 
 namespace Goedel.Protocol {
 
-    abstract public partial class Response  {
+    abstract public partial class Response {
         /// <summary>
         /// Returns true if the response indicates the transaction completed successfully
         /// </summary>
@@ -65,12 +65,12 @@ namespace Goedel.Protocol {
         public byte[] MAC = null;
 
         /// <summary>The message as a HTTP string.</summary>
-        public string HTTPBinding => HTTP () ;
+        public string HTTPBinding => HTTP();
 
 
         /// <summary>Convert message to HTTP</summary>
         /// <returns>The HTTP message value.</returns>
-        public abstract string HTTP() ;
+        public abstract string HTTP();
 
         /// <summary>Default constructor.</summary>
         public BoundMessage() => Payload = "{NOT-YET-IMPLEMENTED}";
@@ -78,15 +78,15 @@ namespace Goedel.Protocol {
         System.Text.Encoding UTF8 = new UTF8Encoding(false);
 
         /// <summary>The length of the payload data.</summary>
-        public int ByteCount  => UTF8.GetByteCount(Payload); 
+        public int ByteCount => UTF8.GetByteCount(Payload);
 
 
         /// <summary>The ticket in Base64.</summary>
-        public string Base64Ticket => BaseConvert.ToStringBase64url(Ticket); 
+        public string Base64Ticket => BaseConvert.ToStringBase64url(Ticket);
 
 
         /// <summary>The message authentication code in Base64.</summary>
-        public string Base64Mac  => BaseConvert.ToStringBase64url(MAC);
+        public string Base64Mac => BaseConvert.ToStringBase64url(MAC);
 
 
 
@@ -117,8 +117,8 @@ Content-Length: {2}
 
         /// <summary>Construct from string payload.</summary>
         /// <param name="PayloadIn">The string payload to wrap.</param>
-        public BoundRequest(string PayloadIn) 
-            : base (PayloadIn) { }
+        public BoundRequest(string PayloadIn)
+            : base(PayloadIn) { }
 
         ///// <summary></summary>
         //public BoundRequest(string PayloadIn, byte[] TicketIn,
@@ -128,11 +128,11 @@ Content-Length: {2}
 
         /// <summary>Present message as HTTP</summary>
         /// <returns>The formatted message.</returns>
-        public override string HTTP () {
-            string Header = String.Format (HeaderFormat, "/", "example.com", Payload.Length);
+        public override string HTTP() {
+            string Header = String.Format(HeaderFormat, "/", "example.com", Payload.Length);
             string ContentIntegrity = "";
             if (Ticket != null) {
-                ContentIntegrity = String.Format (ContentIntegrityFormat, Base64Mac, Base64Ticket);
+                ContentIntegrity = String.Format(ContentIntegrityFormat, Base64Mac, Base64Ticket);
                 }
 
             return Header + ContentIntegrity + "\n" + Payload;
@@ -143,13 +143,13 @@ Content-Length: {2}
     public class BoundResponse : BoundMessage {
 
         /// <summary>Constant for invalid Mac response.</summary>
-        public static BoundResponse ErrorBadMac = new BoundResponse (401, "Not Authorized");
+        public static BoundResponse ErrorBadMac = new BoundResponse(401, "Not Authorized");
 
         /// <summary>Constant for invalid message error.</summary>
-        public static BoundResponse ErrorUnknown = new BoundResponse (500, "Internal Server Error");
+        public static BoundResponse ErrorUnknown = new BoundResponse(500, "Internal Server Error");
 
         /// <summary>Constant for bad request.</summary>
-        public static BoundResponse ErrorSyntax =  new BoundResponse (400, "Bad Request");
+        public static BoundResponse ErrorSyntax = new BoundResponse(400, "Bad Request");
 
 
         /// <summary>The status value (defaults to 200)</summary>
@@ -168,8 +168,8 @@ Content-Length: {2}
 
         /// <summary>Construct response for the specified payload.</summary>
         /// <param name="PayloadIn">The message payload.</param>
-        public BoundResponse(string PayloadIn) 
-            : base (PayloadIn) { }
+        public BoundResponse(string PayloadIn)
+            : base(PayloadIn) { }
 
         ///// <summary></summary>
         //public BoundResponse(string PayloadIn, byte[] TicketIn,
@@ -187,11 +187,11 @@ Content-Length: {2}
 
         /// <summary>Present message as HTTP</summary>
         /// <returns>The message value.</returns>
-        public override string HTTP () {
-            string Header = String.Format (HeaderFormat, Status, StatusDescription, Payload.Length);
+        public override string HTTP() {
+            string Header = String.Format(HeaderFormat, Status, StatusDescription, Payload.Length);
             string ContentIntegrity = "";
             if (Ticket != null) {
-                ContentIntegrity = String.Format (ContentIntegrityFormat, Base64Mac, Base64Ticket);
+                ContentIntegrity = String.Format(ContentIntegrityFormat, Base64Mac, Base64Ticket);
                 }
 
             return Header + ContentIntegrity + "\n" + Payload;

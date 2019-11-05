@@ -1,12 +1,11 @@
-﻿using System;
-using System.Numerics;
-using Xunit;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.PKIX;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-using Goedel.Test;
-using Goedel.ASN;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
+
+using System.Numerics;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -22,7 +21,7 @@ namespace Goedel.XUnit {
                 Public = Public.ToByteArray()
                 };
 
-            for (var i =0; i <66000; i+= 100) {
+            for (var i = 0; i < 66000; i += 100) {
                 Test.Shared = Platform.GetRandomBytes(i);
                 var Encode = Test.DER();
                 Encode.Keep();

@@ -20,10 +20,9 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
+
+using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -62,7 +61,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="tag">If true, serialization is tagged with 
         /// the object type.</param>
         /// <returns>The encoded data.</returns>
-        public byte[] ToJson(bool tag=false) {
+        public byte[] ToJson(bool tag = false) {
             var JSONWriter = new JSONWriter();
             Serialize(JSONWriter, tag);
             return JSONWriter.GetBytes;

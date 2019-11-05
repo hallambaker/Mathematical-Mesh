@@ -20,11 +20,7 @@
 //  
 //  
 
-using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
 
 namespace Goedel.Protocol {
 
@@ -51,8 +47,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="input">The input string</param>
         /// <returns>The wrapped output string</returns>
-        static public string Wrap(string input) { 
-            var StringWriter = new StringWriter ();
+        static public string Wrap(string input) {
+            var StringWriter = new StringWriter();
             using (var WrapWriter = new WrapWriter(StringWriter)) {
                 WrapWriter.Write(input);
                 WrapWriter.Flush();
@@ -66,8 +62,8 @@ namespace Goedel.Protocol {
         string buffer = "";
         string breakBuffer = "";
         string spaceBuffer = "";
-        string leading = "";        
-        
+        string leading = "";
+
         /// <summary>
         /// Line count.
         /// </summary>
@@ -120,7 +116,7 @@ namespace Goedel.Protocol {
         /// Force write of all characters to the output.
         /// </summary>
         public override void Flush() {
-            if ((buffer != "") | (breakBuffer != "" )) {
+            if ((buffer != "") | (breakBuffer != "")) {
                 EndLine();
                 }
             Output.Flush();
@@ -155,11 +151,11 @@ namespace Goedel.Protocol {
         //
 
         void EndLine() {
-            Output.Write (leading);
-            Output.Write (buffer);
-            Output.Write (spaceBuffer);
-            Output.WriteLine (breakBuffer);
-            Line ++;
+            Output.Write(leading);
+            Output.Write(buffer);
+            Output.Write(spaceBuffer);
+            Output.WriteLine(breakBuffer);
+            Line++;
             buffer = "";
             breakBuffer = "";
             spaceBuffer = "";
@@ -168,7 +164,7 @@ namespace Goedel.Protocol {
             }
 
         void BreakLine() {
-            string Minimum = MinLeading ; 
+            string Minimum = MinLeading;
 
             Output.Write(leading);
             if (buffer != "") {
@@ -176,7 +172,7 @@ namespace Goedel.Protocol {
                 buffer = "";
                 }
             else { // Line has no break point
-                Output.WriteLine (breakBuffer);
+                Output.WriteLine(breakBuffer);
                 breakBuffer = "";
                 Minimum += WrappedLeading;
                 }
@@ -239,7 +235,7 @@ namespace Goedel.Protocol {
                         break;
                     case 1:
                         buffer = buffer + spaceBuffer + breakBuffer;
-                        breakBuffer = c.ToString ();
+                        breakBuffer = c.ToString();
                         spaceBuffer = " ";
                         state = 2;
                         break;
@@ -254,18 +250,18 @@ namespace Goedel.Protocol {
             else {
                 switch (state) {
                     case 0:
-                        breakBuffer = c.ToString ();
+                        breakBuffer = c.ToString();
                         state = 1;
                         break;
                     case 1:
                         breakBuffer += c;
                         break;
                     case 2:
-                        breakBuffer = c.ToString ();
+                        breakBuffer = c.ToString();
                         state = 1;
                         break;
                     case 3:
-                        breakBuffer = c.ToString ();
+                        breakBuffer = c.ToString();
                         state = 1;
                         break;
                     }
@@ -277,8 +273,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The string value</returns>
         public override string ToString() {
-            Flush ();
-            string result = Output.ToString ();
+            Flush();
+            string result = Output.ToString();
             return result;
             }
         }

@@ -1,5 +1,4 @@
-﻿using System.IO;
-
+﻿
 using Goedel.IO;
 using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
@@ -43,8 +42,8 @@ namespace Goedel.XUnit {
             TestFile("Hello world", encrypt: account, sign: account);
             }
 
-        public bool TestFile(string content, string contentType=null, 
-            string encrypt=null, string sign = null, bool corrupt = false) {
+        public bool TestFile(string content, string contentType = null,
+            string encrypt = null, string sign = null, bool corrupt = false) {
 
             var filename = content.ToFileUnique();
             var contentClause = contentType == null ? "" : $" /cty {contentType}";

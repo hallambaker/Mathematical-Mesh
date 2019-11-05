@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.IO;
+using Goedel.Utilities;
+
 using System.Collections.Generic;
 using System.IO;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Protocol;
 
 
 namespace Goedel.Mesh {
@@ -27,7 +24,7 @@ namespace Goedel.Mesh {
     public class Store : Disposable {
         ///<summary>The default name for the container</summary>
         public virtual string ContainerDefault => throw new NYI();
-        
+
         ///<summary>The container</summary>
         public virtual Container Container { get; }
 
@@ -39,7 +36,7 @@ namespace Goedel.Mesh {
 
         ///<summary>The cryptographic parameters</summary>
         protected CryptoParameters CryptoParameters;
-        
+
         ///<summary>The key collection used for decryption</summary>
         protected KeyCollection KeyCollection;
 
@@ -60,7 +57,7 @@ namespace Goedel.Mesh {
         /// <param name="create"></param>
         public Store(string directory, string containerName = null,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null, 
+                    KeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) {
 
@@ -73,7 +70,7 @@ namespace Goedel.Mesh {
                 keyCollection ?? cryptoParameters?.KeyCollection,
                 cryptoParameters,
                 ContainerType.MerkleTree,
-                "application/mmm-catalog", 
+                "application/mmm-catalog",
                 decrypt: decrypt,
                 create: create
                 );
@@ -101,7 +98,7 @@ namespace Goedel.Mesh {
                 }
             else {
                 // here open the existing container.
-                using (var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt:false)) {
+                using (var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false)) {
                     container.Append(envelopes);
                     }
                 }
@@ -123,7 +120,7 @@ namespace Goedel.Mesh {
         public void AppendDirect(DareEnvelope message) => Container.Append(message);
 
 
-        public ContainerEnumeratorRaw Select(int minIndex, bool reverse=false) => 
+        public ContainerEnumeratorRaw Select(int minIndex, bool reverse = false) =>
             Container.Select(minIndex, reverse);
 
 

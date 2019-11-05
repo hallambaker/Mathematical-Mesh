@@ -23,7 +23,24 @@ add   Add password entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> password add ftp.example.com alice1 password
+alice1@ftp.example.com = [password]
+````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> password add ftp.example.com alice1 password /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Service": "ftp.example.com",
+      "Username": "alice1",
+      "Password": "password"}}}
+````
 
 # password get
 
@@ -35,7 +52,19 @@ get   Lookup password entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> password delete www.example.com
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> password delete www.example.com /json
+{
+  "Result": {
+    "Success": true}}
+````
 
 # password delete
 
@@ -47,7 +76,20 @@ delete   Delete password entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> mesh list
+````
+
+Specifying the /json option returns a result of type ResultMachine:
+
+````
+Alice> mesh list /json
+{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+````
 
 # password list
 
@@ -59,6 +101,28 @@ list   List password entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> password list
+alice1@ftp.example.com = [password]
+alice@example.com@www.example.com = [newpassword]
+````
+
+Specifying the /json option returns a result of type ResultDump:
+
+````
+Alice> password list /json
+{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "Service": "ftp.example.com",
+        "Username": "alice1",
+        "Password": "password"},
+      {
+        "Service": "www.example.com",
+        "Username": "alice@example.com",
+        "Password": "newpassword"}]}}
+````
 
 

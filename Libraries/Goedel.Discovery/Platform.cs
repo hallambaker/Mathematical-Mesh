@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿
 using System.Security.Cryptography;
 
 namespace Goedel.Discovery {
@@ -68,11 +68,11 @@ namespace Goedel.Discovery {
         /// Return a randomly assigned UDP port.
         /// </summary>
         /// <returns>Random integer</returns>
-        public static ushort GetRandom16 () {
+        public static ushort GetRandom16() {
             var Bytes = GetRandomBytes(2);
             var Result = Bytes[0] + 256 * Bytes[1];
 
-            return (ushort) Result;
+            return (ushort)Result;
             }
 
 

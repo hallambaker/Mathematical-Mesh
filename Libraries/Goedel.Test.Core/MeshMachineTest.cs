@@ -1,14 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using Goedel.Mesh;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
-using Goedel.Cryptography.PKIX;
-using Goedel.Utilities;
+using Goedel.Mesh;
 using Goedel.Mesh.Client;
-using Goedel.Mesh.Server;
-using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
 
 
 namespace Goedel.Test.Core {
@@ -74,10 +71,10 @@ namespace Goedel.Test.Core {
 
 
         // Convenience routines 
-        public ContextAccount GetContextAccount(string localName=null, string accountName = null) {
+        public ContextAccount GetContextAccount(string localName = null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
             var contextMesh = machine.MeshHost.GetContextMesh(localName);
-            return contextMesh.GetContextAccount (localName, accountName);
+            return contextMesh.GetContextAccount(localName, accountName);
             }
 
         public static MeshMachineTest GenerateMasterAccount(
@@ -130,8 +127,8 @@ namespace Goedel.Test.Core {
             TestEnvironmentCommon testEnvironmentCommon,
             string machineName,
             string accountId,
-            string localName =null,
-            string PIN=null) {
+            string localName = null,
+            string PIN = null) {
 
             var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
             return machine.MeshHost.Connect(accountId, PIN: PIN);
@@ -167,7 +164,7 @@ namespace Goedel.Test.Core {
             }
 
         public MeshMachineTest(MeshMachineTest existing) :
-            base (existing.DirectoryMaster) =>
+            base(existing.DirectoryMaster) =>
             testEnvironmentCommon = existing.testEnvironmentCommon;
 
 
@@ -203,6 +200,6 @@ namespace Goedel.Test.Core {
 
 
 
-       }
+        }
 
     }

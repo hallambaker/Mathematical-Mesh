@@ -21,9 +21,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Runtime;
-using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
     /// <summary>
@@ -32,7 +31,7 @@ namespace Goedel.Cryptography.Algorithms {
     [ComVisible(true)]
     public abstract class SHA3 : HashAlgorithm {
 
-        static SHA3 () {
+        static SHA3() {
             //CryptoConfig.AddAlgorithm(typeof(SHA3Managed), "SHA3", "SHA3Managed", 
             //                "SHA-3", "System.Security.Cryptography.SHA3");
             //CryptoConfig.AddAlgorithm(typeof(SHAKE128), "SHAKE128", "SHAKE-128");
@@ -58,7 +57,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// 
         /// </summary>
         /// <param name="hashBitLength"></param>
-        protected SHA3 (int hashBitLength) {
+        protected SHA3(int hashBitLength) {
             //if (hashBitLength != 224 && hashBitLength != 256 && hashBitLength != 384 && hashBitLength != 512) {
             //             throw new ArgumentException("hashBitLength must be 224, 256, 384, or 512", "hashBitLength");
             //             }
@@ -118,7 +117,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// 
         /// </summary>
-        public override void Initialize () {
+        public override void Initialize() {
             buffLength = 0;
             state = new ulong[5 * 5];//1600 bits
             HashValue = null;
@@ -164,7 +163,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="array"></param>
         /// <param name="offset"></param>
         /// <param name="count"></param>
-        protected void AddToBuffer (byte[] array, ref int offset, ref int count) {
+        protected void AddToBuffer(byte[] array, ref int offset, ref int count) {
             int amount = Math.Min(count, buffer.Length - buffLength);
             Buffer.BlockCopy(array, offset, buffer, buffLength, amount);
             offset += amount;
@@ -187,7 +186,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="inb">The input bytes</param>
         /// <param name="laneCount">The lane count</param>
-        protected void KeccakF (ulong[] inb, int laneCount) {
+        protected void KeccakF(ulong[] inb, int laneCount) {
 
             //Console.WriteLine($"In {inb.Length} {inb[0]} Lane {laneCount}");
 
@@ -468,7 +467,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="array"></param>
         /// <param name="ibStart"></param>
         /// <param name="cbSize"></param>
-        protected override void HashCore (byte[] array, int ibStart, int cbSize) {
+        protected override void HashCore(byte[] array, int ibStart, int cbSize) {
 
             //Console.WriteLine($"array {array.ToBase16String()} ibStart {ibStart} cbSize {cbSize}");
             if (array == null) {
@@ -521,7 +520,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// 
         /// </summary>
         /// <returns></returns>
-        protected override byte[] HashFinal () {
+        protected override byte[] HashFinal() {
             int sizeInBytes = SizeInBytes;
             byte[] outb = new byte[HashByteLength];
             //    padding
@@ -533,7 +532,7 @@ namespace Goedel.Cryptography.Algorithms {
                 }
 
             buffer[buffLength++] = PaddingValueStart;
-            buffer[sizeInBytes - 1] |= PaddingValueEnd ;
+            buffer[sizeInBytes - 1] |= PaddingValueEnd;
 
 
             //Console.WriteLine($"buffer {buffer.ToBase16String()}");

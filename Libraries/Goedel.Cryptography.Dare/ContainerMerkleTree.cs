@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -72,7 +67,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContainerInfo">Frame header</param>
         /// <param name="Position">Position of the frame</param>
-        protected override void RegisterFrame (ContainerInfo ContainerInfo, long Position) {
+        protected override void RegisterFrame(ContainerInfo ContainerInfo, long Position) {
             var Index = ContainerInfo.Index;
             FrameIndexToPositionDictionary.Add(Index, Position);
             //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
@@ -120,13 +115,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Frame">The frame number</param>
         /// <param name="ContentDigest">The content digest</param>
         /// <returns>The calculated digest</returns>
-        public virtual byte[] GetTreeDigest (long Frame, byte[] ContentDigest) {
+        public virtual byte[] GetTreeDigest(long Frame, byte[] ContentDigest) {
             long x2 = Frame + 1;
             long d = 1;
 
             while (x2 > 0) {
                 if ((x2 & 1) == 1) {
-                    return DigestFrame (x2 == 1 ? (d / 2) - 1 : Frame - d, ContentDigest);
+                    return DigestFrame(x2 == 1 ? (d / 2) - 1 : Frame - d, ContentDigest);
                     }
                 else {
                     ContentDigest = DigestFrame(Frame - d, ContentDigest);
@@ -143,7 +138,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Frame">The frame index.</param>
         /// <param name="Right">The digest of the rightmost component.</param>
         /// <returns>The calculated digest.</returns>
-        public byte[] DigestFrame (long Frame, byte[] Right) {
+        public byte[] DigestFrame(long Frame, byte[] Right) {
             var Left = GetFrameDigest(Frame);
             return CryptoStackContainer.CombineDigest(Left, Right);
             }
@@ -154,7 +149,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Frame">The frame index.</param>
         /// <returns>The digest value.</returns>
-        public virtual byte[] GetFrameDigest (long Frame) {
+        public virtual byte[] GetFrameDigest(long Frame) {
             var Found = FrameDigestDictionary.TryGetValue(Frame, out var Digest);
             return Digest;
             }
@@ -165,7 +160,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<DareHeader> Headers) {
+        public override void CheckContainer(List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
                 Assert.NotNull(Header.ContainerInfo);

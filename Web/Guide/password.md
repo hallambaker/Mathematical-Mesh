@@ -11,13 +11,24 @@ credentials catalog associated with a profile:
 
 Alice adds the username and password for an ftp service to her catalog:
 
-**Missing Example***
+
+````
+Alice> password add ftp.example.com alice1 password
+alice1@ftp.example.com = [password]
+Alice> password add www.example.com alice@example.com newpassword
+alice@example.com@www.example.com = [newpassword]
+````
 
 ## Synchronizing passwords to an application.
 
 The `password list` command lists all the passwords in the catalog:
 
-**Missing Example***
+
+````
+Alice> password list
+alice1@ftp.example.com = [password]
+alice@example.com@www.example.com = [newpassword]
+````
 
 The output of the list command may be used to configure a user application 
 such as a Web browser that supports password management. But care is obviously
@@ -28,7 +39,11 @@ required as the passwords will only be as secure as the other application.
 The `password get`  command retreives the username and password 
 values for a specified service:
 
-**Missing Example***
+
+````
+Alice> password get ftp.example.com
+alice1@ftp.example.com = [newpassword]
+````
 
 ### Using Credentials in scripts
 
@@ -59,20 +74,30 @@ Having automated access to the ftp site, Alice doesn't need her password to be e
 memorable or conveniently short. She decides to replace her bad password with a strong
 password that is randomly generated:
 
-**Missing Example***
+
+````
+Alice> password add ftp.example.com alice1 newpassword
+alice1@ftp.example.com = [newpassword]
+````
 
 
 ## Deleting passwords
 
 Password entries may be deleted using the  `password delete` command:
 
-**Missing Example***
+
+````
+Alice> password delete www.example.com
+````
 
 ## Adding a Device.
 
 When a device is added, it gets a copy of the password file:
 
-**Missing Example***
+
+````
+Alice> device auth Alice2 /password
+````
 
 
 

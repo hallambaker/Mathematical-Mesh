@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace Goedel.IO {
 
@@ -16,7 +12,7 @@ namespace Goedel.IO {
         /// Delete a directory ignoring errors.
         /// </summary>
         /// <param name="Path">The directory to delete.</param>
-        public static void DirectoryDelete (this string Path) {
+        public static void DirectoryDelete(this string Path) {
             if (!Directory.Exists(Path)) {
                 return;
                 }

@@ -1,9 +1,11 @@
-using System;
-using System.Collections.Generic;
-using Xunit;
 using Goedel.Cryptography;
 using Goedel.Utilities;
+
+using System;
 using System.Collections;
+using System.Collections.Generic;
+
+using Xunit;
 
 namespace Goedel.XUnit {
     public partial class TestDigests {
@@ -36,7 +38,7 @@ namespace Goedel.XUnit {
         //static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.NULL;
 
         public class TestVectors_SHA_NIST : IEnumerable<object[]> {
-            
+
             public IEnumerator<object[]> GetEnumerator() {
                 yield return new object[] {
                     Message1, 1,
@@ -187,7 +189,7 @@ namespace Goedel.XUnit {
             Xunit.Assert.True(Result.IsEqualTo(TestVector.Digest));
             }
 
-        public void Verify_Streamed(CryptoProviderDigest Provider, string MessageString, 
+        public void Verify_Streamed(CryptoProviderDigest Provider, string MessageString,
                 int Repeat, TestVector TestVector) {
             var Message = MessageString.ToBytes();
             var Encoder = Provider.MakeEncoder();

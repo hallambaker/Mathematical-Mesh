@@ -89,7 +89,7 @@
     /// Interface allowing a character or binary stream reader to checkpoint the
     /// current point in the stream and return to it to re-read data.
     /// </summary>
-    public interface IBufferedStream  {
+    public interface IBufferedStream {
 
         /// <summary>Create a restore point in the stream.</summary>
         void Mark();

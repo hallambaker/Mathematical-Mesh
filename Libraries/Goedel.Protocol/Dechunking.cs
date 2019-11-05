@@ -20,9 +20,9 @@
 //  
 //  
 
-using System.IO;
-using System.Text;
 using Goedel.Utilities;
+
+using System.IO;
 
 namespace Goedel.Protocol {
 
@@ -42,7 +42,7 @@ namespace Goedel.Protocol {
         /// <returns>Data read from stream</returns>
         public static string ReadString(long Length, Stream Stream) {
             var Buffer = ReadBytes(Length, Stream);
-            return System.Text.Encoding.UTF8.GetString(Buffer, 0 , Buffer.Length);
+            return System.Text.Encoding.UTF8.GetString(Buffer, 0, Buffer.Length);
             }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Goedel.Protocol {
         /// HTTP chunked encoding is assumed.</param>
         /// <param name="Stream">The stream to be read.</param>
         /// <returns>The array data.</returns>
-        public static byte [] ReadBytes (long Length, Stream Stream) {
+        public static byte[] ReadBytes(long Length, Stream Stream) {
 
             if (Length < 0) {
                 return ReadChunked(Stream);
@@ -68,7 +68,7 @@ namespace Goedel.Protocol {
 
 
             while (Counter < Length) {
-                int Bytes = Stream.Read(Buffer, Counter, (int) Length - Counter);
+                int Bytes = Stream.Read(Buffer, Counter, (int)Length - Counter);
                 Counter += Bytes;
                 }
 

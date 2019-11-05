@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using Goedel.Protocol;
 
 
 namespace Goedel.Protocol.Debug {
@@ -37,7 +35,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Set the level of detail for trace messages
         /// </summary>
-        public int Level {get; set; }
+        public int Level { get; set; }
 
         /// <summary>
         /// The current trace point.
@@ -70,7 +68,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Tag">Label for future retrieval</param>
         /// <param name="Command">Console command that caused the trace.</param>
         /// <returns>The trace point created.</returns>
-        public TracePoint Label (string Tag, string Command = null) {
+        public TracePoint Label(string Tag, string Command = null) {
             _Current = new TracePoint(this, Tag) {
                 Command = Command
                 };
@@ -86,7 +84,7 @@ namespace Goedel.Protocol.Debug {
         public TracePoint Get(string Tag) {
             var Found = Traces.TryGetValue(Tag, out var Result);
 
-            return Found ? Result: null;
+            return Found ? Result : null;
 
             }
 
@@ -105,7 +103,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Status">HTTP Status return line</param>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Response (string Status, JSONObject Payload) {
+        public TraceMessage Response(string Status, JSONObject Payload) {
             var Message = new TraceMessage(Current, Payload, DateTime.Now, false) {
                 Status = Status
                 };
@@ -135,7 +133,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Current level of trace detail
         /// </summary>
-        public int Level =>TraceDictionary.Level;
+        public int Level => TraceDictionary.Level;
 
 
 
@@ -166,7 +164,7 @@ namespace Goedel.Protocol.Debug {
     public class TraceMessage {
 
         TracePoint TracePoint;
-        TraceDictionary TraceDictionary  => TracePoint.TraceDictionary; 
+        TraceDictionary TraceDictionary => TracePoint.TraceDictionary;
 
         /// <summary>
         /// The text of the message payload
@@ -176,19 +174,19 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The time the message was sent
         /// </summary>
-        public DateTime Time { get ; }
+        public DateTime Time { get; }
 
         /// <summary>
         /// If true message was a request, otherwise is a response.
         /// </summary>
-        public bool IsRequest { get ; }
+        public bool IsRequest { get; }
 
 
 
         /// <summary>
         /// The HTTP result
         /// </summary>
-        public string Status {get; set; }
+        public string Status { get; set; }
 
         /// <summary>
         /// Constructor

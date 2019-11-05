@@ -1,10 +1,10 @@
-﻿using System.Numerics;
-
-using Goedel.Utilities;
-using Goedel.Mesh.Test;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
+using Goedel.Mesh.Test;
 using Goedel.Test.Core;
+
+using System.Numerics;
+
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -41,7 +41,7 @@ namespace Goedel.XUnit {
             AlicePublic = AlicePrivate.DiffeHellmanPublic;
             BobPublic = BobPrivate.DiffeHellmanPublic;
             GroupKeyPublic = GroupPrivate.DiffeHellmanPublic;
-        }
+            }
 
 
         public TestCryptography() {
@@ -62,7 +62,7 @@ namespace Goedel.XUnit {
             Utilities.Assert.True(BobKey.Equals(AliceKey));
 
             }
-        
+
         [Fact]
         public void Test_DHAlg_Ephemeral_Agreement() {
 
@@ -76,18 +76,18 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void TestDH_Recryption_2 () {
+        public void TestDH_Recryption_2() {
 
             var BobSplit = GroupPrivate.MakeRecryptionKeySet(2);
             var BobRecryption = BobSplit[0] as DiffeHellmanPrivate;
-            var BobDecryption = BobSplit[1] as DiffeHellmanPrivate; 
+            var BobDecryption = BobSplit[1] as DiffeHellmanPrivate;
 
 
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
             var ServerRecrypt = BobRecryption.Agreement(AlicePublic);
             var BobAgreeW = BobDecryption.Agreement(AlicePublic, ServerRecrypt);
 
-            Utilities.Assert.True(AliceAgreeW == BobAgreeW );
+            Utilities.Assert.True(AliceAgreeW == BobAgreeW);
 
             }
 
@@ -111,7 +111,7 @@ namespace Goedel.XUnit {
             }
 
 
-        void TestRecrypt (int Shares) {
+        void TestRecrypt(int Shares) {
             // Alice's encryption
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
 
@@ -121,7 +121,7 @@ namespace Goedel.XUnit {
             // Calculate part results
             var Recrypts = new BigInteger[Shares];
             for (var i = 0; i < Shares; i++) {
-                Recrypts[i] = (KeySet[i] as DiffeHellmanPrivate ).Agreement(AlicePublic);
+                Recrypts[i] = (KeySet[i] as DiffeHellmanPrivate).Agreement(AlicePublic);
                 }
 
             // Combine them

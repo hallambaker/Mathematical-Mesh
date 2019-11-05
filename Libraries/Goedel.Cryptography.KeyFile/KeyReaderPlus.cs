@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Goedel.Utilities;
 
-using Goedel.Utilities;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Goedel.Cryptography.KeyFile {
 
@@ -178,7 +175,8 @@ namespace Goedel.Cryptography.KeyFile {
                 Count = Armor1,
                 Tag = Tag,
                 Data = Data,
-                Headers = Headers};
+                Headers = Headers
+                };
 
             return Result;
             }

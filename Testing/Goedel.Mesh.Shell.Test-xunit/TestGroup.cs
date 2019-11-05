@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Xunit;
-using Goedel.Mesh.Shell;
-using Goedel.Cryptography;
-using Goedel.Mesh.Test;
-using Goedel.Test.Core;
+﻿using Goedel.Mesh.Shell;
 using Goedel.Test;
-using Goedel.Utilities;
+
+using Xunit;
 
 
 namespace Goedel.XUnit {
@@ -20,7 +15,7 @@ namespace Goedel.XUnit {
         public void TestMessageGroup() {
             var accountA = "alice@example.com";
             var accountB = "bob@example.com";
-            var accountR = "recrypt@example.com";
+            var accountGroup = "groupw@example.com";
 
             var deviceA = GetTestCLI();
             var deviceB = GetTestCLI();
@@ -31,16 +26,16 @@ namespace Goedel.XUnit {
             deviceA.CreateAccount(accountA);
             deviceB.CreateAccount(accountB);
 
-            deviceA.Dispatch($"group create {accountR}");
-            var result1 = Dispatch($"dare encode {filename} /encrypt {accountR}") as ResultFile;
+            deviceA.Dispatch($"group create {accountGroup}");
+            var result1 = Dispatch($"dare encode {filename} /encrypt {accountGroup}") as ResultFile;
             deviceA.Dispatch($"dare decode {result1.Filename}");
-            deviceB.Dispatch($"dare decode {result1.Filename}", fail:true);
+            deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
 
-            deviceA.Dispatch($"group add {accountR} {accountB}");
+            deviceA.Dispatch($"group add {accountGroup} {accountB}");
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}");
 
-            deviceA.Dispatch($"group delete {accountR} {accountB}");
+            deviceA.Dispatch($"group delete {accountGroup} {accountB}");
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
             }

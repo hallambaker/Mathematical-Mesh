@@ -22,8 +22,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Algorithms {
     /// <summary>
@@ -36,7 +34,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// SHA-3 implementation supporting 224, 256, 384 and 512 bits
         /// </summary>
         /// <param name="hashBitLength"></param>
-        public SHA3Managed (int hashBitLength = 512)
+        public SHA3Managed(int hashBitLength = 512)
             : base(hashBitLength) {
 
             switch (hashBitLength) {
@@ -81,7 +79,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Input">The input data</param>
         /// <param name="hashBitLength">The number of output bits</param>
         /// <returns>The digest value</returns>
-        public static byte [] Process (byte[] Input, int hashBitLength = 256) {
+        public static byte[] Process(byte[] Input, int hashBitLength = 256) {
             using (var Provider = new SHAKE128(hashBitLength)) {
                 Provider.TransformFinalBlock(Input, 0, Input.Length);
                 return Provider.Hash;
@@ -113,7 +111,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Input">The input data</param>
         /// <param name="hashBitLength">The number of output bits</param>
         /// <returns>The digest value</returns>
-        public static byte[] Process (byte[] Input, int hashBitLength = 256) {
+        public static byte[] Process(byte[] Input, int hashBitLength = 256) {
             using (var Provider = new SHAKE256(hashBitLength)) {
                 Provider.TransformFinalBlock(Input, 0, Input.Length);
                 return Provider.Hash;

@@ -1,15 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using Goedel.Mesh.Client;
 using Goedel.Utilities;
-using Goedel.Mesh.Client;
-using Goedel.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
-using Goedel.Protocol;
+
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -23,7 +15,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
             var serviceID = Options.ServiceID.Value;
             var pin = Options.PIN.Value;
-            var contextMeshPending = MeshHost.Connect(serviceID, PIN:pin);
+            var contextMeshPending = MeshHost.Connect(serviceID, PIN: pin);
 
             var result = new ResultConnect() {
                 CatalogedMachine = contextMeshPending.CatalogedMachine

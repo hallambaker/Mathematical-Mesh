@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh.Client {
 
@@ -196,7 +194,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmEncrypt"></param>
         /// <returns></returns>
         public ContextAccount CreateAccount(
-            
+
                     string localName,
                     CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                     CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
@@ -264,7 +262,7 @@ namespace Goedel.Mesh.Client {
                 Secret secret,
                 ProfileDevice profileDevice = null,
                 DareEnvelope escrow = null,
-                
+
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default

@@ -20,16 +20,10 @@
 //  
 //  
 
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Core;
+
+using System.Collections.Generic;
 namespace Goedel.Mesh.Server {
 
     /// <summary>
@@ -113,7 +107,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="Request">The request object to send to the host.</param>
 		/// <returns>The response object from the service</returns>
         public override MeshHelloResponse Hello(
-                HelloRequest Request, JpcSession jpcSession=null) {
+                HelloRequest Request, JpcSession jpcSession = null) {
             jpcSession = jpcSession ?? JpcSession;
 
             var HelloResponse = new MeshHelloResponse() {
@@ -225,7 +219,7 @@ namespace Goedel.Mesh.Server {
             jpcSession = jpcSession ?? JpcSession;
             try {
                 var Updates = Mesh.AccountDownload(jpcSession, jpcSession.VerifiedAccount, Request.Select);
-                return new DownloadResponse() { Updates = Updates};
+                return new DownloadResponse() { Updates = Updates };
                 }
             catch (System.Exception exception) {
                 return new DownloadResponse(exception);

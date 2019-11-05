@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography;
 
 namespace Goedel.Mesh {
 
@@ -41,14 +40,14 @@ namespace Goedel.Mesh {
 
 
     public class CatalogContact : Catalog {
-        
-        
-        
+
+
+
         public const string Label = "mmm_Contact";
 
         public CatalogedContact Self;
 
-        public Dictionary<string, CatalogedContact> DictionaryByEmail = 
+        public Dictionary<string, CatalogedContact> DictionaryByEmail =
                     new Dictionary<string, CatalogedContact>();
 
 
@@ -82,14 +81,14 @@ namespace Goedel.Mesh {
 
         public CatalogedContact Add(DareEnvelope contact, bool self = false) {
             var entry = new CatalogedContact(contact) {
-                Self=self
+                Self = self
                 };
             New(entry);
 
             return entry;
             }
 
-        public CatalogedContact Add(Contact contact, bool self = false) => 
+        public CatalogedContact Add(Contact contact, bool self = false) =>
             Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
 

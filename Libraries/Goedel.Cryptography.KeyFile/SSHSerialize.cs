@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+
 using System;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace Goedel.Cryptography.KeyFile {
         uint Length = 0;
         uint Pointer = 0;
 
-        uint Remain => (uint)(Data.Length - Pointer);  
+        uint Remain => (uint)(Data.Length - Pointer);
 
         /// <summary>The collected data</summary>
         public byte[] Data;
@@ -49,7 +50,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Encode a 32 bit length
         /// </summary>
         /// <param name="Length">The length value to encode.</param>
-        public void EncodeLength (uint Length) {
+        public void EncodeLength(uint Length) {
             Data[Pointer++] = (byte)((Length >> 24) & 0xff);
             Data[Pointer++] = (byte)((Length >> 16) & 0xff);
             Data[Pointer++] = (byte)((Length >> 8) & 0xff);
@@ -73,7 +74,7 @@ namespace Goedel.Cryptography.KeyFile {
         public void Encode(string Text) {
             var Size = (uint)Text.CountUTF8();
             EncodeLength(Size);
-            Text.ToUTF8(Data, (int) Pointer);
+            Text.ToUTF8(Data, (int)Pointer);
             Pointer += Size;
             }
 
@@ -81,7 +82,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Decode a length value.
         /// </summary>
         /// <returns>The decoded length.</returns>
-        public uint DecodeLength () {
+        public uint DecodeLength() {
             Assert.False(Remain < 4, UnexpectedEnd.Throw);
 
             var Byte0 = Data[Pointer++];
@@ -90,7 +91,7 @@ namespace Goedel.Cryptography.KeyFile {
             var Byte3 = Data[Pointer++];
 
             // Length encoding is bigendian
-            uint Result = (uint) ((Byte0 << 24) | Byte1 << 16 | Byte2 << 8 | Byte3);
+            uint Result = (uint)((Byte0 << 24) | Byte1 << 16 | Byte2 << 8 | Byte3);
 
             return Result;
             }
@@ -115,7 +116,7 @@ namespace Goedel.Cryptography.KeyFile {
             var StringBuilder = new StringBuilder();
             var Bytes = DecodeLength();
 
-            for (var i = 0; i< Bytes; i++) {
+            for (var i = 0; i < Bytes; i++) {
                 var Byte = Data[Pointer++];
                 StringBuilder.Append((char)Byte);
                 }
@@ -163,7 +164,7 @@ namespace Goedel.Cryptography.KeyFile {
         public abstract byte[] Encode();
 
         /// <summary>The key pair</summary>
-        public virtual KeyPair KeyPair  => null;    // Feature convert DSS keypair
+        public virtual KeyPair KeyPair => null;    // Feature convert DSS keypair
 
         }
 
@@ -172,9 +173,9 @@ namespace Goedel.Cryptography.KeyFile {
     /// </summary>
     public class SSH_RSA : SSHData {
         /// <summary>The SSH tag</summary>
-        public override string Tag  => "ssh-rsa"; 
+        public override string Tag => "ssh-rsa";
         /// <summary>The SSH tag</summary>
-        public static string TagID => "ssh-rsa"; 
+        public static string TagID => "ssh-rsa";
 
         /// <summary>RSA public key exponent.</summary>
         public byte[] Exponent;
@@ -183,19 +184,19 @@ namespace Goedel.Cryptography.KeyFile {
 
         /// <summary>The RSA Key Pair</summary>
         public PKIXPublicKeyRSA RSAPublicKey => new PKIXPublicKeyRSA() {
-                    Modulus = Modulus,
-                    PublicExponent = Exponent
-                    };
+            Modulus = Modulus,
+            PublicExponent = Exponent
+            };
 
         /// <summary>The key pair</summary>
-        public override KeyPair KeyPair => KeyPairBaseRSA.Create(RSAPublicKey );   // NYI convert DSS keypair
+        public override KeyPair KeyPair => KeyPairBaseRSA.Create(RSAPublicKey);   // NYI convert DSS keypair
 
 
         /// <summary>
         /// Construct an SSH_RSA object from an RSAKeyPair
         /// </summary>
         /// <param name="RSAKeyPair">Keypair to construct from</param>
-        public SSH_RSA (KeyPairBaseRSA RSAKeyPair) {
+        public SSH_RSA(KeyPairBaseRSA RSAKeyPair) {
             var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
             Exponent = PKIXPublicKeyRSA.PublicExponent;
             Modulus = PKIXPublicKeyRSA.Modulus;
@@ -232,7 +233,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// Constructor, decode the data item from the specified buffer.
         /// </summary>
         /// <param name="Data">Data input.</param>
-        public SSH_RSA (byte[] Data) : this(new DataBuffer(Data)) {
+        public SSH_RSA(byte[] Data) : this(new DataBuffer(Data)) {
 
             }
         }
@@ -242,10 +243,10 @@ namespace Goedel.Cryptography.KeyFile {
     public class SSH_DSS : SSHData {
 
         /// <summary>The SSH tag</summary>
-        public override string Tag  => "ssh-dss"; 
+        public override string Tag => "ssh-dss";
 
         /// <summary>The SSH tag</summary>
-        public static string TagID  => "ssh-dss"; 
+        public static string TagID => "ssh-dss";
 
         /// <summary>The parameter P</summary>
         public byte[] P;

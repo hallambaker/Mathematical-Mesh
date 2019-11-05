@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -157,7 +152,7 @@ namespace Goedel.Cryptography.Jose {
         static AlgorithmID() {
             foreach (var Entry in StringToID) {
                 IdToString.Add(Entry.Value, Entry.Key);
-                UpperToID.Add(Entry.Key.ToUpper(),Entry.Value);
+                UpperToID.Add(Entry.Key.ToUpper(), Entry.Value);
                 }
             }
 
@@ -166,7 +161,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="JoseID">Jose Name</param>
         /// <returns>Identifier</returns>
-        public static CryptoAlgorithmID FromJoseID (this string JoseID) {
+        public static CryptoAlgorithmID FromJoseID(this string JoseID) {
             if (JoseID == null) {
                 return CryptoAlgorithmID.NULL;
                 }
@@ -182,7 +177,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="defaultID">Optional deafult algorithm to be returned if 
         /// <paramref name="uncasedID"/> is null.</param>
         /// <returns>Identifier</returns>
-        public static CryptoAlgorithmID ToCryptoAlgorithmID(this string uncasedID, 
+        public static CryptoAlgorithmID ToCryptoAlgorithmID(this string uncasedID,
                     CryptoAlgorithmID defaultID = CryptoAlgorithmID.NULL) {
             if (uncasedID == null) {
                 return defaultID;

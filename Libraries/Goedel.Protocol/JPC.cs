@@ -20,9 +20,10 @@
 //  
 //  
 
-using System.IO;
-using System.Collections.Generic;
 using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Protocol {
 
@@ -64,13 +65,13 @@ namespace Goedel.Protocol {
         /// <param name="HostMode">If true, service is self hosted.</param>
         /// <param name="Prefix">The service prefix type</param>
         /// <returns>The formed URI</returns>
-        public static string WellKnownToURI (string Domain, string WellKnown, 
+        public static string WellKnownToURI(string Domain, string WellKnown,
                             string Prefix, bool TLS, bool HostMode) {
 
             var Address = DNS.Resolve(Domain, Prefix);
 
-            return (TLS ? "https://" : "http://") + 
-                (HostMode ? Domain : Address) + 
+            return (TLS ? "https://" : "http://") +
+                (HostMode ? Domain : Address) +
                 "/.well-known/" + WellKnown + "/";
             }
 
@@ -161,7 +162,7 @@ namespace Goedel.Protocol {
     /// Direct connection between client and service host. Useful for debugging
     /// and for direct access to a service on the same machine.
     /// </summary>
-    public partial class DirectSession : JpcSession{
+    public partial class DirectSession : JpcSession {
 
 
 
@@ -224,14 +225,14 @@ namespace Goedel.Protocol {
         /// <param name="Tag">Operation to perform.</param>
         /// <param name="Request">Request data.</param>
         /// <returns>string returned in response.</returns>
-        public virtual string Post (string Tag, JSONObject Request) {
+        public virtual string Post(string Tag, JSONObject Request) {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
 
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
-            JSONWriter.WriteToken(Tag,0);
+            JSONWriter.WriteToken(Tag, 0);
             Request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
@@ -262,7 +263,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Host">The host implementation</param>
         /// <param name="serviceID">The service account.</param>
-        public LocalRemoteSession(JPCProvider Host, string serviceID) : base(serviceID) => 
+        public LocalRemoteSession(JPCProvider Host, string serviceID) : base(serviceID) =>
                 this.Host = Host;
 
         /// <summary>
@@ -276,7 +277,7 @@ namespace Goedel.Protocol {
             var JSONReader = new JSONReader(DataText);
 
             var result = Host.Dispatch(this, JSONReader);
-            return new MemoryStream (result.GetBytes());
+            return new MemoryStream(result.GetBytes());
             }
 
         }

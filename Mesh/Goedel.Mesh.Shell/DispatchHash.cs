@@ -1,12 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -78,7 +72,7 @@ namespace Goedel.Mesh.Shell {
 
             var contentDigest = inputFile.GetDigestOfFile(hashAlgorithm);
             var digest = Cryptography.UDF.ContentDigestOfDigestString(
-                contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key, bits:bits);
+                contentDigest, contentType, cryptoAlgorithmID: hashAlgorithm, key: key, bits: bits);
 
             if (expect == null) {
 

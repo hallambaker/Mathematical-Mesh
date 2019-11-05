@@ -1,5 +1,4 @@
 ﻿using System;
-using Goedel.Utilities;
 
 
 
@@ -11,48 +10,48 @@ namespace Goedel.Cryptography.Windows {
     /// </summary>
     public class DecryptionFailed : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Could not decrypt user data"
         /// </summary>		
-		public DecryptionFailed () : base ("Could not decrypt user data") {
-			}
-        
-		/// <summary>
+        public DecryptionFailed() : base("Could not decrypt user data") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Could not decrypt user data"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public DecryptionFailed (string Description) : base (Description) {
-			}
+        public DecryptionFailed(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public DecryptionFailed (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public DecryptionFailed(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new DecryptionFailed(Reason as string);
-				}
-			else {
-				return new DecryptionFailed();
-				}
+            if (Reason as string != null) {
+                return new DecryptionFailed(Reason as string);
+                }
+            else {
+                return new DecryptionFailed();
+                }
             }
         }
 
@@ -63,48 +62,48 @@ namespace Goedel.Cryptography.Windows {
     [Serializable]
     public class EncryptionFailed : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Could not encrypt user data"
         /// </summary>		
-		public EncryptionFailed () : base ("Could not encrypt user data") {
-			}
-        
-		/// <summary>
+        public EncryptionFailed() : base("Could not encrypt user data") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Could not encrypt user data"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public EncryptionFailed (string Description) : base (Description) {
-			}
+        public EncryptionFailed(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public EncryptionFailed (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public EncryptionFailed(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new EncryptionFailed(Reason as string);
-				}
-			else {
-				return new EncryptionFailed();
-				}
+            if (Reason as string != null) {
+                return new EncryptionFailed(Reason as string);
+                }
+            else {
+                return new EncryptionFailed();
+                }
             }
         }
 
@@ -114,50 +113,50 @@ namespace Goedel.Cryptography.Windows {
     /// </summary>
     public class InsufficientMemory : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Memory allocation failed"
         /// </summary>		
-		public InsufficientMemory () : base ("Memory allocation failed") {
-			}
-        
-		/// <summary>
+        public InsufficientMemory() : base("Memory allocation failed") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Memory allocation failed"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InsufficientMemory (string Description) : base (Description) {
-			}
+        public InsufficientMemory(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InsufficientMemory (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InsufficientMemory(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InsufficientMemory(Reason as string);
-				}
-			else {
-				return new InsufficientMemory();
-				}
+            if (Reason as string != null) {
+                return new InsufficientMemory(Reason as string);
+                }
+            else {
+                return new InsufficientMemory();
+                }
             }
         }
 
 
-	}
+    }

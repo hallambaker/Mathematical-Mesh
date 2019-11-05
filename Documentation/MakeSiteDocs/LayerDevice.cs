@@ -47,6 +47,9 @@ namespace ExampleGenerator {
             ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
             AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
+
+            // decode the catalogged device here and provide the Key collection
+
             // Bob uses the all in one approach
             ProfileCreateBob = testCLIBob1.Example($"mesh create /account {BobAccount} /service={BobService}");
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Goedel.Registry {
@@ -11,7 +10,7 @@ namespace Goedel.Registry {
     /// </summary>
     public static partial class ExtensionMethods {
 
-        private static string _Target = "CS" ;
+        private static string _Target = "CS";
 
         /// <summary>
         /// Sets the code generation target type. This ensures that labels,
@@ -65,7 +64,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="text">Unescaped string</param>
         /// <returns>Quoted escaped string.</returns>
-        public static string Quoted (this string text) {
+        public static string Quoted(this string text) {
             var StringBuilder = new StringBuilder();
             StringBuilder.Append("\"");
             Escape(StringBuilder, text);
@@ -119,7 +118,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="text">The string to return if Value is true.</param>
         /// <returns>The string Text if Value is true, otherwise a null string.</returns>
-        public static string If(this string text) => If(text!=null, text, "");
+        public static string If(this string text) => If(text != null, text, "");
 
         /// <summary>
         /// Return the string value if a condition is met, otherwise return an
@@ -145,7 +144,7 @@ namespace Goedel.Registry {
         /// <param name="value">Value to write</param>
         /// <param name="bold">If true, wrap value in bold style tags</param>
         /// <returns>The resulting formatted string.</returns>
-        public static string TBS (this string value, bool bold=true) {
+        public static string TBS(this string value, bool bold = true) {
             var Message = String.Format("TBS: {0}", value);
             //Console.WriteLine(Message);
             return bold ? "<b>" + Message + "</b>" : Message;
@@ -191,7 +190,7 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="next">String to return after the first call to ToString()</param>
 
-        public Separator(string next) : this ("", next){
+        public Separator(string next) : this("", next) {
             }
 
         /// <summary>

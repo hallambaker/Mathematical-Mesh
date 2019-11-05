@@ -20,11 +20,9 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Goedel.Utilities;
+
+using System.IO;
 
 namespace Goedel.Protocol {
 
@@ -189,7 +187,7 @@ namespace Goedel.Protocol {
                 }
             else if (Length < 0x10000) {
                 Output.Write((byte)(Code + JSONBCD.Length16));
-                Output.Write((byte)((Length>>8) & 0xff));
+                Output.Write((byte)((Length >> 8) & 0xff));
                 Output.Write((byte)(Length & 0xff));
                 }
             else if (Length < 0x100000000) {
@@ -199,7 +197,7 @@ namespace Goedel.Protocol {
                 Output.Write((byte)((Length >> 8) & 0xff));
                 Output.Write((byte)(Length & 0xff));
                 }
-            else  {
+            else {
                 Output.Write((byte)(Code + JSONBCD.Length64));
                 Output.Write((byte)((Length >> 56) & 0xff));
                 Output.Write((byte)((Length >> 48) & 0xff));
@@ -274,7 +272,7 @@ namespace Goedel.Protocol {
         /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
         /// at which to begin copying bytes to the current stream.</param>
         /// <param name="count">The number of bytes to be written to the current stream.</param> 
-        public static void WriteBinary(Stream Stream, byte[] buffer, int offset=0, int count=-1) {
+        public static void WriteBinary(Stream Stream, byte[] buffer, int offset = 0, int count = -1) {
             var Length = count < 0 ? buffer.Length : count;
             WriteTag(Stream, JSONBCD.DataTerm, Length);
             Stream.Write(buffer, offset, Length);
@@ -296,7 +294,7 @@ namespace Goedel.Protocol {
         /// <summary>Write binary data as length-data item.</summary>
         /// <param name="Length">The length of the chunk to be written.</param>
         /// <param name="Terminal">If true, this is the last chunk in a sequence.</param>
-        public override void WriteBinaryBegin (long Length, bool Terminal=true) {
+        public override void WriteBinaryBegin(long Length, bool Terminal = true) {
             WriteTag(Terminal ? JSONBCD.DataTerm : JSONBCD.DataChunk, Length);
             PartLength = Length;
             }
@@ -305,12 +303,12 @@ namespace Goedel.Protocol {
         /// <param name="Data">Value to write</param>
         /// <param name="First">The index position of the first byte in the input data to process</param>
         /// <param name="Length">The number of bytes to process</param>
-        public override void WriteBinaryPart (byte[] Data, long First = 0, long Length = -1) {
+        public override void WriteBinaryPart(byte[] Data, long First = 0, long Length = -1) {
             Length = Length < 0 ? Data.Length : Length;
 
             PartLength -= Length;
             Assert.True(PartLength >= 0, BadPartLength.Throw);
-            Output.Write(Data, (int)First, (int) Length);
+            Output.Write(Data, (int)First, (int)Length);
             }
 
 

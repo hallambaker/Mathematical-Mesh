@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Numerics;
-using System.Text;
-using Goedel.ASN;
-using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -22,17 +18,14 @@ namespace Goedel.Cryptography.Algorithms {
     public abstract class CurveMontgomery : Curve {
 
         /// <summary>The U value (we never use the V value)</summary>
-        public BigInteger U;
+        public BigInteger U { get; set; }
 
-        /// <summary>The projected Z coordinate</summary>
-        public BigInteger Z { get; }
-
-        /// <summary>Sixe of the modular field in bits.</summary>
-        public int Bits;
+        /// <summary>Size of the modular field in bits.</summary>
+        int bits;
         /// <summary>The paameter p</summary>
-        public int P;
+        int p;
         /// <summary>The parameter A24</summary>
-        public int A24;
+        int a24;
 
         /// <summary>
         /// Create a point from the specified U value.
@@ -44,9 +37,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Multiply a point by a scalar
         /// </summary>
-        /// <param name="S">Scalar factor</param>
+        /// <param name="s">Scalar factor</param>
         /// <returns>The result of the multiplication</returns>
-        public CurveMontgomery Multiply(BigInteger S) {
+        public CurveMontgomery Multiply(BigInteger s) {
 
             BigInteger x_1 = U;
             BigInteger x_2 = 1;
@@ -55,7 +48,7 @@ namespace Goedel.Cryptography.Algorithms {
             BigInteger z_3 = 1;
             bool swap = false;
 
-            for (var i = 0; i < Bits; i++) {
+            for (var i = 0; i < bits; i++) {
                 //    var k_t = (k >> t) & 1;
                 //    swap ^= k_t;
                 Cswap(swap, ref x_2, ref x_3);
@@ -74,12 +67,12 @@ namespace Goedel.Cryptography.Algorithms {
                 x_3 = (DA + CB) ^ 2;
                 z_3 = x_1 * (DA - CB) ^ 2;
                 x_2 = AA * BB;
-                z_2 = E * (AA + A24 * E);
+                z_2 = E * (AA + a24 * E);
                 }
 
             Cswap(swap, ref x_2, ref x_3);
             Cswap(swap, ref z_2, ref z_3);
-            var U2 = (x_2 * (BigInteger.ModPow ( z_2,  (P - 2), P))) % P;
+            var U2 = (x_2 * (BigInteger.ModPow(z_2, (p - 2), p))) % p;
 
             return Factory(U2);
             }
@@ -90,7 +83,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Swap">If false A'=A and B'=B on exit, if true A'=B and B'=A on exit</param>
         /// <param name="A">First parameter</param>
         /// <param name="B">Second parameter</param>
-        public void Cswap (bool Swap, ref BigInteger A, ref BigInteger B) {
+        public static void Cswap(bool Swap, ref BigInteger A, ref BigInteger B) {
 
             if (Swap) {  // Limit: This should be in constant time
                 var Dummy = A;
@@ -99,6 +92,17 @@ namespace Goedel.Cryptography.Algorithms {
                 }
 
             }
+
+
+        /// <summary>
+        /// Encode the code point.
+        /// </summary>
+        /// <returns>The encoded format of the point</returns>
+        public abstract byte[] Encode();
+
+
+
+
         }
 
 
@@ -111,7 +115,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public byte[] Encode() => throw new NYI();
+        public override byte[] Encode() => throw new NYI();
 
         /// <summary>
         /// Create a point from the specified U value.
@@ -130,7 +134,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public byte[] Encode() => throw new NYI();
+        public override byte[] Encode() => throw new NYI();
 
         /// <summary>
         /// Create a point from the specified U value.
@@ -178,6 +182,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Q">The Q parameter of the curve.</param>
         /// <returns>True if the points are equal, otherwise false.</returns>
         public bool Equal(CurveEdwards Q) {
+
+
             Assert.True(Q.Prime == Prime);
 
             if (((X * Q.Z) - (Q.X * Z)).Mod(Prime) != 0) {
@@ -223,7 +229,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Replace the current point value with the current value added to itself
         /// (used to implement multiply)
         /// </summary>
-        public abstract void Double();
+        public abstract void DoublePoint();
 
         /// <summary>
         /// Add two points
@@ -240,7 +246,7 @@ namespace Goedel.Cryptography.Algorithms {
     /// Specifies the curve parameters for a Montgomery or Edwards Elliptic Curve
     /// v^2 = u^3 + A*u^2 + u
     /// </summary>
-    public struct DomainParameters {
+    public struct DomainParameters : IEquatable<DomainParameters> {
 
         /// <summary>The prime field</summary>
         public BigInteger P { get; }
@@ -268,6 +274,48 @@ namespace Goedel.Cryptography.Algorithms {
             get;
             }
 
+
+        #region // Equality testing bollocks
+        /// <summary>Test to see if the domain parameters are equal.</summary>
+        /// <param name="other">The parameters to test against</param>
+        /// <returns>True if the parameters are equal, otherwise false.</returns>
+        public override bool Equals(object other) {
+            if (!(other is DomainParameters)) {
+                return false;
+                }
+
+            return Equals((DomainParameters)other);
+            }
+
+        /// <summary>Test to see if the domain parameters are equal.</summary>
+        /// <param name="other">The parameters to test against</param>
+        /// <returns>True if the parameters are equal, otherwise false.</returns>
+        public bool Equals(DomainParameters other) => this == other;
+
+        /// <summary>Test to see if the domain parameters are equal.</summary>
+        /// <param name="p1">First value to test</param>
+        /// <param name="p2">Second value to test</param> 
+        /// <returns>True if the parameters are equal, otherwise false.</returns>
+        public static bool operator ==(DomainParameters p1, DomainParameters p2) => (p1.P == p2.P);
+
+        /// <summary>Test to see if the domain parameters are not equal.</summary>
+        /// <param name="p1">First value to test</param>
+        /// <param name="p2">Second value to test</param> 
+        /// <returns>False if the parameters are equal, otherwise true.</returns>
+        public static bool operator !=(DomainParameters p1, DomainParameters p2) => !(p1 == p2);
+
+        /// <summary>
+        /// Return a hash code. 
+        /// </summary>
+        /// <returns>Hash of the prime value.</returns>
+        public override int GetHashCode() {
+            return P.GetHashCode();
+            }
+        #endregion
+
+
+
+
         /// <summary>
         /// Public constructor
         /// </summary>
@@ -277,8 +325,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="d">The Edwards curve coeffient D</param>
         /// <param name="By">The Edwards curve base point Y value.</param>
         /// <param name="Bits">The number of bits in the prime.</param>
-        public DomainParameters(BigInteger p, BigInteger A, BigInteger U, BigInteger d, 
-                        BigInteger By,  int Bits) {
+        public DomainParameters(BigInteger p, BigInteger A, BigInteger U, BigInteger d,
+                        BigInteger By, int Bits) {
             this.P = p;
             this.A = A;
             this.U = U;
@@ -287,7 +335,7 @@ namespace Goedel.Cryptography.Algorithms {
             A24 = (A - 2) / 4;
             this.Bits = Bits;
 
-            SqrtMinus1 =  p.SqrtMinus1();
+            SqrtMinus1 = p.SqrtMinus1();
             }
 
         static readonly BigInteger Curve25519Prime = BigInteger.Pow(2, 255) - 19;

@@ -1,8 +1,13 @@
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
 using System;
 using Goedel.Utilities;
+After:
+using Goedel.Utilities;
 
-
-
+using System;
+*/
 namespace Goedel.Discovery {
 
 
@@ -11,48 +16,48 @@ namespace Goedel.Discovery {
     /// </summary>
     public class DiscoveryException : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "An exception occurred in the discovery library"
         /// </summary>		
-		public DiscoveryException () : base ("An exception occurred in the discovery library") {
-			}
-        
-		/// <summary>
+        public DiscoveryException() : base("An exception occurred in the discovery library") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "An exception occurred in the discovery library"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public DiscoveryException (string Description) : base (Description) {
-			}
+        public DiscoveryException(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public DiscoveryException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public DiscoveryException(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new DiscoveryException(Reason as string);
-				}
-			else {
-				return new DiscoveryException();
-				}
+            if (Reason as string != null) {
+                return new DiscoveryException(Reason as string);
+                }
+            else {
+                return new DiscoveryException();
+                }
             }
         }
 
@@ -62,44 +67,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class BufferWriteOverflow : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Buffer write overflow"
         /// </summary>		
-		public BufferWriteOverflow () : base ("Buffer write overflow") {
-			}
-        
-		/// <summary>
+        public BufferWriteOverflow() : base("Buffer write overflow") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Buffer write overflow"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public BufferWriteOverflow (string Description) : base (Description) {
-			}
+        public BufferWriteOverflow(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public BufferWriteOverflow (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public BufferWriteOverflow(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new BufferWriteOverflow(Reason as string);
-				}
-			else {
-				return new BufferWriteOverflow();
-				}
+            if (Reason as string != null) {
+                return new BufferWriteOverflow(Reason as string);
+                }
+            else {
+                return new BufferWriteOverflow();
+                }
             }
         }
 
@@ -109,44 +114,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class BufferReadOverflow : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Buffer read overflow"
         /// </summary>		
-		public BufferReadOverflow () : base ("Buffer read overflow") {
-			}
-        
-		/// <summary>
+        public BufferReadOverflow() : base("Buffer read overflow") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Buffer read overflow"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public BufferReadOverflow (string Description) : base (Description) {
-			}
+        public BufferReadOverflow(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public BufferReadOverflow (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public BufferReadOverflow(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new BufferReadOverflow(Reason as string);
-				}
-			else {
-				return new BufferReadOverflow();
-				}
+            if (Reason as string != null) {
+                return new BufferReadOverflow(Reason as string);
+                }
+            else {
+                return new BufferReadOverflow();
+                }
             }
         }
 
@@ -156,44 +161,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class LabelTooLong : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "A message contained a label longer than the permitted length"
         /// </summary>		
-		public LabelTooLong () : base ("A message contained a label longer than the permitted length") {
-			}
-        
-		/// <summary>
+        public LabelTooLong() : base("A message contained a label longer than the permitted length") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "A message contained a label longer than the permitted length"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public LabelTooLong (string Description) : base (Description) {
-			}
+        public LabelTooLong(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public LabelTooLong (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public LabelTooLong(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new LabelTooLong(Reason as string);
-				}
-			else {
-				return new LabelTooLong();
-				}
+            if (Reason as string != null) {
+                return new LabelTooLong(Reason as string);
+                }
+            else {
+                return new LabelTooLong();
+                }
             }
         }
 
@@ -203,44 +208,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class UnicodeNotSupported : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unicode labels are not supported"
         /// </summary>		
-		public UnicodeNotSupported () : base ("Unicode labels are not supported") {
-			}
-        
-		/// <summary>
+        public UnicodeNotSupported() : base("Unicode labels are not supported") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unicode labels are not supported"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnicodeNotSupported (string Description) : base (Description) {
-			}
+        public UnicodeNotSupported(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnicodeNotSupported (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnicodeNotSupported(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnicodeNotSupported(Reason as string);
-				}
-			else {
-				return new UnicodeNotSupported();
-				}
+            if (Reason as string != null) {
+                return new UnicodeNotSupported(Reason as string);
+                }
+            else {
+                return new UnicodeNotSupported();
+                }
             }
         }
 
@@ -250,44 +255,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class IllegalCharacter : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "An illegal character was encountered"
         /// </summary>		
-		public IllegalCharacter () : base ("An illegal character was encountered") {
-			}
-        
-		/// <summary>
+        public IllegalCharacter() : base("An illegal character was encountered") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "An illegal character was encountered"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public IllegalCharacter (string Description) : base (Description) {
-			}
+        public IllegalCharacter(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public IllegalCharacter (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public IllegalCharacter(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new IllegalCharacter(Reason as string);
-				}
-			else {
-				return new IllegalCharacter();
-				}
+            if (Reason as string != null) {
+                return new IllegalCharacter(Reason as string);
+                }
+            else {
+                return new IllegalCharacter();
+                }
             }
         }
 
@@ -297,44 +302,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class TagTooLong : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "A message contained a tag longer than the permitted length"
         /// </summary>		
-		public TagTooLong () : base ("A message contained a tag longer than the permitted length") {
-			}
-        
-		/// <summary>
+        public TagTooLong() : base("A message contained a tag longer than the permitted length") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "A message contained a tag longer than the permitted length"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public TagTooLong (string Description) : base (Description) {
-			}
+        public TagTooLong(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public TagTooLong (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public TagTooLong(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new TagTooLong(Reason as string);
-				}
-			else {
-				return new TagTooLong();
-				}
+            if (Reason as string != null) {
+                return new TagTooLong(Reason as string);
+                }
+            else {
+                return new TagTooLong();
+                }
             }
         }
 
@@ -344,44 +349,44 @@ namespace Goedel.Discovery {
     /// </summary>
     public class InvalidIPv4 : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "A message contained an invalid IPv4 address"
         /// </summary>		
-		public InvalidIPv4 () : base ("A message contained an invalid IPv4 address") {
-			}
-        
-		/// <summary>
+        public InvalidIPv4() : base("A message contained an invalid IPv4 address") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "A message contained an invalid IPv4 address"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InvalidIPv4 (string Description) : base (Description) {
-			}
+        public InvalidIPv4(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidIPv4 (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InvalidIPv4(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidIPv4(Reason as string);
-				}
-			else {
-				return new InvalidIPv4();
-				}
+            if (Reason as string != null) {
+                return new InvalidIPv4(Reason as string);
+                }
+            else {
+                return new InvalidIPv4();
+                }
             }
         }
 
@@ -391,46 +396,46 @@ namespace Goedel.Discovery {
     /// </summary>
     public class InvalidIPv6 : DiscoveryException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "A message contained an invalid IPv6 address"
         /// </summary>		
-		public InvalidIPv6 () : base ("A message contained an invalid IPv6 address") {
-			}
-        
-		/// <summary>
+        public InvalidIPv6() : base("A message contained an invalid IPv6 address") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "A message contained an invalid IPv6 address"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InvalidIPv6 (string Description) : base (Description) {
-			}
+        public InvalidIPv6(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidIPv6 (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InvalidIPv6(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidIPv6(Reason as string);
-				}
-			else {
-				return new InvalidIPv6();
-				}
+            if (Reason as string != null) {
+                return new InvalidIPv6(Reason as string);
+                }
+            else {
+                return new InvalidIPv6();
+                }
             }
         }
 
 
-	}
+    }

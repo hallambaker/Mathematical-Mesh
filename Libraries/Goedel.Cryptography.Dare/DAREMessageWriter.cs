@@ -1,12 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Protocol;
+
 using System.Collections.Generic;
-using Goedel.Utilities;
-using System.Threading;
-using Goedel.Cryptography;
-using Goedel.Protocol;
-using Goedel.Cryptography.Jose;
-using System.Security.Cryptography;
+using System.IO;
 
 namespace Goedel.Cryptography.Dare {
     class DareEnvelopeWriter : Stream {
@@ -36,7 +31,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override long Position {
             get => throw new System.NotImplementedException();
-            set => throw new System.NotImplementedException(); }
+            set => throw new System.NotImplementedException();
+            }
 
         /// <summary>
         /// Copies bytes from the current buffered stream to an array (not supported).
@@ -122,7 +118,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelopeWriter(
                     CryptoParameters cryptoParameters,
                     Stream outputStream,
-                    ContentMeta contentMeta=null,
+                    ContentMeta contentMeta = null,
                     long contentLength = -1,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) : this(cryptoParameters,

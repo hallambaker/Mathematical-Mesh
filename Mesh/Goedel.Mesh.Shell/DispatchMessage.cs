@@ -1,12 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -144,7 +138,7 @@ namespace Goedel.Mesh.Shell {
             Process(Options, Options.RequestID.Value, false);
 
 
-        ShellResult Process (IAccountOptions options, string requestid, bool accept) {
+        ShellResult Process(IAccountOptions options, string requestid, bool accept) {
             using (var contextAccount = GetContextAccount(options)) {
 
                 var recipient = "alice@example.com";

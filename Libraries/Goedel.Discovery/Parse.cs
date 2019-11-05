@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 
 
@@ -48,7 +47,7 @@ namespace Goedel.Discovery {
     /// <summary>DNS Token types</summary>
     public enum TokenType {
         /// <summary>End of file</summary>
-        EOF         = 0x1,
+        EOF = 0x1,
         /// <summary>End of line</summary>
         EOL = 0x2,
         /// <summary>Directive</summary>
@@ -126,7 +125,7 @@ namespace Goedel.Discovery {
         // -1 End of current production (token is valid)
         // -2 Invalid token
 
-        static int [,] NextState = {
+        static int[,] NextState = {
             // ?,  WS,  09,  az,  AZ,   .,   _,   -,   ",   $,   ;,   (,   ),  \n    @,   \,   #
             { -2,   0,   6,   7,   7,  -1,   4,   4,  12,   3,   1,   8,   9,  -1,   2,  10,  -2 }, // 0 "   "
             {  1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,  -1,  -2,  -2,  -2 }, // 1 "  ;blah"
@@ -153,7 +152,7 @@ namespace Goedel.Discovery {
         // 0 Do nothing
         // 1 Add to string
 
-        static int [,] Action = {
+        static int[,] Action = {
             // ?,  WS,  09,  az,  AZ,   .,   _,   -,   ",   $,   ;,   (,   ),  \n    @,   \,   #
             {  0,   0,   1,   1,   1,   1,   1,   1,   0,   1,   0,   0,   0,   0,   1,   0,   1 }, // 0 "   "
             {  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1 "  ;blah"
@@ -175,7 +174,7 @@ namespace Goedel.Discovery {
             {  0,   0,   0,   0,   0,   1,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }  // 17 "ww"                              
             };
 
-        static TokenType [] FinalToken = {
+        static TokenType[] FinalToken = {
                 TokenType.EOL,          // 0
                 TokenType.EOL,          // 1
                 TokenType.At,           // 2
@@ -197,7 +196,7 @@ namespace Goedel.Discovery {
                 TokenType.Unknown};
 
 
-        private static CharType Type (char c) {
+        private static CharType Type(char c) {
             if (c == ' ' | c == '\t' | c == '\r') { return CharType.White; }
             if (c >= '0' & c <= '9') { return CharType.Digit; }
             if (c >= 'A' & c <= 'Z') { return CharType.Lower; }
@@ -221,12 +220,30 @@ namespace Goedel.Discovery {
         /// <param name="TokenType">Type of parse token received.</param>
         /// <returns>The token value as a string.</returns>
         public string Token(TokenType TokenType) {
-            string result = Token (out var GotTokenType);
+            string result = Token(out var GotTokenType);
 
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
             if ((GotTokenType & TokenType )== GotTokenType) {
+After:
+            if ((GotTokenType & TokenType) == GotTokenType) {
+*/
+            if ((GotTokenType & TokenType) == GotTokenType) {
                 return result;
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
                 }
             
+            return null;
+After:
+                }
+
+            return null;
+*/
+                }
+
             return null;
             }
 
@@ -241,11 +258,22 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <param name="TokenType">The token type</param>
         /// <returns>The token received</returns>
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
         public string Token(out TokenType TokenType) {
             
             while (true) {
-                string result = RawToken (out TokenType);
-                if (TokenType == TokenType.EOF) {return result; }
+After:
+        public string Token(out TokenType TokenType) {
+
+            while (true) {
+*/
+        public string Token(out TokenType TokenType) {
+
+            while (true) {
+                string result = RawToken(out TokenType);
+                if (TokenType == TokenType.EOF) { return result; }
 
                 if (TokenType == TokenType.Left) {
                     if (BlockMode) { throw new Exception("Syntax Start Block Mode in Block Mode"); }
@@ -304,8 +332,19 @@ namespace Goedel.Discovery {
                 if (Action[state, (int)CharType] == 1) {
                     result += c;
                     }
+
+/* Unmerged change from project 'Goedel.Discovery'
+Before:
                 state = next_state;
                 
+                }
+After:
+                state = next_state;
+
+                }
+*/
+                state = next_state;
+
                 }
 
             TokenType = FinalToken[state];
@@ -317,7 +356,7 @@ namespace Goedel.Discovery {
         /// </summary>
         /// <returns>The record received.</returns>
         public DNSRecord DNSRecord() {
-            string Tag = Token (out var TokenType);
+            string Tag = Token(out var TokenType);
 
             if (TokenType == TokenType.ALabel) {
                 return Goedel.Discovery.DNSRecord.Parse(Tag, this);
@@ -339,9 +378,9 @@ namespace Goedel.Discovery {
 
         /// <summary>Get Domain name</summary>
         /// <returns>The value returned</returns>
-        public Domain Domain ( ) {
-            string token = Token (TokenType.ALabel | TokenType.DLabel);
-            return new Domain (token);
+        public Domain Domain() {
+            string token = Token(TokenType.ALabel | TokenType.DLabel);
+            return new Domain(token);
             }
 
         /// <summary>Get Mail Address</summary>
@@ -358,18 +397,18 @@ namespace Goedel.Discovery {
 
         /// <summary>Get Int16</summary>
         /// <returns>The value returned</returns>
-        public ushort Int16 ( ) {
-            string result = Token (TokenType.Number);
+        public ushort Int16() {
+            string result = Token(TokenType.Number);
 
-            return Convert.ToUInt16 (result);
+            return Convert.ToUInt16(result);
             }
 
         /// <summary>Get Int32</summary>
         /// <returns>The value returned</returns>
-        public uint Int32 ( ) {            
-            string result = Token (TokenType.Number);
+        public uint Int32() {
+            string result = Token(TokenType.Number);
 
-            return Convert.ToUInt16 (result);
+            return Convert.ToUInt16(result);
             }
 
         /// <summary>Get Time32</summary>
@@ -396,14 +435,14 @@ namespace Goedel.Discovery {
         /// <summary>Get multiple strings</summary>
         /// <returns>The value returned</returns>
         public List<string> Strings() {
-            List<string> ListString = new List<string> ();
+            List<string> ListString = new List<string>();
             while (true) {
                 string token = Token(out var TokenType);
                 if (TokenType == TokenType.EOL) {
                     return ListString;
                     }
                 if (TokenType != TokenType.String) { throw new Exception("Syntax error expected string or EOL"); }
-                ListString.Add (token);
+                ListString.Add(token);
                 }
             }
 

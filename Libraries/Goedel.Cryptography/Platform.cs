@@ -1,10 +1,8 @@
-﻿using System;
+﻿using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
+
 using System.Collections.Generic;
 using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Utilities;
-using Goedel.Cryptography.PKIX;
 
 namespace Goedel.Cryptography {
     /// <summary>
@@ -85,7 +83,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="KeyPair">The key store</param>
         /// <param name="KeySecurity">The storage security level</param>
-        public delegate void WriteToKeyStoreDelegate (IPKIXPrivateKey KeyPair, KeySecurity KeySecurity);
+        public delegate void WriteToKeyStoreDelegate(IPKIXPrivateKey KeyPair, KeySecurity KeySecurity);
 
         /// <summary>
         /// Write a key to the machine keystore
@@ -104,7 +102,7 @@ namespace Goedel.Cryptography {
         /// <param name="UDF">The key identifier</param>
         /// <param name="KeyType">Key type, if known</param>
         /// <returns></returns>
-        public delegate KeyPair FindInKeyStoreDelegate(string UDF, 
+        public delegate KeyPair FindInKeyStoreDelegate(string UDF,
                 CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default);
 
         /// <summary>
@@ -176,7 +174,7 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">Number of bits to get</param>
         /// <returns>Random data</returns>
         public static BigInteger GetRandomBigInteger(int Bits) {
-            var RandomBytes = GetRandomBytes(1+ Bits / 8);
+            var RandomBytes = GetRandomBytes(1 + Bits / 8);
             RandomBytes[RandomBytes.Length - 1] = 0; // make sure it is positive
             return new BigInteger(RandomBytes);
             }

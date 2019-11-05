@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -19,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The label for the container type for use in header declarations
         /// </summary>
-        public new const string Label= "Tree";
+        public new const string Label = "Tree";
 
 
         /// <summary>
@@ -63,7 +59,7 @@ namespace Goedel.Cryptography.Dare {
 
             PrepareFrame(contextWrite.ContainerInfo);
 
-            
+
             base.PrepareFrame(contextWrite);
             }
 
@@ -93,7 +89,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerInfo">Final frame header</param>
         /// <param name="FirstPosition">Position of frame 1</param>
         /// <param name="PositionLast">Position of the last frame</param>
-        protected override void FillDictionary (ContainerInfo containerInfo, long FirstPosition, long PositionLast) {
+        protected override void FillDictionary(ContainerInfo containerInfo, long FirstPosition, long PositionLast) {
             FrameIndexToPositionDictionary.Add(0, 0);
             if (containerInfo.Index == 0) {
                 return;
@@ -130,7 +126,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-        bool IsApex (long Index) {
+        bool IsApex(long Index) {
             if (Index == 0) {
                 return true;
                 }
@@ -162,7 +158,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
-        public override bool MoveToIndex (long Index) {
+        public override bool MoveToIndex(long Index) {
             if (Index == FrameCount) {
                 JBCDStream.PositionRead = JBCDStream.Length;
                 return false;
@@ -175,22 +171,22 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             //Obtain the position of the very last record in the file, this must be known.
-            var Record = FrameCount-1;
+            var Record = FrameCount - 1;
             Assert.True(FrameIndexToPositionDictionary.TryGetValue(Record, out Position));
-               // Bug: this is failing because the position dictionary is not being updated.
-               // check that commit frame is being properly called on deferred writes.
-               // Also check every operation on the device catalog
+            // Bug: this is failing because the position dictionary is not being updated.
+            // check that commit frame is being properly called on deferred writes.
+            // Also check every operation on the device catalog
 
-               // ContainerHeader is not being properly updated.
-               // Also check on the calculation of the trailer.
+            // ContainerHeader is not being properly updated.
+            // Also check on the calculation of the trailer.
 
             long NextRecord;
             bool Found = true;
 
-            Console.WriteLine ("Move to {0}", Index);
+            Console.WriteLine("Move to {0}", Index);
 
             while (Record > Index) {
-                DareHeader FrameHeader=null;
+                DareHeader FrameHeader = null;
                 long NextPosition;
 
                 if (PreviousFrame(Record) < Index) {
@@ -256,7 +252,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Frame">The frame index</param>
         /// <returns>The frame position.</returns>
-        public override long GetFramePosition (long Frame) {
+        public override long GetFramePosition(long Frame) {
 
 
             var Found = FrameIndexToPositionDictionary.TryGetValue(Frame, out var Position);
@@ -275,7 +271,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="FrameIndex">The Frame Index</param>
         /// <returns>The position of the frame.</returns>
-        public long PreviousFramePosition (long FrameIndex) {
+        public long PreviousFramePosition(long FrameIndex) {
             var Previous = PreviousFrame(FrameIndex);
 
             //Console.WriteLine($"  Previous {FrameIndex} = {Previous}");
@@ -288,7 +284,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="Frame">The frame index</param>
         /// <returns>The preceding frame index.</returns>
-        public long PreviousFrame (long Frame) {
+        public long PreviousFrame(long Frame) {
             long x2 = Frame + 1;
             long d = 1;
 
@@ -309,7 +305,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<DareHeader> Headers) {
+        public override void CheckContainer(List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
                 Assert.True(Header.ContainerInfo.Index == Index);
@@ -319,7 +315,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-        
+
         /// <summary>
         /// Verify container contents by reading every frame starting with the first and checking
         /// for integrity. This is likely to take a very long time.
@@ -344,7 +340,7 @@ namespace Goedel.Cryptography.Dare {
                 Assert.True(Header.ContainerInfo.Index == Index);
                 if (Index > 1) {
                     var Previous = PreviousFrame(Index);
-                    Assert.True(HeaderDictionary.TryGetValue (Header.ContainerInfo.TreePosition, out var PreviousHeader));
+                    Assert.True(HeaderDictionary.TryGetValue(Header.ContainerInfo.TreePosition, out var PreviousHeader));
                     Assert.True(PreviousHeader.ContainerInfo.Index == Previous);
                     }
 

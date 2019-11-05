@@ -61,7 +61,21 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-**Missing Example***
+
+````
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
+````
+
+Specifying the /json option returns a result of type ResultFile:
+
+````
+Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
+{
+  "ResultFile": {
+    "Success": true,
+    "Filename": "TestFile1.dare",
+    "TotalBytes": 14}}
+````
 
 
 # dare decode
@@ -86,7 +100,21 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
-**Missing Example***
+
+````
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
+ERROR - The option  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The option  is not known."}}
+````
 
 # dare verify
 
@@ -106,7 +134,21 @@ currently active key collection and reports success or failure.
 The active key collection may be overriden using the `/mesh` option.
 
 
-**Missing Example***
+
+````
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
+ERROR - The option  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The option  is not known."}}
+````
 
 # dare earl
 
@@ -143,5 +185,19 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-**Missing Example***
+
+````
+Alice> dare earl TestFile1.txt
+ERROR - The feature has not been implemented
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> dare earl TestFile1.txt /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The feature has not been implemented"}}
+````
 

@@ -1,15 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.IO;
 using Goedel.Mesh.Test;
-using Goedel.Mesh.Shell;
 using Goedel.Test.Core;
-using Goedel.IO;
-using Goedel.Protocol;
 using Goedel.Utilities;
-using System.Linq;
-using Goedel.Cryptography;
-using System.Numerics;
+
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace ExampleGenerator {
 
@@ -79,7 +75,7 @@ namespace ExampleGenerator {
         public string PollService = "devices@example.com";
 
         public string AliceContactFile = "alice-contact.json";
-        public string CarolContactFile = "carol-contact.json"; 
+        public string CarolContactFile = "carol-contact.json";
         public string DougAccountUDF = "UDF://example.com/ERRROR"; // ToDo: calculate Doug UDF
 
         public string AliceDevice1 = "Alice";
@@ -97,55 +93,55 @@ namespace ExampleGenerator {
 
             PlatformCrypto();
 
-            if (false) {
 
-                //var t= Directory.GetCurrentDirectory();
 
-                testCLIAlice1 = GetTestCLI(AliceDevice1);
-                testCLIAlice2 = GetTestCLI(AliceDevice2);
-                testCLIAlice3 = GetTestCLI(AliceDevice3);
-                testCLIAlice4 = GetTestCLI(AliceDevice4);
-                testCLIBob1 = GetTestCLI("Bob");
-                testCLIMallet1 = GetTestCLI("Mallet");
+            //var t= Directory.GetCurrentDirectory();
 
-                Directory.CreateDirectory(TestDir1);
-                TestFile1.WriteFileNew(TestText1.ToString());
-                TestFile2.WriteFileNew(TestText2.ToString());
-                TestFile3.WriteFileNew(TestText3.ToString());
-                TestFile4.WriteFileNew(TestText4.ToString());
-                TestFile5.WriteFileNew(TestText5.ToString());
-                //var t2 = Directory.GetCurrentDirectory();
+            testCLIAlice1 = GetTestCLI(AliceDevice1);
+            testCLIAlice2 = GetTestCLI(AliceDevice2);
+            testCLIAlice3 = GetTestCLI(AliceDevice3);
+            testCLIAlice4 = GetTestCLI(AliceDevice4);
+            testCLIBob1 = GetTestCLI("Bob");
+            testCLIMallet1 = GetTestCLI("Mallet");
 
-                GitHub = true;
+            Directory.CreateDirectory(TestDir1);
+            TestFile1.WriteFileNew(TestText1.ToString());
+            TestFile2.WriteFileNew(TestText2.ToString());
+            TestFile3.WriteFileNew(TestText3.ToString());
+            TestFile4.WriteFileNew(TestText4.ToString());
+            TestFile5.WriteFileNew(TestText5.ToString());
+            //var t2 = Directory.GetCurrentDirectory();
 
-                PlatformUDF();
-                PlatformCrypto();
-                PlatformDare();
+            GitHub = true;
 
-                LayerDevice();
-                LayerAccount();
-                LayerService();
-                LayerMessage();
-                }
+            PlatformUDF();
+            PlatformCrypto();
+            PlatformDare();
+
+            LayerDevice();
+            LayerAccount();
+            LayerService();
+            LayerMessage();
+
 
             Directory.SetCurrentDirectory(outputPath);
             //var CreateExamples = new CreateExamples();
-            //WebDocs(this);
+            WebDocs(this);
 
             Directory.SetCurrentDirectory("../Release/Documents");
             GitHub = false;
 
-            if (false) {
-
-                MakeUDFExamples(this);
-
-                MakeArchitectureExamples(this);
 
 
-                MakeDareExamples(this);
-                MakeSchemaExamples(this);
-                MakeProtocolExamples(this);
-                }
+            MakeUDFExamples(this);
+
+            MakeArchitectureExamples(this);
+
+
+            MakeDareExamples(this);
+            MakeSchemaExamples(this);
+            MakeProtocolExamples(this);
+
 
             MakeCryptographyExamples(this);
 
@@ -153,7 +149,7 @@ namespace ExampleGenerator {
 
             }
 
-        public bool All = false;
+        public bool All = true;
 
 
         public void MakeClean() {

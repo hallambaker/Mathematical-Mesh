@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
-using Goedel.Utilities;
+using System.Text;
 
 namespace Goedel.Cryptography.Windows {
 
@@ -51,7 +49,7 @@ namespace Goedel.Cryptography.Windows {
 
             IntPtr hProv = IntPtr.Zero;
             //uint flags = (uint)(CRYPT_MACHINE_KEYSET | CRYPT_VERIFYCONTEXT);
-            uint flags = (uint)( CRYPT_VERIFYCONTEXT);
+            uint flags = (uint)(CRYPT_VERIFYCONTEXT);
 
             if (CryptAcquireContext(ref hProv, null, null, PROV_RSA_FULL, flags) == false) {
                 throw new Exception("CryptAcquireContext");
@@ -91,7 +89,7 @@ namespace Goedel.Cryptography.Windows {
 
         /// <summary>Delete the specified key</summary>
         /// <param name="Key">Key to delete.</param>
-        void Delete (string Key) {
+        void Delete(string Key) {
             try {
                 var CSP = new CspParameters() {
                     KeyContainerName = Key

@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -116,7 +111,7 @@ namespace Goedel.Cryptography.Dare {
         /// The number of bytes to be reserved for the trailer.
         /// </summary>
         /// <returns>The number of bytes to reserve</returns>
-        public override DareTrailer FillDummyTrailer(CryptoStack cryptoStack) => 
+        public override DareTrailer FillDummyTrailer(CryptoStack cryptoStack) =>
             cryptoStack?.GetDummyTrailer();
 
 
@@ -137,7 +132,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         void PositionStream() {
-            if (FrameReadStartPosition >=0) {
+            if (FrameReadStartPosition >= 0) {
                 JBCDStream.PositionRead = FrameReadStartPosition;
                 FrameReadStartPosition = -1;
                 }
@@ -155,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="position">The container position to obtain the frame index for.</param>
         /// <returns>The created ContainerFrameIndex instance,</returns>
         public override ContainerFrameIndex GetContainerFrameIndex(
-                    long index = -1, 
+                    long index = -1,
                     long position = -1) {
             if (position < 0 & index >= 0) {
                 MoveToIndex(index);
@@ -195,7 +190,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read the next frame in the file.
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
-        protected virtual bool Next () {
+        protected virtual bool Next() {
             PositionStream();
 
             var RecordStart = PositionRead;
@@ -223,7 +218,7 @@ namespace Goedel.Cryptography.Dare {
         /// of the frame just read.
         /// </summary>
         /// <returns>True if a previous frame exists, otherwise false</returns>
-        public override bool Previous () {
+        public override bool Previous() {
             PositionStream();
 
             FrameRemaining = JBCDStream.ReadFrameReverse(out var FrameHeader);
@@ -246,7 +241,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="index">The frame index to move to</param>
         /// <returns>If success, the frame index.</returns>
-        public override bool MoveToIndex (long index) {
+        public override bool MoveToIndex(long index) {
 
             if (FrameIndexToPositionDictionary.TryGetValue(index, out var Position)) {
                 PositionRead = Position;
@@ -293,7 +288,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="headers">List of headers to check</param>
-        public override void CheckContainer (List<DareHeader> headers) {
+        public override void CheckContainer(List<DareHeader> headers) {
             int Index = 1;
             foreach (var Header in headers) {
                 Assert.NotNull(Header.ContainerInfo);

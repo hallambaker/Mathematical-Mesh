@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using System.IO;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
 
@@ -28,10 +25,10 @@ namespace Goedel.Mesh.Client {
         #region // fields and properties
         public IMeshMachineClient MeshMachine;
         PersistHost containerProfile;
-        
+
         ///<summary>The Key Collection of the Mesh Machine.</summary>
-        public KeyCollection KeyCollection => keyCollection  ?? 
-                new KeyCollectionClient (this, MeshMachine.KeyCollection).CacheValue (out keyCollection);
+        public KeyCollection KeyCollection => keyCollection ??
+                new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
         KeyCollection keyCollection;
 
 
@@ -111,8 +108,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="key">The UDF or name to resolve.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
         public ContextMesh LocateMesh(string key) {
-            ContextMesh context;
-            if (DictionaryUDFContextMesh.TryGetValue(key, out context)) {
+            if (DictionaryUDFContextMesh.TryGetValue(key, out var context)) {
                 return context;
                 }
             if (DictionaryLocalContextMesh.TryGetValue(key, out context)) {
@@ -136,7 +132,7 @@ namespace Goedel.Mesh.Client {
         /// Delete <paramref name="profile"/> from the host catalog.
         /// </summary>
         /// <param name="profile">The profile to delete</param>
-        public virtual void Delete(HostCatalogItem profile) => 
+        public virtual void Delete(HostCatalogItem profile) =>
                 containerProfile.Delete(profile._PrimaryKey);
         #endregion
 
@@ -202,7 +198,7 @@ namespace Goedel.Mesh.Client {
                 string PIN = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) => 
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) =>
             ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
 
 

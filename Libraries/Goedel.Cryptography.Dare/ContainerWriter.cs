@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using Goedel.Utilities;
 
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
+using System.Collections.Generic;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -41,7 +36,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Container writer to write direct to a file.
     /// </summary>
-    public class ContainerWriterFile: ContainerWriter {
+    public class ContainerWriterFile : ContainerWriter {
 
         ///<summary>Position of the frame start.</summary>
         public override long FrameStart => frameStart;
@@ -74,7 +69,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Container writer to write in defered mode so that the updates can be applied in one transaction.
     /// </summary>
-    public class ContainerWriterDeferred: ContainerWriter {
+    public class ContainerWriterDeferred : ContainerWriter {
 
         long frameCount;
 
@@ -140,7 +135,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public DareEnvelope End(byte[] body) {
 
-            
+
             Container.MakeTrailer(ref DareTrailer);
 
 

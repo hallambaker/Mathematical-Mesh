@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Utilities;
-
-
-namespace Goedel.Cryptography.Dare {
+﻿namespace Goedel.Cryptography.Dare {
 
     public partial class ContainerIndex {
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ContainerIndex () {
+        public ContainerIndex() {
             }
 
         ///// <summary>

@@ -1,23 +1,5 @@
-﻿using System;
-
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Numerics;
-using Goedel.Mesh;
-using Goedel.Utilities;
-using Goedel.Protocol.Debug;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Protocol;
-
-using Goedel.IO;
-using Goedel.Command;
-using Goedel.Cryptography.Algorithms;
-using Goedel.Test;
-using Goedel.Cryptography.Core;
-using Goedel.Test.Core;
 
 namespace ExampleGenerator {
 
@@ -35,7 +17,7 @@ namespace ExampleGenerator {
                     byte[] Salt = null) {
 
             Salt = Salt ?? Goedel.Cryptography.Platform.GetRandomBits(128);
-            var CryptoStack = new CryptoStack(EncryptID: CryptoAlgorithmID.AES256CBC) {
+            var CryptoStack = new CryptoStack(encryptID: CryptoAlgorithmID.AES256CBC) {
                 Salt = Salt ?? Goedel.Cryptography.Platform.GetRandomBits(128),
                 MasterSecret = MasterSecret
                 };
@@ -128,7 +110,7 @@ namespace ExampleGenerator {
         //    Device2("connect Complete", out LabelConnectComplete);
         //    }
 
-        
+
         //public string LabelApplicationWeb1;
         //public string LabelApplicationWeb2;
         //public string LabelApplicationWeb3;

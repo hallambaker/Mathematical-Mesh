@@ -23,7 +23,24 @@ add   Add calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> calendar add CalendarEntry1.json CalID1
+{
+  "Title": "CalendarEntry1.json",
+  "Key": "NCVX-HLBU-5L23-VYYD-WUBR-4DPF-I2BE"}````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> calendar add CalendarEntry1.json CalID1 /json
+{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "Title": "CalendarEntry1.json",
+      "Key": "NCVX-HLBU-5L23-VYYD-WUBR-4DPF-I2BE"}}}
+````
 
 # calendar delete
 
@@ -35,7 +52,21 @@ delete   Delete calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> calendar delete CalID1
+ERROR - Object reference not set to an instance of an object.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> calendar delete CalID1 /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "Object reference not set to an instance of an object."}}
+````
 
 # calendar get
 
@@ -47,7 +78,20 @@ get   Lookup calendar entry
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> calendar get CalID1
+Empty
+````
+
+Specifying the /json option returns a result of type ResultEntry:
+
+````
+Alice> calendar get CalID1 /json
+{
+  "ResultEntry": {
+    "Success": false}}
+````
 
 # calendar dump
 
@@ -58,6 +102,20 @@ dump   List calendar entries
     /report   Report output (default)
     /json   Report output in JSON format
 ````
-**Missing Example***
+
+````
+Alice> calendar list
+ERROR - The command  is not known.
+````
+
+Specifying the /json option returns a result of type Result:
+
+````
+Alice> calendar list /json
+{
+  "Result": {
+    "Success": false,
+    "Reason": "The command  is not known."}}
+````
 
 

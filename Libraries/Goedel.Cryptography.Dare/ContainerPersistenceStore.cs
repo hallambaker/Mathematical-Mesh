@@ -1,12 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
-using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -321,8 +319,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="transaction">The transaction context</param>
         /// <returns>The prepared envelope.</returns>
         public DareEnvelope Prepare(
-                ContentMeta contentInfo, 
-                JSONObject jsonObject, 
+                ContentMeta contentInfo,
+                JSONObject jsonObject,
                 Transaction transaction = null) {
 
             var contextWrite = new ContainerWriterDeferred(Container);
@@ -343,7 +341,7 @@ namespace Goedel.Cryptography.Dare {
         public virtual ContainerStoreEntry CommitToContainer(
                 DareEnvelope dareEnvelope,
                 JSONObject item,
-                ContainerStoreEntry previous=null) {
+                ContainerStoreEntry previous = null) {
 
             Container.Append(dareEnvelope);
             return new ContainerStoreEntry(Container, dareEnvelope, previous, item);

@@ -20,12 +20,13 @@
 //  
 //  
 
-using System.IO;
+using Goedel.IO;
+using Goedel.Utilities;
+
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-using Goedel.Utilities;
-using Goedel.IO;
 
 namespace Goedel.Protocol {
 
@@ -55,7 +56,7 @@ namespace Goedel.Protocol {
     /// Factory delegate that returns a JSONObject.
     /// </summary>
     /// <returns></returns>
-    public delegate JSONObject JSONFactoryDelegate ();
+    public delegate JSONObject JSONFactoryDelegate();
 
 
 
@@ -67,7 +68,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Primary key to use for the object.
         /// </summary>
-        public virtual string _PrimaryKey  => null;
+        public virtual string _PrimaryKey => null;
 
         /// <summary>
         /// Secondary keys describing the object
@@ -133,7 +134,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Base constructor.
         /// </summary>
-		public JSONObject () {
+		public JSONObject() {
             //_Initialize();
             }
 
@@ -148,7 +149,7 @@ namespace Goedel.Protocol {
         /// Convert object to string in JSON form
         /// </summary>
         /// <returns>Data as string.</returns>
-		public override string ToString () {
+		public override string ToString() {
             var _JSONWriter = JSONWriterFactory();
             Serialize(_JSONWriter, false);
             return _JSONWriter.GetUTF8;
@@ -180,7 +181,7 @@ namespace Goedel.Protocol {
         /// Convert object to string in JSON form.
         /// </summary>
         /// <returns>Data as string.</returns>
-        public virtual string GetUTF8 () {
+        public virtual string GetUTF8() {
             var _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, true);
             return _JSONWriter.GetUTF8;
@@ -191,7 +192,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public virtual byte[] GetBytes (bool tag = true) {
+        public virtual byte[] GetBytes(bool tag = true) {
             var _JSONWriter = new JSONWriter();
             Serialize(_JSONWriter, tag);
             return _JSONWriter.GetBytes;
@@ -202,7 +203,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="writer">Writer to serialize the data to</param>
         /// <param name="tag">If true, serialization is tagged with the object type.</param>
-        public virtual void Serialize (Writer writer, bool tag = false) {
+        public virtual void Serialize(Writer writer, bool tag = false) {
             bool first = true;
             if (tag) {
                 writer.WriteObjectStart();
@@ -296,7 +297,7 @@ namespace Goedel.Protocol {
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="input">Input string</param>
-        public virtual void Deserialize (string input) {
+        public virtual void Deserialize(string input) {
             var reader = new StringReader(input);
             var jsonReader = new JSONReader(reader);
             Deserialize(jsonReader);
@@ -306,7 +307,7 @@ namespace Goedel.Protocol {
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="jsonReader">Input data</param>
-        public virtual void Deserialize (JSONReader jsonReader) {
+        public virtual void Deserialize(JSONReader jsonReader) {
 
             bool going = jsonReader.StartObject();
             while (going) {
@@ -330,7 +331,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">Input data</param>
         /// <param name="Tag">Input tag</param>
-        public virtual void DeserializeToken (JSONReader jsonReader, string Tag) {
+        public virtual void DeserializeToken(JSONReader jsonReader, string Tag) {
             }
 
 
@@ -340,7 +341,7 @@ namespace Goedel.Protocol {
         /// <param name="fileName">Name of the file to create.</param>
         /// <param name="dataEncoding">The encoding to use</param>
         /// <param name="tagged">If true, tag the output with the object type</param>
-        public void ToFile(string fileName, DataEncoding dataEncoding= DataEncoding.JSON, bool tagged=false) {
+        public void ToFile(string fileName, DataEncoding dataEncoding = DataEncoding.JSON, bool tagged = false) {
             using (var outputStream = fileName.OpenFileNew()) {
                 using (var writer = dataEncoding.GetWriter(outputStream)) {
                     Serialize(writer, tagged);
@@ -357,9 +358,9 @@ namespace Goedel.Protocol {
         /// <param name="Dictionary2">Second dictionary to merge</param>
         /// <param name="Dictionary3">Third dictionary to merge</param>
         /// <returns>Merged dictionaries</returns>
-        public static Dictionary<string, JSONFactoryDelegate> Merge (
+        public static Dictionary<string, JSONFactoryDelegate> Merge(
                     Dictionary<string, JSONFactoryDelegate> Dictionary1,
-                    Dictionary<string, JSONFactoryDelegate> Dictionary2=null,
+                    Dictionary<string, JSONFactoryDelegate> Dictionary2 = null,
                     Dictionary<string, JSONFactoryDelegate> Dictionary3 = null) {
             var Result = new Dictionary<string, JSONFactoryDelegate>();
 
@@ -380,7 +381,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Base">Base dictionary to merge into</param>
         /// <param name="Dictionary">Second dictionary to merge</param>
-        public static void Append (Dictionary<string, JSONFactoryDelegate> Base,
+        public static void Append(Dictionary<string, JSONFactoryDelegate> Base,
                     Dictionary<string, JSONFactoryDelegate> Dictionary) {
             foreach (var Entry in Dictionary) {
                 Base.AddSafe(Entry.Key, Entry.Value);

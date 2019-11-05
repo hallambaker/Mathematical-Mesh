@@ -20,11 +20,7 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
 using Goedel.Protocol;
-using Goedel.Mesh;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh.Server {
 
@@ -34,7 +30,7 @@ namespace Goedel.Mesh.Server {
     /// <summary>
     /// Abstract interface to a local service provider.
     /// </summary>
-    public abstract class MeshLocalPortal : meshPortal{
+    public abstract class MeshLocalPortal : meshPortal {
         /// <summary>
         /// File name for local access to the mesh store.
         /// </summary>
@@ -59,7 +55,7 @@ namespace Goedel.Mesh.Server {
     /// <summary>
     /// Direct connection to service provider via API calls. 
     /// </summary>
-    public class MeshPortalDirect: MeshLocalPortal {
+    public class MeshPortalDirect : MeshLocalPortal {
 
         /// <summary>
         /// Create a new portal using the specified stores.
@@ -67,7 +63,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="serviceName">DNS service name</param>
         /// <param name="serviceDirectory">File name for the Mesh Store.</param>
         /// <param name="portalStore">File name for the Portal Store.</param>
-        public MeshPortalDirect(string serviceName = null, string serviceDirectory=null) {
+        public MeshPortalDirect(string serviceName = null, string serviceDirectory = null) {
             ServiceName = serviceName ?? ServiceName;
             ServiceDirectory = serviceDirectory ?? ServiceDirectory;
             MeshServiceHost = new PublicMeshServiceProvider(ServiceName, ServiceDirectory);

@@ -19,9 +19,6 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
 using Goedel.Utilities;
 
 
@@ -39,12 +36,13 @@ namespace Goedel.Cryptography.PKIX {
         /// property is only filled when the certificate is signed.
         /// </summary>
         public byte[] Data {
-                
+
             get {
                 if (_Data == null) {
                     _Data = DER();
                     }
-                return _Data; }
+                return _Data;
+                }
             }
 
         /// <summary>
@@ -119,7 +117,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Subject Key Identifier
         /// </summary>
-        public byte[] SubjectKeyIdentifier => KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER(); 
+        public byte[] SubjectKeyIdentifier => KeyPair.PKIXPublicKey.SubjectPublicKeyInfo().DER();
 
 
         /// <summary>
@@ -351,7 +349,7 @@ namespace Goedel.Cryptography.PKIX {
         }
 
 
-    public partial class CertificationRequestInfo  {
+    public partial class CertificationRequestInfo {
         /// <summary>
         /// Create an empty CertificationRequestInfo class with version 1.0
         /// </summary>

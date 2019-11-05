@@ -19,14 +19,10 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.ASN;
 
 namespace Goedel.Cryptography.PKIX {
 
-    public partial class SubjectPublicKeyInfo  {
+    public partial class SubjectPublicKeyInfo {
 
 
         /// <summary>
@@ -56,7 +52,7 @@ namespace Goedel.Cryptography.PKIX {
         }
 
 
-    public partial class AlgorithmIdentifier{
+    public partial class AlgorithmIdentifier {
 
 
         /// <summary>

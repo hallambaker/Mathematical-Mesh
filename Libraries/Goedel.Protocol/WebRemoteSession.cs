@@ -20,14 +20,13 @@
 //  
 //  
 
+using Goedel.Discovery;
+using Goedel.Utilities;
+
 using System;
-using System.Net;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.IO;
-using Goedel.Discovery;
-using Goedel.Protocol;
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -46,7 +45,7 @@ namespace Goedel.Protocol {
         /// <param name="service">The IANA Well Known service identifier</param>
         /// <param name="serviceID">Account name</param>
         /// <param name="UDF">Fingerprint of authentication key.</param>
-        public WebRemoteSession(string domain, string service, string serviceID=null, string UDF=null) : base (serviceID) {
+        public WebRemoteSession(string domain, string service, string serviceID = null, string UDF = null) : base(serviceID) {
             this.ServiceID = serviceID;
 
             if (domain == null) {
@@ -102,7 +101,7 @@ namespace Goedel.Protocol {
                     }
                 }
             catch {
-                throw new ConnectionFail(new ExceptionData() {String = URI});
+                throw new ConnectionFail(new ExceptionData() { String = URI });
                 }
             }
 

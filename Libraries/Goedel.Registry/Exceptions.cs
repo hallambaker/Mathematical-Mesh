@@ -1,5 +1,6 @@
-using System;
 using Goedel.Utilities;
+
+using System;
 
 
 
@@ -11,48 +12,48 @@ namespace Goedel.Registry {
     /// </summary>
     public class ParserException : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The user command could not be parsed"
         /// </summary>		
-		public ParserException () : base ("The user command could not be parsed") {
-			}
-        
-		/// <summary>
+        public ParserException() : base("The user command could not be parsed") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The user command could not be parsed"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public ParserException (string Description) : base (Description) {
-			}
+        public ParserException(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParserException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public ParserException(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ParserException(Reason as string);
-				}
-			else {
-				return new ParserException();
-				}
+            if (Reason as string != null) {
+                return new ParserException(Reason as string);
+                }
+            else {
+                return new ParserException();
+                }
             }
         }
 
@@ -62,27 +63,27 @@ namespace Goedel.Registry {
     /// </summary>
     public class FileReadError : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The file could not be read"
         /// </summary>		
-		public FileReadError () : base ("The file could not be read") {
-			}
-        
-		/// <summary>
+        public FileReadError() : base("The file could not be read") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The file could not be read"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public FileReadError (string Description) : base (Description) {
-			}
+        public FileReadError(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileReadError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public FileReadError(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -113,15 +114,15 @@ namespace Goedel.Registry {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new FileReadError(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new FileReadError(Reason as ExceptionData);
-				}
-			else {
-				return new FileReadError();
-				}
+            if (Reason as string != null) {
+                return new FileReadError(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new FileReadError(Reason as ExceptionData);
+                }
+            else {
+                return new FileReadError();
+                }
             }
         }
 
@@ -131,27 +132,27 @@ namespace Goedel.Registry {
     /// </summary>
     public class UnknownCommand : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unknown command"
         /// </summary>		
-		public UnknownCommand () : base ("Unknown command") {
-			}
-        
-		/// <summary>
+        public UnknownCommand() : base("Unknown command") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unknown command"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnknownCommand (string Description) : base (Description) {
-			}
+        public UnknownCommand(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownCommand (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownCommand(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -182,15 +183,15 @@ namespace Goedel.Registry {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnknownCommand(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new UnknownCommand(Reason as ExceptionData);
-				}
-			else {
-				return new UnknownCommand();
-				}
+            if (Reason as string != null) {
+                return new UnknownCommand(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new UnknownCommand(Reason as ExceptionData);
+                }
+            else {
+                return new UnknownCommand();
+                }
             }
         }
 
@@ -200,27 +201,27 @@ namespace Goedel.Registry {
     /// </summary>
     public class UnknownOption : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unknown option"
         /// </summary>		
-		public UnknownOption () : base ("Unknown option") {
-			}
-        
-		/// <summary>
+        public UnknownOption() : base("Unknown option") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unknown option"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnknownOption (string Description) : base (Description) {
-			}
+        public UnknownOption(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnknownOption (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnknownOption(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -251,15 +252,15 @@ namespace Goedel.Registry {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnknownOption(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new UnknownOption(Reason as ExceptionData);
-				}
-			else {
-				return new UnknownOption();
-				}
+            if (Reason as string != null) {
+                return new UnknownOption(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new UnknownOption(Reason as ExceptionData);
+                }
+            else {
+                return new UnknownOption();
+                }
             }
         }
 
@@ -269,44 +270,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class NoCommand : ParserException {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "No command specified"
         /// </summary>		
-		public NoCommand () : base ("No command specified") {
-			}
-        
-		/// <summary>
+        public NoCommand() : base("No command specified") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "No command specified"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public NoCommand (string Description) : base (Description) {
-			}
+        public NoCommand(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NoCommand (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public NoCommand(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NoCommand(Reason as string);
-				}
-			else {
-				return new NoCommand();
-				}
+            if (Reason as string != null) {
+                return new NoCommand(Reason as string);
+                }
+            else {
+                return new NoCommand();
+                }
             }
         }
 
@@ -316,48 +317,48 @@ namespace Goedel.Registry {
     /// </summary>
     public class SchemaParse : global::System.Exception {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "The schema could not be parsed"
         /// </summary>		
-		public SchemaParse () : base ("The schema could not be parsed") {
-			}
-        
-		/// <summary>
+        public SchemaParse() : base("The schema could not be parsed") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "The schema could not be parsed"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public SchemaParse (string Description) : base (Description) {
-			}
+        public SchemaParse(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public SchemaParse (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public SchemaParse(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// User data associated with the exception.
         /// </summary>	
-		public object UserData;
+        public object UserData;
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new SchemaParse(Reason as string);
-				}
-			else {
-				return new SchemaParse();
-				}
+            if (Reason as string != null) {
+                return new SchemaParse(Reason as string);
+                }
+            else {
+                return new SchemaParse();
+                }
             }
         }
 
@@ -367,27 +368,27 @@ namespace Goedel.Registry {
     /// </summary>
     public class NotFoundReserved : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "An error occurred"
         /// </summary>		
-		public NotFoundReserved () : base ("An error occurred") {
-			}
-        
-		/// <summary>
+        public NotFoundReserved() : base("An error occurred") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "An error occurred"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public NotFoundReserved (string Description) : base (Description) {
-			}
+        public NotFoundReserved(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NotFoundReserved (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public NotFoundReserved(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
         /// <summary>
@@ -418,15 +419,15 @@ namespace Goedel.Registry {
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NotFoundReserved(Reason as string);
-				}
-			else if (Reason as ExceptionData != null) {
-				return new NotFoundReserved(Reason as ExceptionData);
-				}
-			else {
-				return new NotFoundReserved();
-				}
+            if (Reason as string != null) {
+                return new NotFoundReserved(Reason as string);
+                }
+            else if (Reason as ExceptionData != null) {
+                return new NotFoundReserved(Reason as ExceptionData);
+                }
+            else {
+                return new NotFoundReserved();
+                }
             }
         }
 
@@ -436,44 +437,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class InternalError : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "An internal parser error occurred"
         /// </summary>		
-		public InternalError () : base ("An internal parser error occurred") {
-			}
-        
-		/// <summary>
+        public InternalError() : base("An internal parser error occurred") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "An internal parser error occurred"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InternalError (string Description) : base (Description) {
-			}
+        public InternalError(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InternalError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InternalError(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InternalError(Reason as string);
-				}
-			else {
-				return new InternalError();
-				}
+            if (Reason as string != null) {
+                return new InternalError(Reason as string);
+                }
+            else {
+                return new InternalError();
+                }
             }
         }
 
@@ -483,44 +484,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class InvalidToken : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "An invalid token was encountered"
         /// </summary>		
-		public InvalidToken () : base ("An invalid token was encountered") {
-			}
-        
-		/// <summary>
+        public InvalidToken() : base("An invalid token was encountered") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "An invalid token was encountered"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public InvalidToken (string Description) : base (Description) {
-			}
+        public InvalidToken(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidToken (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public InvalidToken(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidToken(Reason as string);
-				}
-			else {
-				return new InvalidToken();
-				}
+            if (Reason as string != null) {
+                return new InvalidToken(Reason as string);
+                }
+            else {
+                return new InvalidToken();
+                }
             }
         }
 
@@ -530,44 +531,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class ExpectedStart : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Start token expected"
         /// </summary>		
-		public ExpectedStart () : base ("Start token expected") {
-			}
-        
-		/// <summary>
+        public ExpectedStart() : base("Start token expected") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Start token expected"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public ExpectedStart (string Description) : base (Description) {
-			}
+        public ExpectedStart(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ExpectedStart (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public ExpectedStart(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ExpectedStart(Reason as string);
-				}
-			else {
-				return new ExpectedStart();
-				}
+            if (Reason as string != null) {
+                return new ExpectedStart(Reason as string);
+                }
+            else {
+                return new ExpectedStart();
+                }
             }
         }
 
@@ -577,44 +578,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class ExpectedClass : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Parser Error Expected [Class]"
         /// </summary>		
-		public ExpectedClass () : base ("Parser Error Expected [Class]") {
-			}
-        
-		/// <summary>
+        public ExpectedClass() : base("Parser Error Expected [Class]") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Parser Error Expected [Class]"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public ExpectedClass (string Description) : base (Description) {
-			}
+        public ExpectedClass(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ExpectedClass (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public ExpectedClass(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ExpectedClass(Reason as string);
-				}
-			else {
-				return new ExpectedClass();
-				}
+            if (Reason as string != null) {
+                return new ExpectedClass(Reason as string);
+                }
+            else {
+                return new ExpectedClass();
+                }
             }
         }
 
@@ -624,44 +625,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class Expected : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Parser Error Expected [Class]"
         /// </summary>		
-		public Expected () : base ("Parser Error Expected [Class]") {
-			}
-        
-		/// <summary>
+        public Expected() : base("Parser Error Expected [Class]") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Parser Error Expected [Class]"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public Expected (string Description) : base (Description) {
-			}
+        public Expected(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public Expected (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public Expected(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new Expected(Reason as string);
-				}
-			else {
-				return new Expected();
-				}
+            if (Reason as string != null) {
+                return new Expected(Reason as string);
+                }
+            else {
+                return new Expected();
+                }
             }
         }
 
@@ -671,44 +672,44 @@ namespace Goedel.Registry {
     /// </summary>
     public class TooManyClose : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Too Many Closing Braces"
         /// </summary>		
-		public TooManyClose () : base ("Too Many Closing Braces") {
-			}
-        
-		/// <summary>
+        public TooManyClose() : base("Too Many Closing Braces") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Too Many Closing Braces"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public TooManyClose (string Description) : base (Description) {
-			}
+        public TooManyClose(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public TooManyClose (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public TooManyClose(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new TooManyClose(Reason as string);
-				}
-			else {
-				return new TooManyClose();
-				}
+            if (Reason as string != null) {
+                return new TooManyClose(Reason as string);
+                }
+            else {
+                return new TooManyClose();
+                }
             }
         }
 
@@ -718,46 +719,46 @@ namespace Goedel.Registry {
     /// </summary>
     public class UnreachableCode : SchemaParse {
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception "Unreachable code reached"
         /// </summary>		
-		public UnreachableCode () : base ("Unreachable code reached") {
-			}
-        
-		/// <summary>
+        public UnreachableCode() : base("Unreachable code reached") {
+            }
+
+        /// <summary>
         /// Construct instance for exception "Unreachable code reached"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public UnreachableCode (string Description) : base (Description) {
-			}
+        public UnreachableCode(string Description) : base(Description) {
+            }
 
-		/// <summary>
+        /// <summary>
         /// Construct instance for exception 		/// containing an inner exception.
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnreachableCode (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
-			}
+        /// <param name="Inner">Inner Exception</param>	
+        public UnreachableCode(string Description, System.Exception Inner) :
+                base(Description, Inner) {
+            }
 
 
 
 
-		
-		/// <summary>
+
+        /// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
         static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnreachableCode(Reason as string);
-				}
-			else {
-				return new UnreachableCode();
-				}
+            if (Reason as string != null) {
+                return new UnreachableCode(Reason as string);
+                }
+            else {
+                return new UnreachableCode();
+                }
             }
         }
 
 
-	}
+    }

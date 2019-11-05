@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using System.Text;
-using Goedel.ASN;
-using Goedel.Utilities;
+﻿using Goedel.ASN;
 using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -23,7 +22,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
 
         public DHDomain DHDomain { get; }
-        
+
         /// <summary>Group modulus</summary>
         public BigInteger Modulus { get; }
 
@@ -39,7 +38,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Create a new set of Diffie Hellman group parameters.
         /// </summary>
         /// <param name="Bits">The number of bits, this identifies the group modulus </param>
-        public DiffeHellmanPublic(int Bits=2048) {
+        public DiffeHellmanPublic(int Bits = 2048) {
             switch (Bits) {
                 case 0:
                 case 2048: {
@@ -50,7 +49,7 @@ namespace Goedel.Cryptography.Algorithms {
                     DHDomain = DHDomain.DHDomain4096;
                     break;
                     }
-                default:  {
+                default: {
                     throw new KeySizeNotSupported();
                     }
                 }
@@ -62,40 +61,49 @@ namespace Goedel.Cryptography.Algorithms {
         /// Create a new set of Diffie Hellman parameters using the shared modulus, 
         /// a newly constructed generator and public and private keys.
         /// </summary>
-        /// <param name="DHDomain">The shared parameters</param>
+        /// <param name="dhDomain">The shared parameters</param>
         /// <param name="Public">Optional public value</param>
-        public DiffeHellmanPublic(DHDomain DHDomain, BigInteger? Public=null)  {
-            this.DHDomain = DHDomain;
-            Modulus = DHDomain.BigIntegerP;
-            Generator = DHDomain.BigIntegerG;
+        public DiffeHellmanPublic(DHDomain dhDomain, BigInteger? Public = null) {
+            Contract.Requires(dhDomain != null);
+            dhDomain.AssertNotNull(NullParameter.Throw);
+
+            this.DHDomain = dhDomain;
+            Modulus = dhDomain.BigIntegerP;
+            Generator = dhDomain.BigIntegerG;
             if (Public != null) {
                 this.Public = (BigInteger)Public;
                 }
             }
 
         /// <summary>
-        /// Clone the public components of the key pair <paramref name="Base"/>.
+        /// Clone the public components of the key pair <paramref name="baseKey"/>.
         /// </summary>
-        /// <param name="Base">The key pair to copy.</param>
-        public DiffeHellmanPublic(DiffeHellmanPublic Base) {
-            DHDomain = Base.DHDomain;
-            Modulus = Base.Modulus;
-            Generator = Base.Generator;
-            Public = Base.Public;
+        /// <param name="baseKey">The key pair to copy.</param>
+        public DiffeHellmanPublic(DiffeHellmanPublic baseKey) {
+            Contract.Requires(baseKey != null);
+            baseKey.AssertNotNull(NullParameter.Throw);
+
+            DHDomain = baseKey.DHDomain;
+            Modulus = baseKey.Modulus;
+            Generator = baseKey.Generator;
+            Public = baseKey.Public;
             }
 
 
         /// <summary>
         /// Construct from public key parameters
         /// </summary>
-        /// <param name="PKIXParameters">The key parameters</param>
-        public DiffeHellmanPublic (PKIXPublicKeyDH PKIXParameters) {
-            DHDomain = PKIXParameters.Domain;
+        /// <param name="pkixParameters">The key parameters</param>
+        public DiffeHellmanPublic(PKIXPublicKeyDH pkixParameters) {
+            Contract.Requires(pkixParameters != null);
+            pkixParameters.AssertNotNull(NullParameter.Throw);
+
+            DHDomain = pkixParameters.Domain;
             Assert.NotNull(DHDomain, UnknownNamedParameters.Throw);
 
             Modulus = DHDomain.BigIntegerP;
             Generator = DHDomain.BigIntegerG;
-            Public = PKIXParameters.Public.ToBigInteger();
+            Public = pkixParameters.Public.ToBigInteger();
 
             }
 
@@ -105,10 +113,14 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Check that the Diffie Hellman parameters presented match those of this Key.
         /// </summary>
-        /// <param name="Key">The key to verify</param>
-        public void Verify(DiffeHellmanPublic Key) {
-            Assert.True(Key.Modulus == Modulus, CryptographicException.Throw);
-            Assert.True(Key.Generator == Generator, CryptographicException.Throw);
+        /// <param name="key">The key to verify</param>
+        public void Verify(DiffeHellmanPublic key) {
+            Contract.Requires(key != null);
+            key.AssertNotNull(NullParameter.Throw);
+
+
+            Assert.True(key.Modulus == Modulus, CryptographicException.Throw);
+            Assert.True(key.Generator == Generator, CryptographicException.Throw);
             }
 
 
@@ -122,7 +134,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// key agreement.</returns>
         public ResultDiffieHellman Agreement() {
             var Private = new DiffeHellmanPrivate(this);
-            var DiffeHellmanPublic = Private.DiffeHellmanPublic;
 
             var Result = new ResultDiffieHellman() {
                 EphemeralPublicValue = Private.DiffeHellmanPublic,
@@ -139,15 +150,17 @@ namespace Goedel.Cryptography.Algorithms {
         /// Perform final stage in a Diffie Hellman Agreement to reduce an 
         /// array of carry returns to a single agreement result.
         /// </summary>
-        /// <param name="Carry">The partial recryption results.</param>
+        /// <param name="carry">The partial recryption results.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(BigInteger[] Carry) {
+        public BigInteger Agreement(BigInteger[] carry) {
+            Contract.Requires(carry != null);
+            carry.AssertNotNull(NullParameter.Throw);
 
-            Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
+            Assert.True(carry.Length >= 1, InsufficientResults.Throw);
 
-            var Accumulator = Carry[0];
-            for (var i = 1; i < Carry.Length; i++) {
-                Accumulator *= Carry[i];
+            var Accumulator = carry[0];
+            for (var i = 1; i < carry.Length; i++) {
+                Accumulator *= carry[i];
                 }
             return Accumulator % Modulus;
             }
@@ -159,10 +172,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
-        /// <param name="Contribution">The key contribution.</param>
+        /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public DiffeHellmanPublic Combine (DiffeHellmanPublic Contribution) {
-            var NewPublic = (Public * Contribution.Public) % Modulus;
+        public DiffeHellmanPublic Combine(DiffeHellmanPublic contribution) {
+            Contract.Requires(contribution != null);
+            contribution.AssertNotNull(NullParameter.Throw);
+
+            var NewPublic = (Public * contribution.Public) % Modulus;
             return new DiffeHellmanPublic(DHDomain, NewPublic);
             }
 
@@ -170,10 +186,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
-        /// <param name="Contribution">The key contribution.</param>
+        /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
-            Combine(Contribution as DiffeHellmanPublic);
+        public IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
+            Combine(contribution as DiffeHellmanPublic);
 
         #endregion
         }
@@ -189,20 +205,20 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>If true, this key is part of a recryption set.</summary>
         public bool IsRecryption { get; set; }
 
-        DiffeHellmanPublic _DiffeHellmanPublic = null;
+
 
         /// <summary>
         /// Return the public key.
         /// </summary>
         public DiffeHellmanPublic DiffeHellmanPublic {
             get {
-                if (_DiffeHellmanPublic == null) {
-                    _DiffeHellmanPublic = new DiffeHellmanPublic(DHDomain, Public);
+                if (diffeHellmanPublic == null) {
+                    diffeHellmanPublic = new DiffeHellmanPublic(DHDomain, Public);
                     }
-                return _DiffeHellmanPublic;
+                return diffeHellmanPublic;
                 }
             }
-
+        DiffeHellmanPublic diffeHellmanPublic = null;
 
         #region // Constructors
 
@@ -210,9 +226,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// Create a new set of Diffie Hellman parameters using the shared modulus, 
         /// a newly constructed generator and public and private keys.
         /// </summary>
-        /// <param name="Bits">The number of bits in the modulus to be created. Valid values
+        /// <param name="bits">The number of bits in the modulus to be created. Valid values
         /// are 2048 and 4096</param>
-        public DiffeHellmanPrivate(int Bits=2048) : base(Bits) {
+        public DiffeHellmanPrivate(int bits = 2048) : base(bits) {
             Private = Platform.GetRandomBigInteger(Modulus);
             Public = BigInteger.ModPow(Generator, Private, Modulus);
             IsRecryption = false;
@@ -222,10 +238,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// Create a new set of Diffie Hellman parameters using the shared modulus, 
         /// a newly constructed generator and public and private keys.
         /// </summary>
-        /// <param name="DiffeHellmanPublic">Public key to use to specify the
+        /// <param name="diffeHellmanPublic">Public key to use to specify the
         /// modulus and generator</param>
-        public DiffeHellmanPrivate(DiffeHellmanPublic DiffeHellmanPublic) : 
-                     base(DiffeHellmanPublic.DHDomain) {
+        public DiffeHellmanPrivate(DiffeHellmanPublic diffeHellmanPublic) :
+                     base(diffeHellmanPublic?.DHDomain) {
 
             Private = Platform.GetRandomBigInteger(Modulus);
             Public = BigInteger.ModPow(Generator, Private, Modulus);
@@ -236,16 +252,16 @@ namespace Goedel.Cryptography.Algorithms {
         /// Create a new set of Diffie Hellman parameters using the shared modulus, 
         /// a newly constructed generator and public and private keys.
         /// </summary>
-        /// <param name="PKIXPrivateKeyDH">Key parameters</param>
-        public DiffeHellmanPrivate(PKIXPrivateKeyDH PKIXPrivateKeyDH) : base (PKIXPrivateKeyDH.Domain) {
-            Private = PKIXPrivateKeyDH.Private.ToBigInteger();
-            Public = PKIXPrivateKeyDH.Public.ToBigInteger();
+        /// <param name="pkixPrivateKeyDH">Key parameters</param>
+        public DiffeHellmanPrivate(PKIXPrivateKeyDH pkixPrivateKeyDH) : base(pkixPrivateKeyDH?.Domain) {
+            Private = pkixPrivateKeyDH.Private.ToBigInteger();
+            Public = pkixPrivateKeyDH.Public.ToBigInteger();
             IsRecryption = false;
             }
 
-        private DiffeHellmanPrivate (BigInteger Private) {
-            this.Private = Private;
-            Public = BigInteger.ModPow(Generator, Private, Modulus);
+        private DiffeHellmanPrivate(BigInteger @private) {
+            this.Private = @private;
+            Public = BigInteger.ModPow(Generator, @private, Modulus);
             }
 
         #endregion
@@ -257,7 +273,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         public KeyAgreementResult Agreement(KeyPair keyPair) {
-            var agreement = Agreement((keyPair as KeyPairAdvanced).IKeyAdvancedPublic);
+            var agreement = Agreement((keyPair as KeyPairAdvanced)?.IKeyAdvancedPublic);
             return new ResultDiffieHellman() { Agreement = agreement };
             }
 
@@ -265,67 +281,72 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to this private key
         /// </summary>
-        /// <param name="Public">Set of newly created DH parameters for Alice</param>
+        /// <param name="publicKey">Set of newly created DH parameters for Alice</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(IKeyAdvancedPublic Public) {
-            var PublicDH = Public as DiffeHellmanPublic;
-            Verify(PublicDH);
-            return BigInteger.ModPow(PublicDH.Public, Private, Modulus);
+        public BigInteger Agreement(IKeyAdvancedPublic publicKey) {
+            var publicDH = publicKey as DiffeHellmanPublic;
+            Contract.Requires(publicDH != null);
+            Verify(publicDH);
+            return BigInteger.ModPow(publicDH.Public, Private, Modulus);
             }
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to this private key
         /// </summary>
-        /// <param name="Public">Set of newly created DH parameters for Alice</param>
-        /// <param name="Carry">Recryption carry over value, to be combined with the
+        /// <param name="publicKey">Set of newly created DH parameters for Alice</param>
+        /// <param name="carry">Recryption carry over value, to be combined with the
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public BigInteger Agreement(IKeyAdvancedPublic Public, BigInteger Carry) {
-            var PublicDH = Public as DiffeHellmanPublic;
-            Verify(PublicDH);
-            var Partial = Agreement(PublicDH);
-            return (Partial * Carry) % Modulus;
+        public BigInteger Agreement(IKeyAdvancedPublic publicKey, BigInteger carry) {
+            var publicDH = publicKey as DiffeHellmanPublic;
+            Verify(publicDH);
+            var partial = Agreement(publicDH);
+            return (partial * carry) % Modulus;
             }
         #endregion
         #region // Advanced functions
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
-        /// <param name="Shares">Number of shares to create</param>
+        /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int Shares) {
-            BigInteger Accumulator = 0;
-            var Result = new IKeyAdvancedPrivate[Shares];
+        public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+            BigInteger accumulator = 0;
+            var result = new IKeyAdvancedPrivate[shares];
 
-            for (var i = 1; i < Shares; i++) {
-                var NewPrivate = Platform.GetRandomBigInteger(Modulus - 1);
-                Result[i] = new DiffeHellmanPrivate(NewPrivate) { IsRecryption = true };
-                Accumulator = (Accumulator + NewPrivate) % (Modulus - 1);
+            for (var i = 1; i < shares; i++) {
+                var newPrivate = Platform.GetRandomBigInteger(Modulus - 1);
+                result[i] = new DiffeHellmanPrivate(newPrivate) { IsRecryption = true };
+                accumulator = (accumulator + newPrivate) % (Modulus - 1);
                 }
 
-            Result[0] = new DiffeHellmanPrivate((Modulus + Private - Accumulator - 1) % (Modulus - 1)) {
+            result[0] = new DiffeHellmanPrivate((Modulus + Private - accumulator - 1) % (Modulus - 1)) {
                 IsRecryption = true
                 };
-            return Result;
+            return result;
             }
 
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
-        /// <param name="Shares">Number of shares to create</param>
+        /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) {
-            BigInteger Accumulator = 0;
+        public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
+            Contract.Requires(shares != null);
+            shares.AssertNotNull(NullParameter.Throw);
 
-            foreach (var share in Shares) {
+
+            BigInteger accumulator = 0;
+
+            foreach (var share in shares) {
                 var key = share as KeyPairDH;
                 var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards448Private);
 
-                Accumulator = (Accumulator + privateKey.Private).Mod(Modulus - 1);
+                accumulator = (accumulator + privateKey.Private).Mod(Modulus - 1);
                 }
 
             return new DiffeHellmanPrivate(
-                (Modulus - 1 + Private - Accumulator).Mod(Modulus - 1)) {
+                (Modulus - 1 + Private - accumulator).Mod(Modulus - 1)) {
                 IsRecryption = true
                 };
             }
@@ -335,21 +356,25 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
-        /// <param name="Contribution">The key contribution.</param>
+        /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public DiffeHellmanPrivate Combine(DiffeHellmanPrivate Contribution) {
-            var NewPrivate = (Private + Contribution.Private) % Modulus;
-            return new DiffeHellmanPrivate(NewPrivate);
+        public DiffeHellmanPrivate Combine(DiffeHellmanPrivate contribution) {
+            Contract.Requires(contribution != null);
+            contribution.AssertNotNull(NullParameter.Throw);
+
+
+            var newPrivate = (Private + contribution.Private) % Modulus;
+            return new DiffeHellmanPrivate(newPrivate);
             }
 
 
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
-        /// <param name="Contribution">The key contribution.</param>
+        /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution) =>
-            Combine(Contribution as DiffeHellmanPrivate);
+        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
+            Combine(contribution as DiffeHellmanPrivate);
         #endregion
 
         }
@@ -364,24 +389,24 @@ namespace Goedel.Cryptography.Algorithms {
     public class ResultDiffieHellman : KeyAgreementResult {
 
         /// <summary>The key agreement result</summary>
-        public BigInteger Agreement;
+        public BigInteger Agreement { get; set; }
 
         /// <summary>Wrap as an ASN.1 Structure</summary>
-        public AgreementDH ASNAgreement  => new AgreementDH() {
-                Result = Agreement.ToByteArray()
-                };
+        public AgreementDH ASNAgreement => new AgreementDH() {
+            Result = Agreement.ToByteArray()
+            };
 
         /// <summary>The agreement as ASN.1 DER encoding</summary>
         /// <returns>The DER encoded value.</returns>
-        public override byte[] DER () => ASNAgreement.DER();
+        public override byte[] DER() => ASNAgreement.DER();
 
         /// <summary>The key agreement result as a byte array</summary>
-        public override byte[] IKM => Agreement.ToByteArray();  
+        public override byte[] IKM => Agreement.ToByteArray();
 
         /// <summary>
         /// The Ephemeral public key
         /// </summary>
-        public override KeyPair EphemeralKeyPair => new KeyPairDH (EphemeralPublicValue as DiffeHellmanPublic);
+        public override KeyPair EphemeralKeyPair => new KeyPairDH(EphemeralPublicValue as DiffeHellmanPublic);
 
         }
 

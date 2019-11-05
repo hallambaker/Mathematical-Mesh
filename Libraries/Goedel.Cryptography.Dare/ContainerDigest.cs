@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using Goedel.Utilities;
+
 using System.Collections.Generic;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -76,7 +71,7 @@ namespace Goedel.Cryptography.Dare {
         /// Perform sanity checking on a list of container headers.
         /// </summary>
         /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer (List<DareHeader> Headers) {
+        public override void CheckContainer(List<DareHeader> Headers) {
             int Index = 1;
             foreach (var Header in Headers) {
                 Assert.NotNull(Header.ContainerInfo);

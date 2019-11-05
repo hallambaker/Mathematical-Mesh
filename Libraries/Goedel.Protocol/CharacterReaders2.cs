@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Goedel.Utilities;
+
+using System;
 using System.IO;
 using System.Text;
-
-using Goedel.Utilities;
 
 namespace Goedel.Protocol {
 
@@ -285,7 +285,7 @@ namespace Goedel.Protocol {
 
         #region // methods
 
-        int Lookahead=-1;
+        int Lookahead = -1;
 
         /// <summary>
         /// Get the next byte in the stream and advance the reader position.
@@ -412,7 +412,7 @@ namespace Goedel.Protocol {
         /// <param name="Input">The input data to be read.</param>
         /// <param name="Start">The first byte to be read.</param>
         /// <param name="Length">The maximum number of bytes to read.</param>
-        public CharacterStreamDataReader(byte[] Input, int Start = 0, int Length = -1)  {
+        public CharacterStreamDataReader(byte[] Input, int Start = 0, int Length = -1) {
             this.Input = Input;
             Position = Start;
             Last = Input.GetLast(Start, Length);

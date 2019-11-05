@@ -1,13 +1,13 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Xunit;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Utilities;
 using Goedel.IO;
 using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -20,7 +20,7 @@ namespace Goedel.XUnit {
         /// Test a single plaintext singleton containers.
         /// </summary>
         [Fact]
-        public void TestFileContainer1 () {
+        public void TestFileContainer1() {
             var Bytes = CreateBytes(100);
 
             ReadWriteContainer("TestFilePlaintext_100", Bytes, null);
@@ -31,7 +31,7 @@ namespace Goedel.XUnit {
         /// Test multiple plaintext singleton containers.
         /// </summary>
         [Fact]
-        public void TestFileContainer16 () {
+        public void TestFileContainer16() {
             byte[] Bytes = new byte[0];
             ReadWriteContainer("TestFilePlaintext_0", Bytes, null);
 
@@ -52,7 +52,7 @@ namespace Goedel.XUnit {
         /// per-account O/S integration. Thus unit testing does not work
         /// </summary>
         [Fact]
-        public void TestFileContainerEncrypted1 () {
+        public void TestFileContainerEncrypted1() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -66,7 +66,7 @@ namespace Goedel.XUnit {
         /// Test multiple plaintext singleton containers.
         /// </summary>
         [Fact]
-        public void TestFileContainerEncrypted16 () {
+        public void TestFileContainerEncrypted16() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -105,7 +105,7 @@ namespace Goedel.XUnit {
         /// Test file archive with 10 encrypted entries encrypted under one key exchange
         /// </summary>
         [Fact]
-        public void TestArchiveEncrypted10Bulk () {
+        public void TestArchiveEncrypted10Bulk() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -116,7 +116,7 @@ namespace Goedel.XUnit {
         /// Test file archive with 10 encrypted entries encrypted under independent key exchanges
         /// </summary>
         [Fact]
-        public void TestArchiveEncrypted10Individual () {
+        public void TestArchiveEncrypted10Individual() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -127,7 +127,7 @@ namespace Goedel.XUnit {
         /// Test file archive with multiple different sizes, etc.
         /// </summary>
         [Fact]
-        public void TestArchiveMulti () {
+        public void TestArchiveMulti() {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients);
@@ -140,7 +140,7 @@ namespace Goedel.XUnit {
                 }
             }
 
-        KeyPair CreateKeyPair () {
+        KeyPair CreateKeyPair() {
             var Result = new KeyPairDH();
             KeyCollection.Default.Add(Result);
 
@@ -148,9 +148,9 @@ namespace Goedel.XUnit {
             }
 
         static Random Random = new Random();
-        byte[] CreateBytes (int Length) => CryptoCatalog.GetBytes(Length);
-       
-        void ReadWriteContainer (string FileName, byte[] TestData, CryptoParameters CryptoParameters=null) {
+        byte[] CreateBytes(int Length) => CryptoCatalog.GetBytes(Length);
+
+        void ReadWriteContainer(string FileName, byte[] TestData, CryptoParameters CryptoParameters = null) {
             CryptoParameters = CryptoParameters ?? new CryptoParameters();
 
             // Create container
@@ -165,8 +165,8 @@ namespace Goedel.XUnit {
             }
 
 
-        void ReadWriteArchive (string FileNameBase, int Entries, 
-                    CryptoParameters CryptoParameters=null, bool Independent=false) {
+        void ReadWriteArchive(string FileNameBase, int Entries,
+                    CryptoParameters CryptoParameters = null, bool Independent = false) {
 
             CryptoParameters = CryptoParameters ?? new CryptoParameters();
 
@@ -192,7 +192,7 @@ namespace Goedel.XUnit {
             using (var Reader = new FileContainerReader(Filename, CryptoParameters.KeyCollection)) {
                 for (var i = 0; i < Entries; i++) {
 
-                    Reader.Read(out var ReadData, out var ContentMeta, Index: i+1);
+                    Reader.Read(out var ReadData, out var ContentMeta, Index: i + 1);
                     Utilities.Assert.True(ReadData.IsEqualTo(TestData[i]));
                     }
                 }

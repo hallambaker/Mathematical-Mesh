@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
+﻿using Goedel.IO;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
+using System.Text;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -111,7 +111,7 @@ namespace Goedel.Cryptography.Dare {
 
 
 
-        
+
 
 
         /// <summary>The current frame header as binary data</summary>
@@ -221,7 +221,7 @@ namespace Goedel.Cryptography.Dare {
                         KeyCollection keyCollection = null,
                         CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
-                        string contentType = null, 
+                        string contentType = null,
                         bool decrypt = true,
                         bool create = true) {
 
@@ -711,7 +711,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="envelopes">The enveolpes to append</param>
         /// <param name="index">The starting point at which to begin appending.</param>
-        public void Append(List<DareEnvelope> envelopes, int index=0) {
+        public void Append(List<DareEnvelope> envelopes, int index = 0) {
 
             for (var i = index; i < envelopes.Count; i++) {
                 //Console.WriteLine($"Container Append #{i}  Write:{JBCDStream.PositionWrite} ");
@@ -746,7 +746,7 @@ namespace Goedel.Cryptography.Dare {
             AppendFrame(dataHeader, envelope.Body, dataTrailer);
 
 
-            
+
             }
 
         /// <summary>
@@ -959,10 +959,10 @@ namespace Goedel.Cryptography.Dare {
             byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
-            
+
             var cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
-            
+
             contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
 
             if (data != null) {
@@ -978,7 +978,7 @@ namespace Goedel.Cryptography.Dare {
 
                 return contextWrite.End(null);
                 }
-            
+
             }
 
 

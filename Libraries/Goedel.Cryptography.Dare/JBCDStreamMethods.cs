@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.IO;
 using System.Threading;
-using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.Cryptography.Jose;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -767,7 +767,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public long ReadFrame (out byte[] FrameHeader) {
+        public long ReadFrame(out byte[] FrameHeader) {
             FrameHeader = null;
             StartLastFrameRead = PositionRead;
 
@@ -799,20 +799,20 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public bool ReadFrameReverse (out byte[] FrameHeader, out byte[] FrameData) {
+        public bool ReadFrameReverse(out byte[] FrameHeader, out byte[] FrameData) {
             var Success = ReadTagReverse(out var Code, out var Length);
             if (!Success) {
                 FrameHeader = null;
                 FrameData = null;
                 return false;
                 }
- 
+
             // Sanity check
             var ThePosition = PositionRead;
             Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
-            long Start = ThePosition - Length - TagSpace(Code)-1;
+            long Start = ThePosition - Length - TagSpace(Code) - 1;
 
             PositionRead = Start;
             ReadFrame(out FrameHeader, out FrameData, out var FrameTrailer);
@@ -829,7 +829,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="FrameHeader">The header data that was read.</param>
         /// <returns>True if a tag was read or false if EOF was encountered.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
-        public long ReadFrameReverse (out byte[] FrameHeader) {
+        public long ReadFrameReverse(out byte[] FrameHeader) {
             var Success = ReadTagReverse(out var Code, out var Length);
             if (!Success) {
                 FrameHeader = null;
@@ -841,7 +841,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
-            long Start = ThePosition - Length - TagSpace(Code) -1;
+            long Start = ThePosition - Length - TagSpace(Code) - 1;
 
             PositionRead = Start;
             var Result = ReadFrame(out FrameHeader);
@@ -875,7 +875,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public DareHeader ReadFrameHeader () {
+        public DareHeader ReadFrameHeader() {
             ReadFrame(out var HeaderData);
             return DareHeader.FromJSON(HeaderData.JSONReader(), false);
             }
@@ -885,7 +885,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public DareHeader ReadFirstFrameHeader () {
+        public DareHeader ReadFirstFrameHeader() {
             Begin();
             ReadFrame(out var HeaderData);
             return DareHeader.FromJSON(HeaderData.JSONReader(), false);
@@ -895,7 +895,7 @@ namespace Goedel.Cryptography.Dare {
         /// Read the final frame header
         /// </summary>
         /// <returns>The last frame header</returns>
-        public DareHeader ReadLastFrameHeader () {
+        public DareHeader ReadLastFrameHeader() {
             End();
             ReadFrameReverse(out var HeaderData);
             End();

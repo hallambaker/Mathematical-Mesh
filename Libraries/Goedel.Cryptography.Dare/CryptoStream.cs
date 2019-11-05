@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Goedel.Protocol;
+
+using System;
 using System.IO;
 using System.Security.Cryptography;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using Goedel.Cryptography.Jose;
 namespace Goedel.Cryptography.Dare {
 
 
@@ -48,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The externally accessible stream.
         /// </summary>
-        protected Stream Stream { get;  }
+        protected Stream Stream { get; }
 
         /// <summary>
         /// The Massage Authentication Code Transform.
@@ -255,7 +253,7 @@ namespace Goedel.Cryptography.Dare {
         /// has been reached.</returns>
         public override int Read(byte[] buffer, int offset, int count) =>
             jbcdReader.ReadBinaryData(buffer, offset, count);
-            
+
 
 
 
@@ -385,7 +383,7 @@ namespace Goedel.Cryptography.Dare {
                     PackagingFormat packagingFormat,
                     HashAlgorithm mac,
                     HashAlgorithm digest,
-                    long payloadLength) : base (mac, digest) {
+                    long payloadLength) : base(mac, digest) {
 
             //this.JSONWriter = JSONWriter;
 
@@ -402,9 +400,9 @@ namespace Goedel.Cryptography.Dare {
                 //Console.Write($"Written tag for {PayloadLength}");
                 }
 
-            streamMac = mac== null ? null : new CryptoStream(new CryptoStackStream(), mac, CryptoStreamMode.Write);
+            streamMac = mac == null ? null : new CryptoStream(new CryptoStackStream(), mac, CryptoStreamMode.Write);
 
-            
+
 
             if (digest != null) {
                 streamDigest = new CryptoStream(
@@ -450,7 +448,7 @@ namespace Goedel.Cryptography.Dare {
                 //Console.Write($"  Have {count} bytes to stream");
                 }
             else {
-                JSONBWriter.WriteTag(output, final ?JSONBCD.DataTerm: JSONBCD.DataChunk,
+                JSONBWriter.WriteTag(output, final ? JSONBCD.DataTerm : JSONBCD.DataChunk,
                     count);
                 output.Write(buffer, offset, count);
 

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Numerics;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace Goedel.Cryptography.PKIX {
 
@@ -15,14 +11,14 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PrivateKeyInfo () {
+        public PrivateKeyInfo() {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PrivateKeyInfo (byte[] Data) {
+        public PrivateKeyInfo(byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }
@@ -35,7 +31,7 @@ namespace Goedel.Cryptography.PKIX {
         /// This is done in the forward direction
         /// </summary>
         /// <param name="Buffer">The data to decode.</param>
-        public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode(Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
@@ -73,14 +69,14 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyRSA () {
+        public PKIXPrivateKeyRSA() {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PKIXPrivateKeyRSA (byte[] Data) {
+        public PKIXPrivateKeyRSA(byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }
@@ -93,7 +89,7 @@ namespace Goedel.Cryptography.PKIX {
         /// This is done in the forward direction
         /// </summary>
         /// <param name="Buffer">The source buffer</param>
-        public void Decode (global::Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode(global::Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Version = Buffer.Decode__Integer(0, -1);
@@ -131,7 +127,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Debugging aid.
         /// </summary>
-        public void Dump () {
+        public void Dump() {
             var BigModulus = new BigInteger(Modulus);
             Debug.WriteLine("Modulus\n {0}", BigModulus.ToString());
 
@@ -178,14 +174,14 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyDH () {
+        public PKIXPrivateKeyDH() {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PKIXPrivateKeyDH (byte[] Data) {
+        public PKIXPrivateKeyDH(byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }
@@ -197,7 +193,7 @@ namespace Goedel.Cryptography.PKIX {
         /// This is done in the forward direction
         /// </summary>
         /// <param name="Buffer">The data to decode.</param>
-        public void Decode (Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode(Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Shared = Buffer.Decode__Octets(0, -1);
@@ -219,7 +215,7 @@ namespace Goedel.Cryptography.PKIX {
         /// This is done in the forward direction
         /// </summary>
         /// <param name="Buffer">Buffer to decode.</param>
-        public  void Decode (Goedel.ASN.DecodeBuffer Buffer) {
+        public void Decode(Goedel.ASN.DecodeBuffer Buffer) {
             Buffer.Decode__Sequence_Start();
 
             Result = Buffer.Decode__BigInteger(0, -1);

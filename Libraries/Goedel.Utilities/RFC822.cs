@@ -1,8 +1,15 @@
-﻿using System;
+﻿
+/* Unmerged change from project 'Goedel.Utilities'
+Before:
+using System;
 using System.Collections.Generic;
 using Goedel.Utilities;
+After:
+using Goedel.Utilities;
 
-
+using System;
+using System.Collections.Generic;
+*/
 namespace Goedel.Utilities {
 
 
@@ -18,7 +25,7 @@ namespace Goedel.Utilities {
         /// including the separator, otherwise null.</returns>
         public static string Left(this string Input, char Separator) {
             var Index = Input.IndexOf(Separator);
-            return Index < 0? null : Input.Substring(0, Index);
+            return Index < 0 ? null : Input.Substring(0, Index);
             }
 
         /// <summary>
@@ -31,7 +38,7 @@ namespace Goedel.Utilities {
         /// including the separator, otherwise null.</returns>
         public static string Right(this string Input, char Separator) {
             var Index = Input.IndexOf(Separator);
-            return Index < 0 ? null : Input.Substring(Index+1);
+            return Index < 0 ? null : Input.Substring(Index + 1);
             }
 
 
@@ -45,7 +52,7 @@ namespace Goedel.Utilities {
         /// <param name="Left">The string to the left of the separator</param>
         /// <returns>If the separator is found, returns the input string up to but not 
         /// including the separator, otherwise null.</returns>
-        public static void Separate(this string Input, char Separator, 
+        public static void Separate(this string Input, char Separator,
             out string Left, out string Right) {
             var Index = Input.IndexOf(Separator);
             Left = Index < 0 ? null : Input.Substring(0, Index);
@@ -73,7 +80,7 @@ namespace Goedel.Utilities {
         /// <param name="AccountID">The AccountID to split.</param>
         /// <param name="Service">The portal address.</param>
         /// <param name="Account">The account name.</param>
-        public static void SplitAccountID (this string AccountID,
+        public static void SplitAccountID(this string AccountID,
             out string Service,
             out string Account) {
             Account = null;
@@ -94,11 +101,11 @@ namespace Goedel.Utilities {
         /// <param name="Identifier">The AccountID to split.</param>
         /// <param name="Service">The portal address.</param>
         /// <param name="Account">The account name.</param>
-        public static void SplitAccountIDService (this string Identifier,
+        public static void SplitAccountIDService(this string Identifier,
             out string Service,
             out string Account) {
             Account = null;
-            
+
             int At = Identifier.LastIndexOf('@');
             if (At < 0) {
                 Service = Identifier;

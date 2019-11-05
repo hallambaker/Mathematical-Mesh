@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using Goedel.Mesh.Shell;
 using Goedel.Mesh.Test;
-using Goedel.Mesh.Shell;
-using Goedel.Test.Core;
-using Goedel.IO;
-using Goedel.Protocol;
-using Goedel.Utilities;
-using System.Linq;
-using Goedel.Cryptography;
-using System.Numerics;
+
+using System.Collections.Generic;
 
 namespace ExampleGenerator {
 
@@ -78,7 +69,7 @@ namespace ExampleGenerator {
 
             var resultPending = (ConnectPending[0].Result as ResultPending);
             var id1 = resultPending.Messages[0].MessageID;
-            
+
 
             ConnectAccept = testCLIAlice1.Example($"device accept {id1}");
 
@@ -86,7 +77,7 @@ namespace ExampleGenerator {
 
             var id2 = resultPending.Messages[1].MessageID;
 
-            ConnectSync = testCLIAlice2.Example($"device complete",$"account sync");
+            ConnectSync = testCLIAlice2.Example($"device complete", $"account sync");
 
             ConnectReject = testCLIAlice1.Example($"device reject {id2}");
 
@@ -139,7 +130,7 @@ namespace ExampleGenerator {
 
             // These are all failing because the container is being initialized before it is 
             // synchronized on the device.
-            
+
             ContactList2 = testCLIAlice2.Example($"contact list");
             BookmarkList2 = testCLIAlice2.Example($"bookmark list");
             PasswordList2 = testCLIAlice2.Example($"password list");

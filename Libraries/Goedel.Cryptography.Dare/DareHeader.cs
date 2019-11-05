@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
-using System.Threading;
-
-using Goedel.Cryptography.Jose;
+﻿using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
-using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace Goedel.Cryptography.Dare {
 
@@ -68,7 +66,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
         ///<summary>Routine called after serialization.</summary>
-        public override void PostDecode() => 
+        public override void PostDecode() =>
             ContentMeta = ContentMeta.GetContentInfo(ContentMetaData);
 
 
@@ -140,7 +138,7 @@ namespace Goedel.Cryptography.Dare {
         #region // Consider moving this functionality out to ContextWrite
 
         CryptoStackStreamWriter currentBodyWriter = null;
-        
+
         /// <summary>
         /// Construct a stream that will write the body data with whatever crypto stream
         /// modules are required.
@@ -221,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackStream GetDecoder(
                         Stream stream,
                         out Stream reader,
-                       KeyCollection keyCollection = null) {
+                       IKeyLocate keyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
@@ -239,13 +237,13 @@ namespace Goedel.Cryptography.Dare {
         /// header.
         /// </summary>
         /// <returns>The created CryptoStack</returns>
-        public CryptoStack GetCryptoStack(KeyCollection KeyCollection, bool decrypt = true) {
+        public CryptoStack GetCryptoStack(IKeyLocate KeyCollection, bool decrypt = true) {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
             var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
                 Recipients, Signatures, KeyCollection, decrypt: decrypt) {
                 Salt = Salt
-                
+
                 };
             return CryptoStack;
             }
@@ -261,7 +259,7 @@ namespace Goedel.Cryptography.Dare {
         public CryptoStackStream GetDecoder(
                         JSONBCDReader JSONBCDReader,
                         out Stream Reader,
-                       KeyCollection KeyCollection = null) {
+                       IKeyLocate KeyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
             CryptoStack = GetCryptoStack(KeyCollection);
@@ -275,7 +273,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="KeyCollection">The key collection to use or the default collection
         /// if null.</param>
-        public void DecryptMaster(KeyCollection KeyCollection) {
+        public void DecryptMaster(IKeyLocate KeyCollection) {
             EncryptId = EncryptionAlgorithm.FromJoseID();
             masterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
             }
@@ -300,7 +298,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this KeyCollection KeyCollection,
+        public static byte[] Decrypt(this IKeyLocate KeyCollection,
                     List<DareRecipient> Recipients,
                     CryptoAlgorithmID AlgorithmID) {
             foreach (var Recipient in Recipients) {
@@ -359,7 +357,7 @@ namespace Goedel.Cryptography.Dare {
         /// Encode the content metadata bytes.
         /// </summary>
         /// <returns>The serialized content metadata.</returns>
-        public byte[] GetContentMetaData () => GetBytes(TagData);
+        public byte[] GetContentMetaData() => GetBytes(TagData);
 
         /// <summary>
         /// Decode the content metadata bytes

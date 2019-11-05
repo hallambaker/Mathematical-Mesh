@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Goedel.Utilities {
 
@@ -49,9 +46,10 @@ namespace Goedel.Utilities {
         /// <param name="offset">Offset in the destination array</param>
         /// <param name="data">Data to be written</param>
         /// <returns>Offset of the next byte to be written.</returns>
-        public static int AppendChecked (this byte[] destination, int offset, byte [] data) {
+        public static int AppendChecked(this byte[] destination, int offset, byte[] data) {
             if (offset > destination.Length) {
-                return destination.Length;                 }
+                return destination.Length;
+                }
 
             var Length = offset + data.Length <= destination.Length ?
                       data.Length : destination.Length - offset; // remaining space
@@ -80,7 +78,7 @@ namespace Goedel.Utilities {
         /// <param name="source">The source array</param>
         /// <param name="length">The truncation length, 0 for no truncation.</param>
         /// <returns>Truncated value</returns>
-        public static byte[] OrTruncated (this byte[] source, int length) {
+        public static byte[] OrTruncated(this byte[] source, int length) {
             if (length <= 0) {
                 return Duplicate(source);
                 }
@@ -102,7 +100,7 @@ namespace Goedel.Utilities {
         /// <param name="key">The key to add</param>
         /// <param name="value">The value to add</param>
         /// <returns>True if a new entry was added, otherwise false.</returns>
-        public static bool AddSafe<TKey, TValue> (this IDictionary<TKey, TValue> dictionary, TKey key, TValue value ) {
+        public static bool AddSafe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value) {
             if (value == null) {
                 return false;
                 }
@@ -180,7 +178,7 @@ namespace Goedel.Utilities {
         /// <param name="first">First array</param>
         /// <param name="second">Second array</param>
         /// <returns>result</returns>
-        public static byte[] Concatenate (this byte[] first, byte[] second) {
+        public static byte[] Concatenate(this byte[] first, byte[] second) {
             var Buffer = new byte[first.Length + second.Length];
             Array.Copy(first, Buffer, first.Length);
             Array.Copy(second, 0, Buffer, first.Length, second.Length);

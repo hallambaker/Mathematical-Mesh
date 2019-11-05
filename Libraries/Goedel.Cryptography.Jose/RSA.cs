@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
+﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
@@ -13,7 +10,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PublicKeyRSA () { }
+        public PublicKeyRSA() { }
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -69,7 +66,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PrivateKeyRSA () { }
+        public PrivateKeyRSA() { }
 
         /// <summary>
         /// Construct from the specified RSA Key
@@ -130,7 +127,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>
         /// <returns>The extracted key pair</returns>
-        public override KeyPair GetKeyPair (KeySecurity keySecurity, KeyCollection keyCollection) {
+        public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
 
             var PKIXParams = PKIXPublicKeyRSA;
             var KeyPair = KeyPairBaseRSA.KeyPairPrivateFactory(PKIXPrivateKeyRSA, keySecurity, keyCollection);

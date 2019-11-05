@@ -213,6 +213,10 @@
 			|Describes a group. Note that while a group is created by one person who
 			|becomes its first administrator, control of the group may pass to other
 			|administrators over time.
+		String ServiceIDs
+			Multiple
+			Description
+				|Service address(es).
 		Struct PublicKey KeyEncryption
 			Description
 				|Key currently used to encrypt data under this profile
@@ -574,6 +578,7 @@
 
 	Structure CatalogedGroup
 		Inherits CatalogedApplication
+		Struct ProfileGroup Profile
 
 		// The recryption key
 

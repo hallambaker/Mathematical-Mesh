@@ -1,12 +1,8 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
-using Goedel.Cryptography.Algorithms;
+
+using System.Threading;
 
 namespace Goedel.Mesh.Test {
 
@@ -97,12 +93,12 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        static void TestExport(KeyPair keyPair,  bool Succeed) {
+        static void TestExport(KeyPair keyPair, bool Succeed) {
 
             IPKIXPrivateKey Private = null;
             try {
                 Private = keyPair.PKIXPrivateKey;
-                Assert.True (Succeed);
+                Assert.True(Succeed);
                 }
             catch (NotExportable) {
                 Assert.False(Succeed);

@@ -20,11 +20,11 @@
 //  
 //  
 
-using System;
-using System.Text;
 using System.IO;
+using System.Text;
 
-namespace Goedel.Utilities  {
+
+namespace Goedel.Utilities {
     /// <summary>Specify formatting options fdor conversion</summary>
     public enum ConversionFormat {
         /// <summary>Apply no additional formatting</summary>
@@ -166,7 +166,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="precision"></param>
         /// <returns></returns>
-        public static int OutputLength32 (int precision) => (precision + 4) / 5;
+        public static int OutputLength32(int precision) => (precision + 4) / 5;
 
         #region // Base16
 
@@ -178,7 +178,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase16 (
+        public static IBytesToStream ToStreamBase16(
             this Stream output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StreamConvertBits(output, BASE16, 4, format);
@@ -191,7 +191,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase16 (
+        public static IBytesToStream ToStreamBase16(
             this StringBuilder output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StringBuilderConvertBits(output, BASE16, 4, format);
@@ -204,7 +204,7 @@ namespace Goedel.Utilities  {
         /// <param name="Length">The number of bytes to convert</param>
         /// <param name="Format">Specifies the output format</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase16 (
+        public static string ToStringBase16(
                 this byte[] data,
                 int First = 0,
                 int Length = -1,
@@ -218,7 +218,7 @@ namespace Goedel.Utilities  {
         /// <param name="first">The index position of the first byte to convert.</param>
         /// <param name="length">The number of bytes to convert</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase16FormatHex (
+        public static string ToStringBase16FormatHex(
                 this byte[] data,
                 int first = 0,
                 int length = -1) => StringBuilderConvertBits.Convert(
@@ -251,7 +251,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32 (
+        public static IBytesToStream ToStreamBase32(
             Stream output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StreamConvertBits(output, BASE32, 5, format);
@@ -265,7 +265,7 @@ namespace Goedel.Utilities  {
         /// <param name="format">Specifies the output format</param>
         /// <param name="outputMax">The maximum number of significant bits in the output.</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32 (
+        public static IBytesToStream ToStreamBase32(
             StringBuilder output,
             ConversionFormat format = ConversionFormat.None,
             int outputMax = -1) =>
@@ -280,12 +280,12 @@ namespace Goedel.Utilities  {
         /// <param name="format">Specifies the output format</param>
         /// <param name="outputMax">The maximum number of significant bits in the output.</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase32 (
+        public static string ToStringBase32(
                 this byte[] data,
                 int first = 0,
                 int length = -1,
                 ConversionFormat format = ConversionFormat.None,
-                int outputMax = -1) => 
+                int outputMax = -1) =>
                     StringBuilderConvertBits.Convert(
                         data, BASE32, 5, format, first, length, outputMax: outputMax);
 
@@ -317,7 +317,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32Hex (
+        public static IBytesToStream ToStreamBase32Hex(
             Stream output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StreamConvertBits(output, BASE32HEX, 5, format);
@@ -330,7 +330,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase32Hex (
+        public static IBytesToStream ToStreamBase32Hex(
             StringBuilder output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StringBuilderConvertBits(output, BASE32HEX, 5, format);
@@ -343,11 +343,11 @@ namespace Goedel.Utilities  {
         /// <param name="length">The number of bytes to convert</param>
         /// <param name="Format">Specifies the output format</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase32Hex (
+        public static string ToStringBase32Hex(
                 this byte[] data,
                 int first = 0,
                 int length = -1,
-                ConversionFormat Format = ConversionFormat.None) => 
+                ConversionFormat Format = ConversionFormat.None) =>
                     StringBuilderConvertBits.Convert(
                         data, BASE32HEX, 5, Format, first, length);
 
@@ -377,7 +377,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64 (
+        public static IBytesToStream ToStreamBase64(
             Stream output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StreamConvertBits(output, BASE64, 6, format);
@@ -390,7 +390,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64 (
+        public static IBytesToStream ToStreamBase64(
             StringBuilder output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StringBuilderConvertBits(output, BASE64, 6, format);
@@ -403,7 +403,7 @@ namespace Goedel.Utilities  {
         /// <param name="length">The number of bytes to convert</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase64 (
+        public static string ToStringBase64(
                 this byte[] data,
                 int first = 0,
                 int length = -1,
@@ -436,7 +436,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64Url (
+        public static IBytesToStream ToStreamBase64Url(
             Stream output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StreamConvertBits(output, BASE64URL, 6, format);
@@ -449,7 +449,7 @@ namespace Goedel.Utilities  {
         /// <param name="output">The stream to write the output to.</param>
         /// <param name="format">Specifies the output format</param>
         /// <returns>The stream converter</returns>
-        public static IBytesToStream ToStreamBase64Url (
+        public static IBytesToStream ToStreamBase64Url(
             StringBuilder output,
             ConversionFormat format = ConversionFormat.None) =>
                 new StringBuilderConvertBits(output, BASE64URL, 6, format);
@@ -464,13 +464,13 @@ namespace Goedel.Utilities  {
         /// <param name="outputCol">The initial ouput column</param>
         /// <param name="outputMax">The maximum output width.</param>
         /// <returns>The encoded data</returns>
-        public static string ToStringBase64url (
+        public static string ToStringBase64url(
                 this byte[] data,
                 int first = 0,
                 int length = -1,
                 ConversionFormat format = ConversionFormat.None,
-                int outputCol=0, 
-                int outputMax=70) => 
+                int outputCol = 0,
+                int outputMax = 70) =>
                     StringBuilderConvertBits.Convert(data, BASE64URL, 6, format, first, length,
                         outputCol, outputMax);
 
@@ -506,7 +506,7 @@ namespace Goedel.Utilities  {
         /// <param name="data">The data to convert</param>
         /// <param name="Length">The maximum number of characters in the output string</param>
         /// <returns>The resulting string.</returns>
-        public static string ToStringBase32hs (this byte[] data, int Length) =>
+        public static string ToStringBase32hs(this byte[] data, int Length) =>
             ToStringBase32(data, format: ConversionFormat.Dash4, length: Length);
 
 
@@ -517,7 +517,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase64 (this string Data) =>
+        public static byte[] FromBase64(this string Data) =>
             StreamConvertString.Convert(BASE64Value, 6, Data);
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Goedel.Utilities  {
         /// convert Base32 character string data to binary data.
         /// </summary>
         /// <returns>The resulting binary data.</returns>
-        public static IStringToStream FromBase32 () =>
+        public static IStringToStream FromBase32() =>
             new StreamConvertString(BASE32Value, 6);
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase32 (this string Data) =>
+        public static byte[] FromBase32(this string Data) =>
             StreamConvertString.Convert(BASE32Value, 5, Data);
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace Goedel.Utilities  {
         /// convert Base32 character string data to binary data.
         /// </summary>
         /// <returns>The resulting binary data.</returns>
-        public static IStringToStream FromBase16 () =>
+        public static IStringToStream FromBase16() =>
             new StreamConvertString(BASE16Value, 6);
 
         /// <summary>
@@ -549,7 +549,7 @@ namespace Goedel.Utilities  {
         /// </summary>
         /// <param name="Data">The string to convert</param>
         /// <returns>The resulting binary data.</returns>
-        public static byte[] FromBase16 (this string Data) =>
+        public static byte[] FromBase16(this string Data) =>
             StreamConvertString.Convert(BASE16Value, 4, Data);
 
         }

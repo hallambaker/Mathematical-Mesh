@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-
-namespace Goedel.Cryptography.PKIX {
+﻿namespace Goedel.Cryptography.PKIX {
 
 
     /// <summary>
@@ -159,7 +154,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyEd25519() : base(){
+        public PKIXPrivateKeyEd25519() : base() {
             }
 
         /// <summary>

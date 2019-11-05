@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Goedel.IO;
+using Goedel.Mesh;
+using Goedel.Mesh.Server;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using Goedel.Utilities;
-using Goedel.IO;
-using Goedel.Mesh.Server;
-using Goedel.Mesh;
-using Goedel.Protocol;
 
 
 namespace Goedel.Test.Core {
@@ -170,7 +170,7 @@ namespace Goedel.Test.Core {
         public override Stream Post(MemoryStream Data) {
             MeshPortalTest.MeshProtocolMessages = MeshPortalTest.MeshProtocolMessages ??
                 new List<Trace>();
-            var requestBytes= Data.ToArray();
+            var requestBytes = Data.ToArray();
 
             var JSONReader = new JSONReader(requestBytes);
             var result = Host.Dispatch(this, JSONReader);

@@ -20,11 +20,10 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using Goedel.Utilities;
+
+using System;
+using System.IO;
 
 namespace Goedel.Protocol {
 
@@ -53,7 +52,7 @@ namespace Goedel.Protocol {
         public JSONDebugWriter(MemoryStream Output) => this.Output = Output;
 
 
-        int OutputCol=0;
+        int OutputCol = 0;
 
 
         /// <summary>Write newline character</summary>
@@ -71,7 +70,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Tag">Tag text.</param>
         /// <param name="IndentIn">Current indent level.</param>
-        public override void WriteToken (string Tag, int IndentIn) {
+        public override void WriteToken(string Tag, int IndentIn) {
             NewLine();
             var String = $"\"{Tag}\":";
             Output.Write(String);
@@ -94,7 +93,7 @@ namespace Goedel.Protocol {
 
 
             //if (Data.Length < Threshold) {
-                
+
             //    }
             //else {
             //    throw new NYI();

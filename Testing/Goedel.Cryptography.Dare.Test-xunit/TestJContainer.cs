@@ -1,12 +1,12 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using Xunit;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
+using System.Text;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -119,7 +119,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void ContainerTestEncryptedMulti() {
-            
+
             var CryptoParameters = new CryptoParametersTest(
                     recipients: Recipients);
 
@@ -165,7 +165,7 @@ namespace Goedel.XUnit {
             var Records = 100;
             var ReOpen = 13;
             var MoveStep = 27;
-            TestContainerMulti ($"-{Records}-{ReOpen}-{MoveStep}",
+            TestContainerMulti($"-{Records}-{ReOpen}-{MoveStep}",
                 Records, ReOpen: ReOpen, MoveStep: MoveStep);
             }
 
@@ -199,7 +199,7 @@ namespace Goedel.XUnit {
             }
 
         void TestContainer(string FileName, ContainerType ContainerType,
-                    int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0, 
+                    int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
                     CryptoParameters CryptoParameters = null,
                     CryptoParameters CryptoParametersEntry = null) {
             CryptoParameters = CryptoParameters ?? new CryptoParameters();

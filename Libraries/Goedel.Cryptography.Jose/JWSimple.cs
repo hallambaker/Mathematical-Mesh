@@ -20,12 +20,6 @@
 //  
 //  
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
-using Goedel.Cryptography;
-
 namespace Goedel.Cryptography.Jose {
 
     public partial class JoseWebSignature {

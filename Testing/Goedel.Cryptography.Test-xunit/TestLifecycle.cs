@@ -1,14 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Collections.Generic;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
-using Goedel.Cryptography.Core;
-using Goedel.Cryptography.Dare;
-using Goedel.Test.Core;
-using Goedel.Utilities;
-using Goedel.Cryptography.Algorithms;
+﻿using Goedel.Cryptography;
 using Goedel.Mesh.Test;
+using Goedel.Test.Core;
+
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -47,7 +40,7 @@ namespace Goedel.XUnit {
         public void Test_LifecycleAdmin(CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) =>
             Crypto.Test_LifecycleAdmin(CryptoAlgorithmID, KeyCollection, KeySize);
 
-                [Theory]
+        [Theory]
         [InlineData(CryptoAlgorithmID.RSAExch)]
         [InlineData(CryptoAlgorithmID.RSASign)]
         [InlineData(CryptoAlgorithmID.DH)]
@@ -56,7 +49,7 @@ namespace Goedel.XUnit {
         //[InlineData(CryptoAlgorithmID.X25519)]
         //[InlineData(CryptoAlgorithmID.X448)]
         public void Test_LifecycleDevice(CryptoAlgorithmID CryptoAlgorithmID, int KeySize = 2048) =>
-            Crypto.Test_LifecycleDevice(CryptoAlgorithmID, KeyCollection, KeySize);
+    Crypto.Test_LifecycleDevice(CryptoAlgorithmID, KeyCollection, KeySize);
 
 
         [Theory]

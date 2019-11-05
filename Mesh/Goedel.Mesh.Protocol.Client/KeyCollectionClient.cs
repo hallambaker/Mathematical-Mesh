@@ -1,13 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
     public class KeyCollectionClient : KeyCollection {
@@ -30,7 +23,7 @@ namespace Goedel.Mesh.Client {
             keyCollectionBase.Persist(udf, privateKey, Exportable);
 
 
-        public override KeyPair TryMatchRecipient(string keyID) => 
+        public override KeyPair TryMatchRecipient(string keyID) =>
                     keyCollectionBase.TryMatchRecipient(keyID);
 
 

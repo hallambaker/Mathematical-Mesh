@@ -1,19 +1,19 @@
 ﻿using System;
-using System.Net;
 using System.Diagnostics;
+using System.Net;
 
 namespace Goedel.Discovery {
 
     /// <summary>Describe DNS Option</summary>
     public partial struct DNSOption {
         /// <summary>Code</summary>
-        public ushort          Code;
+        public ushort Code;
         /// <summary>Data</summary>
-        public byte []         Data;
+        public byte[] Data;
         }
 
     /// <summary>The type of gateway</summary>
-    public enum DNSGatewayType : byte  {
+    public enum DNSGatewayType : byte {
         /// <summary>Unknown</summary>
         NULL = 0,
         /// <summary>IPv4 Address</summary>
@@ -29,11 +29,11 @@ namespace Goedel.Discovery {
         /// <summary>The type of gateway</summary>
         public DNSGatewayType Type { get; set; }
 
-        IPAddress               _IPAddress;
-        string                  _DomainName;
+        IPAddress _IPAddress;
+        string _DomainName;
 
         /// <summary>The IP address of the gateway</summary>
-        public IPAddress        IPAddress {
+        public IPAddress IPAddress {
             set {
                 _DomainName = null; _IPAddress = value;
                 Type = DNSGatewayType.IPv4;
@@ -42,7 +42,7 @@ namespace Goedel.Discovery {
 
             }
         /// <summary>The DNS address of the gateway</summary>
-        public string           DomainName {
+        public string DomainName {
             set {
                 _DomainName = value; _IPAddress = null; Type =
                DNSGatewayType.DomainName;
@@ -55,17 +55,17 @@ namespace Goedel.Discovery {
     /// <summary>Base class for DNS records</summary>
     public abstract partial class DNSRecord {
         /// <summary>The domain name</summary>
-        public Domain           Domain;
+        public Domain Domain;
         /// <summary>Record type code</summary>
-        public DNSTypeCode      RType;
+        public DNSTypeCode RType;
         /// <summary>Record class</summary>
-        public DNSClass         RClass;
+        public DNSClass RClass;
         /// <summary>Time to live</summary>
-        public uint             TTL;
+        public uint TTL;
         /// <summary>Record data</summary>
-        public DNSBufferIndex   RData;
+        public DNSBufferIndex RData;
         /// <summary>Start index</summary>
-        public int              Start;
+        public int Start;
 
 
         /// <summary>Default constructor</summary>
@@ -102,7 +102,7 @@ namespace Goedel.Discovery {
 
 
         /// <summary>Write value</summary>
-        public void Write () {
+        public void Write() {
             //Encode ();
             }
 
@@ -213,7 +213,7 @@ namespace Goedel.Discovery {
         public byte[] Data {
             get {
                 DNSBufferIndex Index = new DNSBufferIndex();
-                Encode (Index);
+                Encode(Index);
                 return Index.Bytes;
                 }
             }
@@ -222,16 +222,16 @@ namespace Goedel.Discovery {
         public DNSBuffer Buffer {
             get {
                 DNSBufferIndex Index = new DNSBufferIndex();
-                Encode (Index);
+                Encode(Index);
                 return Index.Buffer;
                 }
             }
 
 
         /// <summary>Message identifier code for matching requests and responses.</summary>
-        public UInt16           ID;
+        public UInt16 ID;
         /// <summary>Flags</summary>
-        public DNSFlags         Flags;
+        public DNSFlags Flags;
 
         /// <summary>OPCode flags</summary>
         public DNSFlags OPCODE => (Flags & DNSFlags.OPCODE_Mask);
@@ -249,69 +249,69 @@ namespace Goedel.Discovery {
         public bool RA => ((Flags & DNSFlags.RA) == DNSFlags.RA);
 
         /// <summary>The DNS Query</summary>
-        public DNSQuery         Query;
+        public DNSQuery Query;
         /// <summary>The authoritative answers</summary>
-        public DNSRecord []     Answers = { };
+        public DNSRecord[] Answers = { };
         /// <summary>The authorities answering</summary>
-        public DNSRecord []     Authorities = { };
+        public DNSRecord[] Authorities = { };
         /// <summary>Additional records</summary>
-        public DNSRecord []     Additional = { };
+        public DNSRecord[] Additional = { };
 
 
         int QueryCount, AnswerCount, AuthorityCount, AdditionalCount;
 
         /// <summary>Encode message to buffer</summary>
         /// <param name="Index">Buffer out</param>
-        public void Encode (DNSBufferIndex Index) {
-            Index.WriteInt16 (ID);
-            Index.WriteInt16 (Flags);
-            Index.WriteInt16 ((Query == null) ? 0 : 1);
-            Index.WriteInt16 (Answers.Length);
-            Index.WriteInt16 (Authorities.Length);
-            Index.WriteInt16 (Additional.Length);
+        public void Encode(DNSBufferIndex Index) {
+            Index.WriteInt16(ID);
+            Index.WriteInt16(Flags);
+            Index.WriteInt16((Query == null) ? 0 : 1);
+            Index.WriteInt16(Answers.Length);
+            Index.WriteInt16(Authorities.Length);
+            Index.WriteInt16(Additional.Length);
 
             if (Query != null) {
-                Query.Encode (Index);
+                Query.Encode(Index);
                 }
             foreach (DNSRecord Record in Answers) {
-                Record.Encode (Index);
+                Record.Encode(Index);
                 }
             foreach (DNSRecord Record in Authorities) {
-                Record.Encode (Index);
+                Record.Encode(Index);
                 }
             foreach (DNSRecord Record in Additional) {
-                Record.Encode (Index);
+                Record.Encode(Index);
                 }
             }
 
         /// <summary>Decode message from buffer</summary>
         /// <param name="Index">Buffer in</param>
-        public void Decode (DNSBufferIndex Index) {
-            
-            Index.ReadInt16 (out ID);
-            Index.ReadInt16 (out Flags);
-            Index.ReadInt16 (out QueryCount);
-            Index.ReadInt16 (out AnswerCount);
-            Index.ReadInt16 (out AuthorityCount);
-            Index.ReadInt16 (out AdditionalCount);
+        public void Decode(DNSBufferIndex Index) {
+
+            Index.ReadInt16(out ID);
+            Index.ReadInt16(out Flags);
+            Index.ReadInt16(out QueryCount);
+            Index.ReadInt16(out AnswerCount);
+            Index.ReadInt16(out AuthorityCount);
+            Index.ReadInt16(out AdditionalCount);
 
             //Console.WriteLine ("ID {0} Flags {1:x}  Queries {2} Answers {3} Authority {4} Additional {5}",
             //        ID, Flags, QueryCount, AnswerCount, AuthorityCount, AdditionalCount);
 
             if (QueryCount == 1) {
                 //Console.WriteLine ("Form Query");
-                Query = DNSQuery.Decode (Index);
+                Query = DNSQuery.Decode(Index);
                 }
 
-            Answers = new DNSRecord [AnswerCount];
+            Answers = new DNSRecord[AnswerCount];
             for (int i = 0; i < AnswerCount; i++) {
                 Answers[i] = DNSRecord.Decode(Index);
                 }
-            Authorities = new DNSRecord [AuthorityCount];
+            Authorities = new DNSRecord[AuthorityCount];
             for (int i = 0; i < AuthorityCount; i++) {
                 Authorities[i] = DNSRecord.Decode(Index);
                 }
-            Additional = new DNSRecord [AdditionalCount];
+            Additional = new DNSRecord[AdditionalCount];
             for (int i = 0; i < AdditionalCount; i++) {
                 Additional[i] = DNSRecord.Decode(Index);
                 }
@@ -320,15 +320,15 @@ namespace Goedel.Discovery {
 
         /// <summary>Parse the data in the buffer BufferIn </summary>
         /// <param name="data">The encoded message</param>
-        public DNSMessage (byte [] data) {
-            DNSBufferIndex Index = new DNSBufferIndex (data);
+        public DNSMessage(byte[] data) {
+            DNSBufferIndex Index = new DNSBufferIndex(data);
 
-            Decode (Index);
+            Decode(Index);
             }
 
 
         /// <summary> Create Empty Message buffer (do not parse, done in sub);</summary>
-        public DNSMessage () {
+        public DNSMessage() {
             //Index = ( new DNSBufferIndex () );
             }
 
@@ -349,12 +349,12 @@ namespace Goedel.Discovery {
         /// <summary>Constructor for request</summary>
         /// <param name="Domain">The domain name</param>
         /// <param name="QType">The query type</param>
-        public DNSRequest(string Domain, string QType){
+        public DNSRequest(string Domain, string QType) {
             if (QType == null) {
-                Query = new DNSQuery (Domain, DNSTypeCode.ALL);
+                Query = new DNSQuery(Domain, DNSTypeCode.ALL);
                 }
             else {
-                Query = new DNSQuery(Domain, DNS.TypeCode(QType) );
+                Query = new DNSQuery(Domain, DNS.TypeCode(QType));
                 }
             Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
             }
@@ -364,7 +364,7 @@ namespace Goedel.Discovery {
         /// <param name="QCode">The query type</param>
         public DNSRequest(string Domain, DNSTypeCode QCode) {
             Flags = DNSFlags.RD | DNSFlags.OPCODE_QUERY;
-            Query = new DNSQuery (Domain,  QCode);
+            Query = new DNSQuery(Domain, QCode);
             }
 
         }
@@ -443,5 +443,5 @@ namespace Goedel.Discovery {
         public DNSQuery(String Domain, DNSTypeCode QTypeIn) :
             this(Domain, QTypeIn, DNSClass.IN) { }
         }
-    
+
     }

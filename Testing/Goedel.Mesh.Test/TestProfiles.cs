@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Generic;
-using Goedel.Mesh;
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Mesh.Client;
-using Goedel.Utilities;
-using Goedel.Test.Core;
 using Goedel.Protocol;
+using Goedel.Test.Core;
+using Goedel.Utilities;
+
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Test {
 
@@ -19,7 +17,7 @@ namespace Goedel.Mesh.Test {
         public static TestProfiles Test => new TestProfiles();
         public TestProfiles() => TestEnvironmentCommon.Initialize();
 
-        public  void EscrowRecover() {
+        public void EscrowRecover() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice Admin");

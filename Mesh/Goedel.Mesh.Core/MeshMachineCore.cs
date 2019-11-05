@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
-using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
-using Goedel.Mesh;
-using Goedel.Protocol;
 using Goedel.Mesh.Client;
+using Goedel.Utilities;
+
+using System.IO;
 
 namespace Goedel.Mesh {
 
@@ -27,7 +24,7 @@ namespace Goedel.Mesh {
         #endregion
 
 
-        public MeshMachineCoreServer(string directory)  {
+        public MeshMachineCoreServer(string directory) {
             DirectoryMaster = directory;
             DirectoryMesh = Path.Combine(directory, "Profiles");
             DirectoryKeys = Path.Combine(directory, "Keys");
@@ -96,7 +93,7 @@ namespace Goedel.Mesh {
         public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
             }
 
-        protected MeshMachineCore(string directory) : base (directory) {
+        protected MeshMachineCore(string directory) : base(directory) {
             // Now read the container to get the directories.
             var containerHost = new PersistHost(FileNameHost, FileTypeHost,
                 fileStatus: FileStatus.ConcurrentLocked,
@@ -108,13 +105,13 @@ namespace Goedel.Mesh {
         #region // Convenience accessors
 
 
- 
+
         #endregion
 
 
         #region // Implementation
 
-        public static  IMeshMachine GetMachine() => new MeshMachineCore();
+        public static IMeshMachine GetMachine() => new MeshMachineCore();
 
         public virtual void Register(HostCatalogItem catalogItem) =>
                 MeshHost.Register(catalogItem);

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
+using Goedel.Utilities;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Goedel.Cryptography;
-using Goedel.Cryptography.PKIX;
-using Goedel.Cryptography.Dare;
-using Goedel.Utilities;
-using Goedel.Protocol;
 namespace Goedel.Mesh {
 
 
@@ -36,12 +36,12 @@ namespace Goedel.Mesh {
                         KeyPair keyPublicAuthenticate) {
 
             var ProfileDevice = new ProfileDevice() {
-                KeyOfflineSignature = new PublicKey (keyPublicSign.KeyPairPublic()),
+                KeyOfflineSignature = new PublicKey(keyPublicSign.KeyPairPublic()),
                 KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
                 KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
                 };
 
-            var bytes = ProfileDevice.GetBytes(tag:true);
+            var bytes = ProfileDevice.GetBytes(tag: true);
 
             ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
                 signingKey: keyPublicSign);
@@ -118,10 +118,10 @@ namespace Goedel.Mesh {
     public partial class ActivationDevice {
         public ProfileDevice ProfileDevice;
 
-        public  DareEnvelope Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
+        public DareEnvelope Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
 
             var cryptoParameters = new CryptoParameters() {
-                EncryptionKeys = new List<KeyPair> { encryptDevice , encryptAdmin } 
+                EncryptionKeys = new List<KeyPair> { encryptDevice, encryptAdmin }
                 };
 
             var contentInfo = new Goedel.Cryptography.Dare.ContentMeta() { ContentType = "application/mmm" };
@@ -151,12 +151,24 @@ namespace Goedel.Mesh {
             //Console.WriteLine($"   Device Auth {profileDevice.KeyAuthentication.UDF} -> {KeyAuthentication.UDF}");
             }
 
-        public static new ActivationDevice Decode(DareEnvelope envelope) {
+        /// <summary>
+        /// Decode the contents of <paramref name="envelope"/> using keys from
+        /// <paramref name="keyCollection"/>.
+        /// </summary>
+        /// <param name="envelope">The envelope containing a JSON encoded ActivationDevice instance</param>
+        /// <param name="keyCollection">Key collection to collect keys from.</param>
+        /// <returns>New instance of the serialized data.</returns>
+        public static ActivationDevice Decode(DareEnvelope envelope, KeyCollection keyCollection) {
             if (envelope == null) {
                 return null;
                 }
-            var result = FromJSON(envelope.GetBodyReader(), true);
+
+            var plaintext = envelope.GetPlaintext(keyCollection);
+
+            Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), true);
             result.DareEnvelope = envelope;
+            //result.keyCollection = keyCollection;
             return result;
             }
 

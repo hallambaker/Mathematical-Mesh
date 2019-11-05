@@ -1,12 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.IO;
-using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
+
+using System;
+using System.Collections.Generic;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -18,9 +14,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeyNonce(KeyNonce Options) => new ResultKey() {
-                Success = true,
-                Key = Cryptography.UDF.Nonce(Options.Bits.ValueDefaulted(128))
-                };
+            Success = true,
+            Key = Cryptography.UDF.Nonce(Options.Bits.ValueDefaulted(128))
+            };
 
         /// <summary>
         /// Dispatch method to return a randomized string suitable for use as
@@ -42,17 +38,17 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult KeyEarl(KeyEarl Options) {
             var bits = Options.Bits.ValueDefaulted(140);
-            var bitsid = Math.Min(bits*2, 440);
+            var bitsid = Math.Min(bits * 2, 440);
 
             var key = Cryptography.UDF.SymmetricKey(bits);
-            var identifier = Cryptography.UDF.ContentDigestOfDataString(key.ToUTF8(), 
-                    UDFConstants.UDFEncryption, bits= bitsid);
+            var identifier = Cryptography.UDF.ContentDigestOfDataString(key.ToUTF8(),
+                    UDFConstants.UDFEncryption, bits = bitsid);
 
 
             return new ResultKey() {
                 Success = true,
                 Key = key,
-                Identifier= identifier
+                Identifier = identifier
                 };
             }
 
@@ -80,7 +76,7 @@ namespace Goedel.Mesh.Shell {
             return new ResultKey() {
                 Success = true,
                 Key = secret.UDFKey,
-                Identifier= secret.UDFIdentifier,
+                Identifier = secret.UDFIdentifier,
                 Shares = textShares
                 };
             }

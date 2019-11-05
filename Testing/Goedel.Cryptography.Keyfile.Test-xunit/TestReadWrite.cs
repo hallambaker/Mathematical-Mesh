@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using Goedel.Utilities;
-using Goedel.Test.Core;
-using Goedel.IO;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.KeyFile;
+using Goedel.IO;
+using Goedel.Test.Core;
+
 using Xunit;
 
 namespace Goedel.XUnit {
@@ -17,7 +14,7 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void TestKeyRead () {
+        public void TestKeyRead() {
 
             var SSH_Public = KeyFileDecode.DecodePEM(Directories.TestKey_SSH2, KeySecurity.Exportable, null);
             var SSH_AuthHosts = KeyFileDecode.DecodeAuthHost(Directories.TestKey_OpenSSH);

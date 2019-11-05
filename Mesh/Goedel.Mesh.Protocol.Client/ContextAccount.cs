@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Goedel.Utilities;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
-using Goedel.Cryptography.Jose;
-using Goedel.Mesh;
+using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Goedel.Mesh.Client {
 
     ///<summary>Track the synchronization status of an upload or download operation.</summary>
     public class SyncStatus {
-        
+
         ///<summary>The local store</summary>
         public Store Store;
 
@@ -29,7 +27,42 @@ namespace Goedel.Mesh.Client {
             }
         }
 
-    public class ContextAccount : Disposable {
+
+    public interface IDare {
+
+
+        /// <summary>
+        /// Create a new DARE Message from the specified parameters.
+        /// </summary>
+        /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        /// <param name="signingKey">The signature key.</param>
+        /// <param name="encryptionKey">The encryption key.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        /// <returns></returns>
+        DareEnvelope DareEncode(
+                    byte[] plaintext,
+                    ContentMeta contentMeta = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null,
+                    List<string> recipients = null,
+                    bool sign = false);
+
+        /// <summary>
+        /// Decode a DARE envelope
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <returns>The plaintext payload data.</returns>
+        byte[] DareDecode(
+                    DareEnvelope envelope,
+                    bool verify = false);
+
+        }
+
+    public class ContextAccount : Disposable, IKeyLocate, IDare {
 
         ///<summary>The enclosing machine context.</summary>
         public ContextMesh ContextMesh;
@@ -67,7 +100,7 @@ namespace Goedel.Mesh.Client {
         KeyPair keyEncryption;
         KeyPair keyAuthentication;
 
-        public MeshService MeshClient => meshClient ??GetMeshClient(ServiceID).CacheValue (out meshClient);
+        public MeshService MeshClient => meshClient ?? GetMeshClient(ServiceID).CacheValue(out meshClient);
         MeshService meshClient;
 
 
@@ -84,6 +117,20 @@ namespace Goedel.Mesh.Client {
 
         protected override void Disposing() => spoolInbound?.Dispose();
 
+        #region Implement IKeyLocate
+        public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+        public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+        public KeyPair LocatePrivate(string UDF) => throw new NotImplementedException();
+        public KeyPair TryMatchRecipient(string keyID) => throw new NotImplementedException();
+        #endregion
+
+
+        #region Implement IDare
+        public DareEnvelope DareEncode(byte[] plaintext, ContentMeta contentMeta = null, byte[] cloaked = null, List<byte[]> dataSequences = null, List<string> recipients = null, bool sign = false) => throw new NotImplementedException();
+        public byte[] DareDecode(DareEnvelope envelope, bool verify = false) => throw new NotImplementedException();
+
+        #endregion
+
 
         public ContextAccount(
                     ContextMesh contextMesh,
@@ -93,7 +140,7 @@ namespace Goedel.Mesh.Client {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
-            ServiceID = serviceID?? AccountEntry.ProfileAccount?.ServiceDefault;
+            ServiceID = serviceID ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
             // Set up the crypto keys so that we can open the application catalog
 
@@ -108,7 +155,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        protected MeshService GetMeshClient(string serviceID) => 
+        protected MeshService GetMeshClient(string serviceID) =>
                     MeshMachine.GetMeshClient(serviceID, keyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
@@ -152,7 +199,7 @@ namespace Goedel.Mesh.Client {
 
             // Update all the devices connected to this profile.
             UpdateDevices(ProfileAccount);
-            
+
             if (sync) {
                 GetCatalogApplication();
                 GetCatalogContact();
@@ -380,9 +427,9 @@ namespace Goedel.Mesh.Client {
 
             foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = message.Header.ContentMeta;
-                
 
-                
+
+
 
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
                     var meshMessage = Message.FromJSON(message.GetBodyReader());
@@ -427,8 +474,8 @@ namespace Goedel.Mesh.Client {
                 }
 
             else {
-                using (var storeLocal = new Store (DirectoryAccount, statusRemote.Container,
-                            decrypt:false, create:false)) {
+                using (var storeLocal = new Store(DirectoryAccount, statusRemote.Container,
+                            decrypt: false, create: false)) {
                     Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
                     return storeLocal.FrameCount >= statusRemote.Index ? null :
                         new ConstraintsSelect() {
@@ -459,10 +506,10 @@ namespace Goedel.Mesh.Client {
                 Store.Append(DirectoryAccount, containerUpdate.Envelopes, containerUpdate.Container);
                 return containerUpdate.Envelopes.Count;
                 }
-            
+
             }
 
-        public Store GetStore(string name, bool blind=false) {
+        public Store GetStore(string name, bool blind = false) {
 
 
             if (dictionaryStores.TryGetValue(name, out var syncStore)) {
@@ -480,11 +527,11 @@ namespace Goedel.Mesh.Client {
 
             //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
-            var store = blind ? new CatalogBlind (DirectoryAccount, name) : MakeStore(name);
+            var store = blind ? new CatalogBlind(DirectoryAccount, name) : MakeStore(name);
 
             syncStore = new SyncStatus(store);
 
- 
+
             dictionaryStores.Add(name, syncStore);
 
             return syncStore.Store;
@@ -608,8 +655,8 @@ namespace Goedel.Mesh.Client {
             return MeshClient.Status(statusRequest);
             }
 
-        
-        
+
+
         /// <summary>
         /// Accept a connection request.
         /// </summary>
@@ -762,7 +809,7 @@ namespace Goedel.Mesh.Client {
             SendMessage(MeshMessage, new List<string> { recipient });
 
 
-        public void SendMessage(Message MeshMessage, List<string> recipients ) {
+        public void SendMessage(Message MeshMessage, List<string> recipients) {
             Connect();
 
             MeshMessage.Sender = ServiceID;
@@ -791,7 +838,7 @@ namespace Goedel.Mesh.Client {
 
             var message = DareEnvelope.Encode(MeshMessage.GetBytes());
             message.Header.ContentMeta = new ContentMeta() {
-                UniqueID = UDF.Nonce (),
+                UniqueID = UDF.Nonce(),
                 MessageType = MeshMessage._Tag
 
                 };
@@ -808,12 +855,24 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public CatalogedGroup CreateGroup(string groupName) {
+        public ContextGroup CreateGroup(string groupName,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-            throw new NYI();
+            // create the group keys
+
+            // 
+
+            var profileGroup = ProfileGroup.Generate(MeshMachine, algorithmSign, algorithmEncrypt);
+
+            var catalogedGroup = new CatalogedGroup(profileGroup);
+
+
+            return new ContextGroup(catalogedGroup);
+
             }
 
-        public CatalogMember GetCatalogGroup(string groupName) {
+        public ContextGroup GetContextGroup(string groupName) {
 
             throw new NYI();
             }

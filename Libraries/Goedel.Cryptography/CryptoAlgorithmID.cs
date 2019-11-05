@@ -20,11 +20,8 @@
 //  
 //  
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Goedel.Utilities;
+
+#pragma warning disable CA1707
 
 namespace Goedel.Cryptography {
 
@@ -57,7 +54,7 @@ namespace Goedel.Cryptography {
         BulkMask = 0xFFFF,
 
         /// <summary>Mask for Algorithm Type</summary>
-        BulkTagMask =0xFF00,
+        BulkTagMask = 0xFF00,
 
         /// <summary>Flag multiplier</summary>
         Digest = Bulk * 0x100,
@@ -420,26 +417,11 @@ namespace Goedel.Cryptography {
         Any = Sign | Encrypt
         }
 
-
-    /////<summary>Enumeration specifying permitted key uses</summary>
-    //[Flags]
-    //public enum KeyUses {
-    //    ///<summary>Signature Use</summary>
-    //    Sign = 0b0001,
-    //    ///<summary>Encryption Use</summary>
-    //    Encrypt = 0b0010,
-
-    //    ///<summary>Sign or Encrypt</summary>
-    //    Any = Sign | Encrypt
-
-    //    }
-
-
     /// <summary>
     /// Algorithm classes.
     /// </summary>
     [Flags]
-    public enum CryptoAlgorithmClass {
+    public enum CryptoAlgorithmClasses {
 
         /// <summary>Unspecified.</summary>
         NULL,
@@ -460,5 +442,5 @@ namespace Goedel.Cryptography {
         Exchange = 16
         }
 
- 
+
     }

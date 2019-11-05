@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Text;
-
-namespace Goedel.Discovery {
+﻿namespace Goedel.Discovery {
 
     /// <summary>
     /// Base class for DNS Records

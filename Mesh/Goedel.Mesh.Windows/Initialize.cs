@@ -1,9 +1,8 @@
-﻿using System;
-using Goedel.Cryptography;
+﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Windows;
 using Goedel.Utilities;
-using Goedel.Protocol;
-using Goedel.Cryptography.Dare;
+
+using System;
 
 namespace Goedel.Mesh {
     public class Mesh {

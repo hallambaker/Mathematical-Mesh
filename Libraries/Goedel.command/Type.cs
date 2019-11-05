@@ -1,11 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿
+/* Unmerged change from project 'Goedel.Command'
+Before:
+using System;
+After:
+using Goedel.Registry;
+using Goedel.Utilities;
+
+using System;
+*/
+
+/* Unmerged change from project 'Goedel.Command'
+Before:
 using System.Threading.Tasks;
 using Goedel.Utilities;
 using Goedel.Registry;
-
+After:
+using System.Threading.Tasks;
+*/
 namespace Goedel.Command {
     /// <summary>Base class for Command line parser types. This could do with
     /// some decrufting to remove implementation artifacts.</summary>
@@ -70,7 +81,7 @@ namespace Goedel.Command {
         /// Construct flag with specified value
         /// </summary>
         /// <param name="Value">The flag value to set</param>
-        public _Flag(string Value=null) {
+        public _Flag(string Value = null) {
             if (Value != null) {
                 Default(Value);
                 }
@@ -344,6 +355,6 @@ namespace Goedel.Command {
         ///<summary>Base constructor</summary>
         public _Enumeration(DescribeEntryEnumerate description, string Value = null) => Description = description;
 
-    }
+        }
 
     }

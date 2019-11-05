@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Goedel.Cryptography.Dare {
+﻿namespace Goedel.Cryptography.Dare {
 
 
     public partial class ContainerInfo {
@@ -17,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>If true, the field ExchangePosition is specified</summary>
         public bool HasExchangePosition => ContainerInfo.HasExchangePosition;
-                // Should get rid of these and use nullable types.
+        // Should get rid of these and use nullable types.
 
 
 

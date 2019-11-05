@@ -1,9 +1,11 @@
 
 using Goedel.Cryptography;
-using System.IO;
-using Xunit;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+
+using System.IO;
+
+using Xunit;
 
 namespace Goedel.XUnit {
 
@@ -22,7 +24,7 @@ namespace Goedel.XUnit {
             public string Base64Url;
 
 
-            public TestVectorBaseConvert (
+            public TestVectorBaseConvert(
                     string Data,
                     string Base16,
                     string Base32,
@@ -31,7 +33,7 @@ namespace Goedel.XUnit {
                     string Base64Url) : this(
                         Data.ToBytes(), Base16, Base32, Base32Hex, Base64, Base64Url) {
                 }
-            public TestVectorBaseConvert (
+            public TestVectorBaseConvert(
                     byte[] Data,
                     string Base16,
                     string Base32,
@@ -87,7 +89,7 @@ namespace Goedel.XUnit {
         string TestFormat1Dash5 = "JQDSD-HULLS-6J7WM-4RIGL-DTWAK";
 
         [Fact]
-        public void BaseConversionFormatting () {
+        public void BaseConversionFormatting() {
             var Bytes = TestFormat1.FromBase16();
 
             var ResultDraft = Bytes.ToStringBase64(format: ConversionFormat.Draft);
@@ -104,15 +106,15 @@ namespace Goedel.XUnit {
 
 
 
-        delegate IBytesToStream GetStreamConverterDelegate (Stream Output,
-                ConversionFormat Format= ConversionFormat.None);
+        delegate IBytesToStream GetStreamConverterDelegate(Stream Output,
+                ConversionFormat Format = ConversionFormat.None);
 
 
-        delegate byte[] FromStringDelegate (string Data);
+        delegate byte[] FromStringDelegate(string Data);
 
 
         [Fact]
-        public void BaseConversionsToString () {
+        public void BaseConversionsToString() {
             foreach (var Vector in TestVector) {
                 ToStringConvertTest(Vector);
                 }
@@ -120,7 +122,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void BaseConversionsToStream () {
+        public void BaseConversionsToStream() {
             foreach (var Vector in TestVector) {
                 ToStreamConvertTest(Vector);
                 }
@@ -128,7 +130,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void BaseConversionsFromString () {
+        public void BaseConversionsFromString() {
             foreach (var Vector in TestVector) {
                 FromStringConvertTest(Vector);
                 }
@@ -136,7 +138,7 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void BaseConversionsRoundTripRandomized () {
+        public void BaseConversionsRoundTripRandomized() {
             foreach (var Vector in TestVector) {
                 for (int i = 0; i < 35; i++) {
                     TestRandomRoundTrip(Vector, i);
@@ -148,7 +150,7 @@ namespace Goedel.XUnit {
             }
 
 
-        void TestRandomRoundTrip (TestVectorBaseConvert Vector, int Length) {
+        void TestRandomRoundTrip(TestVectorBaseConvert Vector, int Length) {
             var Bytes = Platform.GetRandomBytes(Length);
             TestRandomRoundTrip(BaseConvert.ToStreamBase16, BaseConvert.FromBase16, Bytes, ConversionFormat.None);
             TestRandomRoundTrip(BaseConvert.ToStreamBase16, BaseConvert.FromBase16, Bytes, ConversionFormat.Hex);
@@ -158,20 +160,20 @@ namespace Goedel.XUnit {
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.None);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.Terminal);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, ConversionFormat.Draft);
-            TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes, 
+            TestRandomRoundTrip(BaseConvert.ToStreamBase64, BaseConvert.FromBase64, Bytes,
                     ConversionFormat.Draft | ConversionFormat.Terminal);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64Url, BaseConvert.FromBase64, Bytes, ConversionFormat.None);
             TestRandomRoundTrip(BaseConvert.ToStreamBase64Url, BaseConvert.FromBase64, Bytes, ConversionFormat.Draft);
             }
 
-        void TestRandomRoundTrip (GetStreamConverterDelegate ByteToString, 
-                    FromStringDelegate StringToByte, byte[] Data, ConversionFormat ConversionFormat, int Chunk=-1) {
+        void TestRandomRoundTrip(GetStreamConverterDelegate ByteToString,
+                    FromStringDelegate StringToByte, byte[] Data, ConversionFormat ConversionFormat, int Chunk = -1) {
             var StringValue = StreamToString(ByteToString, Data, ConversionFormat, Chunk);
             var Result = StringToByte(StringValue);
             Result.AssertEqual(Data);
             }
 
-        void ToStringConvertTest (TestVectorBaseConvert Vector) {
+        void ToStringConvertTest(TestVectorBaseConvert Vector) {
             CheckTrim(Vector.Base16, Vector.Data.ToStringBase16(Format: ConversionFormat.None));
             CheckTrim(Vector.Base32, Vector.Data.ToStringBase32());
             CheckTrim(Vector.Base32Hex, Vector.Data.ToStringBase32Hex());
@@ -179,7 +181,7 @@ namespace Goedel.XUnit {
             CheckTrim(Vector.Base64Url, Vector.Data.ToStringBase64url());
             }
 
-        void ToStreamConvertTest (TestVectorBaseConvert Vector) {
+        void ToStreamConvertTest(TestVectorBaseConvert Vector) {
             ToStreamConvertTestMultiple(BaseConvert.ToStreamBase16, Vector.Data, Vector.Base16);
             ToStreamConvertTestMultiple(BaseConvert.ToStreamBase32, Vector.Data, Vector.Base32);
             ToStreamConvertTestMultiple(BaseConvert.ToStreamBase32Hex, Vector.Data, Vector.Base32Hex);
@@ -188,7 +190,7 @@ namespace Goedel.XUnit {
             }
 
 
-        void FromStringConvertTest (TestVectorBaseConvert Vector) {
+        void FromStringConvertTest(TestVectorBaseConvert Vector) {
             FromStringConvertTest(BaseConvert.FromBase16, Vector.Data, Vector.Base16);
             FromStringConvertTest(BaseConvert.FromBase32, Vector.Data, Vector.Base32);
             //FromStringConvertTest(BaseConvert.FromBase32HexString, Vector.Data, Vector.Base32Hex);
@@ -197,13 +199,13 @@ namespace Goedel.XUnit {
             }
 
 
-        void FromStringConvertTest (FromStringDelegate ConverterDelegate, byte[] Data, string Test) {
+        void FromStringConvertTest(FromStringDelegate ConverterDelegate, byte[] Data, string Test) {
             var Result = ConverterDelegate(Test);
             Result.AssertEqual(Data);
             }
 
 
-        void ToStreamConvertTestMultiple (GetStreamConverterDelegate ConverterDelegate,
+        void ToStreamConvertTestMultiple(GetStreamConverterDelegate ConverterDelegate,
                     byte[] Data, string Test, ConversionFormat Format = ConversionFormat.None) {
 
             CheckStreamed(ConverterDelegate, Data, Test, Format);
@@ -214,13 +216,13 @@ namespace Goedel.XUnit {
 
 
 
-        void CheckStreamed (GetStreamConverterDelegate ConverterDelegate,
+        void CheckStreamed(GetStreamConverterDelegate ConverterDelegate,
                     byte[] Data, string Test, ConversionFormat Format = ConversionFormat.None, int Chunk = -1) {
             var Result = StreamToString(ConverterDelegate, Data, Format, Chunk);
             CheckTrim(Result, Test);
             }
 
-        string StreamToString (GetStreamConverterDelegate ConverterDelegate,
+        string StreamToString(GetStreamConverterDelegate ConverterDelegate,
             byte[] Data, ConversionFormat Format = ConversionFormat.None, int Chunk = -1) {
 
             var Stream = new MemoryStream();
@@ -239,12 +241,12 @@ namespace Goedel.XUnit {
             }
 
 
-        void CheckTrim(string Value, string Result, string Reason = null) => 
-            Value.AssertEqual( Result.Trim(), Compare.Throw, Reason: Reason);
+        void CheckTrim(string Value, string Result, string Reason = null) =>
+            Value.AssertEqual(Result.Trim(), Compare.Throw, Reason: Reason);
 
 
 
-        void CheckExact(string Value, string Result, string Reason=null) =>
+        void CheckExact(string Value, string Result, string Reason = null) =>
             Value.AssertEqual(Result, Compare.Throw, Reason: Reason);
 
         }
