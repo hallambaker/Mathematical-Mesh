@@ -281,16 +281,15 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The plaintext payload.</returns>
         public byte[] GetPlaintext(IKeyLocate keyCollection) {
 
-            using (var inputStream = new MemoryStream(Body)) {
-                using (var outputStream = new MemoryStream()) {
-                    var Decoder = Header.GetDecoder(
-                            inputStream, out var Reader,
-                            keyCollection: keyCollection);
-                    Reader.CopyTo(outputStream);
-                    Decoder.Close();
-                    return outputStream.ToArray();
-                    }
-                }
+            using var inputStream = new MemoryStream(Body);
+            using var outputStream = new MemoryStream();
+
+            var Decoder = Header.GetDecoder(
+                inputStream, out var Reader,
+                keyCollection: keyCollection);
+            Reader.CopyTo(outputStream);
+            Decoder.Close();
+            return outputStream.ToArray();
             }
 
         /// <summary>

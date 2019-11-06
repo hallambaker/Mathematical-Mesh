@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "meshaccount_windows": {
-      "commandName": "Project",
-      "commandLineArgs": "/start cryptomesh.org host1.cryptomesh.org /nomulti",
-      "workingDirectory": "C:\\Users\\hallam\\test"
-    }
-  }
-}

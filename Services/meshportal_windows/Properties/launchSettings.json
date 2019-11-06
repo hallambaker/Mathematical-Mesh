@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "meshportal_windows": {
-      "commandName": "Project",
-      "commandLineArgs": "servermesh /start cryptomesh.org host1.mathmesh.org /nomulti /mlog TestMeshLog.jlog /plog TestPortalLog.jlog"
-    }
-  }
-}

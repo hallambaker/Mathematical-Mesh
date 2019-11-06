@@ -7,7 +7,10 @@ using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
 
-    public class ContextGroup : Disposable, IKeyLocate, IDare {
+    /// <summary>
+    /// Context binding for a Group account
+    /// </summary>
+    public class ContextGroup : ContextAccountEntry {
 
         public CatalogedGroup CatalogedGroup;
 
@@ -19,26 +22,18 @@ namespace Goedel.Mesh.Client {
 
 
 
-        #region Implement IKeyLocate
-        public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
-        public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
-        public KeyPair LocatePrivate(string UDF) => throw new NotImplementedException();
-        public KeyPair TryMatchRecipient(string keyID) => throw new NotImplementedException();
-        #endregion
-
-        #region Implement IDare
-        public DareEnvelope DareEncode(byte[] plaintext, ContentMeta contentMeta = null, byte[] cloaked = null, List<byte[]> dataSequences = null, List<string> recipients = null, bool sign = false) => throw new NotImplementedException();
-        public byte[] DareDecode(DareEnvelope envelope, bool verify = false) => throw new NotImplementedException();
-
-        #endregion
 
         #region Implement Group operations
 
+        // ToDo: Implement Add member to group
+
         public CatalogedMember Add(string id) => throw new NotImplementedException();
+
+        // ToDo: Implement Locate member in group
 
         public CatalogedMember Locate(string id) => throw new NotImplementedException();
 
-
+        // ToDo: Delete Add member from group
         public CatalogedMember Delete(CatalogedMember id) => throw new NotImplementedException();
 
         #endregion
