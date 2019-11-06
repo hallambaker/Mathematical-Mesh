@@ -41,7 +41,6 @@ namespace Goedel.Cryptography {
         /// <returns>The identifier.</returns>
         KeyPair GetByAccountSign(string keyID);
 
-
         }
 
 

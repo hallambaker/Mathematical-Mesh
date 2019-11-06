@@ -239,6 +239,11 @@ namespace Goedel.Cryptography {
         public static BigInteger SqrtMinus1(this BigInteger p) => BigInteger.ModPow(2, (p - 1) / 4, p);
 
 
+
+        /*
+         
+         */
+
         /// <summary>
         /// Return a Square root of a number modulo a prime. 
         /// </summary>

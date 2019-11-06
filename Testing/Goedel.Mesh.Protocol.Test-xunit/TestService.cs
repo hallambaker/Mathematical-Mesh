@@ -336,6 +336,9 @@ namespace Goedel.XUnit {
 
             // Generate a recryption group
             var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
+
+            // Bug - doesn't sign the Group Profile
+
             var groupList = new List<string>() { AccountGroup };
 
             // Encrypt to the group

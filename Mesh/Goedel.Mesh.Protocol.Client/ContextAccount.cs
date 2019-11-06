@@ -126,8 +126,50 @@ namespace Goedel.Mesh.Client {
 
 
         #region Implement IDare
-        public DareEnvelope DareEncode(byte[] plaintext, ContentMeta contentMeta = null, byte[] cloaked = null, List<byte[]> dataSequences = null, List<string> recipients = null, bool sign = false) => throw new NotImplementedException();
-        public byte[] DareDecode(DareEnvelope envelope, bool verify = false) => throw new NotImplementedException();
+
+        // Bug: this is going to fail because information from the contact catalog is not available.
+
+        /// <summary>
+        /// Encode a fixed message
+        /// </summary>
+        /// <param name="inputData">The input data</param>
+        /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
+        /// be applied to this message.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        ///     as an EDSS header entry.</param>
+        /// <param name="chunk">The maximum chunk size. If unspecified, the default
+        /// system chunk size (2048) is used.</param>
+        /// <returns>The serialized encoding of the data.</returns>
+        public DareEnvelope DareEncode(
+                    byte[] plaintext,
+                    ContentMeta contentMeta = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null,
+                    List<string> recipients = null,
+                    bool sign = false) {
+
+            KeyPair signingKey = sign ? keySignature : null;
+            List<KeyPair> encryptionKeys = null;
+
+            if (recipients != null) {
+                foreach (var recipient in recipients) {
+                    encryptionKeys.Add(GetByAccountEncrypt(recipient));
+
+                    }
+
+                }
+
+
+            var cryptoParameters = new CryptoParameters(signer: signingKey, recipients: null);
+            return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
+
+            }
+
+        public byte[] DareDecode(
+                    DareEnvelope envelope, 
+                    bool verify = false) => throw new NotImplementedException();
 
         #endregion
 

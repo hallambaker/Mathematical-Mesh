@@ -58,7 +58,7 @@ namespace Goedel.Cryptography {
         DerivedKey = 200
         }
 
-
+    ///<summary>Algorithm identifier codes for Derived keys</summary>
     public enum UDFAlgorithmIdentifier {
 
         ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
@@ -791,7 +791,11 @@ namespace Goedel.Cryptography {
         #endregion
 
 
-
+        /// <summary>
+        /// Construct a key specifier for the specified algorithm.
+        /// </summary>
+        /// <param name="algorithmIdentifier">The algorithm to generate the key specifier for.</param>
+        /// <returns>Two byte key specifier.</returns>
         public static byte[] KeySpecifier(UDFAlgorithmIdentifier algorithmIdentifier) {
 
             var result = new byte[2];
@@ -804,7 +808,16 @@ namespace Goedel.Cryptography {
             }
 
 
-
+        /// <summary>
+        /// Create a derived key UDF for algorithm <paramref name="algorithmIdentifier"/> with
+        /// key data <paramref name="data"/> if specified. Otherwise generate a new random key 
+        /// of <paramref name="length"/> bits, 
+        /// </summary>
+        /// <param name="algorithmIdentifier">The algorithm identifier.</param>
+        /// <param name="length">The key size in bits. This is ignored if <paramref name="data"/> is
+        /// not null.</param>
+        /// <param name="data">The master key data.</param>
+        /// <returns>The generated UDF</returns>
         public static string DerivedKey(UDFAlgorithmIdentifier algorithmIdentifier,
                     int length = 128, byte[] data = null) {
 
@@ -821,11 +834,24 @@ namespace Goedel.Cryptography {
             return TypeBDSToString(UDFTypeIdentifier.DerivedKey, result, bits + 8);
             }
 
+        /// <summary>
+        /// Extract the binary data sequence from the string <paramref name="udf"/>.
+        /// </summary>
+        /// <param name="udf">The UDF to parse.</param>
+        /// <returns>The corresponding binary data sequence.</returns>
         public static byte[] DerivedKey(string udf) {
             var result = Parse(udf, out var code);
             return code == (byte)UDFTypeIdentifier.DerivedKey ? result : null;
             }
 
+        /// <summary>
+        /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
+        /// <paramref name="keyType"/> and Key uses <paramref name="keyUses"/>.
+        /// </summary>
+        /// <param name="udf"></param>
+        /// <param name="keyType"></param>
+        /// <param name="keyUses"></param>
+        /// <returns></returns>
         public static KeyPair DeriveKey(string udf,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any) {
