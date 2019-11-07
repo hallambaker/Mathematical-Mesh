@@ -9,6 +9,10 @@ namespace Goedel.Cryptography.Algorithms {
     /// Base Class for Elliptic Curve implementations
     /// </summary>
     public abstract class Curve {
+
+        /// <summary>The paameter p</summary>
+        public abstract BigInteger Prime { get; }
+
         }
 
 
@@ -21,11 +25,50 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger U { get; set; }
 
         /// <summary>Size of the modular field in bits.</summary>
-        int bits;
-        /// <summary>The paameter p</summary>
-        int p;
+        public abstract int Bits { get; }
+
         /// <summary>The parameter A24</summary>
-        int a24;
+        public abstract int A24 { get; }
+
+
+        #region // equality
+        /// <summary>
+        /// Return the hash code
+        /// </summary>
+        /// <returns>The hash code value.</returns>
+        public override int GetHashCode() => U.GetHashCode();
+
+        /// <summary>
+        /// Check points for equality
+        /// </summary>
+        /// <param name="obj">Other point</param>
+        /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
+        public override bool Equals(object obj) => Equal((CurveMontgomery)obj);
+
+        /// <summary>
+        /// Check points for equality
+        /// </summary>
+        /// <param name="obj">Other point</param>
+        /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
+        public bool Equal(CurveMontgomery obj) => this == obj;
+
+        /// <summary>
+        /// Check points for equality
+        /// </summary>
+        /// <param name="a">First point</param>
+        /// <param name="b">Second point</param>
+        /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
+        public static bool operator ==(CurveMontgomery a, CurveMontgomery b) =>
+            (a.Prime == b.Prime) & (a.U == b.U);
+
+        /// <summary>
+        /// Check points for inequality
+        /// </summary>
+        /// <param name="a">First point</param>
+        /// <param name="b">Second point</param>
+        /// <returns>True if the two points are not equal (the P and/or U values are different), otherwise false.</returns>
+        public static bool operator !=(CurveMontgomery a, CurveMontgomery b) => !(a == b);
+        #endregion
 
         /// <summary>
         /// Create a point from the specified U value.
@@ -39,7 +82,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="s">Scalar factor</param>
         /// <returns>The result of the multiplication</returns>
-        public CurveMontgomery Multiply(BigInteger s) {
+        protected BigInteger ScalarMultiply(BigInteger s) {
 
             BigInteger x_1 = U;
             BigInteger x_2 = 1;
@@ -48,9 +91,9 @@ namespace Goedel.Cryptography.Algorithms {
             BigInteger z_3 = 1;
             bool swap = false;
 
-            for (var i = 0; i < bits; i++) {
-                //    var k_t = (k >> t) & 1;
-                //    swap ^= k_t;
+            for (var i = 0; i < Bits; i++) {
+                var k_t = ((s >> i) & 1) == 1;
+                swap ^= k_t ;
                 Cswap(swap, ref x_2, ref x_3);
                 Cswap(swap, ref z_2, ref z_3);
                 //swap = k_t;
@@ -67,14 +110,13 @@ namespace Goedel.Cryptography.Algorithms {
                 x_3 = (DA + CB) ^ 2;
                 z_3 = x_1 * (DA - CB) ^ 2;
                 x_2 = AA * BB;
-                z_2 = E * (AA + a24 * E);
+                z_2 = E * (AA + A24 * E);
                 }
 
             Cswap(swap, ref x_2, ref x_3);
             Cswap(swap, ref z_2, ref z_3);
-            var U2 = (x_2 * (BigInteger.ModPow(z_2, (p - 2), p))) % p;
+            return (x_2 * (BigInteger.ModPow(z_2, (Prime - 2), Prime))) % Prime;
 
-            return Factory(U2);
             }
 
         /// <summary>
@@ -92,6 +134,7 @@ namespace Goedel.Cryptography.Algorithms {
                 }
 
             }
+        
 
 
         /// <summary>
@@ -100,48 +143,19 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The encoded format of the point</returns>
         public abstract byte[] Encode();
 
-
-
-
-        }
-
-
-    /// <summary>
-    /// Montgomery Curve [v^2 = u^3 + A*u^2 + u] for 2^255-19
-    /// </summary>
-    public class CurveMontgomery25519 : CurveMontgomery {
+        /// <summary>
+        /// Add two points
+        /// </summary>
+        /// <param name="Point">Second point</param>
+        /// <returns>The result of the addition.</returns>
+        public abstract CurveMontgomery Add(CurveMontgomery Point);
 
         /// <summary>
-        /// Encode the code point.
+        /// Add two points
         /// </summary>
-        /// <returns>The encoded format of the point</returns>
-        public override byte[] Encode() => throw new NYI();
-
-        /// <summary>
-        /// Create a point from the specified U value.
-        /// </summary>
-        /// <param name="U">The U value</param>
-        /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger U) => new CurveMontgomery25519() { U = U };
-        }
-
-    /// <summary>
-    /// Montgomery Curve [v^2 = u^3 + A*u^2 + u] for 2^448 - 2^224 -1
-    /// </summary>
-    public class CurveMontgomery448 : CurveMontgomery {
-
-        /// <summary>
-        /// Encode the code point.
-        /// </summary>
-        /// <returns>The encoded format of the point</returns>
-        public override byte[] Encode() => throw new NYI();
-
-        /// <summary>
-        /// Create a point from the specified U value.
-        /// </summary>
-        /// <param name="U">The U value</param>
-        /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger U) => new CurveMontgomery448() { U = U };
+        /// <param name="Point">Second point</param>
+        /// <returns>The result of the addition.</returns>
+        public abstract void Accumulate(CurveMontgomery Point);
         }
 
 
@@ -162,8 +176,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>The projected Z coordinate</summary>
         public BigInteger Z { get; set; }
 
-        ///<summary>The modulus, q = 2^255 - 19</summary>
-        public abstract BigInteger Prime { get; }
 
         ///<summary>The modulus, q = 2^255 - 19</summary>
         public abstract BigInteger CurveConstrantD { get; }

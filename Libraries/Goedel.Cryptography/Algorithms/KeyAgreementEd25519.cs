@@ -38,11 +38,11 @@ namespace Goedel.Cryptography.Algorithms {
         ///// <summary>The domain parameters</summary>
         //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
 
-        ///<summary>The modulus, q = 2^255 - 19</summary>
-        readonly static BigInteger P = BigInteger.Pow(2, 255) - 19;
 
-        ///<summary>The modulus, q = 2^255 - 19</summary>
+        ///<summary>The modulus, p = 2^255 - 19</summary>
         public override BigInteger Prime => P;
+        
+        readonly static BigInteger P = BigInteger.Pow(2, 255) - 19;
 
 
         ///<summary>The Curve Constant d</summary>
@@ -90,7 +90,7 @@ namespace Goedel.Cryptography.Algorithms {
             this.Y = Y;
             this.Z = 1;
             X = RecoverX(X0);
-            T = (X * Y) % P;
+            T = (X * Y) % Prime;
             }
 
         /// <summary>
@@ -685,7 +685,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) => publicKey.Public.Multiply(Private);
+        public CurveEdwards25519 Agreement(CurveEdwards25519Public publicKey) => 
+            publicKey.Public.Multiply(Private);
 
 
         /// <summary>

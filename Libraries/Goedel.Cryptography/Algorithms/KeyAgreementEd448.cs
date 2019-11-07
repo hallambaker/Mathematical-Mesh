@@ -15,11 +15,8 @@ namespace Goedel.Cryptography.Algorithms {
     public class CurveEdwards448 : CurveEdwards {
 
         ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
-
-        ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
         public override BigInteger Prime => P;
-
+        readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
 
         ///<summary>The Curve Constant d</summary>
         public override BigInteger CurveConstrantD => D;
@@ -86,9 +83,9 @@ namespace Goedel.Cryptography.Algorithms {
         public override BigInteger RecoverX(bool X0) {
             Assert.True(Y < Prime, InvalidOperation.Throw);
             //var x2 = ((Y * Y - 1) * (CurveConstrantD * Y * Y - 1)).Mod (p);
-            var yy = (Y * Y - 1).Mod(P);
-            var zz = (CurveConstrantD * Y * Y - 1).Mod(P);
-            var x2 = (yy * zz.ModularInverse(P)).Mod(P);
+            var yy = (Y * Y - 1).Mod(Prime);
+            var zz = (CurveConstrantD * Y * Y - 1).Mod(Prime);
+            var x2 = (yy * zz.ModularInverse(Prime)).Mod(Prime);
 
             return x2.Sqrt(Prime, SqrtMinus1, X0);
             }
@@ -136,17 +133,17 @@ namespace Goedel.Cryptography.Algorithms {
         /// (used to implement multiply)
         /// </summary>
         public override void DoublePoint() {
-            var x1s = (X * X).Mod(P);
-            var y1s = (Y * Y).Mod(P);
-            var z1s = (Z * Z).Mod(P);
-            var xys = (X + Y).Mod(P);
-            var F = (x1s + y1s).Mod(P);
-            var J = (F - 2 * z1s).Mod(P);
-            var B = (xys * xys).Mod(P);
+            var x1s = (X * X).Mod(Prime);
+            var y1s = (Y * Y).Mod(Prime);
+            var z1s = (Z * Z).Mod(Prime);
+            var xys = (X + Y).Mod(Prime);
+            var F = (x1s + y1s).Mod(Prime);
+            var J = (F - 2 * z1s).Mod(Prime);
+            var B = (xys * xys).Mod(Prime);
 
-            X = ((B - F) * J).Mod(P);
-            Y = (F * (x1s - y1s)).Mod(P);
-            Z = (F * J).Mod(P);
+            X = ((B - F) * J).Mod(Prime);
+            Y = (F * (x1s - y1s)).Mod(Prime);
+            Z = (F * J).Mod(Prime);
             }
 
 
@@ -420,14 +417,16 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>The random secret used to generate the private key</summary>
         byte[] Secret { get; }
 
-        /// <summary>The private key, i.e. a scalar</summary>
-        public BigInteger Private { get; }
-
         /// <summary>Hash of the secret value bytes [0:31]</summary>
         byte[] PreSecret { get; }
 
+
+
         /// <summary>Hash of the secret value bytes [31:63]</summary>
         byte[] HashPrefix { get; }
+
+        /// <summary>The private key, i.e. a scalar</summary>
+        public BigInteger Private { get; }
 
         /// <summary>The corresponding public key</summary>
         public CurveEdwards448Public Public { get; }
