@@ -7,10 +7,9 @@
 
 
 #xfile CreateExamples WebAccount "Guide/profile.md" CreateExamples Examples
+#% MakeTitle ("account");
 
-## Using the `profile` Command Set
-
-The `account` command set contains commands used to create and manage
+The account command set contains commands used to create and manage
 Mesh accounts.
 
 

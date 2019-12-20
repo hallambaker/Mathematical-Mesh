@@ -1,5 +1,5 @@
-
-# Using the `mail` Command Set
+<title>mail
+# Using the mail Command Set
 
 The `mail` command set contains commands used to manage Internet mail 
 application profiles and to create and manage credentials for the 
@@ -14,10 +14,12 @@ A mail application profile is added to a Mesh profile using the
 `mail add` command:
 
 
-````
-Alice> mail add alice@example.com
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail add alice@example.com
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 The client attempts to obtain the network configuration for the inbound and
 outbound mail services using [SRV auto 
@@ -27,10 +29,12 @@ Alternatively, the configuration may be given explicitly using the form
 \<domain\>:\<port\>:
 
 
-````
-Alice> mail add alice@example.net /inbound=imap4:imap.example.net:993 /outbound=smtp:submit.example.net:587
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail add alice@example.net /inbound=imap4:imap.example.net:993 /outbound=smtp:submit.example.net:587
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 The mail profile only contains the network configuration information. Access 
 credentials for the inbound and outbound mail services must be configured in the
@@ -40,10 +44,12 @@ Account profiles may be updated to change the network configuration using the
 `mail add` command:
 
 
-````
-Alice> mail update alice@example.net
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail update alice@example.net
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Specifying no values causes the SRV auto configuration configuration data to be 
 used replacing the values previously set.
@@ -54,25 +60,31 @@ An OpenPGP public key pair for encryption and authentication may be added to the
 profile when it is created or as a later update using the `/openpgp` option:
 
 
-````
-Alice> mail update  alice@example.com /openpgp
-ERROR - The option  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail update  alice@example.com /openpgp
+<rsp>ERROR - The option  is not known.
+</div>
+~~~~
 
 The private key may be extracted from the profile in a variety of interchange
 formats to allow installation in a key service:
 
 
-````
-Alice> mail openpgp private alice@example.com pgp.private
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail openpgp private alice@example.com pgp.private
+<rsp></div>
+~~~~
 
 The public key may be exported likewise:
 
 
-````
-Alice> mail openpgp public alice@example.com pgp.public
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail openpgp public alice@example.com pgp.public
+<rsp></div>
+~~~~
 
 ## Creating an S/MIME Key Set
 
@@ -80,10 +92,12 @@ An S/MIME public key pair for encryption and authentication may be added to the
 profile when it is created or as a later update using the `/smime` option:
 
 
-````
-Alice> mail alice@example.com /smime
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail alice@example.com /smime
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 By default, a self signed certificate is created.
 
@@ -91,10 +105,12 @@ The `mail smime validate`  causes a certificate request to be sent to the
 specified Certificate Authority service via ACME:
 
 
-````
-Alice> mail alice@example.com /ca=ca.example.net
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail alice@example.com /ca=ca.example.net
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 Responding to the validation challenge requires an access credential for the 
 inbound email service to be specified.
@@ -103,14 +119,18 @@ The private key may be extracted from the profile in a variety of interchange
 formats to allow installation in a key service:
 
 
-````
-Alice> mail smime private alice@example.com smime.private
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail smime private alice@example.com smime.private
+<rsp></div>
+~~~~
 
 The public key may be exported likewise:
 
 
-````
-Alice> mail smime public alice@example.com smime.public
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mail smime public alice@example.com smime.public
+<rsp></div>
+~~~~
 

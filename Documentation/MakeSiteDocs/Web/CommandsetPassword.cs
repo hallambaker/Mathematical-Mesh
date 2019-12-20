@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebPassword(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `password` Command Set\n{0}", _Indent);
+				 MakeTitle ("password");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `password` command set contains commands for managing a catalog of username \n{0}", _Indent);
 				_Output.Write ("and password entries protected by end to end encryption.\n{0}", _Indent);

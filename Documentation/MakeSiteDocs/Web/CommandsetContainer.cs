@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebContainer(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `container Command Set\n{0}", _Indent);
+				 MakeTitle ("container");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `container` command set contains commands that operate on DARE Containers.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

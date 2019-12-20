@@ -30,36 +30,27 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveEdwards25519 : CurveEdwards {
 
+        #region // curve parameter constant definitions
+
+        ///<summary>The domain parameters</summary>
+        public override DomainParameters DomainParameters => DomainParameters.Curve25519;
+
+        ///<summary>The modulus, p = 2^255 - 19</summary>
+        public static BigInteger P => DomainParameters.Curve25519.P;
+
+        ///<summary>The small order subgroup q</summary>
+        public static BigInteger Q => DomainParameters.Curve25519.Q;
+
+        ///<summary>The Curve Constant d</summary>
+        public static BigInteger D => DomainParameters.Curve25519.D;
+        #endregion
+
         /// <summary>
         /// Additional parameter used in affine projection
         /// </summary>
         public BigInteger T { get; set; }
 
-        ///// <summary>The domain parameters</summary>
-        //public override DomainParameters Domain { get; } = DomainParameters.Curve25519;
-
-
-        ///<summary>The modulus, p = 2^255 - 19</summary>
-        public override BigInteger Prime => P;
-        
-        readonly static BigInteger P = BigInteger.Pow(2, 255) - 19;
-
-
-        ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD => D;
-
-        ///<summary>The Curve Constant d</summary>
-        public static readonly BigInteger D =
-            (-121665 * (121666.ModularInverse(P))).Mod(P);
-
-        ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1 => SqrtMinus1Value;
-        readonly static BigInteger SqrtMinus1Value = P.SqrtMinus1();
-
-        ///<summary>The small order subgroup q</summary>
-        public static readonly BigInteger Q =
-            BigInteger.Pow(2, 252) + "27742317777372353535851937790883648493".DecimalToBigInteger();
-
+        #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
         static readonly CurveEdwards25519 BasePoint =
             new CurveEdwards25519(DomainParameters.Curve25519.By, false);
@@ -73,9 +64,8 @@ namespace Goedel.Cryptography.Algorithms {
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         public static CurveEdwards25519 Neutral => NeutralPoint.Copy();
+        #endregion
 
-        /// <summary>The number of bits to multiply</summary>
-        public const int Bits = 255;
 
         /// <summary>Default constructor</summary>
         protected CurveEdwards25519() {
@@ -164,6 +154,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         static void Add(CurveEdwards25519 P1, CurveEdwards25519 P2,
                     out BigInteger X3, out BigInteger Y3, out BigInteger Z3, out BigInteger T3) {
+
+            var P = DomainParameters.Curve25519.P;
+
             Assert.NotNull(P1, NYI.Throw);
             Assert.NotNull(P2, NYI.Throw);
 
@@ -279,7 +272,7 @@ namespace Goedel.Cryptography.Algorithms {
                 var Digest = Sha512.Hash;
                 var Result = Digest.BigIntegerLittleEndian();
 
-                Result %= Q;
+                Result %= DomainParameters.Curve25519.Q;
 
                 return Result;
                 }
@@ -657,7 +650,7 @@ namespace Goedel.Cryptography.Algorithms {
             var Rs = R.Encode();
 
             var k = CurveEdwards25519.HashModQ(context, Rs, Public.Encoding, message);
-            var S = (r + k * Private) % CurveEdwards25519.Q;
+            var S = (r + k * Private) % DomainParameters.Curve25519.Q;
 
             var Bs = S.ToByteArrayLittleEndian();
 

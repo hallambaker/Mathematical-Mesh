@@ -22,10 +22,9 @@ namespace ExampleGenerator {
 			}
 		public void _WebSSH(CreateExamples Examples) {
 
+				 MakeTitle ("SSH");
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The  command set contains commands that \n{0}", _Indent);
+				_Output.Write ("The SSH command set contains commands that \n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("SSH is one of the most successful applications that provides strong cryptographic\n{0}", _Indent);
 				_Output.Write ("protections today. It is certainly the first and so far only cryptographic application\n{0}", _Indent);

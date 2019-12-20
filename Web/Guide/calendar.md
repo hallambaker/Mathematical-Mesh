@@ -1,5 +1,5 @@
-
-# Using the `calendar` Command Set
+<title>calendar
+# Using the calendar Command Set
 
 The `calendar` command set is used to manage a calendar configuration catalog which contains
 a entries describing how to access particular calendars.
@@ -12,14 +12,16 @@ implemented and a placeholder format is implemented instead.
 The `password add` command adds a calendar entry to a catalog:
 
 
-````
-Alice> calendar add CalendarEntry1.json CalID1
-{
+~~~~
+<div="terminal">
+<cmd>Alice> calendar add CalendarEntry1.json CalID1
+<rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCVX-HLBU-5L23-VYYD-WUBR-4DPF-I2BE"}Alice> calendar add CalendarEntry2.json CalID2
-{
+  "Key": "NAHT-EV4E-VDN7-UOFB-QKG2-JIIQ-SPAC"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
+<rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NCZY-AL4V-HQST-IL5X-JQFE-5UGF-3VIW"}````
+  "Key": "NDMX-B5G2-BR3R-G4CH-SL4S-DWWF-4MGU"}</div>
+~~~~
 
 
 ## Finding calendars
@@ -27,32 +29,38 @@ Alice> calendar add CalendarEntry1.json CalID1
 The `password get`  command retreives a calendar entry by label:
 
 
-````
-Alice> calendar get CalID1
-Empty
-````
+~~~~
+<div="terminal">
+<cmd>Alice> calendar get CalID1
+<rsp>Empty
+</div>
+~~~~
 
 ## Deleting calendars
 
 Calendar entries may be deleted using the  `calendar delete` command:
 
 
-````
-Alice> calendar delete CalID1
-ERROR - Object reference not set to an instance of an object.
-Alice> calendar list
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> calendar delete CalID1
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> calendar list
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 ## Listing calendars
 
 A complete list of calendars is obtained using the  `calendar list` command:
 
 
-````
-Alice> calendar list
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> calendar list
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 ## Adding devices
 

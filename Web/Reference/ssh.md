@@ -2,17 +2,23 @@
 
 # ssh
 
-````
+~~~~
+<div="helptext">
+<over>
 ssh    Manage SSH profiles connected to a personal profile
     create   Generate a new SSH public keypair for the current machine and add to the personal profile
     private   Extract the private key for this device
     public   Extract the public key for this device
-````
+<over>
+</div>
+~~~~
 
 
 # ssh create
 
-````
+~~~~
+<div="helptext">
+<over>
 create   Generate a new SSH public keypair for the current machine and add to the personal profile
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
@@ -21,25 +27,34 @@ create   Generate a new SSH public keypair for the current machine and add to th
     /application   The application format
     /alg   List of algorithm specifiers
     /id   Key identifier
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh private
 
-````
+~~~~
+<div="helptext">
+<over>
 private   Extract the private key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
@@ -48,25 +63,34 @@ private   Extract the private key for this device
     /format   File format
     /password   Password to encrypt private key
     /file   Output file
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh public
 
-````
+~~~~
+<div="helptext">
+<over>
 public   Extract the public key for this device
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
@@ -74,50 +98,68 @@ public   Extract the public key for this device
     /json   Report output in JSON format
     /format   File format
     /file   Output file
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh host
 
-````
+~~~~
+<div="helptext">
+<over>
 host   Add one or more hosts to the known_hosts file
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh host
 
-````
+~~~~
+<div="helptext">
+<over>
 host   Add one or more hosts to the known_hosts file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -125,25 +167,34 @@ host   Add one or more hosts to the known_hosts file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh client
 
-````
+~~~~
+<div="helptext">
+<over>
 client   Add one or more keys to the authorized_keys file
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -151,70 +202,95 @@ client   Add one or more keys to the authorized_keys file
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh host
 
-````
+~~~~
+<div="helptext">
+<over>
 host   List the known SSH sites (aka known hosts)
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # ssh client
 
-````
+~~~~
+<div="helptext">
+<over>
 client   List the authorized device keys (aka authorized_keys)
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
     /application   The application format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 

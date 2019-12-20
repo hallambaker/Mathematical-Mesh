@@ -1,5 +1,5 @@
-
-# Using the `network` Command Set
+<title>network
+# Using the network Command Set
 
 The `network` command set is used to manage a network configuration catalog which contains
 a entries describing how to access particular networks.
@@ -9,10 +9,12 @@ a entries describing how to access particular networks.
 The `network add` command adds a network entry to a catalog:
 
 
-````
-Alice> network add NetworkEntry1.json NetID1
-{Username}@{Service} = [{Password}]Alice> network add NetworkEntry2.json NetID2
-{Username}@{Service} = [{Password}]````
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1
+<rsp>{Username}@{Service} = [{Password}]<cmd>Alice> network add NetworkEntry2.json NetID2
+<rsp>{Username}@{Service} = [{Password}]</div>
+~~~~
 
 
 ## Finding networks
@@ -20,32 +22,38 @@ Alice> network add NetworkEntry1.json NetID1
 The `network get`  command retreives a network entry by label:
 
 
-````
-Alice> network get NetID2
-Empty
-````
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2
+<rsp>Empty
+</div>
+~~~~
 
 ## Deleting networks
 
 Network entries may be deleted using the  `network delete` command:
 
 
-````
-Alice> network delete NetID2
-ERROR - Object reference not set to an instance of an object.
-Alice> network list
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> network list
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 ## Listing networks
 
 A complete list of networks is obtained using the  `network list` command:
 
 
-````
-Alice> network list
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> network list
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 ## Adding devices
 

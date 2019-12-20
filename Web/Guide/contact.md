@@ -1,5 +1,5 @@
-
-# Using the `contacts` Command Set
+<title>contacts
+# Using the contacts Command Set
 
 The `contacts` command set is used to manage the user's contacts catalogue.
 
@@ -17,14 +17,16 @@ The `contact add` command adds a contact entry to a catalog from
 a file. 
 
 
-````
-Alice> contact add email carol@example.com
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com
+<rsp>{
   "Self": false,
-  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -37,22 +39,26 @@ The `/self` option is used to mark the contact as being the user's own contact
 details:
 
 
-````
-Alice> contact self email alice@example.com
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact self email alice@example.com
+<rsp>{
   "Self": true,
-  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
 
-````
-Alice> message accept tbs
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp></div>
+~~~~
 
 ## Finding contacts
 
@@ -60,39 +66,45 @@ The `contact get` command retreives a contact by the contact's
 email address or label:
 
 
-````
-Alice> contact get carol@example.com
-Empty
-````
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com
+<rsp>Empty
+</div>
+~~~~
 
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
 
-````
-Alice> contact list
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>{
   "Self": true,
-  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
 
-````
-Alice> contact delete carol@example.com
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 
 

@@ -1,5 +1,5 @@
-
-# Using the `key` Command Set
+<title>key
+# Using the key Command Set
 
 The `key` command set contains commands that operate on cryptographic secrets and
 nonces.
@@ -15,10 +15,12 @@ presentation aids application debugging and audit.
 The `key nonce` command is used to generate a new random nonce value:
 
 
-````
-Alice> key nonce
-NDWN-5BEK-ENOK-AHBF-TC73-AJ55-52CA
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key nonce
+<rsp>NDLN-IN7W-QXML-TV4Z-YKES-N27M-PEXQ
+</div>
+~~~~
 
 The Base32 presentation of a nonce value will always begin with the letter N.
 
@@ -26,27 +28,33 @@ By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option:
 
 
-````
-Alice> key nonce /bits=256
-NAAK-OKKU-GPRS-SXLT-NOEW-XKPE-34A4-XLWQ-YGKU-WC63-3HZP-NDCI-5DUS-C
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key nonce /bits=256
+<rsp>NDY2-YTXB-YS6H-HVWC-Y2KI-67PW-VXG3-S4UE-CIDM-IE7T-3UVC-CWVJ-UYWC-Y
+</div>
+~~~~
 
 Secrets are generated in the same way using the command `key secret`:
 
 
-````
-Alice> key secret
-ECJK-W3X3-3XAE-YK3H-Y4WO-OXHB-6P3Q
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key secret
+<rsp>ECUX-XPSS-MXDD-P2XC-YCLC-F4ZM-57MQ
+</div>
+~~~~
 
 The Base32 presentation of a secret value will always begin with the letter E.
 Again, any output length can be requested up to the platform limit:
 
 
-````
-Alice> key secret /bits=256
-EBWZ-4TLZ-RGFJ-WHWZ-POA7-JC4C-AVUN-G3HZ-LPGA-VOI3-CNZO-RY4J-OVBO-4
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key secret /bits=256
+<rsp>ED6N-GRV4-X3T2-4TPA-OUAL-W5CT-LOEQ-PIVT-PGAI-KJT4-WKHG-ARLT-BTAT-S
+</div>
+~~~~
 
 ## Generating EARL values
 
@@ -60,19 +68,23 @@ EARLs may be generated using the `key earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
 
-````
-Alice> key earl
-EBTR-ITUQ-M3HN-TRWL-VPJ5-G4ND-27HN-UT
-MCCY-32DL-SQNL-46SP-J64G-2LV5-MOTF-R7FI-67EO-6FNO-ZBOX-B26K-6G7M-4Q2E
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key earl
+<rsp>EBI2-R7IW-F5H6-JNNT-J5TA-AD3K-7T5K-LD
+MBVM-OUFP-QBLY-ZRCM-DZXB-CKKM-IFQO-YXDC-3LD6-IXUY-VIY4-MNCR-46ZF-WYPG
+</div>
+~~~~
 
 Alternatively, the `dare earl` command may be used to perform both operations:
 
 
-````
-Alice> dare earl TestFile1.txt
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 ## Sharing and recovering secrets
 
@@ -84,14 +96,16 @@ number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
 
-````
-Alice> key share
-EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-MDS2-IZBW-P5YC-HQKZ-3GHJ-ZEI3-6CKV-2M2A-O45X-7XLG-RIJP-637L-JSPQ
-SAQF-LAQZ-7DMQ-VZ5L-EXQN-XTRC-ZVMR-Y
-SAQZ-PPVK-2SWN-XAFC-TAZJ-6WNK-65IX-4
-SARN-T6Z3-WCAK-YGM2-BKCG-FZJT-EFE6-A
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key share
+<rsp>EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+MCPR-KQBK-I23Y-ZZ3J-ITHZ-E5U2-FVBY-FUPM-BMQD-JM3K-YF6G-SOBF-UKYQ
+SAQI-XFWD-ONIK-OLFU-C4FW-ENV7-WUTH-2
+SAQ4-BX5L-Z7OV-TZV5-PPMJ-OO4C-SCD7-2
+SARP-MKEU-FRVA-ZIGG-4CS4-YQCF-NPUX-2
+</div>
+~~~~
 
 The first UDF output is the secret key, followed by the key identifier 
 two shares. The different outputs are easily distinguished by their first 
@@ -99,26 +113,30 @@ letter. As with every meshman command, the `/json` option may be used to
 obtain the result as a JSON structure:
 
 
-````
-Alice> key share /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> key share /json
+<rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A",
-    "Identifier": "MDS2-IZBW-P5YC-HQKZ-3GHJ-ZEI3-6CKV-2M2A-O45X-7XLG-RIJP-637L-JSPQ",
-    "Shares": ["SAQF-LAQZ-7DMQ-VZ5L-EXQN-XTRC-ZVMR-Y",
-      "SAQZ-PPVK-2SWN-XAFC-TAZJ-6WNK-65IX-4",
-      "SARN-T6Z3-WCAK-YGM2-BKCG-FZJT-EFE6-A"]}}
-````
+    "Key": "EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q",
+    "Identifier": "MCPR-KQBK-I23Y-ZZ3J-ITHZ-E5U2-FVBY-FUPM-BMQD-JM3K-YF6G-SOBF-UKYQ",
+    "Shares": ["SAQI-XFWD-ONIK-OLFU-C4FW-ENV7-WUTH-2",
+      "SAQ4-BX5L-Z7OV-TZV5-PPMJ-OO4C-SCD7-2",
+      "SARP-MKEU-FRVA-ZIGG-4CS4-YQCF-NPUX-2"]}}
+</div>
+~~~~
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum using the `key recover`:
 
 
-````
-Alice> key recover SAQF-LAQZ-7DMQ-VZ5L-EXQN-XTRC-ZVMR-Y SARN-T6Z3-WCAK-YGM2-BKCG-FZJT-EFE6-A
-EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key recover SAQI-XFWD-ONIK-OLFU-C4FW-ENV7-WUTH-2 SARP-MKEU-FRVA-ZIGG-4CS4-YQCF-NPUX-2
+<rsp>EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+</div>
+~~~~
 
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
@@ -129,16 +147,18 @@ For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
 
-````
-Alice> key share /quorum=3 /shares=5
-EAMC-3QLP-IYSC-IZBH-EL6V-AOEM-SMBQ
-MCYK-D2BL-533D-C74Z-NZQ4-5MXE-IWGA-W3U6-K3DE-NW3T-2QDZ-KP5X-TTQA
-SAYC-SBHN-DYKF-25B6-43J6-NDI2-A63U-W
-SAYW-AKB7-EAGU-KCXJ-YS7B-VOMX-74X5-O
-SAZL-3F5X-OUYN-V2DE-YDQZ-TVNS-OL6K-O
-SAZU-CU2W-DV7R-6DFP-3M7G-HYLJ-MMOY-Q
-SA2O-WWY3-DD4B-C56L-CPKH-RXF4-Z6JO-A
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key share /quorum=3 /shares=5
+<rsp>ECVB-AC4O-2OQD-Q5JB-Y6AX-HG2E-UNSQ
+MB53-2D6E-KT5Z-VHTK-WQF4-KIAX-IZ3G-UNJS-LAYQ-S27G-KION-ZSKU-IUJA
+SAYL-6MDI-SZSB-W4AR-ICZ6-A4QL-VS4H-G
+SAYS-FI4Z-YBJQ-NRCH-HWLP-2INM-JN6S-W
+SAZN-I2M7-BSQG-ENIX-DBYN-PAT5-EDY7-G
+SAZ5-JATY-PNGC-3QUA-2FAW-7FD6-FULG-K
+SA2C-F3RG-BRLG-S3EE-NAEM-KV5P-N7VI-C
+</div>
+~~~~
 
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
@@ -146,12 +166,14 @@ created earlier to create three shares with a quorum of two, the shares will
 be different:
 
 
-````
-Alice> key share EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-MDS2-IZBW-P5YC-HQKZ-3GHJ-ZEI3-6CKV-2M2A-O45X-7XLG-RIJP-637L-JSPQ
-SAQE-IZLK-FOTX-45H4-C6OC-JY2I-5LT6-4
-SAQX-LBKL-HJE4-FG2E-POUT-DA7X-GJXS-E
-SARK-NJJM-JDWA-NQMM-363D-4JFF-PH3F-M
-````
+~~~~
+<div="terminal">
+<cmd>Alice> key share EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<rsp>EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+MCPR-KQBK-I23Y-ZZ3J-ITHZ-E5U2-FVBY-FUPM-BMQD-JM3K-YF6G-SOBF-UKYQ
+SAQG-5EP4-2O7L-JIYY-CIJJ-V24W-VFGO-S
+SAQY-NVQ6-SC4X-JU4F-OHTQ-RJJQ-PDKN-K
+SARJ-6GSA-JW2D-KA7S-2G5X-MXWK-JBOM-C
+</div>
+~~~~
 

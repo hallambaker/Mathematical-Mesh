@@ -2,19 +2,25 @@
 
 # contact
 
-````
+~~~~
+<div="helptext">
+<over>
 contact    Manage contact catalogs connected to an account
     add   Add contact entry from file
     delete   Delete contact entry
     get   Lookup contact entry
     list   List contact entries
     self   Add contact entry for self
-````
+<over>
+</div>
+~~~~
 
 
 # contact add
 
-````
+~~~~
+<div="helptext">
+<over>
 add   Add contact entry from file
     /email   <Unspecified>
     /file   <Unspecified>
@@ -22,61 +28,79 @@ add   Add contact entry from file
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> contact add email carol@example.com
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com
+<rsp>{
   "Self": false,
-  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
 
-````
-Alice> contact add email carol@example.com /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com /json
+<rsp>{
   "ResultEntry": {
     "Success": true,
     "CatalogEntry": {
       "Self": false,
-      "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+      "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
       "EnvelopedContact": [{},
         "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}}}
-````
+</div>
+~~~~
+
 
 # contact delete
 
-````
+~~~~
+<div="helptext">
+<over>
 delete   Delete contact entry
        Contact entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> contact delete carol@example.com
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> contact delete carol@example.com /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "Object reference not set to an instance of an object."}}
-````
+</div>
+~~~~
+
 
 # contact get
 
-````
+~~~~
+<div="helptext">
+<over>
 get   Lookup contact entry
        Contact entry identifier
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -84,64 +108,80 @@ get   Lookup contact entry
     /report   Report output (default)
     /json   Report output in JSON format
     /encrypt   Encrypt the contact under the specified key
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> contact get carol@example.com
-Empty
-````
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com
+<rsp>Empty
+</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
 
-````
-Alice> contact get carol@example.com /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com /json
+<rsp>{
   "ResultEntry": {
     "Success": false}}
-````
+</div>
+~~~~
+
 
 # contact list
 
-````
+~~~~
+<div="helptext">
+<over>
 list   List contact entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> contact list
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>{
   "Self": true,
-  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultDump:
 
-````
-Alice> contact list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact list /json
+<rsp>{
   "ResultDump": {
     "Success": true,
     "CatalogedEntries": [{
         "Self": true,
-        "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+        "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
         "EnvelopedContact": [{},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]},
       {
         "Self": false,
-        "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+        "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
         "EnvelopedContact": [{},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}]}}
-````
+</div>
+~~~~
+
 

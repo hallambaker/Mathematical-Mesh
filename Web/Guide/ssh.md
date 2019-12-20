@@ -1,7 +1,7 @@
+<title>SSH
+# Using the SSH Command Set
 
-# Using the  Command Set
-
-The  command set contains commands that 
+The SSH command set contains commands that 
 
 SSH is one of the most successful applications that provides strong cryptographic
 protections today. It is certainly the first and so far only cryptographic application
@@ -47,10 +47,12 @@ appear in the <tt>known_hosts</tt> file.</dd>
 The `ssh create` command adds an SSH profile named `ssh` to a Mesh account:
 
 
-````
-Alice> ssh create
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh create
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Since the command creates a new application catalog, the command must be given to 
 an administration device.
@@ -65,19 +67,23 @@ The `ssh private` command extracts the private key required top configure
 an SSH client:
 
 
-````
-Alice> ssh private ssh-key.public
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh private ssh-key.public
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 The `ssh public` command extracts the public key required top configure
 an SSH client:
 
 
-````
-Alice> ssh public ssh-key.public
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh public ssh-key.public
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 If a script is being used to automate this process, the best practice is for the
 script to first generate a random nonce and request that the private key file
@@ -94,17 +100,21 @@ For example, if the `authorized_keys` file has an entry for Alice's Mesh profile
 corresponding SSH device public keys added:
 
 
-````
-Alice> ssh merge client
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh merge client
+<rsp></div>
+~~~~
 
 The `ssh merge host`  command reads the `known_hosts` file on a client machine and adds
 the listed hosts to the user's ssh catalog.
 
 
-````
-Alice> ssh merge host
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh merge host
+<rsp></div>
+~~~~
 
 ## Client Key management
 
@@ -113,33 +123,41 @@ SSH keys belonging to the user that are not part of the Mesh profile may be adde
 
 
 
-````
-Alice> ssh add client
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh add client
+<rsp></div>
+~~~~
 
 The list of known clients may be returned in various formats using the `ssh show client`  command.
 
 
-````
-Alice> ssh show client
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh show client
+<rsp></div>
+~~~~
 
 ## Host Key Management
 
 The `ssh add host`  command adds specific host entries to the user's SSH profile.
 
 
-````
-Alice> ssh add host
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh add host
+<rsp></div>
+~~~~
 
 The current list of known hosts in the SSH catalog is returned by the `ssh show known` 
 command.
 
 
-````
-Alice> ssh show host
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh show host
+<rsp></div>
+~~~~
 
 ## Additional Devices
 
@@ -153,14 +171,18 @@ The `device auth /ssh`  command is used *from an administration device* to
 enable use of ssh on the machine:
 
 
-````
-Alice> device auth Alice2 /ssh
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device auth Alice2 /ssh
+<rsp></div>
+~~~~
 
 Once the device has been authorized, the client machine can start using SSH immediately:
 
 
-````
-Alice> ssh show host
-````
+~~~~
+<div="terminal">
+<cmd>Alice> ssh show host
+<rsp></div>
+~~~~
 

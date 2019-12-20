@@ -22,10 +22,9 @@ namespace ExampleGenerator {
 			}
 		public void _WebAccount(CreateExamples Examples) {
 
+				 MakeTitle ("account");
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `profile` Command Set\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The `account` command set contains commands used to create and manage\n{0}", _Indent);
+				_Output.Write ("The account command set contains commands used to create and manage\n{0}", _Indent);
 				_Output.Write ("Mesh accounts.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

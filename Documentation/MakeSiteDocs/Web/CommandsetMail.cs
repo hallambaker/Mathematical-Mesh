@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebMail(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `mail` Command Set\n{0}", _Indent);
+				 MakeTitle ("mail");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `mail` command set contains commands used to manage Internet mail \n{0}", _Indent);
 				_Output.Write ("application profiles and to create and manage credentials for the \n{0}", _Indent);

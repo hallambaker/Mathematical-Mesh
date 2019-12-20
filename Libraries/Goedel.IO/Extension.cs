@@ -194,9 +194,8 @@ namespace Goedel.IO {
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
         public static TextReader OpenTextReader(this string filename) {
-            using (var fileStream = filename.OpenFileRead()) {
-                return new StreamReader(fileStream);
-                }
+            var fileStream = filename.OpenFileRead();
+            return new StreamReader(fileStream);
             }
 
 

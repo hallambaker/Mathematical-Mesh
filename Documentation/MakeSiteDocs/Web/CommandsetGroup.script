@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebGroup "Guide/group.md" CreateExamples Examples
-
-## Using the  Command Set
+#% MakeTitle ("group");
 
 The group command set is used to manage recryption groups
 

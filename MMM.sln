@@ -248,6 +248,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Cryptography.Windows
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Cryptography.Standard", "Libraries\Goedel.Cryptography.Standard\Goedel.Cryptography.Standard.csproj", "{308CCA42-0DD7-4329-8F8A-CF6A7B79E5E6}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "RFC7748", "Testing\RFC7748\RFC7748.pyproj", "{1B4662CC-893A-4411-A581-6A34A240F61F}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Libraries\Goedel.Command\Goedel.Command.projitems*{10573a9c-5f44-4b7a-af12-5d7ec971f783}*SharedItemsImports = 13
@@ -2261,6 +2263,24 @@ Global
 		{308CCA42-0DD7-4329-8F8A-CF6A7B79E5E6}.Release|x64.Build.0 = Release|Any CPU
 		{308CCA42-0DD7-4329-8F8A-CF6A7B79E5E6}.Release|x86.ActiveCfg = Release|Any CPU
 		{308CCA42-0DD7-4329-8F8A-CF6A7B79E5E6}.Release|x86.Build.0 = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.DotNet|x64.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.DotNet|x86.ActiveCfg = Debug|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Focus|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Focus|x64.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Focus|x86.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Publish|x64.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Publish|x86.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Release|x64.ActiveCfg = Release|Any CPU
+		{1B4662CC-893A-4411-A581-6A34A240F61F}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2334,6 +2354,7 @@ Global
 		{0DD0F6F9-F1FE-4AB1-83A9-8D2227E16F06} = {7C8561ED-B04C-419D-8DE7-95BEF0CE62E4}
 		{701F5551-E749-4985-ACC8-5A3C02D10D14} = {7C8561ED-B04C-419D-8DE7-95BEF0CE62E4}
 		{308CCA42-0DD7-4329-8F8A-CF6A7B79E5E6} = {7C8561ED-B04C-419D-8DE7-95BEF0CE62E4}
+		{1B4662CC-893A-4411-A581-6A34A240F61F} = {21335470-2C7E-418E-A7CD-9EB6D3A45190}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {480B9067-AB16-45B8-BFE3-8EF8803D9D07}

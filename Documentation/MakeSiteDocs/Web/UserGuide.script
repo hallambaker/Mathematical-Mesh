@@ -178,25 +178,37 @@ executed without any output being made to the console.
 #end xfile
 
 #method DescribeMessage ExampleResult Result
-#{Preformat}
+~~~~
+<div="helptext">
+<over>
 [NYI]
-#{Preformat}
+<over>
+</div>
+~~~~
 #end method
 
 #method Describe DescribeCommandSet CommandSet
 ## #{CommandSet.Identifier}
 
-#{Preformat}
+~~~~
+<div="helptext">
+<over>
 #% CommandSet.Describe('/', _Output, false);
-#{Preformat}
+<over>
+</div>
+~~~~
 #end method
 
 #method2 Describe DescribeCommandSet CommandSet DescribeCommand Command
 ## #{CommandSet.Identifier} #{Command.Identifier}
 
-#{Preformat}
+~~~~
+<div="helptext">
+<over>
 #% Command.Describe('/', _Output, false);
-#{Preformat}
+<over>
+</div>
+~~~~
 #end method2
 
 
@@ -270,12 +282,14 @@ executed without any output being made to the console.
 #% Console.WriteLine ($"Missing example!"); return;
 #end if
 
-#{Preformat}
+~~~~
+<div="terminal">
 #foreach (var exampleResult in exampleResults)
-#{exampleResult.MachineName}> #{exampleResult.Command}
-#{exampleResult.ResultText}#!
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<rsp>#{exampleResult.ResultText}#!
 #end foreach
-#{Preformat}
+</div>
+~~~~
 #end method
 
 
@@ -286,10 +300,12 @@ executed without any output being made to the console.
 #end if
 #% var exampleResult = exampleResults[0];
 
-#{Preformat}
-#{exampleResult.MachineName}> #{exampleResult.Command} /json
-#{exampleResult.ResultJSON}
-#{Preformat}
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
+<rsp>#{exampleResult.ResultJSON}
+</div>
+~~~~
 #end method
 
 #method ConsoleReference List<ExampleResult> exampleResults
@@ -299,17 +315,27 @@ executed without any output being made to the console.
 #end if
 #% var exampleResult = exampleResults[0];
 
-#{Preformat}
-#{exampleResult.MachineName}> #{exampleResult.Command}
-#{exampleResult.ResultText}#!
-#{Preformat}
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command}
+<rsp>#{exampleResult.ResultText}#!
+</div>
+~~~~
 
 Specifying the /json option returns a result of type #{exampleResult.ResultType}:
 
-````
-#{exampleResult.MachineName}> #{exampleResult.Command} /json
-#{exampleResult.ResultJSON}
-````
+~~~~
+<div="terminal">
+<cmd>#{exampleResult.MachineName}> #{exampleResult.Command} /json
+<rsp>#{exampleResult.ResultJSON}
+</div>
+~~~~
+
+#end method
+
+#method MakeTitle string title
+<title>#{title}
+## Using the #{title} Command Set
 #end method
 
 #block

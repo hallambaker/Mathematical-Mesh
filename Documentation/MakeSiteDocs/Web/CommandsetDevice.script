@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebConnect "Guide/device.md" CreateExamples Examples
-
-## Using the device Command Set
+#% MakeTitle ("device");
 
 The `device` command set contains commands used to connect devices to a 
 profile.

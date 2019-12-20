@@ -6,7 +6,9 @@ using System.Collections.Generic;
 
 namespace Goedel.Cryptography {
 
-
+    /// <summary>
+    /// Key discovery interface.
+    /// </summary>
     public interface IKeyLocate {
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.

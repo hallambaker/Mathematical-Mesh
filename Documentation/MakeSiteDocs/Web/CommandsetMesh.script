@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebProfile "Guide/profile.md" CreateExamples Examples
-
-## Using the `profile` Command Set
+#% MakeTitle ("profile");
 
 The `profile` command set contains commands used to create and manage
 Mesh profiles.

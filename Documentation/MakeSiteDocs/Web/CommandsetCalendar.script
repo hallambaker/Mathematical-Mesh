@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebCalendar "Guide/calendar.md" CreateExamples Examples
-
-## Using the `calendar` Command Set
+#% MakeTitle ("calendar");
 
 The `calendar` command set is used to manage a calendar configuration catalog which contains
 a entries describing how to access particular calendars.

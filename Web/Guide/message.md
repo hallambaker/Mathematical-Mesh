@@ -1,4 +1,5 @@
-
+<title>Message
+# Using the Message Command Set
 # Using the Message Command Set
 
 The `message` command set contains commands that send, receive and respond to 
@@ -27,49 +28,59 @@ Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the `message contact` command:
 
 
-````
-Bob> message contact alice@example.com
-````
+~~~~
+<div="terminal">
+<cmd>Bob> message contact alice@example.com
+<rsp></div>
+~~~~
 
 Alice reviews her pending messages using the `message pending` command:
 
 
-````
-Alice> message pending
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message pending
+<rsp></div>
+~~~~
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
 
-````
-Alice> message accept tbs
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp></div>
+~~~~
 
 Bob's contact information has been added to Alice's address book:
 
 
-````
-Alice> contact list
-{
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>{
   "Self": true,
-  "Key": "NAJY-FOLK-JYMJ-ZDOE-6LW7-I4VU-VU57",
+  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDV4-QR6S-ADWR-BQLZ-YCH3-6SSZ-FPGC",
+  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}````
+  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
+~~~~
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
 
-````
-Bob> message status tbs
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -78,16 +89,20 @@ Alice isn't required to accept contact requests. She rejects the request from Ma
 using the `message reject` command:
 
 
-````
-Alice> message reject tbs
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp></div>
+~~~~
 
 For good measure, she decides to block further requests:
 
 
-````
-Alice> message block mallet@example.com
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message block mallet@example.com
+<rsp></div>
+~~~~
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -116,31 +131,39 @@ a confirmation request `Purchase equipment for $6,000?` using the
 `message confirm` command:
 
 
-````
-Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
-````
+~~~~
+<div="terminal">
+<cmd>Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
+<rsp></div>
+~~~~
 
 Alice reviews her pending messages using the using the `message pending` command:
 
 
-````
-Alice> message pending
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message pending
+<rsp></div>
+~~~~
 
 Alice she accepts Bob's request using the `message pending` command:
 
 
-````
-Alice> message accept tbs
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp></div>
+~~~~
 
 Bob receives Alice's approval using the `message status` command:
 
 
-````
-Bob> message status tbs
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
@@ -148,26 +171,32 @@ the accounts department asking them to place the order.
 Alice can also reject requests using the `message reject` command:
 
 
-````
-Alice> message reject tbs
-````
+~~~~
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp></div>
+~~~~
 
 Bob receives a reply telling him the request was rejected:
 
 
-````
-Bob> message status tbs
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
 
-````
-Mallet> message confirm alice@example.com "Purchase equipment for $6,000?"
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Mallet> message confirm alice@example.com "Purchase equipment for $6,000?"
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 

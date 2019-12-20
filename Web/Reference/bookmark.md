@@ -2,19 +2,25 @@
 
 # network
 
-````
+~~~~
+<div="helptext">
+<over>
 network    Manage network profile settings
     add   Add calendar entry from file
     delete   Delete calendar entry
     dump   List network entries
     get   Lookup calendar entry
     import   Add calendar entry from file
-````
+<over>
+</div>
+~~~~
 
 
 # network add
 
-````
+~~~~
+<div="helptext">
+<over>
 add   Add bookmark
        <Unspecified>
        <Unspecified>
@@ -23,31 +29,40 @@ add   Add bookmark
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+<rsp>{
   "Uri": "http://example.com/",
   "Title": "\"Example",
-  "Path": "Folder1/1"}````
+  "Path": "Folder1/1"}</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
 
-````
-Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
+<rsp>{
   "ResultEntry": {
     "Success": true,
     "CatalogEntry": {
       "Uri": "http://example.com/",
       "Title": "\"Example",
       "Path": "Folder1/1"}}}
-````
+</div>
+~~~~
+
 
 # network delete
 
-````
+~~~~
+<div="helptext">
+<over>
 delete   Delete bookmark entry
        Contact entry identifier
     /path   <Unspecified>
@@ -55,67 +70,88 @@ delete   Delete bookmark entry
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> bookmark delete BookmarkPath2
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> bookmark delete BookmarkPath2 /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2 /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "Object reference not set to an instance of an object."}}
-````
+</div>
+~~~~
+
 
 # network get
 
-````
+~~~~
+<div="helptext">
+<over>
 get   Lookup bookmark entry
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> bookmark get Folder1/2
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2
+<rsp>{
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}````
+  "Path": "Folder1/2"}</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
 
-````
-Alice> bookmark get Folder1/2 /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2 /json
+<rsp>{
   "ResultEntry": {
     "Success": true,
     "CatalogEntry": {
       "Uri": "http://example.net/Bananas",
       "Title": "\"Banana",
       "Path": "Folder1/2"}}}
-````
+</div>
+~~~~
+
 
 # network list
 
-````
+~~~~
+<div="helptext">
+<over>
 list   List bookmark entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> bookmark list
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark list
+<rsp>{
   "Uri": "http://example.com/",
   "Title": "\"Example",
   "Path": "Folder1/1"}{
@@ -124,13 +160,15 @@ Alice> bookmark list
   "Path": "Folder1/2"}{
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
-  "Path": "Folder1/1a"}````
+  "Path": "Folder1/1a"}</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultDump:
 
-````
-Alice> bookmark list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark list /json
+<rsp>{
   "ResultDump": {
     "Success": true,
     "CatalogedEntries": [{
@@ -145,5 +183,7 @@ Alice> bookmark list /json
         "Uri": "http://example.com/Fred",
         "Title": "\"The",
         "Path": "Folder1/1a"}]}}
-````
+</div>
+~~~~
+
 

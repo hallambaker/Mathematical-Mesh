@@ -22,7 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebHash(CreateExamples Examples) {
 
-				_Output.Write ("# Using the `hash` Command Set\n{0}", _Indent);
+				 MakeTitle ("hash");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `hash` command set contains commands that perform Content Digest and \n{0}", _Indent);
 				_Output.Write ("Message Authentication Code operations on the contents of a file.\n{0}", _Indent);

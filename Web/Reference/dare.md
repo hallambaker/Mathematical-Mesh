@@ -1,19 +1,25 @@
 # dare
 
-````
+~~~~
+<div="helptext">
+<over>
 dare    DARE Message encryption and decryption commands
     decode   Decode a DARE Message.
     earl   Create an Encrypted Authenticated Resource Locator (EARL)
     encode   Encode data as DARE Message.
     verify   Verify a DARE Message.
-````
+<over>
+</div>
+~~~~
 
 The `dare` command set contains commands that encode, decode and verify 
 DARE messages.
 
 # dare encode
 
-````
+~~~~
+<div="helptext">
+<over>
 encode   Encode data as DARE Message.
        File or directory to encrypt
     /cty   Content Type
@@ -28,7 +34,9 @@ encode   Encode data as DARE Message.
     /out   Filename for encrypted output.
     /sub   Process subdirectories recursively.
     /key   Specifies the value of the master key
-````
+<over>
+</div>
+~~~~
 
 The `dare encode` command encrypts a file and writes the output to a DARE Message.
 
@@ -62,25 +70,32 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-````
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultFile:
 
-````
-Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q /json
+<rsp>{
   "ResultFile": {
     "Success": true,
     "Filename": "TestFile1.dare",
     "TotalBytes": 14}}
-````
+</div>
+~~~~
+
 
 
 # dare decode
 
-````
+~~~~
+<div="helptext">
+<over>
 decode   Decode a DARE Message.
        Encrypted File
        Decrypted File
@@ -89,7 +104,9 @@ decode   Decode a DARE Message.
     /report   Report output (default)
     /json   Report output in JSON format
     /key   Specifies the value of the master key
-````
+<over>
+</div>
+~~~~
 
 The `dare decode` command decodes the specified input file using keys found in the
 currently active key collection.
@@ -101,24 +118,31 @@ file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
 
-````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-ERROR - The option  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<rsp>ERROR - The option  is not known.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "The option  is not known."}}
-````
+</div>
+~~~~
+
 
 # dare verify
 
-````
+~~~~
+<div="helptext">
+<over>
 verify   Verify a DARE Message.
        Encrypted File
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
@@ -126,7 +150,9 @@ verify   Verify a DARE Message.
     /report   Report output (default)
     /json   Report output in JSON format
     /key   Specifies the value of the master key
-````
+<over>
+</div>
+~~~~
 
 The `dare decode` command verifies the specified input file using keys found in the
 currently active key collection and reports success or failure.
@@ -135,24 +161,31 @@ The active key collection may be overriden using the `/mesh` option.
 
 
 
-````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A
-ERROR - The option  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<rsp>ERROR - The option  is not known.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EAJU-LCI5-AU5E-5M5T-R4ME-FGVD-MC5A /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "The option  is not known."}}
-````
+</div>
+~~~~
+
 
 # dare earl
 
-````
+~~~~
+<div="helptext">
+<over>
 earl   Create an Encrypted Authenticated Resource Locator (EARL)
        File or directory to encrypt
     /out   Directory to write encrypted output.
@@ -164,7 +197,9 @@ earl   Create an Encrypted Authenticated Resource Locator (EARL)
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
 The `dare earl` command is used to encode an input file and return
 (or log) the corresponding identifier information in a format that enables use
@@ -186,18 +221,23 @@ the container using the active key collection.
 The active key collection may be overriden using the `/mesh` option.
 
 
-````
-Alice> dare earl TestFile1.txt
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> dare earl TestFile1.txt /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "The feature has not been implemented"}}
-````
+</div>
+~~~~
+
 

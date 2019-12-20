@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebKey "Guide/key.md" CreateExamples Examples
-
-## Using the `key` Command Set
+#% MakeTitle ("key");
 
 The `key` command set contains commands that operate on cryptographic secrets and
 nonces.

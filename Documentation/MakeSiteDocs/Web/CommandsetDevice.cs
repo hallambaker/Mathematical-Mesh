@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebConnect(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the device Command Set\n{0}", _Indent);
+				 MakeTitle ("device");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `device` command set contains commands used to connect devices to a \n{0}", _Indent);
 				_Output.Write ("profile.\n{0}", _Indent);

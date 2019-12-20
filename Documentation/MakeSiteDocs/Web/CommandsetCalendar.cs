@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebCalendar(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `calendar` Command Set\n{0}", _Indent);
+				 MakeTitle ("calendar");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `calendar` command set is used to manage a calendar configuration catalog which contains\n{0}", _Indent);
 				_Output.Write ("a entries describing how to access particular calendars.\n{0}", _Indent);

@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebDare "Guide/dare.md" CreateExamples Examples
-
-## Using the  Command Set
+#% MakeTitle ("dare");
 
 The `dare` command set contains commands that encode, decode and verify 
 DARE messages.

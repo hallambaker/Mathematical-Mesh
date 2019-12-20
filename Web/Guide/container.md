@@ -1,5 +1,5 @@
-
-# Using the `container Command Set
+<title>container
+# Using the container Command Set
 
 The `container` command set contains commands that operate on DARE Containers.
 
@@ -12,9 +12,11 @@ command additionally adds the specified file(s) to the container to create
 a container archive.
 
 
-````
-Alice> container create Container.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container create Container.dcon
+<rsp></div>
+~~~~
 
 *catalog* *spool* *archive* *log*
 
@@ -27,9 +29,11 @@ For example, Alice creates an encrypted container readable by anyone who is a
 member of the group groupw@example.com;
 
 
-````
-Alice> container create ContainerEncrypt.dcon /encrypt=groupw@example.com
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container create ContainerEncrypt.dcon /encrypt=groupw@example.com
+<rsp></div>
+~~~~
 
 Since it is rarely desirable to sign every entry in a container, signatures
 are typically added to a container when entries or indexes are added. 
@@ -38,20 +42,23 @@ The `container archive` creates a new container, adds the
 specified file(s) as entries and appends an index as the final record:
 
 
-````
-Alice> container archive ContainerArchive.dcon TestDir1
-ERROR - Path cannot be null.
-Parameter name: path
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container archive ContainerArchive.dcon TestDir1
+<rsp>ERROR - Path cannot be null. (Parameter 'path')
+</div>
+~~~~
 
 An archive may be signed and encrypted:
 
 
-````
-Alice> container create ContainerArchiveEncrypt.dcon TestDir1
-Alice> /encrypt=groupw@example.com /sign=alice@example.com
-ERROR - The command  is not known.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container create ContainerArchiveEncrypt.dcon TestDir1
+<rsp><cmd>Alice> /encrypt=groupw@example.com /sign=alice@example.com
+<rsp>ERROR - The command  is not known.
+</div>
+~~~~
 
 The signature on a signed archive is calculated over the final apex of the 
 Merkel tree. Thus a single signature verification may be used to validate
@@ -62,9 +69,11 @@ any or all entries in the container.
 The `container verify` command verifies the contents of a container: 
 
 
-````
-Alice> container verify ContainerArchiveEncrypt.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container verify ContainerArchiveEncrypt.dcon
+<rsp></div>
+~~~~
 
 The verification performed depends on the type of authentication applied to the
 container and whether the verifier can provide the necessary authentication or
@@ -78,19 +87,22 @@ One or more container entries may be extracted to a file using the
 the files are extracted by default:
 
 
-````
-Alice> container extract Container.dcon TestOut
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container extract Container.dcon TestOut
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Alternatively, the `/file` option may be used to extract a specific file:
 
 
-````
-Alice> container extract Container.dcon /file=TestDir1\TestFile4.txt
-ERROR - Value cannot be null.
-Parameter name: path
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container extract Container.dcon /file=TestDir1\TestFile4.txt
+<rsp>ERROR - Value cannot be null. (Parameter 'path')
+</div>
+~~~~
 
 
 ## Writing to Containers
@@ -98,10 +110,12 @@ Parameter name: path
 The `container append` command adds an entry to a container:
 
 
-````
-Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
+</div>
+~~~~
 
 If no security enhancements are specified, the default enhancements specified 
 in the index entry are applied.
@@ -112,10 +126,12 @@ The `container delete` command adds an entry to a container
 marking an entry as deleted:
 
 
-````
-Alice> container delete Container.dcon  TestFile2.txt
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container delete Container.dcon  TestFile2.txt
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Marking an entry for deletion does not cause the entry itself to be modified.
 The entry is merely marked as having been deleted. To erase the entry contents,
@@ -128,9 +144,11 @@ The `container index` command adds an index entry to the end of
 container:
 
 
-````
-Alice> container index Container.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container index Container.dcon
+<rsp></div>
+~~~~
 
 The index entry may be complete, providing an index of the entire file 
 or incremental, only indexing the items added since the last index was created.
@@ -144,25 +162,31 @@ collect tree index fields dispersed throughout the container with an index
 at the end:
 
 
-````
-Alice> container copy Container2.dcon
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
+</div>
+~~~~
 
 The copy command may be used to encrypt or decrypt the container contents during 
 the copy:
 
 
-````
-Alice> container copy ContainerArchiveEncrypt.dcon /decrypt
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container copy ContainerArchiveEncrypt.dcon /decrypt
+<rsp></div>
+~~~~
 
 The copy command may also be used to reclaim space used by deleted items:
 
 
-````
-Alice> container copy Container2.dcon /purge
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon /purge
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
+</div>
+~~~~
 
 

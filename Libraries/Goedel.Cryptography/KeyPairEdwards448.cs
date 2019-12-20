@@ -83,6 +83,24 @@ namespace Goedel.Cryptography {
 
             }
 
+        /// <summary>
+        /// Construct a key via parameters presented to KDF-HMAC-SHA-2-512. 
+        /// <para>The values <paramref name="ikm"/> and <paramref name="salt"/> are used to
+        /// generate the key data value as specified by RFC8032.</para>
+        /// </summary>
+        /// <param name="ikm">The initial keying material.</param>
+        /// <param name="salt">Salt value.</param>
+        /// <param name="keyType">The key type.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+        /// in signature operations.</param>
+        public KeyPairEd448(byte[] ikm, byte[] salt,
+                    KeySecurity keyType = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
+            }
+
 
         /// <summary>
         /// Construct a KeyPairEd25519 instance for a secret scalar. This is used to create

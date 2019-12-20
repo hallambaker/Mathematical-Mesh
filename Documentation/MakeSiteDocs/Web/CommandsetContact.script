@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebContact "Guide/contact.md" CreateExamples Examples
-
-## Using the `contacts` Command Set
+#% MakeTitle ("contacts");
 
 The `contacts` command set is used to manage the user's contacts catalogue.
 

@@ -1,5 +1,5 @@
-
-# Using the `bookmark` Command Set
+<title>bookmark
+# Using the bookmark Command Set
 
 The `bookmark` command set is used to manage a bookmarks catalog which contains
 a collection of bookmarks and citations and shares them between devices connected 
@@ -18,20 +18,22 @@ named bookmark catalogs per user and catalogs sharted between multiple users.
 The `bookmark add` command adds a bookmark entry to a catalog:
 
 
-````
-Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+<rsp>{
   "Uri": "http://example.com/",
   "Title": "\"Example",
-  "Path": "Folder1/1"}Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
-{
+  "Path": "Folder1/1"}<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
+<rsp>{
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
-{
+  "Path": "Folder1/2"}<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
+<rsp>{
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
-  "Path": "Folder1/1a"}````
+  "Path": "Folder1/1a"}</div>
+~~~~
 
 
 ## Finding bookmarks
@@ -39,31 +41,36 @@ Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
 The `bookmark get`  command retreives a bookmark  by its index label:
 
 
-````
-Alice> bookmark get Folder1/2
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2
+<rsp>{
   "Uri": "http://example.net/Bananas",
   "Title": "\"Banana",
-  "Path": "Folder1/2"}````
+  "Path": "Folder1/2"}</div>
+~~~~
 
 ## Deleting bookmarks
 
 Bookmark entries may be deleted using the  `bookmark delete` command:
 
 
-````
-Alice> bookmark delete BookmarkPath2
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 ## Listing bookmarks
 
 A complete list of bookmarks is obtained using the  `bookmark list` command:
 
 
-````
-Alice> bookmark list
-{
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark list
+<rsp>{
   "Uri": "http://example.com/",
   "Title": "\"Example",
   "Path": "Folder1/1"}{
@@ -72,7 +79,8 @@ Alice> bookmark list
   "Path": "Folder1/2"}{
   "Uri": "http://example.com/Fred",
   "Title": "\"The",
-  "Path": "Folder1/1a"}````
+  "Path": "Folder1/1a"}</div>
+~~~~
 
 ## Adding devices
 
@@ -80,14 +88,18 @@ Devices are given authorization to access the bookmarks catalog using the
  `device auth` command:
 
 
-````
-Alice> device auth Alice2 /bookmark
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device auth Alice2 /bookmark
+<rsp></div>
+~~~~
 
 The new device now has access to the Bookmarks catalog:
 
 
-````
-Alice2> bookmark list
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice2> bookmark list
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~

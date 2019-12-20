@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebBookmark "Guide/bookmark.md" CreateExamples Examples
-
-## Using the `bookmark` Command Set
+#% MakeTitle ("bookmark");
 
 The `bookmark` command set is used to manage a bookmarks catalog which contains
 a collection of bookmarks and citations and shares them between devices connected 

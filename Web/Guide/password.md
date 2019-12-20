@@ -1,5 +1,5 @@
-
-# Using the `password` Command Set
+<title>password
+# Using the password Command Set
 
 The `password` command set contains commands for managing a catalog of username 
 and password entries protected by end to end encryption.
@@ -12,23 +12,27 @@ credentials catalog associated with a profile:
 Alice adds the username and password for an ftp service to her catalog:
 
 
-````
-Alice> password add ftp.example.com alice1 password
-alice1@ftp.example.com = [password]
-Alice> password add www.example.com alice@example.com newpassword
-alice@example.com@www.example.com = [newpassword]
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password
+<rsp>alice1@ftp.example.com = [password]
+<cmd>Alice> password add www.example.com alice@example.com newpassword
+<rsp>alice@example.com@www.example.com = [newpassword]
+</div>
+~~~~
 
 ## Synchronizing passwords to an application.
 
 The `password list` command lists all the passwords in the catalog:
 
 
-````
-Alice> password list
-alice1@ftp.example.com = [password]
+~~~~
+<div="terminal">
+<cmd>Alice> password list
+<rsp>alice1@ftp.example.com = [password]
 alice@example.com@www.example.com = [newpassword]
-````
+</div>
+~~~~
 
 The output of the list command may be used to configure a user application 
 such as a Web browser that supports password management. But care is obviously
@@ -40,10 +44,12 @@ The `password get`  command retreives the username and password
 values for a specified service:
 
 
-````
-Alice> password get ftp.example.com
-alice1@ftp.example.com = [newpassword]
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password get ftp.example.com
+<rsp>alice1@ftp.example.com = [newpassword]
+</div>
+~~~~
 
 ### Using Credentials in scripts
 
@@ -75,10 +81,12 @@ memorable or conveniently short. She decides to replace her bad password with a 
 password that is randomly generated:
 
 
-````
-Alice> password add ftp.example.com alice1 newpassword
-alice1@ftp.example.com = [newpassword]
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 newpassword
+<rsp>alice1@ftp.example.com = [newpassword]
+</div>
+~~~~
 
 
 ## Deleting passwords
@@ -86,18 +94,22 @@ alice1@ftp.example.com = [newpassword]
 Password entries may be deleted using the  `password delete` command:
 
 
-````
-Alice> password delete www.example.com
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password delete www.example.com
+<rsp></div>
+~~~~
 
 ## Adding a Device.
 
 When a device is added, it gets a copy of the password file:
 
 
-````
-Alice> device auth Alice2 /password
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device auth Alice2 /password
+<rsp></div>
+~~~~
 
 
 

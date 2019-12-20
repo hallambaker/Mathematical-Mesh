@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebContact(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `contacts` Command Set\n{0}", _Indent);
+				 MakeTitle ("contacts");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `contacts` command set is used to manage the user's contacts catalogue.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

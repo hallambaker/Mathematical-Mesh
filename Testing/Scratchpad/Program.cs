@@ -19,15 +19,35 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            TestGoedelCryptography.Test().X448SignedMultiplyFast(1000, 49);
+
+            //TestGoedelCryptography.Test().X448SignedMultiply(1000, 500);
+            //TestGoedelCryptography.Test().X448SignedMultiply(1000, 49);
+            
+
+
             // The tests we need to clear to get the group encryption stuff going:
 
+            //int succeeded = 0;
+            //for (int i = 0; i < 100; i++) {
 
+            //    var success = TestGoedelCryptography.Test().TryX25519AgreeRecryption();
+            //    if (success) {
+            //        succeeded++;
+            //        }
+
+            //    Console.WriteLine($"{success}");
+            //    }
+
+            //Console.WriteLine($"Total Success={succeeded}/100");
+
+            //TestGoedelCryptography.Test().X25519AgreeRecryption();
 
             //TestDare.Test().MessageGroup();
             //TestDare.Test().MessageEncrypted();
 
             //TestService.Test().MeshCatalogAccount();
-            TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshCatalogGroup();
 
             // From the command line:
             //ShellTests.Test().TestFileEncrypt();

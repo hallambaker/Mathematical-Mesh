@@ -14,38 +14,26 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveEdwards448 : CurveEdwards {
 
-        ///<summary>The modulus, p = 2^448 - 2^224 - 1</summary>
-        public override BigInteger Prime => P;
-        readonly static BigInteger P = BigInteger.Pow(2, 448) - BigInteger.Pow(2, 224) - 1;
+        #region // curve parameter constant definitions
 
-        ///<summary>The Curve Constant d</summary>
-        public override BigInteger CurveConstrantD => D;
+        ///<summary>The domain parameters</summary>
+        public override DomainParameters DomainParameters => DomainParameters.Curve448;
 
-        ///<summary>The Curve Constant d</summary>
-        public static readonly BigInteger D = P - 39081;
-
-        ///<summary>The square root of -1.</summary>
-        public override BigInteger SqrtMinus1 => SqrtMinus1Value;
-        readonly static BigInteger SqrtMinus1Value = P.SqrtMinus1();
+        ///<summary>The modulus, p = 2^255 - 19</summary>
+        public static BigInteger P => DomainParameters.Curve448.P;
 
         ///<summary>The small order subgroup q</summary>
-        public static readonly BigInteger Q =
-            BigInteger.Pow(2, 446) -
-            "13818066809895115352007386748515426880336692474882178609894547503885".DecimalToBigInteger();
+        public static BigInteger Q => DomainParameters.Curve448.Q;
+
+        ///<summary>The Curve Constant d</summary>
+        public static BigInteger D => DomainParameters.Curve448.D;
+        #endregion
 
 
-        static readonly BigInteger Curve448BaseY = (
-            "298819210078481492676017930443930673437544040154080242095928241" +
-            "372331506189835876003536878655418784733982303233503462500531545" +
-            "062832660").DecimalToBigInteger();
-
-        //static readonly BigInteger Curve448BaseX = (
-        //    "224580040295924300187604334099896036246789641632564134246125461" +
-        //    "686950415467406032909029192869357953282578032075146446173674602" +
-        //    "635247710").DecimalToBigInteger();
-
+        #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
-        static readonly CurveEdwards448 BasePoint = new CurveEdwards448(Curve448BaseY, false); // { X = Curve448BaseX, Y = Curve448BaseY, Z = 1 };
+        static readonly CurveEdwards448 BasePoint =
+            new CurveEdwards448(DomainParameters.Curve448.By, false);
 
         /// <summary>The base point for the subgroup</summary>
         public static CurveEdwards448 Base => BasePoint.Copy();
@@ -55,9 +43,8 @@ namespace Goedel.Cryptography.Algorithms {
 
         /// <summary>The point P such that P + Q = Q for all Q</summary>
         public static CurveEdwards448 Neutral => NeutralPoint.Copy();
+        #endregion
 
-        /// <summary>The number of bits to multiply</summary>
-        public const int Bits = 448;
 
         /// <summary>Default constructor</summary>
         protected CurveEdwards448() {
@@ -84,7 +71,7 @@ namespace Goedel.Cryptography.Algorithms {
             Assert.True(Y < Prime, InvalidOperation.Throw);
             //var x2 = ((Y * Y - 1) * (CurveConstrantD * Y * Y - 1)).Mod (p);
             var yy = (Y * Y - 1).Mod(Prime);
-            var zz = (CurveConstrantD * Y * Y - 1).Mod(Prime);
+            var zz = (CurveConstantD * Y * Y - 1).Mod(Prime);
             var x2 = (yy * zz.ModularInverse(Prime)).Mod(Prime);
 
             return x2.Sqrt(Prime, SqrtMinus1, X0);

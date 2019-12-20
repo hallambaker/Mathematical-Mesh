@@ -125,7 +125,7 @@ namespace ExampleGenerator {
 
 
             Directory.SetCurrentDirectory(outputPath);
-            //var CreateExamples = new CreateExamples();
+            var CreateExamples = new CreateExamples();
             WebDocs(this);
 
             Directory.SetCurrentDirectory("../Release/Documents");

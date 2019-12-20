@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebNetwork(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `network` Command Set\n{0}", _Indent);
+				 MakeTitle ("network");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `network` command set is used to manage a network configuration catalog which contains\n{0}", _Indent);
 				_Output.Write ("a entries describing how to access particular networks.\n{0}", _Indent);

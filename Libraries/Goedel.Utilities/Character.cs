@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-
+using System;
 
 namespace Goedel.Utilities {
 
@@ -22,6 +22,17 @@ namespace Goedel.Utilities {
 
 
             }
+
+        readonly static char[] Split = { ' ', ',' };
+
+        /// <summary>
+        /// Split a string into a series of substrings delimited by spaces and/or commas
+        /// with null entries suppressed.
+        /// </summary>
+        /// <param name="text">The text to split</param>
+        /// <returns>The split strings.</returns>
+        public static string[] SplitByComma(this string text) =>
+            text.Split(Split, StringSplitOptions.RemoveEmptyEntries);
 
         /// <summary>
         /// Convert UTF8 encoded bytes to string
@@ -55,6 +66,15 @@ namespace Goedel.Utilities {
             ((c >= 'a' & c <= 'z') | (c >= 'A' & c <= 'Z') |
                 (c >= '0' & c <= '9') | c == '+' | c == '/' | c == '_' | c == '-');
 
+
+        /// <summary>
+        /// Test to see whether the input string is blank. That is either a 
+        /// null pointer or an empty string.
+        /// </summary>
+        /// <param name="c">The string to test.</param>
+        /// <returns>True if either c is null or c is the empty string, otherwise false.</returns>
+        public static bool IsBlank(this string c) =>
+            c == null | c == "";
 
         /// <summary>Test to see if an input character is a Base64 character.
         /// </summary>
@@ -121,6 +141,36 @@ namespace Goedel.Utilities {
 
             return Result.ToString();
             }
+
+        /// <summary>
+        /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+        /// </summary>
+        /// <param name="In">String to be escaped</param>
+        /// <returns>The escaped string</returns>
+        public static string XMLEscapeStrict(this string In) {
+            var Result = new StringBuilder();
+
+            foreach (char c in In) {
+                switch (c) {
+                    case '…': Result.Append("..."); break;
+                    case '‘': Result.Append("'"); break;
+                    case '’': Result.Append("'"); break;
+                    case '“': Result.Append("\""); break;
+                    case '”': Result.Append("\""); break;
+                    case '®': Result.Append("(R)"); break;
+                    case '©': Result.Append("(C)"); break;
+
+                    case '<': Result.Append("&lt;"); break;
+                    case '>': Result.Append("&gt;"); break;
+                    case '&': Result.Append("&amp;"); break;
+                    case (char)160: Result.Append(" "); break;
+                    default: Result.Append(c); break;
+                    }
+                }
+
+            return Result.ToString();
+            }
+
 
         /// <summary>
         /// Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;

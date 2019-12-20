@@ -2,7 +2,9 @@
 
 # container
 
-````
+~~~~
+<div="helptext">
+<over>
 container    DARE container commands
     append   Append the specified file as an entry to the specified container
     archive   Create a new DARE Container and archive the specified files
@@ -12,12 +14,16 @@ container    DARE container commands
     extract   Extract the specified record from the container
     index   Compile an index for the specified container and append to the end.
     verify   Verify signatures and digests on container.
-````
+<over>
+</div>
+~~~~
 
 
 # container create
 
-````
+~~~~
+<div="helptext">
+<over>
 create   Create a new DARE Container
        New container
     /cty   Content Type
@@ -30,29 +36,38 @@ create   Create a new DARE Container
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
 The `container create` command creates a container with the specified cryptographic
 enhancements.
 
 
-````
-Alice> container create Container.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container create Container.dcon
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultFile:
 
-````
-Alice> container create Container.dcon /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container create Container.dcon /json
+<rsp>{
   "ResultFile": {
     "Success": true,
     "Filename": "Container.dcon"}}
-````
+</div>
+~~~~
+
 
 # container archive
 
-````
+~~~~
+<div="helptext">
+<over>
 archive   Create a new DARE Container and archive the specified files
        Directory containing files to create archive from
     /cty   Content Type
@@ -66,61 +81,78 @@ archive   Create a new DARE Container and archive the specified files
     /json   Report output in JSON format
     /type   The container type, plain/tree/digest/chain/tree
     /out   New container
-````
+<over>
+</div>
+~~~~
 
 The `container archive` command creates a container with the specified cryptographic
 enhancements and adds the spefied file(s).
 
 
-````
-Alice> container archive ContainerArchive.dcon TestDir1
-ERROR - Path cannot be null.
-Parameter name: path
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container archive ContainerArchive.dcon TestDir1
+<rsp>ERROR - Path cannot be null. (Parameter 'path')
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> container archive ContainerArchive.dcon TestDir1 /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container archive ContainerArchive.dcon TestDir1 /json
+<rsp>{
   "Result": {
     "Success": false,
-    "Reason": "Path cannot be null.\r\nParameter name: path"}}
-````
+    "Reason": "Path cannot be null. (Parameter 'path')"}}
+</div>
+~~~~
+
 
 # container verify
 
-````
+~~~~
+<div="helptext">
+<over>
 verify   Verify signatures and digests on container.
        Container to read
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
 The `container verify` command verifies the authentication data of the specified 
 container.
 
 
-````
-Alice> container verify ContainerArchiveEncrypt.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container verify ContainerArchiveEncrypt.dcon
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultFile:
 
-````
-Alice> container verify ContainerArchiveEncrypt.dcon /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container verify ContainerArchiveEncrypt.dcon /json
+<rsp>{
   "ResultFile": {
     "Success": true,
     "Filename": "ContainerArchiveEncrypt.dcon"}}
-````
+</div>
+~~~~
+
 
 
 # container extract
 
-````
+~~~~
+<div="helptext">
+<over>
 extract   Extract the specified record from the container
        Container to read
        Extracted file
@@ -131,30 +163,39 @@ extract   Extract the specified record from the container
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
 The `container extract` command extracts the specified container entries and writes them
 to files.
 
 
-````
-Alice> container extract Container.dcon TestOut
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container extract Container.dcon TestOut
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> container extract Container.dcon TestOut /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container extract Container.dcon TestOut /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "The feature has not been implemented"}}
-````
+</div>
+~~~~
+
 
 # container append
 
-````
+~~~~
+<div="helptext">
+<over>
 append   Append the specified file as an entry to the specified container
        Container to append to
        File to append
@@ -168,58 +209,76 @@ append   Append the specified file as an entry to the specified container
     /report   Report output (default)
     /json   Report output in JSON format
     /key   <Unspecified>
-````
+<over>
+</div>
+~~~~
 
 The `container append` command appends the specified file to the container.
 
 
-````
-Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txtcontainer'.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container append Container.dcon TestFile1.txtcontainer append Container.dcon TestFile2.txtcontainer append Container.dcon TestFile3.txt /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "Could not find file 'C:\\Users\\hallam\\Test\\WorkingDirectory\\TestFile1.txtcontainer'."}}
-````
+</div>
+~~~~
+
 
 
 # container delete
 
-````
+~~~~
+<div="helptext">
+<over>
 delete   <Unspecified>
        Container to append to
     /file   Name of file to delete
     /key   <Unspecified>
-````
+<over>
+</div>
+~~~~
 
 The `container delete` command marks the specified file entry as deleted in the
 container but does not erase the data from the file.
 
 
-````
-Alice> container delete Container.dcon  TestFile2.txt
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container delete Container.dcon  TestFile2.txt
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> container delete Container.dcon  TestFile2.txt /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container delete Container.dcon  TestFile2.txt /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "The feature has not been implemented"}}
-````
+</div>
+~~~~
+
 
 # container index
 
-````
+~~~~
+<div="helptext">
+<over>
 index   Compile an index for the specified container and append to the end.
        Container to append to
     /cty   Content Type
@@ -231,28 +290,37 @@ index   Compile an index for the specified container and append to the end.
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
 The `container index` command appends an index record to the end of the container.
 
 
-````
-Alice> container index Container.dcon
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container index Container.dcon
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultFile:
 
-````
-Alice> container index Container.dcon /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container index Container.dcon /json
+<rsp>{
   "ResultFile": {
     "Success": true,
     "Filename": "Container.dcon"}}
-````
+</div>
+~~~~
+
 
 # container copy
 
-````
+~~~~
+<div="helptext">
+<over>
 copy   Copy container contents to create a new container
        Container to read
        Copy
@@ -269,24 +337,31 @@ copy   Copy container contents to create a new container
     /decrypt   Decrypt contents
     /index   Append an index record to the end
     /purge   Purge unused data etc.
-````
+<over>
+</div>
+~~~~
 
 The `container copy` command copies a container applying the specified filtering 
 and indexing criteria.
 
 
-````
-Alice> container copy Container2.dcon
-ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Container2.dcon'.
+</div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> container copy Container2.dcon /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> container copy Container2.dcon /json
+<rsp>{
   "Result": {
     "Success": false,
     "Reason": "Could not find file 'C:\\Users\\hallam\\Test\\WorkingDirectory\\Container2.dcon'."}}
-````
+</div>
+~~~~
+
 

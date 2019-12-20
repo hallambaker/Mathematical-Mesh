@@ -7,10 +7,9 @@
 
 
 #xfile CreateExamples WebSSH "Guide/ssh.md" CreateExamples Examples
+#% MakeTitle ("SSH");
 
-## Using the  Command Set
-
-The  command set contains commands that 
+The SSH command set contains commands that 
 
 SSH is one of the most successful applications that provides strong cryptographic
 protections today. It is certainly the first and so far only cryptographic application

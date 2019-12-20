@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Goedel.Utilities;
 
 namespace Goedel.FSR {
 
@@ -7,10 +8,10 @@ namespace Goedel.FSR {
     /// Wrapper class for stream or textreader which provides the get character
     /// and unget character methods needed for the lexical analyzer. For convenience,
     /// </summary>
-    public class LexReader : IDisposable {
-        Stream Stream = null;
-        TextReader TextReader = null;
-        bool Pending = false;
+    public class LexReader : Disposable {
+        Stream stream = null;
+        TextReader textReader = null;
+        bool pending = false;
 
         /// <summary>
         /// File path of input document, used for generating error messages.
@@ -30,6 +31,15 @@ namespace Goedel.FSR {
         protected LexReader() {
             }
 
+
+        /// <summary>
+        /// Create new lexical analyzer
+        /// </summary>
+        public LexReader(string filename) : 
+            this(new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, 
+                    System.IO.FileShare.Read)) {
+            }
+
         // Public constructors
         /// <summary>
         /// Create new lexical analyzer
@@ -46,24 +56,24 @@ namespace Goedel.FSR {
         /// <summary>
         /// Initialize the reader
         /// </summary>
-        /// <param name="Stream">Input data</param>
-        protected void Init(Stream Stream) {
-            this.Stream = Stream;
-            Init(new StreamReader(Stream));
+        /// <param name="stream">Input data</param>
+        protected void Init(Stream stream) {
+            this.stream = stream;
+            Init(new StreamReader(stream));
             }
 
         /// <summary>
         /// Initialize the reader
         /// </summary>
-        /// <param name="TextReader">Input data</param>
-        protected void Init(TextReader TextReader) => this.TextReader = TextReader;
+        /// <param name="textReader">Input data</param>
+        protected void Init(TextReader textReader) => this.textReader = textReader;
 
         /// <summary>
         /// Free resources.
         /// </summary>
-        public virtual void Dispose() {
-            if (Stream != null) { Stream.Dispose(); }
-            if (TextReader != null) { TextReader.Dispose(); }
+        protected override void Disposing() {
+            stream?.Dispose();
+            textReader?.Dispose();
             }
 
         /// <summary>
@@ -71,17 +81,17 @@ namespace Goedel.FSR {
         /// </summary>
         /// <returns>true if the action succeeded, false otherwise.</returns>
         public virtual bool Get() {
-            if (Pending & !EOF) {
-                Pending = false;
+            if (pending & !EOF) {
+                pending = false;
                 return true;
                 }
-            LastInt = TextReader.Read();
+            LastInt = textReader.Read();
             if (LastInt < 0) {
                 EOF = true;
                 return false;
                 }
             else if (LastInt == '\r') {
-                LastInt = TextReader.Read();
+                LastInt = textReader.Read();
                 }
 
             return true;
@@ -92,11 +102,11 @@ namespace Goedel.FSR {
         /// </summary>
         /// <returns>true if the action succeeded, false otherwise.</returns>
         public virtual bool GetBinary() {
-            if (Pending & !EOF) {
-                Pending = false;
+            if (pending & !EOF) {
+                pending = false;
                 return true;
                 }
-            LastInt = TextReader.Read();
+            LastInt = textReader.Read();
             if (LastInt < 0) {
                 EOF = true;
                 return false;
@@ -109,7 +119,7 @@ namespace Goedel.FSR {
         /// Unget the last character read. Only one character is buffered, multiple calls to 
         /// unget without calling get() have no effect.
         /// </summary>
-        public virtual void UnGet() => Pending = true;
+        public virtual void UnGet() => pending = true;
 
         }
 
@@ -123,34 +133,36 @@ namespace Goedel.FSR {
         /// </summary>
         public string String {
             set {
-                Data = value;
-                Count = 0;
+                data = value;
+                count = 0;
                 }
             }
 
-        string Data;
-        int Count;
+        string data;
+        int count;
+
+
+        /// <summary>
+        /// Free resources.
+        /// </summary>
+        protected override void Disposing() {
+            }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="Data">The string to be read.</param>
-        public LexStringReader(string Data) => String = Data;
+        /// <param name="data">The string to be read.</param>
+        public LexStringReader(string data) => String = data;
 
-        /// <summary>
-        /// Dispose method.
-        /// </summary>
-        public override void Dispose() {
-            }
 
         /// <summary>
         /// Get the next character from the lexical stream ignoring CR characters.
         /// </summary>
         /// <returns>true if the action succeeded, false otherwise.</returns>
         public override bool Get() {
-            if (Count < Data.Length) {
-                LastInt = Data[Count];
-                Count++;
+            if (count < data.Length) {
+                LastInt = data[count];
+                count++;
                 return true;
                 }
             else {
@@ -164,8 +176,8 @@ namespace Goedel.FSR {
         /// unget without calling get() have no effect.
         /// </summary>
         public override void UnGet() {
-            if (Count > 0) {
-                Count--;
+            if (count > 0) {
+                count--;
                 }
             }
         }

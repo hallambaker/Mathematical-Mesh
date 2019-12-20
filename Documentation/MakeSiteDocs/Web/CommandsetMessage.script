@@ -7,7 +7,7 @@
 
 
 #xfile CreateExamples WebMessage "Guide/message.md" CreateExamples Examples
-
+#% MakeTitle ("Message");
 ## Using the Message Command Set
 
 The `message` command set contains commands that send, receive and respond to 

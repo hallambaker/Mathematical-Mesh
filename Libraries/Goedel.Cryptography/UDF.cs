@@ -867,7 +867,15 @@ namespace Goedel.Cryptography {
                 case UDFAlgorithmIdentifier.Ed25519: {
                     return new KeyPairEd25519(binaryData, salt, keyType, keyUses);
                     }
-
+                case UDFAlgorithmIdentifier.Ed448: {
+                    return new KeyPairEd448(binaryData, salt, keyType, keyUses);
+                    }
+                case UDFAlgorithmIdentifier.X25519: {
+                    return new KeyPairX25519(binaryData, salt, keyType, keyUses);
+                    }
+                case UDFAlgorithmIdentifier.X448: {
+                    return new KeyPairX448(binaryData, salt, keyType, keyUses);
+                    }
                 }
             throw new NYI();
             }

@@ -13,26 +13,17 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveX25519 : CurveMontgomery {
 
-
+        #region // curve parameter constant definitions
+        ///<summary>The domain parameters</summary>
+        public override DomainParameters DomainParameters => DomainParameters.Curve25519;
 
         ///<summary>The modulus, p = 2^255 - 19</summary>
-        public override BigInteger Prime => P;
-
-        readonly static BigInteger P = BigInteger.Pow(2, 255) - 19;
-
-
-        /// <summary>Size of the modular field in bits.</summary>
-        public override int Bits => 448;
-
-
-        /// <summary>The parameter A24</summary>
-        public override int A24 => 121665;
+        public static BigInteger P => DomainParameters.Curve25519.P;
 
         ///<summary>The small order subgroup q</summary>
-        public static readonly BigInteger Q =
-            BigInteger.Pow(2, 252) + "27742317777372353535851937790883648493".DecimalToBigInteger();
-
-
+        public static BigInteger Q => DomainParameters.Curve25519.Q;
+        #endregion
+        #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
         static readonly CurveX25519 BasePoint =
             new CurveX25519(DomainParameters.Curve25519.U);
@@ -43,7 +34,10 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The neutral point which returns the original value when 
         ///added to a point.</summary>
         public CurveX25519 Neutral => throw new NYI();
+        #endregion
 
+
+        #region // Constructors
         /// <summary>Default constructor</summary>
         protected CurveX25519() {
             }
@@ -52,8 +46,16 @@ namespace Goedel.Cryptography.Algorithms {
         /// Construct a point from a U coordinate.
         /// </summary>
         /// <param name="u">The U coordinate</param>
-        public CurveX25519(BigInteger u) => U = u;
+        public CurveX25519(BigInteger u) => U = u.Mod(P);
 
+
+        /// <summary>
+        /// Construct a point from a U coordinate.
+        /// </summary>
+        /// <param name="data">The encoded U coordinate</param>
+        public CurveX25519(byte[] data) : this (DecodePoint (data)) { }
+
+        #endregion
 
         /// <summary>
         /// Crete a new point with the same parameters as this.
@@ -72,24 +74,6 @@ namespace Goedel.Cryptography.Algorithms {
 
 
         /// <summary>
-        /// Add two points
-        /// </summary>
-        /// <param name="Point">Second point</param>
-        /// <returns>The result of the addition.</returns>
-        public override CurveMontgomery Add(CurveMontgomery Point) {
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Add two points
-        /// </summary>
-        /// <param name="Point">Second point</param>
-        /// <returns>The result of the addition.</returns>
-        public override void Accumulate(CurveMontgomery Point) {
-            throw new NYI();
-            }
-
-        /// <summary>
         /// Generate the public parameter (a point on the curve)
         /// </summary>
         /// <param name="Private">The extended private key</param>
@@ -101,25 +85,54 @@ namespace Goedel.Cryptography.Algorithms {
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public override byte[] Encode() => throw new NYI();
+        public override byte[] Encode() => EncodePoint (U);
 
+        /// <summary>
+        /// Encode the code point <paramref name="u"/>.
+        /// </summary>
+        /// <param name="u">The point to encode.</param>
+        /// <returns>The encoded format of the point</returns>
+        public static byte[] EncodePoint(BigInteger u) =>
+            u.ByteArrayLittleEndian(32);
 
+        /// <summary>
+        /// Encode the code point <paramref name="u"/>.
+        /// </summary>
+        /// <param name="u">The point to encode.</param>
+        /// <returns>The encoded format of the point</returns>
+        public static byte[] EncodeScalar(BigInteger u) =>
+            u.ByteArrayLittleEndian(32);
 
         /// <summary>
         /// Construct a point on the curve from a buffer.
         /// </summary>
         /// <param name="Data">The encoded data</param>
         /// <returns>The point created</returns>
-        public static CurveX25519 Decode(byte[] Data) {
-            throw new NYI();
+        public static BigInteger DecodePoint(byte[] Data) {
+            var copy = Data.Duplicate();
+            copy[31] &= 127;
+            return copy.BigIntegerLittleEndian();
             }
-        
+
+        /// <summary>
+        /// Construct a point on the curve from a buffer.
+        /// </summary>
+        /// <param name="Data">The encoded data</param>
+        /// <returns>The point created</returns>
+        public static BigInteger DecodeScalar(byte[] Data) {
+            var copy = Data.Duplicate();
+            copy[0] &= 248;
+            copy[31] &= 127;
+            copy[31] |= 64;
+            return copy.BigIntegerLittleEndian();
+            }
+
         /// <summary>
         /// Create a point from the specified U value.
         /// </summary>
         /// <param name="U">The U value</param>
         /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger U) => new CurveX25519(U);
+        public override CurveMontgomery Factory(BigInteger U, bool? odd) => new CurveX25519(U);
         }
 
 
@@ -149,7 +162,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="encoding">The encoded public key value.</param>
         public CurveX25519Public(byte[] encoding) {
-            this.Public = CurveX25519.Decode(encoding);
+            this.Public =  new CurveX25519 (encoding);
             this.Encoding = encoding;
             }
         /// <summary>
@@ -236,7 +249,7 @@ namespace Goedel.Cryptography.Algorithms {
 
         public CurveX25519Private(BigInteger privateKey, bool exportable = false) {
             Private = privateKey;
-            Secret = privateKey.ToByteArray();
+            Secret = CurveX25519.EncodeScalar(privateKey);
 
             var PublicPoint = CurveX25519.GetPublic(privateKey);
             Public = new CurveX25519Public(PublicPoint);
@@ -250,14 +263,17 @@ namespace Goedel.Cryptography.Algorithms {
         /// Construct provider from private key data.
         /// </summary>
         /// <param name="encoding">The encoded private key value.</param>
-        /// <param name="Exportable">If true, the private key is exportable</param>
-        public CurveX25519Private(byte[] encoding, bool Exportable = false) => throw new NotImplementedException();
+        /// <param name="exportable">If true, the private key is exportable</param>
+        public CurveX25519Private(byte[] encoding, bool exportable = false) :
+            this(CurveX25519.DecodeScalar(encoding), exportable) { }
+
 
         /// <summary>
         /// Generate a new private key
         /// </summary>
         /// <param name="exportable">If true, the private key is exportable</param>
-        public CurveX25519Private(bool exportable = false) => throw new NotImplementedException();
+        public CurveX25519Private(bool exportable = false) :
+            this(Platform.GetRandomBytes(32), exportable) { }
 
 
 

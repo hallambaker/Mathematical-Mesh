@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebGroup(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
+				 MakeTitle ("group");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The group command set is used to manage recryption groups\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

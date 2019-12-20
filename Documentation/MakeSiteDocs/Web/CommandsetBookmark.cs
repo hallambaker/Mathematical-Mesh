@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebBookmark(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `bookmark` Command Set\n{0}", _Indent);
+				 MakeTitle ("bookmark");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `bookmark` command set is used to manage a bookmarks catalog which contains\n{0}", _Indent);
 				_Output.Write ("a collection of bookmarks and citations and shares them between devices connected \n{0}", _Indent);

@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebKey(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `key` Command Set\n{0}", _Indent);
+				 MakeTitle ("key");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `key` command set contains commands that operate on cryptographic secrets and\n{0}", _Indent);
 				_Output.Write ("nonces.\n{0}", _Indent);

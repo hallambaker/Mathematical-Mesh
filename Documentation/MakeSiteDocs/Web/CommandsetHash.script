@@ -7,7 +7,7 @@
 
 
 #xfile CreateExamples WebHash "Guide/hash.md" CreateExamples Examples
-## Using the `hash` Command Set
+#% MakeTitle ("hash");
 
 The `hash` command set contains commands that perform Content Digest and 
 Message Authentication Code operations on the contents of a file.

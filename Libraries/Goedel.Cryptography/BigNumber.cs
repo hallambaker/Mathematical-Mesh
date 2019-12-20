@@ -140,6 +140,23 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Encode the code point <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">The point to encode.</param>
+        /// <param name="length">The number of bytes to output.</param>
+        /// <returns>The encoded format of the point</returns>
+        public static byte[] ByteArrayLittleEndian(this BigInteger data, int length) {
+            var bytes = data.ToByteArray();
+            if (bytes.Length == length) {
+                return bytes;
+                }
+            var result = new byte[length];
+            Array.Copy(bytes, result, (bytes.Length < length ? bytes.Length : length));
+            return result;
+            }
+
+
+        /// <summary>
         /// Convert an array of bytes in little endian format to a Big Integer
         /// </summary>
         /// <param name="Data">The data in little endian format.</param>

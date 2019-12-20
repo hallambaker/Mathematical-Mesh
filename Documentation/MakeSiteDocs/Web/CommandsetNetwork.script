@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebNetwork "Guide/network.md" CreateExamples Examples
-
-## Using the `network` Command Set
+#% MakeTitle ("network");
 
 The `network` command set is used to manage a network configuration catalog which contains
 a entries describing how to access particular networks.

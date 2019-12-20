@@ -233,9 +233,13 @@ namespace ExampleGenerator {
 		// DescribeMessage
 		//
 		public void DescribeMessage (ExampleResult Result) {
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
+			_Output.Write ("<over>\n{0}", _Indent);
 			_Output.Write ("[NYI]\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("<over>\n{0}", _Indent);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -245,9 +249,13 @@ namespace ExampleGenerator {
 		public void Describe (DescribeCommandSet CommandSet) {
 			_Output.Write ("# {1}\n{0}", _Indent, CommandSet.Identifier);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
+			_Output.Write ("<over>\n{0}", _Indent);
 			 CommandSet.Describe('/', _Output, false);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("<over>\n{0}", _Indent);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -257,9 +265,13 @@ namespace ExampleGenerator {
 		public void Describe (DescribeCommandSet CommandSet, DescribeCommand Command) {
 			_Output.Write ("# {1} {2}\n{0}", _Indent, CommandSet.Identifier, Command.Identifier);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"helptext\">\n{0}", _Indent);
+			_Output.Write ("<over>\n{0}", _Indent);
 			 Command.Describe('/', _Output, false);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("<over>\n{0}", _Indent);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -360,12 +372,14 @@ namespace ExampleGenerator {
 				 Console.WriteLine ($"Missing example!"); return;
 				}
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
 			foreach  (var exampleResult in exampleResults) {
-				_Output.Write ("{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-				_Output.Write ("{1}", _Indent, exampleResult.ResultText);
+				_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+				_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
 				}
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -379,10 +393,12 @@ namespace ExampleGenerator {
 				}
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			_Output.Write ("{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 
@@ -396,17 +412,31 @@ namespace ExampleGenerator {
 				}
 			 var exampleResult = exampleResults[0];
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
-			_Output.Write ("{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("{1}", _Indent, exampleResult.ResultText);
-			_Output.Write ("{1}\n{0}", _Indent, Preformat);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2}\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}", _Indent, exampleResult.ResultText);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("Specifying the /json option returns a result of type {1}:\n{0}", _Indent, exampleResult.ResultType);
 			_Output.Write ("\n{0}", _Indent);
-			_Output.Write ("````\n{0}", _Indent);
-			_Output.Write ("{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
-			_Output.Write ("{1}\n{0}", _Indent, exampleResult.ResultJSON);
-			_Output.Write ("````\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("<div=\"terminal\">\n{0}", _Indent);
+			_Output.Write ("<cmd>{1}> {2} /json\n{0}", _Indent, exampleResult.MachineName, exampleResult.Command);
+			_Output.Write ("<rsp>{1}\n{0}", _Indent, exampleResult.ResultJSON);
+			_Output.Write ("</div>\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// MakeTitle
+		//
+		public void MakeTitle (string title) {
+			_Output.Write ("<title>{1}\n{0}", _Indent, title);
+			_Output.Write ("# Using the {1} Command Set\n{0}", _Indent, title);
 			}
 		
 

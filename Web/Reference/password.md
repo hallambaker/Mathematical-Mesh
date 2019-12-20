@@ -2,18 +2,24 @@
 
 # password
 
-````
+~~~~
+<div="helptext">
+<over>
 password    Manage password catalogs connected to an account
     add   Add password entry
     delete   Delete password entry
     get   Lookup password entry
     list   List password entries
-````
+<over>
+</div>
+~~~~
 
 
 # password add
 
-````
+~~~~
+<div="helptext">
+<over>
 add   Add password entry
        <Unspecified>
        <Unspecified>
@@ -22,97 +28,129 @@ add   Add password entry
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> password add ftp.example.com alice1 password
-alice1@ftp.example.com = [password]
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password
+<rsp>alice1@ftp.example.com = [password]
+</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
 
-````
-Alice> password add ftp.example.com alice1 password /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password /json
+<rsp>{
   "ResultEntry": {
     "Success": true,
     "CatalogEntry": {
       "Service": "ftp.example.com",
       "Username": "alice1",
       "Password": "password"}}}
-````
+</div>
+~~~~
+
 
 # password get
 
-````
+~~~~
+<div="helptext">
+<over>
 get   Lookup password entry
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> password delete www.example.com
-````
+~~~~
+<div="terminal">
+<cmd>Alice> password delete www.example.com
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type Result:
 
-````
-Alice> password delete www.example.com /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> password delete www.example.com /json
+<rsp>{
   "Result": {
     "Success": true}}
-````
+</div>
+~~~~
+
 
 # password delete
 
-````
+~~~~
+<div="helptext">
+<over>
 delete   Delete password entry
        Domain name of Web site
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 Specifying the /json option returns a result of type ResultMachine:
 
-````
-Alice> mesh list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
   "ResultMachine": {
     "Success": true,
     "CatalogedMachines": []}}
-````
+</div>
+~~~~
+
 
 # password list
 
-````
+~~~~
+<div="helptext">
+<over>
 list   List password entries
        <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
     /json   Report output in JSON format
-````
+<over>
+</div>
+~~~~
 
-````
-Alice> password list
-alice1@ftp.example.com = [password]
+~~~~
+<div="terminal">
+<cmd>Alice> password list
+<rsp>alice1@ftp.example.com = [password]
 alice@example.com@www.example.com = [newpassword]
-````
+</div>
+~~~~
 
 Specifying the /json option returns a result of type ResultDump:
 
-````
-Alice> password list /json
-{
+~~~~
+<div="terminal">
+<cmd>Alice> password list /json
+<rsp>{
   "ResultDump": {
     "Success": true,
     "CatalogedEntries": [{
@@ -123,6 +161,8 @@ Alice> password list /json
         "Service": "www.example.com",
         "Username": "alice@example.com",
         "Password": "newpassword"}]}}
-````
+</div>
+~~~~
+
 
 

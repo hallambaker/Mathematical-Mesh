@@ -7,8 +7,7 @@
 
 
 #xfile CreateExamples WebContainer "Guide/container.md" CreateExamples Examples
-
-## Using the `container Command Set
+#% MakeTitle ("container");
 
 The `container` command set contains commands that operate on DARE Containers.
 

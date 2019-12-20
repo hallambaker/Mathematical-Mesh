@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebProfile(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the `profile` Command Set\n{0}", _Indent);
+				 MakeTitle ("profile");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `profile` command set contains commands used to create and manage\n{0}", _Indent);
 				_Output.Write ("Mesh profiles.\n{0}", _Indent);

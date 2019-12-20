@@ -22,8 +22,7 @@ namespace ExampleGenerator {
 			}
 		public void _WebDare(CreateExamples Examples) {
 
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("# Using the  Command Set\n{0}", _Indent);
+				 MakeTitle ("dare");
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `dare` command set contains commands that encode, decode and verify \n{0}", _Indent);
 				_Output.Write ("DARE messages.\n{0}", _Indent);

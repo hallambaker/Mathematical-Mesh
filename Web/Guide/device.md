@@ -1,4 +1,4 @@
-
+<title>device
 # Using the device Command Set
 
 The `device` command set contains commands used to connect devices to a 
@@ -11,11 +11,13 @@ to request connection to the user's profile. Alice need only specify
 the mesh service account alice@example.com to which connection is requested:
 
 
-````
-Alice2> device request alice@example.com
-   Witness value = 42B2-7POX-GMLW-6EBC-GKAI-7NDC-7226
-   Personal Mesh = MA2T-CF6T-DM54-P2UQ-RMYE-SB7W-M3KB
-````
+~~~~
+<div="terminal">
+<cmd>Alice2> device request alice@example.com
+<rsp>   Witness value = ASOE-FANU-WN2N-UQ24-JBHE-GSHV-EKQL
+   Personal Mesh = MCON-CT4L-LAU5-UQTO-TPIS-MHJA-T7RG
+</div>
+~~~~
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -31,37 +33,45 @@ The `device pending` command gives a list of pending connection
 messages.
 
 
-````
-Alice> device pending
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device pending
+<rsp></div>
+~~~~
 
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
 
-````
-Alice> device accept NB4R-GVWN-KZRU-5EQ4-444I-3FGG-67FL
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device accept NDZP-2UYY-ZA5U-T2PR-7XBW-OBT6-2OQE
+<rsp></div>
+~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
 
-````
-Alice> device reject NBSG-GQEN-DBOT-64HY-IA6X-QI6Q-6CG6
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device reject NB3R-I5BK-QDB2-QWXG-WPVK-NGH6-OIII
+<rsp></div>
+~~~~
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
 
-````
-Alice2> device complete
-ERROR - Object reference not set to an instance of an object.
-Alice2> account sync
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice2> device complete
+<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice2> account sync
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 ##Managing connected devices
 
@@ -69,18 +79,22 @@ The `device list` command gives a list of devices in the device
 catalog:
 
 
-````
-Alice> device list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device list
+<rsp></div>
+~~~~
 
 The `device delete` command removes a device from the catalog:
 
 
-````
-Alice> device delete NB4R-GVWN-KZRU-5EQ4-444I-3FGG-67FL
-ERROR - The feature has not been implemented
-Alice> device list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device delete NDZP-2UYY-ZA5U-T2PR-7XBW-OBT6-2OQE
+<rsp>ERROR - The feature has not been implemented
+<cmd>Alice> device list
+<rsp></div>
+~~~~
 
 
 ## Requesting a connection using a PIN
@@ -96,28 +110,34 @@ administration device. The `device pin` command generates
 a new PIN code:
 
 
-````
-Alice> account pin
-PIN=NAOC-EDRT-JAUW-SEC2-6I (Expires=2019-11-05T11:40:36Z)
-````
+~~~~
+<div="terminal">
+<cmd>Alice> account pin
+<rsp>PIN=NARV-QGFB-7LZ2-6IYI-KE (Expires=2019-11-14T20:27:54Z)
+</div>
+~~~~
 
 The pin code can now be used to authenticate the connection request:
 
 
-````
-Alice3> device request alice@example.com /pin=NAOC-EDRT-JAUW-SEC2-6I
-   Witness value = V3L2-I4GR-NYYT-FL6B-PR6Z-ENPF-GIJN
-   Personal Mesh = MA2T-CF6T-DM54-P2UQ-RMYE-SB7W-M3KB
-````
+~~~~
+<div="terminal">
+<cmd>Alice3> device request alice@example.com /pin=NARV-QGFB-7LZ2-6IYI-KE
+<rsp>   Witness value = 6X26-DOD7-HQXO-7WQZ-5VZI-HB6D-CWK3
+   Personal Mesh = MCON-CT4L-LAU5-UQTO-TPIS-MHJA-T7RG
+</div>
+~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
 
-````
-Alice> device pending
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device pending
+<rsp></div>
+~~~~
 
 
 ### Requesting a connection using an EARL
@@ -152,19 +172,23 @@ account established for the purpose of providing a hailing account for enabling
 this type of device connection.
 
 
-````
-Alice4> device pre devices@example.com /key=udf://example.com/ECX5-RCFP-OJDO-6ZBR-SORQ-P7BH-XZQS-LD
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice4> device pre devices@example.com /key=udf://example.com/EB2X-PUOT-6CR3-TVNH-EN2T-4Y4X-FK6Q-NC
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 The device can attempt to complete the connection whenever it is provided with power 
 and network connectivity using the `profile sync` command.
 
 
-````
-Alice4> account sync
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice4> account sync
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -180,20 +204,24 @@ A QR code or other scanning application can use the meshman tool to resolve the 
 and retrieve the data using the `device earl` command:
 
 
-````
-Alice> device earl udf://example.com/ECX5-RCFP-OJDO-6ZBR-SORQ-P7BH-XZQS-LD
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice> device earl udf://example.com/EB2X-PUOT-6CR3-TVNH-EN2T-4Y4X-FK6Q-NC
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
 
-````
-Alice4> account sync
-ERROR - Object reference not set to an instance of an object.
-````
+~~~~
+<div="terminal">
+<cmd>Alice4> account sync
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 

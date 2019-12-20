@@ -1,5 +1,5 @@
-
-# Using the `profile` Command Set
+<title>profile
+# Using the profile Command Set
 
 The `profile` command set contains commands used to create and manage
 Mesh profiles.
@@ -11,12 +11,14 @@ The `profile hello` command contacts a Mesh service and returns
 a description of the service parameters.
 
 
-````
-Alice> account hello alice@example.com
-MeshService 3.0
-   Service UDF = MAO3-6MTG-BG74-AJWI-KR3G-6TRE-DQ7E
-   Host UDF = MCGY-LK76-MUY4-42WK-EHYE-NTAV-2Q6T
-````
+~~~~
+<div="terminal">
+<cmd>Alice> account hello alice@example.com
+<rsp>MeshService 3.0
+   Service UDF = MBM6-NGT3-XLLA-PB3Y-HU2O-TN56-7D37
+   Host UDF = MBXD-54R6-DCZY-4NFG-MF3E-VJJV-6HZL
+</div>
+~~~~
 
 If a Mesh account is specified, the tool attempts to connect to a Mesh service
 at the associated domain. It is not necessary for the account to be registered
@@ -38,11 +40,13 @@ This includes the steps of:
 The `profile create` command creates a profile:
 
 
-````
-Alice> mesh create
-Device Profile UDF=MAXU-2AAG-6EJJ-R434-NFW2-JGYW-JSL7
-Personal Profile UDF=MA2T-CF6T-DM54-P2UQ-RMYE-SB7W-M3KB
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh create
+<rsp>Device Profile UDF=MAKA-EQ4V-AUGA-L4LI-MQKP-NE6Y-6UYT
+Personal Profile UDF=MCON-CT4L-LAU5-UQTO-TPIS-MHJA-T7RG
+</div>
+~~~~
 
 
 
@@ -53,17 +57,21 @@ The `profile list` command lists all the profiles available on the
 machine:
 
 
-````
-Alice> mesh list
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
 
 The `profile dump` command provides a more detailed description of 
 a profile:
 
 
-````
-Alice> mesh get
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh get
+<rsp></div>
+~~~~
 
 ## Escrowing Profile Master Keys
 
@@ -77,10 +85,12 @@ The `profile ` command escrows the signature and encryption keys
 of the user's master profile and returns a set of recovery shares. 
 
 
-````
-Alice> mesh escrow
-ERROR - The cryptographic provider does not permit export of the private key parameters
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh escrow
+<rsp>ERROR - The cryptographic provider does not permit export of the private key parameters
+</div>
+~~~~
 
 By default, three recovery shares are created such that two shares are required to
 recover the master keys.
@@ -89,10 +99,12 @@ Recovery of the master keys is performed by the `profile recover`
 command.
 
 
-````
-Alice> mesh recover $TBS $TBS /verify
-ERROR - The feature has not been implemented
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh recover $TBS $TBS /verify
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 The `/verify` flag causes the tool to check that the keys can be correctly recovered
 without actually installing on the machine.
@@ -103,15 +115,19 @@ without actually installing on the machine.
 A Mesh profile may be exported as a file using the `profile ` command:
 
 
-````
-Alice> mesh export profile.dare
-````
+~~~~
+<div="terminal">
+<cmd>Alice> mesh export profile.dare
+<rsp></div>
+~~~~
 
 The `profile ` profile can then be used to import the file on another 
 machine:
 
 
-````
-Alice4> mesh import profile.dare
-````
+~~~~
+<div="terminal">
+<cmd>Alice4> mesh import profile.dare
+<rsp></div>
+~~~~
 
