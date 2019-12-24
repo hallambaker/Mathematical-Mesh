@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
@@ -150,9 +151,12 @@ namespace Goedel.Cryptography.Jose {
 
         // This is called as a one time initializer
         static AlgorithmID() {
+            foreach (var Entry in UpperToID) {
+                IdToString.AddSafe(Entry.Value, Entry.Key);
+                }
             foreach (var Entry in StringToID) {
-                IdToString.Add(Entry.Value, Entry.Key);
-                UpperToID.Add(Entry.Key.ToUpper(), Entry.Value);
+                IdToString.AddSafe(Entry.Value, Entry.Key);
+                UpperToID.AddSafe(Entry.Key.ToUpper(), Entry.Value);
                 }
             }
 

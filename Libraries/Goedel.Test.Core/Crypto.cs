@@ -60,7 +60,7 @@ namespace Goedel.Test.Core {
 
             var result = new CurveEdwards25519Result() {
                 EphemeralPublicValue = PrivateKey.Public,
-                Agreement = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
+                AgreementEd25519 = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
                 };
 
             EncryptionKey = result.KeyDerive.Derive(KDFSalt, Length: 256);

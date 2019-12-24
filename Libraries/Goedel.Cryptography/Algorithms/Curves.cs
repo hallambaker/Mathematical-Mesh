@@ -26,7 +26,9 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger SqrtMinus1 => DomainParameters.SqrtMinus1;
 
 
+        public abstract Curve Add(Curve point);
 
+        public abstract IKeyAdvancedPublic KeyAdvancedPublic { get; }
         }
 
 
@@ -308,6 +310,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The encoded format of the point</returns>
         public abstract byte[] Encode();
 
+
+        public override Curve Add(Curve point) => Add (point as CurveMontgomery);
+
         /// <summary>
         /// Add two points
         /// </summary>
@@ -415,6 +420,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public abstract CurveEdwards Add(CurveEdwards P2);
 
+        public override Curve Add(Curve point) => Add(point as CurveEdwards);
 
         #region // Equality testing
         /// <summary>Test to see if two points on a curve are equal</summary>

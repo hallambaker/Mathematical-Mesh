@@ -25,7 +25,7 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
 <rsp></div>
 ~~~~
 
@@ -35,7 +35,7 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<cmd>Alice> dare encode TestDir1 /encrypt=EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
 <rsp>ERROR - Access to the path 'C:\Users\hallam\Test\WorkingDirectory\TestDir1' is denied.
 </div>
 ~~~~
@@ -83,7 +83,7 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
 <rsp>ERROR - The option  is not known.
 </div>
 ~~~~
@@ -114,7 +114,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBLE-3WYW-YP2H-FKVS-HYWT-D7GZ-YT6Q
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
 <rsp>ERROR - The option  is not known.
 </div>
 ~~~~

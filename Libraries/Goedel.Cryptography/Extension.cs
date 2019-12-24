@@ -125,6 +125,30 @@ namespace Goedel.Cryptography {
         /// <returns>Portable extension representation.</returns>
         public static PKIX.Extension Extension(this X509Extension X509Extension) => null;
 
+
+
+
+
+        /// <summary>
+        /// Convert CryptoAlgorithmID <paramref name="cryptoAlgorithmID"/> to the 
+        /// corresponding UDF identifier.
+        /// </summary>
+        /// <param name="cryptoAlgorithmID">The identifier to convert</param>
+        /// <param name="keysize">Key size (if needed)</param>
+        /// <returns>The UDF identifier.</returns>
+        public static UDFAlgorithmIdentifier ToUDFID (
+                this CryptoAlgorithmID cryptoAlgorithmID, int keysize = 0) {
+            return cryptoAlgorithmID switch
+                {
+                    CryptoAlgorithmID.X25519 => UDFAlgorithmIdentifier.X25519,
+                    CryptoAlgorithmID.X448 => UDFAlgorithmIdentifier.X448,
+                    CryptoAlgorithmID.Ed25519 => UDFAlgorithmIdentifier.Ed25519,
+                    CryptoAlgorithmID.Ed448 => UDFAlgorithmIdentifier.Ed448,
+                    _ => UDFAlgorithmIdentifier.Any,
+                    };
+            }
+
+
         }
 
     }

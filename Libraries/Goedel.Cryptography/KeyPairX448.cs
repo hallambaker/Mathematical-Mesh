@@ -64,16 +64,17 @@ namespace Goedel.Cryptography {
             KeyUses = keyUses;
             if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX448Public(key);
+                PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
+                keyType = KeySecurity.Public;
                 }
             else {
                 encodedPrivateKey = key;
-                var privateKey = new CurveX448Private(key);
-                PublicKey = privateKey.Public;
-                if (keyType == KeySecurity.Exportable) {
-                    var PKIXPrivateKeyECDH = new PKIXPrivateKeyX448() {
-                        Data = key
-                        };
-                    this.PKIXPrivateKeyECDH = PKIXPrivateKeyECDH; // Enable export.
+                var exportable = keyType.IsExportable();
+                PrivateKey = new CurveX448Private(key, exportable);
+                PublicKey = PrivateKey.Public;
+                PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
+                if (exportable) {
+                    PKIXPrivateKeyECDH = new PKIXPrivateKeyX448(key, PKIXPublicKeyECDH);
                     }
                 }
             PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
@@ -95,7 +96,7 @@ namespace Goedel.Cryptography {
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
-                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 448, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
             }
 
         /// <summary>
@@ -203,9 +204,9 @@ namespace Goedel.Cryptography {
                 Agreement = PrivateKey.Agreement(Public.PublicKey);
                 }
             else {
-                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.Agreement);
+                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.AgreementX448);
                 }
-            return new CurveX448Result() { Agreement = Agreement };
+            return new CurveX448Result() { AgreementX448 = Agreement };
             }
 
         /// <summary>

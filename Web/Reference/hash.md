@@ -135,8 +135,8 @@ true returned if and only if it matches the value specified.
 ~~~~
 <div="terminal">
 <cmd>Alice> hash mac TestFile1.txt
-<rsp>ACPD-YVPX-VMBP-7VAM-RCUP-NAG6-LLYV
-NDXX-MFCD-5YYF-VHJF-JTIG-SJY5-HMBU
+<rsp>ABPG-UBX6-EWP7-5HUT-2F3A-3T73-CYYV
+NAZE-XNDV-NQLL-OPZO-3BFP-QHQP-KBSD
 </div>
 ~~~~
 
@@ -148,8 +148,8 @@ Specifying the /json option returns a result of type ResultDigest:
 <rsp>{
   "ResultDigest": {
     "Success": true,
-    "Digest": "ACPD-YVPX-VMBP-7VAM-RCUP-NAG6-LLYV",
-    "Key": "NDXX-MFCD-5YYF-VHJF-JTIG-SJY5-HMBU"}}
+    "Digest": "ABPG-UBX6-EWP7-5HUT-2F3A-3T73-CYYV",
+    "Key": "NAZE-XNDV-NQLL-OPZO-3BFP-QHQP-KBSD"}}
 </div>
 ~~~~
 

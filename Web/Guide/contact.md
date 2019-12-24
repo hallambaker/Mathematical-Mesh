@@ -22,7 +22,7 @@ a file.
 <cmd>Alice> contact add email carol@example.com
 <rsp>{
   "Self": false,
-  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+  "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
@@ -44,7 +44,7 @@ details:
 <cmd>Alice> contact self email alice@example.com
 <rsp>{
   "Self": true,
-  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
+  "Key": "NB54-QGQH-2PL5-DCAV-SXY6-ER2T-B556",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
@@ -83,12 +83,12 @@ A complete list of contacts is obtained using the  `contact list` command:
 <cmd>Alice> contact list
 <rsp>{
   "Self": true,
-  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
+  "Key": "NB54-QGQH-2PL5-DCAV-SXY6-ER2T-B556",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+  "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>

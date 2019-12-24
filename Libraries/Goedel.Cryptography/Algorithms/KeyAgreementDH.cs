@@ -190,6 +190,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The composite key</returns>
         public IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
             Combine(contribution as DiffeHellmanPublic);
+        public byte[] Encoding => Public.ToByteArray();
 
         #endregion
         }
@@ -376,6 +377,7 @@ namespace Goedel.Cryptography.Algorithms {
         public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
             Combine(contribution as DiffeHellmanPrivate);
         #endregion
+
 
         }
 

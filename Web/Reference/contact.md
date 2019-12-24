@@ -37,7 +37,7 @@ add   Add contact entry from file
 <cmd>Alice> contact add email carol@example.com
 <rsp>{
   "Self": false,
-  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+  "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
@@ -53,7 +53,7 @@ Specifying the /json option returns a result of type ResultEntry:
     "Success": true,
     "CatalogEntry": {
       "Self": false,
-      "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+      "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
       "EnvelopedContact": [{},
         "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}}}
@@ -150,12 +150,12 @@ list   List contact entries
 <cmd>Alice> contact list
 <rsp>{
   "Self": true,
-  "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
+  "Key": "NB54-QGQH-2PL5-DCAV-SXY6-ER2T-B556",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+  "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
@@ -171,13 +171,13 @@ Specifying the /json option returns a result of type ResultDump:
     "Success": true,
     "CatalogedEntries": [{
         "Self": true,
-        "Key": "NAH7-EET7-VDI4-ORF7-OTNP-USGF-TYXE",
+        "Key": "NB54-QGQH-2PL5-DCAV-SXY6-ER2T-B556",
         "EnvelopedContact": [{},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]},
       {
         "Self": false,
-        "Key": "NDSM-IILU-QL4L-AZZF-CN5J-XJU4-5SDE",
+        "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
         "EnvelopedContact": [{},
           "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}]}}

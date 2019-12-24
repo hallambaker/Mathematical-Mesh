@@ -46,6 +46,8 @@ namespace Goedel.Cryptography.Algorithms {
         #endregion
 
 
+        public override IKeyAdvancedPublic KeyAdvancedPublic => new CurveEdwards448Public(this);
+
         /// <summary>Default constructor</summary>
         protected CurveEdwards448() {
             }
@@ -353,7 +355,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             return new CurveEdwards448Result() {
                 EphemeralPublicValue = Private.Public,
-                Agreement = Private.Agreement(this)
+                AgreementEd448 = Private.Agreement(this)
                 };
             }
 
@@ -620,7 +622,7 @@ namespace Goedel.Cryptography.Algorithms {
         public KeyAgreementResult Agreement(KeyPair keyPair) {
             var publicKey = (keyPair as KeyPairEd448).PublicKey;
             var agreement = Agreement(publicKey);
-            return new CurveEdwards448Result() { Agreement = agreement };
+            return new CurveEdwards448Result() { AgreementEd448 = agreement };
             }
 
 
@@ -737,18 +739,20 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveEdwards448Result : ResultECDH {
 
+        public override Curve Agreement => AgreementEd448;
+
         /// <summary>The key agreement result</summary>
-        public CurveEdwards448 Agreement { get; set; }
+        public CurveEdwards448 AgreementEd448 { get; set; }
 
         /// <summary>
         /// The DER encoding of the data. This is the IKM octet sequence.
         /// </summary>
         /// <returns></returns>
-        public override byte[] DER() => Agreement.Encode();
+        public override byte[] DER() => AgreementEd448.Encode();
 
 
         /// <summary>The key agreement result as a byte array</summary>
-        public override byte[] IKM => Agreement.Encode();
+        public override byte[] IKM => AgreementEd448.Encode();
 
         /// <summary>
         /// The Ephemeral public key

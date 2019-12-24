@@ -15,47 +15,47 @@
 #end method
 
 
-#file ExamplesThreshold "Examples\\ExamplesThreshold.md" CreateExamples Example
+#xfile CreateExamples ExamplesThreshold "Examples\\ExamplesThreshold.md" CreateExamples Example
 #% var threshold = Example.Threshold;
 
 #### Threshold Key Generation
 
 ###### X25519
 
-#% DescribeKeyGen (threshold.KeyGenX25519);
+#call DescribeKeyGen threshold.KeyGenX25519
 
 
 ###### X448
 
-#% DescribeKeyGen (threshold.KeyGenX448);
+#call DescribeKeyGen threshold.KeyGenX448
 
 ###### Ed25519
 
-#% DescribeKeyGen (threshold.KeyGenEd25519);
+#call DescribeKeyGen threshold.KeyGenEd25519
 
 ###### Ed448
 
-#% DescribeKeyGen (threshold.KeyGenEd448);
+#call DescribeKeyGen threshold.KeyGenEd448
 
 #### Threshold Decryption
 
 ###### Key Splitting X25519
 
-#% DescribeDecryptSplitting (threshold.DecryptX25519);
+#call DescribeDecryptSplitting threshold.DecryptX25519
 
 ###### Decryption X25519
 
-#% DescribeDecryptUse (threshold.DecryptX25519);
+#call DescribeDecryptUse threshold.DecryptX25519
 
 ###### Key Splitting X448
 
-#% DescribeDecryptSplitting (threshold.DecryptX448);
+#call DescribeDecryptSplitting threshold.DecryptX448
 
 ###### Decryption X448
 
-#% DescribeDecryptUse (threshold.DecryptX448);
+#call DescribeDecryptUse threshold.DecryptX448
 
-#end file
+#end xfile
 
 
 #method DescribeDecryptUse Decrypt Decrypt
@@ -64,20 +64,20 @@ The means of encryption is unchanged. We begin by generating an ephemeral
 key pair:
 
 ~~~~
-#% DescribeKey (Decrypt.KeyE)
+#call DescribeKey Decrypt.KeyE
 ~~~~
 
 The key agreement result is given by multiplying the public key of the encryption 
 pair by the secret scalar of the ephemeral key to obtain the u-coordinate of the result.
 
 ~~~~
-#{KeyEA.XTag}: {Key.X}
+#{Decrypt.KeyEA.XTag}: {Key.X}
 ~~~~
 
 The u-coordinate is encoded in the usual fashion (i.e. without specifying the sign of v).
 
 ~~~~
-#{KeyEA.Public.ToStringBase16FormatHex()}
+#{Decrypt.KeyEA.Public.ToStringBase16FormatHex()}
 ~~~~
 
 The first decryption contribution is generated from the secret scalar of the first key
@@ -86,43 +86,43 @@ share and the public key of the ephemeral.
 The outputs from the Montgomery Ladder are:
 
 ~~~~
-x_2
-z_2
-x_3
-z_3
+x_2 #{Decrypt.KeyE1.X2}
+z_2 #{Decrypt.KeyE1.Z2}
+x_3 #{Decrypt.KeyE1.X3}
+z_3 #{Decrypt.KeyE1.Z3}
 ~~~~
 
 The coordinates of the corresponding point are:
 
 ~~~~
-u1
-v2
+u #{Decrypt.KeyE1.X}
+v #{Decrypt.KeyE1.Y}
 ~~~~
 
 The encoding of this point specifies the u coordinate and the sign (oddness) of the 
 v coordinate:
 
 ~~~~
-encoding2
+#{Decrypt.KeyE1.Public.ToStringBase16FormatHex()}
 ~~~~
 
 The second decryption contribution is generated from the secret scalar of the second key
 share and the public key of the ephemeral in the same way:
 
 ~~~~
-u2
-v2
+u #{Decrypt.KeyE2.X}
+v #{Decrypt.KeyE2.Y}
 ~~~~
 
 ~~~~
-encoding2
+#{Decrypt.KeyE2.Public.ToStringBase16FormatHex()}
 ~~~~
 
 To obtain the key agreement value, we add the two decryption contributions:
 
 ~~~~
-uae
-vae
+u #{Decrypt.KeyE12.X}
+v #{Decrypt.KeyE12.Y}
 ~~~~
 
 This returns the same u coordinate value as before, allowing us to obtain the encoding 
@@ -136,7 +136,7 @@ of the key agreement value and decrypt the message.
 The encryption key pair is
 
 ~~~~
-#% DescribeKey (Decrypt.KeyA)
+#call DescribeKey Decrypt.KeyA
 ~~~~
 
 To create n key shares we first create n-1 key pairs in the normal fashion. Since 
@@ -144,7 +144,7 @@ these key pairs are only used for decryption operations, it is not necessary to
 calculate the public components:
 
 ~~~~
-#% DescribeKeyPrivate (Decrypt.Key1)
+#call DescribeKeyPrivate Decrypt.Key1
 ~~~~
 
 The secret scalar of the final key share is the secret scalar of the base key minus
@@ -154,7 +154,7 @@ the sum of the secret scalars of the other shares modulo the group order:
 Scalar_2 = (Scalar_A - Scalar_1) mod L
     = #{Decrypt.Key1.Scalar}
 This is encoded as a binary integer in little endian format:
-#{Decrypt.Key1.Private.ToStringBase16FormatHex()}
+#{Decrypt.Key2.Private.ToStringBase16FormatHex()}
 ~~~~
 
 
@@ -164,19 +164,19 @@ This is encoded as a binary integer in little endian format:
 The key parameters of the first key contribution are:
 
 ~~~~
-#% DescribeKey (KeyGen.Key1)
+#call DescribeKey KeyGen.Key1
 ~~~~
 
 The key parameters of the second key contribution are:
 
 ~~~~
-#% DescribeKey (KeyGen.Key2)
+#call DescribeKey KeyGen.Key2
 ~~~~
 
 The aggregate private key is:
 
 ~~~~
-Scalar_A = (Scalar_ + Scalar_2) mod L
+Scalar_A = (Scalar_1 + Scalar_2) mod L
   = #{KeyGen.KeyA.Scalar}
 
 Encoded Aggrgate Private Key:
@@ -188,32 +188,30 @@ The aggregate public key is:
 ~~~~
 Point_A = Point_1 + Point_2
 
-#{Key.XTag}: ${KeyGen.KeyA.X}
-#{Key.YTag}: ${KeyGen.KeyA.Y}
+#{KeyGen.KeyA.XTag}: #{KeyGen.KeyA.X}
+#{KeyGen.KeyA.YTag}: #{KeyGen.KeyA.Y}
 
-Encoded Public#{KeyA.Public.ToStringBase16FormatHex()}
+Encoded Public#{KeyGen.KeyA.Public.ToStringBase16FormatHex()}
 ~~~~
 
 #end method
 
 
 
-#method DescribeKeyPrivate SeedKey Key
+#method DescribeKeyPrivate CurveKey Key
 #{Key.Name} (#{Key.Curve})
-    UDF:        #{Key.SeedX25519_1}
+    UDF:        #{Key.UDF}
     Scalar:     #{Key.Scalar}
     Encoded Private#{Key.Private.ToStringBase16FormatHex()}
 #end method
 
-#method DescribeKey SeedKey Key
-#% DescribeKeyPrivate(Key);
-    #{Key.XTag}: {Key.X}
-    #{Key.YTag}: {Key.Y}
+#method DescribeKey CurveKey Key
+#call DescribeKeyPrivate Key
+    #{Key.XTag}: #{Key.X}
+    #{Key.YTag}: #{Key.Y}
     Encoded Public#{Key.Public.ToStringBase16FormatHex()}
 #end method
 
-
-#end file
 
 
 

@@ -107,7 +107,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyA.Agreement(Result.Public);
 
-            (AgreeAB.Y0 == Result.Agreement.Y0).AssertTrue();
+            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).AssertTrue();
             }
 
 
@@ -128,7 +128,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyAPublic.Agreement(Carry);
 
-            (AgreeAB.Y0 == Result.Agreement.Y0).AssertTrue();
+            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).AssertTrue();
             }
 
 

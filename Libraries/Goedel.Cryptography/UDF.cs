@@ -880,7 +880,36 @@ namespace Goedel.Cryptography {
             throw new NYI();
             }
 
+        public static string TestKey(CryptoAlgorithmID cryptoAlgorithmID, string text) =>
+                TestKey(cryptoAlgorithmID.ToUDFID(), text);
+
+        public static string TestKey(UDFAlgorithmIdentifier algorithmIdentifier, string text) {
+            var head = new byte[] { 
+                    (byte)UDFTypeIdentifier.DerivedKey,
+                    (byte)((int)algorithmIdentifier >> 8 & 0xff),
+                    (byte)((int)algorithmIdentifier & 0xff)};
+
+            var plain = head.ToStringBase32() + text.ToUpper();
+
+            var builder = new StringBuilder();
+            for (var i = 0; i < plain.Length; i++) {
+                if ((i % 4 == 0) & (i>0)) {
+                    builder.Append('-');
+                    }
+                var c = plain[i];
+                builder.Append(BaseConvert.BASE32Value[(int)c]==255 ? 'X' : c);
+                }
+
+            return builder.ToString();
+
+
+            }
+
         }
+
+
+
+
 
     /// <summary>Static class containing static extension methods providing convenience functions.</summary>
     public static partial class Extension {

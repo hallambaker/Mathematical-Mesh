@@ -18,9 +18,232 @@ namespace ExampleGenerator {
 		// MakeCryptographyExamples
 		//
 		public void MakeCryptographyExamples (CreateExamples Example) {
-			 ExamplesAdvancedCoGeneration(Example);
-			 ExamplesAdvancedRecryption(Example);
-			 ExamplesAdvancedQuantum(Example);
+			 ExamplesThreshold(Example);
+			}
+		
+
+		//
+		// ExamplesThreshold
+		//
+		public static void ExamplesThreshold(CreateExamples Example) { /* XFile  */
+				using (var _Output = new StreamWriter("Examples\\ExamplesThreshold.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThreshold.md" };
+				obj._ExamplesThreshold(Example);
+				}
+			}
+		public void _ExamplesThreshold(CreateExamples Example) {
+
+				 var threshold = Example.Threshold;
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Threshold Key Generation\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### X25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeKeyGen (threshold.KeyGenX25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### X448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeKeyGen (threshold.KeyGenX448);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Ed25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeKeyGen (threshold.KeyGenEd25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Ed448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeKeyGen (threshold.KeyGenEd448);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Threshold Decryption\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Key Splitting X25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeDecryptSplitting (threshold.DecryptX25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Decryption X25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeDecryptUse (threshold.DecryptX25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Key Splitting X448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeDecryptSplitting (threshold.DecryptX448);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("### Decryption X448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				DescribeDecryptUse (threshold.DecryptX448);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// DescribeDecryptUse
+		//
+		public void DescribeDecryptUse (Decrypt Decrypt) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The means of encryption is unchanged. We begin by generating an ephemeral \n{0}", _Indent);
+			_Output.Write ("key pair:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKey (Decrypt.KeyE);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The key agreement result is given by multiplying the public key of the encryption \n{0}", _Indent);
+			_Output.Write ("pair by the secret scalar of the ephemeral key to obtain the u-coordinate of the result.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}: {{Key.X}}\n{0}", _Indent, Decrypt.KeyEA.XTag);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The u-coordinate is encoded in the usual fashion (i.e. without specifying the sign of v).\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Decrypt.KeyEA.Public.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The first decryption contribution is generated from the secret scalar of the first key\n{0}", _Indent);
+			_Output.Write ("share and the public key of the ephemeral.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The outputs from the Montgomery Ladder are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("x_2 {1}\n{0}", _Indent, Decrypt.KeyE1.X2);
+			_Output.Write ("z_2 {1}\n{0}", _Indent, Decrypt.KeyE1.Z2);
+			_Output.Write ("x_3 {1}\n{0}", _Indent, Decrypt.KeyE1.X3);
+			_Output.Write ("z_3 {1}\n{0}", _Indent, Decrypt.KeyE1.Z3);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The coordinates of the corresponding point are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE1.X);
+			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE1.Y);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The encoding of this point specifies the u coordinate and the sign (oddness) of the \n{0}", _Indent);
+			_Output.Write ("v coordinate:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Decrypt.KeyE1.Public.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The second decryption contribution is generated from the secret scalar of the second key\n{0}", _Indent);
+			_Output.Write ("share and the public key of the ephemeral in the same way:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE2.X);
+			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE2.Y);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Decrypt.KeyE2.Public.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("To obtain the key agreement value, we add the two decryption contributions:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("u {1}\n{0}", _Indent, Decrypt.KeyE12.X);
+			_Output.Write ("v {1}\n{0}", _Indent, Decrypt.KeyE12.Y);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("This returns the same u coordinate value as before, allowing us to obtain the encoding \n{0}", _Indent);
+			_Output.Write ("of the key agreement value and decrypt the message.\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeDecryptSplitting
+		//
+		public void DescribeDecryptSplitting (Decrypt Decrypt) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The encryption key pair is\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKey (Decrypt.KeyA);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("To create n key shares we first create n-1 key pairs in the normal fashion. Since \n{0}", _Indent);
+			_Output.Write ("these key pairs are only used for decryption operations, it is not necessary to \n{0}", _Indent);
+			_Output.Write ("calculate the public components:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKeyPrivate (Decrypt.Key1);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The secret scalar of the final key share is the secret scalar of the base key minus\n{0}", _Indent);
+			_Output.Write ("the sum of the secret scalars of the other shares modulo the group order:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Scalar_2 = (Scalar_A - Scalar_1) mod L\n{0}", _Indent);
+			_Output.Write ("    = {1}\n{0}", _Indent, Decrypt.Key1.Scalar);
+			_Output.Write ("This is encoded as a binary integer in little endian format:\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, Decrypt.Key2.Private.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeKeyGen
+		//
+		public void DescribeKeyGen (KeyGen KeyGen) {
+			_Output.Write ("The key parameters of the first key contribution are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKey (KeyGen.Key1);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The key parameters of the second key contribution are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKey (KeyGen.Key2);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The aggregate private key is:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Scalar_A = (Scalar_1 + Scalar_2) mod L\n{0}", _Indent);
+			_Output.Write ("  = {1}\n{0}", _Indent, KeyGen.KeyA.Scalar);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Encoded Aggrgate Private Key:\n{0}", _Indent);
+			_Output.Write ("{1}\n{0}", _Indent, KeyGen.KeyA.Private.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The aggregate public key is:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Point_A = Point_1 + Point_2\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("{1}: {2}\n{0}", _Indent, KeyGen.KeyA.XTag, KeyGen.KeyA.X);
+			_Output.Write ("{1}: {2}\n{0}", _Indent, KeyGen.KeyA.YTag, KeyGen.KeyA.Y);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Encoded Public{1}\n{0}", _Indent, KeyGen.KeyA.Public.ToStringBase16FormatHex());
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// DescribeKeyPrivate
+		//
+		public void DescribeKeyPrivate (CurveKey Key) {
+			_Output.Write ("{1} ({2})\n{0}", _Indent, Key.Name, Key.Curve);
+			_Output.Write ("    UDF:        {1}\n{0}", _Indent, Key.UDF);
+			_Output.Write ("    Scalar:     {1}\n{0}", _Indent, Key.Scalar);
+			_Output.Write ("    Encoded Private{1}\n{0}", _Indent, Key.Private.ToStringBase16FormatHex());
+			}
+		
+
+		//
+		// DescribeKey
+		//
+		public void DescribeKey (CurveKey Key) {
+			DescribeKeyPrivate (Key);
+			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.XTag, Key.X);
+			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.YTag, Key.Y);
+			_Output.Write ("    Encoded Public{1}\n{0}", _Indent, Key.Public.ToStringBase16FormatHex());
 			}
 		
 

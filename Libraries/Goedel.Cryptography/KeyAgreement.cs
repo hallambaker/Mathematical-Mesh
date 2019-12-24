@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Algorithms;
 
 using System.Collections.Generic;
 
@@ -15,6 +16,10 @@ namespace Goedel.Cryptography {
         /// <param name="Contribution">The public key contribution.</param>
         /// <returns>The new public key.</returns>
         IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution);
+
+
+        
+        byte[] Encoding { get; }
 
         }
 
@@ -51,6 +56,8 @@ namespace Goedel.Cryptography {
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         KeyAgreementResult Agreement(KeyPair keyPair);
+
+
         }
 
 
@@ -245,7 +252,7 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class ResultECDH : KeyAgreementResult {
 
-
+        public abstract Curve Agreement { get; }
         }
 
     }

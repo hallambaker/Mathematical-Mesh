@@ -519,7 +519,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyAPublic.Agreement(Carry);
 
-            return (AgreeAB == Result.Agreement);
+            return (AgreeAB == Result.AgreementX25519);
             }
 
 

@@ -205,9 +205,9 @@ namespace Goedel.Cryptography {
                 Agreement = PrivateKey.Agreement(publicKey.PublicKey);
                 }
             else {
-                Agreement = PrivateKey.Agreement(publicKey.PublicKey, Carry.Agreement);
+                Agreement = PrivateKey.Agreement(publicKey.PublicKey, Carry.AgreementEd25519);
                 }
-            return new CurveEdwards25519Result() { Agreement = Agreement };
+            return new CurveEdwards25519Result() { AgreementEd25519 = Agreement };
             }
 
         /// <summary>

@@ -15,8 +15,8 @@ a description of the service parameters.
 <div="terminal">
 <cmd>Alice> account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MBM6-NGT3-XLLA-PB3Y-HU2O-TN56-7D37
-   Host UDF = MBXD-54R6-DCZY-4NFG-MF3E-VJJV-6HZL
+   Service UDF = MCUD-TPYU-KHKX-2IMU-V7LO-ZFFR-LLMO
+   Host UDF = MDQC-MWVF-5OEG-5LZ2-MY67-KMBP-B6OY
 </div>
 ~~~~
 
@@ -43,8 +43,8 @@ The `profile create` command creates a profile:
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh create
-<rsp>Device Profile UDF=MAKA-EQ4V-AUGA-L4LI-MQKP-NE6Y-6UYT
-Personal Profile UDF=MCON-CT4L-LAU5-UQTO-TPIS-MHJA-T7RG
+<rsp>Device Profile UDF=MA6N-3GFW-6HDE-VA4U-ZCL4-RRXH-OEHK
+Personal Profile UDF=MA5E-Q7B3-SQ5O-6OS2-WBTJ-BFVE-I3S3
 </div>
 ~~~~
 

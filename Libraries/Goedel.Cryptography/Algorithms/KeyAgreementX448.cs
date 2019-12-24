@@ -183,6 +183,7 @@ namespace Goedel.Cryptography.Algorithms {
         public CurveX448 Neutral => throw new NYI();
         #endregion
 
+        public override IKeyAdvancedPublic KeyAdvancedPublic => new CurveX448Public(this);
 
         #region // Constructors
         /// <summary>Default constructor</summary>
@@ -324,7 +325,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             return new CurveX448Result() {
                 EphemeralPublicValue = Private.Public,
-                Agreement = Private.Agreement(this)
+                AgreementX448 = Private.Agreement(this)
                 };
             }
 
@@ -435,7 +436,7 @@ namespace Goedel.Cryptography.Algorithms {
         public KeyAgreementResult Agreement(KeyPair keyPair) {
             var publicKey = (keyPair as KeyPairX448).PublicKey;
             var agreement = Agreement(publicKey);
-            return new CurveX448Result() { Agreement = agreement };
+            return new CurveX448Result() { AgreementX448 = agreement };
             }
 
         /// <summary>
@@ -547,17 +548,18 @@ namespace Goedel.Cryptography.Algorithms {
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
     public class CurveX448Result : ResultECDH {
+        public override Curve Agreement => AgreementX448;
 
         /// <summary>The key agreement result</summary>
-        public CurveX448 Agreement { get; set; }
+        public CurveX448 AgreementX448 { get; set; }
 
         /// <summary>The agreement as ASN.1 DER encoding</summary>
         /// <returns>The DER encoded value.</returns>
-        public override byte[] DER() => Agreement.Encode();
+        public override byte[] DER() => AgreementX448.Encode();
 
 
         /// <summary>The key agreement result as a byte array</summary>
-        public override byte[] IKM => Agreement.Encode();
+        public override byte[] IKM => AgreementX448.Encode();
 
         /// <summary>
         /// The Ephemeral public key

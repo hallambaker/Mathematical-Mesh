@@ -43,8 +43,8 @@ namespace Goedel.Cryptography {
         #endregion
 
 
-        KeySecurity KeyType = KeySecurity.Public;
-        byte[] EncodedPrivateKey = null;
+        KeySecurity keyType = KeySecurity.Public;
+        byte[] encodedPrivateKey = null;
 
 
         /// <summary>
@@ -63,15 +63,15 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
 
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
-            KeyType = keyType;
+            this.keyType = keyType;
             KeyUses = keyUses;
             if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX25519Public(key);
                 PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
-                KeyType = KeySecurity.Public;
+                this.keyType = KeySecurity.Public;
                 }
             else {
-                EncodedPrivateKey = key;
+                encodedPrivateKey = key;
                 var exportable = keyType.IsExportable();
                 PrivateKey = new CurveX25519Private(key, exportable);
                 PublicKey = PrivateKey.Public;
@@ -115,7 +115,7 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.X25519);
             this.PrivateKey = privateKey;
-            KeyType = KeySecurity.Bound;
+            keyType = KeySecurity.Bound;
             KeyUses = keyUses;
             }
 
@@ -178,8 +178,8 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection"></param>
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(PersistPending);
-            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519() { Data = EncodedPrivateKey };
-            keyCollection.Persist(UDF, pkix, KeyType.IsExportable());
+            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519() { Data = encodedPrivateKey };
+            keyCollection.Persist(UDF, pkix, keyType.IsExportable());
             }
 
 
@@ -195,9 +195,9 @@ namespace Goedel.Cryptography {
                 Agreement = PrivateKey.Agreement(Public.PublicKey);
                 }
             else {
-                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.Agreement);
+                Agreement = PrivateKey.Agreement(Public.PublicKey, Carry.AgreementX25519);
                 }
-            return new CurveX25519Result() { Agreement = Agreement };
+            return new CurveX25519Result() { AgreementX25519 = Agreement };
             }
 
         /// <summary>

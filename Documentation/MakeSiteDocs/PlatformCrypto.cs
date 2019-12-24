@@ -12,8 +12,259 @@ using Goedel.Utilities;
 using System;
 using System.IO;
 using System.Numerics;
+using System.Collections.Generic;
 
 namespace ExampleGenerator {
+
+
+    public partial class Threshold {
+        public KeyGen KeyGenX25519;
+        public KeyGen KeyGenX448;
+        public KeyGen KeyGenEd25519;
+        public KeyGen KeyGenEd448;
+
+        public Decrypt DecryptX25519;
+        public Decrypt DecryptX448;
+
+
+        public Threshold() {
+            KeyGenX25519 = new KeyGen(CryptoAlgorithmID.X25519);
+            KeyGenX448 = new KeyGen(CryptoAlgorithmID.X448);
+            KeyGenEd25519 = new KeyGen(CryptoAlgorithmID.Ed25519);
+            KeyGenEd448 = new KeyGen(CryptoAlgorithmID.Ed448);
+
+            DecryptX25519 = new Decrypt(CryptoAlgorithmID.X25519);
+            DecryptX448 = new Decrypt(CryptoAlgorithmID.X448);
+            }
+        }
+
+    public partial class CurveResult {
+        public Curve CurvePoint;
+        public IKeyAdvancedPublic Key;
+
+        public byte[] Public => Key.Encoding;
+
+        public bool IsCurveX => CurvePoint is CurveMontgomery;
+        public string XTag => IsCurveX ? "U" : "X";
+        public string YTag => IsCurveX ? "V" : "Y";
+
+        public BigInteger X = -1;
+        public BigInteger Y = -1;
+
+
+        public string X2 = "TBS";
+        public string Z2 = "TBS";
+        public string X3 = "TBS";
+        public string Z3 = "TBS";
+
+        public CurveResult(Curve point=null) {
+            CurvePoint = point;
+            Key = CurvePoint.KeyAdvancedPublic;
+            }
+
+        }
+
+    public partial class CurveKey {
+
+        static readonly byte[] Dummy = { 0 };
+
+        public string Name = "TBS";
+        CryptoAlgorithmID CryptoAlgorithmID;
+        public KeyPairAdvanced KeyPair;
+
+        public bool IsCurveX => (KeyPair is KeyPairX25519) | (KeyPair is KeyPairX448);
+
+        public string Curve => CryptoAlgorithmID.ToJoseID();
+        public string UDF = "TBS";
+        public BigInteger Scalar = -1;
+        public byte[] Public = Dummy;
+        public byte[] Private = Dummy;
+
+        public BigInteger X = -1;
+        public BigInteger Y = -1;
+        public string XTag => IsCurveX ? "U": "X";
+        public string YTag => IsCurveX ? "V" : "Y";
+
+        // Intermediate Montgomery Ladder parameters
+        public string X2 = "TBS";
+        public string Z2 = "TBS";
+        public string X3 = "TBS";
+        public string Z3 = "TBS";
+
+        public CurveKey() {
+            }
+
+        public CurveKey(CryptoAlgorithmID cryptoAlgorithmID, string prefix = null, string name=null) {
+            CryptoAlgorithmID = cryptoAlgorithmID;
+
+            if (name != null) {
+                Name = cryptoAlgorithmID.ToJoseID() + name;
+                UDF = Goedel.Cryptography.UDF.TestKey(cryptoAlgorithmID, prefix + Name);
+                }
+
+            KeyPair = Goedel.Cryptography.UDF.DeriveKey(UDF, KeySecurity.Exportable, KeyUses.Any) as KeyPairAdvanced;
+            SetParameters(KeyPair);
+
+            }
+        public CurveKey(KeyPair keyPair) {
+            KeyPair = keyPair as KeyPairAdvanced;
+            SetParameters(KeyPair);
+            }
+
+        void SetParameters(KeyPair keyPair) {
+            switch (keyPair) {
+                case KeyPairX25519 keyPairX25519: {
+                    SetParameters(keyPairX25519);
+                    break;
+                    }
+                case KeyPairX448 keyPairX448: {
+                    SetParameters(keyPairX448);
+                    break;
+                    }
+                case KeyPairEd25519 keyPairEd25519: {
+                    SetParameters(keyPairEd25519);
+                    break;
+                    }
+                case KeyPairEd448 keyPairEd448: {
+                    SetParameters(keyPairEd448);
+                    break;
+                    }
+                }
+            Private = Private ?? Dummy;
+            Public = Public ?? Dummy;
+            }
+        void SetParameters(KeyPairX25519 keyPair) {
+            //var publicKey = keyPair.IKeyAdvancedPublic as CurveX25519Public;
+            var privateKey = keyPair.IKeyAdvancedPrivate as CurveX25519Private;
+            var publicKey = privateKey.Public;
+
+            Scalar = privateKey.Private;
+            Private = privateKey.Encoding ;
+            Public = publicKey.Encoding;
+
+            X = publicKey.Public.U;
+            Y = publicKey.Public.V;
+            }
+        void SetParameters(KeyPairX448 keyPair) {
+            //var publicKey = keyPair.IKeyAdvancedPublic as CurveX448Public;
+            var privateKey = keyPair.IKeyAdvancedPrivate as CurveX448Private;
+            var publicKey = privateKey.Public;
+
+            Scalar = privateKey.Private;
+            Private = privateKey.Encoding;
+            Public = publicKey.Encoding;
+
+            X = publicKey.Public.U;
+            Y = publicKey.Public.V;
+            }
+        void SetParameters(KeyPairEd25519 keyPair) {
+            //var publicKey = keyPair.IKeyAdvancedPublic as CurveEdwards25519Public;
+            var privateKey = keyPair.IKeyAdvancedPrivate as CurveEdwards25519Private;
+            var publicKey = privateKey.Public;
+
+            Scalar = privateKey.Private;
+            Private = privateKey.Encoding;
+            Public = publicKey.Encoding;
+
+            X = publicKey.Public.X;
+            Y = publicKey.Public.Y;
+            }
+        void SetParameters(KeyPairEd448 keyPair) {
+            //var publicKey = keyPair.IKeyAdvancedPublic as CurveEdwards448Public;
+            var privateKey = keyPair.IKeyAdvancedPrivate as CurveEdwards448Private;
+            var publicKey = privateKey.Public;
+
+            Scalar = privateKey.Private;
+            Private = privateKey.Encoding;
+            Public = publicKey.Encoding;
+
+            X = publicKey.Public.X;
+            Y = publicKey.Public.Y;
+            }
+
+        }
+
+
+
+    public partial class Decrypt {
+        CryptoAlgorithmID CryptoAlgorithmID;
+
+        public CurveKey KeyE;
+
+        public CurveResult KeyEA;
+        public CurveResult KeyE1;
+        public CurveResult KeyE2;
+        public CurveResult KeyE12;
+
+        // Splitting
+        public CurveKey KeyA;
+        public CurveKey Key1;
+        public CurveKey Key2;
+
+
+        delegate KeyPair MakeKeyPair(IKeyAdvancedPrivate keybase);
+
+        public Decrypt(CryptoAlgorithmID cryptoAlgorithmID) {
+            CryptoAlgorithmID = cryptoAlgorithmID;
+
+            // Create the key split first!
+            Key1 = new CurveKey(CryptoAlgorithmID, "THD", "Key1");
+            var key1 = Key1.KeyPair.IKeyAdvancedPrivate;
+
+            KeyA = new CurveKey(CryptoAlgorithmID, "THD", "KeyA");
+            KeyE = new CurveKey(CryptoAlgorithmID, "THD", "KeyE");
+
+            MakeKeyPair makeKeyPair = KeyA.KeyPair.KeyPair;
+
+            var keyA = KeyA.KeyPair.IKeyAdvancedPrivate;
+            var keyE = KeyE.KeyPair.IKeyAdvancedPrivate;
+
+            var keyEA = keyE.Agreement(KeyA.KeyPair) as ResultECDH;
+
+
+
+            var keys = new List<KeyPair>() { Key1.KeyPair };
+            var key2 = keyA.CompleteRecryptionKeySet(keys);
+            Key2 = new CurveKey(makeKeyPair(key2));
+
+
+            var keyE1 = key1.Agreement(KeyE.KeyPair) as ResultECDH;
+            var keyE2 = key2.Agreement(KeyE.KeyPair) as ResultECDH;
+
+            var keyE12 = keyE1.Agreement.Add(keyE2.Agreement);
+
+            KeyEA = new CurveResult(keyEA.Agreement);
+            KeyE1 = new CurveResult(keyE1.Agreement);
+            KeyE2 = new CurveResult(keyE2.Agreement);
+            KeyE12 = new CurveResult(keyE12);
+
+
+            }
+
+        }
+
+    public partial class KeyGen {
+        CryptoAlgorithmID CryptoAlgorithmID;
+
+        public CurveKey Key1;
+        public CurveKey Key2;
+        public CurveKey KeyA;
+
+        public KeyGen(CryptoAlgorithmID cryptoAlgorithmID) {
+            CryptoAlgorithmID = cryptoAlgorithmID;
+
+            
+            Key1 = new CurveKey(CryptoAlgorithmID, "TKG", "Key1");
+            Key2 = new CurveKey(CryptoAlgorithmID, "TKG", "Key2");
+
+            var keypair = Key1.KeyPair.Combine(Key2.KeyPair);
+
+
+            KeyA = new CurveKey(keypair);
+            }
+        }
+
+
 
 
     public partial class CreateExamples {
@@ -67,16 +318,18 @@ namespace ExampleGenerator {
         #endregion      
         public CryptoCombine CryptoCombine;
         public CryptoGroup CryptoGroup;
+        public Threshold Threshold;
 
         public void PlatformCrypto() {
             // To do - write the code to create examples for the 'advanced' section
             // These will need to include examples of the internals of shamir secret sharing, 
             // co-generation, recryption, etc.
-            CryptoCombine = new CryptoCombine();
-            CryptoGroup = new CryptoGroup();
-
+            //CryptoCombine = new CryptoCombine();
+            //CryptoGroup = new CryptoGroup();
+            Threshold = new Threshold();
             }
         }
+
 
 
     //public class CryptoParametersTest : CryptoParameters {
@@ -124,9 +377,9 @@ namespace ExampleGenerator {
         public KeyPair PrivateKey;
         public KeyPairAdvanced KeyPairService;
         public KeyAgreementResult PartialService;
-        public byte[] PartialServiceEncoded => (PartialService as CurveEdwards25519Result).Agreement.Encode();
+        public byte[] PartialServiceEncoded => (PartialService as CurveEdwards25519Result).AgreementEd25519.Encode();
         public KeyAgreementResult PartialDevice;
-        public byte[] PartialDeviceEncoded => (PartialDevice as CurveEdwards25519Result).Agreement.Encode();
+        public byte[] PartialDeviceEncoded => (PartialDevice as CurveEdwards25519Result).AgreementEd25519.Encode();
         public byte[] Result;
 
         public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
@@ -158,7 +411,7 @@ namespace ExampleGenerator {
 
 
             Result = keyPartial.Agreement(
-                ephemeral as KeyPairEd25519, PartialService as CurveEdwards25519Result).Agreement.Encode();
+                ephemeral as KeyPairEd25519, PartialService as CurveEdwards25519Result).AgreementEd25519.Encode();
             return KeyPartial.Decrypt(encryptedKey, ephemeral, algorithmID, PartialService, salt); ;
             }
 

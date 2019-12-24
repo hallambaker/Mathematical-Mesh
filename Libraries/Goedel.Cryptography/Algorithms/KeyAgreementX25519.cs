@@ -37,6 +37,9 @@ namespace Goedel.Cryptography.Algorithms {
         #endregion
 
 
+        public override IKeyAdvancedPublic KeyAdvancedPublic => new CurveX25519Public(this);
+
+
         #region // Constructors
         /// <summary>Default constructor</summary>
         protected CurveX25519() {
@@ -176,7 +179,7 @@ namespace Goedel.Cryptography.Algorithms {
 
             return new CurveX25519Result() {
                 EphemeralPublicValue = Private.Public,
-                Agreement = Private.Agreement(this)
+                AgreementX25519 = Private.Agreement(this)
                 };
             }
 
@@ -288,7 +291,7 @@ namespace Goedel.Cryptography.Algorithms {
         public KeyAgreementResult Agreement(KeyPair keyPair) {
             var publicKey = (keyPair as KeyPairX25519).PublicKey;
             var agreement = Agreement(publicKey);
-            return new CurveX25519Result() { Agreement = agreement };
+            return new CurveX25519Result() { AgreementX25519 = agreement };
             }
 
         /// <summary>
@@ -358,7 +361,7 @@ namespace Goedel.Cryptography.Algorithms {
             BigInteger Accumulator = 0;
 
             foreach (var share in Shares) {
-                var key = share as KeyPairEd25519;
+                var key = share as KeyPairX25519;
                 var privateKey = (key.IKeyAdvancedPrivate as CurveX25519Private);
 
                 Accumulator = (Accumulator + privateKey.Private).Mod(CurveX25519.Q);
@@ -403,16 +406,19 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveX25519Result : ResultECDH {
 
+
+        public override Curve Agreement => AgreementX25519;
+
         /// <summary>The key agreement result</summary>
-        public CurveX25519 Agreement { get; set; }
+        public CurveX25519 AgreementX25519 { get; set; }
 
         /// <summary>The agreement as ASN.1 DER encoding</summary>
         /// <returns>The DER encoded value.</returns>
-        public override byte[] DER() => Agreement.Encode();
+        public override byte[] DER() => AgreementX25519.Encode();
 
 
         /// <summary>The key agreement result as a byte array</summary>
-        public override byte[] IKM => Agreement.Encode();
+        public override byte[] IKM => AgreementX25519.Encode();
 
         /// <summary>
         /// The Ephemeral public key
