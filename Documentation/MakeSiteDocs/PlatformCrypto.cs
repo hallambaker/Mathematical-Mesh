@@ -38,11 +38,12 @@ namespace ExampleGenerator {
             }
         }
 
+
     public partial class CurveResult {
         public Curve CurvePoint;
         public IKeyAdvancedPublic Key;
 
-        public byte[] Public => Key.Encoding;
+        public byte[] Public;
 
         public bool IsCurveX => CurvePoint is CurveMontgomery;
         public string XTag => IsCurveX ? "U" : "X";
@@ -52,16 +53,41 @@ namespace ExampleGenerator {
         public BigInteger Y = -1;
 
 
-        public string X2 = "TBS";
-        public string Z2 = "TBS";
-        public string X3 = "TBS";
-        public string Z3 = "TBS";
+        public BigInteger X2;
+        public BigInteger Z2;
+        public BigInteger X3;
+        public BigInteger Z3;
 
-        public CurveResult(Curve point=null) {
+        public CurveResult(Curve point = null) {
             CurvePoint = point;
             Key = CurvePoint.KeyAdvancedPublic;
+            Public = Key.Encoding;
             }
+        public CurveResult(IKeyAdvancedPrivate key, KeyPairAdvanced Point) {
+            var scalar = key.Private;
 
+            CurveMontgomery curve;
+            switch (Point.IKeyAdvancedPublic) {
+                case CurveX25519Public point: {
+                    curve = point.Public;
+                    break;
+                    }
+                case CurveX448Public point: {
+                    curve = point.Public;
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
+
+            CurvePoint = curve;
+
+            curve.ScalarAccumulate(curve.U, scalar, out X2, out Z2, out X3, out Z3);
+            (X, Y) = curve.ScalarMultiplySigned(scalar);
+
+            Public = curve.Encode(false);
+            }
         }
 
     public partial class CurveKey {
@@ -80,6 +106,8 @@ namespace ExampleGenerator {
         public byte[] Public = Dummy;
         public byte[] Private = Dummy;
 
+        public bool Extended = false;
+
         public BigInteger X = -1;
         public BigInteger Y = -1;
         public string XTag => IsCurveX ? "U": "X";
@@ -94,7 +122,11 @@ namespace ExampleGenerator {
         public CurveKey() {
             }
 
-        public CurveKey(CryptoAlgorithmID cryptoAlgorithmID, string prefix = null, string name=null) {
+        public CurveKey(
+                CryptoAlgorithmID cryptoAlgorithmID, 
+                bool extended, 
+                string prefix = null, 
+                string name=null) {
             CryptoAlgorithmID = cryptoAlgorithmID;
 
             if (name != null) {
@@ -103,22 +135,22 @@ namespace ExampleGenerator {
                 }
 
             KeyPair = Goedel.Cryptography.UDF.DeriveKey(UDF, KeySecurity.Exportable, KeyUses.Any) as KeyPairAdvanced;
-            SetParameters(KeyPair);
+            SetParameters(KeyPair, extended);
 
             }
-        public CurveKey(KeyPair keyPair) {
+        public CurveKey(KeyPair keyPair, bool extended) {
             KeyPair = keyPair as KeyPairAdvanced;
-            SetParameters(KeyPair);
+            SetParameters(KeyPair, extended);
             }
 
-        void SetParameters(KeyPair keyPair) {
+        void SetParameters(KeyPair keyPair, bool extended) {
             switch (keyPair) {
                 case KeyPairX25519 keyPairX25519: {
-                    SetParameters(keyPairX25519);
+                    SetParameters(keyPairX25519, extended);
                     break;
                     }
                 case KeyPairX448 keyPairX448: {
-                    SetParameters(keyPairX448);
+                    SetParameters(keyPairX448, extended);
                     break;
                     }
                 case KeyPairEd25519 keyPairEd25519: {
@@ -133,26 +165,26 @@ namespace ExampleGenerator {
             Private = Private ?? Dummy;
             Public = Public ?? Dummy;
             }
-        void SetParameters(KeyPairX25519 keyPair) {
+        void SetParameters(KeyPairX25519 keyPair, bool extended) {
             //var publicKey = keyPair.IKeyAdvancedPublic as CurveX25519Public;
             var privateKey = keyPair.IKeyAdvancedPrivate as CurveX25519Private;
             var publicKey = privateKey.Public;
 
             Scalar = privateKey.Private;
             Private = privateKey.Encoding ;
-            Public = publicKey.Encoding;
+            Public = publicKey.Public.Encode (extended);
 
             X = publicKey.Public.U;
             Y = publicKey.Public.V;
             }
-        void SetParameters(KeyPairX448 keyPair) {
+        void SetParameters(KeyPairX448 keyPair, bool extended) {
             //var publicKey = keyPair.IKeyAdvancedPublic as CurveX448Public;
             var privateKey = keyPair.IKeyAdvancedPrivate as CurveX448Private;
             var publicKey = privateKey.Public;
 
             Scalar = privateKey.Private;
             Private = privateKey.Encoding;
-            Public = publicKey.Encoding;
+            Public = publicKey.Public.Encode(extended);
 
             X = publicKey.Public.U;
             Y = publicKey.Public.V;
@@ -202,17 +234,19 @@ namespace ExampleGenerator {
         public CurveKey Key2;
 
 
-        delegate KeyPair MakeKeyPair(IKeyAdvancedPrivate keybase);
+        delegate KeyPair MakeKeyPair(IKeyAdvancedPrivate keybase,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any);
 
         public Decrypt(CryptoAlgorithmID cryptoAlgorithmID) {
             CryptoAlgorithmID = cryptoAlgorithmID;
 
             // Create the key split first!
-            Key1 = new CurveKey(CryptoAlgorithmID, "THD", "Key1");
+            Key1 = new CurveKey(CryptoAlgorithmID, true, "THD", "Key1");
             var key1 = Key1.KeyPair.IKeyAdvancedPrivate;
 
-            KeyA = new CurveKey(CryptoAlgorithmID, "THD", "KeyA");
-            KeyE = new CurveKey(CryptoAlgorithmID, "THD", "KeyE");
+            KeyA = new CurveKey(CryptoAlgorithmID, false, "THD", "KeyA");
+            KeyE = new CurveKey(CryptoAlgorithmID, false, "THD", "KeyE");
 
             MakeKeyPair makeKeyPair = KeyA.KeyPair.KeyPair;
 
@@ -220,25 +254,18 @@ namespace ExampleGenerator {
             var keyE = KeyE.KeyPair.IKeyAdvancedPrivate;
 
             var keyEA = keyE.Agreement(KeyA.KeyPair) as ResultECDH;
-
+            KeyEA = new CurveResult(keyEA.Agreement);
 
 
             var keys = new List<KeyPair>() { Key1.KeyPair };
             var key2 = keyA.CompleteRecryptionKeySet(keys);
-            Key2 = new CurveKey(makeKeyPair(key2));
+            Key2 = new CurveKey(makeKeyPair(key2, KeySecurity.Exportable), true);
 
+            KeyE1 = new CurveResult(key1, KeyE.KeyPair);
+            KeyE2 = new CurveResult(key2, KeyE.KeyPair);
 
-            var keyE1 = key1.Agreement(KeyE.KeyPair) as ResultECDH;
-            var keyE2 = key2.Agreement(KeyE.KeyPair) as ResultECDH;
-
-            var keyE12 = keyE1.Agreement.Add(keyE2.Agreement);
-
-            KeyEA = new CurveResult(keyEA.Agreement);
-            KeyE1 = new CurveResult(keyE1.Agreement);
-            KeyE2 = new CurveResult(keyE2.Agreement);
+            var keyE12 = KeyE1.CurvePoint.Add (KeyE2.CurvePoint);
             KeyE12 = new CurveResult(keyE12);
-
-
             }
 
         }
@@ -254,13 +281,15 @@ namespace ExampleGenerator {
             CryptoAlgorithmID = cryptoAlgorithmID;
 
             
-            Key1 = new CurveKey(CryptoAlgorithmID, "TKG", "Key1");
-            Key2 = new CurveKey(CryptoAlgorithmID, "TKG", "Key2");
+            Key1 = new CurveKey(CryptoAlgorithmID, true, "TKG", "Key1");
+            Key2 = new CurveKey(CryptoAlgorithmID, true, "TKG", "Key2");
 
-            var keypair = Key1.KeyPair.Combine(Key2.KeyPair);
+            var keypair = Key1.KeyPair.Combine(Key2.KeyPair, KeySecurity.Exportable);
 
 
-            KeyA = new CurveKey(keypair);
+            KeyA = new CurveKey(keypair, false);
+
+            
             }
         }
 

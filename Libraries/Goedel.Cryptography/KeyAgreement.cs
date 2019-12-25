@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Algorithms;
 
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace Goedel.Cryptography {
 
@@ -48,7 +49,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Contribution">The private key contribution.</param>
         /// <returns>The new public key.</returns>
-        IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution);
+        IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any);
 
         /// <summary>
         /// Perform a partial key agreement.
@@ -57,7 +60,10 @@ namespace Goedel.Cryptography {
         /// <returns>The key agreement result.</returns>
         KeyAgreementResult Agreement(KeyPair keyPair);
 
-
+        /// <summary>
+        /// The private key value;
+        /// </summary>
+        BigInteger Private { get; }
         }
 
 
@@ -82,7 +88,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="PrivateKey">The private key to construct parameters for.</param>
         /// <returns>The KeyPair that was constructed</returns>
-        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey);
+        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any);
 
         /// <summary>
         /// Factory method to construct a KeyPair for the public key <paramref name="PublicKey"/>.
@@ -141,9 +149,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Contribution"></param>
         /// <returns></returns>
-        public KeyPairAdvanced Combine(KeyPairAdvanced Contribution) {
-            var PrivateKey = IKeyAdvancedPrivate.Combine(Contribution.IKeyAdvancedPrivate);
-            return KeyPair(PrivateKey);
+        public KeyPairAdvanced Combine(KeyPairAdvanced Contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) {
+            var PrivateKey = IKeyAdvancedPrivate.Combine(Contribution.IKeyAdvancedPrivate, keySecurity, keyUses);
+            return KeyPair(PrivateKey, keySecurity, keyUses);
             }
 
         ///// <summary>

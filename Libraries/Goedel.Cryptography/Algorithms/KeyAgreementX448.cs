@@ -9,151 +9,140 @@ using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
 
-    public class CurveX448Signed : CurveX448 {
+    //public class CurveX448Signed : CurveX448 {
 
-        static readonly CurveX448Signed BasePoint =
-                new CurveX448Signed(DomainParameters.Curve448.U, DomainParameters.Curve448.V);
+    //    //static readonly CurveX448Signed BasePoint =
+    //    //        new CurveX448Signed(DomainParameters.Curve448.U, DomainParameters.Curve448.V);
 
-        /// <summary>The base point for the subgroup</summary>
-        public static CurveX448Signed Base => BasePoint.Copy();
+    //    ///// <summary>The base point for the subgroup</summary>
+    //    //public static CurveX448Signed Base => BasePoint.Copy();
 
-        /// <summary>
-        /// Crete a new point with the same parameters as this.
-        /// </summary>
-        /// <returns>The new point</returns>
-        public CurveX448Signed Copy() => new CurveX448Signed(U, V);
-
-
-        // constructors
-
-        /// <summary>
-        /// Construct a point from U and V coordinates. Is only for use by internal
-        /// methods.
-        /// </summary>
-        /// <param name="u">The U coordinate</param>
-        /// <param name="v">The V coordinate</param>
-        public CurveX448Signed(BigInteger u, BigInteger v) {
-            U = u.Mod(P);
-            V = v.Mod(P);
-            }
+    //    ///// <summary>
+    //    ///// Crete a new point with the same parameters as this.
+    //    ///// </summary>
+    //    ///// <returns>The new point</returns>
+    //    //public CurveX448Signed Copy() => new CurveX448Signed(U, V);
 
 
-        /// <summary>
-        /// Construct a point from a U coordinate and sign of V.
-        /// </summary>
-        /// <param name="u">The U coordinate</param>
-        /// <param name="odd">Specify the sign of the V value</param> 
-        public CurveX448Signed(BigInteger u, bool? odd) {
-            U = u.Mod(P);
-            V = GetV(odd);
-            }
+    //    // constructors
+
+    //    ///// <summary>
+    //    ///// Construct a point from U and V coordinates. Is only for use by internal
+    //    ///// methods.
+    //    ///// </summary>
+    //    ///// <param name="u">The U coordinate</param>
+    //    ///// <param name="v">The V coordinate</param>
+    //    //public CurveX448Signed(BigInteger u, BigInteger v) {
+    //    //    U = u.Mod(P);
+    //    //    V = v.Mod(P);
+    //    //    }
 
 
-        /// <summary>
-        /// Construct a point from a U coordinate.
-        /// </summary>
-        /// <param name="data">The encoded U coordinate</param>
-        public CurveX448Signed(byte[] data) {
-            bool? odd;
-            (U, odd) = DecodePointSigned(data);
-            V = GetV(odd);
-            }
+    //    ///// <summary>
+    //    ///// Construct a point from a U coordinate and sign of V.
+    //    ///// </summary>
+    //    ///// <param name="u">The U coordinate</param>
+    //    ///// <param name="odd">Specify the sign of the V value</param> 
+    //    //public CurveX448Signed(BigInteger u, bool? odd) {
+    //    //    U = u.Mod(P);
+    //    //    V = GetV(odd);
+    //    //    }
 
 
-        /// <summary>
-        /// Create a point from the specified U value.
-        /// </summary>
-        /// <param name="u">The U value</param>
-        /// <param name="odd">Specify the sign of the V value, ignored for this curve.</param> 
-        /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger u, bool? odd) => new CurveX448Signed(u, odd);
-
-        // need to override the encode / decode mechanisms
-
-
-        /// <summary>
-        /// Construct a point on the curve from a buffer.
-        /// </summary>
-        /// <param name="data">The encoded data</param>
-        /// <returns>The point created</returns>
-        public static (BigInteger, bool?) DecodePointSigned(byte[] data) {
-            throw new NYI();
-            //return (data.BigIntegerLittleEndian(), null);
-
-            //var copy = data.Duplicate();
-            //copy[0] &= 252;
-            //copy[55] |= 128;
-            //return copy.BigIntegerLittleEndian();
-            }
-
-        /// <summary>
-        /// Encode the code point <paramref name="u"/>.
-        /// </summary>
-        /// <param name="u">The point to encode.</param>
-        /// <returns>The encoded format of the point</returns>
-        public static byte[] EncodePointSigned(BigInteger u) => throw new NYI();
-           //u.ByteArrayLittleEndian(56);
-
-        /// <summary>
-        /// Encode the code point.
-        /// </summary>
-        /// <returns>The encoded format of the point</returns>
-        public override byte[] Encode() => EncodePointSigned(U);
+    //    ///// <summary>
+    //    ///// Construct a point from a U coordinate.
+    //    ///// </summary>
+    //    ///// <param name="data">The encoded U coordinate</param>
+    //    //public CurveX448Signed(byte[] data) {
+    //    //    bool? odd;
+    //    //    (U, odd) = DecodePointSigned(data);
+    //    //    V = GetV(odd);
+    //    //    }
 
 
-        /// <summary>
-        /// Add two points
-        /// </summary>
-        /// <param name="point">Second point</param>
-        /// <returns>The result of the addition.</returns>
-        public override CurveMontgomery Add(CurveMontgomery point) {
-            (point is CurveX448Signed).AssertTrue();
+    //    ///// <summary>
+    //    ///// Create a point from the specified U value.
+    //    ///// </summary>
+    //    ///// <param name="u">The U value</param>
+    //    ///// <param name="odd">Specify the sign of the V value, ignored for this curve.</param> 
+    //    ///// <returns>Created point</returns>
+    //    //public override CurveMontgomery Factory(BigInteger u, bool? odd) => new CurveX448Signed(u, odd);
 
-            var (u, v) = Add(this, point);
-            return new CurveX448Signed(u, v);
+    //    // need to override the encode / decode mechanisms
 
-            }
 
-        /// <summary>
-        /// Multiply this point by a scalar and return the new point.
-        /// </summary>
-        /// <param name="s">Scalar factor</param>
-        /// <returns>The result of the multiplication</returns>
-        public CurveMontgomery MultiplyFast(BigInteger s) {
+    //    /// <summary>
+    //    /// Construct a point on the curve from a buffer.
+    //    /// </summary>
+    //    /// <param name="data">The encoded data</param>
+    //    /// <returns>The point created</returns>
+    //    public static (BigInteger, bool?) DecodePointSigned(byte[] data) {
+    //        throw new NYI();
+    //        //return (data.BigIntegerLittleEndian(), null);
+
+    //        //var copy = data.Duplicate();
+    //        //copy[0] &= 252;
+    //        //copy[55] |= 128;
+    //        //return copy.BigIntegerLittleEndian();
+    //        }
+
+    //    /// <summary>
+    //    /// Encode the code point <paramref name="u"/>.
+    //    /// </summary>
+    //    /// <param name="u">The point to encode.</param>
+    //    /// <returns>The encoded format of the point</returns>
+    //    public static byte[] EncodePointSigned(BigInteger u) => throw new NYI();
+    //       //u.ByteArrayLittleEndian(56);
+
+    //    /// <summary>
+    //    /// Encode the code point.
+    //    /// </summary>
+    //    /// <returns>The encoded format of the point</returns>
+    //    public override byte[] Encode() => EncodePointSigned(U);
 
 
 
 
-            var (u,v) = ScalarMultiplySigned(s);
-            return new CurveX448Signed(u, v);
-            }
+    //    ///// <summary>
+    //    ///// Multiply this point by a scalar and return the new point.
+    //    ///// </summary>
+    //    ///// <param name="s">Scalar factor</param>
+    //    ///// <returns>The result of the multiplication</returns>
+    //    //public CurveMontgomery MultiplyFast(BigInteger s) {
 
 
-        /// <summary>
-        /// Multiply this point by a scalar and return the new point.
-        /// </summary>
-        /// <param name="s">Scalar factor</param>
-        /// <returns>The result of the multiplication</returns>
-        public CurveMontgomery Multiply(BigInteger s) {
-            ScalarAccumulate(U, s, out var xq, out var zq, out var xq1, out var zq1);
 
-            var uq = Recover(xq, zq);
-            var uq1 = Recover(xq1, zq1);
 
-            var vq = GetV(uq, true);
-            //var vq1 = GetV(uq1, true);
+    //    //    var (u,v) = ScalarMultiplySigned(s);
+    //    //    return new CurveX448Signed(u, v);
+    //    //    }
 
-            CheckCurve(uq, vq);
-            var q = new CurveX448Signed(uq, vq);
 
-            var q1 = Add(q);
-            if (uq1 != q1.U) {
-                q.V = (Prime - q.V).Mod(Prime);
-                }
-            return q;
-            }
+    //    ///// <summary>
+    //    ///// Multiply this point by a scalar and return the new point.
+    //    ///// </summary>
+    //    ///// <param name="s">Scalar factor</param>
+    //    ///// <returns>The result of the multiplication</returns>
+    //    //public CurveMontgomery Multiply(BigInteger s) {
+    //    //    ScalarAccumulate(U, s, out var xq, out var zq, out var xq1, out var zq1);
 
-        }
+    //    //    var uq = Recover(xq, zq);
+    //    //    var uq1 = Recover(xq1, zq1);
+
+    //    //    var vq = GetV(uq, true);
+    //    //    //var vq1 = GetV(uq1, true);
+
+    //    //    CheckCurve(uq, vq);
+    //    //    var q = new CurveX448(uq, vq);
+
+    //    //    var q1 = Add(q);
+    //    //    if (uq1 != q1.U) {
+    //    //        q.V = (Prime - q.V).Mod(Prime);
+    //    //        }
+    //    //    return q;
+    //    //    }
+
+    //    }
 
     /// <summary>
     /// Montgomery Curve [v^2 = u^3 + A*u^2 + u] for 2^448 - 2^224 -1
@@ -164,7 +153,7 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The domain parameters</summary>
         public override DomainParameters DomainParameters => DomainParameters.Curve448;
 
-        ///<summary>The modulus, p = 2^255 - 19</summary>
+        ///<summary>The modulus, p =2^448 - 2^224 -1</summary>
         public static BigInteger P => DomainParameters.Curve448.P;
 
         ///<summary>The small order subgroup q</summary>
@@ -173,7 +162,9 @@ namespace Goedel.Cryptography.Algorithms {
         #region // computed curve points
         /// <summary>The base point for the subgroup</summary>
         static readonly CurveX448 BasePoint =
-            new CurveX448(DomainParameters.Curve448.U);
+            new CurveX448(
+                DomainParameters.Curve448.U,
+                DomainParameters.Curve448.V);
 
         /// <summary>The base point for the subgroup</summary>
         public static CurveX448 Base => BasePoint.Copy();
@@ -193,9 +184,22 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Construct a point from a U coordinate.
         /// </summary>
+        /// <param name="v">The V coordinate (optional)</param>
         /// <param name="u">The U coordinate</param>
-        public CurveX448(BigInteger u) => U = u.Mod(P);
+        public CurveX448(BigInteger u, BigInteger v) {
+            U = u.Mod(P);
+            V = v.Mod(P);
+            }
 
+        /// <summary>
+        /// Construct a point from a U coordinate.
+        /// </summary>
+        /// <param name="odd">Specifies if the v coordinate is odd or even</param>
+        /// <param name="u">The U coordinate</param>
+        public CurveX448(BigInteger u, bool? odd = null) {
+            U = u.Mod(P);
+            Odd = odd;
+            }
 
         /// <summary>
         /// Construct a point from a U coordinate.
@@ -210,37 +214,49 @@ namespace Goedel.Cryptography.Algorithms {
         /// Crete a new point with the same parameters as this.
         /// </summary>
         /// <returns>The new point</returns>
-        public CurveX448 Copy() => new CurveX448(U);
+        public CurveX448 Copy() => new CurveX448(U, Odd);
 
-        /// <summary>
-        /// Multiply this point by a scalar
-        /// </summary>
-        /// <param name="s">Scalar factor</param>
-        /// <returns>The result of the multiplication</returns>
-
-        public CurveX448 Multiply(BigInteger s) => new CurveX448(ScalarMultiply(s));
 
         /// <summary>
         /// Generate the public parameter (a point on the curve)
         /// </summary>
         /// <param name="secretScalar">The extended private key</param>
         /// <returns>The public key corresponding to Private (s.B)</returns>
-        public static CurveX448 GetPublic(BigInteger secretScalar) => Base.Multiply(secretScalar);
-
+        public static CurveX448 GetPublic(BigInteger secretScalar) => 
+            (CurveX448) Base.Multiply(secretScalar);
 
         /// <summary>
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public override byte[] Encode() => EncodePoint(U);
+        public override byte[] Encode(bool extended = false) =>
+            extended ? EncodePointSigned(U, Odd) : EncodePoint(U);
 
         /// <summary>
         /// Encode the code point <paramref name="u"/>.
         /// </summary>
         /// <param name="u">The point to encode.</param>
+        /// <param name="odd">Specify if the v value is odd, even or undefined.</param>
         /// <returns>The encoded format of the point</returns>
-        public static byte[] EncodePoint(BigInteger u) =>
-            u.ByteArrayLittleEndian(56);
+        public static byte[] EncodePoint(BigInteger u, bool? odd = null) {
+            if (odd == null) {
+                return EncodePointUnsigned(u);
+                }
+            return EncodePointSigned(u, odd);
+            }
+
+
+        static byte[] EncodePointUnsigned(BigInteger u) {
+            return u.ByteArrayLittleEndian(32);
+            }
+        static byte[] EncodePointSigned(BigInteger u, bool? odd = null) {
+            var prefix = u.ByteArrayLittleEndian(56);
+            var result = new byte[57];
+            prefix.CopyTo(result, 0);
+            result[56] = odd == true ? (byte)0x80 : (byte)00;
+
+            return result;
+            }
 
         /// <summary>
         /// Encode the code point <paramref name="s"/>.
@@ -250,15 +266,20 @@ namespace Goedel.Cryptography.Algorithms {
         public static byte[] EncodeScalar(BigInteger s) =>
             s.ByteArrayLittleEndian(56);
 
-
-
         /// <summary>
         /// Construct a point on the curve from a buffer.
         /// </summary>
         /// <param name="data">The encoded data</param>
         /// <returns>The point created</returns>
         public static BigInteger DecodePoint(byte[] data) {
-            return data.BigIntegerLittleEndian();
+            if (data.Length == 56) {
+                return data.BigIntegerLittleEndian();
+                }
+            else if (data.Length == 57) {
+                throw new NYI();
+                }
+
+            throw new NYI();
             }
 
         /// <summary>
@@ -280,7 +301,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="u">The U value</param>
         /// <param name="odd">Specify the sign of the V value, ignored for this curve.</param> 
         /// <returns>Created point</returns>
-        public override CurveMontgomery Factory(BigInteger u, bool? odd) => new CurveX448(u);
+        public override CurveMontgomery Factory(BigInteger u, bool? odd) => new CurveX448(u, odd);
+
+
+
+
         }
 
 
@@ -445,7 +470,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="publicKey">Public key parameters</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX448 Agreement(CurveX448Public publicKey) =>
-            publicKey.Public.Multiply(Private);
+            (CurveX448) publicKey.Public.Multiply(Private);
 
         /// <summary>
         /// Perform a Diffie Hellman Key Agreement to a private key
@@ -455,7 +480,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// result of this key agreement.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveX448 Agreement(CurveX448Public publicKey, CurveX448 carry) {
-            var Result = publicKey.Public.Multiply(Private);
+            var Result = (CurveX448) publicKey.Public.Multiply(Private);
             Result.Accumulate(carry);
 
             return Result;
@@ -506,7 +531,7 @@ namespace Goedel.Cryptography.Algorithms {
             BigInteger Accumulator = 0;
 
             foreach (var share in Shares) {
-                var key = share as KeyPairEd448;
+                var key = share as KeyPairX448;
                 var privateKey = (key.IKeyAdvancedPrivate as CurveX448Private);
 
                 Accumulator = (Accumulator + privateKey.Private).Mod(CurveX448.Q);

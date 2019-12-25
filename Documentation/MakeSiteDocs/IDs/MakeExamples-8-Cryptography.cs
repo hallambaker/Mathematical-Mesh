@@ -44,15 +44,12 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### X448\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DescribeKeyGen (threshold.KeyGenX448);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Ed25519\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DescribeKeyGen (threshold.KeyGenEd25519);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Ed448\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DescribeKeyGen (threshold.KeyGenEd448);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("## Threshold Decryption\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -66,11 +63,9 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Key Splitting X448\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DescribeDecryptSplitting (threshold.DecryptX448);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("### Decryption X448\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				DescribeDecryptUse (threshold.DecryptX448);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		

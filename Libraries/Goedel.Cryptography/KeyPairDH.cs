@@ -264,15 +264,19 @@ namespace Goedel.Cryptography {
         /// <param name="privateKey">The private key</param>
         /// <returns>The key pair created.</returns>
 
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey)
-            => new KeyPairDH((DiffeHellmanPrivate)privateKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any)
+            => new KeyPairDH((DiffeHellmanPrivate)privateKey, 
+                    keySecurity: keySecurity);
 
         /// <summary>
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="publicKey">The public key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey)
+        public override KeyPairAdvanced KeyPair(
+                    IKeyAdvancedPublic publicKey)
             => new KeyPairDH((DiffeHellmanPublic)publicKey);
         #endregion
 

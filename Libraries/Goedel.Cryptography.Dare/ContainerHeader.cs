@@ -3,7 +3,7 @@
 
     public partial class ContainerInfo {
         ///<summary>If true, the field ExchangePosition is specified</summary>
-        public bool HasExchangePosition => __ExchangePosition;
+        public bool HasExchangePosition() => __ExchangePosition;
         }
 
     public partial class DareHeader {
@@ -14,7 +14,7 @@
 
 
         ///<summary>If true, the field ExchangePosition is specified</summary>
-        public bool HasExchangePosition => ContainerInfo.HasExchangePosition;
+        public bool HasExchangePosition => ContainerInfo.HasExchangePosition();
         // Should get rid of these and use nullable types.
 
 

@@ -114,13 +114,14 @@ namespace Goedel.Cryptography {
         /// in signature operations.</param>
         public KeyPairEd25519(
                     CurveEdwards25519Private privateKey = null,
+                    KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
             CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
             this.PrivateKey = privateKey ?? new CurveEdwards25519Private();
             PublicKey = this.PrivateKey.Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
-            KeyType = KeySecurity.Bound;
+            KeyType = keySecurity;
             KeyUses = keyUses;
             }
 
@@ -160,8 +161,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="privateKey">The private key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey) =>
-            new KeyPairEd25519((CurveEdwards25519Private)privateKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) =>
+            new KeyPairEd25519((CurveEdwards25519Private)privateKey, keySecurity, keyUses);
 
         /// <summary>
         /// Factory method to produce a key pair from implementation public key parameters

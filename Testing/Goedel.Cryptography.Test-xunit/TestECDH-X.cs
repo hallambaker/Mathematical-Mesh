@@ -349,12 +349,13 @@ namespace Goedel.XUnit {
 
         [Theory]
         [InlineData(1000, 500)]
+        [InlineData(1000, 50)]
         public void X448SignedMultiply(BigInteger total, BigInteger part) {
 
             var q = CurveX448.Base;
             var q1 = q.Multiply(part+1);
 
-            var point = CurveX448Signed.Base;
+            var point = CurveX448.Base;
             CheckCurve(point);
 
             point.ScalarAccumulate(point.U, part, out var xq, out var zq, out var xq1, out var zq1);
@@ -368,7 +369,7 @@ namespace Goedel.XUnit {
             (q1.U == u2).AssertTrue();
 
             var v0 = point.GetV(u0, true);
-            var s = new CurveX448Signed(u0, v0);
+            var s = new CurveX448(u0, v0);
             var s1 = s.Add(point);
 
             (s1.U == u1).AssertTrue();
@@ -398,13 +399,15 @@ namespace Goedel.XUnit {
             (p3.V == p3test.V).AssertTrue();
             }
 
-
+        [Theory]
+        [InlineData(1000, 500)]
+        [InlineData(1000, 50)]
         public void X448SignedMultiplyFast(BigInteger total, BigInteger part) {
 
             var q = CurveX448.Base;
             var q1 = q.Multiply(part + 1);
 
-            var point = CurveX448Signed.Base;
+            var point = CurveX448.Base;
             CheckCurve(point);
 
             point.ScalarAccumulate(point.U, part, out var xq, out var zq, out var xq1, out var zq1);
@@ -418,7 +421,7 @@ namespace Goedel.XUnit {
             (q1.U == u2).AssertTrue();
 
             var v0 = point.GetV(u0, true);
-            var s = new CurveX448Signed(u0, v0);
+            var s = new CurveX448(u0, v0);
             var s1 = s.Add(point);
 
             (s1.U == u1).AssertTrue();
@@ -431,17 +434,17 @@ namespace Goedel.XUnit {
             (s1.V == v1).AssertTrue();
 
 
-            var p1 = point.MultiplyFast(part);
+            var p1 = point.MultiplySigned(part);
             CheckCurve(p1);
 
 
-            var p2 = point.MultiplyFast(total - part);
+            var p2 = point.MultiplySigned(total - part);
             CheckCurve(p2);
 
             var p3 = p1.Add(p2);
             CheckCurve(p3);
 
-            var p3test = point.MultiplyFast(total);
+            var p3test = point.MultiplySigned(total);
             CheckCurve(p3test);
 
             (p3.U == p3test.U).AssertTrue();

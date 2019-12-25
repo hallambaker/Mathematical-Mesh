@@ -27,15 +27,15 @@
 
 ###### X448
 
-#call DescribeKeyGen threshold.KeyGenX448
+#%call DescribeKeyGen threshold.KeyGenX448
 
 ###### Ed25519
 
-#call DescribeKeyGen threshold.KeyGenEd25519
+#%call DescribeKeyGen threshold.KeyGenEd25519
 
 ###### Ed448
 
-#call DescribeKeyGen threshold.KeyGenEd448
+#%call DescribeKeyGen threshold.KeyGenEd448
 
 #### Threshold Decryption
 
@@ -49,11 +49,11 @@
 
 ###### Key Splitting X448
 
-#call DescribeDecryptSplitting threshold.DecryptX448
+#%call DescribeDecryptSplitting threshold.DecryptX448
 
 ###### Decryption X448
 
-#call DescribeDecryptUse threshold.DecryptX448
+#%call DescribeDecryptUse threshold.DecryptX448
 
 #end xfile
 

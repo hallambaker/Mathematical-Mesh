@@ -97,7 +97,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="privateKey">The private key</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey) => throw new NotImplementedException();
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) => throw new NotImplementedException();
 
         /// <summary>
         /// Factory method to produce a key pair from implementation public key parameters

@@ -25,9 +25,17 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The square root of -1.</summary>
         public BigInteger SqrtMinus1 => DomainParameters.SqrtMinus1;
 
-
+        /// <summary>
+        /// Add the point <paramref name="point"/> to this point on the curve
+        /// and return the result as a new point.
+        /// </summary>
+        /// <param name="point">The point to add.</param>
+        /// <returns>The sum of the two points.</returns>
         public abstract Curve Add(Curve point);
 
+        /// <summary>
+        /// Return a IKeyAdvancedPublic public key for this point. 
+        /// </summary>
         public abstract IKeyAdvancedPublic KeyAdvancedPublic { get; }
         }
 
@@ -41,7 +49,23 @@ namespace Goedel.Cryptography.Algorithms {
         public BigInteger U { get; set; }
 
         /// <summary>The V value, used for Point Addition.</summary>
-        public BigInteger V { get; set; }
+        public BigInteger V { get => v;
+            set {
+                v = value;
+                odd = !v.IsEven;
+                }
+            }
+        BigInteger v;
+
+        ///<summary>If true the point value is odd.</summary>
+        public bool? Odd {
+            set {
+                v = (value == null) ? -1 : GetV(value);
+                odd = value;
+                }
+            get => odd;
+            }
+        bool? odd;
 
 
         /// <summary>The parameter A24</summary>
@@ -61,23 +85,24 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
         /// <summary>
-        /// Return the V point corresponding to U
+        /// Return the V point corresponding to the u coordinate value <paramref name="u"/>
+        /// with sign specified by <paramref name="odd"/>.
         /// </summary>
         /// <param name="odd">If true, the odd value of V is returned. If false, the
         /// even value is returned. Otherwise, either value may be returned.</param>
+        /// <param name="u">The u coordinate value.</param>
         /// <returns>The V corresponding to U.</returns>
         public BigInteger GetV(BigInteger u , bool? odd = null) {
             //v^2 = u^3 + A*u^2 + u
-            var P = Prime;
 
-            var u2 = (u * u).Mod(P);
-            var u3 = (u * u2).Mod(P);
-            var v2 = (u3 + A * u2 + u).Mod(P);
+            var u2 = (u * u).Mod(Prime);
+            var u3 = (u * u2).Mod(Prime);
+            var v2 = (u3 + A * u2 + u).Mod(Prime);
 
-            var v = v2.Sqrt(P, SqrtMinus1, odd);
+            var v = v2.Sqrt(Prime, SqrtMinus1, odd);
 
             // check the value is correct
-            ((v * v).Mod(P) == v2).AssertTrue();
+            ((v * v).Mod(Prime) == v2).AssertTrue();
             return v;
             }
 
@@ -224,9 +249,50 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="s">Scalar factor</param>
         /// <returns>The result of the multiplication</returns>
         public CurveMontgomery Multiply(BigInteger s) {
-            var u = ScalarMultiply(s);
-            return Factory(u, null);
+            BigInteger u;
+            if (Odd == null) {
+                u = ScalarMultiply(s);
+                return Factory(u, null);
+                }
+            return MultiplySigned(s);
             }
+
+
+
+        /// <summary>
+        /// Multiply this point by a scalar and return the new point.
+        /// </summary>
+        /// <param name="s">Scalar factor</param>
+        /// <returns>The result of the multiplication</returns>
+        public CurveMontgomery MultiplySigned(BigInteger s) {
+            var (u, v) = ScalarMultiplySigned(s);
+            return Factory(u, !v.IsEven);
+            }
+
+        /// <summary>
+        /// Multiply this point by a scalar and return the new point.
+        /// </summary>
+        /// <param name="s">Scalar factor</param>
+        /// <returns>The result of the multiplication</returns>
+        public CurveMontgomery MultiplySignedSlow(BigInteger s) {
+            ScalarAccumulate(U, s, out var xq, out var zq, out var xq1, out var zq1);
+
+            var uq = Recover(xq, zq);
+            var uq1 = Recover(xq1, zq1);
+
+            var vq = GetV(uq, true);
+            //var vq1 = GetV(uq1, true);
+
+            CheckCurve(uq, vq);
+            var q = Factory(uq, !vq.IsEven);
+
+            var q1 = Add(q);
+            if (uq1 != q1.U) {
+                q.V = (Prime - q.V).Mod(Prime);
+                }
+            return q;
+            }
+
 
         /// <summary>
         /// Multiply a point by a scalar and return the U and V values.
@@ -270,21 +336,6 @@ namespace Goedel.Cryptography.Algorithms {
 
             }
 
-        ///// <summary>
-        ///// Multiply a point by a scalar and return the result with sign (positive =
-        ///// even, negative = odd);
-        ///// </summary>
-        ///// <param name="s">Scalar factor</param>
-        ///// <returns>The result of the multiplication</returns>
-        //public BigInteger SignedScalarMultiply(BigInteger s) {
-        //    (var sU, var s1U) = ScalarAccumulate(s);
-
-        //    var testU = 
-
-
-        //    return sU;
-        //    }
-
 
         /// <summary>
         /// Conditional swap in constant time.
@@ -308,7 +359,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Encode the code point.
         /// </summary>
         /// <returns>The encoded format of the point</returns>
-        public abstract byte[] Encode();
+        public abstract byte[] Encode(bool extended=false);
 
 
         public override Curve Add(Curve point) => Add (point as CurveMontgomery);
@@ -318,7 +369,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="point">Second point</param>
         /// <returns>The result of the addition.</returns>
-        public virtual CurveMontgomery Add(CurveMontgomery point) => throw new NYI();
+        public CurveMontgomery Add(CurveMontgomery point) {
+            var (u, v) = Add(this, point);
+            return Factory(u, !v.IsEven);
+            }
 
         /// <summary>
         /// Add two points
@@ -327,6 +381,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="point2">Second point</param>
         /// <returns>The result of the addition.</returns>
         public (BigInteger, BigInteger) Add(CurveMontgomery point1, CurveMontgomery point2) {
+
+            (point1.Prime == point2.Prime).AssertTrue();
 
             var u1 = point1.U;
             var v1 = point1.V;
@@ -604,6 +660,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="p">The prime.</param>
         /// <param name="a">The curve coefficient.</param>
         /// <param name="u">The Montgomery initial point U value.</param>
+        /// <param name="v">The Montgomery initial point V value.</param>
         /// <param name="d">The Edwards curve coeffient D</param>
         /// <param name="by">The Edwards curve base point Y value.</param>
         /// <param name="bits">The number of bits in the prime.</param>
