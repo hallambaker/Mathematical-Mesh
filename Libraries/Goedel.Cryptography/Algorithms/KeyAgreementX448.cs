@@ -9,141 +9,6 @@ using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
 
-    //public class CurveX448Signed : CurveX448 {
-
-    //    //static readonly CurveX448Signed BasePoint =
-    //    //        new CurveX448Signed(DomainParameters.Curve448.U, DomainParameters.Curve448.V);
-
-    //    ///// <summary>The base point for the subgroup</summary>
-    //    //public static CurveX448Signed Base => BasePoint.Copy();
-
-    //    ///// <summary>
-    //    ///// Crete a new point with the same parameters as this.
-    //    ///// </summary>
-    //    ///// <returns>The new point</returns>
-    //    //public CurveX448Signed Copy() => new CurveX448Signed(U, V);
-
-
-    //    // constructors
-
-    //    ///// <summary>
-    //    ///// Construct a point from U and V coordinates. Is only for use by internal
-    //    ///// methods.
-    //    ///// </summary>
-    //    ///// <param name="u">The U coordinate</param>
-    //    ///// <param name="v">The V coordinate</param>
-    //    //public CurveX448Signed(BigInteger u, BigInteger v) {
-    //    //    U = u.Mod(P);
-    //    //    V = v.Mod(P);
-    //    //    }
-
-
-    //    ///// <summary>
-    //    ///// Construct a point from a U coordinate and sign of V.
-    //    ///// </summary>
-    //    ///// <param name="u">The U coordinate</param>
-    //    ///// <param name="odd">Specify the sign of the V value</param> 
-    //    //public CurveX448Signed(BigInteger u, bool? odd) {
-    //    //    U = u.Mod(P);
-    //    //    V = GetV(odd);
-    //    //    }
-
-
-    //    ///// <summary>
-    //    ///// Construct a point from a U coordinate.
-    //    ///// </summary>
-    //    ///// <param name="data">The encoded U coordinate</param>
-    //    //public CurveX448Signed(byte[] data) {
-    //    //    bool? odd;
-    //    //    (U, odd) = DecodePointSigned(data);
-    //    //    V = GetV(odd);
-    //    //    }
-
-
-    //    ///// <summary>
-    //    ///// Create a point from the specified U value.
-    //    ///// </summary>
-    //    ///// <param name="u">The U value</param>
-    //    ///// <param name="odd">Specify the sign of the V value, ignored for this curve.</param> 
-    //    ///// <returns>Created point</returns>
-    //    //public override CurveMontgomery Factory(BigInteger u, bool? odd) => new CurveX448Signed(u, odd);
-
-    //    // need to override the encode / decode mechanisms
-
-
-    //    /// <summary>
-    //    /// Construct a point on the curve from a buffer.
-    //    /// </summary>
-    //    /// <param name="data">The encoded data</param>
-    //    /// <returns>The point created</returns>
-    //    public static (BigInteger, bool?) DecodePointSigned(byte[] data) {
-    //        throw new NYI();
-    //        //return (data.BigIntegerLittleEndian(), null);
-
-    //        //var copy = data.Duplicate();
-    //        //copy[0] &= 252;
-    //        //copy[55] |= 128;
-    //        //return copy.BigIntegerLittleEndian();
-    //        }
-
-    //    /// <summary>
-    //    /// Encode the code point <paramref name="u"/>.
-    //    /// </summary>
-    //    /// <param name="u">The point to encode.</param>
-    //    /// <returns>The encoded format of the point</returns>
-    //    public static byte[] EncodePointSigned(BigInteger u) => throw new NYI();
-    //       //u.ByteArrayLittleEndian(56);
-
-    //    /// <summary>
-    //    /// Encode the code point.
-    //    /// </summary>
-    //    /// <returns>The encoded format of the point</returns>
-    //    public override byte[] Encode() => EncodePointSigned(U);
-
-
-
-
-    //    ///// <summary>
-    //    ///// Multiply this point by a scalar and return the new point.
-    //    ///// </summary>
-    //    ///// <param name="s">Scalar factor</param>
-    //    ///// <returns>The result of the multiplication</returns>
-    //    //public CurveMontgomery MultiplyFast(BigInteger s) {
-
-
-
-
-    //    //    var (u,v) = ScalarMultiplySigned(s);
-    //    //    return new CurveX448Signed(u, v);
-    //    //    }
-
-
-    //    ///// <summary>
-    //    ///// Multiply this point by a scalar and return the new point.
-    //    ///// </summary>
-    //    ///// <param name="s">Scalar factor</param>
-    //    ///// <returns>The result of the multiplication</returns>
-    //    //public CurveMontgomery Multiply(BigInteger s) {
-    //    //    ScalarAccumulate(U, s, out var xq, out var zq, out var xq1, out var zq1);
-
-    //    //    var uq = Recover(xq, zq);
-    //    //    var uq1 = Recover(xq1, zq1);
-
-    //    //    var vq = GetV(uq, true);
-    //    //    //var vq1 = GetV(uq1, true);
-
-    //    //    CheckCurve(uq, vq);
-    //    //    var q = new CurveX448(uq, vq);
-
-    //    //    var q1 = Add(q);
-    //    //    if (uq1 != q1.U) {
-    //    //        q.V = (Prime - q.V).Mod(Prime);
-    //    //        }
-    //    //    return q;
-    //    //    }
-
-    //    }
-
     /// <summary>
     /// Montgomery Curve [v^2 = u^3 + A*u^2 + u] for 2^448 - 2^224 -1
     /// </summary>
@@ -549,9 +414,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public CurveX448Private Combine(CurveX448Private contribution) {
+        public CurveX448Private Combine(CurveX448Private contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) {
             var NewPrivate = (Private + contribution.Private).Mod(CurveX448.Q);
-            return new CurveX448Private(NewPrivate);
+            return new CurveX448Private(NewPrivate, keySecurity.IsExportable());
             }
 
 
@@ -560,8 +427,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
-            Combine(contribution as CurveX448Private);
+        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) =>
+            Combine(contribution as CurveX448Private, keySecurity, keyUses);
         #endregion
 
 

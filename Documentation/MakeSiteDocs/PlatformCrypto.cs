@@ -16,7 +16,25 @@ using System.Collections.Generic;
 
 namespace ExampleGenerator {
 
+    public static class Extension {
+        public static (BigInteger X, BigInteger Y) GetXY(this Curve curve) {
+            switch (curve) {
 
+                case CurveMontgomery curveMontgomery: {
+                    return (curveMontgomery.U,
+                        curveMontgomery.V);
+                    }
+                case CurveEdwards curveEdwards: {
+                    return (curveEdwards.X,
+                        curveEdwards.Y);
+                    }
+                }
+
+            throw new NYI();
+            }
+
+        
+        }
     public partial class Threshold {
         public KeyGen KeyGenX25519;
         public KeyGen KeyGenX448;
@@ -62,6 +80,8 @@ namespace ExampleGenerator {
             CurvePoint = point;
             Key = CurvePoint.KeyAdvancedPublic;
             Public = Key.Encoding;
+
+            (X, Y) = point.GetXY();
             }
         public CurveResult(IKeyAdvancedPrivate key, KeyPairAdvanced Point) {
             var scalar = key.Private;
@@ -258,7 +278,8 @@ namespace ExampleGenerator {
 
 
             var keys = new List<KeyPair>() { Key1.KeyPair };
-            var key2 = keyA.CompleteRecryptionKeySet(keys);
+
+            var key2 = keyA.Combine(key1, KeySecurity.Exportable);
             Key2 = new CurveKey(makeKeyPair(key2, KeySecurity.Exportable), true);
 
             KeyE1 = new CurveResult(key1, KeyE.KeyPair);

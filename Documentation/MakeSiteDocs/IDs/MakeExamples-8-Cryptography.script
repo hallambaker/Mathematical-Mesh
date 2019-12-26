@@ -9,9 +9,6 @@
 
 #method MakeCryptographyExamples CreateExamples Example
 #% ExamplesThreshold(Example);
-#!% ExamplesAdvancedCoGeneration(Example);
-#!% ExamplesAdvancedRecryption(Example);
-#!% ExamplesAdvancedQuantum(Example);
 #end method
 
 
@@ -27,15 +24,15 @@
 
 ###### X448
 
-#%call DescribeKeyGen threshold.KeyGenX448
+#call DescribeKeyGen threshold.KeyGenX448
 
 ###### Ed25519
 
-#%call DescribeKeyGen threshold.KeyGenEd25519
+#call DescribeKeyGen threshold.KeyGenEd25519
 
 ###### Ed448
 
-#%call DescribeKeyGen threshold.KeyGenEd448
+#call DescribeKeyGen threshold.KeyGenEd448
 
 #### Threshold Decryption
 
@@ -49,11 +46,11 @@
 
 ###### Key Splitting X448
 
-#%call DescribeDecryptSplitting threshold.DecryptX448
+#call DescribeDecryptSplitting threshold.DecryptX448
 
 ###### Decryption X448
 
-#%call DescribeDecryptUse threshold.DecryptX448
+#call DescribeDecryptUse threshold.DecryptX448
 
 #end xfile
 
@@ -71,7 +68,7 @@ The key agreement result is given by multiplying the public key of the encryptio
 pair by the secret scalar of the ephemeral key to obtain the u-coordinate of the result.
 
 ~~~~
-#{Decrypt.KeyEA.XTag}: {Key.X}
+#{Decrypt.KeyEA.XTag}: #{Decrypt.KeyEA.X}
 ~~~~
 
 The u-coordinate is encoded in the usual fashion (i.e. without specifying the sign of v).
@@ -152,7 +149,7 @@ the sum of the secret scalars of the other shares modulo the group order:
 
 ~~~~
 Scalar_2 = (Scalar_A - Scalar_1) mod L
-    = #{Decrypt.Key1.Scalar}
+    = #{Decrypt.Key2.Scalar}
 This is encoded as a binary integer in little endian format:
 #{Decrypt.Key2.Private.ToStringBase16FormatHex()}
 ~~~~
@@ -194,6 +191,13 @@ Point_A = Point_1 + Point_2
 Encoded Public#{KeyGen.KeyA.Public.ToStringBase16FormatHex()}
 ~~~~
 
+#if (KeyGen.KeyA.IsCurveX) 
+Note that in this case, the unsigned representation of the key is used as
+the aggregate key is intended for unsigned CurveX key agreement. If the
+result is intended for use as a key contribution, the signed representation
+is required.
+
+#end if
 #end method
 
 
@@ -213,128 +217,6 @@ Encoded Public#{KeyGen.KeyA.Public.ToStringBase16FormatHex()}
 #end method
 
 
-
-
-#file ExamplesAdvancedCoGeneration "Examples\\ExamplesAdvancedCoGeneration.md" CreateExamples Example
-####Example: Provisioning the Confirmation Service
-#% var Section = Example.CryptoCombine;
-
-For example, Alice provisions the confirmation service to her watch. The device profile
-of the watch specifies an Ed25519 signature key. Note that for production use, Ed448 is
-almost certainly prefered but Ed25519 has the advantage of more compact presentation.
-
-~~~~
-Device Key
-
-UDF Seed:       #{Section.SeedAliceDevice}
-Private Key:#{Section.KeyPairDevicePrivate.ToStringBase16FormatHex()}
-Secret Scalar:
-#{Section.SecretScalarDevice}
-Public Key:#{Section.KeyPairDevice.PublicData.ToStringBase16FormatHex()}
-Fingerprint:    #{Section.KeyPairDevice.UDF}
-~~~~
-
-The provisioning device could generate a signature key for the device and encrypt it
-under the encryption key of the device. But this means that we cannot attribute signatures
-to the watch with absolute certainty as the provisioning device has had knowledge of the 
-watch signature key. Nor do we wish to use the device signature key for the confirmation
-service.
-
-Instead, the provisioning device generates an overlay keypair:
-
-~~~~
-Device Key
-
-UDF Seed:       #{Section.SeedAliceOverlay}
-Private Key:#{Section.KeyPairOverlayPrivate.ToStringBase16FormatHex()}
-Secret Scalar:
-#{Section.SecretScalarOverlay}
-Public Key:#{Section.KeyPairOverlay.PublicData.ToStringBase16FormatHex()}
-Fingerprint:    #{Section.KeyPairOverlay.UDF}
-~~~~
-
-The provisioning device can calculate the public key of the composite keypair
-by adding the public keys of the device profile and the companion public key:
-
-~~~~
-Composite public key = Device + Overlay:#{Section.CombinedPublic.PublicData.ToStringBase16FormatHex()}
-Fingerprint:    #{Section.CombinedPublic.UDF}
-~~~~
-
-The provisioning device encrypts the private key of the comanion keypair (or the seed from which it
-was generated) under the encryption key of the device. 
-
-The provisioning device calculates the private key of the composite keypair by 
-adding the two private key values modulo the order of the group and verifies that scalar 
-multiplication of the base point returns the composite public key value.
-
-~~~~
-Composite Secret Scalar = Device + Overlay:
-#{Section.SecretScalarComposite}
-Fingerprint:    #{Section.CombinedPrivate.UDF}
-~~~~
-
-
-#end file
-
-#file ExamplesAdvancedRecryption "Examples\\ExamplesAdvancedRecryption.md" CreateExamples Example
-#% var Section = Example.CryptoGroup;
-####Example: Messaging group
-
-NB: The current code implements encryption in the Elliptic Curve Ed25519, not the Montgomery
-Curve X.25519 as it should. This will be lifted in the near future.
-
-Alice creates an encryption keypair.
-
-~~~~
-Group Key:#{Section.KeyPairGroupPrivate.ToStringBase16FormatHex()}
-Value:
-#{Section.KeyPairGroupPrivateInt}
-~~~~
-
-To verify the proper function of the group, Alice creates a test message and 
-encrypts it under the group key.
-
-~~~~
-Message = #{Section.PlaintextText} as UTF8:#{Section.Plaintext.ToStringBase16FormatHex()}
-
-#{Section.Envelope}
-~~~~
-
-Alice decides to add Bob to the group. She creates an encryption key for Bob:
-The decryption key is specified in the same way as any other Ed25519 private key
-using the hash of a private key seed value:
-
-~~~~
-Bob's Member Key:#{Section.KeyPairDevicePrivate.ToStringBase16FormatHex()}
-Value:
-#{Section.KeyPairDevicePrivateInt}
-~~~~
-
-The the recryption key is the group secret scalar minus  (mod p) the secret scalar of Bob's
-private key:
-
-~~~~
-Bob's Service Key:
-   [Not specified as a digest input value]
-Value:
-#{Section.KeyPairServicePrivateInt}
-~~~~
-
-To decrypt:
-
-~~~~
-Member Agreement Value:#{Section.KeyPairDeviceWrapped.PartialDeviceEncoded.ToStringBase16FormatHex()}
-
-Service Agreement Value:#{Section.KeyPairDeviceWrapped.PartialServiceEncoded.ToStringBase16FormatHex()}
-
-Key Agreement IKM:#{Section.KeyPairDeviceWrapped.Result.ToStringBase16FormatHex()}
-~~~~
-
-This value allows the test message to be decrypted.
-
-
-#end file
 
 #file ExamplesAdvancedQuantum "Examples\\ExamplesAdvancedQuantum.md" CreateExamples Example
 ####Example: Creating a Quantum Resistant Signature Fingerprint

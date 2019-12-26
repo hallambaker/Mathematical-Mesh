@@ -716,9 +716,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public CurveEdwards448Private Combine(CurveEdwards448Private contribution) {
+        public CurveEdwards448Private Combine(CurveEdwards448Private contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) {
             var NewPrivate = (Private + contribution.Private).Mod(CurveEdwards448.Q);
-            return new CurveEdwards448Private(NewPrivate);
+            return new CurveEdwards448Private(NewPrivate, keySecurity.IsExportable());
             }
 
 
@@ -727,8 +729,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
-            Combine(contribution as CurveEdwards448Private);
+        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) =>
+            Combine(contribution as CurveEdwards448Private, keySecurity, keyUses);
         #endregion
 
         }

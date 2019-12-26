@@ -359,7 +359,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public DiffeHellmanPrivate Combine(DiffeHellmanPrivate contribution) {
+        public DiffeHellmanPrivate Combine(DiffeHellmanPrivate contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) {
             Contract.Requires(contribution != null);
             contribution.AssertNotNull(NullParameter.Throw);
 
@@ -374,8 +376,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution) =>
-            Combine(contribution as DiffeHellmanPrivate);
+        public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
+                    KeySecurity keySecurity = KeySecurity.Bound,
+                    KeyUses keyUses = KeyUses.Any) =>
+            Combine(contribution as CurveEdwards448Private, keySecurity, keyUses);
         #endregion
 
 
