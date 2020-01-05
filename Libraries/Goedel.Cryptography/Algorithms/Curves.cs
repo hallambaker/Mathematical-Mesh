@@ -1,6 +1,7 @@
 ﻿using Goedel.Utilities;
 
 using System;
+using System.Collections.Generic;
 using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
@@ -469,6 +470,8 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The Curve Constant d</summary>
         public BigInteger CurveConstantD => DomainParameters.D;
 
+        public abstract byte[] Encode();
+
         /// <summary>
         /// Add this point to a second point
         /// </summary>
@@ -572,6 +575,123 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Point">Second point</param>
         /// <returns>The result of the addition.</returns>
         public abstract void Accumulate(CurveEdwards Point);
+
+        /// <summary>
+        /// Get the K value corresponding to this point
+        /// </summary>
+        /// <param name="domain"></param>
+        /// <param name="encodedR"></param>
+        /// <param name="encodedA"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public abstract BigInteger GetK(
+            byte[] domain,
+            byte[] encodedR,
+            byte[] data);
+
+
+        public abstract bool Verify(BigInteger k, BigInteger s, CurveEdwards R);
+
+
+        public abstract ThresholdCoordinatorEdwards Coordinator();
+
+        }
+
+
+    public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
+
+
+        public abstract CurveEdwards PublicPoint { get;}
+
+        /// <summary>The private key, i.e. a scalar</summary>
+        public BigInteger Private { get; protected set; }
+
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        public abstract KeyAgreementResult Agreement(KeyPair keyPair);
+
+        /// <summary>
+        /// Split the private key into a number of recryption keys.
+        /// <para>
+        /// Since the
+        /// typical use case for recryption requires both parts of the generated machine
+        /// to be used on a machine that is not the machine on which they are created, the
+        /// key security level is always to permit export.</para>
+        /// </summary>
+        /// <param name="shares">The number of keys to create.</param>
+        /// <returns>The created keys</returns>
+        public abstract IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares);
+
+        /// <summary>
+        /// Make a recryption keyset by splitting the private key.
+        /// </summary>
+        /// <param name="Shares">Number of shares to create</param>
+        /// <returns>Array shares.</returns>
+        public abstract IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares);
+        
+        /// <summary>
+        /// Combine the two public keys to create a composite public key.
+        /// </summary>
+        /// <param name="contribution">The key contribution.</param>
+        /// <returns>The composite key</returns>
+        public abstract IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, 
+            KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any);
+
+
+        /// <summary>
+        /// Sign a message using the public key according to RFC8032
+        /// </summary>
+        /// <remarks>This method does not prehash the message data since if
+        /// prehashing is desired, it is because the data needs to be hashed
+        /// before being presented.</remarks>
+        /// <param name="message">The message</param>
+        /// <param name="domain">Context value, if used.</param>
+        /// <returns>The encoded signature data</returns>
+        public byte[] Sign(byte[] message, byte[] domain = null) {
+
+            // 1.Hash the private key, 32 octets, using SHA-512.  Let h denote the
+            // resulting digest. Construct the secret scalar s from the first
+            // half of the digest, and the corresponding public key A, as
+            // described in the previous section.Let prefix denote the second
+            // half of the hash digest, h[32],..., h[63].
+
+            // 2.  Compute SHA-512(dom2(F, C) || prefix || PH(M)), where M is the
+            // message to be signed.Interpret the 64-octet digest as a little-
+            // endian integer r.
+
+            // 3.  Compute the point[r]B. For efficiency, do this by first
+            // reducing r modulo L, the group order of B.Let the string R be
+            // the encoding of this point.
+
+            // 4.  Compute SHA512(dom2(F, C) || R || A || PH(M)), and interpret the
+            // 64-octet digest as a little-endian integer k.
+
+            // 5.  Compute S = (r + k * s) mod L.For efficiency, again reduce k
+            // modulo L first.
+
+            // 6.  Form the signature of the concatenation of R (32 octets) and the
+            // little-endian encoding of S(32 octets; the three most
+            // significant bits of the final octet are always zero).
+
+
+            var (r, Rs) = PreSign(message, domain);
+            var k = PublicPoint.GetK(domain, Rs, message);
+            var S = Sign(k, r);
+            return EncodeSignature(Rs, S);
+            }
+
+
+        public abstract (BigInteger, byte[]) PreSign(byte[] message, byte[] context = null);
+
+        public abstract BigInteger Sign(BigInteger k, BigInteger r);
+
+        public abstract byte[] EncodeSignature(byte[] r, BigInteger scalar);
+
+
+
 
         }
 

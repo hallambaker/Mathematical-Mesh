@@ -27,8 +27,8 @@ namespace ExampleGenerator {
         public ResultDigest ResultCommitSHA2;
         public ResultDigest ResultCommitSHA3;
 
-        public Secret UDFSplitSecret;
-        public Goedel.Cryptography.KeyShare[] UDFSplitShares;
+        public SharedSecret UDFSplitSecret;
+        public Goedel.Cryptography.KeyShareSymmetric[] UDFSplitShares;
         public BigInteger[] UDFSplitPolynomial;
 
         public string TestStringValue = "UDF Content Data";
@@ -55,7 +55,7 @@ namespace ExampleGenerator {
             ResultDigestSHA3 = testCLI.Dispatch($"hash udf {filename} /alg sha3") as ResultDigest;
             ResultCommitSHA2 = testCLI.Dispatch($"hash mac {filename} /alg sha2 /key {ResultUDFNonce.Key}") as ResultDigest;
 
-            UDFSplitSecret = new Secret(128);
+            UDFSplitSecret = new SharedSecret(128);
             UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);
 
             PublicKeyed25519 = KeyPair.Factory(CryptoAlgorithmID.Ed25519, KeySecurity.Exportable)

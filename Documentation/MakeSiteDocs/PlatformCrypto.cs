@@ -33,8 +33,186 @@ namespace ExampleGenerator {
             throw new NYI();
             }
 
-        
+
         }
+
+    public partial class ThresholdSignature {
+
+        public Unanimous UnanimousEd25519;
+        public Unanimous UnanimousEd448;
+        public Quorate QuorateEd25519;
+        public Quorate QuorateEd448;
+
+        public ThresholdSignature() {
+            UnanimousEd25519 = new Unanimous(CryptoAlgorithmID.Ed25519);
+            UnanimousEd448 = new Unanimous(CryptoAlgorithmID.Ed25519);
+            QuorateEd25519 = new Quorate(CryptoAlgorithmID.Ed25519);
+            QuorateEd448 = new Quorate(CryptoAlgorithmID.Ed25519);
+            }
+        }
+
+    public partial class SigExample {
+        public virtual string TestData => "This is a test";
+        public byte[] TestDataBytes => TestData.ToUTF8();
+
+        public byte[] RRa;
+        public byte[] RRb;
+        public BigInteger Ra;
+        public BigInteger Rb;
+        public BigInteger R;
+        public BigInteger K;
+
+        public BigInteger La = 1;
+        public BigInteger Lc = 1;
+
+        public BigInteger SSa;
+        public BigInteger SSb;
+
+        public BigInteger S;
+        public CurveEdwards SB;
+        public BigInteger SBX => SB.X0;
+        public BigInteger SBY => SB.Y0;
+        CryptoAlgorithmID CryptoAlgorithmID;
+
+
+        CurveEdwards PublicSignatureKey;
+
+        public ThresholdCoordinatorEdwards ThresholdCoordinate;
+
+        public SigExample(CryptoAlgorithmID cryptoAlgorithmID) {
+            CryptoAlgorithmID = cryptoAlgorithmID;
+            }
+
+        public ThresholdSignatureEdwards Threshold1;
+        public ThresholdSignatureEdwards Threshold2;
+
+        public void Complete1(KeyPairEdwards EdwardsAlice,
+            KeyPairEdwards EdwardsBob) {
+
+            var hash = CryptoAlgorithmID.Bulk().GetDigest(TestDataBytes);
+            Threshold1 = EdwardsAlice.SignHashThreshold(hash);
+            Threshold2 = EdwardsBob.SignHashThreshold(hash);
+
+            Ra = Threshold1.PrivateR;
+            RRa = Threshold1.PublicR.Encode();
+
+            Rb = Threshold2.PrivateR;
+            RRb = Threshold2.PublicR.Encode();
+
+            ThresholdCoordinate = PublicSignatureKey.Coordinator();
+
+            // Coordinator actions
+            ThresholdCoordinate.AddShareR(RRa);
+            ThresholdCoordinate.AddShareR(RRb);
+
+            K = ThresholdCoordinate.MakeK (TestDataBytes) ;
+
+            CurveEdwards A = null;
+
+            SSa = Threshold1.Complete(ThresholdCoordinate.R, A, TestDataBytes, La);
+            SSb = Threshold2.Complete(ThresholdCoordinate.R, A, TestDataBytes, Lc);
+
+            ThresholdCoordinate.AddShareS(SSa);
+            ThresholdCoordinate.AddShareS(SSb);
+
+            S = ThresholdCoordinate.Verify();
+            SB = ThresholdCoordinate.SB;
+            }
+
+        }
+
+    public partial class Unanimous : SigExample {
+
+        public CurveKey KeyAlice;
+        public CurveKey KeyBob;
+        public CurveKey KeyAggregate;
+
+
+
+        public Unanimous(CryptoAlgorithmID cryptoAlgorithmID) : base(cryptoAlgorithmID) {
+
+            KeyAlice = new CurveKey(cryptoAlgorithmID, true, "TSIG1", "Alice's Key");
+            KeyBob = new CurveKey(cryptoAlgorithmID, true, "TSIG2", "Bob's Key");
+
+            var EdwardsAlice = KeyAlice.KeyPair as KeyPairEdwards;
+            var EdwardsBob = KeyBob.KeyPair as KeyPairEdwards;
+
+            var keypair = EdwardsAlice.Combine(EdwardsBob, KeySecurity.Exportable);
+            KeyAggregate = new CurveKey(keypair, false);
+
+            Complete1(EdwardsAlice, EdwardsBob);
+
+            }
+        }
+
+    public partial class Quorate : SigExample {
+        public override string TestData => "This is another test";
+
+        public CurveKey KeyAggregate;
+        public BigInteger A0;
+        public BigInteger A1;
+        public BigInteger A2;
+
+        public BigInteger Xa;
+        public BigInteger Fa;
+
+        public BigInteger Xb;
+        public BigInteger Fb;
+        public BigInteger Xc;
+        public BigInteger Fc;
+
+
+
+        public BigInteger Sa;
+        public BigInteger Sc;
+
+        // Map the Carol parameters to the 'b' set calculated above
+        public byte[] RRc => RRb;
+        public BigInteger Rc => Rb;
+        public BigInteger SSc => SSb;
+
+
+
+        public Quorate(CryptoAlgorithmID cryptoAlgorithmID): base (cryptoAlgorithmID) {
+
+            KeyAggregate = new CurveKey(cryptoAlgorithmID, true, "TSIG2", "Aggregate Key");
+            var Modulus = KeyAggregate.Modulus;
+            var EdwardsKeyAggregate = KeyAggregate.KeyPair as KeyPairEdwards;
+
+            var keyShares = EdwardsKeyAggregate.Split(3, 2, out var polynomial);
+
+            A0 = polynomial[0];
+            A1 = polynomial[1];
+            A2 = polynomial[2];
+
+            Xa = keyShares[0].Index;
+            Fa = keyShares[0].Value;
+
+            Xb = keyShares[1].Index;
+            Fb = keyShares[1].Value;
+
+            Xc = keyShares[2].Index;
+            Fc = keyShares[2].Value;
+
+            // create the recovery shares
+            var recoveryShares = new KeyShareEdwards[] { keyShares[0], keyShares[2] };
+            La = recoveryShares[0].Lagrange(recoveryShares, 0);
+            Lc = recoveryShares[2].Lagrange(recoveryShares, 1);
+
+            // calculate the recovery scalar values
+            Sa = (La * Fa).Mod(Modulus);
+            Sc = (Lc * Fc).Mod(Modulus);
+
+            var EdwardsAlice = KeyPairEdwards.Factory(cryptoAlgorithmID, Fa);
+            var EdwardsCarol = KeyPairEdwards.Factory(cryptoAlgorithmID, Fa);
+
+            Complete1(EdwardsAlice, EdwardsCarol);
+
+
+            }
+        }
+
+
     public partial class Threshold {
         public KeyGen KeyGenX25519;
         public KeyGen KeyGenX448;
@@ -55,6 +233,9 @@ namespace ExampleGenerator {
             DecryptX448 = new Decrypt(CryptoAlgorithmID.X448);
             }
         }
+
+
+
 
 
     public partial class CurveResult {
@@ -123,6 +304,9 @@ namespace ExampleGenerator {
         public string Curve => CryptoAlgorithmID.ToJoseID();
         public string UDF = "TBS";
         public BigInteger Scalar = -1;
+
+        public BigInteger Modulus => throw new NYI();
+
         public byte[] Public = Dummy;
         public byte[] Private = Dummy;
 
@@ -299,15 +483,11 @@ namespace ExampleGenerator {
         public CurveKey KeyA;
 
         public KeyGen(CryptoAlgorithmID cryptoAlgorithmID) {
-            CryptoAlgorithmID = cryptoAlgorithmID;
-
             
-            Key1 = new CurveKey(CryptoAlgorithmID, true, "TKG", "Key1");
-            Key2 = new CurveKey(CryptoAlgorithmID, true, "TKG", "Key2");
+            Key1 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key1");
+            Key2 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key2");
 
             var keypair = Key1.KeyPair.Combine(Key2.KeyPair, KeySecurity.Exportable);
-
-
             KeyA = new CurveKey(keypair, false);
 
             
@@ -331,7 +511,7 @@ namespace ExampleGenerator {
         public int AdvancedRecoveryThreshold = 3;
         public int AdvancedRecoveryCount = 5;
         public BigInteger[] AdvancedRecoveryPolynomial;
-        public KeyShare[] AdvancedRecoveryShares;
+        public KeyShareSymmetric[] AdvancedRecoveryShares;
         public BigInteger[] AdvancedRecoveryShareValues;
         public byte[][] AdvancedRecoverySharesHex;
         public string[] AdvancedRecoveryBase32;
@@ -369,6 +549,7 @@ namespace ExampleGenerator {
         public CryptoCombine CryptoCombine;
         public CryptoGroup CryptoGroup;
         public Threshold Threshold;
+        public ThresholdSignature ThresholdSignature;
 
         public void PlatformCrypto() {
             // To do - write the code to create examples for the 'advanced' section
@@ -377,49 +558,11 @@ namespace ExampleGenerator {
             //CryptoCombine = new CryptoCombine();
             //CryptoGroup = new CryptoGroup();
             Threshold = new Threshold();
+            ThresholdSignature = new ThresholdSignature();
             }
         }
 
 
-
-    //public class CryptoParametersTest : CryptoParameters {
-
-
-    //    public CryptoParametersTest(
-    //                List<KeyPair> encryptionKeys = null,
-    //                List<KeyPair> signerKeys = null,
-    //                CryptoAlgorithmID encryptID = CryptoAlgorithmID.Default,
-    //                CryptoAlgorithmID digestID = CryptoAlgorithmID.Null) :
-    //        base(new KeyCollectionCore(),  encryptID: encryptID, digestID: digestID) {
-
-    //        EncryptionKeys = encryptionKeys;
-    //        SignerKeys = signerKeys;
-
-    //        }
-
-
-    //    protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
-
-    //    public void AddEncrypt(string accountId, bool register = true) {
-    //        EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
-
-    //        var udf = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: accountId.ToUTF8());
-    //        var keypair = UDF.DeriveKey(udf, keyType: KeySecurity.Exportable) as KeyPairEd25519;
-    //        keypair.Locator = accountId;
-
-    //        var publicKeyKeypair = keypair.KeyPairPublic();
-    //        EncryptionKeys.Add(publicKeyKeypair);
-
-    //        //Console.WriteLine($"Keypair is {Keypair.UDF}");
-    //        //Console.WriteLine($"  Public {Keypair.PKIXPublicKeyDH}");
-    //        //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
-
-    //        if (register) {
-    //            KeyCollection.Add(keypair);
-    //            }
-
-    //        }
-    //    }
     public partial class KeyPairPartialTest : KeyPairPartial {
 
         public string IdGroup;
@@ -590,95 +733,6 @@ namespace ExampleGenerator {
             CombinedPrivate = KeyPairDevice.Combine(KeyPairDevice) as KeyPairEd25519;
             CombinedPublic = KeyPairDevice.CombinePublic(KeyPairDevice) as KeyPairEd25519;
             }
-
-        //            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
-
-        //// AdvancedRecovery 
-        //var AdvancedRecoveryMaster = CryptoCatalog.GetBits(128);
-        //var Secret = new Secret(AdvancedRecoveryMaster);
-        //Secret.Keep();
-        //var AdvancedRecoveryShares = Secret.Split(AdvancedRecoveryThreshold,
-        //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
-        //AdvancedRecoveryShareValues = new BigInteger[AdvancedRecoveryCount];
-        //AdvancedRecoverySharesHex = new byte[AdvancedRecoveryCount][];
-        //AdvancedRecoveryBase32 = new string[AdvancedRecoveryCount];
-
-        //for (var i = 0; i < AdvancedRecoveryCount; i++) {
-        //    AdvancedRecoveryShareValues[i] = AdvancedRecoveryShares[i].Value;
-        //    AdvancedRecoverySharesHex[i] = AdvancedRecoveryShares[i].Key;
-        //    AdvancedRecoveryBase32[i] = AdvancedRecoveryShares[i].UDFKey;
-        //    }
-
-        // AdvancedCogen
-        //AdvancedCogenDeviceProfile = new DeviceProfile(
-        //            "AliceWatch", "A wearable watch computer",
-        //            CryptoAlgorithmID.Ed25519,
-        //            CryptoAlgorithmID.XEd25519);
-
-
-        //var AdvancedCogenDeviceSignPublic =
-        //    (PublicKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PublicParameters;
-        //var AdvancedCogenDeviceSignPrivate =
-        //    (PrivateKeyECDH)null; //AdvancedCogenDeviceProfile.DeviceSignatureKey.PrivateParameters;
-
-        //AdvancedCogenPrivateKeySeed = CryptoCatalog.GetBits(128);
-        //var CogenPrivateKeyValue = new PrivateKeyECDH(AdvancedCogenPrivateKeySeed, true);
-
-        //AdvancedCogenPrivateKeyValue = AdvancedCogenDeviceSignPrivate.CombinePrivate(CogenPrivateKeyValue);
-        //AdvancedCogenCompositeKey = AdvancedCogenDeviceSignPublic.CombinePublic(CogenPrivateKeyValue);
-
-        //AdvancedCogenPrivateKeySeedEncrypted = AdvancedCogenDeviceProfile.DareEncrypt(AdvancedCogenPrivateKeyValue);
-
-
-        //AdvancedRecryption
-        //var AliceProfile = MakeProfile("", out var AliceKeyCollection);
-        //var BobProfile = MakeProfile("", out var BobKeyCollection);
-
-        //AddMessage(AliceProfile);
-        //AddMessage(BobProfile);
-
-        //var RecryptionGroup = new RecryptionGroup ("recrypt@example.com");
-        //RecryptionGroup.AddAdmin(AliceProfile);
-        //RecryptionGroup.AddMember(BobProfile);
-
-        //AdvancedRecryptionMessagePlaintext = $"Welcome to the group {AdvancedRecryptionGroupID}";
-        //AdvancedRecryptionMessageEncrypted = RecryptionGroup.Encrypt(AdvancedRecryptionMessagePlaintext);
-
-        //BobKeyCollection.Decrypt(AdvancedRecryptionMessageEncrypted);
-
-
-        //public ApplicationProfile AdvancedRecryptionGroup;
-        //public string AdvancedRecryptionMessagePlaintext;
-        //public DAREMessage AdvancedRecryptionMessageEncrypted;
-        //public ApplicationProfile AdvancedRecryptionBobProfile;
-        //public Key AdvancedRecryptionBobDecryptionKey;
-        //public Key AdvancedRecryptionBobRecryptionKey;
-        //public Key AdvancedRecryptionBobRecryptionEntry;
-        //public Object AdvancedRecryptionRecryptionAddMemberRequest;
-        //public Object AdvancedRecryptionRecryptionRecryptionRequest;
-        //public Object AdvancedRecryptionRecryptionRecryptionResponse;
-        //public Object AdvancedRecryptionDecryptionValue;
-        //public Object AdvancedRecryptionKeyAgreementValue;
-
-
-
-
-
-        // AdvancedQuantum
-
-        //var XMSS = new XMSS();
-        //AdvancedQuantumMasterSecret = XMSS.MasterSecret;
-        //var AdvancedQuantumKeyShares = Secret.Split(AdvancedRecoveryThreshold,
-        //        AdvancedRecoveryCount, out AdvancedRecoveryPolynomial);
-        //AdvancedQuantumShares = new string[AdvancedRecoveryCount];
-        //for (var i = 0; i < AdvancedRecoveryCount; i++) {
-        //    AdvancedQuantumShares[i] = AdvancedQuantumKeyShares[i].UDFKey;
-        //    }
-
-
-        //AdvancedQuantumPrivate = XMSS.Private;
-        //AdvancedQuantumPublic = XMSS.Public;
-        //AdvancedQuantumPublicUDF = XMSS.UDF;
 
 
 

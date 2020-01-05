@@ -140,6 +140,17 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
+        /// Return a positive random BigInteger that is strictly less than 2^bits.
+        /// </summary>
+        /// <param name="maximum">One more than the maximum value that may be returned.</param>
+        /// <returns>The random value.</returns>
+        public static BigInteger Random(BigInteger maximum) {
+            var bytes = CryptoCatalog.GetBytes(maximum.GetByteCount() + 16);
+            return BigIntegerLittleEndian(bytes) % maximum;
+            }
+
+
+        /// <summary>
         /// Encode the code point <paramref name="data"/>.
         /// </summary>
         /// <param name="data">The point to encode.</param>

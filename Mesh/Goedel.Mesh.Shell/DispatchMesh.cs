@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Shell {
             AddIfPresent(recoverShares, Options.Share6);
             AddIfPresent(recoverShares, Options.Share7);
             AddIfPresent(recoverShares, Options.Share8);
-            var secret = new Secret(recoverShares);
+            var secret = new SharedSecret(recoverShares);
 
             DareEnvelope escrow = null;
 

@@ -215,7 +215,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
                 ) {
-            var secret = new Secret(shares);
+            var secret = new SharedSecret(shares);
             return ContextMeshAdmin.RecoverMesh(
                      this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
             }

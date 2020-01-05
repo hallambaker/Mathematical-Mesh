@@ -11,7 +11,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// KeyPair binding for Ed448 signature and exchange.
     /// </summary>
-    public class KeyPairEd448 : KeyPairECDH {
+    public class KeyPairEd448 : KeyPairEdwards {
 
 
         #region // Properties and fields 
@@ -244,42 +244,18 @@ namespace Goedel.Cryptography {
             return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
             }
 
-        static byte[] Dom4(CryptoAlgorithmID cryptoAlgorithm, byte[] y) {
-            byte x = 0;
-            switch (cryptoAlgorithm) {
-                case CryptoAlgorithmID.Ed448: {
-                    x = 0;
-                    break;
-                    }
-                case CryptoAlgorithmID.Ed448ph: {
-                    x = 1;
-                    break;
-                    }
-                }
 
-            var Buffer = new MemoryStream();
-            Buffer.Write("SigEd448".ToBytes());
-            Buffer.WriteByte(x);
-            if (y == null) {
-                Buffer.WriteByte(0);
-                }
-            else {
-                Buffer.WriteByte((byte)y.Length);
-                Buffer.Write(y);
-                }
-            return Buffer.ToArray();
-            }
 
         /// <summary>
         /// Sign a precomputed digest
         /// </summary>
-        /// <param name="digest">The data to sign.</param>
+        /// <param name="data">The data to sign.</param>
         /// <param name="algorithmID">The algorithm to use.</param>
         /// <param name="context">Additional data added to the signature scope
         /// for protocol isolation.</param>
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
-                byte[] digest,
+                byte[] data,
                 CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                 byte[] context = null) {
             Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
@@ -287,12 +263,18 @@ namespace Goedel.Cryptography {
             algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
             if (algorithmID == CryptoAlgorithmID.Ed448ph) {
                 using (var shake256 = new SHAKE256(64 * 8)) {
-                    digest = shake256.ComputeHash(digest);
+                    data = shake256.ComputeHash(data);
                     }
                 }
 
-            return PrivateKey.Sign(digest, Dom4(algorithmID, context)); ;
+            var dom4 = CurveEdwards448.Dom4(algorithmID, context);
+            return PrivateKey.Sign(data, dom4);
             }
+
+
+        public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
+        CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+            byte[] context = null) => new ThresholdSignatureEdwards448(PrivateKey);
 
 
         /// <summary>
@@ -317,7 +299,9 @@ namespace Goedel.Cryptography {
                     digest = shake256.ComputeHash(digest);
                     }
                 }
-            return PublicKey.Verify(signature, digest, Dom4(algorithmID, context));
+
+            var dom4 = CurveEdwards448.Dom4(algorithmID, context);
+            return PublicKey.Verify(signature, digest, dom4);
             }
 
 

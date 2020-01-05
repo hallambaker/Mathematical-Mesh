@@ -1,28 +1,7 @@
-﻿
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System;
-After:
-using Goedel.Registry;
-
-using System;
-*/
-using Goedel.Registry;
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System.Linq;
-using System.Text;
-using System.IO;
-using Goedel.Registry;
-After:
-using System.IO;
-using System.Linq;
-using System.Text;
-*/
-
-
+﻿using Goedel.Registry;
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Goedel.Command {
 
@@ -50,11 +29,11 @@ namespace Goedel.Command {
         /// Write short form description of the current program to the console.
         /// </summary>
         public static void About() {
-            DateTime CompilationDate = Script.AssemblyBuildTime(
-                System.Reflection.Assembly.GetCallingAssembly());
+            var CompilationDate = Script.AssemblyBuildTime;
+            //System.Reflection.Assembly.GetCallingAssembly());
 
             string Build = Script.LocalizeTime(CompilationDate, false);
-
+            //var fred = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>();
 
             Console.WriteLine(Script.AssemblyTitle);
             Console.WriteLine("  {0}", Script.AssemblyDescription);
@@ -75,8 +54,7 @@ namespace Goedel.Command {
             if (OutputDateTime == DateTime.MinValue) {
                 return false;
                 }
-            DateTime ToolDateTime = Script.AssemblyBuildTime(
-                System.Reflection.Assembly.GetCallingAssembly());
+            DateTime ToolDateTime = Script.AssemblyBuildTime;
             if (OutputDateTime < ToolDateTime) {
                 return false;
                 }

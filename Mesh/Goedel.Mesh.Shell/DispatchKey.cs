@@ -64,7 +64,7 @@ namespace Goedel.Mesh.Shell {
             var bits = Options.Bits.ValueDefaulted(128);
             var secretUDF = Options.Secret.Value;
 
-            var secret = secretUDF == null ? new Secret(bits) : new Secret(secretUDF);
+            var secret = secretUDF == null ? new SharedSecret(bits) : new SharedSecret(secretUDF);
 
             var keyShares = secret.Split(shares, quorum);
             // the secrets should be in udf form as well.
@@ -104,7 +104,7 @@ namespace Goedel.Mesh.Shell {
             var s8 = Options.Share8.Value;
 
             var shares = makeList(s1, s2, s3, s4, s5, s6, s7, s7);
-            var secret = new Secret(shares);
+            var secret = new SharedSecret(shares);
 
             return new ResultKey() {
                 Success = true,

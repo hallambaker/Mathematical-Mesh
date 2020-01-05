@@ -174,7 +174,7 @@ namespace Goedel.Cryptography.Dare {
         /// Create a JSONReader for the decrypted body content according to the specified encoding.
         /// </summary>
         /// <returns></returns>
-        public JSONReader GetBodyReader(Secret secret) => throw new NYI();
+        public JSONReader GetBodyReader(SharedSecret secret) => throw new NYI();
 
         /// <summary>
         /// 

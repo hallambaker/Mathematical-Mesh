@@ -172,6 +172,26 @@ namespace Goedel.Utilities {
             }
 
 
+        public static string ToHTMLEntity(this char c) {
+            switch (c) {
+                case '&': {
+                    return "&amp;";
+                    }
+                case '<': {
+                    return "&lt;";
+                    }
+                case '>': {
+                    return "&gt;";
+                    }
+                default: {
+                    return c.ToString();
+                    }
+
+
+                }
+
+            }
+
         /// <summary>
         /// Escape text using XML acharacter entity sequences &amp;lt;, &amp;gt;, &amp;amp;
         /// &amp;quot; and &amp;nbsp;.

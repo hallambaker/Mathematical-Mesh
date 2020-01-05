@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Globalization;
 
 
 namespace Goedel.Registry {
@@ -96,118 +97,129 @@ namespace Goedel.Registry {
         public static string PlatformVersion => OperatingSystem.Version.ToString();
 
 
-        /// <summary>The assembly title.</summary>
-        public static string AssemblyTitle => GetAssemblyTitle(EntryAssembly);
-
-
-        /// <summary>Get assembly title.</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The assembly title.</returns>
-        public static string GetAssemblyTitle(Assembly Assembly) {
-            object[] attributes = Assembly.
-                    GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-            if (attributes.Length > 0) {
-                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                if (titleAttribute.Title != "") {
-                    return titleAttribute.Title;
-                    }
-                }
-            // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
-            return System.IO.Path.GetFileNameWithoutExtension(Assembly.CodeBase);
-            }
-
         /// <summary>The assembly version</summary>
-        public static string AssemblyVersion => EntryAssembly != null ? GetAssemblyVersion(EntryAssembly) :
-                        "Unknown";
+        public static string AssemblyVersion => Assembly.GetEntryAssembly().GetName().Version.ToString();
 
-
-        /// <summary>Get assembly version</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The assembly version</returns>
-        public static string GetAssemblyVersion(Assembly Assembly) => Assembly.GetName().Version.ToString();
+        /// <summary>The assembly title.</summary>
+        public static string AssemblyTitle => 
+            Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>().Title;
 
         /// <summary>The Assembly Description</summary>
-        public static string AssemblyDescription => EntryAssembly != null ? GetAssemblyDescription(EntryAssembly) :
-                        "Unknown";
-
-
-        /// <summary>Get Assembly Description</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The Assembly Description</returns>
-        public static string GetAssemblyDescription(Assembly Assembly) {
-
-            // Get all Description attributes on this assembly
-            object[] attributes = Assembly.
-                    GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-            // If there aren't any Description attributes, return an empty string
-            if (attributes.Length == 0) {
-                return "";
-                }
-            // If there is a Description attribute, return its value
-            return ((AssemblyDescriptionAttribute)attributes[0]).Description;
-
-            }
+        public static string AssemblyDescription =>
+            Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyDescriptionAttribute>().Description;
 
         /// <summary>The Assembly Product</summary>
-        public static string AssemblyProduct => EntryAssembly != null ? GetAssemblyProduct(EntryAssembly) :
-                        "Unknown";
-
-
-        /// <summary>Get Assembly Product</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The Assembly Product</returns>
-        public static string GetAssemblyProduct(Assembly Assembly) {
-            // Get all Product attributes on this assembly
-            object[] attributes = Assembly.GetExecutingAssembly().
-                GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-            // If there aren't any Product attributes, return an empty string
-            if (attributes.Length == 0) {
-                return "";
-                }
-            // If there is a Product attribute, return its value
-            return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
+        public static string AssemblyProduct =>
+            Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyProductAttribute>().Product;
 
         /// <summary>The Assembly Copyright</summary>
-        public static string AssemblyCopyright => EntryAssembly != null ? GetAssemblyCopyright(EntryAssembly) :
-                        "Unknown";
-
-
-        /// <summary>Get Assembly Copyright</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The Assembly Copyright</returns>
-        public static string GetAssemblyCopyright(Assembly Assembly) {
-            // Get all Copyright attributes on this assembly
-            object[] attributes = Assembly.GetExecutingAssembly().
-                GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-            // If there aren't any Copyright attributes, return an empty string
-            if (attributes.Length == 0) {
-                return "";
-                }
-            // If there is a Copyright attribute, return its value
-            return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-            }
+        public static string AssemblyCopyright =>
+            Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyCopyrightAttribute>().Copyright;
 
         /// <summary>The Assembly Company</summary>
-        public static string AssemblyCompany => EntryAssembly != null ? GetAssemblyCompany(EntryAssembly) :
-                        "Unknown";
+        public static string AssemblyCompany =>
+            Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyCompanyAttribute>().Company;
 
 
-        /// <summary>Get Assembly Company</summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The Assembly Company</returns>
-        public static string GetAssemblyCompany(Assembly Assembly) {
+        ///// <summary>Get assembly title.</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The assembly title.</returns>
+        //public static string GetAssemblyTitle(Assembly Assembly) {
+        //    object[] attributes = Assembly.
+        //            GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+        //    if (attributes.Length > 0) {
+        //        AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+        //        if (titleAttribute.Title != "") {
+        //            return titleAttribute.Title;
+        //            }
+        //        }
+        //    // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
+        //    return System.IO.Path.GetFileNameWithoutExtension(Assembly.CodeBase);
+        //    }
 
-            // Get all Company attributes on this assembly
-            object[] attributes = Assembly.GetExecutingAssembly().
-                GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-            // If there aren't any Company attributes, return an empty string
-            if (attributes.Length == 0) {
-                return "";
-                }
-            // If there is a Company attribute, return its value
-            return ((AssemblyCompanyAttribute)attributes[0]).Company;
-            }
+
+
+
+
+        ///// <summary>Get assembly version</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The assembly version</returns>
+        //public static string GetAssemblyVersion(Assembly Assembly) => Assembly.GetName().Version.ToString();
+
+
+
+
+        ///// <summary>Get Assembly Description</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The Assembly Description</returns>
+        //public static string GetAssemblyDescription(Assembly Assembly) {
+
+        //    // Get all Description attributes on this assembly
+        //    object[] attributes = Assembly.
+        //            GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+        //    // If there aren't any Description attributes, return an empty string
+        //    if (attributes.Length == 0) {
+        //        return "";
+        //        }
+        //    // If there is a Description attribute, return its value
+        //    return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+
+        //    }
+
+
+
+
+        ///// <summary>Get Assembly Product</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The Assembly Product</returns>
+        //public static string GetAssemblyProduct(Assembly Assembly) {
+        //    // Get all Product attributes on this assembly
+        //    object[] attributes = Assembly.GetExecutingAssembly().
+        //        GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+        //    // If there aren't any Product attributes, return an empty string
+        //    if (attributes.Length == 0) {
+        //        return "";
+        //        }
+        //    // If there is a Product attribute, return its value
+        //    return ((AssemblyProductAttribute)attributes[0]).Product;
+        //    }
+
+
+
+
+        ///// <summary>Get Assembly Copyright</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The Assembly Copyright</returns>
+        //public static string GetAssemblyCopyright(Assembly Assembly) {
+        //    // Get all Copyright attributes on this assembly
+        //    object[] attributes = Assembly.GetExecutingAssembly().
+        //        GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+        //    // If there aren't any Copyright attributes, return an empty string
+        //    if (attributes.Length == 0) {
+        //        return "";
+        //        }
+        //    // If there is a Copyright attribute, return its value
+        //    return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+        //    }
+
+
+
+
+        ///// <summary>Get Assembly Company</summary>
+        ///// <param name="Assembly">The assembly being queried.</param>
+        ///// <returns>The Assembly Company</returns>
+        //public static string GetAssemblyCompany(Assembly Assembly) {
+
+        //    // Get all Company attributes on this assembly
+        //    object[] attributes = Assembly.GetExecutingAssembly().
+        //        GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+        //    // If there aren't any Company attributes, return an empty string
+        //    if (attributes.Length == 0) {
+        //        return "";
+        //        }
+        //    // If there is a Company attribute, return its value
+        //    return ((AssemblyCompanyAttribute)attributes[0]).Company;
+        //    }
 
 
         // Get the date at which the running assembly was linked
@@ -225,31 +237,50 @@ namespace Goedel.Registry {
         /// </summary>
         /// <param name="Assembly">The assembly being queried.</param>
         /// <returns>The assembly build time</returns>
-        public static DateTime AssemblyBuildTime(Assembly Assembly) {
+        public static DateTime AssemblyBuildTime => GetBuildDate(Assembly.GetEntryAssembly());
+        private static DateTime GetBuildDate(Assembly assembly) {
+            const string BuildVersionMetadataPrefix = "+build";
 
-            string FilePath = Assembly.Location;
-            const int c_PeHeaderOffset = 60;
-            const int c_LinkerTimestampOffset = 8;
-            byte[] b = new byte[2048];
-            System.IO.Stream s = null;
-
-            try {
-                s = new System.IO.FileStream(FilePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-                s.Read(b, 0, 2048);
-                }
-            finally {
-                if (s != null) {
-                    s.Close();
+            var attribute = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            if (attribute?.InformationalVersion != null) {
+                var value = attribute.InformationalVersion;
+                var index = value.IndexOf(BuildVersionMetadataPrefix);
+                if (index > 0) {
+                    value = value.Substring(index + BuildVersionMetadataPrefix.Length);
+                    if (DateTime.TryParseExact(value, "yyyyMMddHHmmss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var result)) {
+                        return result;
+                        }
                     }
                 }
 
-            int i = System.BitConverter.ToInt32(b, c_PeHeaderOffset);
-            int SecondsSince1970 = System.BitConverter.ToInt32(b, i + c_LinkerTimestampOffset);
-            DateTime DateTime = new DateTime(1970, 1, 1, 0, 0, 0);
-            DateTime = DateTime.AddSeconds(SecondsSince1970);
-
-            return DateTime.SpecifyKind(DateTime, DateTimeKind.Utc); ;
+            return default;
             }
+
+        //(Assembly Assembly) {
+
+        //    string FilePath = Assembly.Location;
+        //    const int c_PeHeaderOffset = 60;
+        //    const int c_LinkerTimestampOffset = 8;
+        //    byte[] b = new byte[2048];
+        //    System.IO.Stream s = null;
+
+        //    try {
+        //        s = new System.IO.FileStream(FilePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+        //        s.Read(b, 0, 2048);
+        //        }
+        //    finally {
+        //        if (s != null) {
+        //            s.Close();
+        //            }
+        //        }
+
+        //    int i = System.BitConverter.ToInt32(b, c_PeHeaderOffset);
+        //    int SecondsSince1970 = System.BitConverter.ToInt32(b, i + c_LinkerTimestampOffset);
+        //    DateTime DateTime = new DateTime(1970, 1, 1, 0, 0, 0);
+        //    DateTime = DateTime.AddSeconds(SecondsSince1970);
+
+        //    return DateTime.SpecifyKind(DateTime, DateTimeKind.Utc); ;
+        //    }
 
         /// <summary>
         /// Convert a time to a localized string.

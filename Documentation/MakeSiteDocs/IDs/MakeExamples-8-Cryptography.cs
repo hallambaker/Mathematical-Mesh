@@ -19,6 +19,7 @@ namespace ExampleGenerator {
 		//
 		public void MakeCryptographyExamples (CreateExamples Example) {
 			 ExamplesThreshold(Example);
+			 ExamplesThresholdSig(Example);
 			}
 		
 
@@ -251,6 +252,196 @@ namespace ExampleGenerator {
 			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.XTag, Key.X);
 			_Output.Write ("    {1}: {2}\n{0}", _Indent, Key.YTag, Key.Y);
 			_Output.Write ("    Encoded Public{1}\n{0}", _Indent, Key.Public.ToStringBase16FormatHex());
+			}
+		
+
+		//
+		// ExamplesThresholdSig
+		//
+		public static void ExamplesThresholdSig(CreateExamples Example) { /* XFile  */
+				using (var _Output = new StreamWriter("Examples\\ExamplesThresholdSig.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThresholdSig.md" };
+				obj._ExamplesThresholdSig(Example);
+				}
+			}
+		public void _ExamplesThresholdSig(CreateExamples Example) {
+
+				_Output.Write ("## Unanimous Threshold Signature Ed25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				Describe (Example.ThresholdSignature.UnanimousEd25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Unanimous Threshold Signature Ed448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				Describe (Example.ThresholdSignature.UnanimousEd448);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Quorate Threshold Signature Ed25519\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				Describe (Example.ThresholdSignature.QuorateEd25519);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("## Quorate Threshold Signature Ed448\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				Describe (Example.ThresholdSignature.QuorateEd448);
+				_Output.Write ("\n{0}", _Indent);
+					}
+		
+
+		//
+		// Describe
+		//
+		public void Describe (Quorate sig) {
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The administrator creates the aggregate key pair\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			DescribeKey (sig.KeyAggregate);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Three key shares are required for Alice, Bob and Carol with a threshold of two. \n{0}", _Indent);
+			_Output.Write ("The parameters of the Shamir Secret Sharing polynomial are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("a0 = {1}\n{0}", _Indent, sig.A0);
+			_Output.Write ("a1 = {1}\n{0}", _Indent, sig.A1);
+			_Output.Write ("a2 = {1}\n{0}", _Indent, sig.A2);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The key share values for the participants are\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("xa = {1}\n{0}", _Indent, sig.Xa);
+			_Output.Write ("fa = {1}\n{0}", _Indent, sig.Fa);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("xb = {1}\n{0}", _Indent, sig.Xb);
+			_Output.Write ("fb = {1}\n{0}", _Indent, sig.Fb);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("xc = {1}\n{0}", _Indent, sig.Xc);
+			_Output.Write ("fc = {1}\n{0}", _Indent, sig.Fc);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Alice and Carol are selected to sign the message \"This is another test\"\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The legendre coefficients are:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("la = {1}\n{0}", _Indent, sig.La);
+			_Output.Write ("lc = {1}\n{0}", _Indent, sig.Lc);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The legendre coefficients are passed to Alice and Carol who use them to \n{0}", _Indent);
+			_Output.Write ("calculate their secret scalar values:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("sa = la.Sa;\n{0}", _Indent);
+			_Output.Write ("sc = lc.Sc\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Alice and Carol select their values ra, rc\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("ra = {1}\n{0}", _Indent, sig.Ra);
+			_Output.Write ("Ra = {1}\n{0}", _Indent, sig.RRa);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("rc = {1}\n{0}", _Indent, sig.Rc);
+			_Output.Write ("Rc = {1}\n{0}", _Indent, sig.RRc);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The aggregate value R = R<sub>a</sub> + R<sub>c</sub>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("R =  {1}\n{0}", _Indent, sig.R);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The value k is \n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("k = {1}\n{0}", _Indent, sig.K);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The signature contributions can now be calulated:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Sa = {1}\n{0}", _Indent, sig.SSa);
+			_Output.Write ("Sc = {1}\n{0}", _Indent, sig.SSc);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("S =  {1}\n{0}", _Indent, sig.S);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The coordinator checks to see that the signature verifies:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("S.B = R + kA = \n{0}", _Indent);
+			_Output.Write ("    X: {1}\n{0}", _Indent, sig.SBX);
+			_Output.Write ("    Y: {1}\n{0}", _Indent, sig.SBY);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			}
+		
+
+		//
+		// Describe
+		//
+		public void Describe (Unanimous sig) {
+			_Output.Write ("The signers are Alice and Bob. Each creates a key pair:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			DescribeKey (sig.KeyAlice);
+			DescribeKey (sig.KeyBob);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The Aggregate Signature Key A = A<sub>a</sub> + A<sub>b</sub>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			DescribeKey (sig.KeyAggregate);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("To sign the text \"This is a Test\", Alice and Bob first generate their values r\n{0}", _Indent);
+			_Output.Write ("which they multiply by the base point to obtain the value R<sub>i</sub>:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Alice:\n{0}", _Indent);
+			_Output.Write ("r_a =  {1}\n{0}", _Indent, sig.Ra);
+			_Output.Write ("R_a =  {1}\n{0}", _Indent, sig.RRa);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Bob:\n{0}", _Indent);
+			_Output.Write ("r_a =  {1}\n{0}", _Indent, sig.Rb);
+			_Output.Write ("R_a =  {1}\n{0}", _Indent, sig.RRb);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The aggregate value R = R<sub>a</sub> + R<sub>b</sub>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("R =  {1}\n{0}", _Indent, sig.R);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The value k is calculated \n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("k =  {1}\n{0}", _Indent, sig.K);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Alice and Bob both calculate their signature scalar contribution:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("Alice:\n{0}", _Indent);
+			_Output.Write ("S_a =  {1}\n{0}", _Indent, sig.SSa);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("Bob:\n{0}", _Indent);
+			_Output.Write ("S_b =  {1}\n{0}", _Indent, sig.SSb);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("S =  {1}\n{0}", _Indent, sig.S);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("The coordinator checks to see that the signature verifies:\n{0}", _Indent);
+			_Output.Write ("\n{0}", _Indent);
+			_Output.Write ("~~~~\n{0}", _Indent);
+			_Output.Write ("S.B = R + kA = \n{0}", _Indent);
+			_Output.Write ("    X: {1}\n{0}", _Indent, sig.SBX);
+			_Output.Write ("    Y: {1}\n{0}", _Indent, sig.SBY);
+			_Output.Write ("~~~~\n{0}", _Indent);
 			}
 		
 

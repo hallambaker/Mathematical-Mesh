@@ -11,7 +11,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Ed25519 public / private keypair.
     /// </summary>
-    public class KeyPairEd25519 : KeyPairECDH {
+    public class KeyPairEd25519 : KeyPairEdwards {
 
         #region //Properties
         ///<summary>The implementation public key value</summary>
@@ -254,35 +254,6 @@ namespace Goedel.Cryptography {
             }
 
 
-        static byte[] Dom2(
-                CryptoAlgorithmID cryptoAlgorithm,
-                byte[] y) {
-            byte x = 0;
-            switch (cryptoAlgorithm) {
-                case CryptoAlgorithmID.Ed25519: return null;
-                case CryptoAlgorithmID.Ed25519ph: {
-                    x = 1;
-                    break;
-                    }
-                case CryptoAlgorithmID.Ed25519ctx: {
-                    x = 0;
-                    break;
-                    }
-                }
-
-            var Buffer = new MemoryStream();
-            Buffer.Write("SigEd25519 no Ed25519 collisions".ToBytes());
-            Buffer.WriteByte(x);
-            if (y == null) {
-                Buffer.WriteByte(0);
-                }
-            else {
-                Buffer.WriteByte((byte)y.Length);
-                Buffer.Write(y);
-                }
-            return Buffer.ToArray();
-            }
-
         /// <summary>
         /// Sign a precomputed digest
         /// </summary>
@@ -303,8 +274,20 @@ namespace Goedel.Cryptography {
                     }
                 }
 
-            return PrivateKey.Sign(data, Dom2(algorithmID, context));
+
+            var dom2 = CurveEdwards25519.Dom2(algorithmID, context);
+            return PrivateKey.Sign(data, dom2);
             }
+
+
+        public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
+                CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                byte[] context = null) => new ThresholdSignatureEdwards25519(PrivateKey);
+
+
+
+
+
 
         /// <summary>
         /// Verify a signature over the purported data digest.
@@ -322,12 +305,13 @@ namespace Goedel.Cryptography {
                 byte[] context = null) {
             algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
             if (algorithmID == CryptoAlgorithmID.Ed25519ph) {
-                using (var sha512 = SHA512.Create()) {
-                    data = sha512.ComputeHash(data);
-                    }
+                using var sha512 = SHA512.Create();
+
+                data = sha512.ComputeHash(data);
                 }
 
-            return PublicKey.Verify(data, signature, Dom2(algorithmID, context));
+            var dom2 = CurveEdwards25519.Dom2(algorithmID, context);
+            return PublicKey.Verify(data, signature, dom2);
             }
         }
 

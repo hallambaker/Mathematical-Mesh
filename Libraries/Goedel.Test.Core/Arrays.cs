@@ -38,9 +38,9 @@ namespace Goedel.Test.Core {
             return result;
             }
 
-        public static KeyShare[] Shuffle(this KeyShare[] keyShares, int count) {
+        public static KeyShareSymmetric[] Shuffle(this KeyShareSymmetric[] keyShares, int count) {
             var permutation = Shuffle(keyShares.Length);
-            var result = new KeyShare[count];
+            var result = new KeyShareSymmetric[count];
             for (var i = 0; i < count; i++) {
                 result[i] = keyShares[permutation[i]];
                 }

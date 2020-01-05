@@ -236,9 +236,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="quorum">Number of shares required to recreate the quorum</param>
         /// <param name="bits">Key size in bits</param>
         /// <returns>The encrypted escrow entry and the key shares.</returns>
-        public (DareEnvelope, KeyShare[]) Escrow(int shares, int quorum, int bits = 128) {
+        public (DareEnvelope, KeyShareSymmetric[]) Escrow(int shares, int quorum, int bits = 128) {
 
-            var secret = new Secret(bits);
+            var secret = new SharedSecret(bits);
             var keyShares = secret.Split(shares, quorum);
             var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
 
@@ -259,7 +259,7 @@ namespace Goedel.Mesh.Client {
 
         public static ContextMeshAdmin RecoverMesh(
                 MeshHost meshHost,
-                Secret secret,
+                SharedSecret secret,
                 ProfileDevice profileDevice = null,
                 DareEnvelope escrow = null,
 

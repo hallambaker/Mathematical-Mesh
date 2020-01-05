@@ -25,16 +25,16 @@ namespace Goedel.XUnit {
         [InlineData(512)]
         public void TestKey(int bits, string hexData = null) {
             var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
-            var secret = new Secret(data);
+            var secret = new SharedSecret(data);
             var udf = secret.UDFKey;
 
-            var secret2 = new Secret(secret.Key);
+            var secret2 = new SharedSecret(secret.Key);
             secret2.UDFKey.AssertEqual(udf);
 
             var key = UDF.SymmetricKey(udf);
             key.AssertEqual(secret.Key);
 
-            var secret3 = new Secret(udf);
+            var secret3 = new SharedSecret(udf);
             secret3.Key.AssertEqual(secret.Key);
             secret3.UDFKey.AssertEqual(udf);
             }
@@ -53,18 +53,18 @@ namespace Goedel.XUnit {
             var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
             var index = 1;
 
-            var keyShare = new KeyShare(index, data);
+            var keyShare = new KeyShareSymmetric(index, data);
             data.AssertEqual(keyShare.Data);
             (keyShare.Value >= 0).AssertTrue();
 
             var udf = keyShare.UDFKey;
-            var keyShare2 = new KeyShare(udf);
+            var keyShare2 = new KeyShareSymmetric(udf);
 
             keyShare2.Key.AssertEqual(keyShare.Key);
             keyShare2.UDFKey.AssertEqual(udf);
             keyShare2.Value.AssertEqual(keyShare.Value);
 
-            var keyShare3 = new KeyShare(index, keyShare.Value, data.Length);
+            var keyShare3 = new KeyShareSymmetric(index, keyShare.Value, data.Length);
             keyShare3.Key.AssertEqual(keyShare.Key);
             keyShare3.UDFKey.AssertEqual(udf);
             keyShare3.Value.AssertEqual(keyShare.Value);
@@ -93,11 +93,11 @@ namespace Goedel.XUnit {
         [InlineData(15, 2)]
         public void TestShares(int N, int K) {
 
-            var secret = new Secret(128);
+            var secret = new SharedSecret(128);
             var shares = secret.Split(N, K);
 
             var partshares = shares.Shuffle(K);
-            var resecret = new Secret(partshares);
+            var resecret = new SharedSecret(partshares);
 
             Xunit.Assert.True(secret.Key.IsEqualTo(resecret.Key));
             }
@@ -111,7 +111,7 @@ namespace Goedel.XUnit {
             for (int i = 32; i < 512; i += 32) {
 
                 var exponent = BigInteger.Pow(2, i);
-                var prime = Secret.GetPrime(i, out _, out _);
+                var prime = SharedSecret.GetPrime(i, out _, out _);
                 prime.IsProbablePrime(256).AssertTrue();
                 (prime > exponent).AssertTrue();
 

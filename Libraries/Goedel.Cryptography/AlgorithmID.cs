@@ -6,7 +6,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Extension class to manage OID and XML references.
     /// </summary>
-    public static class AlgorithmID {
+    public static partial class AlgorithmID {
 
         /// <summary>
         /// Mapping of XML DigSig entries to CryptoAlgorithmID

@@ -9,6 +9,7 @@
 
 #method MakeCryptographyExamples CreateExamples Example
 #% ExamplesThreshold(Example);
+#% ExamplesThresholdSig(Example);
 #end method
 
 
@@ -216,6 +217,177 @@ is required.
     Encoded Public#{Key.Public.ToStringBase16FormatHex()}
 #end method
 
+#xfile CreateExamples ExamplesThresholdSig "Examples\\ExamplesThresholdSig.md" CreateExamples Example
+#### Unanimous Threshold Signature Ed25519
+
+#call Describe Example.ThresholdSignature.UnanimousEd25519
+
+#### Unanimous Threshold Signature Ed448
+
+#call Describe Example.ThresholdSignature.UnanimousEd448
+
+#### Quorate Threshold Signature Ed25519
+
+#call Describe Example.ThresholdSignature.QuorateEd25519
+
+#### Quorate Threshold Signature Ed448
+
+#call Describe Example.ThresholdSignature.QuorateEd448
+
+#end xfile
+
+#method Describe Quorate sig
+
+The administrator creates the aggregate key pair
+
+~~~~
+#call DescribeKey sig.KeyAggregate
+~~~~
+
+Three key shares are required for Alice, Bob and Carol with a threshold of two. 
+The parameters of the Shamir Secret Sharing polynomial are:
+
+~~~~
+a0 = #{sig.A0}
+a1 = #{sig.A1}
+a2 = #{sig.A2}
+~~~~
+
+The key share values for the participants are
+
+~~~~
+xa = #{sig.Xa}
+fa = #{sig.Fa}
+
+xb = #{sig.Xb}
+fb = #{sig.Fb}
+
+xc = #{sig.Xc}
+fc = #{sig.Fc}
+~~~~
+
+Alice and Carol are selected to sign the message "This is another test"
+
+The legendre coefficients are:
+
+~~~~
+la = #{sig.La}
+lc = #{sig.Lc}
+~~~~
+
+The legendre coefficients are passed to Alice and Carol who use them to 
+calculate their secret scalar values:
+
+~~~~
+sa = la.Sa;
+sc = lc.Sc
+~~~~
+
+Alice and Carol select their values ra, rc
+
+~~~~
+ra = #{sig.Ra}
+Ra = #{sig.RRa}
+
+rc = #{sig.Rc}
+Rc = #{sig.RRc}
+~~~~
+
+The aggregate value R = R<sub>a</sub> + R<sub>c</sub>
+
+~~~~
+R =  #{sig.R}
+~~~~
+
+The value k is 
+
+~~~~
+k = #{sig.K}
+~~~~
+
+The signature contributions can now be calulated:
+
+~~~~
+Sa = #{sig.SSa}
+Sc = #{sig.SSc}
+~~~~
+
+The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>
+
+~~~~
+S =  #{sig.S}
+~~~~
+
+The coordinator checks to see that the signature verifies:
+
+~~~~
+S.B = R + kA = 
+    X: #{sig.SBX}
+    Y: #{sig.SBY}
+~~~~
+
+#end method
+
+
+#method Describe Unanimous sig
+The signers are Alice and Bob. Each creates a key pair:
+
+#call DescribeKey sig.KeyAlice
+#call DescribeKey sig.KeyBob
+
+The Aggregate Signature Key A = A<sub>a</sub> + A<sub>b</sub>
+
+#call DescribeKey sig.KeyAggregate
+
+To sign the text "This is a Test", Alice and Bob first generate their values r
+which they multiply by the base point to obtain the value R<sub>i</sub>:
+
+~~~~
+Alice:
+r_a =  #{sig.Ra}
+R_a =  #{sig.RRa}
+
+Bob:
+r_a =  #{sig.Rb}
+R_a =  #{sig.RRb}
+~~~~
+
+The aggregate value R = R<sub>a</sub> + R<sub>b</sub>
+
+~~~~
+R =  #{sig.R}
+~~~~
+
+The value k is calculated 
+
+~~~~
+k =  #{sig.K}
+~~~~
+
+Alice and Bob both calculate their signature scalar contribution:
+
+~~~~
+Alice:
+S_a =  #{sig.SSa}
+
+Bob:
+S_b =  #{sig.SSb}
+~~~~
+
+The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>
+
+~~~~
+S =  #{sig.S}
+~~~~
+
+The coordinator checks to see that the signature verifies:
+
+~~~~
+S.B = R + kA = 
+    X: #{sig.SBX}
+    Y: #{sig.SBY}
+~~~~
+#end method
 
 
 #file ExamplesAdvancedQuantum "Examples\\ExamplesAdvancedQuantum.md" CreateExamples Example

@@ -167,7 +167,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="secret">The secret to use to form the MasterSecret</param>
         /// <param name="encryptID">The encryption algorithm to use.</param>
         public CryptoStack(
-                Secret secret,
+                SharedSecret secret,
                 CryptoAlgorithmID encryptID = CryptoAlgorithmID.Default) {
             EncryptID = encryptID.DefaultBulk(CryptoAlgorithmID.AES256CBC);
             (keySize, blockSize) = encryptID.GetKeySize();
