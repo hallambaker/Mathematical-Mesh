@@ -2,6 +2,8 @@
 using Goedel.Utilities;
 
 using System;
+using System.Numerics;
+using Goedel.Cryptography.Algorithms;
 
 namespace Goedel.Cryptography {
 
@@ -81,6 +83,45 @@ namespace Goedel.Cryptography {
         public override SubjectPublicKeyInfo PrivateKeyInfoData => PKIXPrivateKeyECDH.SubjectPublicKeyInfo();
 
 
+        /// <summary>
+        /// Create an ECDH private key of type <paramref name="cryptoAlgorithmID"/> 
+        /// from a specified scalar value <paramref name="privateScalar"/>. 
+        /// </summary>
+        /// <param name="cryptoAlgorithmID">The cryptographic algorithm identifier of the 
+        /// type of key to create.</param>
+        /// <param name="privateScalar">The private scalar value.</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+        /// <returns>The generated key pair</returns>
+        public static KeyPair KeyPairFactory(
+            CryptoAlgorithmID cryptoAlgorithmID,
+            BigInteger privateScalar,
+            KeySecurity keySecurity = KeySecurity.Bound,
+            KeyUses keyUses = KeyUses.Any) {
+
+            switch (cryptoAlgorithmID) {
+                case CryptoAlgorithmID.Ed448: {
+                    return new KeyPairEd448(new CurveEdwards448Private(privateScalar), 
+                        keySecurity, keyUses, cryptoAlgorithmID);
+                    }
+
+                case CryptoAlgorithmID.Ed25519: {
+                    return new KeyPairEd25519(new CurveEdwards25519Private(privateScalar),
+                        keySecurity, keyUses, cryptoAlgorithmID);
+                    }
+                case CryptoAlgorithmID.X448: {
+                    return new KeyPairX448(new CurveX448Private(privateScalar),
+                        keySecurity, keyUses, cryptoAlgorithmID);
+                    }
+                case CryptoAlgorithmID.X25519: {
+                    return new KeyPairX25519(new CurveX25519Private(privateScalar),
+                        keySecurity, keyUses, cryptoAlgorithmID);
+                    }
+                }
+
+            return null;
+            }
+
         ///// <summary>
         ///// Perform an ECDH Key Agreement to a private key
         ///// </summary>
@@ -94,13 +135,13 @@ namespace Goedel.Cryptography {
         /// Generate a key pair for the specified algorithm and key size.
         /// </summary>
         /// <param name="keySize">The Key size, must be 255 or 448</param>
-        /// <param name="keyType">The key security model</param>
+        /// <param name="keySecurity">The key security model</param>
         /// <param name="cryptoAlgorithmID">The cryptographic algorithm identifier</param>
         /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The generated key pair</returns>
         public static KeyPair KeyPairFactory(
                     int keySize = 0,
-                    KeySecurity keyType = KeySecurity.Bound,
+                    KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.NULL) {
 
@@ -109,23 +150,31 @@ namespace Goedel.Cryptography {
             KeyPair keyPair = null;
 
             switch (cryptoAlgorithmID) {
-                case CryptoAlgorithmID.Ed448:
-                    keyPair = KeyPairEd448.Generate(keyType, keyUses, cryptoAlgorithmID); break;
-                case CryptoAlgorithmID.Ed25519:
-                    keyPair = KeyPairEd25519.Generate(keyType, keyUses, cryptoAlgorithmID); break;
-                case CryptoAlgorithmID.X448:
-                    keyPair = KeyPairX448.Generate(keyType, keyUses, cryptoAlgorithmID); break;
-                case CryptoAlgorithmID.X25519:
-                    keyPair = KeyPairX25519.Generate(keyType, keyUses, cryptoAlgorithmID); break;
+                case CryptoAlgorithmID.Ed448: {
+                    keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); 
+                    break;
+                    }
+                case CryptoAlgorithmID.Ed25519: {
+                    keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); 
+                    break;
+                    }
+                case CryptoAlgorithmID.X448: {
+                    keyPair = KeyPairX448.Generate(keySecurity, keyUses, cryptoAlgorithmID); 
+                    break;
+                    }
+                case CryptoAlgorithmID.X25519: {
+                    keyPair = KeyPairX25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); 
+                    break;
+                    }
                 }
 
             if (keyPair == null) {
                 keySize = keySize == 0 ? 448 : keySize;
                 switch (keySize) {
                     case 448:
-                        keyPair = KeyPairEd448.Generate(keyType, keyUses, cryptoAlgorithmID); break;
+                        keyPair = KeyPairEd448.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                     case 25519:
-                        keyPair = KeyPairEd25519.Generate(keyType, keyUses, cryptoAlgorithmID); break;
+                        keyPair = KeyPairEd25519.Generate(keySecurity, keyUses, cryptoAlgorithmID); break;
                     }
                 }
             Assert.NotNull(keyPair, NoProviderSpecified.Throw);

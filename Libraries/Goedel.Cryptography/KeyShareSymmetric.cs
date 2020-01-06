@@ -34,11 +34,11 @@ namespace Goedel.Cryptography {
         public virtual BigInteger Value { get; set; }
 
         public Shared() {
-            throw new NYI();
             }
 
-        public Shared(BigInteger Value, BigInteger Prime) {
-            
+        public Shared(BigInteger value, BigInteger prime) {
+            Value = value;
+            Prime = prime;
             }
 
         /// <summary>
@@ -55,13 +55,12 @@ namespace Goedel.Cryptography {
 
             Console.WriteLine("Key = {0} ", polynomial[0]);
 
-            for (int i = 2; i < t; i++) {
+            for (int i = 1; i < t; i++) {
                 polynomial[i] = BigNumber.Random(Prime);
                 }
 
             for (int i = 0; i < n; i++) {
-                keyShares[i].Index = i; 
-                keyShares[i].Value = PolyMod(i + 1, polynomial, Prime);
+                keyShares[i].Value = PolyMod(keyShares[i].Index, polynomial, Prime);
                 keyShares[i].Prime = Prime;
                 }
 
@@ -70,11 +69,11 @@ namespace Goedel.Cryptography {
 
         // Note here that since BigInteger is a structure, not a class, we don't
         // need to worry about boxing or call by value issues
-        BigInteger PolyMod(int x, BigInteger[] polyNomial, BigInteger modulus) {
-            int power = 1;  // expect the optimizer to catch
+        BigInteger PolyMod(BigInteger x, BigInteger[] polyNomial, BigInteger modulus) {
+            BigInteger power = 1;  // expect the optimizer to catch
             var result = polyNomial[0];
             for (int i = 1; i < polyNomial.Length; i++) {
-                power *= x;
+                power = (x * power) % modulus;
                 result = (modulus + result + polyNomial[i] * power) % modulus;
                 }
 
@@ -102,20 +101,72 @@ namespace Goedel.Cryptography {
                     BigInteger modulus) {
 
             BigInteger numerator = 1, denominator = 1;
+            var start = shares[index].Index;
 
             for (var count = 0; count < shares.Length; count++) {
                 if (index == count) {
                     continue;  // If not the same value
                     }
 
-                var start = shares[index].Index;
                 var next = shares[count].Index;
 
-                numerator = (numerator * -next) % modulus;
-                denominator = (denominator * (start - next)) % modulus;
+                numerator = (numerator * -next).Mod ( modulus);
+                denominator = (denominator * (start - next)).Mod(modulus);
+
+                Console.WriteLine($"Numerator {numerator}");
+                Console.WriteLine($"Denominator {denominator}");
                 }
-            var InvDenominator = ModInverse(denominator, modulus);
-            return numerator * InvDenominator;
+ 
+            var invDenominator = ModInverse(denominator, modulus);
+            var result = (numerator * invDenominator).Mod(modulus);
+
+            Console.WriteLine($"InvDenominator {invDenominator}");
+            Console.WriteLine($"result {result}");
+
+            return result;
+            }
+
+
+
+        public static BigInteger CombineNK2(KeyShare[] shares, int threshold, BigInteger modulus) {
+
+            Assert.False(shares.Length < threshold, InsufficientShares.Throw);
+
+            //Console.WriteLine($"Recovered Share {shares[0].Value}");
+
+
+            BigInteger accum = 0;
+
+            for (var formula = 0; formula < threshold; formula++) {
+
+                var value = shares[formula].Value;
+                var start = shares[formula].Index;
+
+                Console.WriteLine($"Value = {start}, {value} ");
+
+                BigInteger numerator = 1, denominator = 1;
+                for (var count = 0; count < threshold; count++) {
+                    if (formula == count) {
+                        continue;  // If not the same value
+                        }
+
+                    
+                    var next = shares[count].Index;
+
+                    numerator = (numerator * -next) % modulus;
+                    denominator = (denominator * (start - next)) % modulus;
+
+                    Console.WriteLine($"    {count},{next}:{numerator}/{denominator}");
+                    }
+
+                Console.WriteLine($"Total {formula}: {numerator}/{denominator}");
+
+                var InvDenominator = ModInverse(denominator, modulus);
+
+                accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
+                }
+
+            return accum;
             }
 
 
@@ -311,7 +362,8 @@ namespace Goedel.Cryptography {
             Split(keyShares, k, out polynomial);
 
             // Check that all our share chunks will fit into a UDF
-            for (var search = true; search; Split(keyShares, k, out polynomial)) {               
+            for (var search = true; search; 
+                Split(keyShares, k, out polynomial)) {               
                 search = false;
                 for (int i = 0; i < n; i++) {
                     search = search ? keyShares[i].Value < Prime : false;
@@ -421,7 +473,7 @@ namespace Goedel.Cryptography {
 
 
         void KeyValue(int index, byte[] data) {
-            First = index;
+            First = index-1;
             Data = data;
             Key = new byte[data.Length + 1];
             Key[0] = (byte)First;

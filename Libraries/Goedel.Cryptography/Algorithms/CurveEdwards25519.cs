@@ -87,6 +87,7 @@ namespace Goedel.Cryptography.Algorithms {
             T = (X * Y) % Prime;
             }
 
+
         /// <summary>
         /// Crete a new point with the same parameters as this.
         /// </summary>
@@ -244,15 +245,7 @@ namespace Goedel.Cryptography.Algorithms {
 
         readonly static byte[] ZeroByteArray = new byte[0] { };
 
-
-
-
-        public BigInteger GetK(
-                CryptoAlgorithmID algorithmID,
-                byte[] Rs,
-                byte[] data,
-                byte[] context = null) => GetK(Dom2(algorithmID, context), Rs, data);
-            
+           
 
 
         public override BigInteger GetK(
@@ -260,9 +253,11 @@ namespace Goedel.Cryptography.Algorithms {
                 byte[] Rs,
                 byte[] data) => HashModQ(dom2, Rs, Encode(), data);
 
+        public override byte[] Domain(
+                CryptoAlgorithmID cryptoAlgorithm,
+                byte[] y) => Dom2(cryptoAlgorithm, y);
 
-
-        public static byte[] Dom2(
+            public static byte[] Dom2(
                 CryptoAlgorithmID cryptoAlgorithm,
                 byte[] y) {
             byte x = 0;
@@ -367,7 +362,7 @@ namespace Goedel.Cryptography.Algorithms {
                 return false;
                 }
 
-            var k = GetK(Context, Rs, Message);
+            var k = HashModQ(Context, Rs, Message);
 
             return Verify(k, s, R);
             }
@@ -392,13 +387,14 @@ namespace Goedel.Cryptography.Algorithms {
     /// <summary>
     /// Manages the public key
     /// </summary>
-    public class CurveEdwards25519Public : IKeyAdvancedPublic {
+    public class CurveEdwards25519Public : CurveEdwardsPublic {
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public virtual CurveEdwards25519 Public { get; }
 
-        /// <summary>Encoded form of the public key.</summary>
-        public byte[] Encoding { get; }
+        public override CurveEdwards PublicKey => Public;
+
+        public override byte[] Encoding { get; }
 
         /// <summary>
         /// Construct provider from public key parameters.
@@ -432,10 +428,6 @@ namespace Goedel.Cryptography.Algorithms {
                 AgreementEd25519 = Private.Agreement(this)
                 };
             }
-
-
-
-
 
         /// <summary>
         /// Perform final stage in a Diffie Hellman Agreement to reduce an 
@@ -471,7 +463,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
+        public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
             Combine(Contribution as CurveEdwards25519Public);
 
         /// <summary>

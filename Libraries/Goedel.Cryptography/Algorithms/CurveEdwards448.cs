@@ -229,18 +229,15 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
 
-        public BigInteger GetK(
-        CryptoAlgorithmID algorithmID,
-            byte[] Rs,
-            byte[] data,
-            byte[] context = null) => GetK(Dom4(algorithmID, context), Rs, data);
-
-
 
         public override BigInteger GetK(
                 byte[] dom2,
                 byte[] Rs,
                 byte[] data) => HashModQ(dom2, Rs, Encode(), data);
+
+        public override byte[] Domain(
+                CryptoAlgorithmID cryptoAlgorithm,
+                byte[] y) => Dom4(cryptoAlgorithm, y);
 
         public static byte[] Dom4(CryptoAlgorithmID cryptoAlgorithm, byte[] y) {
             byte x = 0;
@@ -349,13 +346,15 @@ namespace Goedel.Cryptography.Algorithms {
     /// <summary>
     /// Manages the public key
     /// </summary>
-    public class CurveEdwards448Public : IKeyAdvancedPublic {
+    public class CurveEdwards448Public : CurveEdwardsPublic {
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public CurveEdwards448 Public { get; }
 
+        public override CurveEdwards PublicKey => Public;
+
         /// <summary>Encoded form of the public key.</summary>
-        public byte[] Encoding { get; }
+        public override byte[] Encoding { get; }
 
         /// <summary>
         /// Construct from public key parameters.
@@ -435,9 +434,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="Contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
+        public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
             Combine(Contribution as CurveEdwards448Public);
         }
+
 
 
     /// <summary>

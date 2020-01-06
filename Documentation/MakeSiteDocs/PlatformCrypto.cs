@@ -44,14 +44,41 @@ namespace ExampleGenerator {
         public Quorate QuorateEd448;
 
         public ThresholdSignature() {
+
+            //TestLagrange();
+
+            UnanimousEd448 = new Unanimous(CryptoAlgorithmID.Ed448);
+            QuorateEd448 = new Quorate(CryptoAlgorithmID.Ed448);
+
             UnanimousEd25519 = new Unanimous(CryptoAlgorithmID.Ed25519);
-            UnanimousEd448 = new Unanimous(CryptoAlgorithmID.Ed25519);
             QuorateEd25519 = new Quorate(CryptoAlgorithmID.Ed25519);
-            QuorateEd448 = new Quorate(CryptoAlgorithmID.Ed25519);
+
+
             }
+
+
+        public void TestLagrange() {
+
+            var KeyShares = new KeyShare[] {
+                //new KeyShareSymmetric (1, 1494, 16),
+                new KeyShareSymmetric (2, 1942, 16),
+                //new KeyShareSymmetric (3, 2578, 16),
+                new KeyShareSymmetric (4, 3402, 16),
+                new KeyShareSymmetric (5, 4414, 16),
+
+                };
+
+            var prime = BigInteger.Pow(2, 32) + 15;
+            var result = Shared.CombineNK2(KeyShares, 3, DomainParameters.Curve25519.Q);
+            (result == 1234).AssertTrue();
+            }
+
         }
 
     public partial class SigExample {
+
+        public BigInteger Modulus => PublicSignatureKey.DomainParameters.Q;
+
         public virtual string TestData => "This is a test";
         public byte[] TestDataBytes => TestData.ToUTF8();
 
@@ -59,7 +86,7 @@ namespace ExampleGenerator {
         public byte[] RRb;
         public BigInteger Ra;
         public BigInteger Rb;
-        public BigInteger R;
+        public byte[] R;
         public BigInteger K;
 
         public BigInteger La = 1;
@@ -75,7 +102,7 @@ namespace ExampleGenerator {
         CryptoAlgorithmID CryptoAlgorithmID;
 
 
-        CurveEdwards PublicSignatureKey;
+        public CurveEdwards PublicSignatureKey;
 
         public ThresholdCoordinatorEdwards ThresholdCoordinate;
 
@@ -86,12 +113,16 @@ namespace ExampleGenerator {
         public ThresholdSignatureEdwards Threshold1;
         public ThresholdSignatureEdwards Threshold2;
 
-        public void Complete1(KeyPairEdwards EdwardsAlice,
-            KeyPairEdwards EdwardsBob) {
+        public KeyPairEdwards Edwards1;
+        public KeyPairEdwards Edwards2;
+        public KeyPairEdwards EdwardsAggregate;
+        public CurveKey KeyAggregate;
+
+        public void Complete1() {
 
             var hash = CryptoAlgorithmID.Bulk().GetDigest(TestDataBytes);
-            Threshold1 = EdwardsAlice.SignHashThreshold(hash);
-            Threshold2 = EdwardsBob.SignHashThreshold(hash);
+            Threshold1 = Edwards1.SignHashThreshold(hash);
+            Threshold2 = Edwards2.SignHashThreshold(hash);
 
             Ra = Threshold1.PrivateR;
             RRa = Threshold1.PublicR.Encode();
@@ -105,19 +136,78 @@ namespace ExampleGenerator {
             ThresholdCoordinate.AddShareR(RRa);
             ThresholdCoordinate.AddShareR(RRb);
 
-            K = ThresholdCoordinate.MakeK (TestDataBytes) ;
+            R = ThresholdCoordinate.CompleteR (TestDataBytes) ;
+            K = ThresholdCoordinate.K;
 
-            CurveEdwards A = null;
-
-            SSa = Threshold1.Complete(ThresholdCoordinate.R, A, TestDataBytes, La);
-            SSb = Threshold2.Complete(ThresholdCoordinate.R, A, TestDataBytes, Lc);
+            SSa = Threshold1.GetS(R, PublicSignatureKey, TestDataBytes, La);
+            SSb = Threshold2.GetS(R, PublicSignatureKey, TestDataBytes, Lc);
 
             ThresholdCoordinate.AddShareS(SSa);
             ThresholdCoordinate.AddShareS(SSb);
 
-            S = ThresholdCoordinate.Verify();
-            SB = ThresholdCoordinate.SB;
+            S = ThresholdCoordinate.CompleteS(false);
+            SB = CurveEdwards25519.Base.Multiply(S);
+
+            //Verify();
             }
+
+
+        void Verify() {
+            // check that R = RRa + RRb
+
+            var publicRa = CurveEdwards25519.Decode(RRa);
+            var publicRb = CurveEdwards25519.Decode(RRb);
+
+            var publicR = CurveEdwards25519.Decode(R);
+
+            var publicRab = publicRa.Add(publicRb);
+            var publicRba = publicRb.Add(publicRa);
+
+            (publicRab == publicRba).AssertTrue();
+            (publicRab == publicR).AssertTrue();
+
+            // Check that S = Sa + Sb Mod Q 
+            var SSab = (SSa + SSb).Mod(DomainParameters.Curve25519.Q);
+            (S == SSab).AssertTrue();
+
+            var privateKey1 = (Edwards1.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
+            var privateKey2 = (Edwards2.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
+            var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
+
+            // multiply by the lagrange coefficients.
+            privateKey1 = (privateKey1 * La).Mod(Modulus);
+            privateKey2 = (privateKey2 * Lc).Mod(Modulus);
+
+
+
+
+            // check the (adjusted) private key shares equal the master key.
+            var privateKey12 = (privateKey1+ privateKey2).Mod(Modulus);
+            (privateKey.Mod(Modulus) == privateKey12).AssertTrue();
+
+            // Check that public key A + B = Aggregate;
+            var publicKey1 = (Edwards1.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey as CurveEdwards25519;
+            var publicKey2 = (Edwards2.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey as CurveEdwards25519;
+
+
+            if (La == 1) {
+                // If doing unanimous Check the public components add up.
+                var publicKey12 = publicKey1.Add(publicKey2);
+                (PublicSignatureKey == publicKey12).AssertTrue();
+
+
+                // Check the value of the first threshold contribution is correct
+                var SBa = CurveEdwards25519.Base.Multiply(SSa);
+                var kA1 = publicKey1.Multiply(K);
+                var RkA1 = publicRa.Add(kA1);
+                (SBa == RkA1).AssertTrue();
+                }
+
+            // Verify that S.B = R + S.A;
+            PublicSignatureKey.Verify(K, S, publicR).AssertTrue();
+
+            }
+
 
         }
 
@@ -125,7 +215,7 @@ namespace ExampleGenerator {
 
         public CurveKey KeyAlice;
         public CurveKey KeyBob;
-        public CurveKey KeyAggregate;
+
 
 
 
@@ -134,13 +224,17 @@ namespace ExampleGenerator {
             KeyAlice = new CurveKey(cryptoAlgorithmID, true, "TSIG1", "Alice's Key");
             KeyBob = new CurveKey(cryptoAlgorithmID, true, "TSIG2", "Bob's Key");
 
-            var EdwardsAlice = KeyAlice.KeyPair as KeyPairEdwards;
-            var EdwardsBob = KeyBob.KeyPair as KeyPairEdwards;
+            Edwards1 = KeyAlice.KeyPair as KeyPairEdwards;
+            Edwards2 = KeyBob.KeyPair as KeyPairEdwards;
 
-            var keypair = EdwardsAlice.Combine(EdwardsBob, KeySecurity.Exportable);
-            KeyAggregate = new CurveKey(keypair, false);
+            EdwardsAggregate = Edwards1.Combine(Edwards2, KeySecurity.Exportable) as KeyPairEdwards;
+            KeyAggregate = new CurveKey(EdwardsAggregate, false);
+            KeyAggregate.Name = "Aggregate Key = Alice + Bob";
 
-            Complete1(EdwardsAlice, EdwardsBob);
+            PublicSignatureKey = (EdwardsAggregate.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey;
+
+
+            Complete1();
 
             }
         }
@@ -148,18 +242,17 @@ namespace ExampleGenerator {
     public partial class Quorate : SigExample {
         public override string TestData => "This is another test";
 
-        public CurveKey KeyAggregate;
+
         public BigInteger A0;
         public BigInteger A1;
-        public BigInteger A2;
 
         public BigInteger Xa;
-        public BigInteger Fa;
+        public BigInteger Ya;
 
         public BigInteger Xb;
-        public BigInteger Fb;
+        public BigInteger Yb;
         public BigInteger Xc;
-        public BigInteger Fc;
+        public BigInteger Yc;
 
 
 
@@ -175,41 +268,117 @@ namespace ExampleGenerator {
 
         public Quorate(CryptoAlgorithmID cryptoAlgorithmID): base (cryptoAlgorithmID) {
 
-            KeyAggregate = new CurveKey(cryptoAlgorithmID, true, "TSIG2", "Aggregate Key");
-            var Modulus = KeyAggregate.Modulus;
-            var EdwardsKeyAggregate = KeyAggregate.KeyPair as KeyPairEdwards;
+            KeyAggregate = new CurveKey(cryptoAlgorithmID, true, "TSIGQ", "Aggregate Key");
+            
+            EdwardsAggregate = KeyAggregate.KeyPair as KeyPairEdwards;
+            
+            PublicSignatureKey = (EdwardsAggregate.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey;
+            
+            // extract the private key for later use
+            var privateKey = (EdwardsAggregate.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
 
-            var keyShares = EdwardsKeyAggregate.Split(3, 2, out var polynomial);
+
+            var keyShares = EdwardsAggregate.Split(3, 2, out var polynomial);
+
+            (keyShares[0].Prime == Modulus).AssertTrue();
+
 
             A0 = polynomial[0];
             A1 = polynomial[1];
-            A2 = polynomial[2];
+
+            //(A0 % Modulus == A0).AssertTrue();
+
 
             Xa = keyShares[0].Index;
-            Fa = keyShares[0].Value;
+            Ya = keyShares[0].Value;
 
             Xb = keyShares[1].Index;
-            Fb = keyShares[1].Value;
+            Yb = keyShares[1].Value;
 
             Xc = keyShares[2].Index;
-            Fc = keyShares[2].Value;
+            Yc = keyShares[2].Value;
 
-            // create the recovery shares
+            (Xa == 1).AssertTrue();
+            (Xb == 2).AssertTrue();
+            (Xc == 3).AssertTrue();
+
+
+            // check the calculation of Fa
+            var checkfa = (A0 + (Xa * A1)).Mod(Modulus);
+            (checkfa == Ya).AssertTrue();
+
+            var checkfb = (A0 + (Xb * A1)).Mod(Modulus);
+            (checkfb == Yb).AssertTrue();
+
+            var checkfc = (A0 + (Xc * A1)).Mod(Modulus);
+            (checkfc == Yc).AssertTrue();
+
+
+            // create the recovery shares for the first and third shares
             var recoveryShares = new KeyShareEdwards[] { keyShares[0], keyShares[2] };
+            var testa0 = Shared.CombineNK2(recoveryShares, 2, Modulus);
+
+            Console.WriteLine($" A0 =     {A0}");
+            Console.WriteLine($" TestA0 = {testa0}");
+
+            var t3 = (A0 - testa0) % Modulus;
+            Console.WriteLine($" TestA0 = {t3}");
+
+
             La = recoveryShares[0].Lagrange(recoveryShares, 0);
-            Lc = recoveryShares[2].Lagrange(recoveryShares, 1);
+            Lc = recoveryShares[1].Lagrange(recoveryShares, 1);
+
+            
+
+
+            // check calculation of the lagrange point La - x = 1
+            var l1num = (-3) %Modulus;
+            var l1den = (1 - 3) %Modulus;
+            var l1deninv = ModInverse(l1den, Modulus);
+            var l1test = (l1num * l1deninv).Mod(Modulus);
+
+            var litestinv = (l1den * l1deninv).Mod(Modulus);
+            Console.WriteLine($" litestinv = {litestinv}");
+
+            (l1test == La).AssertTrue();
+
+            // check calculation of the lagrange point Lc - x = 3
+            var l2num = (-1)% Modulus;
+            var l2den = (3 - 1)%Modulus;
+            var l2deninv = ModInverse(l2den, Modulus);
+            var l2test = (l2num * l2deninv).Mod(Modulus);
+
+            (l2test == Lc).AssertTrue();
+
+
 
             // calculate the recovery scalar values
-            Sa = (La * Fa).Mod(Modulus);
-            Sc = (Lc * Fc).Mod(Modulus);
+            Sa = (La * Ya).Mod(Modulus);
+            Sc = (Lc * Yc).Mod(Modulus);
 
-            var EdwardsAlice = KeyPairEdwards.Factory(cryptoAlgorithmID, Fa);
-            var EdwardsCarol = KeyPairEdwards.Factory(cryptoAlgorithmID, Fa);
+            // check the (adjusted) private key shares equal the master key.
+            var Sac = (Sa + Sc).Mod(Modulus);
+            (A0.Mod(Modulus) == Sac).AssertTrue();
 
-            Complete1(EdwardsAlice, EdwardsCarol);
+
+            Edwards1 = KeyPairECDH.KeyPairFactory(cryptoAlgorithmID, Ya) as KeyPairEdwards;
+            Edwards2 = KeyPairECDH.KeyPairFactory(cryptoAlgorithmID, Yc) as KeyPairEdwards;
+
+            Complete1();
 
 
             }
+
+
+        static BigInteger ModInverse(BigInteger k, BigInteger m) {
+            var m2 = m - 2;
+            if (k < 0) {
+                k += m;
+                }
+
+            return BigInteger.ModPow(k, m2, m);
+            }
+
         }
 
 

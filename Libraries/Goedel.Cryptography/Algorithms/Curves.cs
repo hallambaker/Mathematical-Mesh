@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Text;
 
 namespace Goedel.Cryptography.Algorithms {
 
@@ -137,8 +138,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="b">Second point</param>
         /// <returns>True if the two points are equal (the P and U values are the same), otherwise false.</returns>
         public static bool operator ==(CurveMontgomery a, CurveMontgomery b) =>
-            (a.Prime == b.Prime) & (a.U == b.U);
-
+            (a as object) == null ?             // Do NOT remove 'as object' 
+                (b as object) == null :         // Do NOT remove 'as object' 
+                (a.Prime == b.Prime) & (a.U == b.U); // Ignoring above warning causes an infinite loop
+                                                     // due to the == operator being overloaded.
         /// <summary>
         /// Check points for inequality
         /// </summary>
@@ -472,6 +475,15 @@ namespace Goedel.Cryptography.Algorithms {
 
         public abstract byte[] Encode();
 
+
+        public override string ToString() {
+            var builder = new StringBuilder();
+            builder.Append($"Ed{DomainParameters.Bits} ");
+            builder.Append(Encode().ToStringBase32());
+            return builder.ToString();
+            }
+
+
         /// <summary>
         /// Add this point to a second point
         /// </summary>
@@ -486,7 +498,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="other">The point to test for equality.</param>
         /// <returns>True if the points are equal, otherwise false.</returns>
         public bool Equal(CurveEdwards other) {
-            Assert.True(other.Prime == Prime);
+            if (other?.Prime != Prime) {
+                return false;
+                }
 
             if (((X * other.Z) - (other.X * Z)).Mod(Prime) != 0) {
                 return false;
@@ -512,7 +526,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="p1">First value to test</param>
         /// <param name="p2">Second value to test</param> 
         /// <returns>True if the parameters are equal, otherwise false.</returns>
-        public static bool operator ==(CurveEdwards p1, CurveEdwards p2) => p1.Equal(p2);
+        public static bool operator ==(CurveEdwards p1, CurveEdwards p2) =>
+            (p1 as object) == null ?        // Do NOT remove 'as object' 
+                (p2 as object) == null :    // Do NOT remove 'as object' 
+                p1.Equal(p2);               // Ignoring above warning causes an infinite loop
+                                            // due to the == operator being overloaded.
+
+            
 
         /// <summary>Test to see if the domain parameters are not equal.</summary>
         /// <param name="p1">First value to test</param>
@@ -576,12 +596,17 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public abstract void Accumulate(CurveEdwards Point);
 
+        public  BigInteger GetK(
+            CryptoAlgorithmID algorithmID,
+            byte[] Rs,
+            byte[] data,
+            byte[] context = null) => GetK(Domain(algorithmID, context), Rs, data);
+
         /// <summary>
         /// Get the K value corresponding to this point
         /// </summary>
         /// <param name="domain"></param>
         /// <param name="encodedR"></param>
-        /// <param name="encodedA"></param>
         /// <param name="data"></param>
         /// <returns></returns>
         public abstract BigInteger GetK(
@@ -589,6 +614,9 @@ namespace Goedel.Cryptography.Algorithms {
             byte[] encodedR,
             byte[] data);
 
+        public abstract byte[] Domain(
+            CryptoAlgorithmID cryptoAlgorithm,
+            byte[] y);
 
         public abstract bool Verify(BigInteger k, BigInteger s, CurveEdwards R);
 
@@ -596,7 +624,15 @@ namespace Goedel.Cryptography.Algorithms {
         public abstract ThresholdCoordinatorEdwards Coordinator();
 
         }
+    public abstract class CurveEdwardsPublic : IKeyAdvancedPublic {
 
+        /// <summary>The public key, i.e. a point on the curve</summary>
+        public abstract CurveEdwards PublicKey { get; }
+
+        public virtual byte[] Encoding { get; }
+
+        public abstract IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution);
+        }
 
     public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
 

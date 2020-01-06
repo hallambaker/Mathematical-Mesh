@@ -250,38 +250,30 @@ The parameters of the Shamir Secret Sharing polynomial are:
 ~~~~
 a0 = #{sig.A0}
 a1 = #{sig.A1}
-a2 = #{sig.A2}
 ~~~~
 
 The key share values for the participants are
 
 ~~~~
 xa = #{sig.Xa}
-fa = #{sig.Fa}
+ya = #{sig.Ya}
 
 xb = #{sig.Xb}
-fb = #{sig.Fb}
+yb = #{sig.Yb}
 
 xc = #{sig.Xc}
-fc = #{sig.Fc}
+yc = #{sig.Yc}
 ~~~~
 
-Alice and Carol are selected to sign the message "This is another test"
+Alice and Carol are selected to sign the message "#{sig.TestData}"
 
-The legendre coefficients are:
+The Lagrange coefficients are:
 
 ~~~~
 la = #{sig.La}
 lc = #{sig.Lc}
 ~~~~
 
-The legendre coefficients are passed to Alice and Carol who use them to 
-calculate their secret scalar values:
-
-~~~~
-sa = la.Sa;
-sc = lc.Sc
-~~~~
 
 Alice and Carol select their values ra, rc
 
@@ -296,13 +288,22 @@ Rc = #{sig.RRc}
 The aggregate value R = R<sub>a</sub> + R<sub>c</sub>
 
 ~~~~
-R =  #{sig.R}
+R =  #{sig.R.ToStringBase16FormatHex()}
 ~~~~
 
 The value k is 
 
 ~~~~
 k = #{sig.K}
+~~~~
+
+The values R and k (or the document to be signed) and the 
+Lagrange coefficients are passed to Alice and Carol who use them to 
+calculate their secret scalar values:
+
+~~~~
+sa = #{sig.Sa};
+sc = #{sig.Sc}
 ~~~~
 
 The signature contributions can now be calulated:
@@ -332,14 +333,18 @@ S.B = R + kA =
 #method Describe Unanimous sig
 The signers are Alice and Bob. Each creates a key pair:
 
+~~~~
 #call DescribeKey sig.KeyAlice
 #call DescribeKey sig.KeyBob
+~~~~
 
 The Aggregate Signature Key A = A<sub>a</sub> + A<sub>b</sub>
 
+~~~~
 #call DescribeKey sig.KeyAggregate
+~~~~
 
-To sign the text "This is a Test", Alice and Bob first generate their values r
+To sign the text "#{sig.TestData}", Alice and Bob first generate their values r
 which they multiply by the base point to obtain the value R<sub>i</sub>:
 
 ~~~~
@@ -355,7 +360,7 @@ R_a =  #{sig.RRb}
 The aggregate value R = R<sub>a</sub> + R<sub>b</sub>
 
 ~~~~
-R =  #{sig.R}
+R =  #{sig.R.ToStringBase16FormatHex()}
 ~~~~
 
 The value k is calculated 
