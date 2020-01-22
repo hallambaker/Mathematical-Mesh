@@ -72,9 +72,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public GroupInvitation MakeInvitation(Contact user) {
-            throw new NYI();
-            }
+        public GroupInvitation MakeInvitation(Contact user) => throw new NYI();
 
         }
 

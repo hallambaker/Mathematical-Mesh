@@ -96,6 +96,8 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from key parameters.
         /// </summary>
         /// <param name="privateKey">The private key</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
         public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,

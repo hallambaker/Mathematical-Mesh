@@ -175,7 +175,7 @@ namespace Goedel.Cryptography {
         /// <returns>Random data</returns>
         public static BigInteger GetRandomBigInteger(int Bits) {
             var RandomBytes = GetRandomBytes(1 + Bits / 8);
-            RandomBytes[RandomBytes.Length - 1] = 0; // make sure it is positive
+            RandomBytes[^1] = 0; // make sure it is positive
             return new BigInteger(RandomBytes);
             }
 

@@ -39,6 +39,9 @@ namespace Goedel.Cryptography.Algorithms {
         public CurveX448 Neutral => throw new NYI();
         #endregion
 
+        /// <summary>
+        /// Return a IKeyAdvancedPublic public key for this point. 
+        /// </summary>
         public override IKeyAdvancedPublic KeyAdvancedPublic => new CurveX448Public(this);
 
         #region // Constructors
@@ -111,9 +114,7 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
 
-        static byte[] EncodePointUnsigned(BigInteger u) {
-            return u.ByteArrayLittleEndian(32);
-            }
+        static byte[] EncodePointUnsigned(BigInteger u) => u.ByteArrayLittleEndian(32);
         static byte[] EncodePointSigned(BigInteger u, bool? odd = null) {
             var prefix = u.ByteArrayLittleEndian(56);
             var result = new byte[57];
@@ -413,6 +414,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public CurveX448Private Combine(CurveX448Private contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -426,6 +429,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -442,6 +447,8 @@ namespace Goedel.Cryptography.Algorithms {
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
     public class CurveX448Result : ResultECDH {
+
+        ///<summary>The key agreement value, a point on the curve.</summary>
         public override Curve Agreement => AgreementX448;
 
         /// <summary>The key agreement result</summary>

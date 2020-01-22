@@ -90,12 +90,10 @@ namespace ExampleGenerator {
             var TextWriter = new StringWriter();
 
             using (var Input = new MemoryStream(data)) {
-                using (var JBCDStream = new JBCDStreamDebug(Input, TextWriter)) {
-
-                    var Salt = ReadBinary(JBCDStream);
-                    var Body = ReadBinary(JBCDStream);
-                    var Tag = ReadBinary(JBCDStream);
-                    }
+                using var JBCDStream = new JBCDStreamDebug(Input, TextWriter);
+                var Salt = ReadBinary(JBCDStream);
+                var Body = ReadBinary(JBCDStream);
+                var Tag = ReadBinary(JBCDStream);
                 }
 
 

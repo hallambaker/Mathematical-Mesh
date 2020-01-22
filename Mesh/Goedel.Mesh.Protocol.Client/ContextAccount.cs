@@ -67,11 +67,11 @@ namespace Goedel.Mesh.Client {
 
         public string KeySignatureUDF => keySignature.UDF;
         public string KeyEncryptionUDF => keyEncryption.UDF;
-        public string KeyAuthenticationUDF => keyAuthentication.UDF;
+        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
 
 
 
-        KeyPair keyAuthentication { get; set; }
+        KeyPair KeyAuthentication { get; set; }
 
         public MeshService MeshClient => meshClient ?? GetMeshClient(ServiceID).CacheValue(out meshClient);
         MeshService meshClient;
@@ -109,7 +109,7 @@ namespace Goedel.Mesh.Client {
             keySignature = ActivationAccount.KeySignature.GetPrivate(MeshMachine);
 
             keyEncryption = ActivationAccount.KeyEncryption.GetPrivate(MeshMachine);
-            keyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
+            KeyAuthentication = ActivationAccount.KeyAuthentication.GetPrivate(MeshMachine);
             KeyCollection.Add(keyEncryption);
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
@@ -118,7 +118,7 @@ namespace Goedel.Mesh.Client {
 
 
         protected MeshService GetMeshClient(string serviceID) =>
-                    MeshMachine.GetMeshClient(serviceID, keyAuthentication,
+                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Goedel.Mesh.Client {
             var updates = new List<CatalogedDevice>();
             foreach (var device in catalog.AsCatalogEntryDevice) {
                 bool updated = false;
-                device.Accounts = device.Accounts ?? new List<AccountEntry>();
+                device.Accounts ??= new List<AccountEntry>();
 
 
                 foreach (var accountEntry in device.Accounts) {
@@ -436,18 +436,16 @@ namespace Goedel.Mesh.Client {
                 }
 
             else {
-                using (var storeLocal = new Store(DirectoryAccount, statusRemote.Container,
-                            decrypt: false, create: false)) {
-                    Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
-                    return storeLocal.FrameCount >= statusRemote.Index ? null :
-                        new ConstraintsSelect() {
-                            Container = statusRemote.Container,
-                            IndexMax = statusRemote.Index,
-                            IndexMin = (int)storeLocal.FrameCount
+                using var storeLocal = new Store(DirectoryAccount, statusRemote.Container,
+                            decrypt: false, create: false);
+                Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount
 
-                            };
-
-                    }
+                        };
                 }
             }
 
@@ -643,15 +641,6 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        void Download() {
-            }
-
-
-
-
-
-
-
         public void Process(Message meshMessage, bool accept = true, bool respond = true) {
 
             switch (meshMessage) {
@@ -834,10 +823,7 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        public ContextGroup GetContextGroup(string groupName) {
-
-            throw new NYI();
-            }
+        public ContextGroup GetContextGroup(string groupName) => throw new NYI();
         }
 
     }

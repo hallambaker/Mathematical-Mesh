@@ -11,25 +11,25 @@ namespace Goedel.Mesh {
     #region // Enumerators and associated classes
 
     public class EnumeratorCatalogedMember : IEnumerator<CatalogedMember> {
-        IEnumerator<ContainerStoreEntry> BaseEnumerator;
+        IEnumerator<ContainerStoreEntry> baseEnumerator;
 
-        public CatalogedMember Current => BaseEnumerator.Current.JsonObject as CatalogedMember;
+        public CatalogedMember Current => baseEnumerator.Current.JsonObject as CatalogedMember;
         object IEnumerator.Current => Current;
-        public void Dispose() => BaseEnumerator.Dispose();
-        public bool MoveNext() => BaseEnumerator.MoveNext();
+        public void Dispose() => baseEnumerator.Dispose();
+        public bool MoveNext() => baseEnumerator.MoveNext();
         public void Reset() => throw new NotImplementedException();
 
         public EnumeratorCatalogedMember(ContainerPersistenceStore container) =>
-            BaseEnumerator = container.GetEnumerator();
+            baseEnumerator = container.GetEnumerator();
         }
 
     public class AsCatalogedMember : IEnumerable<CatalogedMember> {
-        CatalogMember Catalog;
+        CatalogMember catalog;
 
-        public AsCatalogedMember(CatalogMember catalog) => Catalog = catalog;
+        public AsCatalogedMember(CatalogMember catalog) => this.catalog = catalog;
 
         public IEnumerator<CatalogedMember> GetEnumerator() =>
-                    new EnumeratorCatalogedMember(Catalog.ContainerPersistence);
+                    new EnumeratorCatalogedMember(catalog.ContainerPersistence);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
@@ -94,9 +94,7 @@ namespace Goedel.Mesh {
             }
 
 
-        public CatalogedGroup(ProfileGroup profileGroup) {
-            Profile = profileGroup;
-            }
+        public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
 
         }
 

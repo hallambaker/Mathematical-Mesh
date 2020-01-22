@@ -168,8 +168,7 @@ namespace Goedel.Test.Core {
         /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
         public override Stream Post(MemoryStream Data) {
-            MeshPortalTest.MeshProtocolMessages = MeshPortalTest.MeshProtocolMessages ??
-                new List<Trace>();
+            MeshPortalTest.MeshProtocolMessages ??=                 new List<Trace>();
             var requestBytes = Data.ToArray();
 
             var JSONReader = new JSONReader(requestBytes);

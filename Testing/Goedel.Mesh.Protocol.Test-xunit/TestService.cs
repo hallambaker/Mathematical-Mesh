@@ -49,21 +49,21 @@ namespace Goedel.XUnit {
         public Contact ContactBob => MeshMachineTest.ContactBob;
 
 
-        CatalogedCredential Password1 = new CatalogedCredential() {
+        CatalogedCredential password1 = new CatalogedCredential() {
             Username = "fred",
             Password = "password",
             Service = "example.com"
             };
-        CatalogedCredential Password2 = new CatalogedCredential() {
+        CatalogedCredential password2 = new CatalogedCredential() {
             Username = "fred",
             Password = "password",
             Service = "example.net"
             };
-        CatalogedCredential Password3 = new CatalogedCredential() {
-            Username = "fred",
-            Password = "password",
-            Service = "fred.example.com"
-            };
+        //CatalogedCredential password3 = new CatalogedCredential() {
+        //    Username = "fred",
+        //    Password = "password",
+        //    Service = "fred.example.com"
+        //    };
         [Fact]
         public void ProtocolHello() {
 
@@ -116,7 +116,7 @@ namespace Goedel.XUnit {
 
             // Do some catalog updates and check the results
             var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();
-            catalogCredential.New(Password1);
+            catalogCredential.New(password1);
 
 
             // Bug: This is failing because the get pending routine is not traversing containers correctly
@@ -133,7 +133,7 @@ namespace Goedel.XUnit {
 
 
             // Do some catalog updates and check the results
-            catalogCredential.New(Password2);
+            catalogCredential.New(password2);
 
             // Check message handling - introduce Bob
             var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
@@ -401,7 +401,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(ConnectionAccount first, ConnectionAccount second) {
+        public bool Verify(ConnectionAccount first, ConnectionAccount second) {
             (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
             (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
@@ -409,7 +409,7 @@ namespace Goedel.XUnit {
             }
 
 
-        bool Verify(ConnectionDevice first, ConnectionDevice second) {
+        public bool Verify(ConnectionDevice first, ConnectionDevice second) {
             (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
             (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();

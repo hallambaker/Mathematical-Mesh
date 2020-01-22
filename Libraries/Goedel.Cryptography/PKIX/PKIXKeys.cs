@@ -71,7 +71,7 @@
         /// <param name="OIDValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
+            OIDValue ??= OID;
             return new SubjectPublicKeyInfo(OIDValue, DER());
             }
 
@@ -96,7 +96,7 @@
         /// <param name="OIDValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
+            OIDValue ??= OID;
             return new SubjectPublicKeyInfo(OIDValue, DER());
             }
 
@@ -117,7 +117,7 @@
         /// </summary>
         public PKIXPublicKeyDH PKIXPublicKeyDH {
             get {
-                _PKIXPublicKeyDH = _PKIXPublicKeyDH ?? new PKIXPublicKeyDH() {
+                _PKIXPublicKeyDH ??= new PKIXPublicKeyDH() {
                     Shared = Shared,
                     Public = Public
                     };
@@ -140,7 +140,7 @@
         /// <param name="OIDValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
+            OIDValue ??= OID;
             return new SubjectPublicKeyInfo(OIDValue, DER());
             }
 
@@ -165,7 +165,7 @@
         /// <param name="OIDValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OIDValue = null) {
-            OIDValue = OIDValue ?? OID;
+            OIDValue ??= OID;
             return new SubjectPublicKeyInfo(OIDValue, DER());
             }
 
@@ -186,7 +186,7 @@
         /// </summary>
         public PKIXPublicKeyRSA PKIXPublicKeyRSA {
             get {
-                _PKIXPublicKeyRSA = _PKIXPublicKeyRSA ?? new PKIXPublicKeyRSA() {
+                _PKIXPublicKeyRSA ??= new PKIXPublicKeyRSA() {
                     Modulus = Modulus,
                     PublicExponent = PublicExponent
                     };

@@ -82,9 +82,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="odd">If true, the odd value of V is returned. If false, the
         /// even value is returned. Otherwise, either value may be returned.</param>
         /// <returns>The V corresponding to U.</returns>
-        public BigInteger GetV(bool? odd = null) {
-            return GetV(U, odd);
-            }
+        public BigInteger GetV(bool? odd = null) => GetV(U, odd);
 
         /// <summary>
         /// Return the V point corresponding to the u coordinate value <paramref name="u"/>
@@ -903,9 +901,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Return a hash code. 
         /// </summary>
         /// <returns>Hash of the prime value.</returns>
-        public override int GetHashCode() {
-            return P.GetHashCode();
-            }
+        public override int GetHashCode() => P.GetHashCode();
         #endregion
 
 

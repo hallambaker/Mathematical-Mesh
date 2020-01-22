@@ -53,37 +53,35 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestPersistenceStoreCreate() {
-            using (var TestStore = new TestItemContainerPersistenceStore(
-            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
-                // retrieve by master key -fail
-                Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
-                }
+            using var TestStore = new TestItemContainerPersistenceStore(
+            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
+            // retrieve by master key -fail
+            Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
             }
 
 
         [Fact]
         public void TestPersistenceStoreAdd() {
-            using (var TestStore = new TestItemContainerPersistenceStore(
-            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
-                // retrieve by master key -fail
-                Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
-                (TestStore.Container.FrameCount == 1).AssertTrue();
+            using var TestStore = new TestItemContainerPersistenceStore(
+            FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
+            // retrieve by master key -fail
+            Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+            (TestStore.Container.FrameCount == 1).AssertTrue();
 
 
-                TestStore.New(AccountAlice);
+            TestStore.New(AccountAlice);
 
-                (TestStore.Container.FrameCount == 2).AssertTrue();
+            (TestStore.Container.FrameCount == 2).AssertTrue();
 
 
-                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+            Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
+            Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
 
-                var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+            var AccountTest = TestStore.GetAccountID(AccountIDAlice);
+            Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
 
-                var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
-                }
+            var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
+            Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
             }
 
 

@@ -654,9 +654,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="k">The data to sign.</param>
         /// <param name="r">The presignature value.</param>
         /// <returns>The value r+k* Private.</returns>
-        public override BigInteger Sign(BigInteger k, BigInteger r) {
-            return (r + k * Private) % DomainParameters.Curve448.Q;
-            }
+        public override BigInteger Sign(BigInteger k, BigInteger r) => (r + k * Private) % DomainParameters.Curve448.Q;
 
 
         /// <summary>

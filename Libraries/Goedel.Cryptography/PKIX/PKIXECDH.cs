@@ -22,7 +22,7 @@
         /// <param name="oidValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
-            oidValue = oidValue ?? OID;
+            oidValue ??= OID;
             return new SubjectPublicKeyInfo(oidValue, DER());
             }
 
@@ -87,7 +87,7 @@
         /// <param name="oidValue">The OID value</param>
         /// <returns>The PKIX structure</returns>
         public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] oidValue = null) {
-            oidValue = oidValue ?? OID;
+            oidValue ??= OID;
             return new SubjectPublicKeyInfo(oidValue, DER());
             }
 

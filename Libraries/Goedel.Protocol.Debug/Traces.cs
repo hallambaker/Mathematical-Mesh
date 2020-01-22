@@ -118,7 +118,7 @@ namespace Goedel.Protocol.Debug {
     /// Capture a related set of traces.
     /// </summary>
     public class TracePoint {
-        string _Tag;
+        public string Tag;
 
         /// <summary>
         /// The console command issued to cause the result.
@@ -146,12 +146,12 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Constructor for a trace point.
         /// </summary>
-        /// <param name="TraceDictionary">The parent dictionary</param>
-        /// <param name="Tag">Locator tag within the trace dictionary</param>
-        public TracePoint(TraceDictionary TraceDictionary, string Tag) {
-            this.TraceDictionary = TraceDictionary;
+        /// <param name="traceDictionary">The parent dictionary</param>
+        /// <param name="tag">Locator tag within the trace dictionary</param>
+        public TracePoint(TraceDictionary traceDictionary, string tag) {
+            TraceDictionary = traceDictionary;
             Messages = new List<TraceMessage>();
-            _Tag = Tag;
+            Tag = tag;
             }
 
 

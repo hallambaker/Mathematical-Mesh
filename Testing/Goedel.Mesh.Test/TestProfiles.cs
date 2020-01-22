@@ -11,8 +11,8 @@ namespace Goedel.Mesh.Test {
     public partial class TestProfiles {
 
         static string Service = "example.com";
-        static string NextAccountAlice(string Test) => $"alice{Test}@{Service}";
-        static string NextAccountBob(string Test) => $"bob{Test}@{Service}";
+        public static string NextAccountAlice(string Test) => $"alice{Test}@{Service}";
+        public static string NextAccountBob(string Test) => $"bob{Test}@{Service}";
 
         public static TestProfiles Test => new TestProfiles();
         public TestProfiles() => TestEnvironmentCommon.Initialize();
@@ -39,63 +39,61 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
-            using (var catalog = deviceAdmin.GetCatalogCredential()) {
-
-                var entry1 = new CatalogedCredential() {
-                    Service = "example.com",
-                    Username = "alice",
-                    Password = "password"
-                    };
-                var entry2 = new CatalogedCredential() {
-                    Service = "example.net",
-                    Username = "alice",
-                    Password = "samepassword"
-                    };
-                var entry3 = new CatalogedCredential() {
-                    Service = "www.cnn.com",
-                    Username = "alice1977",
-                    Password = "EasyToGuess"
-                    };
-                var entry4 = new CatalogedCredential() {
-                    Service = "www.bank.test",
-                    Username = "alice1977",
-                    Password = "EasyToGuess"
-                    };
-                var entry5 = new CatalogedCredential() {
-                    Service = "example.net",
-                    Username = "alice",
-                    Password = "samepassword2"
-                    };
-
-
-                CheckCatalog(catalog, new List<CatalogedEntry> { });
-
-                catalog.New(entry1);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1 });
-
-                catalog.New(entry2);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2 });
-
-                catalog.New(entry3);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3 });
-
-                catalog.New(entry4);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3, entry4 });
-
-                catalog.Update(entry5);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry4, entry5 });
-
-                catalog.Delete(entry4);
-                CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry5 });
-
-                CheckCatalogEntry(entry1, catalog.LocateByService(entry1.Service));
-                CheckCatalogEntry(entry3, catalog.LocateByService(entry3.Service));
-                CheckCatalogEntry(null, catalog.LocateByService(entry4.Service));
-                CheckCatalogEntry(entry5, catalog.LocateByService(entry5.Service));
+            using var catalog = deviceAdmin.GetCatalogCredential();
+            var entry1 = new CatalogedCredential() {
+                Service = "example.com",
+                Username = "alice",
+                Password = "password"
+                };
+            var entry2 = new CatalogedCredential() {
+                Service = "example.net",
+                Username = "alice",
+                Password = "samepassword"
+                };
+            var entry3 = new CatalogedCredential() {
+                Service = "www.cnn.com",
+                Username = "alice1977",
+                Password = "EasyToGuess"
+                };
+            var entry4 = new CatalogedCredential() {
+                Service = "www.bank.test",
+                Username = "alice1977",
+                Password = "EasyToGuess"
+                };
+            var entry5 = new CatalogedCredential() {
+                Service = "example.net",
+                Username = "alice",
+                Password = "samepassword2"
+                };
 
 
-                CheckCatalogEntry(entry1, catalog.Locate(entry1._PrimaryKey));
-                }
+            CheckCatalog(catalog, new List<CatalogedEntry> { });
+
+            catalog.New(entry1);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1 });
+
+            catalog.New(entry2);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2 });
+
+            catalog.New(entry3);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3 });
+
+            catalog.New(entry4);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry2, entry3, entry4 });
+
+            catalog.Update(entry5);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry4, entry5 });
+
+            catalog.Delete(entry4);
+            CheckCatalog(catalog, new List<CatalogedEntry> { entry1, entry3, entry5 });
+
+            CheckCatalogEntry(entry1, catalog.LocateByService(entry1.Service));
+            CheckCatalogEntry(entry3, catalog.LocateByService(entry3.Service));
+            CheckCatalogEntry(null, catalog.LocateByService(entry4.Service));
+            CheckCatalogEntry(entry5, catalog.LocateByService(entry5.Service));
+
+
+            CheckCatalogEntry(entry1, catalog.Locate(entry1._PrimaryKey));
             }
 
         /// <summary>

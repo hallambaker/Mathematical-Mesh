@@ -149,13 +149,12 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus fileStatus = FileStatus.Overwrite
                 ) {
 
-            using (var Writer = new FileContainerWriter(
+            using var Writer = new FileContainerWriter(
                         fileName, cryptoParameters,
                         archive: false,
                         digest: false,
-                        fileStatus: fileStatus, containerType: ContainerType.List)) {
-                Writer.Add(data, cryptoParameters, contentMeta);
-                }
+                        fileStatus: fileStatus, containerType: ContainerType.List);
+            Writer.Add(data, cryptoParameters, contentMeta);
             }
 
 
@@ -327,12 +326,11 @@ namespace Goedel.Cryptography.Dare {
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
-            using (var Reader = new FileContainerReader(FileName, KeyCollection)) {
-                var ContainerDataReader = Reader.container.GetContainerFrameIndex(
-                            position: Reader.container.PositionFinalFrameStart);
-                Data = ContainerDataReader.Payload;
-                ContentMeta = ContainerDataReader?.Header.ContentMeta;
-                }
+            using var Reader = new FileContainerReader(FileName, KeyCollection);
+            var ContainerDataReader = Reader.container.GetContainerFrameIndex(
+position: Reader.container.PositionFinalFrameStart);
+            Data = ContainerDataReader.Payload;
+            ContentMeta = ContainerDataReader?.Header.ContentMeta;
             }
 
 
@@ -348,9 +346,8 @@ namespace Goedel.Cryptography.Dare {
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
-            using (var Reader = new FileContainerReader(DataIn)) {
-                Reader.Read(out Data, out ContentMeta);
-                }
+            using var Reader = new FileContainerReader(DataIn);
+            Reader.Read(out Data, out ContentMeta);
 
             }
 

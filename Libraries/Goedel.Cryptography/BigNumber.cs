@@ -10,27 +10,27 @@ namespace Goedel.Cryptography {
     /// </summary>
     public struct BitIndex {
 
-        byte[] BitField;
+        byte[] bitField;
 
-        int DownByte;
-        int DownBit;
-        int UpByte;
-        int UpBit;
-        int Length;
-        byte DataDown, DataUp;
+        int downByte;
+        int downBit;
+        int upByte;
+        int upBit;
+        int length;
+        byte dataDown, dataUp;
 
         //bool CountUp;
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingDown => (DownByte > 1) | (DownBit > 0);
+        public bool GoingDown => (downByte > 1) | (downBit > 0);
 
 
         /// <summary>
         /// Returns true if there is further work to be completed, otherwise false.
         /// </summary>
-        public bool GoingUp => (UpByte < (Length - 1) | UpBit < 8);
+        public bool GoingUp => (upByte < (length - 1) | upBit < 8);
 
 
         /// <summary>
@@ -40,17 +40,17 @@ namespace Goedel.Cryptography {
         /// <param name="Bits">The number of bits to process</param>
         /// <param name="Up">If true, count is performed in ascending order</param>
         public BitIndex(BigInteger Value, int Bits, bool Up = false) {
-            Length = (Bits + 7) / 8;
+            length = (Bits + 7) / 8;
             Bits--;
-            DownByte = Bits / 8;
-            DownBit = Bits % 8;
-            UpByte = 0;
-            UpBit = 0;
-            BitField = Value.ToByteArrayLittleEndian(Length);
+            downByte = Bits / 8;
+            downBit = Bits % 8;
+            upByte = 0;
+            upBit = 0;
+            bitField = Value.ToByteArrayLittleEndian(length);
 
 
-            DataDown = BitField[DownByte];
-            DataUp = BitField[0];
+            dataDown = bitField[downByte];
+            dataUp = bitField[0];
             //this.CountUp = Up;
             }
 
@@ -61,16 +61,16 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>True iff the next bit to be read is 1.</returns>
         public bool Down() {
-            if (DownBit < 0) {
-                DownByte--;
-                DownBit = 7;
-                Assert.True(DownByte >= 0, InvalidOperation.Throw);
+            if (downBit < 0) {
+                downByte--;
+                downBit = 7;
+                Assert.True(downByte >= 0, InvalidOperation.Throw);
 
-                DataDown = BitField[DownByte];
+                dataDown = bitField[downByte];
                 }
-            var Result = (DataDown & 0x80) > 0;
-            DataDown = (byte)(DataDown << 1);
-            DownBit--;
+            var Result = (dataDown & 0x80) > 0;
+            dataDown = (byte)(dataDown << 1);
+            downBit--;
 
             return Result;
             }
@@ -80,18 +80,18 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>True iff the next bit to be read is 1.</returns>
         public bool Up() {
-            Assert.True(UpByte < Length, InvalidOperation.Throw);
+            Assert.True(upByte < length, InvalidOperation.Throw);
 
-            if (UpBit > 7) {
-                UpByte++;
-                UpBit = 0;
+            if (upBit > 7) {
+                upByte++;
+                upBit = 0;
 
 
-                DataUp = BitField[UpByte];
+                dataUp = bitField[upByte];
                 }
-            var Result = (DataUp & 0x01) > 0;
-            DataUp = (byte)(DataUp >> 1);
-            UpBit++;
+            var Result = (dataUp & 0x01) > 0;
+            dataUp = (byte)(dataUp >> 1);
+            upBit++;
 
             return Result;
 
@@ -173,7 +173,7 @@ namespace Goedel.Cryptography {
         /// <param name="Data">The data in little endian format.</param>
         /// <returns>The constructed integer</returns>
         public static BigInteger BigIntegerLittleEndian(this byte[] Data) {
-            if ((Data[Data.Length - 1] >> 7) == 0) {
+            if ((Data[^1] >> 7) == 0) {
                 return new BigInteger(Data);
                 }
             var Extend = new byte[Data.Length + 1];

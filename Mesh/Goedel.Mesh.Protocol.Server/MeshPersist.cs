@@ -96,37 +96,35 @@ namespace Goedel.Mesh.Server {
         public ConnectResponse Connect(JpcSession jpcSession,
                         RequestConnection messageConnectionRequestClient) {
 
-            using (var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID)) {
+            using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID);
+            var serviceNonce = CryptoCatalog.GetBits(128);
 
-                var serviceNonce = CryptoCatalog.GetBits(128);
+            var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.KeyPair.UDFBytes;
+            var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.KeyPair.UDFBytes;
 
-                var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.KeyPair.UDFBytes;
-                var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.KeyPair.UDFBytes;
+            var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
+                messageConnectionRequestClient.ClientNonce);
 
-                var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
-                    messageConnectionRequestClient.ClientNonce);
+            var messageConnectionRequest = new AcknowledgeConnection() {
+                EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
+                ServerNonce = serviceNonce,
+                Witness = witness,
+                MessageID = UDF.Nonce()
+                };
 
-                var messageConnectionRequest = new AcknowledgeConnection() {
-                    EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
-                    ServerNonce = serviceNonce,
-                    Witness = witness,
-                    MessageID = UDF.Nonce()
-                    };
+            // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
-                // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
-
-                var message = Envelope(messageConnectionRequest);
-                accountHandle.Post(message);
+            var message = Envelope(messageConnectionRequest);
+            accountHandle.Post(message);
 
 
-                var connectResponse = new ConnectResponse() {
-                    EnvelopedConnectionResponse = message,
-                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                    EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope
-                    };
+            var connectResponse = new ConnectResponse() {
+                EnvelopedConnectionResponse = message,
+                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope
+                };
 
-                return connectResponse;
-                }
+            return connectResponse;
             }
 
         /// <summary>
@@ -137,19 +135,17 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account for which the status is requested..</param>
         public StatusResponse AccountComplete(JpcSession jpcSession, CompleteRequest completeRequest) {
 
-            using (var accountHandle = GetAccountUnverified(completeRequest.ServiceID)) {
+            using var accountHandle = GetAccountUnverified(completeRequest.ServiceID);
+            var catalogEntry = accountHandle.GetCatalogEntryDevice(completeRequest.DeviceUDF);
 
-                var catalogEntry = accountHandle.GetCatalogEntryDevice(completeRequest.DeviceUDF);
-
-                var statusResponse = new StatusResponse() {
-                    //ContainerStatus = containerStatus,
-                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                    EnvelopedCatalogEntryDevice = catalogEntry
-                    };
+            var statusResponse = new StatusResponse() {
+                //ContainerStatus = containerStatus,
+                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                EnvelopedCatalogEntryDevice = catalogEntry
+                };
 
 
-                return statusResponse;
-                }
+            return statusResponse;
 
             }
 
@@ -203,26 +199,23 @@ namespace Goedel.Mesh.Server {
                     VerifiedAccount account,
                     List<ConstraintsSelect> selections) {
 
-            using (var accountEntry = GetAccountVerified(account, jpcSession)) {
+            using var accountEntry = GetAccountVerified(account, jpcSession);
+            var updates = new List<ContainerUpdate>();
+            foreach (var selection in selections) {
+                using var store = accountEntry.GetStore(selection.Container);
+                var update = new ContainerUpdate() {
+                    Container = selection.Container,
+                    Envelopes = new List<DareEnvelope>()
+                    };
 
-                var updates = new List<ContainerUpdate>();
-                foreach (var selection in selections) {
-                    using (var store = accountEntry.GetStore(selection.Container)) {
-                        var update = new ContainerUpdate() {
-                            Container = selection.Container,
-                            Envelopes = new List<DareEnvelope>()
-                            };
 
-
-                        foreach (var message in store.Select(selection.IndexMin)) {
-                            update.Envelopes.Add(message);
-                            }
-
-                        updates.Add(update);
-                        }
+                foreach (var message in store.Select(selection.IndexMin)) {
+                    update.Envelopes.Add(message);
                     }
-                return updates;
+
+                updates.Add(update);
                 }
+            return updates;
             }
 
 
@@ -245,19 +238,18 @@ namespace Goedel.Mesh.Server {
             // report the updates to be applied here
 
 
-            using (var accountEntry = GetAccountVerified(account, jpcSession)) {
-                Assert.NotNull(accountEntry);
-                if (selfs != null) {
-                    foreach (var self in selfs) {
-                        accountEntry.Post(self);
-                        }
+            using var accountEntry = GetAccountVerified(account, jpcSession);
+            Assert.NotNull(accountEntry);
+            if (selfs != null) {
+                foreach (var self in selfs) {
+                    accountEntry.Post(self);
                     }
+                }
 
-                if (updates != null) {
-                    foreach (var update in updates) {
-                        update.ToConsole();
-                        accountEntry.StoreAppend(update.Container, update.Envelopes);
-                        }
+            if (updates != null) {
+                foreach (var update in updates) {
+                    update.ToConsole();
+                    accountEntry.StoreAppend(update.Container, update.Envelopes);
                     }
                 }
 
@@ -286,14 +278,13 @@ namespace Goedel.Mesh.Server {
         /// <param name="dareMessage">The message</param>
         public string MessagePost(JpcSession jpcSession, string account, DareEnvelope dareMessage) {
 
-            using (var accountUnverified = GetAccountUnverified(account)) {
-                dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??
-                    new ContentMeta();
-                var identifier = UDF.Nonce();
-                dareMessage.Header.ContentMeta.UniqueID = identifier;
-                accountUnverified.Post(dareMessage);
-                return identifier;
-                }
+            using var accountUnverified = GetAccountUnverified(account);
+            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??
+new ContentMeta();
+            var identifier = UDF.Nonce();
+            dareMessage.Header.ContentMeta.UniqueID = identifier;
+            accountUnverified.Post(dareMessage);
+            return identifier;
             }
 
         /// <summary>

@@ -11,7 +11,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public DHDomain Domain {
             get {
-                _Domain = _Domain ?? DHDomain.GetByUDF(Shared);
+                _Domain ??= DHDomain.GetByUDF(Shared);
                 return _Domain;
                 }
             set {
@@ -29,7 +29,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public DHDomain Domain {
             get {
-                _Domain = _Domain ?? DHDomain.GetByUDF(Shared);
+                _Domain ??= DHDomain.GetByUDF(Shared);
                 return _Domain;
                 }
             set {
@@ -80,7 +80,7 @@ namespace Goedel.Cryptography.PKIX {
             93B4EA98 8D8FDDC1 86FFB7DC 90A6C08F 4DF435C9 34063199
             FFFFFFFF FFFFFFFF";
 
-        byte[] _UDFData = null;
+        byte[] udfData = null;
 
         /// <summary>
         /// Return the UDF value as a byte sequence.
@@ -88,31 +88,31 @@ namespace Goedel.Cryptography.PKIX {
         public byte[] UDFData {
             get {
                 var DEREncoded = DER();
-                _UDFData = _UDFData ?? UDF.FromKeyInfo(DEREncoded);
-                return _UDFData;
+                udfData ??= UDF.FromKeyInfo(DEREncoded);
+                return udfData;
                 }
             }
 
 
-        static DHDomain _DHDomain2048 = null;
+        static DHDomain DhDomain2048 = null;
         /// <summary>
         /// Shared parameters for the 2048 bit curve
         /// </summary>
         public static DHDomain DHDomain2048 {
             get {
-                _DHDomain2048 = _DHDomain2048 ?? new DHDomain(Group2048PText);
-                return _DHDomain2048;
+                DhDomain2048 ??= new DHDomain(Group2048PText);
+                return DhDomain2048;
                 }
             }
 
-        static DHDomain _DHDomain4096 = null;
+        static DHDomain DhDomain4096 = null;
         /// <summary>
         /// Shared parameters for the 2048 bit curve
         /// </summary>
         public static DHDomain DHDomain4096 {
             get {
-                _DHDomain4096 = _DHDomain4096 ?? new DHDomain(Group4096PText);
-                return _DHDomain2048;
+                DhDomain4096 ??= new DHDomain(Group4096PText);
+                return DhDomain4096;
                 }
             }
 
@@ -123,7 +123,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public BigInteger BigIntegerP {
             get {
-                _BigIntegerP = _BigIntegerP ?? Modulus.ToBigInteger();
+                _BigIntegerP ??= Modulus.ToBigInteger();
                 return (BigInteger)_BigIntegerP;
                 }
             }
@@ -134,7 +134,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         public BigInteger BigIntegerG {
             get {
-                _BigIntegerG = _BigIntegerG ?? Generator.ToBigInteger();
+                _BigIntegerG ??= Generator.ToBigInteger();
                 return (BigInteger)_BigIntegerG;
                 }
             }

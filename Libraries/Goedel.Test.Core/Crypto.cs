@@ -90,7 +90,7 @@ namespace Goedel.Test.Core {
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
         public void AddEncrypt(string accountId, bool register = true) {
-            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys ??= new List<KeyPair>();
 
             var keypair = new KeyPairEd25519() {
                 Locator = accountId
@@ -110,7 +110,7 @@ namespace Goedel.Test.Core {
 
         protected override void AddSign(string AccountId) => AddSign(AccountId, true);
         public void AddSign(string AccountId, bool Register) {
-            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys ??= new List<KeyPair>();
 
             var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
             var PublicKeyKeypair = Keypair.KeyPairPublic();
@@ -138,7 +138,7 @@ namespace Goedel.Test.Core {
         public TestKeys(KeyCollection KeyCollection = null) => this.KeyCollection = KeyCollection ?? KeyCollection.Default;
 
         public void AddEncrypt(bool Register = true) {
-            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys ??= new List<KeyPair>();
 
             var Keypair = new KeyPairDH();
             var Public = Keypair.PKIXPublicKeyDH;
@@ -155,7 +155,7 @@ namespace Goedel.Test.Core {
             }
 
         public void AddSign(bool Register = true) {
-            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys ??= new List<KeyPair>();
 
             throw new NYI();
             }

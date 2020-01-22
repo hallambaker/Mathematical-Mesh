@@ -174,7 +174,6 @@ namespace Goedel.Protocol {
             throw new UnknownTag();
             }
 
-        byte[] DataBuffer = new byte[16];
         ulong GetInteger(int Code) {
             ulong Result = 0;
 
@@ -208,11 +207,11 @@ namespace Goedel.Protocol {
             return Token.String;
             }
 
-        int LengthRemainingRead = -1;
-        int BinaryBuffer = -1;
+        int lengthRemainingRead = -1;
+        int binaryBuffer = -1;
 
         Token LexerBinary(int Code, bool Terminal) {
-            LengthRemainingRead = (int)GetInteger(Code);
+            lengthRemainingRead = (int)GetInteger(Code);
             this.Terminal = Terminal;
             return Token.Binary;
             }
@@ -222,8 +221,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <returns>The binary data.</returns>
         public override byte[] ReadBinaryData() {
-            ResultBinary = ByteInput.ReadBinary(LengthRemainingRead);
-            LengthRemainingRead = -1;
+            ResultBinary = ByteInput.ReadBinary(lengthRemainingRead);
+            lengthRemainingRead = -1;
             return ResultBinary;
             }
 
@@ -236,11 +235,11 @@ namespace Goedel.Protocol {
 
             switch (TokenType) {
                 case Token.String: {
-                    BinaryBuffer = 0;
+                    binaryBuffer = 0;
                     return true;
                     }
                 case Token.Binary: {
-                    BinaryBuffer = -1;
+                    binaryBuffer = -1;
                     return Terminal;
                     }
                 }
@@ -261,21 +260,21 @@ namespace Goedel.Protocol {
             byte[] Data, int Offset, int Count) {
             int Length;
 
-            if (BinaryBuffer >= 0) {
-                Length = Math.Min(Count, ResultBinary.Length - BinaryBuffer);
+            if (binaryBuffer >= 0) {
+                Length = Math.Min(Count, ResultBinary.Length - binaryBuffer);
 
-                Buffer.BlockCopy(ResultBinary, BinaryBuffer, Data, Offset, Length);
-                BinaryBuffer += Length;
+                Buffer.BlockCopy(ResultBinary, binaryBuffer, Data, Offset, Length);
+                binaryBuffer += Length;
 
                 return Length;
                 }
 
 
-            if (LengthRemainingRead < 0) {
+            if (lengthRemainingRead < 0) {
                 return 0; // Have completed reading the data.
                 }
 
-            if (LengthRemainingRead == 0) {
+            if (lengthRemainingRead == 0) {
                 if (Terminal) {
                     return 0;
                     }
@@ -283,9 +282,9 @@ namespace Goedel.Protocol {
                 }
 
             // reduce the read count to the smaller of count and the remaining data.
-            Length = Math.Min(Count, LengthRemainingRead);
+            Length = Math.Min(Count, lengthRemainingRead);
 
-            LengthRemainingRead -= Length;
+            lengthRemainingRead -= Length;
             var Read = ByteInput.ReadBinary(Data, Offset, Length);
 
             //Console.WriteLine("Read ${Read} bytes");

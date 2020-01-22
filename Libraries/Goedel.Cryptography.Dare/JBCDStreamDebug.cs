@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         public JBCDStreamDebug(string FileName, FileStatus FileStatus = FileStatus.Read,
                             bool WriteOnly = false, TextWriter Output = null)
             : base(FileName, FileStatus, WriteOnly) {
-            Output = Output ?? Console.Out;
+            Output ??= Console.Out;
 
             this.Output = Output;
             }
@@ -37,7 +37,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Stream">The underlying stream. This must support the seek operation.</param>
         /// <param name="Output">The additional output stream.</param>
         public JBCDStreamDebug(Stream Stream, TextWriter Output = null) : base(Stream, null) {
-            Output = Output ?? Console.Out;
+            Output ??= Console.Out;
 
             this.Output = Output;
             }

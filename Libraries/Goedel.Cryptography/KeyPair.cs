@@ -188,6 +188,19 @@ namespace Goedel.Cryptography {
 
             }
 
+        /// <summary>
+        /// Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
+        /// using the data <paramref name="binaryData"/> as the seed for the KDF and optional
+        /// salt valu <paramref name="salt"/>. 
+        /// </summary>
+        /// <param name="algorithmID">The type of key to create.</param>
+        /// <param name="keyCollection">The key collection to add the key to.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
+        /// <param name="binaryData">Seed data for the key.</param>
+        /// <param name="salt">Optional salt value.</param>
+        /// <param name="keySize">The size of the key in bits.</param>
+        /// <returns>the derrived key.</returns>
         public static KeyPair Factory(
             CryptoAlgorithmID algorithmID,
             KeySecurity keySecurity,
@@ -215,16 +228,20 @@ namespace Goedel.Cryptography {
                 //    break;
                 //    }
                 case CryptoAlgorithmID.X25519: {
-                    return new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
+                    keyPair = new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
+                    break;
                     }
                 case CryptoAlgorithmID.Ed25519: {
-                    return new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
+                    keyPair = new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
+                    break;
                     }
                 case CryptoAlgorithmID.X448: {
-                    return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
+                    keyPair = new KeyPairX448(binaryData, salt, keySecurity, keyUses);
+                    break;
                     }
                 case CryptoAlgorithmID.Ed448: {
-                    return new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
+                    keyPair = new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
+                    break;
                     }
                 default: {
                     throw new NYI();
@@ -238,7 +255,14 @@ namespace Goedel.Cryptography {
             }
 
 
-
+        /// <summary>
+        /// Register the key pair <paramref name="keyPair"/> in the collection 
+        /// <paramref name="keyCollection"/> and persist according to the key
+        /// security model <paramref name="keySecurity"/>.
+        /// </summary>
+        /// <param name="keyPair">The key pair to persist.</param>
+        /// <param name="keyCollection">The key collection to add the key to.</param>
+        /// <param name="keySecurity">The key security model.</param>
         public static void Register(KeyPair keyPair,
             KeySecurity keySecurity,
             KeyCollection keyCollection) {
@@ -246,7 +270,7 @@ namespace Goedel.Cryptography {
             keyPair.KeySecurity = keySecurity;
 
             if (keySecurity != KeySecurity.Ephemeral) {
-                keyCollection = keyCollection ?? KeyCollection.Default;
+                keyCollection ??= KeyCollection.Default;
 
                 keyCollection.Persist(keyPair);
                 keyCollection.Add(keyPair);

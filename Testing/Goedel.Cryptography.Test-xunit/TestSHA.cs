@@ -14,20 +14,20 @@ namespace Goedel.XUnit {
 
         public TestGoedelCryptography() => TestEnvironmentCommon.Initialize();
 
-        byte[] SHA_Plaintext =
-                        ("6bc1bee22e409f96e93d7e117393172a"
-                        + "ae2d8a571e03ac9c9eb76fac45af8e51"
-                        + "30c81c46a35ce411e5fbc1191a0a52ef"
-                        + "f69f2445df4f9b17ad2b417be66c3710.").FromBase16();
+        //byte[] SHA_Plaintext =
+        //                ("6bc1bee22e409f96e93d7e117393172a"
+        //                + "ae2d8a571e03ac9c9eb76fac45af8e51"
+        //                + "30c81c46a35ce411e5fbc1191a0a52ef"
+        //                + "f69f2445df4f9b17ad2b417be66c3710.").FromBase16();
 
-        List<CryptoAlgorithmID> Algorithms = new List<CryptoAlgorithmID>() {
-            CryptoAlgorithmID.SHA_1_DEPRECATED,
-            CryptoAlgorithmID.SHA_2_256,
-            CryptoAlgorithmID.SHA_2_512,
-            CryptoAlgorithmID.SHA_2_512T128,
-            CryptoAlgorithmID.SHA_3_256,
-            CryptoAlgorithmID.SHA_3_512,
-            };
+        //List<CryptoAlgorithmID> Algorithms = new List<CryptoAlgorithmID>() {
+        //    CryptoAlgorithmID.SHA_1_DEPRECATED,
+        //    CryptoAlgorithmID.SHA_2_256,
+        //    CryptoAlgorithmID.SHA_2_512,
+        //    CryptoAlgorithmID.SHA_2_512T128,
+        //    CryptoAlgorithmID.SHA_3_256,
+        //    CryptoAlgorithmID.SHA_3_512,
+        //    };
 
         // http://csrc.nist.gov/groups/ST/toolkit/documents/Examples/SHA_All.pdf
         // https://www.di-mgt.com.au/sha_testvectors.html

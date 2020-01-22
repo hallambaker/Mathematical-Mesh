@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.Dare {
         KeyCollection keyCollection;
 
         ///<summary>The envelope body</summary>
-        public byte[] Payload => GetPayLoad().CacheValue(out payload);
+        public byte[] Payload => payload ?? GetPayLoad().CacheValue(out payload);
         byte[] payload;
 
         ///<summary>The decoded JSONObject</summary>
@@ -65,16 +65,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>The frame payload data.</returns>
         public byte[] GetPayLoad() {
-            using (var input = jbcdStream.FramerGetReader(DataPosition, DataLength)) {
+            using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+            var Decoder = Header.GetDecoder(input, out var Reader,
+                        keyCollection: keyCollection);
 
-                var Decoder = Header.GetDecoder(input, out var Reader,
-                            keyCollection: keyCollection);
-
-                using (var output = new MemoryStream()) {
-                    Reader.CopyTo(output);
-                    return output.ToArray();
-                    }
-                }
+            using var output = new MemoryStream();
+            Reader.CopyTo(output);
+            return output.ToArray();
             }
 
 
@@ -127,12 +124,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
         public byte[] GetBody(Container container) {
-            using (var input = container.JBCDStream.FramerGetReader(DataPosition, DataLength)) {
-                using (var output = new MemoryStream()) {
-                    input.CopyTo(output);
-                    return output.ToArray();
-                    }
-                }
+            using var input = container.JBCDStream.FramerGetReader(DataPosition, DataLength);
+            using var output = new MemoryStream();
+            input.CopyTo(output);
+            return output.ToArray();
 
             }
 

@@ -148,7 +148,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
-            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys ??= new List<KeyPair>();
             EncryptionKeys.Add(KeyCollection.GetByAccountEncrypt(AccountId));
             }
 
@@ -157,7 +157,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddSign(string AccountId) {
-            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys ??= new List<KeyPair>();
             SignerKeys.Add(KeyCollection.GetByAccountSign(AccountId));
             }
 

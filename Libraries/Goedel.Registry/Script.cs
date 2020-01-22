@@ -121,106 +121,6 @@ namespace Goedel.Registry {
             Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyCompanyAttribute>().Company;
 
 
-        ///// <summary>Get assembly title.</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The assembly title.</returns>
-        //public static string GetAssemblyTitle(Assembly Assembly) {
-        //    object[] attributes = Assembly.
-        //            GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-        //    if (attributes.Length > 0) {
-        //        AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-        //        if (titleAttribute.Title != "") {
-        //            return titleAttribute.Title;
-        //            }
-        //        }
-        //    // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
-        //    return System.IO.Path.GetFileNameWithoutExtension(Assembly.CodeBase);
-        //    }
-
-
-
-
-
-        ///// <summary>Get assembly version</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The assembly version</returns>
-        //public static string GetAssemblyVersion(Assembly Assembly) => Assembly.GetName().Version.ToString();
-
-
-
-
-        ///// <summary>Get Assembly Description</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The Assembly Description</returns>
-        //public static string GetAssemblyDescription(Assembly Assembly) {
-
-        //    // Get all Description attributes on this assembly
-        //    object[] attributes = Assembly.
-        //            GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-        //    // If there aren't any Description attributes, return an empty string
-        //    if (attributes.Length == 0) {
-        //        return "";
-        //        }
-        //    // If there is a Description attribute, return its value
-        //    return ((AssemblyDescriptionAttribute)attributes[0]).Description;
-
-        //    }
-
-
-
-
-        ///// <summary>Get Assembly Product</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The Assembly Product</returns>
-        //public static string GetAssemblyProduct(Assembly Assembly) {
-        //    // Get all Product attributes on this assembly
-        //    object[] attributes = Assembly.GetExecutingAssembly().
-        //        GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-        //    // If there aren't any Product attributes, return an empty string
-        //    if (attributes.Length == 0) {
-        //        return "";
-        //        }
-        //    // If there is a Product attribute, return its value
-        //    return ((AssemblyProductAttribute)attributes[0]).Product;
-        //    }
-
-
-
-
-        ///// <summary>Get Assembly Copyright</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The Assembly Copyright</returns>
-        //public static string GetAssemblyCopyright(Assembly Assembly) {
-        //    // Get all Copyright attributes on this assembly
-        //    object[] attributes = Assembly.GetExecutingAssembly().
-        //        GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-        //    // If there aren't any Copyright attributes, return an empty string
-        //    if (attributes.Length == 0) {
-        //        return "";
-        //        }
-        //    // If there is a Copyright attribute, return its value
-        //    return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-        //    }
-
-
-
-
-        ///// <summary>Get Assembly Company</summary>
-        ///// <param name="Assembly">The assembly being queried.</param>
-        ///// <returns>The Assembly Company</returns>
-        //public static string GetAssemblyCompany(Assembly Assembly) {
-
-        //    // Get all Company attributes on this assembly
-        //    object[] attributes = Assembly.GetExecutingAssembly().
-        //        GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-        //    // If there aren't any Company attributes, return an empty string
-        //    if (attributes.Length == 0) {
-        //        return "";
-        //        }
-        //    // If there is a Company attribute, return its value
-        //    return ((AssemblyCompanyAttribute)attributes[0]).Company;
-        //    }
-
 
         // Get the date at which the running assembly was linked
 
@@ -233,10 +133,8 @@ namespace Goedel.Registry {
         // they change the linker format.
 
         /// <summary>
-        /// Return the assembly build time.
+        /// The assembly build time.
         /// </summary>
-        /// <param name="Assembly">The assembly being queried.</param>
-        /// <returns>The assembly build time</returns>
         public static DateTime AssemblyBuildTime => GetBuildDate(Assembly.GetEntryAssembly());
         private static DateTime GetBuildDate(Assembly assembly) {
             const string BuildVersionMetadataPrefix = "+build";
@@ -256,31 +154,6 @@ namespace Goedel.Registry {
             return default;
             }
 
-        //(Assembly Assembly) {
-
-        //    string FilePath = Assembly.Location;
-        //    const int c_PeHeaderOffset = 60;
-        //    const int c_LinkerTimestampOffset = 8;
-        //    byte[] b = new byte[2048];
-        //    System.IO.Stream s = null;
-
-        //    try {
-        //        s = new System.IO.FileStream(FilePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-        //        s.Read(b, 0, 2048);
-        //        }
-        //    finally {
-        //        if (s != null) {
-        //            s.Close();
-        //            }
-        //        }
-
-        //    int i = System.BitConverter.ToInt32(b, c_PeHeaderOffset);
-        //    int SecondsSince1970 = System.BitConverter.ToInt32(b, i + c_LinkerTimestampOffset);
-        //    DateTime DateTime = new DateTime(1970, 1, 1, 0, 0, 0);
-        //    DateTime = DateTime.AddSeconds(SecondsSince1970);
-
-        //    return DateTime.SpecifyKind(DateTime, DateTimeKind.Utc); ;
-        //    }
 
         /// <summary>
         /// Convert a time to a localized string.

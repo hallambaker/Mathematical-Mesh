@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public CryptoData CryptoDataDigest {
             get {
-                _CryptoDataDigest = _CryptoDataDigest ?? GetCryptoData();
+                _CryptoDataDigest ??= GetCryptoData();
                 return _CryptoDataDigest;
                 }
             }
@@ -130,7 +130,7 @@ namespace Goedel.Cryptography.Jose {
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default,
                 string ContentType = null) {
 
-            Signatures = Signatures ?? new List<Signature>();
+            Signatures ??= new List<Signature>();
 
             var Alg = SignerKey.SignatureAlgorithmID(ProviderAlgorithm);
 

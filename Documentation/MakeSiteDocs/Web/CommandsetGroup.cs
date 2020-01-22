@@ -15,11 +15,10 @@ namespace ExampleGenerator {
 		// WebGroup
 		//
 		public static void WebGroup(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/group.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/group.md" };
-				obj._WebGroup(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/group.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/group.md" };
+            obj._WebGroup(Examples);
+            }
 		public void _WebGroup(CreateExamples Examples) {
 
 				 MakeTitle ("group");
@@ -125,11 +124,10 @@ namespace ExampleGenerator {
 		// GroupReference
 		//
 		public static void GroupReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/group.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/group.md" };
-				obj._GroupReference(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/group.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/group.md" };
+            obj._GroupReference(Examples);
+            }
 		public void _GroupReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Group;

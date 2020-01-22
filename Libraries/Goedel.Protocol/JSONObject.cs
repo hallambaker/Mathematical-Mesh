@@ -265,9 +265,8 @@ namespace Goedel.Protocol {
         /// <param name="data">Source</param>
         /// <returns>Constructed object</returns>
         public static JSONObject From(byte[] data) {
-            using (var reader = data.JSONReader()) {
-                return FromJSON(reader, true);
-                }
+            using var reader = data.JSONReader();
+            return FromJSON(reader, true);
             }
 
         /// <summary>
@@ -276,9 +275,8 @@ namespace Goedel.Protocol {
         /// <param name="input">Source</param>
         /// <returns>Constructed object</returns>
         public static JSONObject From(string input) {
-            using (var reader = input.JSONReader()) {
-                return FromJSON(reader, true);
-                }
+            using var reader = input.JSONReader();
+            return FromJSON(reader, true);
             }
 
 
@@ -342,11 +340,9 @@ namespace Goedel.Protocol {
         /// <param name="dataEncoding">The encoding to use</param>
         /// <param name="tagged">If true, tag the output with the object type</param>
         public void ToFile(string fileName, DataEncoding dataEncoding = DataEncoding.JSON, bool tagged = false) {
-            using (var outputStream = fileName.OpenFileNew()) {
-                using (var writer = dataEncoding.GetWriter(outputStream)) {
-                    Serialize(writer, tagged);
-                    }
-                }
+            using var outputStream = fileName.OpenFileNew();
+            using var writer = dataEncoding.GetWriter(outputStream);
+            Serialize(writer, tagged);
             }
 
 

@@ -78,13 +78,11 @@ namespace Goedel.Mesh {
 
 
         public static ContainerStatus Status(string directory, string containerName) {
-            using (var container = new Catalog(directory, containerName, decrypt: false)) {
-
-                return new ContainerStatus() {
-                    Index = (int)container.ContainerPersistence.FrameCount,
-                    Container = containerName
-                    };
-                }
+            using var container = new Catalog(directory, containerName, decrypt: false);
+            return new ContainerStatus() {
+                Index = (int)container.ContainerPersistence.FrameCount,
+                Container = containerName
+                };
             }
 
 

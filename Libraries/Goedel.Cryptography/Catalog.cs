@@ -40,7 +40,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static CryptoCatalog Default {
             get {
-                _CryptoCatalog = _CryptoCatalog ?? new CryptoCatalog();
+                _CryptoCatalog ??= new CryptoCatalog();
                 return _CryptoCatalog;
                 }
             }

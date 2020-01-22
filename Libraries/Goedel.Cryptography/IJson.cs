@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Cryptography {
+
+    /// <summary>
+    /// Interface describing properties that allow export of a secret
+    /// or private key as a JSON object.
+    /// </summary>
     public interface IJson {
 
         /// <summary>

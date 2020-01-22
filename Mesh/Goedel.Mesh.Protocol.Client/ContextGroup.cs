@@ -16,9 +16,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public ContextGroup(CatalogedGroup catalogedGroup) {
-            CatalogedGroup = catalogedGroup;
-            }
+        public ContextGroup(CatalogedGroup catalogedGroup) => CatalogedGroup = catalogedGroup;
 
 
 

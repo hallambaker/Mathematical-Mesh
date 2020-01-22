@@ -204,7 +204,12 @@ namespace Goedel.Utilities {
             return Result.ToString();
             }
 
-
+        /// <summary>
+        /// Perform strict character constraints according to the undocumented requirements
+        /// or the HTML RFC spec.
+        /// </summary>
+        /// <param name="c">The character to constrain.</param>
+        /// <returns>The constrained character.</returns>
         public static char RFCBullies(char c) {
             var cint = (int)c;
 
@@ -215,7 +220,12 @@ namespace Goedel.Utilities {
             return '?';
             }
 
-
+        /// <summary>
+        /// Convert the character <paramref name="c"/> to the choresponding escaped
+        /// HTML character or entity binding.
+        /// </summary>
+        /// <param name="c">Character to escape.</param>
+        /// <returns>The escaped character.</returns>
         public static string ToHTMLEntity(this char c) {
             switch (c) {
                 case '&': {
@@ -230,10 +240,7 @@ namespace Goedel.Utilities {
                 default: {
                     return c.ToString();
                     }
-
-
                 }
-
             }
 
         /// <summary>

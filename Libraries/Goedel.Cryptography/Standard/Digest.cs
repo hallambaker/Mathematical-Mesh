@@ -189,7 +189,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 
@@ -240,7 +240,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
 
             var Default = Catalog.Add(CryptoAlgorithmID.SHA_2_512, 512, _AlgorithmClass, Factory);
             Catalog.Add(CryptoAlgorithmID.SHA_2_512T128, 128, _AlgorithmClass, Factory);
@@ -309,7 +309,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 
@@ -364,7 +364,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 
@@ -416,7 +416,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 
@@ -469,7 +469,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 
@@ -520,7 +520,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             return Catalog.Add(_CryptoAlgorithm);
             }
 

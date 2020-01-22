@@ -109,6 +109,7 @@ namespace Goedel.Cryptography {
         /// private keys using cogeneration.
         /// </summary>
         /// <param name="privateKey">The secret scalar value.</param>
+        /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The permitted key uses.</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
@@ -160,6 +161,8 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from key parameters.
         /// </summary>
         /// <param name="privateKey">The private key</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
         public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -269,9 +272,8 @@ namespace Goedel.Cryptography {
 
             algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
             if (algorithmID == CryptoAlgorithmID.Ed25519ph) {
-                using (var sha512 = SHA512.Create()) {
-                    data = sha512.ComputeHash(data);
-                    }
+                using var sha512 = SHA512.Create();
+                data = sha512.ComputeHash(data);
                 }
 
 
@@ -279,7 +281,15 @@ namespace Goedel.Cryptography {
             return PrivateKey.Sign(data, dom2);
             }
 
-
+        /// <summary>
+        /// Begin the process of signing the data <paramref name="data"/> according to the
+        /// algorithm specifier <paramref name="algorithmID"/> and optional context value
+        /// <paramref name="context"/>.
+        /// </summary>
+        /// <param name="data">The data to sign</param>
+        /// <param name="algorithmID">The specific signature algorithm variant.</param>
+        /// <param name="context">Optional context value.</param>
+        /// <returns>The signature context.</returns>
         public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
                 CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                 byte[] context = null) => new ThresholdSignatureEdwards25519(PrivateKey);

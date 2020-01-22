@@ -75,9 +75,7 @@ namespace ExampleGenerator {
     public partial class UDFResults {
 
         public Derive Derive;
-        public UDFResults() {
-            Derive = new Derive();
-            }
+        public UDFResults() => Derive = new Derive();
 
         }
 
@@ -113,12 +111,12 @@ namespace ExampleGenerator {
 
         public KeyDeriveHKDF HKDF;
 
-        public UDFAlgorithmIdentifier algorithmID;
+        public UDFAlgorithmIdentifier AlgorithmID;
 
         public DerivedKey(UDFAlgorithmIdentifier type,
                     UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) {
 
-            algorithmID = specific == UDFAlgorithmIdentifier.Any ? type : specific;
+            AlgorithmID = specific == UDFAlgorithmIdentifier.Any ? type : specific;
 
             var seed = GC.UDF.KeySpecifier(type);
             var random = KeyDeriveHKDF.Random(seed, 128, "UDF examples".ToUTF8());
@@ -126,7 +124,7 @@ namespace ExampleGenerator {
             UDF = GC.UDF.DerivedKey(type, data: random);
             IKM = GC.UDF.DerivedKey(UDF);
 
-            Salt = GC.UDF.KeySpecifier(algorithmID);
+            Salt = GC.UDF.KeySpecifier(AlgorithmID);
 
             HKDF = new KeyDeriveHKDF(IKM, Salt, CryptoAlgorithmID.HMAC_SHA_2_512);
 
@@ -146,7 +144,7 @@ namespace ExampleGenerator {
                 UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
-            switch (algorithmID) {
+            switch (AlgorithmID) {
                 case UDFAlgorithmIdentifier.X25519: {
                     OKM = HKDF.Derive(null, 256);
                     break;
@@ -195,7 +193,7 @@ namespace ExampleGenerator {
                 UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
-            switch (algorithmID) {
+            switch (AlgorithmID) {
                 case UDFAlgorithmIdentifier.P256: {
                     OKM = HKDF.Derive(null, 320);
                     prime = p256;
@@ -241,7 +239,7 @@ namespace ExampleGenerator {
                         base(type, specific) {
 
             int bits = 0;
-            switch (algorithmID) {
+            switch (AlgorithmID) {
 
                 case UDFAlgorithmIdentifier.P256: {
                     bits = 1024;

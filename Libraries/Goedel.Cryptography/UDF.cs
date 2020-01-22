@@ -395,14 +395,6 @@ namespace Goedel.Cryptography {
 
 
         #region // Comparison functions
-        static bool IsBase32(char c) {
-            var x = (int)c;
-            if (x > 127) {
-                return false;
-                }
-            return BaseConvert.BASE32Value[x] < 255;
-            }
-
 
         /// <summary>
         /// Determine if the string <paramref name="value"/> matches the 
@@ -828,7 +820,7 @@ namespace Goedel.Cryptography {
                     int length = 128, byte[] data = null) {
 
             var keySpecifier = KeySpecifier(algorithmIdentifier);
-            data = data ?? CryptoCatalog.GetBits(length);
+            data ??= CryptoCatalog.GetBits(length);
 
             var result = new byte[keySpecifier.Length + data.Length];
 

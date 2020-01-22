@@ -78,10 +78,8 @@ namespace Goedel.Mesh.Server {
 
             // here we should perform an authorization operation against the store.
 
-            using (var container = new Spool(AccountEntry.Directory, Spool.SpoolInbound)) {
-
-                container.Add(dareMessage);
-                }
+            using var container = new Spool(AccountEntry.Directory, Spool.SpoolInbound);
+            container.Add(dareMessage);
 
             }
 

@@ -9,7 +9,7 @@ using Xunit;
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
 
-        List<TestVectorWrap> TestVectorsAESWrap = new List<TestVectorWrap>() {
+        List<TestVectorWrap> testVectorsAESWrap = new List<TestVectorWrap>() {
             // 128 Key with 128 KEK
             new TestVectorWrap() {
                 KEK = "000102030405060708090A0B0C0D0E0F".FromBase16(),
@@ -53,7 +53,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void Test_Wrap_3394() {
-            foreach (var TestVector in TestVectorsAESWrap) {
+            foreach (var TestVector in testVectorsAESWrap) {
                 var KeyWrap = new KeyWrapRFC3394();
 
                 TestVector.Verify(KeyWrap);
@@ -63,8 +63,6 @@ namespace Goedel.XUnit {
 
 
     public class TestVectorWrap {
-        CryptoAlgorithmID ID { get; set; }
-
         public byte[] KEK { get; set; }
 
         public byte[] Key { get; set; }

@@ -6,12 +6,11 @@ namespace Goedel.XUnit {
         public string IdGroup;
         public string IdMember;
         public KeyPair PrivateKey;
-        KeyPairAdvanced KeyPairService;
+        KeyPairAdvanced keyPairService;
 
         public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
-                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) {
-            KeyPairService = keyPairService;
-            }
+                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : 
+            base(keyPairGroup, keyPairPart) => this.keyPairService = keyPairService;
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -30,7 +29,7 @@ namespace Goedel.XUnit {
                     KeyAgreementResult partial = null,
                     byte[] salt = null) {
 
-            partial = KeyPairService.Agreement(ephemeral);
+            partial = keyPairService.Agreement(ephemeral);
 
             return KeyPartial.Decrypt(encryptedKey, ephemeral, algorithmID, partial, salt);
 

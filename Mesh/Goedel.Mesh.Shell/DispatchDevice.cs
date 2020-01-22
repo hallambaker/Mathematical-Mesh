@@ -45,41 +45,39 @@ namespace Goedel.Mesh.Shell {
             }
 
         public override ShellResult DevicePending(DevicePending Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            contextAccount.Sync();
 
-                contextAccount.Sync();
+            // get the inbound spool
+            var inbound = contextAccount.GetSpoolInbound();
 
-                // get the inbound spool
-                var inbound = contextAccount.GetSpoolInbound();
+            var messages = new List<Message>();
+            var completed = new Dictionary<string, Message>();
 
-                var messages = new List<Message>();
-                var completed = new Dictionary<string, Message>();
-
-                foreach (var message in inbound.Select(1, true)) {
-                    var meshMessage = Message.FromJSON(message.GetBodyReader());
-                    if (!completed.ContainsKey(meshMessage.MessageID)) {
-                        switch (meshMessage) {
-                            case MessageComplete meshMessageComplete: {
-                                foreach (var reference in meshMessageComplete.References) {
-                                    completed.Add(reference.MessageID, meshMessageComplete);
-                                    }
-                                break;
+            foreach (var message in inbound.Select(1, true)) {
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    switch (meshMessage) {
+                        case MessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
                                 }
-                            default: {
-                                messages.Add(meshMessage);
-                                break;
-                                }
+                            break;
+                            }
+                        default: {
+                            messages.Add(meshMessage);
+                            break;
                             }
                         }
                     }
-
-                var result = new ResultPending() {
-                    Success = true,
-                    Messages = messages
-                    };
-
-                return result;
                 }
+
+            var result = new ResultPending() {
+                Success = true,
+                Messages = messages
+                };
+
+            return result;
 
             }
 
@@ -92,19 +90,18 @@ namespace Goedel.Mesh.Shell {
             ProcessRequest(Options, Options.CompletionCode.Value, false);
 
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
 
-                // Hack: should be able to accept, reject specific requests, not just
-                // the last one.
-                var message = contextAccount.GetPendingMessageConnectionRequest();
-                contextAccount.Process(message, accept);
+            // Hack: should be able to accept, reject specific requests, not just
+            // the last one.
+            var message = contextAccount.GetPendingMessageConnectionRequest();
+            contextAccount.Process(message, accept);
 
-                // Hack: need to obtain the actual result.
-                var result = new ResultConnectProcess() {
+            // Hack: need to obtain the actual result.
+            var result = new ResultConnectProcess() {
 
-                    };
-                return result;
-                }
+                };
+            return result;
 
 
             }
@@ -199,34 +196,28 @@ namespace Goedel.Mesh.Shell {
 
 
         public override ShellResult DeviceDelete(DeviceDelete Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var result = new Result() {
 
-                var result = new Result() {
-
-                    };
-                throw new NYI();
-                }
+                };
+            throw new NYI();
             }
         public override ShellResult DeviceList(DeviceList Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var result = new Result() {
 
-                var result = new Result() {
-
-                    };
-                "".TaskFunctionality();
-                return result;
-                }
+                };
+            "".TaskFunctionality();
+            return result;
             }
 
         public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var result = new ResultAuthorize() {
 
-                var result = new ResultAuthorize() {
-
-                    };
-                "".TaskFunctionality();
-                return result;
-                }
+                };
+            "".TaskFunctionality();
+            return result;
             }
 
         }

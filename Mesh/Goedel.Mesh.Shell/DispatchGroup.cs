@@ -14,15 +14,13 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupCreate(GroupCreate Options) {
             var groupID = Options.GroupID.Value;
 
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var contextGroup = contextAccount.CreateGroup(groupID);
 
-                var contextGroup = contextAccount.CreateGroup(groupID);
-
-                var result = new ResultEntry() {
-                    CatalogEntry = contextGroup.CatalogedGroup
-                    };
-                return result;
-                }
+            var result = new ResultEntry() {
+                CatalogEntry = contextGroup.CatalogedGroup
+                };
+            return result;
             }
 
         /// <summary>
@@ -33,21 +31,18 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupAdd(GroupAdd Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using (var contextAccount = GetContextAccount(Options)) {
-                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
+            using var contextAccount = GetContextAccount(Options);
+            using var contextGroup = contextAccount.GetContextGroup(groupID);
 
-                    //Contact contact = null;
-                    "Implement pulling contact from contacts catalog".TaskFunctionality(false);
+            //Contact contact = null;
+            "Implement pulling contact from contacts catalog".TaskFunctionality(false);
 
-                    var entryMember = contextGroup.Add(memberID);
+            var entryMember = contextGroup.Add(memberID);
 
-                    var result = new ResultEntry() {
-                        CatalogEntry = entryMember
-                        };
-                    return result;
-
-                    }
-                }
+            var result = new ResultEntry() {
+                CatalogEntry = entryMember
+                };
+            return result;
             }
 
         /// <summary>
@@ -58,17 +53,15 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupGet(GroupGet Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using (var contextAccount = GetContextAccount(Options)) {
-                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
-                    var member = contextGroup.Locate(memberID);
+            using var contextAccount = GetContextAccount(Options);
+            using var contextGroup = contextAccount.GetContextGroup(groupID);
+            var member = contextGroup.Locate(memberID);
 
-                    var result = new ResultEntry() {
-                        Success = member != null,
-                        CatalogEntry = member
-                        };
-                    return result;
-                    }
-                }
+            var result = new ResultEntry() {
+                Success = member != null,
+                CatalogEntry = member
+                };
+            return result;
             }
 
         /// <summary>
@@ -79,20 +72,17 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupDelete(GroupDelete Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using (var contextAccount = GetContextAccount(Options)) {
-                using (var contextGroup = contextAccount.GetContextGroup(groupID)) {
+            using var contextAccount = GetContextAccount(Options);
+            using var contextGroup = contextAccount.GetContextGroup(groupID);
+            var member = contextGroup.Locate(memberID);
+            contextGroup.Delete(member);
 
-                    var member = contextGroup.Locate(memberID);
-                    contextGroup.Delete(member);
+            var result = new ResultEntry() {
+                Success = member != null,
+                CatalogEntry = member
+                };
 
-                    var result = new ResultEntry() {
-                        Success = member != null,
-                        CatalogEntry = member
-                        };
-
-                    return result;
-                    }
-                }
+            return result;
             }
 
         /// <summary>
@@ -103,19 +93,17 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupList(GroupList Options) {
             var groupID = Options.GroupID.Value;
 
-            using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetContextGroup(groupID)) {
-                    var catalogedEntries = new List<CatalogedEntry>();
+            using var contextAccount = GetContextAccount(Options);
+            using var catalog = contextAccount.GetContextGroup(groupID);
+            var catalogedEntries = new List<CatalogedEntry>();
 
-                    "Fill in the member entries".TaskFunctionality();
+            "Fill in the member entries".TaskFunctionality();
 
-                    var result = new ResultDump() {
-                        Success = true,
-                        CatalogedEntries = catalogedEntries
-                        };
-                    return result;
-                    }
-                }
+            var result = new ResultDump() {
+                Success = true,
+                CatalogedEntries = catalogedEntries
+                };
+            return result;
 
             }
         }

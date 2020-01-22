@@ -161,7 +161,7 @@ namespace Goedel.Cryptography {
         /// <param name="id">The Goedel Algorithm identifier.</param>
         /// <returns>The corresponding .Net algorithm name.</returns>
         public static HashAlgorithmName ToHashAlgorithmName(this CryptoAlgorithmID id) {
-            var Found = IDtoHashAlgorithmName.TryGetValue(id.Bulk(), out var Result);
+            IDtoHashAlgorithmName.TryGetValue(id.Bulk(), out var Result);
             return Result;
             }
 

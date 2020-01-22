@@ -49,7 +49,7 @@ namespace Goedel.Cryptography.Dare {
             return container;
             }
 
-        readonly static byte[] EmptyBytes = new byte[0];
+        //readonly static byte[] EmptyBytes = new byte[0];
         //DareHeader DareHeaderFinal = null;
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns></returns>
         public override void MakeTrailer(ref DareTrailer Trailer) {
-            Trailer = Trailer ?? CryptoStackContainer.GetNullTrailer();
+            Trailer ??= CryptoStackContainer.GetNullTrailer();
 
             if (DareHeaderFinal != null) {
                 Trailer.ChainDigest = CryptoStackContainer.CombineDigest(DareHeaderFinal.ChainDigest, Trailer.PayloadDigest);

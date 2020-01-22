@@ -140,18 +140,11 @@ namespace Goedel.XUnit {
                 }
             }
 
-        KeyPair CreateKeyPair() {
-            var Result = new KeyPairDH();
-            KeyCollection.Default.Add(Result);
-
-            return Result;
-            }
-
         static Random Random = new Random();
         byte[] CreateBytes(int Length) => CryptoCatalog.GetBytes(Length);
 
         void ReadWriteContainer(string FileName, byte[] TestData, CryptoParameters CryptoParameters = null) {
-            CryptoParameters = CryptoParameters ?? new CryptoParameters();
+            CryptoParameters ??= new CryptoParameters();
 
             // Create container
             FileContainerWriter.File(FileName, CryptoParameters, TestData, null);
@@ -168,7 +161,7 @@ namespace Goedel.XUnit {
         void ReadWriteArchive(string FileNameBase, int Entries,
                     CryptoParameters CryptoParameters = null, bool Independent = false) {
 
-            CryptoParameters = CryptoParameters ?? new CryptoParameters();
+            CryptoParameters ??= new CryptoParameters();
 
             var TestData = new byte[Entries][];
             for (var i = 0; i < Entries; i++) {
@@ -189,12 +182,11 @@ namespace Goedel.XUnit {
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using (var Reader = new FileContainerReader(Filename, CryptoParameters.KeyCollection)) {
-                for (var i = 0; i < Entries; i++) {
+            using var Reader = new FileContainerReader(Filename, CryptoParameters.KeyCollection);
+            for (var i = 0; i < Entries; i++) {
 
-                    Reader.Read(out var ReadData, out var ContentMeta, Index: i + 1);
-                    Utilities.Assert.True(ReadData.IsEqualTo(TestData[i]));
-                    }
+                Reader.Read(out var ReadData, out var ContentMeta, Index: i + 1);
+                Utilities.Assert.True(ReadData.IsEqualTo(TestData[i]));
                 }
             }
 

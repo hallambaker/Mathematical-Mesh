@@ -17,10 +17,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>The Device Entry in the CatalogHost</summary>
         public CatalogedMachine CatalogedMachine;
 
-
-        ///<summary>Convenience property returning the device connections</summary>
-        CatalogedStandard DeviceConnection => CatalogedMachine as CatalogedStandard;
-
         ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
         ///connection entry;</summary>
         public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
@@ -72,7 +68,7 @@ namespace Goedel.Mesh.Client {
         ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
 
 
-        KeyPair KeyAuthentication;
+        KeyPair keyAuthentication;
 
         public string ServiceID => MessageConnectionRequest?.ServiceID;
         public MeshService MeshClient;
@@ -157,10 +153,10 @@ namespace Goedel.Mesh.Client {
 
             "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
-            KeyAuthentication = KeyAuthentication ?? MeshMachine.KeyCollection.LocatePrivateKeyPair(
+            keyAuthentication ??= MeshMachine.KeyCollection.LocatePrivateKeyPair(
                         ProfileDevice.KeyAuthentication.UDF);
 
-            MeshClient = MeshClient ?? MeshMachine.GetMeshClient(ServiceID, KeyAuthentication, null);
+            MeshClient ??= MeshMachine.GetMeshClient(ServiceID, keyAuthentication, null);
 
             var completeRequest = new CompleteRequest() {
                 DeviceUDF = ProfileDevice.UDF,

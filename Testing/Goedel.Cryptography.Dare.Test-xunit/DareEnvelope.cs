@@ -220,7 +220,7 @@ namespace Goedel.XUnit {
                 List<byte[]> DataSequences = null,
                 string ContentType = null) {
 
-            CryptoParameters = CryptoParameters ?? CryptoParametersNull;
+            CryptoParameters ??= CryptoParametersNull;
             var Message = new DareEnvelope(CryptoParameters, Plaintext);
 
             var MessageBytes = Message.GetJson(false);
@@ -235,7 +235,7 @@ namespace Goedel.XUnit {
                     List<byte[]> DataSequences = null,
                     string ContentType = null) {
 
-            CryptoParameters = CryptoParameters ?? CryptoParametersNull;
+            CryptoParameters ??= CryptoParametersNull;
 
             var Message = new DareEnvelope(CryptoParameters, Plaintext, dataSequences: DataSequences);
 
@@ -254,18 +254,15 @@ namespace Goedel.XUnit {
                     int Stride = -1,
                     List<byte[]> DataSequences = null,
                     string contentType = null) {
-            CryptoParameters = CryptoParameters ?? CryptoParametersNull;
+            CryptoParameters ??= CryptoParametersNull;
             var contentInfo = new ContentMeta() { ContentType = contentType };
-            using (var InputStream = new MemoryStream(Plaintext)) {
+            using var InputStream = new MemoryStream(Plaintext);
+            using var OutputStream = new MemoryStream();
+            DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
+Plaintext.Length, contentInfo, dataSequences: DataSequences);
 
-                using (var OutputStream = new MemoryStream()) {
-                    DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-                        Plaintext.Length, contentInfo, dataSequences: DataSequences);
-
-                    var MessageBytes = OutputStream.ToArray();
-                    CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
-                    }
-                }
+            var MessageBytes = OutputStream.ToArray();
+            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
             }
 
         void TestMessageVariable(byte[] Plaintext,
@@ -273,18 +270,15 @@ namespace Goedel.XUnit {
                     int Stride = -1,
                     List<byte[]> DataSequences = null,
                     string contentType = null) {
-            CryptoParameters = CryptoParameters ?? CryptoParametersNull;
+            CryptoParameters ??= CryptoParametersNull;
             var contentInfo = new ContentMeta() { ContentType = contentType };
-            using (var InputStream = new MemoryStream(Plaintext)) {
+            using var InputStream = new MemoryStream(Plaintext);
+            using var OutputStream = new MemoryStream();
+            DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
+contentMeta: contentInfo, dataSequences: DataSequences);
 
-                using (var OutputStream = new MemoryStream()) {
-                    DareEnvelope.Encode(CryptoParameters, InputStream, OutputStream,
-                        contentMeta: contentInfo, dataSequences: DataSequences);
-
-                    var MessageBytes = OutputStream.ToArray();
-                    CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
-                    }
-                }
+            var MessageBytes = OutputStream.ToArray();
+            CheckDecodeDirect(CryptoParameters, MessageBytes, Plaintext, DataSequences, contentType);
             }
 
 
@@ -313,14 +307,12 @@ namespace Goedel.XUnit {
             byte[] decrypt;
 
 
-            using (var input = new MemoryStream(envelope.Body)) {
-                using (var output = new MemoryStream()) {
-                    var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
-                    plaintextStream.CopyTo(output);
-                    decrypt = output.ToArray();
-                    decrypt.IsEqualTo(plaintext).AssertTrue();
-                    }
-                }
+            using var input = new MemoryStream(envelope.Body);
+            using var output = new MemoryStream();
+            var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
+            plaintextStream.CopyTo(output);
+            decrypt = output.ToArray();
+            decrypt.IsEqualTo(plaintext).AssertTrue();
 
             }
 

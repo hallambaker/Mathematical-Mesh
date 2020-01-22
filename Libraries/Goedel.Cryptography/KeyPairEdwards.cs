@@ -8,22 +8,50 @@ using System.Numerics;
 
 namespace Goedel.Cryptography {
 
-
+    /// <summary>
+    /// A key share containing a scalar on an Edwards curve.
+    /// </summary>
     public class KeyShareEdwards : KeyShare {
 
         }
 
-
+    /// <summary>
+    /// Base class for Edwards key pairs.
+    /// </summary>
     public abstract class KeyPairEdwards : KeyPairECDH {
 
+        /// <summary>
+        /// Begin the process of signing the data <paramref name="data"/> according to the
+        /// algorithm specifier <paramref name="algorithmID"/> and optional context value
+        /// <paramref name="context"/>.
+        /// </summary>
+        /// <param name="data">The data to sign</param>
+        /// <param name="algorithmID">The specific signature algorithm variant.</param>
+        /// <param name="context">Optional context value.</param>
+        /// <returns>The signature context.</returns>
         public abstract ThresholdSignatureEdwards SignHashThreshold(byte[] data,
                 CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
                 byte[] context = null);
 
 
+        /// <summary>
+        /// Split the private key into <paramref name="n"/> shares with a 
+        /// threshold <paramref name="t"/>.
+        /// </summary>
+        /// <param name="n">The number of shares to create.</param>
+        /// <param name="t">The number of shares needed to recover the private key.</param>
+        /// <returns>The set of key shares.</returns>
         public static KeyShareEdwards[] Split(int n, int t) =>
                 Split(n, t);
 
+        /// <summary>
+        /// Split the private key into <paramref name="n"/> shares with a 
+        /// threshold <paramref name="t"/>.
+        /// </summary>
+        /// <param name="n">The number of shares to create.</param>
+        /// <param name="t">The number of shares needed to recover the private key.</param>
+        /// <param name="polynomial">The polynomial parameters.</param>
+        /// <returns>The set of key shares.</returns>
         public KeyShareEdwards[] Split(
                     int n, int t, out BigInteger[] polynomial) {
 
@@ -48,15 +76,31 @@ namespace Goedel.Cryptography {
 
         }
 
+    /// <summary>
+    /// Base class for threshold signature coordinator classes.
+    /// </summary>
     public abstract class ThresholdCoordinatorEdwards {
+
+        ///<summary>The curve prime.</summary>
         public abstract BigInteger Prime { get; }
 
+        ///<summary>The scalar signature data value k.</summary>
         public BigInteger K;
+
+        ///<summary>The aggregate point R</summary>
         public CurveEdwards R = null;
+
+        ///<summary>The aggregate scalar s</summary>
         public BigInteger S = 0;
+
+        ///<summary>The public key value.</summary>
         public abstract CurveEdwards PublicKey { get; }
 
-        public abstract void AddShareR(byte[] r);
+        /// <summary>
+        /// Add the share value <paramref name="encodedR"/>
+        /// </summary>
+        /// <param name="encodedR"></param>
+        public abstract void AddShareR(byte[] encodedR);
 
 
         /// <summary>
@@ -111,57 +155,102 @@ namespace Goedel.Cryptography {
 
         }
 
-
+    /// <summary>
+    /// Threshold signature coordinator for Ed25519 signature
+    /// </summary>
     public class ThresholdCoordinatorEdwards25519 : ThresholdCoordinatorEdwards {
+        ///<summary>The curve prime.</summary>
         public override BigInteger Prime => DomainParameters.Curve25519.Q;
 
+        ///<summary>The public key parameter A.</summary>
         public CurveEdwards25519 A;
+
+        ///<summary>The public key</summary>
         public override CurveEdwards PublicKey => A;
 
-        public ThresholdCoordinatorEdwards25519(CurveEdwards25519 a) {
-            A = a;
-            }
+        /// <summary>
+        /// Constructor for the public key <paramref name="a"/>.
+        /// </summary>
+        /// <param name="a">The public key point.</param>
+        public ThresholdCoordinatorEdwards25519(CurveEdwards25519 a) => A = a;
 
-        public override void AddShareR(byte[] r) {
+        /// <summary>
+        /// Add the share value <paramref name="encodedR"/>
+        /// </summary>
+        /// <param name="encodedR"></param>
+        public override void AddShareR(byte[] encodedR) {
 
-            var shareR = CurveEdwards25519.Decode(r);
+            var shareR = CurveEdwards25519.Decode(encodedR);
             R = R == null ? shareR : R.Add(shareR);
             }
 
         }
 
+    /// <summary>
+    /// Threshold signature coordinator for Ed448signature
+    /// </summary>
     public class ThresholdCoordinatorEdwards448 : ThresholdCoordinatorEdwards {
+        ///<summary>The curve prime.</summary>
         public override BigInteger Prime => DomainParameters.Curve448.Q;
 
+        ///<summary>The public key parameter A.</summary>
         public CurveEdwards448 A;
+
+        ///<summary>The public key</summary>
         public override CurveEdwards PublicKey => A;
 
-        public ThresholdCoordinatorEdwards448(CurveEdwards448 a) {
-            A = a;
-            }
+        /// <summary>
+        /// Constructor for the public key <paramref name="a"/>.
+        /// </summary>
+        /// <param name="a">The public key point.</param>
+        public ThresholdCoordinatorEdwards448(CurveEdwards448 a) => A = a;
 
-        public override void AddShareR(byte[] r) {
+        /// <summary>
+        /// Add the share value <paramref name="encodedR"/>
+        /// </summary>
+        /// <param name="encodedR"></param>
+        public override void AddShareR(byte[] encodedR) {
 
-            var shareR = CurveEdwards448.Decode(r);
+            var shareR = CurveEdwards448.Decode(encodedR);
             R = R == null ? shareR : R.Add(shareR);
             }
 
         }
 
+    /// <summary>
+    /// Base class for threshold signature context.
+    /// </summary>
     public abstract class ThresholdSignatureEdwards {
 
+        ///<summary>The public point R.</summary>
         public CurveEdwards PublicR;
+
+        ///<summary>The secret scalar r</summary>
         public BigInteger PrivateR;
 
+        ///<summary>The private key value.</summary>
         protected BigInteger privateKey;
 
+        ///<summary>The scalar value representing the data being signed.</summary>
         public BigInteger K;
 
-
-        protected ThresholdSignatureEdwards(BigInteger prime) {
+        /// <summary>
+        /// Base constructor, specifying the prime value <paramref name="prime"/>
+        /// </summary>
+        /// <param name="prime">The prime value.</param>
+        protected ThresholdSignatureEdwards(BigInteger prime) => 
             PrivateR = BigNumber.Random(prime);
-            }
 
+        /// <summary>
+        /// Complete the threshold signature contribution
+        /// </summary>
+        /// <param name="aggregateR">The aggregare value of R</param>
+        /// <param name="A">The public key value.</param>
+        /// <param name="data">The data to sign.</param>
+        /// <param name="algorithmID">The algorithm identifier for the signature.</param>
+        /// <param name="context">The signature context information.</param>
+        /// <param name="prehash">If true, perform prehashing.</param>
+        /// <returns>The threshold signature contribution.</returns>
         public BigInteger Complete(
                     byte[] aggregateR,
                     CurveEdwards A,
@@ -171,6 +260,18 @@ namespace Goedel.Cryptography {
                     bool prehash = true) =>
             GetS(aggregateR, A, data, 1, algorithmID, context, prehash);
 
+        /// <summary>
+        /// Complete the threshold signature contribution
+        /// </summary>
+        /// <param name="aggregateR">The aggregare value of R</param>
+        /// <param name="A">The public key value.</param>
+        /// <param name="data">The data to sign.</param>
+
+        /// <param name="lagrange">The Lagrange cofactor</param>
+        /// <param name="algorithmID">The algorithm identifier for the signature.</param>
+        /// <param name="context">The signature context information.</param>
+        /// <param name="prehash">If true, perform prehashing.</param>
+        /// <returns>The threshold signature contribution.</returns>
         public abstract BigInteger GetS(
                     byte[] aggregateR,
                     CurveEdwards A,
@@ -182,13 +283,33 @@ namespace Goedel.Cryptography {
 
         }
 
+    /// <summary>
+    /// Threshold signature context for Ed25518 curve.
+    /// </summary>
     public class ThresholdSignatureEdwards25519 : ThresholdSignatureEdwards {
 
+        /// <summary>
+        /// Constructor for the private key contribution <paramref name="key"/>
+        /// </summary>
+        /// <param name="key">The private key contribution.</param>
         public ThresholdSignatureEdwards25519(CurveEdwards25519Private key) : 
                 base (DomainParameters.Curve25519.Q) {
             privateKey = key.Private;
             PublicR = CurveEdwards25519.Base.Multiply(PrivateR);
             }
+
+        /// <summary>
+        /// Complete the threshold signature contribution
+        /// </summary>
+        /// <param name="aggregateR">The aggregare value of R</param>
+        /// <param name="A">The public key value.</param>
+        /// <param name="data">The data to sign.</param>
+
+        /// <param name="lagrange">The Lagrange cofactor</param>
+        /// <param name="algorithmID">The algorithm identifier for the signature.</param>
+        /// <param name="context">The signature context information.</param>
+        /// <param name="prehash">If true, perform prehashing.</param>
+        /// <returns>The threshold signature contribution.</returns>
 
         public override BigInteger GetS(
                     byte[] aggregateR,
@@ -204,17 +325,9 @@ namespace Goedel.Cryptography {
 
             var scalar = lagrange == 1 ? privateKey : (privateKey * lagrange).Mod(DomainParameters.Curve25519.Q);
 
-
             var sk = (k * scalar).Mod(DomainParameters.Curve25519.Q);
             var s = (PrivateR + sk).Mod(DomainParameters.Curve25519.Q);
             PrivateR = 0; // prevent reuse of the private additive scalar.
-
-            Console.WriteLine($"Sign 0");
-            Console.WriteLine($"   s=  {s}");
-            Console.WriteLine($"   K=  {k}");
-            Console.WriteLine($"   S=  {s}");
-            Console.WriteLine($"   R");
-            Console.WriteLine(aggregateR.ToStringBase16FormatHex());
 
             return s;
             }
@@ -222,14 +335,33 @@ namespace Goedel.Cryptography {
 
         }
 
+    /// <summary>
+    /// Threshold signature context for Ed448 curve.
+    /// </summary>
     public class ThresholdSignatureEdwards448: ThresholdSignatureEdwards {
-        CurveEdwards448Private Key;
 
+        /// <summary>
+        /// Constructor for the private key contribution <paramref name="key"/>
+        /// </summary>
+        /// <param name="key">The private key contribution.</param>
         public ThresholdSignatureEdwards448(CurveEdwards448Private key) :
                 base(DomainParameters.Curve448.Q) {
-            Key = key;
+            privateKey = key.Private;
             PublicR = CurveEdwards448.Base.Multiply(PrivateR);
             }
+
+        /// <summary>
+        /// Complete the threshold signature contribution
+        /// </summary>
+        /// <param name="aggregateR">The aggregare value of R</param>
+        /// <param name="A">The public key value.</param>
+        /// <param name="data">The data to sign.</param>
+
+        /// <param name="lagrange">The Lagrange cofactor</param>
+        /// <param name="algorithmID">The algorithm identifier for the signature.</param>
+        /// <param name="context">The signature context information.</param>
+        /// <param name="prehash">If true, perform prehashing.</param>
+        /// <returns>The threshold signature contribution.</returns>
 
         public override BigInteger GetS(
                     byte[] aggregateR,
@@ -243,10 +375,13 @@ namespace Goedel.Cryptography {
             var domain = CurveEdwards448.Dom4(algorithmID, context);
             var k = A.GetK(domain, aggregateR, data);
 
-            var key = lagrange == 1 ? new CurveEdwards448Private(PrivateR) :
-                new CurveEdwards448Private((PrivateR * lagrange).Mod(DomainParameters.Curve448.Q));
+            var scalar = lagrange == 1 ? privateKey : (privateKey * lagrange).Mod(DomainParameters.Curve25519.Q);
 
-            return key.Sign(k, PrivateR);
+            var sk = (k * scalar).Mod(DomainParameters.Curve448.Q);
+            var s = (PrivateR + sk).Mod(DomainParameters.Curve448.Q);
+            PrivateR = 0; // prevent reuse of the private additive scalar.
+
+            return s;
             }
         }
 

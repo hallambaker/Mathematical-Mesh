@@ -15,13 +15,11 @@ namespace Goedel.Mesh {
             }
 
         public static ContainerStatus Status(string directory, string containerName) {
-            using (var container = new Spool(directory, containerName)) {
-
-                return new ContainerStatus() {
-                    Index = (int)container.Container.FrameCount,
-                    Container = containerName
-                    };
-                }
+            using var container = new Spool(directory, containerName);
+            return new ContainerStatus() {
+                Index = (int)container.Container.FrameCount,
+                Container = containerName
+                };
             }
 
         /// <summary>

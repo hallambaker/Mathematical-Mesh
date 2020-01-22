@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
                         List<Permission> permissions
                         ) {
             // Get an online signature key if not already found
-            keySignOnline = keySignOnline ?? meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
+            keySignOnline ??= meshMachine.KeyCollection.LocatePrivate(KeysOnlineSignature);
 
             // Create a new activation and entry
             var activationAccount = new ActivationAccount(meshMachine, catalogedDevice, this);
@@ -85,7 +85,7 @@ namespace Goedel.Mesh {
                 EnvelopedActivationAccount = activationAccount.DareEnvelope
                 };
 
-            catalogedDevice.Accounts = catalogedDevice.Accounts ?? new List<AccountEntry>();
+            catalogedDevice.Accounts ??= new List<AccountEntry>();
             catalogedDevice.Accounts.Add(accountEntry);
 
 
@@ -154,7 +154,7 @@ namespace Goedel.Mesh {
 
         public DareEnvelope Sign(
                     IMeshMachine meshMachine) {
-            keySignOffline = keySignOffline ?? meshMachine.KeyCollection.LocatePrivateKeyPair(KeyOfflineSignature.UDF);
+            keySignOffline ??= meshMachine.KeyCollection.LocatePrivateKeyPair(KeyOfflineSignature.UDF);
             return Sign(keySignOffline);
             }
 

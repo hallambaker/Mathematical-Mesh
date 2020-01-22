@@ -28,14 +28,29 @@ using System.Numerics;
 
 namespace Goedel.Cryptography {
 
-
+    /// <summary>
+    /// Base class for Shamir Shared Secrets.
+    /// </summary>
     public class Shared {
+
+        ///<summary>The prime modulus</summary>
         public BigInteger Prime;
+
+        ///<summary>The secret value.</summary>
         public virtual BigInteger Value { get; set; }
 
+        /// <summary>
+        /// Base constructor.
+        /// </summary>
         public Shared() {
             }
 
+        /// <summary>
+        /// Construct a secret sharing of <paramref name="value"/> using modulus 
+        /// <paramref name="prime"/>.
+        /// </summary>
+        /// <param name="value">The secret value to share.</param>
+        /// <param name="prime">The prime modulus.</param>
         public Shared(BigInteger value, BigInteger prime) {
             Value = value;
             Prime = prime;
@@ -44,6 +59,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create a set of N key shares with a quorum of K.
         /// </summary>
+        /// <param name="keyShares">The key shares pre-initialized with the x coordinate value.</param>
         /// <param name="t">Quorum of key shares required to reconstruct the secret.</param>
         /// <param name="polynomial">The polynomial co-efficients generated.</param>
         /// <returns>The key shares created.</returns>
@@ -80,9 +96,17 @@ namespace Goedel.Cryptography {
             return result;
             }
 
-        public static BigInteger CombineNK(KeyShare[] shares,
+        /// <summary>
+        /// Combine the shares <paramref name="shares"/> using the prime modulus 
+        /// <paramref name="modulus"/> with a threshold of <paramref name="threshold"/>
+        /// </summary>
+        /// <param name="shares">The shares to construct the coefficient from.</param>
+        /// <param name="modulus">The prime modulus.</param>
+        /// <param name="threshold">The threshold value.</param>
+        /// <returns>The recovered value.</returns>
+        public static BigInteger CombineNT(KeyShare[] shares,
                     BigInteger modulus,
-                    BigInteger threshold) {
+                    int threshold) {
             BigInteger accum = 0;
 
             for (var formula = 0; formula < threshold; formula++) {
@@ -95,7 +119,14 @@ namespace Goedel.Cryptography {
             return accum;
             }
 
-
+        /// <summary>
+        /// Construct the Lagrange coefficient for the share <paramref name="index"/> among
+        /// the shares <paramref name="shares"/> in the prime modulus <paramref name="modulus"/>.
+        /// </summary>
+        /// <param name="shares">The shares to construct the coefficient from.</param>
+        /// <param name="index">The index of the share to construct the coefficient for.</param>
+        /// <param name="modulus">The prime modulus.</param>
+        /// <returns>The Lagrange coefficient</returns>
         public static BigInteger Lagrange(KeyShare[] shares,
                     int index,
                     BigInteger modulus) {
@@ -127,44 +158,51 @@ namespace Goedel.Cryptography {
             }
 
 
+        ///// <summary>
+        ///// Combine the shares <paramref name="shares"/> using the prime modulus 
+        ///// <paramref name="modulus"/> with a threshold of <paramref name="threshold"/>
+        ///// </summary>
+        ///// <param name="shares">The shares to construct the coefficient from.</param>
+        ///// <param name="modulus">The prime modulus.</param>
+        ///// <param name="threshold">The threshold value.</param>
+        ///// <returns>The recovered value.</returns>
+        //public static BigInteger CombineNT2(KeyShare[] shares, BigInteger modulus, int threshold) {
 
-        public static BigInteger CombineNK2(KeyShare[] shares, int threshold, BigInteger modulus) {
+        //    Assert.False(shares.Length < threshold, InsufficientShares.Throw);
 
-            Assert.False(shares.Length < threshold, InsufficientShares.Throw);
+        //    BigInteger accum = 0;
 
-            BigInteger accum = 0;
+        //    for (var formula = 0; formula < threshold; formula++) {
 
-            for (var formula = 0; formula < threshold; formula++) {
+        //        var value = shares[formula].Value;
+        //        var start = shares[formula].Index;
 
-                var value = shares[formula].Value;
-                var start = shares[formula].Index;
+        //        Console.WriteLine($"Value = {start}, {value} ");
 
-                Console.WriteLine($"Value = {start}, {value} ");
-
-                BigInteger numerator = 1, denominator = 1;
-                for (var count = 0; count < threshold; count++) {
-                    if (formula == count) {
-                        continue;  // If not the same value
-                        }
+        //        BigInteger numerator = 1, denominator = 1;
+        //        for (var count = 0; count < threshold; count++) {
+        //            if (formula == count) {
+        //                continue;  // If not the same value
+        //                }
 
 
-                    var next = shares[count].Index;
+        //            var next = shares[count].Index;
 
-                    numerator = (numerator * -next) % modulus;
-                    denominator = (denominator * (start - next)) % modulus;
+        //            numerator = (numerator * -next) % modulus;
+        //            denominator = (denominator * (start - next)) % modulus;
 
-                    Console.WriteLine($"    {count},{next}:{numerator}/{denominator}");
-                    }
+        //            Console.WriteLine($"    {count},{next}:{numerator}/{denominator}");
+        //            }
 
-                Console.WriteLine($"Total {formula}: {numerator}/{denominator}");
+        //        Console.WriteLine($"Total {formula}: {numerator}/{denominator}");
 
-                var InvDenominator = ModInverse(denominator, modulus);
+        //        var InvDenominator = ModInverse(denominator, modulus);
 
-                accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
-                }
+        //        accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
+        //        }
 
-            return accum;
-            }
+        //    return accum;
+        //    }
 
 
         // Not the fastest way to do modular inverse but the easiest with the
@@ -209,9 +247,11 @@ namespace Goedel.Cryptography {
         ///<summary>The UDF identifier of the secret value.</summary>
         public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
 
-
+        ///<summary>The maximum allowed secret value.</summary>
         public BigInteger SecretMax;
-        public int ShareChunks;
+
+        ///<summary>The number of 32 bit words used to represent the value.</summary>
+        public int ShareWords;
 
 
         /// <summary>
@@ -231,7 +271,7 @@ namespace Goedel.Cryptography {
         public SharedSecret(byte[] key) {
             Key = key;
             Value = key.BigIntegerBigEndian();
-            Prime = GetPrime(KeyBits, out SecretMax, out ShareChunks);
+            Prime = GetPrime(KeyBits, out SecretMax, out ShareWords);
             }
 
 
@@ -371,7 +411,7 @@ namespace Goedel.Cryptography {
             var keyShares = new KeyShareSymmetric[n];
 
             for (int i = 0; i < n; i++) {
-                keyShares[i] = new KeyShareSymmetric(i, k, ShareChunks*4);
+                keyShares[i] = new KeyShareSymmetric(i, k, ShareWords*4);
                 }
             Split(keyShares, k, out polynomial);
 
@@ -404,7 +444,7 @@ namespace Goedel.Cryptography {
             var secretBits = shares[0].KeyBits - 8;
             var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
 
-            var accum = CombineNK(shares, modulus, threshold);
+            var accum = CombineNT(shares, modulus, threshold);
             Console.WriteLine($"Reconstructed value = {accum}");
             return accum.ToByteArrayBigEndian(shareChunks * 4);
             }
@@ -417,12 +457,18 @@ namespace Goedel.Cryptography {
     /// A member of a key share collection.
     /// </summary>
     public class KeyShare : SharedSecret {
-
+        ///<summary>The index value</summary>
         public virtual BigInteger Index { get; set; }
 
         //public virtual BigInteger Value { get; }
 
-
+        /// <summary>
+        /// Calculate the Lagrange coefficient for the shares <paramref name="shares"/> and
+        /// index <paramref name="i"/>.
+        /// </summary>
+        /// <param name="shares">The shares to calculate the index for.</param>
+        /// <param name="i">The x value.</param>
+        /// <returns>The Lagrange coefficient.</returns>
         public BigInteger Lagrange(KeyShare[] shares, int i) => Lagrange(shares, i, Prime);
 
 
@@ -437,8 +483,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override string UDFKey => Cryptography.UDF.KeyShare(Key);
 
-
+        ///<summary>The value of the first byte specifying the threshold and index values</summary>
         public int First;
+
+        ///<summary>The number of bytes of the constructed share.</summary>
         public int ShareBytes;
 
         /// <summary>
@@ -452,7 +500,7 @@ namespace Goedel.Cryptography {
         public override BigInteger Index => (First & 0xf) + 1;
 
         /// <summary>
-        /// The key share data.
+        /// The full key share data.
         /// </summary>
         public override byte[] Key {
             get => key;
@@ -468,7 +516,7 @@ namespace Goedel.Cryptography {
         byte[] key;
 
         /// <summary>
-        /// The key share data.
+        /// The key share data (stripped of the quorum and index information)
         /// </summary>
         public byte[] Data {
             get => data;
@@ -482,6 +530,7 @@ namespace Goedel.Cryptography {
             }
         byte[] data;
 
+        ///<summary>The key share value.</summary>
         public override BigInteger Value {
             get => valueStore;
             set {
@@ -494,6 +543,13 @@ namespace Goedel.Cryptography {
             }
         BigInteger valueStore;
 
+        /// <summary>
+        /// Construct a key share with index <paramref name="index"/>, sharing a secret of 
+        /// <paramref name="shareBytes"/> bytes and a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="index">The x value of the share.</param>
+        /// <param name="threshold">The threshold value for the shares.</param>
+        /// <param name="shareBytes">The number of bytes shared.</param>
         public KeyShareSymmetric(int index, int threshold, int shareBytes) {
             First = index + 0x10 * threshold;
             ShareBytes = shareBytes;

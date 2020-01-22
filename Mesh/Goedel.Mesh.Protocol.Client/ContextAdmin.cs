@@ -62,7 +62,7 @@ namespace Goedel.Mesh.Client {
             var profileMaster = ProfileMesh.Generate(
                 meshHost.MeshMachine, algorithmSign, algorithmEncrypt,
                 masterSecret, persist);
-            profileDevice = profileDevice ?? ProfileDevice.Generate(meshHost.MeshMachine,
+            profileDevice ??= ProfileDevice.Generate(meshHost.MeshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
 
@@ -125,8 +125,7 @@ namespace Goedel.Mesh.Client {
                     ) {
             var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
 
-            profileMaster.KeysOnlineSignature = profileMaster.KeysOnlineSignature ??
-                        new List<PublicKey>();
+            profileMaster.KeysOnlineSignature ??=                         new List<PublicKey>();
 
             profileMaster.KeysOnlineSignature.Add(new PublicKey(keyOverlaySignature.KeyPair));
 
@@ -167,8 +166,7 @@ namespace Goedel.Mesh.Client {
 
             var assertionDeviceConnection = new ConnectionDevice(assertionDevicePrivate);
 
-            keyMasterSignature = keyMasterSignature ??
-                    MeshMachine.KeyCollection.LocatePrivateKeyPair(ProfileMesh.UDF);
+            keyMasterSignature ??=                     MeshMachine.KeyCollection.LocatePrivateKeyPair(ProfileMesh.UDF);
             Sign(assertionDeviceConnection);
 
             var catalogEntryDevice = new Mesh.CatalogedDevice() {

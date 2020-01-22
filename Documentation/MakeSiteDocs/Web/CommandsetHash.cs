@@ -15,11 +15,10 @@ namespace ExampleGenerator {
 		// WebHash
 		//
 		public static void WebHash(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/hash.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/hash.md" };
-				obj._WebHash(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/hash.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/hash.md" };
+            obj._WebHash(Examples);
+            }
 		public void _WebHash(CreateExamples Examples) {
 
 				 MakeTitle ("hash");
@@ -90,11 +89,10 @@ namespace ExampleGenerator {
 		// HashReference
 		//
 		public static void HashReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/hash.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/hash.md" };
-				obj._HashReference(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/hash.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/hash.md" };
+            obj._HashReference(Examples);
+            }
 		public void _HashReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Hash;

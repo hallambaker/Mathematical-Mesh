@@ -140,7 +140,7 @@ namespace Goedel.Cryptography.Dare {
                 if (frameHeader == null) {
                     return null;
                     }
-                containerHeader = containerHeader ?? DareHeader.FromJSON(frameHeader.JSONReader(), false);
+                containerHeader ??= DareHeader.FromJSON(frameHeader.JSONReader(), false);
                 return containerHeader;
                 }
             }
@@ -242,7 +242,7 @@ namespace Goedel.Cryptography.Dare {
                         containerType, contentType: contentType);
                     }
                 else {
-                    keyCollection = keyCollection ?? cryptoParameters?.KeyCollection;
+                    keyCollection ??= cryptoParameters?.KeyCollection;
                     Container = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
 
                     }
@@ -490,7 +490,7 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null
                         ) {
 
-            cryptoParameters = cryptoParameters ?? new CryptoParameters();
+            cryptoParameters ??= new CryptoParameters();
             var container = MakeNewContainer(jbcdStream,
                     cryptoParameters: cryptoParameters, containerType: containerType);
 
@@ -792,11 +792,10 @@ namespace Goedel.Cryptography.Dare {
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
 
-            using (var InputStream = new MemoryStream(data)) {
-                var ContentLength = InputStream.Length;
-                AppendFromStream(InputStream, ContentLength, contentInfo, cryptoParameters,
-                        contentType, cloaked, dataSequences);
-                }
+            using var InputStream = new MemoryStream(data);
+            var ContentLength = InputStream.Length;
+            AppendFromStream(InputStream, ContentLength, contentInfo, cryptoParameters,
+                    contentType, cloaked, dataSequences);
             }
 
 
@@ -819,11 +818,10 @@ namespace Goedel.Cryptography.Dare {
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null) {
 
-            using (var FileStream = fileName.OpenFileRead()) {
-                var ContentLength = FileStream.Length;
-                AppendFromStream(FileStream, ContentLength, contentInfo, cryptoParameters,
-                        contentType, cloaked, dataSequences);
-                }
+            using var FileStream = fileName.OpenFileRead();
+            var ContentLength = FileStream.Length;
+            AppendFromStream(FileStream, ContentLength, contentInfo, cryptoParameters,
+                    contentType, cloaked, dataSequences);
             }
 
 
@@ -892,7 +890,7 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null) {
             cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
-            contentInfo = contentInfo ?? new ContentMeta() {
+            contentInfo ??= new ContentMeta() {
                 ContentType = contentType
                 };
 
@@ -966,13 +964,11 @@ namespace Goedel.Cryptography.Dare {
             contextWrite.StreamOpen(contentInfo, cryptoStack, cloaked, dataSequences);
 
             if (data != null) {
-                using (var buffer = new MemoryStream(data.Length + 32)) {
-                    var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
-                    stream.Write(data);
-                    contextWrite.StreamClose();
-                    return contextWrite.End(buffer.ToArray());
-
-                    }
+                using var buffer = new MemoryStream(data.Length + 32);
+                var stream = contextWrite.ContainerHeader.BodyWriter(buffer);
+                stream.Write(data);
+                contextWrite.StreamClose();
+                return contextWrite.End(buffer.ToArray());
                 }
             else {
 
@@ -1168,29 +1164,27 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="builder">The stringbuilder to use.</param>
         /// <param name="indent">The indent level.</param>
         public static void ToBuilder(string fileName, StringBuilder builder, int indent) {
-            using (var jbcdStream = new JBCDStream(fileName, fileStatus: FileStatus.Read)) {
-
-                var positionRead = jbcdStream.PositionRead;
-                var envelope = jbcdStream.ReadDareEnvelope();
-                while (envelope != null) {
-                    if (envelope?.Header?.ContainerInfo is var containerInfo) {
-                        builder.AppendIndent(indent, $"[{containerInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
-                        builder.AppendIndent(indent + 1, $"Tree Position:{containerInfo.TreePosition}");
-                        }
-                    else {
-                        builder.AppendIndent(indent + 1, $"No Container header");
-                        }
-
-                    builder.AppendIndent(indent + 1, $"Body Length:{envelope.Body?.Length}");
-
-                    if (envelope.Trailer is var trailer) {
-                        builder.AppendIndent(indent + 1, $"Payload: {trailer.PayloadDigest?.ToStringBase64url()}");
-                        builder.AppendIndent(indent + 1, $"Tree:    {trailer.TreeDigest?.ToStringBase64url()}");
-                        }
-
-                    positionRead = jbcdStream.PositionRead;
-                    envelope = jbcdStream.ReadDareEnvelope();
+            using var jbcdStream = new JBCDStream(fileName, fileStatus: FileStatus.Read);
+            var positionRead = jbcdStream.PositionRead;
+            var envelope = jbcdStream.ReadDareEnvelope();
+            while (envelope != null) {
+                if (envelope?.Header?.ContainerInfo is var containerInfo) {
+                    builder.AppendIndent(indent, $"[{containerInfo.Index}]  <{positionRead}-{jbcdStream.PositionRead}>");
+                    builder.AppendIndent(indent + 1, $"Tree Position:{containerInfo.TreePosition}");
                     }
+                else {
+                    builder.AppendIndent(indent + 1, $"No Container header");
+                    }
+
+                builder.AppendIndent(indent + 1, $"Body Length:{envelope.Body?.Length}");
+
+                if (envelope.Trailer is var trailer) {
+                    builder.AppendIndent(indent + 1, $"Payload: {trailer.PayloadDigest?.ToStringBase64url()}");
+                    builder.AppendIndent(indent + 1, $"Tree:    {trailer.TreeDigest?.ToStringBase64url()}");
+                    }
+
+                positionRead = jbcdStream.PositionRead;
+                envelope = jbcdStream.ReadDareEnvelope();
                 }
             }
 

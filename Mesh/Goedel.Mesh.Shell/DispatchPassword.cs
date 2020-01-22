@@ -9,26 +9,25 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordAdd(PasswordAdd Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var site = Options.Site.Value;
-                var username = Options.Username.Value;
-                var password = Options.Password.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var site = Options.Site.Value;
+            var username = Options.Username.Value;
+            var password = Options.Password.Value;
 
-                var entry = new CatalogedCredential() {
-                    Service = site,
-                    Username = username,
-                    Password = password
-                    };
+            var entry = new CatalogedCredential() {
+                Service = site,
+                Username = username,
+                Password = password
+                };
 
-                using (var catalog = contextAccount.GetCatalogCredential()) {
-                    catalog.Update(entry);
-                    }
-
-                return new ResultEntry() {
-                    Success = true,
-                    CatalogEntry = entry
-                    };
+            using (var catalog = contextAccount.GetCatalogCredential()) {
+                catalog.Update(entry);
                 }
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
             }
 
         /// <summary>
@@ -37,19 +36,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordGet(PasswordGet Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var site = Options.Site.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var site = Options.Site.Value;
 
-                using (var catalog = contextAccount.GetCatalogCredential()) {
-                    var result = catalog.LocateByService(site);
+            using var catalog = contextAccount.GetCatalogCredential();
+            var result = catalog.LocateByService(site);
 
 
-                    return new ResultEntry() {
-                        Success = result != null,
-                        CatalogEntry = result
-                        };
-                    }
-                }
+            return new ResultEntry() {
+                Success = result != null,
+                CatalogEntry = result
+                };
             }
 
         /// <summary>
@@ -58,19 +55,18 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDelete(PasswordDelete Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var site = Options.Site.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var site = Options.Site.Value;
 
 
-                using (var catalog = contextAccount.GetCatalogCredential()) {
-                    var result = catalog.LocateByService(site);
-                    catalog.Delete(result);
-                    }
-
-                return new Result() {
-                    Success = true
-                    };
+            using (var catalog = contextAccount.GetCatalogCredential()) {
+                var result = catalog.LocateByService(site);
+                catalog.Delete(result);
                 }
+
+            return new Result() {
+                Success = true
+                };
             }
 
         /// <summary>
@@ -79,19 +75,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDump(PasswordDump Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-
-                var result = new ResultDump() {
-                    Success = true,
-                    CatalogedEntries = new List<CatalogedEntry>()
-                    };
-                using (var catalog = contextAccount.GetCatalogCredential()) {
-                    foreach (var entry in catalog) {
-                        result.CatalogedEntries.Add(entry);
-                        }
+            using var contextAccount = GetContextAccount(Options);
+            var result = new ResultDump() {
+                Success = true,
+                CatalogedEntries = new List<CatalogedEntry>()
+                };
+            using (var catalog = contextAccount.GetCatalogCredential()) {
+                foreach (var entry in catalog) {
+                    result.CatalogedEntries.Add(entry);
                     }
-                return result;
                 }
+            return result;
             }
         }
     }

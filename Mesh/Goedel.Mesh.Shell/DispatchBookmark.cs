@@ -9,27 +9,25 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkAdd(BookmarkAdd Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var uri = Options.Uri.Value;
+            var title = Options.Title.Value;
+            var path = Options.Path.Value;
 
-                var uri = Options.Uri.Value;
-                var title = Options.Title.Value;
-                var path = Options.Path.Value;
+            var entry = new CatalogedBookmark() {
+                Uri = uri,
+                Title = title,
+                Path = path
+                };
 
-                var entry = new CatalogedBookmark() {
-                    Uri = uri,
-                    Title = title,
-                    Path = path
-                    };
-
-                using (var catalog = contextAccount.GetCatalogBookmark()) {
-                    catalog.New(entry);
-                    }
-
-                return new ResultEntry() {
-                    Success = true,
-                    CatalogEntry = entry
-                    };
+            using (var catalog = contextAccount.GetCatalogBookmark()) {
+                catalog.New(entry);
                 }
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
             }
 
         /// <summary>
@@ -38,20 +36,18 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDelete(BookmarkDelete Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var uri = Options.Uri.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var uri = Options.Uri.Value;
 
 
-                using (var catalog = contextAccount.GetCatalogBookmark()) {
-                    var result = catalog.Locate(uri);
+            using var catalog = contextAccount.GetCatalogBookmark();
+            var result = catalog.Locate(uri);
 
-                    catalog.Delete(result);
+            catalog.Delete(result);
 
-                    return new Result() {
-                        Success = true
-                        };
-                    }
-                }
+            return new Result() {
+                Success = true
+                };
             }
 
 
@@ -61,18 +57,16 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkGet(BookmarkGet Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                using (var catalog = contextAccount.GetCatalogBookmark()) {
-                    var identifier = Options.Identifier.Value;
+            using var contextAccount = GetContextAccount(Options);
+            using var catalog = contextAccount.GetCatalogBookmark();
+            var identifier = Options.Identifier.Value;
 
-                    var result = catalog.Locate(identifier);
+            var result = catalog.Locate(identifier);
 
-                    return new ResultEntry() {
-                        Success = result != null,
-                        CatalogEntry = result
-                        };
-                    }
-                }
+            return new ResultEntry() {
+                Success = result != null,
+                CatalogEntry = result
+                };
             }
 
         /// <summary>
@@ -81,19 +75,17 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult BookmarkDump(BookmarkDump Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-
-                var result = new ResultDump() {
-                    Success = true,
-                    CatalogedEntries = new List<CatalogedEntry>()
-                    };
-                using (var catalog = contextAccount.GetCatalogBookmark()) {
-                    foreach (var entry in catalog) {
-                        result.CatalogedEntries.Add(entry);
-                        }
+            using var contextAccount = GetContextAccount(Options);
+            var result = new ResultDump() {
+                Success = true,
+                CatalogedEntries = new List<CatalogedEntry>()
+                };
+            using (var catalog = contextAccount.GetCatalogBookmark()) {
+                foreach (var entry in catalog) {
+                    result.CatalogedEntries.Add(entry);
                     }
-                return result;
                 }
+            return result;
             }
         }
     }

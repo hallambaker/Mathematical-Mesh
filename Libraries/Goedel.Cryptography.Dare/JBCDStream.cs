@@ -116,8 +116,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>The new position within the current stream.</returns>
         public virtual long Begin() {
-            FramerFrameStart = StreamRead.Seek(0, SeekOrigin.Begin);
-            return FramerFrameStart;
+            framerFrameStart = StreamRead.Seek(0, SeekOrigin.Begin);
+            return framerFrameStart;
             }
 
         /// <summary>

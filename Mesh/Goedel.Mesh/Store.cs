@@ -92,15 +92,12 @@ namespace Goedel.Mesh {
             var fileName = FileName(directory, containerName);
 
             if (envelopes[0].Header.ContainerInfo.Index == 0) {
-                using (var container = Container.MakeNewContainer(fileName, envelopes)) {
-                    //container.Append(envelopes);
-                    }
+                using var container = Container.MakeNewContainer(fileName, envelopes);
                 }
             else {
                 // here open the existing container.
-                using (var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false)) {
-                    container.Append(envelopes);
-                    }
+                using var container = Container.OpenExisting(fileName, FileStatus.ConcurrentLocked, decrypt: false);
+                container.Append(envelopes);
                 }
 
             }

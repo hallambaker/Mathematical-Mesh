@@ -15,11 +15,10 @@ namespace ExampleGenerator {
 		// WebCalendar
 		//
 		public static void WebCalendar(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/calendar.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
-				obj._WebCalendar(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/calendar.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/calendar.md" };
+            obj._WebCalendar(Examples);
+            }
 		public void _WebCalendar(CreateExamples Examples) {
 
 				 MakeTitle ("calendar");
@@ -70,11 +69,10 @@ namespace ExampleGenerator {
 		// CalendarReference
 		//
 		public static void CalendarReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/calendar.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
-				obj._CalendarReference(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/calendar.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/calendar.md" };
+            obj._CalendarReference(Examples);
+            }
 		public void _CalendarReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Calendar;

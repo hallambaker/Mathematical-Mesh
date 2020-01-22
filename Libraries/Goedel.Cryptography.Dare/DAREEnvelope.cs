@@ -252,11 +252,11 @@ namespace Goedel.Cryptography.Dare {
             }
         #endregion
         #region // Payload decoding routines 
-        JSONBCDReader jsonReader { get; }
+        JSONBCDReader JsonReader { get; }
 
         DareEnvelope(JSONBCDReader jsonReader, DareHeader header) {
-            this.jsonReader = jsonReader;
-            this.Header = header;
+            JsonReader = jsonReader;
+            Header = header;
             }
 
         /// <summary>
@@ -371,13 +371,11 @@ namespace Goedel.Cryptography.Dare {
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
-            using (var output = outputFile.OpenFileNew()) {
-                using (var input = inputFile.OpenFileRead()) {
-                    Encode(cryptoParameters, input, output, input.Length,
-                        contentMeta, cloaked, dataSequences, chunk);
-                    return input.Length;
-                    }
-                }
+            using var output = outputFile.OpenFileNew();
+            using var input = inputFile.OpenFileRead();
+            Encode(cryptoParameters, input, output, input.Length,
+contentMeta, cloaked, dataSequences, chunk);
+            return input.Length;
 
             }
 
@@ -401,13 +399,11 @@ namespace Goedel.Cryptography.Dare {
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null,
                 int chunk = -1) {
-            using (var outputStream = new MemoryStream()) {
-                using (var inputStream = new MemoryStream(inputData)) {
-                    Encode(cryptoParameters, inputStream, outputStream, inputStream.Length,
-                        contentMeta, cloaked, dataSequences, chunk);
-                    return outputStream.ToArray();
-                    }
-                }
+            using var outputStream = new MemoryStream();
+            using var inputStream = new MemoryStream(inputData);
+            Encode(cryptoParameters, inputStream, outputStream, inputStream.Length,
+contentMeta, cloaked, dataSequences, chunk);
+            return outputStream.ToArray();
 
             }
 
@@ -444,10 +440,9 @@ namespace Goedel.Cryptography.Dare {
                 int chunk = -1) {
 
 
-            using (var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
-                outputStream, contentMeta, contentLength, cloaked, dataSequences)) {
-                inputStream.CopyTo(DAREEnvelopeWriter);
-                }
+            using var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
+                outputStream, contentMeta, contentLength, cloaked, dataSequences);
+            inputStream.CopyTo(DAREEnvelopeWriter);
 
             }
 
@@ -463,9 +458,8 @@ namespace Goedel.Cryptography.Dare {
                 string outputFile = null,
                 IKeyLocate keyCollection = null) {
 
-            using (var input = inputFile.OpenFileRead()) {
-                return Decode(input, null, outputFile, keyCollection);
-                }
+            using var input = inputFile.OpenFileRead();
+            return Decode(input, null, outputFile, keyCollection);
 
             }
         /// <summary>
@@ -481,31 +475,28 @@ namespace Goedel.Cryptography.Dare {
                 string outputFile = null,
                 IKeyLocate keyCollection = null) {
             long length = -1;
-            keyCollection = keyCollection ?? KeyCollection.Default;
+            keyCollection ??= KeyCollection.Default;
 
             var JSONBCDReader = new JSONBCDReader(inputStream);
-            using (var message = DecodeHeader(JSONBCDReader)) {
+            using var message = DecodeHeader(JSONBCDReader);
+            var decoder = message.Header.GetDecoder(
+                        JSONBCDReader, out var Reader,
+                        KeyCollection: keyCollection);
 
-                var decoder = message.Header.GetDecoder(
-                            JSONBCDReader, out var Reader,
-                            KeyCollection: keyCollection);
-
-                if (outputStream != null) {
-                    Reader.CopyTo(outputStream);
-                    outputStream.Flush();
-                    }
-                else {
-                    var filename = outputFile ?? message.Header.ContentMeta.Filename;
-                    using (var output = filename.OpenFileNew()) {
-                        Reader.CopyTo(output);
-                        output.Flush();
-                        length = output.Length;
-                        }
-                    }
-                decoder.Close();
-
-                return length;
+            if (outputStream != null) {
+                Reader.CopyTo(outputStream);
+                outputStream.Flush();
                 }
+            else {
+                var filename = outputFile ?? message.Header.ContentMeta.Filename;
+                using var output = filename.OpenFileNew();
+                Reader.CopyTo(output);
+                output.Flush();
+                length = output.Length;
+                }
+            decoder.Close();
+
+            return length;
             }
 
 
@@ -517,9 +508,8 @@ namespace Goedel.Cryptography.Dare {
         public static bool Verify(
                 string inputFile,
                 IKeyLocate keyCollection = null) {
-            using (var inputStream = inputFile.OpenFileRead()) {
-                return Verify(inputStream, keyCollection);
-                }
+            using var inputStream = inputFile.OpenFileRead();
+            return Verify(inputStream, keyCollection);
             }
 
         /// <summary>
@@ -531,7 +521,7 @@ namespace Goedel.Cryptography.Dare {
                 Stream inputStream,
                 IKeyLocate keyCollection = null) {
 
-            keyCollection = keyCollection ?? KeyCollection.Default;
+            keyCollection ??= KeyCollection.Default;
 
             using (var JSONBCDReader = new JSONBCDReader(inputStream)) {
                 //var Message = DecodeHeader(JSONBCDReader);

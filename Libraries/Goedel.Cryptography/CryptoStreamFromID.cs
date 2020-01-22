@@ -219,9 +219,8 @@ namespace Goedel.Cryptography {
                 CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
             var hashProvider = cryptoAlgorithmID.CreateDigest();
             using (var inputStream = fileName.OpenFileRead()) {
-                using (var cryptoStream = new CryptoStream(Stream.Null, hashProvider, CryptoStreamMode.Write)) {
-                    inputStream.CopyTo(cryptoStream);
-                    }
+                using var cryptoStream = new CryptoStream(Stream.Null, hashProvider, CryptoStreamMode.Write);
+                inputStream.CopyTo(cryptoStream);
                 }
             return hashProvider.Hash;
 
@@ -253,9 +252,8 @@ namespace Goedel.Cryptography {
                     CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512, int offset = 0,
             int count = -1) {
             count = count < 0 ? data.Length - offset : count;
-            using (var hashAlgorithm = cryptoAlgorithmID.CreateDigest()) {
-                return hashAlgorithm.ComputeHash(data, offset, count);
-                }
+            using var hashAlgorithm = cryptoAlgorithmID.CreateDigest();
+            return hashAlgorithm.ComputeHash(data, offset, count);
             }
 
         /// <summary>
@@ -276,9 +274,8 @@ namespace Goedel.Cryptography {
             count = count < 0 ? data.Length - offset : count;
             cryptoAlgorithmID = cryptoAlgorithmID.Default(CryptoAlgorithmID.HMAC_SHA_2_512);
 
-            using (var hashAlgorithm = cryptoAlgorithmID.CreateMac(key)) {
-                return hashAlgorithm.ComputeHash(data, offset, count);
-                }
+            using var hashAlgorithm = cryptoAlgorithmID.CreateMac(key);
+            return hashAlgorithm.ComputeHash(data, offset, count);
             }
         }
     }

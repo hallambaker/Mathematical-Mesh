@@ -136,17 +136,15 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID">The identifier to convert</param>
         /// <param name="keysize">Key size (if needed)</param>
         /// <returns>The UDF identifier.</returns>
-        public static UDFAlgorithmIdentifier ToUDFID (
-                this CryptoAlgorithmID cryptoAlgorithmID, int keysize = 0) {
-            return cryptoAlgorithmID switch
-                {
-                    CryptoAlgorithmID.X25519 => UDFAlgorithmIdentifier.X25519,
-                    CryptoAlgorithmID.X448 => UDFAlgorithmIdentifier.X448,
-                    CryptoAlgorithmID.Ed25519 => UDFAlgorithmIdentifier.Ed25519,
-                    CryptoAlgorithmID.Ed448 => UDFAlgorithmIdentifier.Ed448,
-                    _ => UDFAlgorithmIdentifier.Any,
-                    };
-            }
+        public static UDFAlgorithmIdentifier ToUDFID(
+                this CryptoAlgorithmID cryptoAlgorithmID, int keysize = 0) => cryptoAlgorithmID switch
+                    {
+                        CryptoAlgorithmID.X25519 => UDFAlgorithmIdentifier.X25519,
+                        CryptoAlgorithmID.X448 => UDFAlgorithmIdentifier.X448,
+                        CryptoAlgorithmID.Ed25519 => UDFAlgorithmIdentifier.Ed25519,
+                        CryptoAlgorithmID.Ed448 => UDFAlgorithmIdentifier.Ed448,
+                        _ => UDFAlgorithmIdentifier.Any,
+                        };
 
 
         }

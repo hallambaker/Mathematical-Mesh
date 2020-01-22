@@ -22,7 +22,7 @@ namespace Goedel.Test {
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
         public void AddEncrypt(string AccountId, bool Register = true) {
-            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys ??= new List<KeyPair>();
 
             var Keypair = new KeyPairDH();
             var Pub = Keypair.KeyPairPublic();
@@ -41,7 +41,7 @@ namespace Goedel.Test {
 
         protected override void AddSign(string accountId) => AddSign(accountId, true);
         public void AddSign(string accountId, bool register) {
-            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys ??= new List<KeyPair>();
 
             var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
             var PublicKeyKeypair = Keypair.KeyPairPublic();
@@ -61,7 +61,7 @@ namespace Goedel.Test {
 
     public class TestKeys {
 
-        KeyCollection KeyCollection;
+        public KeyCollection KeyCollection;
 
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;
@@ -69,7 +69,7 @@ namespace Goedel.Test {
         public TestKeys(KeyCollection keyCollection = null) => KeyCollection = keyCollection ?? KeyCollection.Default;
 
         public void AddEncrypt(bool register = true) {
-            EncryptionKeys = EncryptionKeys ?? new List<KeyPair>();
+            EncryptionKeys ??= new List<KeyPair>();
 
             var Keypair = new KeyPairDH();
             var Public = Keypair.PKIXPublicKeyDH;
@@ -86,7 +86,7 @@ namespace Goedel.Test {
             }
 
         public void AddSign(bool register = true) {
-            SignerKeys = SignerKeys ?? new List<KeyPair>();
+            SignerKeys ??= new List<KeyPair>();
 
             throw new NYI();
             }

@@ -14,12 +14,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Combine two public keys to obtain a new public key.
         /// </summary>
-        /// <param name="Contribution">The public key contribution.</param>
+        /// <param name="contribution">The public key contribution.</param>
         /// <returns>The new public key.</returns>
-        IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution);
+        IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution);
 
 
-        
+        ///<summary>The byte encoding of the key.</summary>
         byte[] Encoding { get; }
 
         }
@@ -32,24 +32,26 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
-        /// <param name="Shares">Number of shares to create</param>
+        /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        IKeyAdvancedPrivate[] MakeRecryptionKeySet(int Shares);
+        IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares);
 
 
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
-        /// <param name="Shares">Number of shares to create</param>
+        /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares);
+        IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares);
 
         /// <summary>
         /// Combine two private keys to obtain a new public key.
         /// </summary>
-        /// <param name="Contribution">The private key contribution.</param>
+        /// <param name="contribution">The private key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The new public key.</returns>
-        IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate Contribution,
+        IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);
 
@@ -82,30 +84,32 @@ namespace Goedel.Cryptography {
         public abstract IKeyAdvancedPrivate IKeyAdvancedPrivate { get; }
 
         /// <summary>
-        /// Factory method to construct a KeyPair for the private key <paramref name="PrivateKey"/>.
+        /// Factory method to construct a KeyPair for the private key <paramref name="privateKey"/>.
         /// The created key pair will have the same security model as the key from which the
         /// method is invoked.
         /// </summary>
-        /// <param name="PrivateKey">The private key to construct parameters for.</param>
+        /// <param name="privateKey">The private key to construct parameters for.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The KeyPair that was constructed</returns>
-        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate PrivateKey,
+        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);
 
         /// <summary>
-        /// Factory method to construct a KeyPair for the public key <paramref name="PublicKey"/>.
+        /// Factory method to construct a KeyPair for the public key <paramref name="publicKey"/>.
         /// </summary>
-        /// <param name="PublicKey">The private key to construct parameters for.</param>
+        /// <param name="publicKey">The private key to construct parameters for.</param>
         /// <returns>The KeyPair that was constructed</returns>
-        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey);
+        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey);
 
         /// <summary>
         /// Search all the local machine stores to find a key pair with the specified
         /// fingerprint
         /// </summary>
-        /// <param name="UDF">Fingerprint of key</param>
+        /// <param name="udf">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
-        public static KeyPair FindLocalAdvanced(string UDF) => Platform.FindInKeyStore(UDF, CryptoAlgorithmID.DH);
+        public static KeyPair FindLocalAdvanced(string udf) => Platform.FindInKeyStore(udf, CryptoAlgorithmID.DH);
 
         /// <summary>
         /// Perform a partial key agreement.
@@ -137,22 +141,24 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Combine the public parameters with another public key to create the composite public key pair
         /// </summary>
-        /// <param name="Contribution">The public key parameters to combine</param>
+        /// <param name="contribution">The public key parameters to combine</param>
         /// <returns>The generated public key pair.</returns>
-        public KeyPairAdvanced CombinePublic(KeyPairAdvanced Contribution) {
-            var PublicKey = IKeyAdvancedPublic.Combine(Contribution.IKeyAdvancedPublic);
+        public KeyPairAdvanced CombinePublic(KeyPairAdvanced contribution) {
+            var PublicKey = IKeyAdvancedPublic.Combine(contribution.IKeyAdvancedPublic);
             return KeyPair(PublicKey);
             }
 
         /// <summary>
         /// Combine the private parameters with another private key to create the composite private key pair
         /// </summary>
-        /// <param name="Contribution"></param>
+        /// <param name="contribution"></param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns></returns>
-        public KeyPairAdvanced Combine(KeyPairAdvanced Contribution,
+        public KeyPairAdvanced Combine(KeyPairAdvanced contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any) {
-            var PrivateKey = IKeyAdvancedPrivate.Combine(Contribution.IKeyAdvancedPrivate, keySecurity, keyUses);
+            var PrivateKey = IKeyAdvancedPrivate.Combine(contribution.IKeyAdvancedPrivate, keySecurity, keyUses);
             return KeyPair(PrivateKey, keySecurity, keyUses);
             }
 
@@ -196,7 +202,7 @@ namespace Goedel.Cryptography {
         /// <summary>Key derivation function. May be overridden, defaults to KDF.</summary>
         public virtual KeyDerive KeyDerive {
             get {
-                _KeyDerive = _KeyDerive ?? new KeyDeriveHKDF(IKM, _Salt);
+                _KeyDerive ??= new KeyDeriveHKDF(IKM, _Salt);
                 return _KeyDerive;
                 }
             set => _KeyDerive = value;
@@ -217,38 +223,38 @@ namespace Goedel.Cryptography {
         /// Encrypt the bulk key.
         /// </summary>
         /// <returns>The encoder</returns>
-        public virtual void Encrypt(byte[] Key,
-            out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null) {
+        public virtual void Encrypt(byte[] key,
+            out byte[] exchange, out KeyPair ephemeral, byte[] salt = null) {
 
             // Console.Write($"PRK Encrypt is {IKM.ToStringBase16()}");
 
-            var EncryptionKey = KeyDerive.Derive(Salt, Length: 256);
+            var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
             // Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 
-            Exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, Key);
-            Ephemeral = EphemeralKeyPair;
+            exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
+            ephemeral = EphemeralKeyPair;
             }
 
         /// <summary>
         /// Perform a key exchange to decrypt a bulk or wrapped key under this one.
         /// </summary>
-        /// <param name="EncryptedKey">The encrypted session key</param>
-        /// <param name="Ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="Partial">Partial key agreement value (for recryption)</param>
-        /// <param name="Salt">Optional salt value for use in key derivation. If specified
+        /// <param name="encryptedKey">The encrypted session key</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="partial">Partial key agreement value (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
         /// must match the salt used to encrypt.</param>
         /// <returns>The decoded data instance</returns>
         public virtual byte[] Decrypt(
-                    byte[] EncryptedKey,
-                    KeyPair Ephemeral,
-                    KeyAgreementResult Partial = null,
-                    byte[] Salt = null) {
+                    byte[] encryptedKey,
+                    KeyPair ephemeral,
+                    KeyAgreementResult partial = null,
+                    byte[] salt = null) {
 
 
-            var EncryptionKey = KeyDerive.Derive(Salt, Length: 256);
-            var KeySize = (EncryptedKey.Length * 8) - 64;
+            var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
+            var KeySize = (encryptedKey.Length * 8) - 64;
 
-            return Platform.KeyWrapRFC3394.Unwrap(EncryptionKey, EncryptedKey);
+            return Platform.KeyWrapRFC3394.Unwrap(EncryptionKey, encryptedKey);
 
             }
 

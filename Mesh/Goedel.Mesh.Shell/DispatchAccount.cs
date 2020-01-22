@@ -34,16 +34,13 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult AccountCreate(AccountCreate Options) {
             var accountID = Options.NewAccountID.Value;
 
-            using (var contextMesh = GetContextMeshAdmin(Options)) {
-
-                var contextAccount = contextMesh.CreateAccount(accountID);
-                return new ResultCreateAccount() {
-                    Success = true,
-                    ProfileAccount = contextAccount.ProfileAccount,
-                    ActivationAccount = contextAccount.ActivationAccount
-                    };
-
-                }
+            using var contextMesh = GetContextMeshAdmin(Options);
+            var contextAccount = contextMesh.CreateAccount(accountID);
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileAccount = contextAccount.ProfileAccount,
+                ActivationAccount = contextAccount.ActivationAccount
+                };
             }
 
 
@@ -53,14 +50,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountStatus(AccountStatus Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var result = contextAccount.Status();
+            using var contextAccount = GetContextAccount(Options);
+            var result = contextAccount.Status();
 
-                return new ResultStatus() {
-                    Success = true,
-                    StatusResponse = result
-                    };
-                }
+            return new ResultStatus() {
+                Success = true,
+                StatusResponse = result
+                };
             }
 
 
@@ -70,14 +66,13 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountSync(AccountSync Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var result = contextAccount.Sync();
+            using var contextAccount = GetContextAccount(Options);
+            var result = contextAccount.Sync();
 
-                return new ResultSync() {
-                    Success = true,
-                    Fetched = result
-                    };
-                }
+            return new ResultSync() {
+                Success = true,
+                Fetched = result
+                };
             }
 
 
@@ -87,27 +82,24 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountRegister(AccountRegister Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                contextAccount.AddService(Options.NewAccountID.Value);
+            using var contextAccount = GetContextAccount(Options);
+            contextAccount.AddService(Options.NewAccountID.Value);
 
-                return new ResultCreateAccount() {
-                    Success = true,
-                    ActivationAccount = contextAccount.ActivationAccount,
-                    ProfileAccount = contextAccount.ProfileAccount
-                    };
-
-                }
+            return new ResultCreateAccount() {
+                Success = true,
+                ActivationAccount = contextAccount.ActivationAccount,
+                ProfileAccount = contextAccount.ProfileAccount
+                };
             }
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var messageConnectionPIN = contextAccount.GetPIN();
+            using var contextAccount = GetContextAccount(Options);
+            var messageConnectionPIN = contextAccount.GetPIN();
 
-                var result = new ResultPIN() {
-                    MessagePIN = messageConnectionPIN
-                    };
+            var result = new ResultPIN() {
+                MessagePIN = messageConnectionPIN
+                };
 
-                return result;
-                }
+            return result;
             }
         }
     }

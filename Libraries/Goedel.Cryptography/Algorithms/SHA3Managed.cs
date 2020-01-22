@@ -80,10 +80,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="hashBitLength">The number of output bits</param>
         /// <returns>The digest value</returns>
         public static byte[] Process(byte[] Input, int hashBitLength = 256) {
-            using (var Provider = new SHAKE128(hashBitLength)) {
-                Provider.TransformFinalBlock(Input, 0, Input.Length);
-                return Provider.Hash;
-                }
+            using var Provider = new SHAKE128(hashBitLength);
+            Provider.TransformFinalBlock(Input, 0, Input.Length);
+            return Provider.Hash;
             }
 
 
@@ -112,10 +111,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="hashBitLength">The number of output bits</param>
         /// <returns>The digest value</returns>
         public static byte[] Process(byte[] Input, int hashBitLength = 256) {
-            using (var Provider = new SHAKE256(hashBitLength)) {
-                Provider.TransformFinalBlock(Input, 0, Input.Length);
-                return Provider.Hash;
-                }
+            using var Provider = new SHAKE256(hashBitLength);
+            Provider.TransformFinalBlock(Input, 0, Input.Length);
+            return Provider.Hash;
             }
         }
     }

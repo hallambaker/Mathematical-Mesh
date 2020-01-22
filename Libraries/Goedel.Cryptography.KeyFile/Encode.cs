@@ -211,6 +211,6 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="Tag">Tag to prepend to data</param>
         public static void Dump(this byte[] Data, string Tag) => Console.WriteLine("{0} : [{1}]  {2}.{3}.{4} ... {5}.{6}.{7}",
                 Tag, Data.Length, Data[0], Data[1], Data[2],
-                    Data[Data.Length - 3], Data[Data.Length - 2], Data[Data.Length - 1]);
+                    Data[^3], Data[^2], Data[^1]);
         }
     }

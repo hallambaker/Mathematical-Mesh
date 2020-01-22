@@ -69,7 +69,7 @@ namespace Goedel.Cryptography {
     public class KeyDeriveHKDF : KeyDerive {
 
         //CryptoProviderAuthentication Provider;
-        CryptoAlgorithmID Algorithm;
+        CryptoAlgorithmID algorithm;
 
         /// <summary>The Pseudorandom key constructed from the IKM and salt</summary>
         public byte[] PRK { get; set; }
@@ -97,8 +97,8 @@ namespace Goedel.Cryptography {
         /// <param name="algorithm">The MAC algorithm to use</param>
         public KeyDeriveHKDF(byte[] ikm, byte[] salt = null,
                 CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) {
-            Algorithm = algorithm;
-            PRK = Extract(Algorithm, ikm, salt);
+            this.algorithm = algorithm;
+            PRK = Extract(this.algorithm, ikm, salt);
             }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Goedel.Cryptography {
         public override byte[] Derive(byte[] Info, int Length = 0) {
             Length = Length == 0 ? DefaultLength : Length;
 
-            return Expand(Algorithm, PRK, Length, Info);
+            return Expand(algorithm, PRK, Length, Info);
             }
 
         static readonly byte[] NullKey = new byte[0];
@@ -179,7 +179,7 @@ namespace Goedel.Cryptography {
             byte[] prk, int length, byte[] info = null) {
 
             var (size, _) = algorithm.GetKeySize();
-            info = info ?? NullKey;
+            info ??= NullKey;
 
             var result = new byte[length / 8];
 
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography {
             // Calculate T1 and add to Result
             var data = new byte[info.Length + 1];
             data.AppendChecked(0, info);
-            data[data.Length - 1] = index++;
+            data[^1] = index++;
             var t = data.GetMAC(prk, cryptoAlgorithmID: algorithm);
 
             var offset = result.AppendChecked(0, t);
@@ -200,7 +200,7 @@ namespace Goedel.Cryptography {
 
             while (offset < result.Length) {
                 data.AppendChecked(0, t);
-                data[data.Length - 1] = index++;
+                data[^1] = index++;
                 t = data.GetMAC(prk, cryptoAlgorithmID: algorithm);
                 offset = result.AppendChecked(offset, t);
                 }

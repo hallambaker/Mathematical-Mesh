@@ -49,13 +49,12 @@ namespace Goedel.Protocol {
         /// <returns>The wrapped output string</returns>
         static public string Wrap(string input) {
             var StringWriter = new StringWriter();
-            using (var WrapWriter = new WrapWriter(StringWriter)) {
-                WrapWriter.Write(input);
-                WrapWriter.Flush();
-                string result = StringWriter.ToString();
+            using var WrapWriter = new WrapWriter(StringWriter);
+            WrapWriter.Write(input);
+            WrapWriter.Flush();
+            string result = StringWriter.ToString();
 
-                return result;
-                }
+            return result;
             }
 
 

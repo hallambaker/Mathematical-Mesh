@@ -270,8 +270,8 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        long FrameLength;
-        long Check;
+        long frameLength;
+        long check;
 
         /// <summary>
         /// Write a wrapped frame containing a header and an optional data section
@@ -291,21 +291,21 @@ namespace Goedel.Cryptography.Dare {
             var DL = (FrameDataLength < 0 ? 0 : TotalLength(FrameDataLength));
             var TL = (FrameTrailerLength < 0 ? 0 : TotalLength(FrameTrailerLength));
 
-            FrameLength = HL + DL + TL;
+            frameLength = HL + DL + TL;
 
-            WriteTag(BFrame, FrameLength);
+            WriteTag(BFrame, frameLength);
 
-            Check = PositionWrite;
+            check = PositionWrite;
             if (FrameHeader != null) {
                 WriteFrame(FrameHeader);
                 }
 
-            Assert.True(PositionWrite == Check + HL, Internal.Throw);
+            Assert.True(PositionWrite == check + HL, Internal.Throw);
 
             // here write out the binary marker for the frame data.
             WriteTag(UFrame, FrameDataLength);
 
-            return TotalLength2(FrameLength);
+            return TotalLength2(frameLength);
             }
 
         /// <summary>
@@ -319,13 +319,13 @@ namespace Goedel.Cryptography.Dare {
                 WriteFrame(FrameTrailer);
                 }
 
-            Check += FrameLength;
-            Assert.True(PositionWrite == Check, Internal.Throw);
+            check += frameLength;
+            Assert.True(PositionWrite == check, Internal.Throw);
 
-            WriteTagReverse(BFrame, FrameLength);
+            WriteTagReverse(BFrame, frameLength);
             StreamWrite.Flush(); // Force output of data
 
-            return TotalLength2(FrameLength);
+            return TotalLength2(frameLength);
             }
 
 
@@ -604,15 +604,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public long StartLastFrameRead { get; private set; } = 0;
 
-        bool FramerEndOfStream => StreamRead.Length > StreamRead.Position;
-        long FramerFrameStart;
-        long FramerFrameLength;
-        long FramerFrameEnd;
-        long FramerRecordStart;
-        long FramerRecordData;
-        long FramerRecordNext;
-        long FramerRecordLength;
-        int FramerCode;
+
+        long framerFrameStart;
+        long framerFrameLength;
+        long framerFrameEnd;
+        long framerRecordStart;
+        long framerRecordData;
+        long framerRecordNext;
+        long framerRecordLength;
+        int framerCode;
 
         /// <summary>
         /// Open a frame reader at the position indicated by <paramref name="Position"/>
@@ -625,34 +625,34 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The length of the frame if it could be read, otherwise -1.</returns>
         public long FramerOpen(long Position = -1) {
 
-            FramerFrameStart = Position < 0 ? FramerFrameStart : Position;
+            framerFrameStart = Position < 0 ? framerFrameStart : Position;
 
-            StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
-            var Success = ReadTag(out FramerCode, out FramerFrameLength);
-            FramerFrameEnd = StreamRead.Position + FramerFrameLength;
-            FramerRecordNext = StreamRead.Position;
-            return FramerFrameLength;
+            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
+            var Success = ReadTag(out framerCode, out framerFrameLength);
+            framerFrameEnd = StreamRead.Position + framerFrameLength;
+            framerRecordNext = StreamRead.Position;
+            return framerFrameLength;
 
 
             }
 
 
         bool FramerOpenRecord() {
-            FramerRecordStart = FramerRecordNext;
+            framerRecordStart = framerRecordNext;
 
             //FrameDataPosition = FramerRecordStart; // just in case, legacy.
 
-            if (FramerRecordStart >= FramerFrameEnd) {
+            if (framerRecordStart >= framerFrameEnd) {
                 return false;
                 }
 
-            StreamRead.Seek(FramerRecordStart, SeekOrigin.Begin);
-            var Success = ReadTag(out var Code, out FramerRecordLength);
+            StreamRead.Seek(framerRecordStart, SeekOrigin.Begin);
+            var Success = ReadTag(out var Code, out framerRecordLength);
             if (!Success) {
                 return false;
                 }
-            FramerRecordData = PositionRead;
-            FramerRecordNext = FramerRecordData + FramerRecordLength;
+            framerRecordData = PositionRead;
+            framerRecordNext = framerRecordData + framerRecordLength;
             return true;
             }
 
@@ -666,12 +666,12 @@ namespace Goedel.Cryptography.Dare {
                 return null;
                 }
 
-            var Result = new byte[FramerRecordLength];
+            var Result = new byte[framerRecordLength];
             var Offset = 0;
-            var Length = StreamRead.Read(Result, Offset, FramerRecordLength);
+            var Length = StreamRead.Read(Result, Offset, framerRecordLength);
             while (Length > 0) {
                 Offset += (int)Length;
-                Length = StreamRead.Read(Result, Offset, FramerRecordLength - Offset);
+                Length = StreamRead.Read(Result, Offset, framerRecordLength - Offset);
                 }
             Assert.True(Length == 0, DataRecordTruncated.Throw);
 
@@ -686,15 +686,15 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataLength"></param>
         public bool FramerGetFrameIndex(out long DataPosition, out long DataLength) {
             if (!FramerOpenRecord()) {
-                DataPosition = FramerRecordStart;
+                DataPosition = framerRecordStart;
                 DataLength = 0;
                 return false;
                 }
 
-            DataPosition = FramerRecordData;
-            DataLength = FramerRecordLength;
+            DataPosition = framerRecordData;
+            DataLength = framerRecordLength;
 
-            PositionRead = FramerRecordNext;
+            PositionRead = framerRecordNext;
 
             return true;
 
@@ -716,11 +716,11 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>If <code>true</code>, there are more frames to be read. If 
         /// <code>false</code> the end of the stream has been reached.</returns>
         public bool FramerNext() {
-            StreamRead.Seek(FramerFrameEnd, System.IO.SeekOrigin.Begin);
-            if ((FramerCode & TypeMask) == BFrame) {
-                CheckReversedLength(FramerCode, FramerFrameLength);
+            StreamRead.Seek(framerFrameEnd, System.IO.SeekOrigin.Begin);
+            if ((framerCode & TypeMask) == BFrame) {
+                CheckReversedLength(framerCode, framerFrameLength);
                 }
-            FramerFrameStart = StreamRead.Position;
+            framerFrameStart = StreamRead.Position;
             return StreamRead.Length > StreamRead.Position;
             }
 
@@ -732,7 +732,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>If <code>true</code>, there are more frames to be read. If 
         /// <code>false</code> the end of the stream has been reached.</returns>
         public bool FramerPrevious() {
-            StreamRead.Seek(FramerFrameStart, System.IO.SeekOrigin.Begin);
+            StreamRead.Seek(framerFrameStart, System.IO.SeekOrigin.Begin);
             var Success = ReadTagReverse(out var Code, out var Length);
             if (!Success) {
                 return false;
@@ -744,7 +744,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;
-            FramerFrameStart = Start;
+            framerFrameStart = Start;
             PositionRead = Start;
 
             return true;

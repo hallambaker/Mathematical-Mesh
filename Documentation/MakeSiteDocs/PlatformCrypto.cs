@@ -69,7 +69,7 @@ namespace ExampleGenerator {
                 };
 
             var prime = BigInteger.Pow(2, 32) + 15;
-            var result = Shared.CombineNK2(KeyShares, 3, DomainParameters.Curve25519.Q);
+            var result = Shared.CombineNT(KeyShares, DomainParameters.Curve25519.Q, 3);
             (result == 1234).AssertTrue();
             }
 
@@ -99,16 +99,14 @@ namespace ExampleGenerator {
         public CurveEdwards SB;
         public BigInteger SBX => SB.X0;
         public BigInteger SBY => SB.Y0;
-        CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmID CryptoAlgorithmID;
 
 
         public CurveEdwards PublicSignatureKey;
 
         public ThresholdCoordinatorEdwards ThresholdCoordinate;
 
-        public SigExample(CryptoAlgorithmID cryptoAlgorithmID) {
-            CryptoAlgorithmID = cryptoAlgorithmID;
-            }
+        public SigExample(CryptoAlgorithmID cryptoAlgorithmID) => CryptoAlgorithmID = cryptoAlgorithmID;
 
         public ThresholdSignatureEdwards Threshold1;
         public ThresholdSignatureEdwards Threshold2;
@@ -152,7 +150,7 @@ namespace ExampleGenerator {
             }
 
 
-        void Verify() {
+        public void Verify() {
             // check that R = RRa + RRb
 
             var publicRa = CurveEdwards25519.Decode(RRa);
@@ -228,8 +226,9 @@ namespace ExampleGenerator {
             Edwards2 = KeyBob.KeyPair as KeyPairEdwards;
 
             EdwardsAggregate = Edwards1.Combine(Edwards2, KeySecurity.Exportable) as KeyPairEdwards;
-            KeyAggregate = new CurveKey(EdwardsAggregate, false);
-            KeyAggregate.Name = "Aggregate Key = Alice + Bob";
+            KeyAggregate = new CurveKey(EdwardsAggregate, false) {
+                Name = "Aggregate Key = Alice + Bob"
+                };
 
             PublicSignatureKey = (EdwardsAggregate.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey;
 
@@ -316,7 +315,7 @@ namespace ExampleGenerator {
 
             // create the recovery shares for the first and third shares
             var recoveryShares = new KeyShareEdwards[] { keyShares[0], keyShares[2] };
-            var testa0 = Shared.CombineNK2(recoveryShares, 2, Modulus);
+            var testa0 = Shared.CombineNT(recoveryShares, Modulus, 2);
 
             Console.WriteLine($" A0 =     {A0}");
             Console.WriteLine($" TestA0 = {testa0}");
@@ -465,7 +464,7 @@ namespace ExampleGenerator {
         static readonly byte[] Dummy = { 0 };
 
         public string Name = "TBS";
-        CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmID CryptoAlgorithmID;
         public KeyPairAdvanced KeyPair;
 
         public bool IsCurveX => (KeyPair is KeyPairX25519) | (KeyPair is KeyPairX448);
@@ -535,8 +534,8 @@ namespace ExampleGenerator {
                     break;
                     }
                 }
-            Private = Private ?? Dummy;
-            Public = Public ?? Dummy;
+            Private ??= Dummy;
+            Public ??= Dummy;
             }
         void SetParameters(KeyPairX25519 keyPair, bool extended) {
             //var publicKey = keyPair.IKeyAdvancedPublic as CurveX25519Public;
@@ -592,7 +591,7 @@ namespace ExampleGenerator {
 
 
     public partial class Decrypt {
-        CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmID CryptoAlgorithmID;
 
         public CurveKey KeyE;
 
@@ -607,7 +606,7 @@ namespace ExampleGenerator {
         public CurveKey Key2;
 
 
-        delegate KeyPair MakeKeyPair(IKeyAdvancedPrivate keybase,
+        delegate KeyPair MakeKeyPairDelegate(IKeyAdvancedPrivate keybase,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);
 
@@ -621,7 +620,7 @@ namespace ExampleGenerator {
             KeyA = new CurveKey(CryptoAlgorithmID, false, "THD", "KeyA");
             KeyE = new CurveKey(CryptoAlgorithmID, false, "THD", "KeyE");
 
-            MakeKeyPair makeKeyPair = KeyA.KeyPair.KeyPair;
+            MakeKeyPairDelegate makeKeyPair = KeyA.KeyPair.KeyPair;
 
             var keyA = KeyA.KeyPair.IKeyAdvancedPrivate;
             var keyE = KeyE.KeyPair.IKeyAdvancedPrivate;
@@ -645,7 +644,7 @@ namespace ExampleGenerator {
         }
 
     public partial class KeyGen {
-        CryptoAlgorithmID CryptoAlgorithmID;
+
 
         public CurveKey Key1;
         public CurveKey Key2;
@@ -745,9 +744,7 @@ namespace ExampleGenerator {
         public byte[] Result;
 
         public KeyPairPartialTest(KeyPairAdvanced keyPairGroup,
-                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) {
-            KeyPairService = keyPairService;
-            }
+                KeyPairAdvanced keyPairPart, KeyPairAdvanced keyPairService) : base(keyPairGroup, keyPairPart) => KeyPairService = keyPairService;
 
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -856,14 +853,12 @@ namespace ExampleGenerator {
             byte[] decrypt;
 
 
-            using (var input = new MemoryStream(envelope.Body)) {
-                using (var output = new MemoryStream()) {
-                    var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
-                    plaintextStream.CopyTo(output);
-                    decrypt = output.ToArray();
-                    decrypt.IsEqualTo(plaintext).AssertTrue();
-                    }
-                }
+            using var input = new MemoryStream(envelope.Body);
+            using var output = new MemoryStream();
+            var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
+            plaintextStream.CopyTo(output);
+            decrypt = output.ToArray();
+            decrypt.IsEqualTo(plaintext).AssertTrue();
 
             }
 

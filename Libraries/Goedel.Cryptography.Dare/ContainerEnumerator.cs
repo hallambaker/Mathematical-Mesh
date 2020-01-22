@@ -9,10 +9,10 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumeratorRaw : IEnumerator<DareEnvelope> {
 
-        Container Container;
-        int LowIndex;
-        bool Reverse;
-        bool Active;
+        Container container;
+        int lowIndex;
+        bool reverse;
+        bool active;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
@@ -28,9 +28,9 @@ namespace Goedel.Cryptography.Dare {
         /// otherwise, enumerate from <paramref name="lowIndex"/> to the first.</param>
         /// <param name="container">The container to enumerate.</param>
         public ContainerEnumeratorRaw(Container container, int lowIndex = 0, bool reverse = false) {
-            this.Container = container;
-            LowIndex = lowIndex;
-            Reverse = reverse;
+            this.container = container;
+            this.lowIndex = lowIndex;
+            this.reverse = reverse;
             Reset();
             }
 
@@ -54,20 +54,20 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>If true, the next item was found. Otherwise, the end of the enumeration 
         /// was reached.</returns>
         public bool MoveNext() {
-            if (!Reverse) {
-                Current = Container.ReadDirect();
+            if (!reverse) {
+                Current = container.ReadDirect();
                 return Current != null;
                 }
-            if (!Active) {
+            if (!active) {
                 return false;
                 }
-            Current = Container.ReadDirectReverse();
+            Current = container.ReadDirectReverse();
             if (Current == null) {
                 return false;
                 }
 
             var header = Current.Header;
-            return header.ContainerInfo.Index >= LowIndex;
+            return header.ContainerInfo.Index >= lowIndex;
             }
 
         /// <summary>
@@ -75,12 +75,12 @@ namespace Goedel.Cryptography.Dare {
         /// in the collection.
         /// </summary>
         public void Reset() {
-            if (Reverse) {
-                Active = Container.MoveToLast();
+            if (reverse) {
+                active = container.MoveToLast();
                 }
             else {
 
-                Container.MoveToIndex(LowIndex);
+                container.MoveToIndex(lowIndex);
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Goedel.Cryptography.Dare {
     /// </summary>
     public class ContainerEnumerator : IEnumerator<ContainerFrameIndex> {
 
-        Container Container;
+        Container container;
 
         /// <summary>
         /// Gets the element in the collection at the current position of the enumerator.
@@ -104,7 +104,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The container to enumerate.</param>
         public ContainerEnumerator(Container container) {
-            this.Container = container;
+            this.container = container;
             Reset();
             }
 
@@ -117,7 +117,6 @@ namespace Goedel.Cryptography.Dare {
 
 
         object IEnumerator.Current => throw new NotImplementedException();
-        private object Current1 => Current;
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -131,16 +130,16 @@ namespace Goedel.Cryptography.Dare {
         /// <returns><code>true</code> if the enumerator was successfully advanced to the next element; 
         /// <code>false</code> if the enumerator has passed the end of the collection.</returns>
         public bool MoveNext() {
-            var Result = Container.NextFrame();
-            Current = Result ? Container.GetContainerFrameIndex() : null;
+            var Result = container.NextFrame();
+            Current = Result ? container.GetContainerFrameIndex() : null;
             return Result;
             }
         /// <summary>
         /// Sets the enumerator to its initial position, which is before the first element in the collection.
         /// </summary>
         public void Reset() {
-            Container.Start();
-            Current = Container.GetContainerFrameIndex();
+            container.Start();
+            Current = container.GetContainerFrameIndex();
             }
         }
 

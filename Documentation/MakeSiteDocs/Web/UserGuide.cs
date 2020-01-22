@@ -59,11 +59,10 @@ namespace ExampleGenerator {
 		// Web
 		//
 		public static void Web(CreateExamples Index) { /* XFile  */
-				using (var _Output = new StreamWriter("readme.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
-				obj._Web(Index);
-				}
-			}
+            using var _Output = new StreamWriter("readme.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "readme.md" };
+            obj._Web(Index);
+            }
 		public void _Web(CreateExamples Index) {
 
 				_Output.Write ("\n{0}", _Indent);
@@ -89,11 +88,10 @@ namespace ExampleGenerator {
 		// Features
 		//
 		public static void Features(CreateExamples Index) { /* XFile  */
-				using (var _Output = new StreamWriter("festures.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
-				obj._Features(Index);
-				}
-			}
+            using var _Output = new StreamWriter("festures.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "festures.md" };
+            obj._Features(Index);
+            }
 		public void _Features(CreateExamples Index) {
 
 				_Output.Write ("# Feature Requests\n{0}", _Indent);
@@ -151,11 +149,10 @@ namespace ExampleGenerator {
 		// UserGuide
 		//
 		public static void UserGuide(CreateExamples Index) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/readme.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
-				obj._UserGuide(Index);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/readme.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/readme.md" };
+            obj._UserGuide(Index);
+            }
 		public void _UserGuide(CreateExamples Index) {
 
 				_Output.Write ("# meshman User Guide\n{0}", _Indent);
@@ -177,11 +174,10 @@ namespace ExampleGenerator {
 		// Reference
 		//
 		public static void Reference(CreateExamples Index) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/readme.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
-				obj._Reference(Index);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/readme.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/readme.md" };
+            obj._Reference(Index);
+            }
 		public void _Reference(CreateExamples Index) {
 
 				_Output.Write ("# meshman Reference Manual\n{0}", _Indent);

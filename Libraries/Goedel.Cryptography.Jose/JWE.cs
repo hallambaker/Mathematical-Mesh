@@ -45,11 +45,11 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public byte[] Plaintext {
             get {
-                _Plaintext = _Plaintext ?? Decrypt();
-                return _Plaintext;
+                plaintext ??= Decrypt();
+                return plaintext;
                 }
             }
-        byte[] _Plaintext = null;
+        byte[] plaintext = null;
 
         /// <summary>
         /// The decrypted plaintext as a string.
@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Jose {
 
 
         /// <summary>Caches the CryptoData instance</summary>
-        protected CryptoData _CryptoDataEncrypt = null;
+        protected CryptoData CacheCryptoDataEncrypt = null;
 
         /// <summary>
         /// Call GetCryptoData and return the result, unless GetCryptoData has been
@@ -66,8 +66,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public CryptoData CryptoDataEncrypt {
             get {
-                _CryptoDataEncrypt = _CryptoDataEncrypt ?? GetCryptoData();
-                return _CryptoDataEncrypt;
+                CacheCryptoDataEncrypt ??= GetCryptoData();
+                return CacheCryptoDataEncrypt;
                 }
             }
 
@@ -120,7 +120,7 @@ namespace Goedel.Cryptography.Jose {
 
             var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
             var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
-            _CryptoDataEncrypt = EncryptEncoder;
+            CacheCryptoDataEncrypt = EncryptEncoder;
 
             if (EncryptionKey != null) {
                 AddRecipient(EncryptionKey, KID: KID, ProviderAlgorithm: EncryptID);
@@ -165,7 +165,7 @@ namespace Goedel.Cryptography.Jose {
 
             var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
             var EncryptEncoder = Provider.MakeEncoder(Algorithm: EncryptID);
-            _CryptoDataEncrypt = EncryptEncoder;
+            CacheCryptoDataEncrypt = EncryptEncoder;
 
             BindCryptoData(EncryptEncoder, ContentType, null);
 
@@ -298,7 +298,7 @@ namespace Goedel.Cryptography.Jose {
             EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
             var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, KID);
 
-            Recipients = Recipients ?? new List<Recipient>();
+            Recipients ??= new List<Recipient>();
             Recipients.Add(Recipient);
 
             return Recipient;
@@ -318,14 +318,14 @@ namespace Goedel.Cryptography.Jose {
                 CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
 
             var Identifier = UDF.SymmetricKeyUDF(Secret);
-            Info = Info ?? Identifier;
+            Info ??= Identifier;
 
             var KeyDerive = new KeyDeriveHKDF(Secret, Info);
-            var Encrypt = KeyDerive.Derive(IV, _CryptoDataEncrypt.Key.Length * 8);
-            var WrappedKey = KeyWrapRFC3394.WrapKey(Encrypt, _CryptoDataEncrypt.Key);
+            var Encrypt = KeyDerive.Derive(IV, CacheCryptoDataEncrypt.Key.Length * 8);
+            var WrappedKey = KeyWrapRFC3394.WrapKey(Encrypt, CacheCryptoDataEncrypt.Key);
 
             var Recipient = new Recipient("KDFW_AES_SHA_512", Identifier, WrappedKey);
-            Recipients = Recipients ?? new List<Recipient>();
+            Recipients ??= new List<Recipient>();
             Recipients.Add(Recipient);
 
             return Recipient;
@@ -337,8 +337,8 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         public void Complete() {
             CryptoDataEncrypt.Complete();
-            CipherText = _CryptoDataEncrypt.OutputData;
-            JTag = _CryptoDataEncrypt.Integrity;
+            CipherText = CacheCryptoDataEncrypt.OutputData;
+            JTag = CacheCryptoDataEncrypt.Integrity;
 
             CipherText = CryptoDataEncrypt.ProcessedData;
 
@@ -350,8 +350,6 @@ namespace Goedel.Cryptography.Jose {
         static Header ProtectedHeader(CryptoData Data,
                     string ContentType,
                     CryptoProviderDigest Digest) {
-
-
             var enc = Data.AlgorithmIdentifier.Bulk();
             var encID = enc.ToJoseID();
 
@@ -369,7 +367,7 @@ namespace Goedel.Cryptography.Jose {
 
         void BindCryptoData(CryptoData Data, string ContentType,
                     CryptoProviderDigest Digest) {
-            _CryptoDataEncrypt = Data;
+            CacheCryptoDataEncrypt = Data;
 
             var enc = Data.AlgorithmIdentifier.Bulk();
             var encID = enc.ToJoseID();
@@ -430,9 +428,9 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The decrypted data</returns>
         public byte[] Decrypt(KeyPair DecryptionKey = null, Recipient Recipient = null) {
 
-            DecryptionKey = DecryptionKey ?? MatchDecryptionKey(Recipients, out Recipient);
+            DecryptionKey ??= MatchDecryptionKey(Recipients, out Recipient);
 
-            Recipient = Recipient ?? MatchRecipient(DecryptionKey);
+            Recipient ??= MatchRecipient(DecryptionKey);
             var AlgorithmJose = Recipient?.Header.Alg;
             var ExchangeID = AlgorithmJose.FromJoseID();
 
@@ -499,7 +497,7 @@ namespace Goedel.Cryptography.Jose {
             var Identifier = UDF.SymmetricKeyUDF(Secret);
             var Recipient = MatchRecipient(Identifier);
 
-            Info = Info ?? Identifier;
+            Info ??= Identifier;
             var KeyDerive = new KeyDeriveHKDF(Secret, Info);
             var Encrypt = KeyDerive.Derive(IV, Provider.KeySize);
             var Exchange = KeyWrapRFC3394.UnwrapKey(Encrypt, Recipient.EncryptedKey);

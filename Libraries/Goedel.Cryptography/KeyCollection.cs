@@ -131,7 +131,12 @@ namespace Goedel.Cryptography {
             }
 
 
-
+        /// <summary>
+        /// Locate the private key with fingerprint <paramref name="udf"/> and return
+        /// the corresponding JSON description.
+        /// </summary>
+        /// <param name="udf">Key to locate</param>
+        /// <returns>The JSON description (if found).</returns>
         public abstract IJson LocatePrivateKey(string udf);
 
         /// <summary>
@@ -177,12 +182,12 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
-        /// or non-exportable according to the value of <paramref name="Exportable"/>.
+        /// Persist the key pair specified by <paramref name="joseKey"/> and mark as exportable
+        /// or non-exportable according to the value of <paramref name="exportable"/>.
         /// </summary>
         /// <param name="udf">The UDF of the key</param>
-        /// <param name="privateKey">The private key parameters.</param>
-        /// <param name="Exportable">If true, the key is exportable.</param>
+        /// <param name="joseKey">The private key parameters.</param>
+        /// <param name="exportable">If true, the key is exportable.</param>
         public abstract void Persist(string udf, IJson joseKey, bool exportable);
 
 

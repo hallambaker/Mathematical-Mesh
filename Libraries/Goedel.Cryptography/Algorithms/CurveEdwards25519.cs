@@ -324,28 +324,26 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The SHA-2-512 hash of the inputs as a big integer reduced modulo the sub group</returns>
         public static BigInteger HashModQ(byte[] A0, byte[] A1, byte[] A2, byte[] A3 = null) {
 
-            using (var Sha512 = SHA512.Create()) {
-
-                if (A0 != null) {
-                    Sha512.Digest(A0);
-                    }
-                if (A1 != null) {
-                    Sha512.Digest(A1);
-                    }
-                if (A2 != null) {
-                    Sha512.Digest(A2);
-                    }
-                if (A3 != null) {
-                    Sha512.Digest(A3);
-                    }
-                Sha512.TransformFinalBlock(ZeroByteArray, 0, 0);
-                var Digest = Sha512.Hash;
-                var Result = Digest.BigIntegerLittleEndian();
-
-                Result %= DomainParameters.Curve25519.Q;
-
-                return Result;
+            using var Sha512 = SHA512.Create();
+            if (A0 != null) {
+                Sha512.Digest(A0);
                 }
+            if (A1 != null) {
+                Sha512.Digest(A1);
+                }
+            if (A2 != null) {
+                Sha512.Digest(A2);
+                }
+            if (A3 != null) {
+                Sha512.Digest(A3);
+                }
+            Sha512.TransformFinalBlock(ZeroByteArray, 0, 0);
+            var Digest = Sha512.Hash;
+            var Result = Digest.BigIntegerLittleEndian();
+
+            Result %= DomainParameters.Curve25519.Q;
+
+            return Result;
             }
 
 
@@ -717,9 +715,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="k">The data to sign.</param>
         /// <param name="r">The presignature value.</param>
         /// <returns>The value r+k* Private.</returns>
-        public override BigInteger Sign (BigInteger k, BigInteger r) {
-            return (r + k * Private) % DomainParameters.Curve25519.Q;
-            }
+        public override BigInteger Sign(BigInteger k, BigInteger r) => (r + k * Private) % DomainParameters.Curve25519.Q;
 
 
         /// <summary>

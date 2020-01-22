@@ -23,11 +23,9 @@ namespace Goedel.Test {
 
         public static void CheckFilesEqual(this string File1, string File2) {
 
-            using (var FileStream1 = File1.OpenFileRead()) {
-                using (var FileStream2 = File2.OpenFileRead()) {
-                    Assert.True(FileStreamEquals(FileStream1, FileStream2));
-                    }
-                }
+            using var FileStream1 = File1.OpenFileRead();
+            using var FileStream2 = File2.OpenFileRead();
+            Assert.True(FileStreamEquals(FileStream1, FileStream2));
             }
 
         public static void CheckDirectroriesEqual(this string Directory1, string Directory2) {
@@ -72,19 +70,17 @@ namespace Goedel.Test {
             }
 
         public static bool FileStreamEquals(Stream Stream1, Stream Stream2) {
-            using (BufferedStream BufferedStream1 = new BufferedStream(Stream1)) {
-                using (BufferedStream BufferedStream2 = new BufferedStream(Stream2)) {
-                    while (true) {
-                        var B1 = BufferedStream1.ReadByte();
-                        var B2 = BufferedStream2.ReadByte();
+            using BufferedStream BufferedStream1 = new BufferedStream(Stream1);
+            using BufferedStream BufferedStream2 = new BufferedStream(Stream2);
+            while (true) {
+                var B1 = BufferedStream1.ReadByte();
+                var B2 = BufferedStream2.ReadByte();
 
-                        if (B1 != B2) {
-                            return false;
-                            }
-                        if (B1 < 0) {
-                            return true;
-                            }
-                        }
+                if (B1 != B2) {
+                    return false;
+                    }
+                if (B1 < 0) {
+                    return true;
                     }
                 }
             }

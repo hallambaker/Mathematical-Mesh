@@ -202,7 +202,7 @@ namespace Goedel.XUnit {
                     int Records = 1, int MaxSize = 0, int ReOpen = 0, int MoveStep = 0,
                     CryptoParameters CryptoParameters = null,
                     CryptoParameters CryptoParametersEntry = null) {
-            CryptoParameters = CryptoParameters ?? new CryptoParameters();
+            CryptoParameters ??= new CryptoParameters();
 
             var KeyCollection = CryptoParameters?.KeyCollection ?? CryptoParametersEntry?.KeyCollection;
 
@@ -225,13 +225,12 @@ namespace Goedel.XUnit {
 
             // Write additional records
             while (Record < Records) {
-                using (var XContainer = Container.Open(FileName, FileStatus.Append,
-                            cryptoParameters: CryptoParameters)) {
-                    for (var i = 0; (Record < Records) & i < ReOpen; i++) {
-                        var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
-                        XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
-                        Record++;
-                        }
+                using var XContainer = Container.Open(FileName, FileStatus.Append,
+                            cryptoParameters: CryptoParameters);
+                for (var i = 0; (Record < Records) & i < ReOpen; i++) {
+                    var Test = MakeConstant("Test ", ((Record + 1) % MaxSize));
+                    XContainer.Append(Test, cryptoParameters: CryptoParametersEntry);
+                    Record++;
                     }
                 }
 

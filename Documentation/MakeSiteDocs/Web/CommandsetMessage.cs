@@ -15,11 +15,10 @@ namespace ExampleGenerator {
 		// WebMessage
 		//
 		public static void WebMessage(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/message.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
-				obj._WebMessage(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/message.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/message.md" };
+            obj._WebMessage(Examples);
+            }
 		public void _WebMessage(CreateExamples Examples) {
 
 				 MakeTitle ("Message");
@@ -146,11 +145,10 @@ namespace ExampleGenerator {
 		// MessageReference
 		//
 		public static void MessageReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/message.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
-				obj._MessageReference(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/message.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/message.md" };
+            obj._MessageReference(Examples);
+            }
 		public void _MessageReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Message;

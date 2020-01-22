@@ -15,11 +15,10 @@ namespace ExampleGenerator {
 		// WebAccount
 		//
 		public static void WebAccount(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/profile.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
-				obj._WebAccount(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Guide/profile.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
+            obj._WebAccount(Examples);
+            }
 		public void _WebAccount(CreateExamples Examples) {
 
 				 MakeTitle ("account");
@@ -64,11 +63,10 @@ namespace ExampleGenerator {
 		// AccountReference
 		//
 		public static void AccountReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/profile.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
-				obj._AccountReference(Examples);
-				}
-			}
+            using var _Output = new StreamWriter("Reference/profile.md");
+            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
+            obj._AccountReference(Examples);
+            }
 		public void _AccountReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Account;

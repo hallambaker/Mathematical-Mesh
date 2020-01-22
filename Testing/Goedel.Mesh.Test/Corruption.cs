@@ -11,26 +11,25 @@ namespace Goedel.Mesh.Test {
 
         public static void CorruptDareMessage(this string filename) {
 
-            using (var inputStream = filename.OpenFileReadWrite()) {
-                var jsonReader = new JSONBCDReader(inputStream);
+            using var inputStream = filename.OpenFileReadWrite();
+            var jsonReader = new JSONBCDReader(inputStream);
 
-                Assert.True(jsonReader.StartArray());
-                var Header = DareHeader.FromJSON(jsonReader, false);
-                Assert.NotNull(Header);
-                Assert.True(jsonReader.NextArray());
+            Assert.True(jsonReader.StartArray());
+            var Header = DareHeader.FromJSON(jsonReader, false);
+            Assert.NotNull(Header);
+            Assert.True(jsonReader.NextArray());
 
-                jsonReader.PeekToken();
+            jsonReader.PeekToken();
 
-                switch (jsonReader.TokenType) {
-                    case JSONReader.Token.Binary: {
-                        CorruptBinaryJSON(inputStream);
-                        return;
-                        }
+            switch (jsonReader.TokenType) {
+                case JSONReader.Token.Binary: {
+                    CorruptBinaryJSON(inputStream);
+                    return;
+                    }
 
-                    case JSONReader.Token.String: {
-                        CorruptStringJSON(inputStream);
-                        return;
-                        }
+                case JSONReader.Token.String: {
+                    CorruptStringJSON(inputStream);
+                    return;
                     }
                 }
             }

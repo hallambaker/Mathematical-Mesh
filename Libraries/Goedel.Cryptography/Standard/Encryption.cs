@@ -220,8 +220,8 @@ namespace Goedel.Cryptography.Standard {
         public override byte[] Encrypt(byte[] Data,
                         byte[] Key = null, byte[] IV = null) {
 
-            Key = Key ?? Provider.Key;
-            IV = IV ?? Provider.IV;
+            Key ??= Provider.Key;
+            IV ??= Provider.IV;
 
             //Console.WriteLine("Encrypt {0}", Key.Base16());
 
@@ -238,8 +238,8 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>The result of the cryptographic operation.</returns>
         public override byte[] Decrypt(byte[] Data,
                         byte[] Key = null, byte[] IV = null) {
-            Key = Key ?? Provider.Key;
-            IV = IV ?? Provider.IV;
+            Key ??= Provider.Key;
+            IV ??= Provider.IV;
 
             //Console.WriteLine("Decrypt {0}", Key.Base16());
             //Console.WriteLine("IV {0}", IV.Base16());
@@ -325,7 +325,7 @@ namespace Goedel.Cryptography.Standard {
         /// null, the default catalog is used.</param>
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
-            Catalog = Catalog ?? CryptoCatalog.Default;
+            Catalog ??= CryptoCatalog.Default;
             var Default = Catalog.Add(CryptoAlgorithmID.AES256CBC, 256, _AlgorithmClass, Factory);
 
             Catalog.Add(CryptoAlgorithmID.AES256, 256, _AlgorithmClass, Factory);

@@ -11,23 +11,22 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageContact(MessageContact Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var recipient = Options.Recipient.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var recipient = Options.Recipient.Value;
 
-                var message = new RequestContact() {
-                    Recipient = recipient,
-                    Reply = true
-                    };
+            var message = new RequestContact() {
+                Recipient = recipient,
+                Reply = true
+                };
 
-                contextAccount.SendMessage(message, recipient);
+            contextAccount.SendMessage(message, recipient);
 
 
-                var result = new ResultSent() {
-                    Success = true,
-                    Message = message
-                    };
-                return result;
-                }
+            var result = new ResultSent() {
+                Success = true,
+                Message = message
+                };
+            return result;
             }
         /// <summary>
         /// Dispatch method
@@ -35,25 +34,24 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageConfirm(MessageConfirm Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
-                var recipient = Options.Recipient.Value;
-                var text = Options.Text.Value;
+            using var contextAccount = GetContextAccount(Options);
+            var recipient = Options.Recipient.Value;
+            var text = Options.Text.Value;
 
-                var message = new RequestConfirmation() {
-                    Recipient = recipient,
-                    Text = text
-                    };
+            var message = new RequestConfirmation() {
+                Recipient = recipient,
+                Text = text
+                };
 
-                contextAccount.SendMessage(message, recipient);
+            contextAccount.SendMessage(message, recipient);
 
 
-                var result = new ResultSent() {
-                    Success = true,
-                    Message = message
-                    };
+            var result = new ResultSent() {
+                Success = true,
+                Message = message
+                };
 
-                return result;
-                }
+            return result;
             }
 
         /// <summary>
@@ -63,45 +61,44 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessagePending(MessagePending Options) {
 
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
 
-                // this is failing to read in the inbound messages as it should.
-                // The 
+            // this is failing to read in the inbound messages as it should.
+            // The 
 
 
-                contextAccount.Sync();
+            contextAccount.Sync();
 
-                // get the inbound spool
-                var inbound = contextAccount.GetSpoolInbound();
+            // get the inbound spool
+            var inbound = contextAccount.GetSpoolInbound();
 
-                var messages = new List<Message>();
-                var completed = new Dictionary<string, Message>();
+            var messages = new List<Message>();
+            var completed = new Dictionary<string, Message>();
 
-                foreach (var message in inbound.Select(1, true)) {
-                    var meshMessage = Message.FromJSON(message.GetBodyReader());
-                    if (!completed.ContainsKey(message.Header.ContentMeta.UniqueID)) {
-                        switch (meshMessage) {
-                            case MessageComplete meshMessageComplete: {
-                                foreach (var reference in meshMessageComplete.References) {
-                                    completed.Add(reference.MessageID, meshMessageComplete);
-                                    }
-                                break;
+            foreach (var message in inbound.Select(1, true)) {
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(message.Header.ContentMeta.UniqueID)) {
+                    switch (meshMessage) {
+                        case MessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
                                 }
-                            default: {
-                                messages.Add(meshMessage);
-                                break;
-                                }
+                            break;
+                            }
+                        default: {
+                            messages.Add(meshMessage);
+                            break;
                             }
                         }
                     }
-
-                var result = new ResultPending() {
-                    Success = true,
-                    Messages = messages
-                    };
-
-                return result;
                 }
+
+            var result = new ResultPending() {
+                Success = true,
+                Messages = messages
+                };
+
+            return result;
             }
 
         /// <summary>
@@ -110,14 +107,11 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageStatus(MessageStatus Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var result = new ResultSent() {
 
-                var result = new ResultSent() {
-
-                    };
-                throw new NYI();
-                //return result;
-                }
+                };
+            throw new NYI();
             }
 
 
@@ -139,26 +133,24 @@ namespace Goedel.Mesh.Shell {
 
 
         ShellResult Process(IAccountOptions options, string requestid, bool accept) {
-            using (var contextAccount = GetContextAccount(options)) {
+            using var contextAccount = GetContextAccount(options);
+            var recipient = "alice@example.com";
+            // Hack: Need to pull the message off the spool here and see what type it is,
+            // then respond.
 
-                var recipient = "alice@example.com";
-                // Hack: Need to pull the message off the spool here and see what type it is,
-                // then respond.
 
+            var message = new ResponseConfirmation() {
+                Recipient = recipient,
+                Accept = accept
+                };
 
-                var message = new ResponseConfirmation() {
-                    Recipient = recipient,
-                    Accept = accept
-                    };
+            contextAccount.SendMessage(message, recipient);
 
-                contextAccount.SendMessage(message, recipient);
-
-                var result = new ResultSent() {
-                    Success = true,
-                    Message = message
-                    };
-                return result;
-                }
+            var result = new ResultSent() {
+                Success = true,
+                Message = message
+                };
+            return result;
             }
 
         /// <summary>
@@ -167,13 +159,11 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageBlock(MessageBlock Options) {
-            using (var contextAccount = GetContextAccount(Options)) {
+            using var contextAccount = GetContextAccount(Options);
+            var result = new ResultSent() {
 
-                var result = new ResultSent() {
-
-                    };
-                return result;
-                }
+                };
+            return result;
             }
 
 

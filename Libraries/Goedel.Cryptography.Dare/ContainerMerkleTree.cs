@@ -97,7 +97,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public override void MakeTrailer(ref DareTrailer Trailer) {
 
-            Trailer = Trailer ?? CryptoStackContainer.GetNullTrailer();
+            Trailer ??= CryptoStackContainer.GetNullTrailer();
 
             if (FrameCount > 0) {
                 Trailer.TreeDigest = GetTreeDigest(FrameCount, Trailer.PayloadDigest);
