@@ -25,10 +25,10 @@ namespace Goedel.Mesh.Test {
 
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMesh("main");
 
-            var (escrow, shares) = deviceAdmin.Escrow(3, 2);
+            var shares = deviceAdmin.Escrow(3, 2);
             var recoverShares = new List<string> { shares[0].UDFKey, shares[2].UDFKey };
 
-            var deviceAdminRecovered = machineAliceRecover.MeshHost.RecoverMesh("main", escrow: escrow, shares: recoverShares);
+            var deviceAdminRecovered = machineAliceRecover.MeshHost.RecoverMesh("main", shares: recoverShares);
 
             }
 

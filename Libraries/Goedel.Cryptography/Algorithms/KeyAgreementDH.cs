@@ -190,6 +190,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The composite key</returns>
         public IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
             Combine(contribution as DiffeHellmanPublic);
+        
+        ///<summary>The encoding of the public value.</summary>
         public byte[] Encoding => Public.ToByteArray();
 
         #endregion
@@ -358,6 +360,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public DiffeHellmanPrivate Combine(DiffeHellmanPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -375,6 +379,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,

@@ -409,7 +409,7 @@ namespace Goedel.Cryptography.Jose {
                 KID.SplitAccountID(out var Domain, out var Account);
 
                 if (Account == null) {
-                    var DecryptionKey = keyCollection.LocatePrivate(KID);
+                    var DecryptionKey = keyCollection.LocatePrivateKeyPair(KID);
                     if (DecryptionKey != null) {
                         RecipientOut = Recipient;
                         return DecryptionKey;

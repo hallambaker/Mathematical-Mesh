@@ -52,10 +52,8 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshEscrow(MeshEscrow Options) {
             var contextMesh = GetContextMeshAdmin(Options);
-            var file = Options.File.Value ?? contextMesh.ProfileMesh.UDF + ".escrow";
+            var shares = contextMesh.Escrow(3, 2);
 
-            (var escrow, var shares) = contextMesh.Escrow(3, 2);
-            escrow.ToFile(file);
             var textShares = new List<string>();
             foreach (var share in shares) {
                 textShares.Add(share.UDFKey);
@@ -63,8 +61,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultEscrow() {
                 Success = true,
-                Shares = textShares,
-                Filename = file
+                Shares = textShares
                 };
 
             }
@@ -82,7 +79,6 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshRecover(MeshRecover Options) {
-            var file = Options.File.Value;
 
             var recoverShares = new List<string>();
             AddIfPresent(recoverShares, Options.Share1);
@@ -96,17 +92,8 @@ namespace Goedel.Mesh.Shell {
             AddIfPresent(recoverShares, Options.Share8);
             var secret = new SharedSecret(recoverShares);
 
-            DareEnvelope escrow = null;
 
-            if (file != null) {
-                "convert file to encrypted data".TaskFunctionality();
-                }
-            else {
-                "Pull encrypted escrow data from service".TaskFunctionality();
-                }
-
-
-            var contextMesh = ContextMeshAdmin.RecoverMesh(MeshHost, secret, escrow: escrow);
+            var contextMesh = ContextMeshAdmin.RecoverMesh(MeshHost, secret.Key);
 
             "recover subordinate accounts, etc.".TaskFunctionality();
             return new ResultRecover() {

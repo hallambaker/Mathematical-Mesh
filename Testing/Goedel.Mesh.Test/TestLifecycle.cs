@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Test {
         /// <param name="UDF"></param>
         static void CheckPersisted(string UDF, KeyCollection keyCollection, bool persisted, bool exportable) {
 
-            var key = keyCollection.LocatePrivate(UDF);
+            var key = keyCollection.LocatePrivateKeyPair(UDF);
             if (!persisted) {
                 Assert.Null(key);
                 return;

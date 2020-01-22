@@ -45,7 +45,9 @@ namespace Goedel.Cryptography.Algorithms {
         public static CurveEdwards448 Neutral => NeutralPoint.Copy();
         #endregion
 
-
+        /// <summary>
+        /// Return a IKeyAdvancedPublic public key for this point. 
+        /// </summary>
         public override IKeyAdvancedPublic KeyAdvancedPublic => new CurveEdwards448Public(this);
 
         /// <summary>Default constructor</summary>
@@ -229,16 +231,41 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
 
+        /// <summary>
+        /// Calculate the value of K for the domain parameters <paramref name="domain"/>,
+        /// point <paramref name="encodedR"/> and data to be signed <paramref name="data"/>.
+        /// </summary>
+        /// <param name="domain">The domain parameter</param>
+        /// <param name="encodedR">The encoding of the point R.</param>
+        /// <param name="data">The data to sign.</param>
+        /// <returns>The value HashModQ (<paramref name="domain"/>, <paramref name="encodedR"/>,
+        ///     Public, <paramref name="data"/>)</returns>
 
         public override BigInteger GetK(
-                byte[] dom2,
-                byte[] Rs,
-                byte[] data) => HashModQ(dom2, Rs, Encode(), data);
+                byte[] domain,
+                byte[] encodedR,
+                byte[] data) => HashModQ(domain, encodedR, Encode(), data);
 
+        /// <summary>
+        /// Calculate the domain parameters for the cryptographic algoriothm <paramref name="cryptoAlgorithm"/>
+        /// and encoded y value <paramref name="y"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithm">The cryptographic algorithm identifier (used to specify
+        /// whether the signed data is prehashed or not.</param>
+        /// <param name="y">The y value.</param>
+        /// <returns>The domain parameter.</returns>
         public override byte[] Domain(
                 CryptoAlgorithmID cryptoAlgorithm,
                 byte[] y) => Dom4(cryptoAlgorithm, y);
 
+        /// <summary>
+        /// Calculate the domain parameters for the cryptographic algoriothm <paramref name="cryptoAlgorithm"/>
+        /// and encoded y value <paramref name="y"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithm">The cryptographic algorithm identifier (used to specify
+        /// whether the signed data is prehashed or not.</param>
+        /// <param name="y">The y value.</param>
+        /// <returns>The domain parameter.</returns>
         public static byte[] Dom4(CryptoAlgorithmID cryptoAlgorithm, byte[] y) {
             byte x = 0;
             switch (cryptoAlgorithm) {
@@ -326,17 +353,29 @@ namespace Goedel.Cryptography.Algorithms {
             return Verify(k, s, R);
             }
 
-        public override bool Verify(BigInteger k, BigInteger s, CurveEdwards R) {
+        /// <summary>
+        /// Verify that s.B = R + k.P where <paramref name="s"/> is s, <paramref name="curveR"/>
+        /// is R, <paramref name="k"/> is k and P is the public key point.
+        /// </summary>
+        /// <param name="k">The scalar value being signed.</param>
+        /// <param name="s">The signature scalar value.</param>
+        /// <param name="curveR">The fixed point used to obscure the private key value.</param>
+        /// <returns>True if the signature is correct, otherwise false.</returns>
+        public override bool Verify(BigInteger k, BigInteger s, CurveEdwards curveR) {
 
             var sB = Base.Multiply(s);
             var hA = Multiply(k);
-            var Rha = hA.Add(R);
+            var Rha = hA.Add(curveR);
 
             var Result = sB.Equal(Rha);
 
             return Result;
             }
 
+        /// <summary>
+        /// Return a threshold signature coordinator for this public key.
+        /// </summary>
+        /// <returns>The signature coordinator.</returns>
         public override ThresholdCoordinatorEdwards Coordinator() =>
                 new ThresholdCoordinatorEdwards448(this);
         }
@@ -351,6 +390,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>The public key, i.e. a point on the curve</summary>
         public CurveEdwards448 Public { get; }
 
+        /// <summary>The public key, i.e. a point on the curve</summary>
         public override CurveEdwards PublicKey => Public;
 
         /// <summary>Encoded form of the public key.</summary>
@@ -456,11 +496,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>Hash of the secret value bytes [31:63]</summary>
         byte[] HashPrefix { get; }
 
-        /// <summary>The private key, i.e. a scalar</summary>
-        public BigInteger Private { get; }
+
+        /// <summary>The public key, a point on the curve</summary>
+        public CurveEdwards448Public Public { get; }
 
         /// <summary>The corresponding public key</summary>
-        public CurveEdwards448Public Public { get; }
         public override CurveEdwards PublicPoint => Public.Public;
 
         /// <summary>The wire encoding. Null if the key is not exportable</summary>
@@ -593,6 +633,13 @@ namespace Goedel.Cryptography.Algorithms {
             return Copy;
             }
 
+        /// <summary>
+        /// Perform a presigning operation on the message <paramref name="message"/> with
+        /// context <paramref name="context"/>.
+        /// </summary>
+        /// <param name="message">The message to pre-sign</param>
+        /// <param name="context">Optional signature context.</param>
+        /// <returns>The scalar r and point r.B.</returns>
         public override (BigInteger, byte[]) PreSign(byte[] message, byte[] context = null) {
             var r = CurveEdwards448.HashModQ(context, HashPrefix, message);
             var R = CurveEdwards448.Base.Multiply(r);
@@ -600,14 +647,29 @@ namespace Goedel.Cryptography.Algorithms {
             return (r, Rs);
             }
 
+        /// <summary>
+        /// Sign the scalar data value <paramref name="k"/> using scalar presignature
+        /// value <paramref name="r"/>.
+        /// </summary>
+        /// <param name="k">The data to sign.</param>
+        /// <param name="r">The presignature value.</param>
+        /// <returns>The value r+k* Private.</returns>
         public override BigInteger Sign(BigInteger k, BigInteger r) {
             return (r + k * Private) % DomainParameters.Curve448.Q;
             }
 
-        public override byte[] EncodeSignature(byte[] Rs, BigInteger scalar) {
+
+        /// <summary>
+        /// Encode the signature with point <paramref name="encodedR"/> and
+        /// scalar value <paramref name="scalar"/>.
+        /// </summary>
+        /// <param name="encodedR">The point value.</param>
+        /// <param name="scalar">The signature scalar.</param>
+        /// <returns>The encoded signature.</returns>
+        public override byte[] EncodeSignature(byte[] encodedR, BigInteger scalar) {
             var Bs = scalar.ToByteArrayLittleEndian();
             var Result = new byte[114]; // Is set to zeros
-            Array.Copy(Rs, Result, Rs.Length); // little endian so trailing zeroes don't matter.
+            Array.Copy(encodedR, Result, encodedR.Length); // little endian so trailing zeroes don't matter.
             Array.Copy(Bs, 0, Result, 57, Bs.Length);
 
             return Result;
@@ -615,62 +677,6 @@ namespace Goedel.Cryptography.Algorithms {
 
 
 
-
-        ///// <summary>
-        /////    Sign a message using the public key according to RFC8032
-        /////    
-        /////    The inputs to the signing procedure is the private key, a 57-octet
-        /////    string, a flag F, which is 0 for Ed448, 1 for Ed448ph, context C of
-        /////    at most 255 octets, and a message M of arbitrary size.
-        ///// 
-        /////    1.  Hash the private key, 57 octets, using SHAKE256(x, 114).  Let h
-        /////        denote the resulting digest.Construct the secret scalar s from
-        /////        the first half of the digest, and the corresponding public key A,
-        /////        as described in the previous section.Let prefix denote the
-        /////        second half of the hash digest, h[57],..., h[113].
-        ///// 
-        /////    2.  Compute SHAKE256(dom4(F, C) || prefix || PH(M), 114), where M is
-        /////        the message to be signed, F is 1 for Ed448ph, 0 for Ed448, and C
-        /////        is the context to use.Interpret the 114-octet digest as a
-        /////        little-endian integer r.
-        ///// 
-        /////    3.  Compute the point[r] B.  For efficiency, do this by first
-        /////        reducing r modulo L, the group order of B.Let the string R be
-        /////        the encoding of this point.
-        ///// 
-        /////    4.  Compute SHAKE256(dom4(F, C) || R || A || PH(M), 114), and
-        /////        interpret the 114-octet digest as a little-endian integer k.
-        ///// 
-        /////    5.  Compute S = (r + k * s) mod L.For efficiency, again reduce k
-        /////        modulo L first.
-        ///// 
-        /////    6.  Form the signature of the concatenation of R (57 octets) and the
-        /////        little-endian encoding of S(57 octets; the ten most significant
-        /////       bits of the final octets are always zero).
-        ///// </summary>
-        ///// <remarks>This method does not prehash the message data since if
-        ///// prehashing is desired, it is because the data needs to be hashed
-        ///// before being presented.</remarks>
-        ///// <param name="message">The message</param>
-        ///// <param name="context">Context value, if used.</param>
-        ///// <returns>The encoded signature data</returns>
-        //public byte[] Sign(byte[] message, byte[] context = null) {
-
-        //    var r = CurveEdwards448.HashModQ(context, HashPrefix, message);
-        //    var R = CurveEdwards448.Base.Multiply(r);
-        //    var Rs = R.Encode();
-
-        //    var h = CurveEdwards448.HashModQ(context, Rs, Public.Encoding, message);
-        //    var s = (r + h * Private) % CurveEdwards448.Q;
-
-        //    var Bs = s.ToByteArrayLittleEndian(); // Is little endian conversion.
-
-        //    var Result = new byte[114]; // Is set to zeros
-        //    Array.Copy(Rs, Result, Rs.Length); // little endian so trailing zeroes don't matter.
-        //    Array.Copy(Bs, 0, Result, 57, Bs.Length);
-
-        //    return Result;
-        //    }
 
 
         /// <summary>
@@ -774,6 +780,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public CurveEdwards448Private Combine(CurveEdwards448Private contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -787,6 +795,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public override IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
@@ -802,6 +812,7 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveEdwards448Result : ResultECDH {
 
+        ///<summary>The key agreement value, a point on the curve.</summary>
         public override Curve Agreement => AgreementEd448;
 
         /// <summary>The key agreement result</summary>
@@ -813,7 +824,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns></returns>
         public override byte[] DER() => AgreementEd448.Encode();
 
-
         /// <summary>The key agreement result as a byte array</summary>
         public override byte[] IKM => AgreementEd448.Encode();
 
@@ -822,11 +832,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         public override KeyPair EphemeralKeyPair => new KeyPairEd448(EphemeralKeyValue448);
 
-
         /// <summary>Public key generated by ephemeral key generation.</summary>
         CurveEdwards448Public EphemeralKeyValue448 => EphemeralPublicValue as CurveEdwards448Public;
-
         }
-
-
     }

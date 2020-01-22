@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
+using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,14 @@ namespace Goedel.Mesh.Client {
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                byte[] masterSecret = null,
+                bool? persist = null) {
 
             // Create the master profile.
-            var profileMaster = ProfileMesh.Generate(meshHost.MeshMachine);
+            var profileMaster = ProfileMesh.Generate(
+                meshHost.MeshMachine, algorithmSign, algorithmEncrypt,
+                masterSecret, persist);
             profileDevice = profileDevice ?? ProfileDevice.Generate(meshHost.MeshMachine,
                 algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
                 algorithmAuthenticate: algorithmAuthenticate);
@@ -126,7 +131,7 @@ namespace Goedel.Mesh.Client {
             profileMaster.KeysOnlineSignature.Add(new PublicKey(keyOverlaySignature.KeyPair));
 
             var keyMasterSignature =
-                    meshMachine.KeyCollection.LocatePrivate(profileMaster.UDF);
+                    meshMachine.KeyCollection.LocatePrivateKeyPair(profileMaster.UDF);
             profileMaster.Sign(keyMasterSignature);
 
             return new CatalogedAdmin() {
@@ -163,7 +168,7 @@ namespace Goedel.Mesh.Client {
             var assertionDeviceConnection = new ConnectionDevice(assertionDevicePrivate);
 
             keyMasterSignature = keyMasterSignature ??
-                    MeshMachine.KeyCollection.LocatePrivate(ProfileMesh.UDF);
+                    MeshMachine.KeyCollection.LocatePrivateKeyPair(ProfileMesh.UDF);
             Sign(assertionDeviceConnection);
 
             var catalogEntryDevice = new Mesh.CatalogedDevice() {
@@ -178,7 +183,10 @@ namespace Goedel.Mesh.Client {
             }
 
 
-
+        /// <summary>
+        /// Accept device connection request.
+        /// </summary>
+        /// <param name="request"></param>
         public void Accept(AcknowledgeConnection request) {
             var device = CreateCataloguedDevice(request.MessageConnectionRequest.ProfileDevice);
             }
@@ -190,9 +198,9 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Create an account without attaching it to a service (yet).
         /// </summary>
-        /// <param name="localName"></param>
-        /// <param name="algorithmEncrypt"></param>
-        /// <returns></returns>
+        /// <param name="localName">Local (friendly) name for the account.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm to use.</param>
+        /// <returns>The created account context.</returns>
         public ContextAccount CreateAccount(
 
                     string localName,
@@ -233,50 +241,57 @@ namespace Goedel.Mesh.Client {
         /// Create an escrow set for the master key.
         /// </summary>
         /// <param name="shares">Number of shares to create</param>
-        /// <param name="quorum">Number of shares required to recreate the quorum</param>
-        /// <param name="bits">Key size in bits</param>
+        /// <param name="threshold">Number of shares required to recreate the quorum</param>
         /// <returns>The encrypted escrow entry and the key shares.</returns>
-        public (DareEnvelope, KeyShareSymmetric[]) Escrow(int shares, int quorum, int bits = 128) {
-
-            var secret = new SharedSecret(bits);
-            var keyShares = secret.Split(shares, quorum);
-            var cryptoStack = new CryptoStack(secret, CryptoAlgorithmID.AES256CBC);
-
-
-            var MasterSignatureKeyPair = KeyCollection.LocatePrivate(ProfileMesh.KeyOfflineSignature.UDF);
-            var MasterSignatureKey = Key.FactoryPrivate(MasterSignatureKeyPair);
-            var MasterEscrowKeys = new List<Key>();
-
-            var EscrowedKeySet = new EscrowedKeySet() {
-                MasterSignatureKey = MasterSignatureKey,
-                MasterEscrowKeys = MasterEscrowKeys
-                };
-
-            var message = new DareEnvelope(cryptoStack, EscrowedKeySet.GetBytes(true));
-
-            return (message, keyShares);
+        public KeyShareSymmetric[] Escrow(int shares, int threshold) {
+            // pull the master key
+            var mastersecret = KeyCollection.LocatePrivateKey(ProfileMesh.KeyOfflineSignature.UDF);
+            // convert to byte array;
+            var mastersecretBytes = (mastersecret as PrivateKeyUDFMaster).PrivateValue.FromBase32();
+            Console.WriteLine(mastersecretBytes.ToStringBase16FormatHex());
+            // split (n, t) ways
+            var secret = new SharedSecret(mastersecretBytes);
+            var keyShares = secret.Split(shares, threshold);
+            return keyShares;
             }
 
+
+        /// <summary>
+        /// Recover a Mesh Profile from the recovery key value.
+        /// </summary>
+        /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
+        /// <param name="secretBytes">The recovered UDF key derrivation seed. This may have leading
+        /// zeros.</param>
+        /// <param name="profileDevice">The device profile to bind to.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        /// <returns>An administration context instance for the recovered profile.</returns>
         public static ContextMeshAdmin RecoverMesh(
                 MeshHost meshHost,
-                SharedSecret secret,
+                byte[] secretBytes,
                 ProfileDevice profileDevice = null,
-                DareEnvelope escrow = null,
-
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
                 ) {
 
+            // trim the shared secret value to remove leading zeros,
+            // the key type, etc.
 
-            var escrowedKeySet = EscrowedKeySet.FromJSON(escrow.GetBodyReader(secret), true);
-            var keySign = escrowedKeySet.MasterSignatureKey.GetKeyPair(KeySecurity.Device, keyCollection: meshHost.KeyCollection);
-            var keyEncrypt = escrowedKeySet.MasterEncryptionKey.GetKeyPair(KeySecurity.Device, keyCollection: meshHost.KeyCollection);
+            int start;
+            for (start = 0; (start < secretBytes.Length) && secretBytes[start] == 0; start++) {
+                }
+            (secretBytes[start++] == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
+            var algorithm = secretBytes[start++]* 0x100 + secretBytes[start++];
+            (algorithm == (int)UDFAlgorithmIdentifier.MeshProfileMaster).AssertTrue();
 
-            var profileMaster = new ProfileMesh(keySign, null, keyEncrypt);
-
-
-            return CreateMesh(meshHost, profileMaster, profileDevice);
+            var length = secretBytes.Length - start;
+            var masterSecret = new byte[length];
+            Buffer.BlockCopy(secretBytes, start, masterSecret, 0, length);
+            Console.WriteLine(masterSecret.ToStringBase16FormatHex());
+            return meshHost.CreateMesh("main", algorithmSign, algorithmEncrypt, algorithmAuthenticate,
+                masterSecret);
             }
 
         #endregion

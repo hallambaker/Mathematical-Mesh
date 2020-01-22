@@ -11,49 +11,151 @@ The output files are GitHub compatible Markdown.
 ## Part 1: Architecture 
 
 
-No information in pending!!!
-Alice> device pending
-Alice> device accept NDWF-RH6B-OH3E-AO4A-CNLU-7ZWJ-TOLW
-
 
 5.4.1. Direct Connection
+
+
+````
+Alice2> device request alice@example.com
+   Witness value = NGPY-QAYV-OCQD-W6JD-U3HP-3OAQ-57OW
+   Personal Mesh = MCSC-2POG-PH7T-ODJX-HOCA-B4XY-AFSK
+````
+
+
+No information in pending!!!
+````
+Alice> device pending
+Alice> device accept NCPO-L452-CMZY-MLQO-TM52-KQYW-EFGP
+````
+
+Connected device does not get access to the new info:
+
+````
+Alice2> password list
+ERROR - Object reference not set to an instance of an object.
+````
+
+````
 Alice2> password list
 ERROR - The feature has not been implemented
+````
+
 
 5.4.2. Pin Connection
+
+
+Should report the devices that were automatically connected.
+````
+Alice> device pending
+````
+
+````
 Alice3> account sync
-ERROR - The feature has not been implemented
+ERROR - Object reference not set to an instance of an object.
+````
+
 
 5.4.3. EARL/QR Code Connection
+
+````
 Alice4> device pre devices@example.com /key=udf://example.com/EDP5-KKAU-JTGJ-LDXT-4UAE-Y4A7-4QVB-C5
 ERROR - Object reference not set to an instance of an object.
+````
 
+````
 Alice4> account sync
-ERROR - The feature has not been implemented
+ERROR - Object reference not set to an instance of an object.
+````
 
+````
+Alice> device earl udf://example.com/EC4X-PWKB-JNOA-FRW7-DBBT-ZAYU-3E
+    VA-FR
+ERROR - Object reference not set to an instance of an object.
+````
+
+````
 Alice4> account sync
-ERROR - The feature has not been implemented
-
+ERROR - Object reference not set to an instance of an object.
+````
 
 5.5.1. Remote
 
-Bob> message contact alice@example.com
+Need some report back here:
 
+````
+Bob> message contact alice@example.com
+````
+
+Implement message pending for the contact messages:
+````
 Alice> message pending
 Alice> message accept tbs
+````
+
+Should add some treatment of what Bob does at the other end.
 
 
 5.6. Sharing Confidential Data in the Cloud
 
-Alice> group create groupw@example.com
-ERROR - The feature has not been implemented
+Seems like we are oversharing here:
 
+````
+Alice> group create groupw@example.com
+{
+  "Profile": {
+    "KeyOfflineSignature": {
+      "UDF": "MB2A-I332-A75U-OHD7-WLHR-XRZK-CLRU",
+      "PublicParameters": {
+        "PublicKeyECDH": {
+          "crv": "Ed448",
+          "Public": "V9z0yscYdi-vi2cqWrehpdZhy45EjB-AIaXWC7iIVtmHckZA
+              xSlK
+  pDd-vDVDwBgF50egU0gEvMUA"}}},
+    "KeyEncryption": {
+      "UDF": "MB2W-EYG3-EFXZ-QGEL-BCFJ-BA76-IF6H",
+      "PublicParameters": {
+        "PublicKeyECDH": {
+          "crv": "Ed448",
+          "Public": "8XTv_F07n1odENFoyPvc8gXF95iZoOp1sLZ3HeO4jwxy42Qe
+              TfE8
+  2HtQWT59vPV5X8uSg0iKdloA"}}}}}
+````
+
+````
+Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=grou
+    pw@example.com
+ERROR - The command  is not known.
+Bob> dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+    stFile1-group.dare'.
+````
+
+````
+Alice> dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+    stFile1-group.dare'.
+````
+
+````
+Alice> group delete groupw@example.com bob@example.com
+ERROR - The feature has not been implemented
+````
+
+````
+Alice> dare decode  TestFile1-group.dare
+ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
+    stFile1-group.dare'.
+````
 
 5.7. Escrow and Recovery of Keys
 
-lice> mesh escrow
-ERROR - The cryptographic provider does not permit export of the private key parameters
+OK, need to reset this completely to use the new keygen approach.
 
+````
+Alice> mesh escrow
+ERROR - The cryptographic provider does not permit export of the priv
+    ate key parameters
+````
 
 
 ## Part II: UDF
@@ -62,7 +164,6 @@ ERROR - The cryptographic provider does not permit export of the private key par
 
 ## Part III DARE 
 
-Rename Container to DARE Sequence
 
 ## Part IV Schema
 

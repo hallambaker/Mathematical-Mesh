@@ -60,12 +60,12 @@ Bob's contact information has been added to Alice's address book:
 <cmd>Alice> contact list
 <rsp>{
   "Self": true,
-  "Key": "NB54-QGQH-2PL5-DCAV-SXY6-ER2T-B556",
+  "Key": "NDMW-OM2B-66IV-DWFH-MQXO-X322-IP74",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
   "Self": false,
-  "Key": "NCG6-H4KN-TR6Z-QKFK-KRQO-2L3N-PAKK",
+  "Key": "NBBK-W7H6-RMXW-D6HP-ZS3Q-EVNC-N7RX",
   "EnvelopedContact": [{},
     "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
   I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>

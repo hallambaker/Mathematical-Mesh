@@ -4,6 +4,7 @@
 
     Using Goedel.Cryptography.Jose
     Using Goedel.Cryptography.Dare
+	Extern Key
 
 	Section 2 "Shared Classes"
 		Description
@@ -90,6 +91,7 @@
 			Multiple
 			Description
 				|The escrowed master escrow keys.
+
 
 
 

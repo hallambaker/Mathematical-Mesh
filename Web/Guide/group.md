@@ -55,19 +55,19 @@ Recryption groups are created using the `group create` command:
 <rsp>{
   "Profile": {
     "KeyOfflineSignature": {
-      "UDF": "MAZW-YIWQ-I46E-2NUB-4YRL-SX3O-FXQK",
+      "UDF": "MB2A-I332-A75U-OHD7-WLHR-XRZK-CLRU",
       "PublicParameters": {
         "PublicKeyECDH": {
           "crv": "Ed448",
-          "Public": "yO4Lqx_Q0A07evC7v9qxgcWR5oWld_3ZJViOE2wT_UfCcZegF33k
-  ImBpcyZgcm-QyNatdeArEByA"}}},
+          "Public": "V9z0yscYdi-vi2cqWrehpdZhy45EjB-AIaXWC7iIVtmHckZAxSlK
+  pDd-vDVDwBgF50egU0gEvMUA"}}},
     "KeyEncryption": {
-      "UDF": "MDAA-MKLP-S7T5-5LD5-NSOE-JX2L-GVHY",
+      "UDF": "MB2W-EYG3-EFXZ-QGEL-BCFJ-BA76-IF6H",
       "PublicParameters": {
         "PublicKeyECDH": {
           "crv": "Ed448",
-          "Public": "FYPiybVQ-I7zdMxFl3Ol96WlnTig1V18eY2dyfgu9Nantpxd6H8k
-  fhJpGR0XwyjJDBzfR4hHAGQA"}}}}}</div>
+          "Public": "8XTv_F07n1odENFoyPvc8gXF95iZoOp1sLZ3HeO4jwxy42QeTfE8
+  2HtQWT59vPV5X8uSg0iKdloA"}}}}}</div>
 ~~~~
 
 This command creates the group groupw@example.com. Since Alice created the

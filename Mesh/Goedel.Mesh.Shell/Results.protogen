@@ -75,7 +75,6 @@
 
 	Structure ResultEscrow
 		Inherits		Result
-		String			Filename
 		String			Service
 		String			Shares
 			Multiple

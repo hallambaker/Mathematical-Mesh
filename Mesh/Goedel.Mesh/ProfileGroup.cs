@@ -47,7 +47,7 @@ namespace Goedel.Mesh {
                     Contact user) {
 
 
-            var key = meshMachine.KeyCollection.LocatePrivate(KeyEncryption.UDF) as KeyPairAdvanced;
+            var key = meshMachine.KeyCollection.LocatePrivateKeyPair(KeyEncryption.UDF) as KeyPairAdvanced;
             throw new NYI();
 
             //key.GenerateRecryptionPair(out var serviceKey, out var deviceKey);

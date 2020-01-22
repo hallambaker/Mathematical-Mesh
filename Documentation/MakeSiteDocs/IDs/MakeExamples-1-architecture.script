@@ -129,7 +129,7 @@ We can check the device connection by attempting to synchronize to the profile a
 
 #%  ConsoleExample (Example.ConnectSyncPIN);
 
-Note that this connection mechanism could be addapted to allow a device with a 
+Note that this connection mechanism could be adapted to allow a device with a 
 camera affordance to connect by scanning a QR code on the administration device.
 #end zfile
 

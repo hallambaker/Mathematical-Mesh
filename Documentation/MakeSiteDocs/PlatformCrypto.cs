@@ -814,7 +814,7 @@ namespace ExampleGenerator {
 
 
 
-            KeyPairGroup = UDF.DeriveKey(KeyUDFGroup, keyType: KeySecurity.Exportable) as KeyPairEd25519;
+            KeyPairGroup = UDF.DeriveKey(KeyUDFGroup, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
             KeyPairGroup.Locator = KeyUDFGroup;
 
 
@@ -822,7 +822,7 @@ namespace ExampleGenerator {
             var CryptoParametersGroup = new CryptoParameters(recipient: KeyPairGroup);
 
 
-            KeyPairDevice = UDF.DeriveKey(KeyUDFDevice, keyType: KeySecurity.Exportable) as KeyPairEd25519;
+            KeyPairDevice = UDF.DeriveKey(KeyUDFDevice, keySecurity: KeySecurity.Exportable) as KeyPairEd25519;
 
             KeyPairService = KeyPairGroup.GenerateRecryptionKey(KeyPairDevice) as KeyPairEd25519;
 

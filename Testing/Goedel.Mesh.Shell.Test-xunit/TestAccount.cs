@@ -1,5 +1,9 @@
 ﻿using Xunit;
+using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
+using Goedel.Protocol;
 
+using System.Collections.Generic;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
@@ -37,6 +41,36 @@ namespace Goedel.XUnit {
 
 
             var result2 = Dispatch($"account status");
+            }
+
+        public string AliceDevice1 = "Alice";
+        public string AliceDevice2 = "Alice2";
+        public string AliceDevice3 = "Alice3";
+        public string AliceDevice4 = "Alice4";
+        public string AliceDevice5 = "Alice5";
+
+        [Fact]
+        public void TestEscrow() {
+
+            var testCLIAlice1 = GetTestCLI(AliceDevice1);
+
+            var ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
+            var AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
+
+            var ProfileList = testCLIAlice1.Example($"mesh list");
+            var ProfileDump = testCLIAlice1.Example($"mesh get");
+
+
+            // Escrow round trip
+            var ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
+
+            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];    
+
+
+            var ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+            var ProfileRecover = testCLIAlice1.Example($"mesh recover {share1} {share2} /verify");
+
             }
 
 

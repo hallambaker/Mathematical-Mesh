@@ -323,6 +323,24 @@
 			Description
 				|The private key
 
+	Structure PrivateKeyUDF
+		Inherits Key
+		Description
+			|A UDF Key
+		String PrivateValue
+			Description
+				|The private value
+
+	Structure PrivateKeyUDFMaster
+		Inherits PrivateKeyUDF
+		Description
+			|A UDF Device Key
+	
+	Structure PrivateKeyUDFDevice
+		Inherits PrivateKeyUDF
+		Description
+			|A UDF Master Key
+
 	Structure KeyAgreement
 		Description
 			|Result of applying a key agreement.

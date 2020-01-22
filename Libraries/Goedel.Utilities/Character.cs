@@ -130,7 +130,8 @@ namespace Goedel.Utilities {
                     case '”': Result.Append("\""); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
-
+                    case '\u2011':
+                        Result.Append("-"); break;
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
                     case '&': Result.Append("&amp;"); break;
@@ -159,6 +160,38 @@ namespace Goedel.Utilities {
                     case '”': Result.Append("\""); break;
                     case '®': Result.Append("(R)"); break;
                     case '©': Result.Append("(C)"); break;
+                    case '\u2011':
+                        Result.Append("-"); break;
+                    case '<': Result.Append("&lt;"); break;
+                    case '>': Result.Append("&gt;"); break;
+                    case '&': Result.Append("&amp;"); break;
+                    case (char)160: Result.Append(" "); break;
+                    default: Result.Append(c); break;
+                    }
+                }
+
+            return Result.ToString();
+            }
+
+        /// <summary>
+        /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+        /// </summary>
+        /// <param name="In">String to be escaped</param>
+        /// <returns>The escaped string</returns>
+        public static string XMLEscapeRFCBullies(this string In) {
+            var Result = new StringBuilder();
+
+            foreach (char c in In) {
+                switch (c) {
+                    case '…': Result.Append("..."); break;
+                    case '‘': Result.Append("'"); break;
+                    case '’': Result.Append("'"); break;
+                    case '“': Result.Append("\""); break;
+                    case '”': Result.Append("\""); break;
+                    case '®': Result.Append("(R)"); break;
+                    case '©': Result.Append("(C)"); break;
+                    case '\u2011': 
+                        Result.Append("-"); break;
 
                     case '<': Result.Append("&lt;"); break;
                     case '>': Result.Append("&gt;"); break;
@@ -169,6 +202,17 @@ namespace Goedel.Utilities {
                 }
 
             return Result.ToString();
+            }
+
+
+        public static char RFCBullies(char c) {
+            var cint = (int)c;
+
+            if (cint < 256) {
+                return c;
+                }
+
+            return '?';
             }
 
 

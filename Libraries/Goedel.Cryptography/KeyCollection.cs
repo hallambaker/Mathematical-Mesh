@@ -24,7 +24,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        KeyPair LocatePrivate(string UDF);
+        KeyPair LocatePrivateKeyPair(string UDF);
 
 
         /// <summary>
@@ -132,14 +132,14 @@ namespace Goedel.Cryptography {
 
 
 
-
+        public abstract IJson LocatePrivateKey(string udf);
 
         /// <summary>
         /// Locate a private key
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        public virtual KeyPair LocatePrivate(string UDF) {
+        public virtual KeyPair LocatePrivateKeyPair(string UDF) {
 
 
             var keyPair = KeyPairRSA.Locate(UDF);
@@ -164,6 +164,8 @@ namespace Goedel.Cryptography {
 
             }
 
+
+
         /// <summary>
         /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
         /// or non-exportable according to the value of <paramref name="Exportable"/>.
@@ -172,6 +174,16 @@ namespace Goedel.Cryptography {
         /// <param name="privateKey">The private key parameters.</param>
         /// <param name="Exportable">If true, the key is exportable.</param>
         public abstract void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable);
+
+
+        /// <summary>
+        /// Persist the key pair specified by <paramref name="privateKey"/> and mark as exportable
+        /// or non-exportable according to the value of <paramref name="Exportable"/>.
+        /// </summary>
+        /// <param name="udf">The UDF of the key</param>
+        /// <param name="privateKey">The private key parameters.</param>
+        /// <param name="Exportable">If true, the key is exportable.</param>
+        public abstract void Persist(string udf, IJson joseKey, bool exportable);
 
 
         /// <summary>

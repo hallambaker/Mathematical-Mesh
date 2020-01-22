@@ -216,7 +216,7 @@ PRK =
 
 OKM =
     #{Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex()}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex()}
 ~~~~
@@ -226,7 +226,7 @@ Derivation of an X448 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.X448.UDF}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex()}
 ~~~~
@@ -236,7 +236,7 @@ Derivation of an Ed25519 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.Ed25519.UDF}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex()}
 ~~~~
@@ -246,7 +246,7 @@ Derivation of an Ed448 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.Ed448.UDF}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex()}
 ~~~~
@@ -272,7 +272,7 @@ PRK =
 
 OKM =
     #{Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex()}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.P256.Key}
 ~~~~
@@ -282,7 +282,7 @@ Derivation of a P-384 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.P384.UDF}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.P384.Key}
 ~~~~
@@ -292,7 +292,7 @@ Derivation of a P-521 key:
 ~~~~
 Fingerprint =
     #{Example.UDFResults.Derive.P521.UDF}
-	
+    
 Key = 
     #{Example.UDFResults.Derive.P521.Key}
 ~~~~
@@ -326,7 +326,7 @@ Info(q) =
 
 OKM(q) =
     #{Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex()}
-	
+    
 Key P = 
     #{Example.UDFResults.Derive.RSA2048.P}
 
@@ -346,7 +346,7 @@ To generate an RSA-2048 key
 
 salt =
     #{Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex()}
-	
+    
 Key P = 
     #{Example.UDFResults.Derive.Any_RSA2048.P}
 

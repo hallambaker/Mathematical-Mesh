@@ -26,7 +26,9 @@ using Goedel.Utilities;
 
 namespace Goedel.Cryptography.Jose {
 
-    public partial class Key {
+
+
+    public partial class Key : IJson {
 
         /// <summary>Convert to Goedel.Cryptography.KeyPair</summary>
         public virtual KeyPair KeyPair => GetKeyPair(KeySecurity.Bound);

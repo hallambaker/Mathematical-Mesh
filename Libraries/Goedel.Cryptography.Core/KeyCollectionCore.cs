@@ -2,6 +2,7 @@
 using Goedel.Cryptography.PKIX;
 using Goedel.IO;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 using System;
 using System.IO;
@@ -78,8 +79,33 @@ namespace Goedel.Cryptography.Core {
 
             }
 
+        public override void Persist(string udf, IJson joseKey, bool exportable) {
+            var fileName = Path.Combine(DirectoryKeys, udf);
 
-        public override KeyPair LocatePrivate(string udf) {
+            joseKey.Exportable = exportable;
+            var plaintext = joseKey.ToJson(true);
+
+            Directory.CreateDirectory(DirectoryKeys);
+            fileName.WriteFileNew(plaintext);
+
+
+            }
+
+        public override IJson LocatePrivateKey(string udf) {
+
+            var fileName = Path.Combine(DirectoryKeys, udf);
+
+            try {
+
+                fileName.OpenReadToEnd(out var data);
+                return Key.FromJSON(data.JSONReader(), true);
+                }
+            catch {
+                throw new NYI();
+                }
+            }
+
+        public override KeyPair LocatePrivateKeyPair(string udf) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
 
@@ -90,7 +116,7 @@ namespace Goedel.Cryptography.Core {
                 return key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
                 }
             catch {
-                return base.LocatePrivate(udf);
+                return base.LocatePrivateKeyPair(udf);
                 }
             }
 

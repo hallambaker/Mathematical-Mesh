@@ -259,6 +259,7 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class ResultECDH : KeyAgreementResult {
 
+        ///<summary>The key agreement value, a point on the curve.</summary>
         public abstract Curve Agreement { get; }
         }
 

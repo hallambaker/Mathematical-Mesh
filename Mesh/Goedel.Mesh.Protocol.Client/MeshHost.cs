@@ -148,10 +148,13 @@ namespace Goedel.Mesh.Client {
                 string localName,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                byte[] masterSecret = null,
+                bool? persist = null) {
 
             var context = ContextMeshAdmin.CreateMesh(
-                    this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+                    this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
+                    masterSecret, persist);
 
             Register(context);
             Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
@@ -209,15 +212,16 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh</returns>
         public ContextMeshAdmin RecoverMesh(
                 string localName,
-                DareEnvelope escrow = null,
                 IEnumerable<string> shares = null,
                 CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
                 ) {
             var secret = new SharedSecret(shares);
-            return ContextMeshAdmin.RecoverMesh(
-                     this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+            throw new NYI();
+
+            //return ContextMeshAdmin.RecoverMesh(
+            //         this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
             }
 
         /// <summary>

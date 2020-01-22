@@ -183,6 +183,65 @@ namespace Goedel.Cryptography {
 
                 }
 
+            Register(keyPair, keySecurity, keyCollection);
+            return keyPair;
+
+            }
+
+        public static KeyPair Factory(
+            CryptoAlgorithmID algorithmID,
+            KeySecurity keySecurity,
+            byte[] binaryData,
+            byte[] salt,
+            KeyCollection keyCollection = null,
+            int keySize = 0,
+            KeyUses keyUses = KeyUses.Any) {
+
+
+            KeyPair keyPair = null;
+
+            switch (algorithmID) {
+                //case CryptoAlgorithmID.RSAExch: {
+                //    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+                //    break;
+                //    }
+
+                //case CryptoAlgorithmID.RSASign: {
+                //    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
+                //    break;
+                //    }
+                //case CryptoAlgorithmID.DH: {
+                //    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
+                //    break;
+                //    }
+                case CryptoAlgorithmID.X25519: {
+                    return new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
+                    }
+                case CryptoAlgorithmID.Ed25519: {
+                    return new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
+                    }
+                case CryptoAlgorithmID.X448: {
+                    return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
+                    }
+                case CryptoAlgorithmID.Ed448: {
+                    return new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
+
+
+            Register(keyPair, keySecurity, keyCollection);
+            return keyPair;
+
+            }
+
+
+
+        public static void Register(KeyPair keyPair,
+            KeySecurity keySecurity,
+            KeyCollection keyCollection) {
             Assert.NotNull(keyPair, NoProviderSpecified.Throw);
             keyPair.KeySecurity = keySecurity;
 
@@ -192,11 +251,7 @@ namespace Goedel.Cryptography {
                 keyCollection.Persist(keyPair);
                 keyCollection.Add(keyPair);
                 }
-            return keyPair;
-
             }
-
-
 
         /// <summary>
         /// Generate a new keypair. Initialized by the cryptographic

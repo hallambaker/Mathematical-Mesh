@@ -18,7 +18,7 @@ namespace Goedel.Mesh.Client {
         #region Implement IKeyLocate
         public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
         public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
-        public KeyPair LocatePrivate(string UDF) => throw new NotImplementedException();
+        public KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
         public KeyPair TryMatchRecipient(string keyID) => throw new NotImplementedException();
         #endregion
 

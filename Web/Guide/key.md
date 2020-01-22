@@ -18,7 +18,7 @@ The `key nonce` command is used to generate a new random nonce value:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce
-<rsp>NCTC-KKU3-QZST-UGXF-YWUV-ELBV-ISFQ
+<rsp>NDVO-BPJC-JIAY-CUKX-4T5E-PLX2-UUPQ
 </div>
 ~~~~
 
@@ -31,7 +31,7 @@ generated using the `/bits` option:
 ~~~~
 <div="terminal">
 <cmd>Alice> key nonce /bits=256
-<rsp>NBKY-VVB6-VBSY-7ESD-NODP-B4RY-75UY-XZE7-C7ZG-KSQT-HBRA-ZBTK-AHVL-U
+<rsp>NAP4-AQ7L-ZAF7-TDZF-AFNH-4TVS-BNY4-CG2A-DU6Y-3J4U-5LVI-6TLQ-I7EC-I
 </div>
 ~~~~
 
@@ -41,7 +41,7 @@ Secrets are generated in the same way using the command `key secret`:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret
-<rsp>EASP-CVRM-NB32-QSOH-XCOI-HKGS-TBAQ
+<rsp>EDYA-LHGG-J663-TNTV-3HAU-SUQG-PPGQ
 </div>
 ~~~~
 
@@ -52,7 +52,7 @@ Again, any output length can be requested up to the platform limit:
 ~~~~
 <div="terminal">
 <cmd>Alice> key secret /bits=256
-<rsp>EAJT-VQUZ-6MBY-YLM6-HTFS-HDLE-7WAB-3BKX-LMAG-VRWM-6RAP-ZDSL-DTSK-U
+<rsp>EAQP-DKBC-B3MO-O4QM-3VV4-QWLW-WOTR-BUOX-MOH5-RLZ5-XSJ7-6NEX-WJ2X-6
 </div>
 ~~~~
 
@@ -71,8 +71,8 @@ a new secret/digest pair which are then used to process the content data:
 ~~~~
 <div="terminal">
 <cmd>Alice> key earl
-<rsp>EASB-ULSK-CAQO-AMWN-QHY6-I6TA-5MJ4-WB
-MBUQ-PSGE-3DLW-EQ7A-KGIF-WXKJ-2NF6-JCVS-V4MX-VOJL-5JSR-YI3R-BARG-H67I
+<rsp>EBYV-GJQU-7XYF-VG3C-OMW2-QXF6-Z37F-HN
+MCO5-D3TD-KQMA-5S4V-45ZI-Q4EW-6YUU-TIF7-4RNK-YT7G-Y7DY-AUV2-6SDQ-BUAO
 </div>
 ~~~~
 
@@ -99,11 +99,11 @@ bit secret is created and three shares are created with a quorum of two:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share
-<rsp>EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
-MDG2-CU4H-GS73-FZ43-B3QY-UCEN-K4DQ-OVTN-NW3X-F4TO-SCE3-MQ2V-TCTQ
-SAQB-FPUH-YAKT-ZYA6-WIKF-E6XF-CSS6-A
-SAQR-6ZDV-YHBI-H2VT-KR3J-2JIS-FI62-I
-SARC-YCTD-YNX4-V5KH-63MO-PTZ7-H7KW-Q
+<rsp>ECBR-HIGH-QJX6-WX7O-KYAP-UBQI-NZEA
+MCZU-U662-PSPP-QQ3R-IZTI-TJR7-VORM-VPLI-FZ3I-VSYJ-QVJN-DNZE-GROQ
+SAQG-NSYI-ZJ23-AKOL-J64S-TBR4-VRWU-Q
+SAQU-VATQ-ZVUP-A2BW-WEOF-EETT-KBWE-Q
+SARC-4OOY-2BOD-BJVC-CJ7X-VHVJ-6RVU-Q
 </div>
 ~~~~
 
@@ -119,11 +119,11 @@ obtain the result as a JSON structure:
 <rsp>{
   "ResultKey": {
     "Success": true,
-    "Key": "EADB-RGN6-M725-LCQP-WID5-BN77-BYOA",
-    "Identifier": "MDG2-CU4H-GS73-FZ43-B3QY-UCEN-K4DQ-OVTN-NW3X-F4TO-SCE3-MQ2V-TCTQ",
-    "Shares": ["SAQB-FPUH-YAKT-ZYA6-WIKF-E6XF-CSS6-A",
-      "SAQR-6ZDV-YHBI-H2VT-KR3J-2JIS-FI62-I",
-      "SARC-YCTD-YNX4-V5KH-63MO-PTZ7-H7KW-Q"]}}
+    "Key": "ECBR-HIGH-QJX6-WX7O-KYAP-UBQI-NZEA",
+    "Identifier": "MCZU-U662-PSPP-QQ3R-IZTI-TJR7-VORM-VPLI-FZ3I-VSYJ-QVJN-DNZE-GROQ",
+    "Shares": ["SAQG-NSYI-ZJ23-AKOL-J64S-TBR4-VRWU-Q",
+      "SAQU-VATQ-ZVUP-A2BW-WEOF-EETT-KBWE-Q",
+      "SARC-4OOY-2BOD-BJVC-CJ7X-VHVJ-6RVU-Q"]}}
 </div>
 ~~~~
 
@@ -133,8 +133,8 @@ meet the quorum using the `key recover`:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key recover SAQB-FPUH-YAKT-ZYA6-WIKF-E6XF-CSS6-A SARC-YCTD-YNX4-V5KH-63MO-PTZ7-H7KW-Q
-<rsp>EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
+<cmd>Alice> key recover SAQG-NSYI-ZJ23-AKOL-J64S-TBR4-VRWU-Q SARC-4OOY-2BOD-BJVC-CJ7X-VHVJ-6RVU-Q
+<rsp>ERROR - Not enough shares to recover key
 </div>
 ~~~~
 
@@ -150,13 +150,13 @@ of three:
 ~~~~
 <div="terminal">
 <cmd>Alice> key share /quorum=3 /shares=5
-<rsp>EBO6-UT2V-JRUD-2GR7-S75K-G2ZP-SD2A
-MBOD-Z6ZL-CHSS-6GU6-2XD2-TC7L-ARWA-IOYZ-GZS4-ZSZM-L62E-M5SA-Z2UQ
-SAYM-D6NP-JULH-KLRS-4SWB-CI63-N444-C
-SAY7-6PHF-ODL6-SNAH-KQ2M-3U4C-GX72-M
-SAZB-LM7R-YCIM-ITUX-RYZD-BMS7-QPRH-A
-SAZQ-KXWU-HRAQ-M7PD-SKSD-TQDT-LDRI-K
-SA2M-4PMM-4PUK-7QPL-MGFO-R7N5-WT76-K
+<rsp>EDLZ-UN3I-P3QU-EAKC-RJZH-EXD2-HUCQ
+MCMP-J5EH-VANO-QW5S-WCCP-DN6M-OBPQ-IEYN-RRUX-RVQG-CBLE-7ERY-PZNQ
+SAYI-HBLI-WGQC-C4XJ-LJYV-TTMF-FWIY-C
+SAY3-OSFB-ODCV-6GFO-DOM3-PBEF-I2XZ-W
+SAZH-FY7B-UXXJ-UM2P-QYBY-XF24-YWLS-A
+SAZ3-MVZJ-KEN5-FQWN-TGXN-MBQL-VJEE-G
+SA2I-DITY-OJGQ-RRZI-K2NZ-NUER-6TBN-C
 </div>
 ~~~~
 
@@ -168,12 +168,8 @@ be different:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> key share EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
-<rsp>EADB-RGN6-M725-LCQP-WID5-BN77-BYOA
-MDG2-CU4H-GS73-FZ43-B3QY-UCEN-K4DQ-OVTN-NW3X-F4TO-SCE3-MQ2V-TCTQ
-SAQD-VO5O-PXP3-RV4C-AQFL-QYF4-IEG5-6
-SAQW-6XWD-HVLX-XWLZ-7BRW-R4GA-QMG2-E
-SARK-IAOX-7THT-5W3R-5S6B-TAGE-YUGW-K
+<cmd>Alice> key share ECBR-HIGH-QJX6-WX7O-KYAP-UBQI-NZEA
+<rsp>ERROR - Attempted to divide by zero.
 </div>
 ~~~~
 

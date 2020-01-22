@@ -233,7 +233,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				  ConsoleExample (Example.ConnectSyncPIN);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Note that this connection mechanism could be addapted to allow a device with a \n{0}", _Indent);
+				_Output.Write ("Note that this connection mechanism could be adapted to allow a device with a \n{0}", _Indent);
 				_Output.Write ("camera affordance to connect by scanning a QR code on the administration device.\n{0}", _Indent);
 					}
 		

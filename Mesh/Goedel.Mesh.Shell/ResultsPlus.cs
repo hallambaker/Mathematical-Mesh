@@ -276,9 +276,6 @@ namespace Goedel.Mesh.Shell {
             foreach (var share in Shares) {
                 Builder.AppendLine($"Share: {share}");
                 }
-            if (Filename != null) {
-                Builder.AppendLine($"Written to {Filename}");
-                }
 
             return Builder.ToString();
             }
@@ -287,21 +284,21 @@ namespace Goedel.Mesh.Shell {
 
 
 
-    public partial class ResultRecover {
-        public override string ToString() {
-            var Builder = new StringBuilder();
+    //public partial class ResultRecover {
+    //    public override string ToString() {
+    //        var Builder = new StringBuilder();
 
-            //if (SignUDF != null) {
-            //    Builder.AppendLine($"Signature Key: {SignUDF}");
-            //    }
-            //foreach (var key in EncryptUDF) {
-            //    Builder.AppendLine($"Encryption Key: {key}");
-            //    }
+    //        //if (SignUDF != null) {
+    //        //    Builder.AppendLine($"Signature Key: {SignUDF}");
+    //        //    }
+    //        //foreach (var key in EncryptUDF) {
+    //        //    Builder.AppendLine($"Encryption Key: {key}");
+    //        //    }
 
 
-            return Builder.ToString();
-            }
-        }
+    //        return Builder.ToString();
+    //        }
+    //    }
 
 
     }

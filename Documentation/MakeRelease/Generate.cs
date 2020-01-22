@@ -69,7 +69,7 @@ namespace Goedel.Tool.Version {
 				_Output.Write ("When distribution of the GUI tool resumes, there will be platform specific installers for each platform\n{0}", _Indent);
 				_Output.Write ("once again.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The Mathematical Mesh reference tools are written in C under the Microsoft .NET Core 2.0 framework\n{0}", _Indent);
+				_Output.Write ("The Mathematical Mesh reference tools are written in C under the Microsoft .NET Core 3.1 framework\n{0}", _Indent);
 				_Output.Write ("as Standalone Distribution files. All the files required to run the distribution are provided. It is not\n{0}", _Indent);
 				_Output.Write ("necessary to install .NET Core first.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);

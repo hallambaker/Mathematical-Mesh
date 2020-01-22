@@ -80,8 +80,8 @@ namespace Goedel.Cryptography {
             return result;
             }
 
-        public static BigInteger CombineNK(KeyShare[] shares, 
-                    BigInteger modulus, 
+        public static BigInteger CombineNK(KeyShare[] shares,
+                    BigInteger modulus,
                     BigInteger threshold) {
             BigInteger accum = 0;
 
@@ -110,13 +110,13 @@ namespace Goedel.Cryptography {
 
                 var next = shares[count].Index;
 
-                numerator = (numerator * -next).Mod ( modulus);
+                numerator = (numerator * -next).Mod(modulus);
                 denominator = (denominator * (start - next)).Mod(modulus);
 
                 Console.WriteLine($"Numerator {numerator}");
                 Console.WriteLine($"Denominator {denominator}");
                 }
- 
+
             var invDenominator = ModInverse(denominator, modulus);
             var result = (numerator * invDenominator).Mod(modulus);
 
@@ -131,9 +131,6 @@ namespace Goedel.Cryptography {
         public static BigInteger CombineNK2(KeyShare[] shares, int threshold, BigInteger modulus) {
 
             Assert.False(shares.Length < threshold, InsufficientShares.Throw);
-
-            //Console.WriteLine($"Recovered Share {shares[0].Value}");
-
 
             BigInteger accum = 0;
 
@@ -150,7 +147,7 @@ namespace Goedel.Cryptography {
                         continue;  // If not the same value
                         }
 
-                    
+
                     var next = shares[count].Index;
 
                     numerator = (numerator * -next) % modulus;
@@ -190,9 +187,9 @@ namespace Goedel.Cryptography {
     public class SharedSecret : Shared {
 
         /// <summary>
-        /// Size of key in bits.
+        /// Size of key in bits. This will determine the size of the prime
         /// </summary>
-        public int KeyBits => Key.Length * 8;
+        public virtual int KeyBits => Key.Length * 8;
 
         /// <summary>
         /// Size of key in bytes;
@@ -202,7 +199,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key value
         /// </summary>
-        public byte[] Key { get; set; }
+        public virtual byte[] Key { get; set; }
 
         /// <summary>
         /// The Key Value as a Base32 encoded string.
@@ -212,17 +209,30 @@ namespace Goedel.Cryptography {
         ///<summary>The UDF identifier of the secret value.</summary>
         public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
 
+
+        public BigInteger SecretMax;
+        public int ShareChunks;
+
+
         /// <summary>
         /// Create a new random secret with the specified number of bits.
         /// </summary>
         /// <param name="bits">Nyumber of bits in the secret</param>
-        public SharedSecret(int bits) => Key = CryptoCatalog.GetBits(bits);
+        public SharedSecret(int bits) : this(CryptoCatalog.GetBits(bits)) {
+            }
+
+
+
 
         /// <summary>
         /// Create a secret from the specified key value.
         /// </summary>
         /// <param name="key">The key value.</param>
-        public SharedSecret(byte[] key) => this.Key = key;
+        public SharedSecret(byte[] key) {
+            Key = key;
+            Value = key.BigIntegerBigEndian();
+            Prime = GetPrime(KeyBits, out SecretMax, out ShareChunks);
+            }
 
 
         /// <summary>
@@ -359,33 +369,23 @@ namespace Goedel.Cryptography {
             Assert.False(k > 15, QuorumDegreeExceeded.Throw);
 
             var keyShares = new KeyShareSymmetric[n];
+
+            for (int i = 0; i < n; i++) {
+                keyShares[i] = new KeyShareSymmetric(i, k, ShareChunks*4);
+                }
             Split(keyShares, k, out polynomial);
 
             // Check that all our share chunks will fit into a UDF
-            for (var search = true; search; 
-                Split(keyShares, k, out polynomial)) {               
+            for (var search = true; search;
+                Split(keyShares, k, out polynomial)) {
                 search = false;
                 for (int i = 0; i < n; i++) {
-                    search = search ? keyShares[i].Value < Prime : false;
+                    search = search ? keyShares[i].Value < SecretMax : false;
                     }
                 }
 
             return keyShares;
             }
-
-        // Note here that since BigInteger is a structure, not a class, we don't
-        // need to worry about boxing or call by value issues
-        BigInteger PolyMod(int x, BigInteger[] polyNomial, BigInteger modulus) {
-            int power = 1;  // expect the optimizer to catch
-            var result = polyNomial[0];
-            for (int i = 1; i < polyNomial.Length; i++) {
-                power *= x;
-                result = (modulus + result + polyNomial[i] * power) % modulus;
-                }
-
-            return result;
-            }
-
 
         static byte[] Combine(KeyShareSymmetric[] Shares) {
 
@@ -405,20 +405,9 @@ namespace Goedel.Cryptography {
             var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
 
             var accum = CombineNK(shares, modulus, threshold);
-
+            Console.WriteLine($"Reconstructed value = {accum}");
             return accum.ToByteArrayBigEndian(shareChunks * 4);
             }
-
-
-        private static byte[] GetBytes(BigInteger input) {
-            var bytes = new byte[16];
-            var source = input.ToByteArray();
-            int length = source.Length < 16 ? source.Length : 16;
-            Array.Copy(source, bytes, length);
-            return bytes;
-
-            }
-
 
         }
 
@@ -449,7 +438,8 @@ namespace Goedel.Cryptography {
         public override string UDFKey => Cryptography.UDF.KeyShare(Key);
 
 
-        int First;
+        public int First;
+        public int ShareBytes;
 
         /// <summary>
         /// Quorum required to recombine the key shares to recover the secret.
@@ -464,40 +454,59 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The key share data.
         /// </summary>
-        public byte[] Data { get; set; }
-
-        /// <summary>
-        /// The key share data as a BigInteger.
-        /// </summary>
-        public override BigInteger Value => Data.BigIntegerBigEndian();
-
-
-        void KeyValue(int index, byte[] data) {
-            First = index-1;
-            Data = data;
-            Key = new byte[data.Length + 1];
-            Key[0] = (byte)First;
-            Array.Copy(data, 0, Key, 1, data.Length);
+        public override byte[] Key {
+            get => key;
+            set {
+                key = value;
+                data = new byte[key.Length - 1];
+                Array.Copy(key, 1, data, 0, key.Length-1);
+                First = key[0];
+                valueStore = data.BigIntegerBigEndian();
+                }
             }
 
+        byte[] key;
 
-        ///// <summary>
-        ///// Create a secret from the specified key value.
-        ///// </summary>
-        ///// <param name="udf">The key value as a UDF.</param>
-        //public KeyShare(string udf) => this.Key = UDF.SymmetricKey(udf);
+        /// <summary>
+        /// The key share data.
+        /// </summary>
+        public byte[] Data {
+            get => data;
+            set {
+                data = value;
+                key = new byte[data.Length + 1];
+                key[0] = (byte)First;
+                Array.Copy(data, 0, key, 1, data.Length);
+                valueStore = data.BigIntegerBigEndian();
+                }
+            }
+        byte[] data;
 
+        public override BigInteger Value {
+            get => valueStore;
+            set {
+                valueStore = value;
+                data = Value.ToByteArrayBigEndian(ShareBytes);
+                key = new byte[data.Length + 1];
+                key[0] = (byte)First;
+                Array.Copy(data, 0, key, 1, data.Length);
+                }
+            }
+        BigInteger valueStore;
+
+        public KeyShareSymmetric(int index, int threshold, int shareBytes) {
+            First = index + 0x10 * threshold;
+            ShareBytes = shareBytes;
+            }
 
         /// <summary>
         /// Construct a key share with the specified secret value.
         /// </summary>
         /// <param name="text">The secret value in text form.</param>
         public KeyShareSymmetric(string text) {
-            var buffer = BaseConvert.FromBase32(text);
-            Assert.True(buffer[0] == (byte)UDFTypeIdentifier.ShamirSecret);
-            var result = new byte[buffer.Length - 2];
-            Buffer.BlockCopy(buffer, 2, result, 0, buffer.Length - 2);
-            KeyValue(buffer[1], result);
+            var buffer = UDF.Parse(text, out var code);
+            Assert.True(code == (byte)UDFTypeIdentifier.ShamirSecret);
+            Key = buffer;
             }
 
 
@@ -507,8 +516,11 @@ namespace Goedel.Cryptography {
         /// <param name="index">The key share index and threshold.</param>
         /// <param name="value">The key share value/</param>
         /// <param name="bytes">Number of bytes in the share to be constructed.</param>
-        public KeyShareSymmetric(int index, BigInteger value, int bytes) =>
-                KeyValue(index, value.ToByteArrayBigEndian(bytes));
+        public KeyShareSymmetric(int index, BigInteger value, int bytes) {
+            First = index;
+            ShareBytes = bytes;
+            Value = value;
+            }
 
 
         /// <summary>
@@ -516,7 +528,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="index">The key share index and threshold.</param>
         /// <param name="data">The key share value/</param>
-        public KeyShareSymmetric(int index, byte[] data) => KeyValue(index, data);
+        public KeyShareSymmetric(int index, byte[] data) {
+            First = index;
+            Data = data;
 
+            }
         }
     }

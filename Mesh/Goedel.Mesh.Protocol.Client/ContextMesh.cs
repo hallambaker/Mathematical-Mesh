@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-            var keyAuthentication = meshHost.KeyCollection.LocatePrivate(
+            var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
                         profileDevice.KeyAuthentication.UDF);
 
             var messageConnectionRequestClientEncoded = messageConnectionRequestClient.Encode(keyAuthentication);
@@ -157,7 +157,7 @@ namespace Goedel.Mesh.Client {
 
             "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
-            KeyAuthentication = KeyAuthentication ?? MeshMachine.KeyCollection.LocatePrivate(
+            KeyAuthentication = KeyAuthentication ?? MeshMachine.KeyCollection.LocatePrivateKeyPair(
                         ProfileDevice.KeyAuthentication.UDF);
 
             MeshClient = MeshClient ?? MeshMachine.GetMeshClient(ServiceID, KeyAuthentication, null);

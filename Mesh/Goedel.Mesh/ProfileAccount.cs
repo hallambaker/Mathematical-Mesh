@@ -154,7 +154,7 @@ namespace Goedel.Mesh {
 
         public DareEnvelope Sign(
                     IMeshMachine meshMachine) {
-            keySignOffline = keySignOffline ?? meshMachine.KeyCollection.LocatePrivate(KeyOfflineSignature.UDF);
+            keySignOffline = keySignOffline ?? meshMachine.KeyCollection.LocatePrivateKeyPair(KeyOfflineSignature.UDF);
             return Sign(keySignOffline);
             }
 

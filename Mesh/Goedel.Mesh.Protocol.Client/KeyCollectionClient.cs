@@ -3,6 +3,12 @@ using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
+
+
+    /// <summary>
+    /// A wrapper around a KeyCollection that allows other key resolution sources to be added.
+    /// This may well be unnecessary due to the move from multiple frameworks to .Core alone.
+    /// </summary>
     public class KeyCollectionClient : KeyCollection {
 
         KeyCollection keyCollectionBase;
@@ -18,15 +24,23 @@ namespace Goedel.Mesh.Client {
         /// Persist a key to the underlying key collection.
         /// </summary>
         /// <param name="privateKey"></param>
-        /// <param name="Exportable"></param>
-        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool Exportable) =>
-            keyCollectionBase.Persist(udf, privateKey, Exportable);
+        /// <param name="exportable"></param>
+        public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) =>
+            keyCollectionBase.Persist(udf, privateKey, exportable);
 
+
+        public override void Persist(string udf, IJson joseKey, bool exportable) =>
+            keyCollectionBase.Persist(udf, joseKey, exportable);
 
         public override KeyPair TryMatchRecipient(string keyID) =>
                     keyCollectionBase.TryMatchRecipient(keyID);
 
+        public override IJson LocatePrivateKey(string udf) => 
+            keyCollectionBase.LocatePrivateKey(udf);
 
+
+        public override KeyPair LocatePrivateKeyPair(string udf) => 
+            keyCollectionBase.LocatePrivateKeyPair(udf);
 
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,

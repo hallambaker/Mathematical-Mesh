@@ -1620,10 +1620,6 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual string						Filename  {get; set;}
-        /// <summary>
-        /// </summary>
-
 		public virtual string						Service  {get; set;}
         /// <summary>
         /// </summary>
@@ -1673,11 +1669,6 @@ namespace Goedel.Mesh.Shell {
 				_Writer.WriteObjectStart ();
 				}
 			((Result)this).SerializeX(_Writer, false, ref _first);
-			if (Filename != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Filename", 1);
-					_Writer.WriteString (Filename);
-				}
 			if (Service != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("Service", 1);
@@ -1728,10 +1719,6 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
 			
 			switch (Tag) {
-				case "Filename" : {
-					Filename = JSONReader.ReadString ();
-					break;
-					}
 				case "Service" : {
 					Service = JSONReader.ReadString ();
 					break;

@@ -317,7 +317,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("OKM =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.OKM.ToStringBase16FormatHex());
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X25519.Key.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -327,7 +327,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.UDF);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.X448.Key.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -337,7 +337,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.UDF);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed25519.Key.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -347,7 +347,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.UDF);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Ed448.Key.ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -380,7 +380,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("OKM =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.OKM.ToStringBase16FormatHex());
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P256.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -390,7 +390,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.UDF);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P384.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -400,7 +400,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("Fingerprint =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.UDF);
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.P521.Key);
 				_Output.Write ("~~~~\n{0}", _Indent);
@@ -441,7 +441,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("OKM(q) =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.OKM_Q.ToStringBase16FormatHex());
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key P = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.RSA2048.P);
 				_Output.Write ("\n{0}", _Indent);
@@ -468,7 +468,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("salt =\n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.Salt.ToStringBase16FormatHex());
-				_Output.Write ("	\n{0}", _Indent);
+				_Output.Write ("    \n{0}", _Indent);
 				_Output.Write ("Key P = \n{0}", _Indent);
 				_Output.Write ("    {1}\n{0}", _Indent, Example.UDFResults.Derive.Any_RSA2048.P);
 				_Output.Write ("\n{0}", _Indent);

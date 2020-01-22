@@ -38,7 +38,7 @@ namespace Goedel.Mesh {
         public static KeyPair LocatePrivate(this KeyCollection keyCollection, List<PublicKey> publicKeys) {
 
             foreach (var publicKey in publicKeys) {
-                var keyPair = keyCollection.LocatePrivate(publicKey.UDF);
+                var keyPair = keyCollection.LocatePrivateKeyPair(publicKey.UDF);
                 if (keyPair != null) {
                     return keyPair;
                     }

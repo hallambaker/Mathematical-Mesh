@@ -83,7 +83,13 @@ namespace Goedel.Cryptography {
         ///<summary>3072 bit RSA keypair</summary>
         RSA3072 = 9,
         ///<summary>4096 bit RSA keypair</summary>
-        RSA4096 = 10
+        RSA4096 = 10,
+
+        ///<summary>Mesh master profile</summary>
+        MeshProfileMaster = 256,
+
+        ///<summary>Mesh device profile</summary>
+        MeshProfileDevice = 257,
         }
 
 
@@ -846,14 +852,14 @@ namespace Goedel.Cryptography {
 
         /// <summary>
         /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
-        /// <paramref name="keyType"/> and Key uses <paramref name="keyUses"/>.
+        /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
         /// </summary>
         /// <param name="udf"></param>
-        /// <param name="keyType"></param>
+        /// <param name="keySecurity"></param>
         /// <param name="keyUses"></param>
         /// <returns></returns>
         public static KeyPair DeriveKey(string udf,
-                    KeySecurity keyType = KeySecurity.Public,
+                    KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any) {
 
             var binaryData = Parse(udf, out var code);
@@ -865,24 +871,100 @@ namespace Goedel.Cryptography {
 
             switch (algorithm) {
                 case UDFAlgorithmIdentifier.Ed25519: {
-                    return new KeyPairEd25519(binaryData, salt, keyType, keyUses);
+                    return new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
                     }
                 case UDFAlgorithmIdentifier.Ed448: {
-                    return new KeyPairEd448(binaryData, salt, keyType, keyUses);
+                    return new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
                     }
                 case UDFAlgorithmIdentifier.X25519: {
-                    return new KeyPairX25519(binaryData, salt, keyType, keyUses);
+                    return new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
                     }
                 case UDFAlgorithmIdentifier.X448: {
-                    return new KeyPairX448(binaryData, salt, keyType, keyUses);
+                    return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
                     }
                 }
             throw new NYI();
             }
 
+        /// <summary>
+        /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
+        /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithmIDin">Additional algorithm identifier.</param>
+        /// <param name="udf">The UDF to derrive the key from.</param>
+        /// <param name="keyCollection">The key collection to add the key to.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
+        /// <param name="name">Friendly name for the key.</param>
+        /// <returns>The derrived key pair.</returns>
+        public static KeyPair DeriveKey(string udf,
+                    KeyCollection keyCollection,
+                    KeySecurity keySecurity = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmID cryptoAlgorithmIDin = CryptoAlgorithmID.Default,
+                    string name=null) {
+
+            var binaryData = Parse(udf, out var code);
+            (code == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
+
+            var algorithm = (UDFAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
+            var salt = KeySpecifier(algorithm);
+
+            int keySize = 0;
+            CryptoAlgorithmID cryptoAlgorithmID;
+            switch (algorithm) {
+                case UDFAlgorithmIdentifier.Ed25519: {
+                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    break;
+                    }
+                case UDFAlgorithmIdentifier.Ed448: {
+                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    break;
+                    }
+                case UDFAlgorithmIdentifier.X25519: {
+                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    break;
+                    }
+                case UDFAlgorithmIdentifier.X448: {
+                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    break;
+                    }
+
+                case UDFAlgorithmIdentifier.MeshProfileMaster: {
+                    cryptoAlgorithmID = cryptoAlgorithmIDin;
+                    break;
+                    }
+                case UDFAlgorithmIdentifier.MeshProfileDevice: {
+                    cryptoAlgorithmID = cryptoAlgorithmIDin;
+                    break;
+                    }
+                default: {
+                    throw new NYI();
+                    }
+                }
+
+            return KeyPair.Factory(cryptoAlgorithmID, keySecurity, binaryData, salt,
+                keyCollection, keySize, keyUses);
+
+            }
+
+        /// <summary>
+        /// Generate a UDF for a test key for the algorithm <paramref name="cryptoAlgorithmID"/>
+        /// using the seed string <paramref name="text"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithmID">The type of key to generate.</param>
+        /// <param name="text">The seed text.</param>
+        /// <returns>The computed UDF.</returns>
         public static string TestKey(CryptoAlgorithmID cryptoAlgorithmID, string text) =>
                 TestKey(cryptoAlgorithmID.ToUDFID(), text);
 
+        /// <summary>
+        /// Generate a UDF for a test key for the algorithm <paramref name="algorithmIdentifier"/>
+        /// using the seed string <paramref name="text"/>.
+        /// </summary>
+        /// <param name="algorithmIdentifier">The type of key to generate.</param>
+        /// <param name="text">The seed text.</param>
+        /// <returns>The computed UDF.</returns>
         public static string TestKey(UDFAlgorithmIdentifier algorithmIdentifier, string text) {
             var head = new byte[] { 
                     (byte)UDFTypeIdentifier.DerivedKey,
@@ -899,17 +981,9 @@ namespace Goedel.Cryptography {
                 var c = plain[i];
                 builder.Append(BaseConvert.BASE32Value[(int)c]==255 ? 'X' : c);
                 }
-
             return builder.ToString();
-
-
             }
-
         }
-
-
-
-
 
     /// <summary>Static class containing static extension methods providing convenience functions.</summary>
     public static partial class Extension {

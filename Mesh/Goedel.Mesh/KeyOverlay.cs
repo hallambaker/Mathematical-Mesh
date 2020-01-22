@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
             }
 
         public KeyPairAdvanced GetPrivate(IMeshMachine meshMachine) =>
-                meshMachine.KeyCollection.LocatePrivate(UDF) as KeyPairAdvanced;
+                meshMachine.KeyCollection.LocatePrivateKeyPair(UDF) as KeyPairAdvanced;
 
 
         }
@@ -72,7 +72,7 @@ namespace Goedel.Mesh {
         /// <param name="meshMachine">The machine on which private keys are to be resolved.</param>
         /// <returns></returns>
         public KeyPairAdvanced GetPrivate(IMeshMachine meshMachine) =>
-            GetPrivate(meshMachine.KeyCollection.LocatePrivate(BaseUDF) as KeyPairAdvanced);
+            GetPrivate(meshMachine.KeyCollection.LocatePrivateKeyPair(BaseUDF) as KeyPairAdvanced);
 
 
         public KeyPairAdvanced GetPrivate(KeyPairAdvanced keypairBase) {

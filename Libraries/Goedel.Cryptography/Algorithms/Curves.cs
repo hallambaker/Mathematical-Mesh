@@ -216,9 +216,14 @@ namespace Goedel.Cryptography.Algorithms {
             Console.WriteLine($"x_2  {x_2.IsEven}  z_2  {z_2.IsEven}");
             }
 
-
-        public BigInteger Recover(BigInteger x_2, BigInteger z_2) =>
-            (x_2 * (BigInteger.ModPow(z_2, (Prime - 2), Prime))).Mod(Prime);
+        /// <summary>
+        /// Recover the x value from prtojective coordinates.
+        /// </summary>
+        /// <param name="x">The projective coordinate of x</param>
+        /// <param name="z">The projective coordinate multiplier z</param>
+        /// <returns>The value x/z mod Prime.</returns>
+        public BigInteger Recover(BigInteger x, BigInteger z) =>
+            (x * (BigInteger.ModPow(z, (Prime - 2), Prime))).Mod(Prime);
 
         /// <summary>
         /// Multiply a point by a scalar
@@ -365,7 +370,12 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The encoded format of the point</returns>
         public abstract byte[] Encode(bool extended=false);
 
-
+        /// <summary>
+        /// Add the point <paramref name="point"/> to this point on the curve
+        /// and return the result as a new point.
+        /// </summary>
+        /// <param name="point">The point to add.</param>
+        /// <returns>The sum of the two points.</returns>
         public override Curve Add(Curve point) => Add (point as CurveMontgomery);
 
         /// <summary>
@@ -413,7 +423,11 @@ namespace Goedel.Cryptography.Algorithms {
             return (u3, v3);
             }
 
-
+        /// <summary>
+        /// Double the point <paramref name="point"/>.
+        /// </summary>
+        /// <param name="point">The point to double.</param>
+        /// <returns>The (u,v) cooredinates of the result.</returns>
         public (BigInteger, BigInteger) Double (CurveMontgomery point) {
             var x = point.U;
             var y = point.V;
@@ -432,9 +446,15 @@ namespace Goedel.Cryptography.Algorithms {
             return (u3, v3);
             }
 
-
+        ///<summary>Checks that the values U, V lie on the curve.</summary>
         public bool IsValid => CheckCurve(U, V);
 
+        /// <summary>
+        /// Checks that the values <paramref name="u"/>, <paramref name="v"/> lie on the curve.
+        /// </summary>
+        /// <param name="u">The u coordinate.</param>
+        /// <param name="v">The v coordinate.</param>
+        /// <returns>True if the point lies on the curve, otherwise false.</returns>
         public bool CheckCurve(BigInteger u, BigInteger v) {
             var vv = (v * v).Mod(Prime);
             var uu = (u * u).Mod(Prime);
@@ -473,9 +493,16 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The Curve Constant d</summary>
         public BigInteger CurveConstantD => DomainParameters.D;
 
+        /// <summary>
+        /// Encode this point in the compressed buffer representation
+        /// </summary>
+        /// <returns>The point encoded in the compressed buffer representation.</returns>
         public abstract byte[] Encode();
 
-
+        /// <summary>
+        /// Convert the point value to a string representation (useful for debugging).
+        /// </summary>
+        /// <returns>The curve name followed by the Base32 encoding of the point.</returns>
         public override string ToString() {
             var builder = new StringBuilder();
             builder.Append($"Ed{DomainParameters.Bits} ");
@@ -491,6 +518,12 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public abstract CurveEdwards Add(CurveEdwards P2);
 
+        /// <summary>
+        /// Add the point <paramref name="point"/> to this point on the curve
+        /// and return the result as a new point.
+        /// </summary>
+        /// <param name="point">The point to add.</param>
+        /// <returns>The sum of the two points.</returns>
         public override Curve Add(Curve point) => Add(point as CurveEdwards);
 
         #region // Equality testing
@@ -596,47 +629,92 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public abstract void Accumulate(CurveEdwards Point);
 
-        public  BigInteger GetK(
+        /// <summary>
+        /// Calculate the value of K for the algorithm <paramref name="algorithmID"/>,
+        /// point <paramref name="encodedR"/>, data to be signed <paramref name="data"/>
+        /// and context data <paramref name="context"/>.
+        /// </summary>
+        /// <param name="algorithmID">The signature algorithm</param>
+        /// <param name="encodedR">The encoding of the point R.</param>
+        /// <param name="data">The data to sign.</param>
+        /// <param name="context">Optional context data</param>
+        /// <returns>The scalar value representing the data being signed.</returns>
+        public BigInteger GetK(
             CryptoAlgorithmID algorithmID,
-            byte[] Rs,
+            byte[] encodedR,
             byte[] data,
-            byte[] context = null) => GetK(Domain(algorithmID, context), Rs, data);
+            byte[] context = null) => GetK(Domain(algorithmID, context), encodedR, data);
 
         /// <summary>
-        /// Get the K value corresponding to this point
+        /// Calculate the value of K for the domain parameters <paramref name="domain"/>,
+        /// point <paramref name="encodedR"/> and data to be signed <paramref name="data"/>.
         /// </summary>
-        /// <param name="domain"></param>
-        /// <param name="encodedR"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="domain">The domain parameter</param>
+        /// <param name="encodedR">The encoding of the point R.</param>
+        /// <param name="data">The data to sign.</param>
+        /// <returns>The value HashModQ (<paramref name="domain"/>, <paramref name="encodedR"/>,
+        ///     Public, <paramref name="data"/>)</returns>
         public abstract BigInteger GetK(
             byte[] domain,
             byte[] encodedR,
             byte[] data);
 
+        /// <summary>
+        /// Calculate the domain parameters for the cryptographic algoriothm <paramref name="cryptoAlgorithm"/>
+        /// and encoded y value <paramref name="y"/>.
+        /// </summary>
+        /// <param name="cryptoAlgorithm">The cryptographic algorithm identifier (used to specify
+        /// whether the signed data is prehashed or not.</param>
+        /// <param name="y">The y value.</param>
+        /// <returns>The domain parameter.</returns>
         public abstract byte[] Domain(
             CryptoAlgorithmID cryptoAlgorithm,
             byte[] y);
 
-        public abstract bool Verify(BigInteger k, BigInteger s, CurveEdwards R);
+        /// <summary>
+        /// Verify that s.B = R + k.P where <paramref name="s"/> is s, <paramref name="curveR"/>
+        /// is R, <paramref name="k"/> is k and P is the public key point.
+        /// </summary>
+        /// <param name="k">The scalar value being signed.</param>
+        /// <param name="s">The signature scalar value.</param>
+        /// <param name="curveR">The fixed point used to obscure the private key value.</param>
+        /// <returns>True if the signature is correct, otherwise false.</returns>
 
+        public abstract bool Verify(BigInteger k, BigInteger s, CurveEdwards curveR);
 
+        /// <summary>
+        /// Return a threshold signature coordinator for this public key.
+        /// </summary>
+        /// <returns>The signature coordinator.</returns>
         public abstract ThresholdCoordinatorEdwards Coordinator();
 
         }
+
+    /// <summary>
+    /// A public key value on an Edwards Curve.
+    /// </summary>
     public abstract class CurveEdwardsPublic : IKeyAdvancedPublic {
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public abstract CurveEdwards PublicKey { get; }
 
+        ///<summary>The encoding of the point</summary>
         public virtual byte[] Encoding { get; }
 
+        /// <summary>
+        /// Combine the two public keys to create a composite public key.
+        /// </summary>
+        /// <param name="Contribution">The key contribution.</param>
+        /// <returns>The composite key</returns>
         public abstract IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution);
         }
 
+    /// <summary>
+    /// A private key value on an Edwards Curve.
+    /// </summary>
     public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
 
-
+        /// <summary>The public key, a point on the curve</summary>
         public abstract CurveEdwards PublicPoint { get;}
 
         /// <summary>The private key, i.e. a scalar</summary>
@@ -667,11 +745,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
         public abstract IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares);
-        
+
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
         /// <param name="contribution">The key contribution.</param>
+        /// <param name="keySecurity">The key security model.</param>
+        /// <param name="keyUses">The allowed key uses.</param>
         /// <returns>The composite key</returns>
         public abstract IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution, 
             KeySecurity keySecurity = KeySecurity.Admin, KeyUses keyUses = KeyUses.Any);
@@ -719,12 +799,33 @@ namespace Goedel.Cryptography.Algorithms {
             return EncodeSignature(Rs, S);
             }
 
-
+        /// <summary>
+        /// Perform a presigning operation on the message <paramref name="message"/> with
+        /// context <paramref name="context"/>.
+        /// </summary>
+        /// <param name="message">The message to pre-sign</param>
+        /// <param name="context">Optional signature context.</param>
+        /// <returns>The scalar r and point r.B.</returns>
         public abstract (BigInteger, byte[]) PreSign(byte[] message, byte[] context = null);
 
+        /// <summary>
+        /// Sign the scalar data value <paramref name="k"/> using scalar presignature
+        /// value <paramref name="r"/>.
+        /// </summary>
+        /// <param name="k">The data to sign.</param>
+        /// <param name="r">The presignature value.</param>
+        /// <returns>The value r+k* Private.</returns>
         public abstract BigInteger Sign(BigInteger k, BigInteger r);
 
-        public abstract byte[] EncodeSignature(byte[] r, BigInteger scalar);
+        /// <summary>
+        /// Encode the signature with point <paramref name="encodedR"/> and
+        /// scalar value <paramref name="scalar"/>.
+        /// </summary>
+        /// <param name="encodedR">The point value.</param>
+        /// <param name="scalar">The signature scalar.</param>
+        /// <returns>The encoded signature.</returns>
+
+        public abstract byte[] EncodeSignature(byte[] encodedR, BigInteger scalar);
 
 
 
