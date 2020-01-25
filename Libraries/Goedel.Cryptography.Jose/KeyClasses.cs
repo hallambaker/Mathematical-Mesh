@@ -52,71 +52,55 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>Public portion.</returns>
-        public static Key GetPublic(KeyPair keyPair) {
-            switch (keyPair) {
-                case KeyPairBaseRSA keyPairBaseRSA:
-                    return new PublicKeyRSA(keyPairBaseRSA);
-                case KeyPairBaseDH keyPairBaseDH:
-                    return new PublicKeyDH(keyPairBaseDH);
-                case KeyPairECDH keyPairECDH:
-                    return new PublicKeyECDH(keyPairECDH);
-                }
-            throw new NYI();
-            }
+        public static Key GetPublic(KeyPair keyPair) => keyPair switch
+            {
+                KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
+                KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
+                KeyPairECDH keyPairECDH => new PublicKeyECDH(keyPairECDH),
+                _ => throw new NYI(),
+                };
 
         /// <summary>
         /// Return the private portion of the keypair.
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>The private data.</returns>
-        public static Key GetPrivate(KeyPair keyPair) {
-            switch (keyPair) {
-                case KeyPairBaseRSA keyPairBaseRSA:
-                    return new PrivateKeyRSA(keyPairBaseRSA);
-                case KeyPairBaseDH keyPairBaseDH:
-                    return new PrivateKeyDH(keyPairBaseDH);
-                case KeyPairECDH keyPairECDH:
-                    return new PrivateKeyECDH(keyPairECDH);
-                }
-            throw new NYI();
-            }
+        public static Key GetPrivate(KeyPair keyPair) => keyPair switch
+            {
+                KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
+                KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),
+                KeyPairECDH keyPairECDH => new PrivateKeyECDH(keyPairECDH),
+                _ => throw new NYI(),
+                };
 
         /// <summary>
         /// Convert PKIX parameters to JSON structure.
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory(IPKIXPublicKey pkixKey) {
-
-            switch (pkixKey) {
-                case PKIXPrivateKeyRSA PKIXPrivateKeyRSA: return new PrivateKeyRSA(PKIXPrivateKeyRSA);
-                case PKIXPrivateKeyDH PKIXPrivateKeyDH: return new PrivateKeyDH(PKIXPrivateKeyDH);
-                case PKIXPrivateKeyECDH PKIXPrivateKeyECDH: return new PrivateKeyECDH(PKIXPrivateKeyECDH);
-                case PKIXPublicKeyRSA PKIXPublicKeyRSA: return new PublicKeyRSA(PKIXPublicKeyRSA);
-                case PKIXPublicKeyDH PKIXPublicKeyDH: return new PublicKeyDH(PKIXPublicKeyDH);
-                case PKIXPublicKeyECDH PKIXPublicKeyECDH: return new PublicKeyECDH(PKIXPublicKeyECDH);
-                }
-            return null;
-            }
+        public static Key Factory(IPKIXPublicKey pkixKey) => pkixKey switch
+            {
+                PKIXPrivateKeyRSA PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
+                PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
+                PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
+                PKIXPublicKeyRSA PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
+                PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
+                PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
+                _ => null,
+                };
 
         /// <summary>
         /// Convert PKIX parameters to JSON structure.
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory(IPKIXPrivateKey pkixKey) {
-
-            switch (pkixKey) {
-                case PKIXPrivateKeyRSA privateKey:
-                    return new PrivateKeyRSA(privateKey);
-                case PKIXPrivateKeyDH privateKey:
-                    return new PrivateKeyDH(privateKey);
-                case PKIXPrivateKeyECDH privateKey:
-                    return new PrivateKeyECDH(privateKey);
-                }
-
-            return null;
-            }
+        public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch
+            {
+                PKIXPrivateKeyRSA privateKey => new PrivateKeyRSA(privateKey),
+                PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
+                PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
+                _ => null,
+                };
 
         /// <summary>Create private key from Goedel.Cryptography.KeyPair.</summary>
         /// <param name="keyPair">Key pair to convert</param>

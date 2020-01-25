@@ -35,7 +35,12 @@ namespace Goedel.Mesh {
                 readContainer: false, decrypt: false, create: false) => ContainerPersistence?.FastReadContainer();
 
 
-        public DareEnvelope Get(string key) => GetEntry(key).FrameIndex.GetEnvelope(Container);
+        public DareEnvelope Get(string key) {
+
+            var entry = GetEntry(key);
+            var envelope = entry.FrameIndex.GetEnvelope(Container);
+            return envelope;
+            }
 
 
         public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {

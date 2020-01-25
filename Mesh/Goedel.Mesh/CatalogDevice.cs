@@ -49,11 +49,6 @@ namespace Goedel.Mesh {
         ///<summary>Enumerate the catalog as CatalogEntryDevice instances.</summary>
         public AsCatalogEntryDevice AsCatalogEntryDevice => new AsCatalogEntryDevice(this);
 
-
-
-
-
-
         /// <summary>
         /// Constructor for a catalog named <paramref name="containerName"/> in directory
         /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -117,6 +112,10 @@ namespace Goedel.Mesh {
         ConnectionDevice connectionDevice = null;
 
 
+        public ProfileMesh ProfileMesh => profileMesh ??
+            ProfileMesh.Decode(EnvelopedProfileMesh).CacheValue(out profileMesh);
+        ProfileMesh profileMesh;
+
         public ProfileDevice ProfileDevice => profileDevice ??
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
@@ -140,6 +139,14 @@ namespace Goedel.Mesh {
             return builder.ToString();
             }
 
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"ContextDevice");
@@ -149,6 +156,7 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Mesh UDF {UDF}");
             DareEnvelope.Report(builder);
 
+            ProfileMesh.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
             GetActivationDevice(machine?.KeyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
@@ -163,8 +171,8 @@ namespace Goedel.Mesh {
                     builder.AppendIndent(indent, $"Account Entry {account.AccountUDF}");
 
                     account.ProfileAccount.ToBuilder(builder, indent, "[Profile Account Missing]");
-                    //account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
-                    //account.ActivationAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
+                    account.GetActivationAccount(machine?.KeyCollection).ToBuilder(builder, indent, "[Profile Device Missing]");
                     }
 
                 }
@@ -242,7 +250,36 @@ namespace Goedel.Mesh {
             }
 
 
+        /// <summary>
+        /// Verify the Catalogued Device information and verify that it is all correctly signed.
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool Validate() {
+
+            // Verify the master profile is correctly self signed.
+            ProfileMesh.Validate();
+
+            // Verify the device profile is correctly self signed.
+            ProfileDevice.Validate();
+
+            // Verify that the connection and activation entries are signed under the master profile
+            ProfileMesh.Verify(EnvelopedConnectionDevice);
+            ProfileMesh.Verify(EnvelopedActivationDevice);
+
+            // Verify that each connected account is correct.
+            foreach (var account in Accounts) {
+                account.Validate();
+                }
+
+
+            return true; // this will probably turn into exception return.
+            }
+
+
         }
+
+
+
 
 
     }

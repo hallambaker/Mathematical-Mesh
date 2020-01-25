@@ -1,22 +1,8 @@
 ﻿
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System;
-After:
-using Goedel.Registry;
-using Goedel.Utilities;
+// Base classes referenced in generated code. Classes use underscore prefixed
+// naming to avoid collisions with user written code.
+#pragma warning disable IDE1006
 
-using System;
-*/
-
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System.Threading.Tasks;
-using Goedel.Utilities;
-using Goedel.Registry;
-After:
-using System.Threading.Tasks;
-*/
 namespace Goedel.Command {
     /// <summary>Base class for Command line parser types. This could do with
     /// some decrufting to remove implementation artifacts.</summary>

@@ -208,7 +208,10 @@
 		Struct PublicKey KeyEncryption
 			Description
 				|Key used to encrypt data under this profile
-	
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate requests made by the device.
+				
 	Structure ProfileGroup
 		Inherits Profile
 		Description 
@@ -310,9 +313,13 @@
 		Description 
 			|Contains the private activation information for a Mesh application running on
 			|a specific device
+		String ActivationKey
+			Description
+				|The master secret from which all the key contributions are derrived.
+
 
 	Structure ActivationDevice // To do list accounts as permissions 
-		Inherits Assertion
+		Inherits Activation
 		Struct DareEnvelope EnvelopedAssertionDeviceConnection
 			Description
 				|The signed AssertionDeviceConnection.
@@ -321,19 +328,7 @@
 			Multiple
 			Description
 				|List of application and account activation data. Keys, etc.
-		Struct KeyOverlay KeySignature
-			Description
-				|The key overlay used to generate the account signature key from the
-				|device signature key 
-		Struct KeyOverlay KeyEncryption
-			Description
-				|The key overlay used to generate the account encryption key from the
-				|device encryption key 
-		Struct KeyOverlay KeyAuthentication
-			Description
-			Description
-				|The key overlay used to generate the account authentication key from the
-				|device authentication key 
+
 	
 	Structure ActivationAccount
 		Inherits Activation
@@ -473,6 +468,9 @@
 		String UDF
 			Description
 				|UDF of the signature key of the device in the Mesh
+		Struct DareEnvelope EnvelopedProfileMesh
+			Description
+				|The Mesh profile
 		String DeviceUDF
 			Description
 				|UDF of the signature key of the device
@@ -646,6 +644,19 @@
 			Description
 				|
 
+	Structure RespondConnection
+		Description
+			|Respond to RequestConnection message to grant or refuse the connection
+			|request.
+		Inherits Message
+		String Result 
+			Description
+				|The response to the request. One of "Accept", "Reject" or "Pending".
+				
+		Struct CatalogedDevice CatalogedDevice
+			Description
+				|The device information. MUST be present if the value of Result is
+				|"Accept". MUST be absent or null otherwise.
 
 	Structure OfferGroup
 		Inherits Message

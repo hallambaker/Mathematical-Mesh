@@ -199,14 +199,12 @@ namespace Goedel.Cryptography {
         public static HashAlgorithm CreateShake(
                         CryptoAlgorithmID cryptoAlgorithmID,
                         int hashBitLength
-                        ) {
-
-            switch (cryptoAlgorithmID) {
-                case CryptoAlgorithmID.SHAKE_128: return new SHAKE128(hashBitLength);
-                case CryptoAlgorithmID.SHAKE_256: return new SHAKE256(hashBitLength);
-                }
-            return null;
-            }
+                        ) => cryptoAlgorithmID switch
+                            {
+                                CryptoAlgorithmID.SHAKE_128 => new SHAKE128(hashBitLength),
+                                CryptoAlgorithmID.SHAKE_256 => new SHAKE256(hashBitLength),
+                                _ => null,
+                                };
 
         /// <summary>
         /// Calculate the digest value of the contents of <paramref name="fileName"/> using the algorithm

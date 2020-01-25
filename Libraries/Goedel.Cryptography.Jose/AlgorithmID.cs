@@ -207,15 +207,12 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public static KeyUses GetUses(this string tag) {
-            switch (tag) {
-                case "enc":
-                    return KeyUses.Encrypt;
-                case "sig":
-                    return KeyUses.Sign;
-                }
-            return KeyUses.Any;
-            }
+        public static KeyUses GetUses(this string tag) => tag switch
+            {
+                "enc" => KeyUses.Encrypt,
+                "sig" => KeyUses.Sign,
+                _ => KeyUses.Any,
+                };
 
         }
     }

@@ -37,7 +37,7 @@ add   Add calendar entry
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NBJN-YHNC-5OJZ-MQ3S-EQVP-KELI-TAUM"}</div>
+  "Key": "NB2H-R3FQ-EYGQ-RVJG-3NP3-AV4Y-UCFR"}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -50,7 +50,7 @@ Specifying the /json option returns a result of type ResultEntry:
     "Success": true,
     "CatalogEntry": {
       "Title": "CalendarEntry1.json",
-      "Key": "NBJN-YHNC-5OJZ-MQ3S-EQVP-KELI-TAUM"}}}
+      "Key": "NB2H-R3FQ-EYGQ-RVJG-3NP3-AV4Y-UCFR"}}}
 </div>
 ~~~~
 

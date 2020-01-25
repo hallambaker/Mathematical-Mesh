@@ -346,8 +346,15 @@ namespace Goedel.Cryptography.Jose {
             // Sign here?
             }
 
-
-        static Header ProtectedHeader(CryptoData Data,
+        /// <summary>
+        /// Construct a protected header with content type <paramref name="ContentType"/>,
+        /// cryptographic parameters <paramref name="Data"/> and digest <paramref name="Digest"/>
+        /// </summary>
+        /// <param name="Data">The cryptographic context</param>
+        /// <param name="ContentType">The type of the content.</param>
+        /// <param name="Digest">The digest provider.</param>
+        /// <returns>A protected header.</returns>
+        public static Header ProtectedHeader(CryptoData Data,
                     string ContentType,
                     CryptoProviderDigest Digest) {
             var enc = Data.AlgorithmIdentifier.Bulk();

@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebSSH
 		//
 		public static void WebSSH(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/ssh.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/ssh.md" };
-            obj._WebSSH(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/ssh.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/ssh.md" };
+				obj._WebSSH(Examples);
+				}
+			}
 		public void _WebSSH(CreateExamples Examples) {
 
 				 MakeTitle ("SSH");
@@ -157,10 +158,11 @@ namespace ExampleGenerator {
 		// SSHReference
 		//
 		public static void SSHReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/ssh.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/ssh.md" };
-            obj._SSHReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/ssh.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/ssh.md" };
+				obj._SSHReference(Examples);
+				}
+			}
 		public void _SSHReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_SSH;

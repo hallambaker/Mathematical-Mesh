@@ -179,14 +179,6 @@ namespace Goedel.Test.Core {
             return Result;
             }
 
-
-        public override void OpenCatalog(Catalog catalog, string Name) {
-
-
-
-
-            }
-
         }
 
 

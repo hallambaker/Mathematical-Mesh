@@ -8,6 +8,28 @@ namespace Goedel.Utilities {
     public static class NumberSplit {
 
 
+        /// <summary>
+        /// Returns the lesser of <paramref name="value"/> and <paramref name="maximum"/>,
+        /// thus ensuring that the returned value is equal to or smaller than the specified
+        /// maximum.
+        /// </summary>
+        /// <param name="value">The test value.</param>
+        /// <param name="maximum">The maximum value to return.</param>
+        /// <returns>The greater of <paramref name="value"/> and <paramref name="maximum"/></returns>
+        public static int Maximum(this int value, int maximum) =>
+            value <= maximum ? value : maximum;
+
+
+        /// <summary>
+        /// Returns the greater of <paramref name="value"/> and <paramref name="minimum"/>,
+        /// thus ensuring that the returned value is equal to or greater than the specified
+        /// minimum.
+        /// </summary>
+        /// <param name="value">The test value.</param>
+        /// <param name="minimum">The minimum value to return.</param>
+        /// <returns>The greater of <paramref name="value"/> and <paramref name="minimum"/></returns>
+        public static int Minimum(this int value, int minimum) =>
+            value >= minimum ? value : minimum;
 
 
         /// <summary>

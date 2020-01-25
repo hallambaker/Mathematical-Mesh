@@ -35,6 +35,9 @@ namespace Goedel.Mesh.Client {
 
         }
 
+
+
+
     public class ContextAccount : ContextAccountEntry {
 
         ///<summary>The enclosing machine context.</summary>
@@ -49,7 +52,8 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The account activation</summary>
-        public ActivationAccount ActivationAccount => AccountEntry.ActivationAccount;
+        public ActivationAccount ActivationAccount => 
+                AccountEntry.GetActivationAccount(KeyCollection);
 
 
         public ProfileAccount ProfileAccount => AccountEntry.ProfileAccount;
@@ -302,6 +306,7 @@ namespace Goedel.Mesh.Client {
         public List<string> Stores = new List<string> {
             Spool.SpoolOutbound,
             Spool.SpoolInbound,
+            Spool.SpoolLocal,
             Spool.SpoolArchive,
             CatalogApplication.Label,
             CatalogDevice.Label,
@@ -333,8 +338,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>Returns the network catalog for the account</summary>
         public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
 
-
-
         ///<summary>Returns the inbound spool for the account</summary>
         public Spool GetSpoolInbound() => spoolInbound ?? (GetStore(Spool.SpoolInbound) as Spool).CacheValue(out spoolInbound);
         Spool spoolInbound;
@@ -342,6 +345,10 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
         public Spool GetSpoolOutbound() => GetStore(Spool.SpoolOutbound) as Spool;
+
+        ///<summary>Returns the outbound spool catalog for the account</summary>
+        public Spool GetSpoolLocal() => spoolLocal ?? (GetStore(Spool.SpoolLocal) as Spool).CacheValue(out spoolLocal);
+        Spool spoolLocal;
 
         /// <summary>
         /// Return the latest unprocessed MessageConnectionRequest that was received.
@@ -390,9 +397,6 @@ namespace Goedel.Mesh.Client {
             foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = message.Header.ContentMeta;
 
-
-
-
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
                     var meshMessage = Message.FromJSON(message.GetBodyReader());
                     Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
@@ -413,6 +417,38 @@ namespace Goedel.Mesh.Client {
                 }
             return null;
             }
+
+
+        public Message GetPendingMessageByID (string messageID, out bool found) {
+            foreach (var message in GetSpoolInbound().Select(1, true)) {
+                var contentMeta = message.Header.ContentMeta;
+
+
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
+                
+                if (meshMessage.MessageID == messageID) {
+                    found = true;
+                    return meshMessage;
+                    }
+                switch (meshMessage) {
+                    case MessageComplete meshMessageComplete: {
+                        foreach (var reference in meshMessageComplete.References) {
+                            if (reference.MessageID == messageID) {
+                                found = true;
+                                return null;
+                                }
+                            }
+                        break;
+                        }
+                    }
+
+                }
+
+            found = false;
+            return null;
+            }
+
 
         #endregion
 
@@ -497,23 +533,21 @@ namespace Goedel.Mesh.Client {
             return syncStore.Store;
             }
 
-        Store MakeStore(string name) {
-            switch (name) {
-                case Spool.SpoolInbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case Spool.SpoolOutbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case Spool.SpoolArchive: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-
-                case CatalogCredential.Label: return new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogContact.Label: return new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogCalendar.Label: return new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                case CatalogDevice.Label: return new CatalogDevice(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-                }
-
-            throw new NYI();
-            }
+        Store MakeStore(string name) => name switch
+            {
+                Spool.SpoolInbound => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                Spool.SpoolOutbound => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                Spool.SpoolLocal => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                Spool.SpoolArchive => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogCredential.Label => new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogContact.Label => new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogCalendar.Label => new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogBookmark.Label => new CatalogBookmark(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogNetwork.Label => new CatalogNetwork(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogApplication.Label => new CatalogApplication(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                CatalogDevice.Label => new CatalogDevice(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                _ => throw new NYI(),
+                };
 
         public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
 
@@ -621,19 +655,41 @@ namespace Goedel.Mesh.Client {
         /// Accept a connection request.
         /// </summary>
         /// <param name="request">The request to accept.</param>
-        void Accept(AcknowledgeConnection request) {
-            // Connect the device to the Mesh
-            var device = ContextMeshAdmin.CreateCataloguedDevice(
-                            request.MessageConnectionRequest.ProfileDevice);
+        IProcessResult Process(AcknowledgeConnection request, bool accept = true) {
+            var messageID = request.GetResponseID();
+            var respondConnection = new RespondConnection() {
+                MessageID = messageID
+                };
 
-            // Connect the device to the Account
-            ProfileAccount.ConnectDevice(MeshMachine, device, null);
+            if (accept) {
+                // Connect the device to the Mesh
+                var device = ContextMeshAdmin.CreateCataloguedDevice(
+                                request.MessageConnectionRequest.ProfileDevice);
 
-            // Update the local and remote catalog.
-            AddDevice(device);
+                // Connect the device to the Account
+                ProfileAccount.ConnectDevice(MeshMachine, device, null);
+                
+                
+                Console.WriteLine(device.ToString());
+
+
+                // Update the local and remote catalog.
+                AddDevice(device);
+
+
+                respondConnection.CatalogedDevice = device;
+                respondConnection.Result = Constants.TransactionResultAccept;
+                }
+            else {
+                respondConnection.Result = Constants.TransactionResultReject;
+                }
+
+            Console.WriteLine($"Accept connection ID is {messageID}");
+
+            SendMessage(respondConnection, uniqueID: messageID);
+
+            return respondConnection;
             }
-
-
 
         //-------------------------------
 
@@ -641,12 +697,11 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void Process(Message meshMessage, bool accept = true, bool respond = true) {
+        public IProcessResult Process(Message meshMessage, bool accept = true, bool respond = true) {
 
             switch (meshMessage) {
                 case AcknowledgeConnection connection: {
-                    Accept(connection);
-                    break;
+                    return Process(connection, accept) ;
                     }
                 case ReplyContact replyContact: {
                     break;
@@ -674,6 +729,9 @@ namespace Goedel.Mesh.Client {
 
                 default: throw new NYI();
                 }
+
+
+            return null;
             }
 
         public void ContactReply(string serviceID) {
@@ -760,14 +818,28 @@ namespace Goedel.Mesh.Client {
             SendMessage(MeshMessage, new List<string> { recipient });
 
 
-        public void SendMessage(Message MeshMessage, List<string> recipients) {
+        /// <summary>
+        /// Post the message <paramref name="MeshMessage"/> to the service. If <paramref name="recipients"/>
+        /// is not null, the message is to be posted to the outbound spool to be forwarded to the
+        /// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
+        /// collection.
+        /// </summary>
+        /// <param name="MeshMessage">The message to post</param>
+        /// <param name="recipients">The recipients the message is to be sent to. If null, the
+        /// message is for local pickup.</param>
+        /// <param name="uniqueID">The unique message ID.</param>
+        public void SendMessage(
+                    Message MeshMessage, 
+                    List<string> recipients=null,
+                    string uniqueID=null) {
             Connect();
 
             MeshMessage.Sender = ServiceID;
+            uniqueID ??= UDF.Nonce();
 
             var message = DareEnvelope.Encode(MeshMessage.GetBytes());
             message.Header.ContentMeta = new ContentMeta() {
-                UniqueID = UDF.Nonce(),
+                UniqueID = uniqueID,
                 MessageType = MeshMessage._Tag
 
                 };

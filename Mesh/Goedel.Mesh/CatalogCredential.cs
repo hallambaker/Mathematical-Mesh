@@ -90,7 +90,10 @@ namespace Goedel.Mesh {
 
         //public override List<KeyValuePair<string, string>> _KeyValues => base._KeyValues;
 
-
+        /// <summary>
+        /// Converts the value of this instance to a <see langword="String"/>.
+        /// </summary>
+        /// <returns>The current string.</returns>
         public override string ToString() {
             var stringBuilder = new StringBuilder();
             if (Protocol != null) {

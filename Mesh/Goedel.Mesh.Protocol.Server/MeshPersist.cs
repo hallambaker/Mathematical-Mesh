@@ -8,6 +8,7 @@ using Goedel.Utilities;
 
 using System.Collections.Generic;
 using System.IO;
+using System;
 
 namespace Goedel.Mesh.Server {
     public partial class CatalogItem {
@@ -105,12 +106,19 @@ namespace Goedel.Mesh.Server {
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
                 messageConnectionRequestClient.ClientNonce);
 
+            var messageID = UDF.Nonce();
+            //Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
+
             var messageConnectionRequest = new AcknowledgeConnection() {
                 EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
                 ServerNonce = serviceNonce,
                 Witness = witness,
-                MessageID = UDF.Nonce()
+                MessageID = messageID
                 };
+
+            Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
+            Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseID()}");
+
 
             // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
@@ -133,19 +141,20 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
-        public StatusResponse AccountComplete(JpcSession jpcSession, CompleteRequest completeRequest) {
+        public CompleteResponse AccountComplete(JpcSession jpcSession, 
+                    VerifiedAccount account, 
+                    CompleteRequest completeRequest) {
 
-            using var accountHandle = GetAccountUnverified(completeRequest.ServiceID);
-            var catalogEntry = accountHandle.GetCatalogEntryDevice(completeRequest.DeviceUDF);
+            using var accountHandle = GetAccountVerified(account, jpcSession);
 
-            var statusResponse = new StatusResponse() {
-                //ContainerStatus = containerStatus,
-                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                EnvelopedCatalogEntryDevice = catalogEntry
+            // pull the request off SpoolLocal
+            var message = accountHandle.GetLocal(completeRequest.ResponseID);
+
+            var response = new CompleteResponse() {
+                SignedResponse = message
+
                 };
-
-
-            return statusResponse;
+            return response;
 
             }
 
@@ -163,6 +172,8 @@ namespace Goedel.Mesh.Server {
 
                 var containerStatus = new List<ContainerStatus> {
                     accountHandle.GetStatusSpool (Spool.SpoolInbound),
+                    accountHandle.GetStatusSpool (Spool.SpoolOutbound),
+                    accountHandle.GetStatusSpool (Spool.SpoolLocal),
                     accountHandle.GetStatusCatalog (CatalogCredential.Label),
                     accountHandle.GetStatusCatalog (CatalogDevice.Label),
                     accountHandle.GetStatusCatalog (CatalogContact.Label),
@@ -274,18 +285,28 @@ namespace Goedel.Mesh.Server {
         /// Process an inbound message to an account.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account to which the message is directed.</param>
+        /// <param name="accounts">The account to which the message is directed.</param>
         /// <param name="dareMessage">The message</param>
-        public string MessagePost(JpcSession jpcSession, string account, DareEnvelope dareMessage) {
+        public string MessagePost(JpcSession jpcSession, VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => accounts == null ? MessagePostLocal(jpcSession, account, dareMessage) :
+                 MessagePostRemote(jpcSession, account, accounts, dareMessage);//            using var accountUnverified = GetAccountUnverified(account);//            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??//new ContentMeta();//            var identifier = UDF.Nonce();//            dareMessage.Header.ContentMeta.UniqueID = identifier;//            accountUnverified.Post(dareMessage);//            return identifier;
 
-            using var accountUnverified = GetAccountUnverified(account);
-            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??
-new ContentMeta();
-            var identifier = UDF.Nonce();
-            dareMessage.Header.ContentMeta.UniqueID = identifier;
-            accountUnverified.Post(dareMessage);
+
+        public string MessagePostLocal(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
+
+            var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
+
+            identifier.AssertNotNull(InvalidMessageID.Throw, "Messages must have an identifier");
+
+            using var accountEntry = GetAccountVerified(account, jpcSession);
+            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ?? new ContentMeta();
+
+            accountEntry.PostLocal(dareMessage);
+
             return identifier;
             }
+
+        public string MessagePostRemote(JpcSession jpcSession, VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => throw new NYI();
+
 
         /// <summary>
         /// Create a message envelope for a message originated by the service. The message is
@@ -377,29 +398,17 @@ new ContentMeta();
                 return null;
                 }
             }
-
-
-
-
-
-
-
-
         }
 
 
 
     public partial class AccountEntry {
 
-
-
-
         public override string _PrimaryKey => ServiceID;
 
         public ProfileMesh ProfileMesh => profileMesh ??
                 ProfileMesh.Decode(SignedProfileMesh).CacheValue(out profileMesh);
         ProfileMesh profileMesh;
-
 
         public ProfileAccount AssertionAccount => assertionAccount ??
             ProfileAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);

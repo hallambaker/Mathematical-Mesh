@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebBookmark
 		//
 		public static void WebBookmark(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/bookmark.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
-            obj._WebBookmark(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/bookmark.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/bookmark.md" };
+				obj._WebBookmark(Examples);
+				}
+			}
 		public void _WebBookmark(CreateExamples Examples) {
 
 				 MakeTitle ("bookmark");
@@ -77,10 +78,11 @@ namespace ExampleGenerator {
 		// BookmarkReference
 		//
 		public static void BookmarkReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/bookmark.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
-            obj._BookmarkReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/bookmark.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/bookmark.md" };
+				obj._BookmarkReference(Examples);
+				}
+			}
 		public void _BookmarkReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;

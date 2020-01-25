@@ -446,15 +446,13 @@ namespace Goedel.Protocol {
                         return Token.Invalid;
                         }
                     else if (Token == Token.Litteral) {
-                        switch (StringBuilder.ToString()) {
-                            case "true":
-                                return Token.True;
-                            case "false":
-                                return Token.False;
-                            case "null":
-                                return Token.Null;
-                            }
-                        return Token.Invalid;
+                        return (StringBuilder.ToString()) switch
+                            {
+                                "true" => Token.True,
+                                "false" => Token.False,
+                                "null" => Token.Null,
+                                _ => Token.Invalid,
+                                };
                         }
                     ResultString = StringBuilder.ToString();
                     return Token;
@@ -574,13 +572,12 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override int ReadInteger32() {
             GetToken();
-            switch (TokenType) {
-                case Token.Number:
-                    return Convert.ToInt32(ResultString);
-                case Token.Integer:
-                    return (int)ResultInt64;
-                }
-            throw new Exception("Expected Number");
+            return TokenType switch
+                {
+                    Token.Number => Convert.ToInt32(ResultString),
+                    Token.Integer => (int)ResultInt64,
+                    _ => throw new Exception("Expected Number"),
+                    };
             }
 
         /// <summary>
@@ -589,13 +586,12 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override long ReadInteger64() {
             GetToken();
-            switch (TokenType) {
-                case Token.Number:
-                    return Convert.ToInt64(ResultString);
-                case Token.Integer:
-                    return ResultInt64;
-                }
-            throw new Exception("Expected Number");
+            return TokenType switch
+                {
+                    Token.Number => Convert.ToInt64(ResultString),
+                    Token.Integer => ResultInt64,
+                    _ => throw new Exception("Expected Number"),
+                    };
             }
 
         /// <summary>
@@ -619,13 +615,12 @@ namespace Goedel.Protocol {
         /// <returns>The data read</returns>
         public override byte[] ReadBinary() {
             GetToken(true);
-            switch (TokenType) {
-                case Token.String:
-                    return ResultBinary;
-                case Token.Binary:
-                    return ReadBinaryData();
-                }
-            throw new Exception("Expected BASE64 encoded binary");
+            return TokenType switch
+                {
+                    Token.String => ResultBinary,
+                    Token.Binary => ReadBinaryData(),
+                    _ => throw new Exception("Expected BASE64 encoded binary"),
+                    };
             }
 
         /// <summary>

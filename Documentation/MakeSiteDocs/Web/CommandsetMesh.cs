@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebProfile
 		//
 		public static void WebProfile(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/profile.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
-            obj._WebProfile(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/profile.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/profile.md" };
+				obj._WebProfile(Examples);
+				}
+			}
 		public void _WebProfile(CreateExamples Examples) {
 
 				 MakeTitle ("profile");
@@ -113,10 +114,11 @@ namespace ExampleGenerator {
 		// ProfileReference
 		//
 		public static void ProfileReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/profile.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
-            obj._ProfileReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/profile.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/profile.md" };
+				obj._ProfileReference(Examples);
+				}
+			}
 		public void _ProfileReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Mesh;

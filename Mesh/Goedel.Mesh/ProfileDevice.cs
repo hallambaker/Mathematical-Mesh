@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
@@ -11,67 +12,90 @@ namespace Goedel.Mesh {
 
     public partial class ProfileDevice {
 
-        public override string _PrimaryKey => UDF;
-
-
-        public string UDF => KeyOfflineSignature.UDF;
-
-        public byte[] UDFBytes => KeyOfflineSignature.KeyPair.PKIXPublicKey.UDFBytes(512);
-
-
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
         public ProfileDevice() {
             }
 
-        /// <summary>
-        /// Create a new master profile.
-        /// </summary>
-        /// <param name="AlgorithmSign"></param>
-        /// <param name="AlgorithmEncrypt"></param>
-        public static ProfileDevice Generate(
-                        KeyPair keyPublicSign,
-                        KeyPair keyPublicEncrypt,
-                        KeyPair keyPublicAuthenticate) {
-
-            var ProfileDevice = new ProfileDevice() {
-                KeyOfflineSignature = new PublicKey(keyPublicSign.KeyPairPublic()),
-                KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
-                KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
-                };
-
-            var bytes = ProfileDevice.GetBytes(tag: true);
-
-            ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
-                signingKey: keyPublicSign);
-
-            return ProfileDevice;
-
-            }
 
         /// <summary>
-        /// Generate a new profile.
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        /// seed.
         /// </summary>
-        /// <param name="meshMachine">Machine context for persisting keys.</param>
-        /// <param name="algorithmSign">The signature algorithm</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm</param>
-        /// <param name="algorithmAuthenticate">The authentication algorithm</param>
-        /// <returns>The generated, signed profile.</returns>
-        public static ProfileDevice Generate(
-                    IMeshMachine meshMachine,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-            algorithmAuthenticate = algorithmAuthenticate.DefaultAlgorithmAuthenticate();
-            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-            var keyAuthenticate = meshMachine.CreateKeyPair(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-            return Generate(keySign, keyEncrypt, keyAuthenticate);
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public ProfileDevice(
+                    KeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed,
+                    bool persist=false) {
+            var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
+            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
+            var keyAuthenticate = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixAuthenticate);
 
+            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
+            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            KeyAuthentication = new PublicKey(keyAuthenticate.KeyPairPublic());
+
+            if (persist) {
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                }
             }
+
+
+
+
+
+        ///// <summary>
+        ///// Create a new master profile.
+        ///// </summary>
+        ///// <param name="AlgorithmSign"></param>
+        ///// <param name="AlgorithmEncrypt"></param>
+        //public static ProfileDevice Generate(
+        //                KeyPair keyPublicSign,
+        //                KeyPair keyPublicEncrypt,
+        //                KeyPair keyPublicAuthenticate) {
+
+        //    var ProfileDevice = new ProfileDevice() {
+        //        KeyOfflineSignature = new PublicKey(keyPublicSign.KeyPairPublic()),
+        //        KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
+        //        KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
+        //        };
+
+        //    var bytes = ProfileDevice.GetBytes(tag: true);
+
+        //    ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
+        //        signingKey: keyPublicSign);
+
+        //    return ProfileDevice;
+
+        //    }
+
+        ///// <summary>
+        ///// Generate a new profile.
+        ///// </summary>
+        ///// <param name="meshMachine">Machine context for persisting keys.</param>
+        ///// <param name="algorithmSign">The signature algorithm</param>
+        ///// <param name="algorithmEncrypt">The encryption algorithm</param>
+        ///// <param name="algorithmAuthenticate">The authentication algorithm</param>
+        ///// <returns>The generated, signed profile.</returns>
+        //public static ProfileDevice Generate(
+        //            IMeshMachine meshMachine,
+        //            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+        //            CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+        //    algorithmSign = algorithmSign.DefaultAlgorithmSign();
+        //    algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+        //    algorithmAuthenticate = algorithmAuthenticate.DefaultAlgorithmAuthenticate();
+            
+        //    var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+        //    var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+        //    var keyAuthenticate = meshMachine.CreateKeyPair(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
+
+        //    return Generate(keySign, keyEncrypt, keyAuthenticate);
+        //    }
 
         /// <summary>
         /// Decode an enveloped profile device.
@@ -88,10 +112,13 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Formatted print routine.
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
         /// </summary>
-        /// <param name="builder"></param>
-        /// <param name="indent"></param>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Profile Device");
@@ -109,24 +136,76 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
 
             }
-
-
-
         }
 
 
     public partial class ActivationDevice {
+
+        ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
         public ProfileDevice ProfileDevice;
 
-        public DareEnvelope Encode(KeyPair encryptDevice, KeyPair encryptAdmin) {
+        ///<summary>The <see cref="ConnectionDevice"/> instance binding the activated device
+        ///to a MeshProfile.</summary>
+        public ConnectionDevice ConnectionDevice;
+
+        ///<summary>The aggregate encryption key</summary>
+        public KeyPairAdvanced KeyEncryption;
+
+        ///<summary>The aggregate authentication key</summary>
+        public KeyPairAdvanced KeyAuthentication;
+
+
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public ActivationDevice() { }
+
+
+        /// <summary>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDFDevice"/>
+        /// seed.
+        /// </summary>
+        /// <param name="profileDevice">The device profile to activate.</param>
+        /// <param name="keyCollection">Key collection to write private key values to
+        /// for later use.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        public ActivationDevice(
+                    ProfileDevice profileDevice,
+                    KeyCollection keyCollection,
+                    byte[] masterSecret = null,
+                    int bits = 256) : base (
+                        profileDevice, keyCollection, UdfAlgorithmIdentifier.MeshProfileDevice,
+                        Constants.UDFActivationDevice, masterSecret, bits) {
+
+            KeyEncryption = Combine(keyCollection, profileDevice.KeyEncryption,
+                ActivationKey, Constants.UDFActivationDevice, Constants.UDFMeshKeySufixEncrypt);
+
+            KeyAuthentication = Combine(keyCollection, profileDevice.KeyAuthentication,
+                ActivationKey, Constants.UDFActivationDevice, Constants.UDFMeshKeySufixAuthenticate);
+
+            // Create the (unsigned) ConnectionDevice
+            ConnectionDevice = new ConnectionDevice() {
+                KeyEncryption = new PublicKey(KeyEncryption.KeyPairPublic()),
+                KeySignature = new PublicKey(KeySignature.KeyPairPublic()),
+                KeyAuthentication = new PublicKey(KeyAuthentication.KeyPairPublic())
+                };
+            }
+        
+
+
+
+        /// <summary>
+        /// Encrypt this activation under the ProfileDevice encryption key.
+        /// </summary>
+        public DareEnvelope Encode() {
 
             var cryptoParameters = new CryptoParameters() {
-                EncryptionKeys = new List<KeyPair> { encryptDevice, encryptAdmin }
+                EncryptionKeys = new List<KeyPair> { ProfileDevice.KeyEncryption.KeyPair }
                 };
 
             var contentInfo = new Goedel.Cryptography.Dare.ContentMeta() { ContentType = "application/mmm" };
 
-            this.DareEnvelope = new DareEnvelope(
+            DareEnvelope = new DareEnvelope(
                 cryptoParameters,
                 GetBytes(tag: true),
                 contentMeta: contentInfo);
@@ -134,22 +213,6 @@ namespace Goedel.Mesh {
             return DareEnvelope;
             }
 
-        public ActivationDevice() { }
-
-        public ActivationDevice(
-                    IMeshMachine meshMachine,
-                    ProfileDevice profileDevice) {
-            ProfileDevice = profileDevice;
-            KeySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
-            KeyEncryption = new KeyOverlay(meshMachine, profileDevice.KeyEncryption);
-            KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
-
-
-            //Console.WriteLine($"Created new device private key");
-            //Console.WriteLine($"   Device Sig  {profileDevice.KeyOfflineSignature.UDF} -> {KeySignature.UDF}");
-            //Console.WriteLine($"   Device Enc  {profileDevice.KeyEncryption.UDF} -> {KeyEncryption.UDF}");
-            //Console.WriteLine($"   Device Auth {profileDevice.KeyAuthentication.UDF} -> {KeyAuthentication.UDF}");
-            }
 
         /// <summary>
         /// Decode the contents of <paramref name="envelope"/> using keys from
@@ -172,27 +235,34 @@ namespace Goedel.Mesh {
             return result;
             }
 
-        public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
-                FromJSON(message.GetBodyReader(), true);
+        //public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
+        //        FromJSON(message.GetBodyReader(), true);
 
 
-        // is failing here because the device entry is not being written back to the catalog after the update.
-        // fix this and then some skyrim.
+        //// is failing here because the device entry is not being written back to the catalog after the update.
+        //// fix this and then some skyrim.
 
-        public ActivationAccount GetActivation(string accountName = null) {
-            foreach (var activation in Activations) {
-                switch (activation) {
-                    case ActivationAccount activationAccount:
-                        return activationAccount;
-                    }
+        //public ActivationAccount GetActivation(string accountName = null) {
+        //    foreach (var activation in Activations) {
+        //        switch (activation) {
+        //            case ActivationAccount activationAccount:
+        //                return activationAccount;
+        //            }
 
-                }
-
-
-            return null;
-            }
+        //        }
 
 
+        //    return null;
+        //    }
+
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
             builder.AppendIndent(indent, $"Activation Device");
             indent++;
@@ -201,25 +271,25 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeySignature:        {KeySignature.UDF} ");
             builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
             builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
-
             }
-
 
         }
 
     public partial class ConnectionDevice {
-        public ProfileMesh ProfileMaster;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public ConnectionDevice() {
             }
 
-        public ConnectionDevice(ActivationDevice assertionDevicePrivate) {
-            KeySignature = new PublicKey(assertionDevicePrivate.KeySignature.KeyPair);
-            KeyEncryption = new PublicKey(assertionDevicePrivate.KeyEncryption.KeyPair);
-            KeyAuthentication = new PublicKey(assertionDevicePrivate.KeyAuthentication.KeyPair);
-            }
 
-
+        /// <summary>
+        /// Decode the DareEnvelope <paramref name="envelope"/> and return the corresponding
+        /// <see cref="ConnectionDevice"/> instance.
+        /// </summary>
+        /// <param name="envelope">The DareEnvelope to decode</param>
+        /// <returns>The decoded <see cref="ConnectionDevice"/> instance.</returns>
         public static new ConnectionDevice Decode(DareEnvelope envelope) {
             if (envelope == null) {
                 return null;
@@ -229,6 +299,14 @@ namespace Goedel.Mesh {
             return result;
             }
 
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Connection Device");
@@ -240,8 +318,6 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
 
             }
-
-
         }
 
 

@@ -13,26 +13,19 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoAlgorithmID">The algorithm identifier to categorize.</param>
         /// <returns>The class of algorithm specified by <paramref name="cryptoAlgorithmID"/></returns>
         public static CryptoAlgorithmClasses Class(
-                    this CryptoAlgorithmID cryptoAlgorithmID) {
-            var btm = cryptoAlgorithmID & CryptoAlgorithmID.BulkTagMask;
-            switch (cryptoAlgorithmID & CryptoAlgorithmID.BulkTagMask) {
-                case CryptoAlgorithmID.Digest: return CryptoAlgorithmClasses.Digest;
-
-                case CryptoAlgorithmID.Encryption: return CryptoAlgorithmClasses.Encryption;
-
-                case CryptoAlgorithmID.MAC: return CryptoAlgorithmClasses.MAC;
-                }
-
-            switch (cryptoAlgorithmID & CryptoAlgorithmID.MetaTagMask) {
-                case CryptoAlgorithmID.Signature: return CryptoAlgorithmClasses.Signature;
-
-                case CryptoAlgorithmID.Exchange: return CryptoAlgorithmClasses.Exchange;
-
-                }
-
-            return CryptoAlgorithmClasses.NULL;
-
-            }
+                    this CryptoAlgorithmID cryptoAlgorithmID) =>
+            (cryptoAlgorithmID & CryptoAlgorithmID.BulkTagMask) switch
+                {
+                    CryptoAlgorithmID.Digest => CryptoAlgorithmClasses.Digest,
+                    CryptoAlgorithmID.Encryption => CryptoAlgorithmClasses.Encryption,
+                    CryptoAlgorithmID.MAC => CryptoAlgorithmClasses.MAC,
+                    _ => (cryptoAlgorithmID & CryptoAlgorithmID.MetaTagMask) switch
+                        {
+                            CryptoAlgorithmID.Signature => CryptoAlgorithmClasses.Signature,
+                            CryptoAlgorithmID.Exchange => CryptoAlgorithmClasses.Exchange,
+                            _ => CryptoAlgorithmClasses.NULL,
+                            },
+                    };
 
 
         /// <summary>

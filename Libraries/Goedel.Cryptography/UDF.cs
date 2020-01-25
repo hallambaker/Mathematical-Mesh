@@ -59,7 +59,7 @@ namespace Goedel.Cryptography {
         }
 
     ///<summary>Algorithm identifier codes for Derived keys</summary>
-    public enum UDFAlgorithmIdentifier {
+    public enum UdfAlgorithmIdentifier {
 
         ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
         Any = 0,
@@ -90,6 +90,15 @@ namespace Goedel.Cryptography {
 
         ///<summary>Mesh device profile</summary>
         MeshProfileDevice = 257,
+
+        ///<summary>Mesh device profile</summary>
+        MeshProfileAccount = 258,
+
+        ///<summary>Mesh device profile</summary>
+        MeshActivationDevice = 259,
+
+        ///<summary>Mesh device profile</summary>
+        MeshActivationAccount = 260
         }
 
 
@@ -794,7 +803,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="algorithmIdentifier">The algorithm to generate the key specifier for.</param>
         /// <returns>Two byte key specifier.</returns>
-        public static byte[] KeySpecifier(UDFAlgorithmIdentifier algorithmIdentifier) {
+        public static byte[] KeySpecifier(UdfAlgorithmIdentifier algorithmIdentifier) {
 
             var result = new byte[2];
 
@@ -816,7 +825,7 @@ namespace Goedel.Cryptography {
         /// not null.</param>
         /// <param name="data">The master key data.</param>
         /// <returns>The generated UDF</returns>
-        public static string DerivedKey(UDFAlgorithmIdentifier algorithmIdentifier,
+        public static string DerivedKey(UdfAlgorithmIdentifier algorithmIdentifier,
                     int length = 128, byte[] data = null) {
 
             var keySpecifier = KeySpecifier(algorithmIdentifier);
@@ -857,21 +866,21 @@ namespace Goedel.Cryptography {
             var binaryData = Parse(udf, out var code);
             (code == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
 
-            var algorithm = (UDFAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
+            var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
             var salt = KeySpecifier(algorithm);
 
 
             switch (algorithm) {
-                case UDFAlgorithmIdentifier.Ed25519: {
+                case UdfAlgorithmIdentifier.Ed25519: {
                     return new KeyPairEd25519(binaryData, salt, keySecurity, keyUses);
                     }
-                case UDFAlgorithmIdentifier.Ed448: {
+                case UdfAlgorithmIdentifier.Ed448: {
                     return new KeyPairEd448(binaryData, salt, keySecurity, keyUses);
                     }
-                case UDFAlgorithmIdentifier.X25519: {
+                case UdfAlgorithmIdentifier.X25519: {
                     return new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
                     }
-                case UDFAlgorithmIdentifier.X448: {
+                case UdfAlgorithmIdentifier.X448: {
                     return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
                     }
                 }
@@ -899,34 +908,34 @@ namespace Goedel.Cryptography {
             var binaryData = Parse(udf, out var code);
             (code == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
 
-            var algorithm = (UDFAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
+            var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
             var salt = KeySpecifier(algorithm);
 
             int keySize = 0;
             CryptoAlgorithmID cryptoAlgorithmID;
             switch (algorithm) {
-                case UDFAlgorithmIdentifier.Ed25519: {
+                case UdfAlgorithmIdentifier.Ed25519: {
                     cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
                     break;
                     }
-                case UDFAlgorithmIdentifier.Ed448: {
+                case UdfAlgorithmIdentifier.Ed448: {
                     cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
                     break;
                     }
-                case UDFAlgorithmIdentifier.X25519: {
+                case UdfAlgorithmIdentifier.X25519: {
                     cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
                     break;
                     }
-                case UDFAlgorithmIdentifier.X448: {
+                case UdfAlgorithmIdentifier.X448: {
                     cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
                     break;
                     }
 
-                case UDFAlgorithmIdentifier.MeshProfileMaster: {
+                case UdfAlgorithmIdentifier.MeshProfileMaster: {
                     cryptoAlgorithmID = cryptoAlgorithmIDin;
                     break;
                     }
-                case UDFAlgorithmIdentifier.MeshProfileDevice: {
+                case UdfAlgorithmIdentifier.MeshProfileDevice: {
                     cryptoAlgorithmID = cryptoAlgorithmIDin;
                     break;
                     }
@@ -957,7 +966,7 @@ namespace Goedel.Cryptography {
         /// <param name="algorithmIdentifier">The type of key to generate.</param>
         /// <param name="text">The seed text.</param>
         /// <returns>The computed UDF.</returns>
-        public static string TestKey(UDFAlgorithmIdentifier algorithmIdentifier, string text) {
+        public static string TestKey(UdfAlgorithmIdentifier algorithmIdentifier, string text) {
             var head = new byte[] { 
                     (byte)UDFTypeIdentifier.DerivedKey,
                     (byte)((int)algorithmIdentifier >> 8 & 0xff),

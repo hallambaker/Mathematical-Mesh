@@ -15,8 +15,8 @@ a description of the service parameters.
 <div="terminal">
 <cmd>Alice> account hello alice@example.com
 <rsp>MeshService 3.0
-   Service UDF = MAZN-ABCG-4UH7-NN3H-5G7D-KP7X-HRGO
-   Host UDF = MDNG-3RJS-N6BJ-MU63-U7TZ-RKVB-SYZT
+   Service UDF = MBNT-WOL7-R4N6-WNQ6-DZGH-NARU-QXGS
+   Host UDF = MB2O-MYIT-SVZM-AP5P-N7XS-XPHN-CNYA
 </div>
 ~~~~
 
@@ -43,8 +43,8 @@ The `profile create` command creates a profile:
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh create
-<rsp>Device Profile UDF=MBPL-MIIT-KOHN-FC6P-6V5Y-ZQ4R-3NKY
-Personal Profile UDF=MCSC-2POG-PH7T-ODJX-HOCA-B4XY-AFSK
+<rsp>Device Profile UDF=MAKJ-PBFP-LU5T-5Z34-YITA-PHYT-F5QS
+Personal Profile UDF=MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
 </div>
 ~~~~
 
@@ -88,7 +88,9 @@ of the user's master profile and returns a set of recovery shares.
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh escrow
-<rsp>ERROR - The cryptographic provider does not permit export of the private key parameters
+<rsp>Share: SAQE-Y4MW-BH55-ZL57-4XFP-PQVZ-VLHT-U7C3-X2BA-ZOCW-75EE-KZZM-3KSQ-E47T-O26A-I
+Share: SAQZ-QGZL-CPK4-DXZN-EOWK-2AAO-DS76-6JV2-ZXUB-YSVJ-TJKK-ONXT-CDVB-S633-ZANC-M
+Share: SARO-HRGA-DWX2-ODU2-MGHG-EPLC-R2YK-HUIZ-3VHC-XXH4-GVQQ-SBVZ-I4XT-BAYE-DF4E-Q
 </div>
 ~~~~
 
@@ -101,8 +103,9 @@ command.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> mesh recover $TBS $TBS /verify
-<rsp>ERROR - The feature has not been implemented
+<cmd>Alice> mesh recover $SAQE-Y4MW-BH55-ZL57-4XFP-PQVZ-VLHT-U7C3-X2BA-ZOCW-75EE-KZZM-3KSQ-E47T-O26A-I $SARO-HRGA-DWX2-ODU2-MGHG-EPLC-R2YK-HUIZ-3VHC-XXH4-GVQQ-SBVZ-I4XT-BAYE-DF4E-Q /verify
+<rsp>Device Profile UDF=MAZC-3DVD-LIWY-A6UV-XGWR-GSBA-62YB
+Personal Profile UDF=MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
 </div>
 ~~~~
 

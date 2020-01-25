@@ -330,16 +330,18 @@
 		String PrivateValue
 			Description
 				|The private value
-
-	Structure PrivateKeyUDFMaster
-		Inherits PrivateKeyUDF
-		Description
-			|A UDF Device Key
-	
-	Structure PrivateKeyUDFDevice
-		Inherits PrivateKeyUDF
-		Description
-			|A UDF Master Key
+		String KeyType
+			Description
+				|The UDF key identifier
+		String AlgorithmEncrypt
+			Description
+				|The algorithm used to derrive the encryption key
+		String AlgorithmSign
+			Description
+				|The algorithm used to derrive the encryption key
+		String AlgorithmAuthenticate
+			Description
+				|The algorithm used to derrive the encryption key
 
 	Structure KeyAgreement
 		Description

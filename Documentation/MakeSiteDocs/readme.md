@@ -147,16 +147,6 @@ ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\Te
     stFile1-group.dare'.
 ````
 
-5.7. Escrow and Recovery of Keys
-
-OK, need to reset this completely to use the new keygen approach.
-
-````
-Alice> mesh escrow
-ERROR - The cryptographic provider does not permit export of the priv
-    ate key parameters
-````
-
 
 ## Part II: UDF
 

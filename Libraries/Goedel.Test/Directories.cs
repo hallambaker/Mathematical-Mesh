@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
+//using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Goedel.Test {
     public class Directories {
@@ -31,13 +31,13 @@ namespace Goedel.Test {
         public static string TestKey_Bob_Encrypt = CommonData + "TestKey_RSA_Bob.prv";
 
 
-        public static void Initialize(MT.TestContext Context) {
-            Context.Properties.TryGetValue("TestDeploymentDir", out var TestDeploymentDir);
+        //public static void Initialize(MT.TestContext Context) {
+        //    Context.Properties.TryGetValue("TestDeploymentDir", out var TestDeploymentDir);
 
-            ResultDirectory = TestDeploymentDir as string;
-            Directory.SetCurrentDirectory(RunDirectory);
+        //    ResultDirectory = TestDeploymentDir as string;
+        //    Directory.SetCurrentDirectory(RunDirectory);
 
-            }
+        //    }
 
 
         }

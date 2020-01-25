@@ -1,5 +1,8 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class ProfileService {
@@ -7,7 +10,37 @@ namespace Goedel.Mesh {
 
         public ProfileService() { }
 
+        /// <summary>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        /// seed.
+        /// </summary>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public ProfileService(
+                    KeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed,
+                    bool persist = false) {
+            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
+            var keyAuthenticate = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixAuthenticate);
+
+            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
+            KeyAuthentication = new PublicKey(keyAuthenticate.KeyPairPublic());
+
+            if (persist) {
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                }
+            }
+
+
+
+
         public ProfileService(KeyPair keySign) => KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
+
+
+
+
 
         public static ProfileService Generate(
             IMeshMachine meshMachine,

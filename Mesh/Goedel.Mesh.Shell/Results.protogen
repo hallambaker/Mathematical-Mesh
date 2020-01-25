@@ -59,6 +59,10 @@
 		Struct ProfileAccount				ProfileAccount
 		Struct ActivationAccount			ActivationAccount
 	
+	Structure ResultRegisterService
+		Inherits							ResultCreateAccount
+		String								ServiceID
+
 	Structure ResultRecover
 		Inherits		ResultCreatePersonal
 
@@ -128,12 +132,13 @@
 		Struct Message Messages
 			Multiple
 
-	Structure ResultConnectProcess
+	Structure ResultProcess
 		Inherits		Result
-		Boolean			Accepted
-		String			Witness
+		Struct Message			ProcessResult
 
-
+	Structure ResultConnect
+		Inherits		Result
+		Struct CatalogedMachine			CatalogedMachine
 
 
 	Structure ResultTransactionRequest
@@ -141,10 +146,6 @@
 		String			Identifier
 
 
-
-	Structure ResultConnect
-		Inherits		Result
-		Struct CatalogedMachine			CatalogedMachine
 
 	Structure ResultComplete
 		Inherits		Result

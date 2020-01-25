@@ -1,8 +1,10 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Protocol;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 using System.Collections.Generic;
+using System;
 
 namespace Goedel.Mesh {
     public partial class Message {
@@ -70,5 +72,45 @@ namespace Goedel.Mesh {
             }
         }
 
+    public partial class RespondConnection {
+        KeyCollection keyCollection;
 
+        public static RespondConnection Decode(DareEnvelope envelope, 
+                    KeyCollection keyCollection=null) {
+
+            if (envelope == null) {
+                return null;
+                }
+
+            var plaintext = envelope.GetPlaintext(keyCollection);
+
+            Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), true);
+            result.DareEnvelope = envelope;
+            result.keyCollection = keyCollection;
+            return result;
+            }
+
+
+
+        public void Validate(ProfileDevice profileDevice, KeyCollection keyCollection) {
+
+            // Validate the chain for the device to master
+
+            // Profile Master is self Signed
+            // Device Profile connection is valid under Profile Master
+            // Device Activation for master is valid
+
+
+            // Foreach Account 
+            //  // Validate the chain for the device to account
+
+            //  // Profile Account is self Signed
+            //  // Account connection is valid under Profile Master
+            //  // Device Account connection is valid under Profile Account
+            //  // Device Activation for Account is valid
+
+            }
+
+        }
     }

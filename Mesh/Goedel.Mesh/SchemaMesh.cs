@@ -27,7 +27,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
+#pragma warning disable IDE1006
 
 
 using Goedel.Cryptography.Jose;
@@ -112,6 +112,7 @@ namespace Goedel.Mesh {
 			{"MessagePIN", MessagePIN._Factory},
 			{"RequestConnection", RequestConnection._Factory},
 			{"AcknowledgeConnection", AcknowledgeConnection._Factory},
+			{"RespondConnection", RespondConnection._Factory},
 			{"OfferGroup", OfferGroup._Factory},
 			{"RequestContact", RequestContact._Factory},
 			{"ReplyContact", ReplyContact._Factory},
@@ -123,10 +124,10 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
-        /// <param name="JSONReader">Input stream</param>
+        /// <param name="jsonReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
-			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
+			Out = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -280,16 +281,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PublicKey FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new PublicKey FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as PublicKey;
 				}
 		    var Result = new PublicKey ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -297,40 +298,40 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
 					break;
 					}
 				case "X509Certificate" : {
-					X509Certificate = JSONReader.ReadBinary ();
+					X509Certificate = jsonReader.ReadBinary ();
 					break;
 					}
 				case "X509Chain" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					X509Chain = new List <byte[]> ();
 					while (_Going) {
-						byte[] _Item = JSONReader.ReadBinary ();
+						byte[] _Item = jsonReader.ReadBinary ();
 						X509Chain.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "X509CSR" : {
-					X509CSR = JSONReader.ReadBinary ();
+					X509CSR = jsonReader.ReadBinary ();
 					break;
 					}
 				case "PublicParameters" : {
-					PublicParameters = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					PublicParameters = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "PrivateParameters" : {
-					PrivateParameters = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					PrivateParameters = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -446,16 +447,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyComposite FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new KeyComposite FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyComposite;
 				}
 		    var Result = new KeyComposite ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -463,21 +464,21 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Public" : {
-					Public = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					Public = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "Part" : {
-					Part = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					Part = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "Service" : {
-					Service = JSONReader.ReadString ();
+					Service = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -587,16 +588,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DeviceRecryptionKey FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new DeviceRecryptionKey FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as DeviceRecryptionKey;
 				}
 		    var Result = new DeviceRecryptionKey ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -604,33 +605,33 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
 					break;
 					}
 				case "Contact" : {
 					// An untagged structure
 					Contact = new Contact ();
-					Contact.Deserialize (JSONReader);
+					Contact.Deserialize (jsonReader);
  
 					break;
 					}
 				case "RecryptionKey" : {
 					// An untagged structure
 					RecryptionKey = new PublicKey ();
-					RecryptionKey.Deserialize (JSONReader);
+					RecryptionKey.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedRecryptionKeyDevice" : {
 					// An untagged structure
 					EnvelopedRecryptionKeyDevice = new DareEnvelope ();
-					EnvelopedRecryptionKeyDevice.Deserialize (JSONReader);
+					EnvelopedRecryptionKeyDevice.Deserialize (jsonReader);
  
 					break;
 					}
@@ -739,16 +740,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyOverlay FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new KeyOverlay FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyOverlay;
 				}
 		    var Result = new KeyOverlay ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -756,21 +757,21 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
 					break;
 					}
 				case "BaseUDF" : {
-					BaseUDF = JSONReader.ReadString ();
+					BaseUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "Overlay" : {
-					Overlay = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					Overlay = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -899,16 +900,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new EscrowedKeySet FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new EscrowedKeySet FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as EscrowedKeySet;
 				}
 		    var Result = new EscrowedKeySet ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -916,27 +917,27 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "MasterSignatureKey" : {
-					MasterSignatureKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					MasterSignatureKey = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "MasterEncryptionKey" : {
-					MasterEncryptionKey = Key.FromJSON (JSONReader, true) ;  // A tagged structure
+					MasterEncryptionKey = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "MasterEscrowKeys" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					MasterEscrowKeys = new List <Key> ();
 					while (_Going) {
-						var _Item = Key.FromJSON (JSONReader, true); // a tagged structure
+						var _Item = Key.FromJSON (jsonReader, true); // a tagged structure
 						MasterEscrowKeys.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -1068,12 +1069,12 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Assertion FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Assertion FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Assertion;
 				}
 			throw new CannotCreateAbstract();
@@ -1082,32 +1083,32 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Names" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Names = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Names.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Updated" : {
-					Updated = JSONReader.ReadDateTime ();
+					Updated = jsonReader.ReadDateTime ();
 					break;
 					}
 				case "NotaryToken" : {
-					NotaryToken = JSONReader.ReadString ();
+					NotaryToken = jsonReader.ReadString ();
 					break;
 					}
 				case "Conditions" : {
-					Conditions = Condition.FromJSON (JSONReader, true) ;  // A tagged structure
+					Conditions = Condition.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -1179,12 +1180,12 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Condition FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Condition FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Condition;
 				}
 			throw new CannotCreateAbstract();
@@ -1193,9 +1194,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
@@ -1304,12 +1305,12 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Profile FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Profile FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Profile;
 				}
 			throw new CannotCreateAbstract();
@@ -1318,34 +1319,34 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "KeyOfflineSignature" : {
 					// An untagged structure
 					KeyOfflineSignature = new PublicKey ();
-					KeyOfflineSignature.Deserialize (JSONReader);
+					KeyOfflineSignature.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeysOnlineSignature" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					KeysOnlineSignature = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  PublicKey ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new PublicKey (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new PublicKey (jsonReader);
 						KeysOnlineSignature.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -1449,16 +1450,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileMesh FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileMesh FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileMesh;
 				}
 		    var Result = new ProfileMesh ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -1466,34 +1467,34 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "KeysMasterEscrow" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					KeysMasterEscrow = new List <PublicKey> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  PublicKey ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new PublicKey (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new PublicKey (jsonReader);
 						KeysMasterEscrow.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -1594,16 +1595,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileDevice FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileDevice;
 				}
 		    var Result = new ProfileDevice ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -1611,31 +1612,31 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Description" : {
-					Description = JSONReader.ReadString ();
+					Description = jsonReader.ReadString ();
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -1715,16 +1716,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileService FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileService FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileService;
 				}
 		    var Result = new ProfileService ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -1732,20 +1733,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -1775,6 +1776,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual PublicKey						KeyEncryption  {get; set;}
+        /// <summary>
+        ///Key used to authenticate requests made by the device.
+        /// </summary>
+
+		public virtual PublicKey						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1841,6 +1847,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("KeyEncryption", 1);
 					KeyEncryption.Serialize (_Writer, false);
 				}
+			if (KeyAuthentication != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("KeyAuthentication", 1);
+					KeyAuthentication.Serialize (_Writer, false);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -1852,16 +1863,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileAccount FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileAccount;
 				}
 		    var Result = new ProfileAccount ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -1869,35 +1880,42 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "ServiceIDs" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					ServiceIDs = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						ServiceIDs.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "MeshProfileUDF" : {
-					MeshProfileUDF = JSONReader.ReadString ();
+					MeshProfileUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "KeyAuthentication" : {
+					// An untagged structure
+					KeyAuthentication = new PublicKey ();
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -1996,16 +2014,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileGroup FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileGroup;
 				}
 		    var Result = new ProfileGroup ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2013,31 +2031,31 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "ServiceIDs" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					ServiceIDs = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						ServiceIDs.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2115,16 +2133,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ProfileHost FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ProfileHost FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ProfileHost;
 				}
 		    var Result = new ProfileHost ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2132,20 +2150,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2233,16 +2251,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Connection FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Connection FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Connection;
 				}
 		    var Result = new Connection ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2250,21 +2268,21 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "SubjectUDF" : {
-					SubjectUDF = JSONReader.ReadString ();
+					SubjectUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "AuthorityUDF" : {
-					AuthorityUDF = JSONReader.ReadString ();
+					AuthorityUDF = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2359,16 +2377,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Permission FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Permission FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Permission;
 				}
 		    var Result = new Permission ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2376,23 +2394,23 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Name" : {
-					Name = JSONReader.ReadString ();
+					Name = jsonReader.ReadString ();
 					break;
 					}
 				case "Role" : {
-					Role = JSONReader.ReadString ();
+					Role = jsonReader.ReadString ();
 					break;
 					}
 				case "Capabilities" : {
 					// An untagged structure
 					Capabilities = new DareEnvelope ();
-					Capabilities.Deserialize (JSONReader);
+					Capabilities.Deserialize (jsonReader);
  
 					break;
 					}
@@ -2516,16 +2534,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionDevice FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionDevice;
 				}
 		    var Result = new ConnectionDevice ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2533,48 +2551,48 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Permissions" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Permissions = new List <Permission> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Permission ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Permission (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Permission (jsonReader);
 						Permissions.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "KeySignature" : {
 					// An untagged structure
 					KeySignature = new PublicKey ();
-					KeySignature.Deserialize (JSONReader);
+					KeySignature.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2711,16 +2729,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionAccount FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionAccount;
 				}
 		    var Result = new ConnectionAccount ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2728,59 +2746,59 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "ServiceID" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					ServiceID = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						ServiceID.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Permissions" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Permissions = new List <Permission> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Permission ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Permission (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Permission (jsonReader);
 						Permissions.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "KeySignature" : {
 					// An untagged structure
 					KeySignature = new PublicKey ();
-					KeySignature.Deserialize (JSONReader);
+					KeySignature.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new PublicKey ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2860,16 +2878,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionGroup FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionGroup;
 				}
 		    var Result = new ConnectionGroup ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2877,20 +2895,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new KeyComposite ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -2958,16 +2976,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionService FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionService FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionService;
 				}
 		    var Result = new ConnectionService ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -2975,13 +2993,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3049,16 +3067,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionHost FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionHost FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionHost;
 				}
 		    var Result = new ConnectionHost ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3066,13 +3084,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3140,16 +3158,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ConnectionApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ConnectionApplication FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ConnectionApplication;
 				}
 		    var Result = new ConnectionApplication ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3157,13 +3175,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3179,6 +3197,11 @@ namespace Goedel.Mesh {
 	/// a specific device
 	/// </summary>
 	public partial class Activation : Assertion {
+        /// <summary>
+        ///The master secret from which all the key contributions are derrived.
+        /// </summary>
+
+		public virtual string						ActivationKey  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3223,6 +3246,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			if (ActivationKey != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("ActivationKey", 1);
+					_Writer.WriteString (ActivationKey);
+				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3234,16 +3262,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Activation FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Activation FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Activation;
 				}
 		    var Result = new Activation ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3251,13 +3279,17 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
+				case "ActivationKey" : {
+					ActivationKey = jsonReader.ReadString ();
+					break;
+					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3269,7 +3301,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class ActivationDevice : Assertion {
+	public partial class ActivationDevice : Activation {
         /// <summary>
         ///The signed AssertionDeviceConnection.
         /// </summary>
@@ -3280,24 +3312,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual List<Activation>				Activations  {get; set;}
-        /// <summary>
-        ///The key overlay used to generate the account signature key from the
-        ///device signature key 
-        /// </summary>
-
-		public virtual KeyOverlay						KeySignature  {get; set;}
-        /// <summary>
-        ///The key overlay used to generate the account encryption key from the
-        ///device encryption key 
-        /// </summary>
-
-		public virtual KeyOverlay						KeyEncryption  {get; set;}
-        /// <summary>
-        ///The key overlay used to generate the account authentication key from the
-        ///device authentication key 
-        /// </summary>
-
-		public virtual KeyOverlay						KeyAuthentication  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3341,7 +3355,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_Writer.WriteObjectStart ();
 				}
-			((Assertion)this).SerializeX(_Writer, false, ref _first);
+			((Activation)this).SerializeX(_Writer, false, ref _first);
 			if (EnvelopedAssertionDeviceConnection != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("EnvelopedAssertionDeviceConnection", 1);
@@ -3363,21 +3377,6 @@ namespace Goedel.Mesh {
 				_Writer.WriteArrayEnd ();
 				}
 
-			if (KeySignature != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeySignature", 1);
-					KeySignature.Serialize (_Writer, false);
-				}
-			if (KeyEncryption != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeyEncryption", 1);
-					KeyEncryption.Serialize (_Writer, false);
-				}
-			if (KeyAuthentication != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("KeyAuthentication", 1);
-					KeyAuthentication.Serialize (_Writer, false);
-				}
 			if (_wrap) {
 				_Writer.WriteObjectEnd ();
 				}
@@ -3389,16 +3388,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ActivationDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ActivationDevice FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ActivationDevice;
 				}
 		    var Result = new ActivationDevice ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3406,52 +3405,31 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "EnvelopedAssertionDeviceConnection" : {
 					// An untagged structure
 					EnvelopedAssertionDeviceConnection = new DareEnvelope ();
-					EnvelopedAssertionDeviceConnection.Deserialize (JSONReader);
+					EnvelopedAssertionDeviceConnection.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Activations" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Activations = new List <Activation> ();
 					while (_Going) {
-						var _Item = Activation.FromJSON (JSONReader, true); // a tagged structure
+						var _Item = Activation.FromJSON (jsonReader, true); // a tagged structure
 						Activations.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
-				case "KeySignature" : {
-					// An untagged structure
-					KeySignature = new KeyOverlay ();
-					KeySignature.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "KeyEncryption" : {
-					// An untagged structure
-					KeyEncryption = new KeyOverlay ();
-					KeyEncryption.Deserialize (JSONReader);
- 
-					break;
-					}
-				case "KeyAuthentication" : {
-					// An untagged structure
-					KeyAuthentication = new KeyOverlay ();
-					KeyAuthentication.Deserialize (JSONReader);
- 
-					break;
-					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3574,16 +3552,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ActivationAccount FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ActivationAccount FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ActivationAccount;
 				}
 		    var Result = new ActivationAccount ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3591,45 +3569,45 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "AccountUDF" : {
-					AccountUDF = JSONReader.ReadString ();
+					AccountUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "KeyGroup" : {
 					// An untagged structure
 					KeyGroup = new KeyComposite ();
-					KeyGroup.Deserialize (JSONReader);
+					KeyGroup.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new KeyOverlay ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeyAuthentication" : {
 					// An untagged structure
 					KeyAuthentication = new KeyOverlay ();
-					KeyAuthentication.Deserialize (JSONReader);
+					KeyAuthentication.Deserialize (jsonReader);
  
 					break;
 					}
 				case "KeySignature" : {
 					// An untagged structure
 					KeySignature = new KeyOverlay ();
-					KeySignature.Deserialize (JSONReader);
+					KeySignature.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3717,16 +3695,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ActivationGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ActivationGroup FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ActivationGroup;
 				}
 		    var Result = new ActivationGroup ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3734,24 +3712,24 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "GroupUDF" : {
-					GroupUDF = JSONReader.ReadString ();
+					GroupUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "KeyEncryption" : {
 					// An untagged structure
 					KeyEncryption = new KeyOverlay ();
-					KeyEncryption.Deserialize (JSONReader);
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -3843,16 +3821,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContactMesh FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ContactMesh FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ContactMesh;
 				}
 		    var Result = new ContactMesh ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -3860,23 +3838,23 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
 					break;
 					}
 				case "ServiceID" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					ServiceID = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						ServiceID.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -4142,16 +4120,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Contact FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Contact FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Contact;
 				}
 		    var Result = new Contact ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -4159,126 +4137,126 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "MeshAccounts" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					MeshAccounts = new List <DareEnvelope> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  DareEnvelope ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new DareEnvelope (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
 						MeshAccounts.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Email" : {
-					Email = JSONReader.ReadString ();
+					Email = jsonReader.ReadString ();
 					break;
 					}
 				case "Identifier" : {
-					Identifier = JSONReader.ReadString ();
+					Identifier = jsonReader.ReadString ();
 					break;
 					}
 				case "FullName" : {
-					FullName = JSONReader.ReadString ();
+					FullName = jsonReader.ReadString ();
 					break;
 					}
 				case "Title" : {
-					Title = JSONReader.ReadString ();
+					Title = jsonReader.ReadString ();
 					break;
 					}
 				case "First" : {
-					First = JSONReader.ReadString ();
+					First = jsonReader.ReadString ();
 					break;
 					}
 				case "Middle" : {
-					Middle = JSONReader.ReadString ();
+					Middle = jsonReader.ReadString ();
 					break;
 					}
 				case "Last" : {
-					Last = JSONReader.ReadString ();
+					Last = jsonReader.ReadString ();
 					break;
 					}
 				case "Suffix" : {
-					Suffix = JSONReader.ReadString ();
+					Suffix = jsonReader.ReadString ();
 					break;
 					}
 				case "Labels" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Labels = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Labels.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "AssertionAccounts" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					AssertionAccounts = new List <ProfileAccount> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  ProfileAccount ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new ProfileAccount (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new ProfileAccount (jsonReader);
 						AssertionAccounts.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Addresses" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Addresses = new List <Address> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Address ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Address (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Address (jsonReader);
 						Addresses.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Locations" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Locations = new List <Location> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Location ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Location (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Location (jsonReader);
 						Locations.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Roles" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Roles = new List <Role> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Role ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Role (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Role (jsonReader);
 						Roles.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -4396,16 +4374,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Role FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Role FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Role;
 				}
 		    var Result = new Role ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -4413,40 +4391,40 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "CompanyName" : {
-					CompanyName = JSONReader.ReadString ();
+					CompanyName = jsonReader.ReadString ();
 					break;
 					}
 				case "Addresses" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Addresses = new List <Address> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Address ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Address (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Address (jsonReader);
 						Addresses.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Locations" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Locations = new List <Location> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Location ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Location (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Location (jsonReader);
 						Locations.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -4542,16 +4520,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Address FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Address FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Address;
 				}
 		    var Result = new Address ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -4559,23 +4537,23 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "URI" : {
-					URI = JSONReader.ReadString ();
+					URI = jsonReader.ReadString ();
 					break;
 					}
 				case "Labels" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Labels = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Labels.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -4709,16 +4687,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Location FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Location FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Location;
 				}
 		    var Result = new Location ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -4726,37 +4704,37 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Appartment" : {
-					Appartment = JSONReader.ReadString ();
+					Appartment = jsonReader.ReadString ();
 					break;
 					}
 				case "Street" : {
-					Street = JSONReader.ReadString ();
+					Street = jsonReader.ReadString ();
 					break;
 					}
 				case "District" : {
-					District = JSONReader.ReadString ();
+					District = jsonReader.ReadString ();
 					break;
 					}
 				case "Locality" : {
-					Locality = JSONReader.ReadString ();
+					Locality = jsonReader.ReadString ();
 					break;
 					}
 				case "County" : {
-					County = JSONReader.ReadString ();
+					County = jsonReader.ReadString ();
 					break;
 					}
 				case "Postcode" : {
-					Postcode = JSONReader.ReadString ();
+					Postcode = jsonReader.ReadString ();
 					break;
 					}
 				case "Country" : {
-					Country = JSONReader.ReadString ();
+					Country = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -4856,16 +4834,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Reference FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Reference FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Reference;
 				}
 		    var Result = new Reference ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -4873,21 +4851,21 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "MessageID" : {
-					MessageID = JSONReader.ReadString ();
+					MessageID = jsonReader.ReadString ();
 					break;
 					}
 				case "ResponseID" : {
-					ResponseID = JSONReader.ReadString ();
+					ResponseID = jsonReader.ReadString ();
 					break;
 					}
 				case "Relationship" : {
-					Relationship = JSONReader.ReadString ();
+					Relationship = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -5094,16 +5072,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Task FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Task FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Task;
 				}
 		    var Result = new Task ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5111,75 +5089,75 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Key" : {
-					Key = JSONReader.ReadString ();
+					Key = jsonReader.ReadString ();
 					break;
 					}
 				case "Start" : {
-					Start = JSONReader.ReadDateTime ();
+					Start = jsonReader.ReadDateTime ();
 					break;
 					}
 				case "Finish" : {
-					Finish = JSONReader.ReadDateTime ();
+					Finish = jsonReader.ReadDateTime ();
 					break;
 					}
 				case "StartTravel" : {
-					StartTravel = JSONReader.ReadString ();
+					StartTravel = jsonReader.ReadString ();
 					break;
 					}
 				case "FinishTravel" : {
-					FinishTravel = JSONReader.ReadString ();
+					FinishTravel = jsonReader.ReadString ();
 					break;
 					}
 				case "TimeZone" : {
-					TimeZone = JSONReader.ReadString ();
+					TimeZone = jsonReader.ReadString ();
 					break;
 					}
 				case "Title" : {
-					Title = JSONReader.ReadString ();
+					Title = jsonReader.ReadString ();
 					break;
 					}
 				case "Description" : {
-					Description = JSONReader.ReadString ();
+					Description = jsonReader.ReadString ();
 					break;
 					}
 				case "Location" : {
-					Location = JSONReader.ReadString ();
+					Location = jsonReader.ReadString ();
 					break;
 					}
 				case "Trigger" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Trigger = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Trigger.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Conference" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Conference = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Conference.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Repeat" : {
-					Repeat = JSONReader.ReadString ();
+					Repeat = jsonReader.ReadString ();
 					break;
 					}
 				case "Busy" : {
-					Busy = JSONReader.ReadBoolean ();
+					Busy = jsonReader.ReadBoolean ();
 					break;
 					}
 				default : {
@@ -5251,16 +5229,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedEntry FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedEntry;
 				}
 		    var Result = new CatalogedEntry ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5268,9 +5246,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
@@ -5293,6 +5271,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						UDF  {get; set;}
+        /// <summary>
+        ///The Mesh profile
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileMesh  {get; set;}
         /// <summary>
         ///UDF of the signature key of the device
         /// </summary>
@@ -5367,6 +5350,11 @@ namespace Goedel.Mesh {
 				_Writer.WriteToken ("UDF", 1);
 					_Writer.WriteString (UDF);
 				}
+			if (EnvelopedProfileMesh != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("EnvelopedProfileMesh", 1);
+					EnvelopedProfileMesh.Serialize (_Writer, false);
+				}
 			if (DeviceUDF != null) {
 				_Writer.WriteObjectSeparator (ref _first);
 				_Writer.WriteToken ("DeviceUDF", 1);
@@ -5415,16 +5403,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedDevice FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedDevice FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedDevice;
 				}
 		    var Result = new CatalogedDevice ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5432,56 +5420,63 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
+					break;
+					}
+				case "EnvelopedProfileMesh" : {
+					// An untagged structure
+					EnvelopedProfileMesh = new DareEnvelope ();
+					EnvelopedProfileMesh.Deserialize (jsonReader);
+ 
 					break;
 					}
 				case "DeviceUDF" : {
-					DeviceUDF = JSONReader.ReadString ();
+					DeviceUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "EnvelopedProfileDevice" : {
 					// An untagged structure
 					EnvelopedProfileDevice = new DareEnvelope ();
-					EnvelopedProfileDevice.Deserialize (JSONReader);
+					EnvelopedProfileDevice.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedConnectionDevice" : {
 					// An untagged structure
 					EnvelopedConnectionDevice = new DareEnvelope ();
-					EnvelopedConnectionDevice.Deserialize (JSONReader);
+					EnvelopedConnectionDevice.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedActivationDevice" : {
 					// An untagged structure
 					EnvelopedActivationDevice = new DareEnvelope ();
-					EnvelopedActivationDevice.Deserialize (JSONReader);
+					EnvelopedActivationDevice.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Accounts" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Accounts = new List <AccountEntry> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  AccountEntry ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new AccountEntry (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new AccountEntry (jsonReader);
 						Accounts.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -5588,16 +5583,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new AccountEntry FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as AccountEntry;
 				}
 		    var Result = new AccountEntry ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5605,33 +5600,33 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "AccountUDF" : {
-					AccountUDF = JSONReader.ReadString ();
+					AccountUDF = jsonReader.ReadString ();
 					break;
 					}
 				case "EnvelopedProfileAccount" : {
 					// An untagged structure
 					EnvelopedProfileAccount = new DareEnvelope ();
-					EnvelopedProfileAccount.Deserialize (JSONReader);
+					EnvelopedProfileAccount.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedConnectionAccount" : {
 					// An untagged structure
 					EnvelopedConnectionAccount = new DareEnvelope ();
-					EnvelopedConnectionAccount.Deserialize (JSONReader);
+					EnvelopedConnectionAccount.Deserialize (jsonReader);
  
 					break;
 					}
 				case "EnvelopedActivationAccount" : {
 					// An untagged structure
 					EnvelopedActivationAccount = new DareEnvelope ();
-					EnvelopedActivationAccount.Deserialize (JSONReader);
+					EnvelopedActivationAccount.Deserialize (jsonReader);
  
 					break;
 					}
@@ -5739,16 +5734,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedCredential FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedCredential FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedCredential;
 				}
 		    var Result = new CatalogedCredential ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5756,29 +5751,29 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Protocol" : {
-					Protocol = JSONReader.ReadString ();
+					Protocol = jsonReader.ReadString ();
 					break;
 					}
 				case "Service" : {
-					Service = JSONReader.ReadString ();
+					Service = jsonReader.ReadString ();
 					break;
 					}
 				case "Username" : {
-					Username = JSONReader.ReadString ();
+					Username = jsonReader.ReadString ();
 					break;
 					}
 				case "Password" : {
-					Password = JSONReader.ReadString ();
+					Password = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -5882,16 +5877,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedNetwork FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedNetwork;
 				}
 		    var Result = new CatalogedNetwork ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -5899,29 +5894,29 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Protocol" : {
-					Protocol = JSONReader.ReadString ();
+					Protocol = jsonReader.ReadString ();
 					break;
 					}
 				case "Service" : {
-					Service = JSONReader.ReadString ();
+					Service = jsonReader.ReadString ();
 					break;
 					}
 				case "Username" : {
-					Username = JSONReader.ReadString ();
+					Username = jsonReader.ReadString ();
 					break;
 					}
 				case "Password" : {
-					Password = JSONReader.ReadString ();
+					Password = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6048,16 +6043,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedContact FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedContact;
 				}
 		    var Result = new CatalogedContact ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6065,42 +6060,42 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Self" : {
-					Self = JSONReader.ReadBoolean ();
+					Self = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Key" : {
-					Key = JSONReader.ReadString ();
+					Key = jsonReader.ReadString ();
 					break;
 					}
 				case "Permissions" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Permissions = new List <Permission> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Permission ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Permission (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Permission (jsonReader);
 						Permissions.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "EnvelopedContact" : {
 					// An untagged structure
 					EnvelopedContact = new DareEnvelope ();
-					EnvelopedContact.Deserialize (JSONReader);
+					EnvelopedContact.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6168,16 +6163,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedContactRecryption FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedContactRecryption FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedContactRecryption;
 				}
 		    var Result = new CatalogedContactRecryption ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6185,13 +6180,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6286,16 +6281,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedBookmark FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedBookmark FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedBookmark;
 				}
 		    var Result = new CatalogedBookmark ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6303,25 +6298,25 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Uri" : {
-					Uri = JSONReader.ReadString ();
+					Uri = jsonReader.ReadString ();
 					break;
 					}
 				case "Title" : {
-					Title = JSONReader.ReadString ();
+					Title = jsonReader.ReadString ();
 					break;
 					}
 				case "Path" : {
-					Path = JSONReader.ReadString ();
+					Path = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6417,16 +6412,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedTask FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedTask FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedTask;
 				}
 		    var Result = new CatalogedTask ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6434,28 +6429,28 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "EnvelopedTask" : {
 					// An untagged structure
 					EnvelopedTask = new DareEnvelope ();
-					EnvelopedTask.Deserialize (JSONReader);
+					EnvelopedTask.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Title" : {
-					Title = JSONReader.ReadString ();
+					Title = jsonReader.ReadString ();
 					break;
 					}
 				case "Key" : {
-					Key = JSONReader.ReadString ();
+					Key = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6532,16 +6527,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedApplication FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedApplication FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedApplication;
 				}
 		    var Result = new CatalogedApplication ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6549,17 +6544,17 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Key" : {
-					Key = JSONReader.ReadString ();
+					Key = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6636,16 +6631,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedMember FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedMember FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedMember;
 				}
 		    var Result = new CatalogedMember ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6653,17 +6648,17 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "UDF" : {
-					UDF = JSONReader.ReadString ();
+					UDF = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6740,16 +6735,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedGroup FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedGroup;
 				}
 		    var Result = new CatalogedGroup ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6757,20 +6752,20 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Profile" : {
 					// An untagged structure
 					Profile = new ProfileGroup ();
-					Profile.Deserialize (JSONReader);
+					Profile.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6838,16 +6833,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedApplicationSSH FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedApplicationSSH FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedApplicationSSH;
 				}
 		    var Result = new CatalogedApplicationSSH ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6855,13 +6850,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -6929,16 +6924,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedApplicationMail FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedApplicationMail FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedApplicationMail;
 				}
 		    var Result = new CatalogedApplicationMail ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -6946,13 +6941,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7020,16 +7015,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedApplicationNetwork FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new CatalogedApplicationNetwork FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedApplicationNetwork;
 				}
 		    var Result = new CatalogedApplicationNetwork ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7037,13 +7032,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7158,16 +7153,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Message FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Message FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Message;
 				}
 		    var Result = new Message ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7175,34 +7170,34 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "MessageID" : {
-					MessageID = JSONReader.ReadString ();
+					MessageID = jsonReader.ReadString ();
 					break;
 					}
 				case "Sender" : {
-					Sender = JSONReader.ReadString ();
+					Sender = jsonReader.ReadString ();
 					break;
 					}
 				case "Recipient" : {
-					Recipient = JSONReader.ReadString ();
+					Recipient = jsonReader.ReadString ();
 					break;
 					}
 				case "References" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					References = new List <Reference> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Reference ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Reference (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Reference (jsonReader);
 						References.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -7274,16 +7269,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MessageComplete FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new MessageComplete FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as MessageComplete;
 				}
 		    var Result = new MessageComplete ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7291,13 +7286,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7392,16 +7387,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MessagePIN FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new MessagePIN FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as MessagePIN;
 				}
 		    var Result = new MessagePIN ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7409,25 +7404,25 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Account" : {
-					Account = JSONReader.ReadString ();
+					Account = jsonReader.ReadString ();
 					break;
 					}
 				case "Expires" : {
-					Expires = JSONReader.ReadDateTime ();
+					Expires = jsonReader.ReadDateTime ();
 					break;
 					}
 				case "PIN" : {
-					PIN = JSONReader.ReadString ();
+					PIN = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7537,16 +7532,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RequestConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new RequestConnection FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as RequestConnection;
 				}
 		    var Result = new RequestConnection ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7554,32 +7549,32 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "ServiceID" : {
-					ServiceID = JSONReader.ReadString ();
+					ServiceID = jsonReader.ReadString ();
 					break;
 					}
 				case "EnvelopedProfileDevice" : {
 					// An untagged structure
 					EnvelopedProfileDevice = new DareEnvelope ();
-					EnvelopedProfileDevice.Deserialize (JSONReader);
+					EnvelopedProfileDevice.Deserialize (jsonReader);
  
 					break;
 					}
 				case "ClientNonce" : {
-					ClientNonce = JSONReader.ReadBinary ();
+					ClientNonce = jsonReader.ReadBinary ();
 					break;
 					}
 				case "PinUDF" : {
-					PinUDF = JSONReader.ReadString ();
+					PinUDF = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7680,16 +7675,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AcknowledgeConnection FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new AcknowledgeConnection FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as AcknowledgeConnection;
 				}
 		    var Result = new AcknowledgeConnection ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7697,28 +7692,154 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "EnvelopedRequestConnection" : {
 					// An untagged structure
 					EnvelopedRequestConnection = new DareEnvelope ();
-					EnvelopedRequestConnection.Deserialize (JSONReader);
+					EnvelopedRequestConnection.Deserialize (jsonReader);
  
 					break;
 					}
 				case "ServerNonce" : {
-					ServerNonce = JSONReader.ReadBinary ();
+					ServerNonce = jsonReader.ReadBinary ();
 					break;
 					}
 				case "Witness" : {
-					Witness = JSONReader.ReadString ();
+					Witness = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Respond to RequestConnection message to grant or refuse the connection
+	/// request.
+	/// </summary>
+	public partial class RespondConnection : Message {
+        /// <summary>
+        ///The response to the request. One of "Accept", "Reject" or "Pending".
+        /// </summary>
+
+		public virtual string						Result  {get; set;}
+        /// <summary>
+        ///The device information. MUST be present if the value of Result is
+        ///"Accept". MUST be absent or null otherwise.
+        /// </summary>
+
+		public virtual CatalogedDevice						CatalogedDevice  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "RespondConnection";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new RespondConnection();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="Writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
+			SerializeX (Writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_Writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_Writer.WriteObjectStart ();
+				}
+			((Message)this).SerializeX(_Writer, false, ref _first);
+			if (Result != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("Result", 1);
+					_Writer.WriteString (Result);
+				}
+			if (CatalogedDevice != null) {
+				_Writer.WriteObjectSeparator (ref _first);
+				_Writer.WriteToken ("CatalogedDevice", 1);
+					CatalogedDevice.Serialize (_Writer, false);
+				}
+			if (_wrap) {
+				_Writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="JSONReader">The input stream</param>
+		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new RespondConnection FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (Tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as RespondConnection;
+				}
+		    var Result = new RespondConnection ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="Tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+			
+			switch (Tag) {
+				case "Result" : {
+					Result = jsonReader.ReadString ();
+					break;
+					}
+				case "CatalogedDevice" : {
+					// An untagged structure
+					CatalogedDevice = new CatalogedDevice ();
+					CatalogedDevice.Deserialize (jsonReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7786,16 +7907,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new OfferGroup FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new OfferGroup FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as OfferGroup;
 				}
 		    var Result = new OfferGroup ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7803,13 +7924,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -7910,16 +8031,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RequestContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new RequestContact FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as RequestContact;
 				}
 		    var Result = new RequestContact ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -7927,28 +8048,28 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Reply" : {
-					Reply = JSONReader.ReadBoolean ();
+					Reply = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Subject" : {
-					Subject = JSONReader.ReadString ();
+					Subject = jsonReader.ReadString ();
 					break;
 					}
 				case "Self" : {
 					// An untagged structure
 					Self = new DareEnvelope ();
-					Self.Deserialize (JSONReader);
+					Self.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -8016,16 +8137,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ReplyContact FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ReplyContact FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ReplyContact;
 				}
 		    var Result = new ReplyContact ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -8033,13 +8154,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -8125,16 +8246,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new GroupInvitation FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new GroupInvitation FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as GroupInvitation;
 				}
 		    var Result = new GroupInvitation ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -8142,24 +8263,24 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Text" : {
-					Text = JSONReader.ReadString ();
+					Text = jsonReader.ReadString ();
 					break;
 					}
 				case "EncryptedPartDecrypt" : {
 					// An untagged structure
 					EncryptedPartDecrypt = new DareEnvelope ();
-					EncryptedPartDecrypt.Deserialize (JSONReader);
+					EncryptedPartDecrypt.Deserialize (jsonReader);
  
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -8236,16 +8357,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RequestConfirmation FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new RequestConfirmation FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as RequestConfirmation;
 				}
 		    var Result = new RequestConfirmation ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -8253,17 +8374,17 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Text" : {
-					Text = JSONReader.ReadString ();
+					Text = jsonReader.ReadString ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -8354,16 +8475,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResponseConfirmation FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ResponseConfirmation FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ResponseConfirmation;
 				}
 		    var Result = new ResponseConfirmation ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -8371,24 +8492,24 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Request" : {
 					// An untagged structure
 					Request = new RequestConfirmation ();
-					Request.Deserialize (JSONReader);
+					Request.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Accept" : {
-					Accept = JSONReader.ReadBoolean ();
+					Accept = jsonReader.ReadBoolean ();
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -8456,16 +8577,16 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new RequestTask FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new RequestTask FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as RequestTask;
 				}
 		    var Result = new RequestTask ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -8473,13 +8594,13 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}

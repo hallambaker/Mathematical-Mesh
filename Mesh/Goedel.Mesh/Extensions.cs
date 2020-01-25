@@ -10,7 +10,14 @@ namespace Goedel.Mesh {
 
         //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
-
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units.
+        /// </summary>
+        /// <param name="meshItem">The item to present.</param>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="nullText">Text to provide if the item is null.</param>
         public static void ToBuilder(this MeshItem meshItem, StringBuilder builder,
                 int indent, string nullText) {
             if (meshItem == null) {

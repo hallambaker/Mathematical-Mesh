@@ -4,6 +4,7 @@ using Goedel.Cryptography.Dare;
 namespace Goedel.Mesh {
     public class Spool : Store {
         public const string SpoolOutbound = "mmm_Outbound";
+        public const string SpoolLocal = "mmm_Local";
         public const string SpoolInbound = "mmm_Inbound";
         public const string SpoolArchive = "mmm_Archive";
 

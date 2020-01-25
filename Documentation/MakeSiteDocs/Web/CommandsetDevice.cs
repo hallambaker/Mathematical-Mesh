@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebConnect
 		//
 		public static void WebConnect(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/device.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/device.md" };
-            obj._WebConnect(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/device.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/device.md" };
+				obj._WebConnect(Examples);
+				}
+			}
 		public void _WebConnect(CreateExamples Examples) {
 
 				 MakeTitle ("device");
@@ -173,10 +174,11 @@ namespace ExampleGenerator {
 		// ConnectReference
 		//
 		public static void ConnectReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/device.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/device.md" };
-            obj._ConnectReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/device.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/device.md" };
+				obj._ConnectReference(Examples);
+				}
+			}
 		public void _ConnectReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Connect;

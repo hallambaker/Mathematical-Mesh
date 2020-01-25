@@ -27,7 +27,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
+#pragma warning disable IDE1006
 
 
 
@@ -67,10 +67,10 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
-        /// <param name="JSONReader">Input stream</param>
+        /// <param name="jsonReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
-			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
+			Out = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -161,12 +161,12 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Request FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Request FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Request;
 				}
 			throw new CannotCreateAbstract();
@@ -175,17 +175,17 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Service" : {
-					Service = JSONReader.ReadString ();
+					Service = jsonReader.ReadString ();
 					break;
 					}
 				case "ID" : {
-					ID = JSONReader.ReadBinary ();
+					ID = jsonReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -314,12 +314,12 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Response FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Response FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Response;
 				}
 			throw new CannotCreateAbstract();
@@ -328,25 +328,25 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Status" : {
-					Status = JSONReader.ReadInteger32 ();
+					Status = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "StatusExtended" : {
-					StatusExtended = JSONReader.ReadInteger32 ();
+					StatusExtended = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "StatusDescription" : {
-					StatusDescription = JSONReader.ReadString ();
+					StatusDescription = jsonReader.ReadString ();
 					break;
 					}
 				case "ID" : {
-					ID = JSONReader.ReadBinary ();
+					ID = jsonReader.ReadBinary ();
 					break;
 					}
 				default : {
@@ -490,16 +490,16 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Version FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Version FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Version;
 				}
 		    var Result = new Version ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -507,41 +507,41 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Major" : {
-					Major = JSONReader.ReadInteger32 ();
+					Major = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "Minor" : {
-					Minor = JSONReader.ReadInteger32 ();
+					Minor = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "Encodings" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Encodings = new List <Encoding> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Encoding ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Encoding (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Encoding (jsonReader);
 						Encodings.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "URI" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					URI = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						URI.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -650,16 +650,16 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Encoding FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new Encoding FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Encoding;
 				}
 		    var Result = new Encoding ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -667,30 +667,30 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "ID" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					ID = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						ID.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Dictionary" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Dictionary = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Dictionary.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -764,16 +764,16 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloRequest FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new HelloRequest FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as HelloRequest;
 				}
 		    var Result = new HelloRequest ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -781,13 +781,13 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}
@@ -889,16 +889,16 @@ namespace Goedel.Protocol {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloResponse FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new HelloResponse FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as HelloResponse;
 				}
 		    var Result = new HelloResponse ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -906,34 +906,34 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Version" : {
 					// An untagged structure
 					Version = new Version ();
-					Version.Deserialize (JSONReader);
+					Version.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Alternates" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Alternates = new List <Version> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  Version ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new Version (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Version (jsonReader);
 						Alternates.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				default : {
-					base.DeserializeToken(JSONReader, Tag);
+					base.DeserializeToken(jsonReader, Tag);
 					break;
 					}
 				}

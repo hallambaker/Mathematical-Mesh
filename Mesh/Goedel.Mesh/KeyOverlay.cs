@@ -38,11 +38,22 @@ namespace Goedel.Mesh {
     public partial class KeyOverlay {
 
         public KeyPairAdvanced KeyPair;
-
+        public PublicKey PublicKey;
 
         public KeyOverlay() {
 
             }
+
+
+        public KeyOverlay(
+                KeyCollection keyCollection, 
+                PublicKey baseKey,
+                string secret,
+                string salt1,
+                string salt)  {
+            throw new NYI();
+            }
+
 
 
         public KeyOverlay(IMeshMachine meshMachine, PublicKey baseKey) :

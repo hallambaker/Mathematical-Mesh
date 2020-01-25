@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebKey
 		//
 		public static void WebKey(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/key.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/key.md" };
-            obj._WebKey(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/key.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/key.md" };
+				obj._WebKey(Examples);
+				}
+			}
 		public void _WebKey(CreateExamples Examples) {
 
 				 MakeTitle ("key");
@@ -118,10 +119,11 @@ namespace ExampleGenerator {
 		// KeyReference
 		//
 		public static void KeyReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/key.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/key.md" };
-            obj._KeyReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/key.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/key.md" };
+				obj._KeyReference(Examples);
+				}
+			}
 		public void _KeyReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Key;

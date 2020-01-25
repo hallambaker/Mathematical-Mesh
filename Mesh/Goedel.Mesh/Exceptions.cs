@@ -202,4 +202,52 @@ namespace Goedel.Mesh {
         }
 
 
+    /// <summary>
+    /// Mesh Messages MUST specify a valid message ID.
+    /// </summary>
+    [Serializable]
+	public class InvalidMessageID : Internal {
+
+		/// <summary>
+        /// Construct instance for exception "Mesh Messages MUST specify a valid message ID"
+        /// </summary>		
+		public InvalidMessageID () : base ("Mesh Messages MUST specify a valid message ID") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Mesh Messages MUST specify a valid message ID"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidMessageID (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidMessageID (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidMessageID(Reason as string);
+				}
+			else {
+				return new InvalidMessageID();
+				}
+            }
+        }
+
+
 	}

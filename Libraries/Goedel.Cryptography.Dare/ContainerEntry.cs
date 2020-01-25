@@ -27,7 +27,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
+#pragma warning disable IDE1006
 
 
 using Goedel.Cryptography.Jose;
@@ -67,10 +67,10 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
-        /// <param name="JSONReader">Input stream</param>
+        /// <param name="jsonReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
-			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
+			Out = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -258,16 +258,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerInfo FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ContainerInfo FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ContainerInfo;
 				}
 		    var Result = new ContainerInfo ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -275,41 +275,41 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "DataEncoding" : {
-					DataEncoding = JSONReader.ReadString ();
+					DataEncoding = jsonReader.ReadString ();
 					break;
 					}
 				case "Index" : {
-					Index = JSONReader.ReadInteger32 ();
+					Index = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "ContainerType" : {
-					ContainerType = JSONReader.ReadString ();
+					ContainerType = jsonReader.ReadString ();
 					break;
 					}
 				case "IsMeta" : {
-					IsMeta = JSONReader.ReadBoolean ();
+					IsMeta = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Default" : {
-					Default = JSONReader.ReadBoolean ();
+					Default = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "TreePosition" : {
-					TreePosition = JSONReader.ReadInteger32 ();
+					TreePosition = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "IndexPosition" : {
-					IndexPosition = JSONReader.ReadInteger32 ();
+					IndexPosition = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "ExchangePosition" : {
-					ExchangePosition = JSONReader.ReadInteger32 ();
+					ExchangePosition = jsonReader.ReadInteger32 ();
 					break;
 					}
 				default : {
@@ -443,16 +443,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerIndex FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new ContainerIndex FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ContainerIndex;
 				}
 		    var Result = new ContainerIndex ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -460,40 +460,40 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Full" : {
-					Full = JSONReader.ReadBoolean ();
+					Full = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Positions" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Positions = new List <IndexPosition> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  IndexPosition ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new IndexPosition (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new IndexPosition (jsonReader);
 						Positions.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Metas" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Metas = new List <IndexMeta> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  IndexMeta ();
-						_Item.Deserialize (JSONReader);
-						// var _Item = new IndexMeta (JSONReader);
+						_Item.Deserialize (jsonReader);
+						// var _Item = new IndexMeta (jsonReader);
 						Metas.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
@@ -596,16 +596,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexPosition FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new IndexPosition FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexPosition;
 				}
 		    var Result = new IndexPosition ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -613,17 +613,17 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Index" : {
-					Index = JSONReader.ReadInteger32 ();
+					Index = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "Position" : {
-					Position = JSONReader.ReadInteger32 ();
+					Position = jsonReader.ReadInteger32 ();
 					break;
 					}
 				default : {
@@ -715,16 +715,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyValue FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new KeyValue FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyValue;
 				}
 		    var Result = new KeyValue ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -732,17 +732,17 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Key" : {
-					Key = JSONReader.ReadString ();
+					Key = jsonReader.ReadString ();
 					break;
 					}
 				case "Value" : {
-					Value = JSONReader.ReadString ();
+					Value = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -876,16 +876,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexMeta FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new IndexMeta FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexMeta;
 				}
 		    var Result = new IndexMeta ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -893,45 +893,45 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Index" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Index = new List <int> ();
 					while (_Going) {
-						int _Item = JSONReader.ReadInteger32 ();
+						int _Item = jsonReader.ReadInteger32 ();
 						Index.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "ContentType" : {
-					ContentType = JSONReader.ReadString ();
+					ContentType = jsonReader.ReadString ();
 					break;
 					}
 				case "Paths" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Paths = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Paths.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
 				case "Labels" : {
 					// Have a sequence of values
-					bool _Going = JSONReader.StartArray ();
+					bool _Going = jsonReader.StartArray ();
 					Labels = new List <string> ();
 					while (_Going) {
-						string _Item = JSONReader.ReadString ();
+						string _Item = jsonReader.ReadString ();
 						Labels.Add (_Item);
-						_Going = JSONReader.NextArray ();
+						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}

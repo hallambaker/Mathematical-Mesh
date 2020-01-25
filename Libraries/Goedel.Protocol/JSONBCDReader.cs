@@ -38,13 +38,14 @@ namespace Goedel.Protocol {
 
         int ModifierToLength(int c) {
             var Code = c & 0x03;
-            switch (Code) {
-                case 0: return 1;
-                case 1: return 2;
-                case 2: return 4;
-                case 3: return 8;
-                }
-            throw new NYI();
+            return Code switch
+                {
+                    0 => 1,
+                    1 => 2,
+                    2 => 4,
+                    3 => 8,
+                    _ => throw new NYI(),
+                    };
             }
 
 

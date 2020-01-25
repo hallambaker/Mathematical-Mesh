@@ -14,8 +14,8 @@ the mesh service account alice@example.com to which connection is requested:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Witness value = NGPY-QAYV-OCQD-W6JD-U3HP-3OAQ-57OW
-   Personal Mesh = MCSC-2POG-PH7T-ODJX-HOCA-B4XY-AFSK
+<rsp>   Witness value = M4J5-YPNB-2O3U-35FZ-PC6G-SP6R-4LBD
+   Personal Mesh = MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
 </div>
 ~~~~
 
@@ -45,7 +45,7 @@ Alice sees the request that she posted and approves it with the connect
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device accept NCPO-L452-CMZY-MLQO-TM52-KQYW-EFGP
+<cmd>Alice> device accept NCGP-WWTX-4HDR-YR2I-N5DO-TYBJ-C4X7
 <rsp></div>
 ~~~~
 
@@ -55,7 +55,7 @@ request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device reject NCWO-SIYM-U3KV-YMR6-HRHQ-SQEK-I26H
+<cmd>Alice> device reject NAJK-KX55-GHUE-JZPZ-Q5N7-QMGD-SEUH
 <rsp></div>
 ~~~~
 
@@ -90,7 +90,7 @@ The `device delete` command removes a device from the catalog:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device delete NCPO-L452-CMZY-MLQO-TM52-KQYW-EFGP
+<cmd>Alice> device delete NCGP-WWTX-4HDR-YR2I-N5DO-TYBJ-C4X7
 <rsp>ERROR - The feature has not been implemented
 <cmd>Alice> device list
 <rsp></div>
@@ -113,7 +113,7 @@ a new PIN code:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin
-<rsp>PIN=NCAX-BVXY-5O3Y-CPZS-OU (Expires=2020-01-07T17:19:33Z)
+<rsp>PIN=NCGD-ZOQL-JRVF-TALA-EY (Expires=2020-01-23T01:18:57Z)
 </div>
 ~~~~
 
@@ -122,9 +122,9 @@ The pin code can now be used to authenticate the connection request:
 
 ~~~~
 <div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=NCAX-BVXY-5O3Y-CPZS-OU
-<rsp>   Witness value = RDPZ-WAM2-QD3P-YNJE-R3BV-NXOF-OEFC
-   Personal Mesh = MCSC-2POG-PH7T-ODJX-HOCA-B4XY-AFSK
+<cmd>Alice3> device request alice@example.com /pin=NCGD-ZOQL-JRVF-TALA-EY
+<rsp>   Witness value = XNLM-MOF2-KNZS-3HCO-WOEO-BOTN-Y6G2
+   Personal Mesh = MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
 </div>
 ~~~~
 
@@ -174,7 +174,7 @@ this type of device connection.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> device pre devices@example.com /key=udf://example.com/EC4X-PWKB-JNOA-FRW7-DBBT-ZAYU-3EVA-FR
+<cmd>Alice4> device pre devices@example.com /key=udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
 <rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~
@@ -206,7 +206,7 @@ and retrieve the data using the `device earl` command:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device earl udf://example.com/EC4X-PWKB-JNOA-FRW7-DBBT-ZAYU-3EVA-FR
+<cmd>Alice> device earl udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
 <rsp>ERROR - Object reference not set to an instance of an object.
 </div>
 ~~~~

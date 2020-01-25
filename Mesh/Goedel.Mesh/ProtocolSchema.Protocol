@@ -254,12 +254,18 @@
 
 
     // Device Connection
-	Transaction User Complete CompleteRequest StatusResponse
+	Transaction User Complete CompleteRequest CompleteResponse
 
 	Message CompleteRequest
 		Inherits StatusRequest
 		String ServiceID
+		String ResponseID
 
+	Message CompleteResponse
+		Inherits MeshResponse
+		Struct DareEnvelope SignedResponse
+			Description
+				|The signed assertion describing the result of the connect request
 
 	Transaction User Status StatusRequest StatusResponse
 	Message StatusRequest

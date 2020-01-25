@@ -1,20 +1,18 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Mesh {
     public partial class ProfileAccount {
 
-        ///<summary>The primary key</summary>
-        public override string _PrimaryKey => UDF;
 
-        ///<summary>The UDF of the account</summary>
-        public string UDF => KeyOfflineSignature.UDF;
-
-
+        ///<summary>The identifier of the default service.</summary>
         public string ServiceDefault => ServiceIDs?[0];
 
 
@@ -22,38 +20,72 @@ namespace Goedel.Mesh {
         KeyPair keySignOnline;
 
         /// <summary>
-        /// Generate a new ProfileAccount with a unique signature and encryption key.
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        /// seed.
         /// </summary>
-        /// <param name="meshMachine">The machine context in which to generate and persist the key pairs.</param>
         /// <param name="profileMesh">The mesh profile to which this account will belong.</param>
-        /// <param name="algorithmSign">The algorithm to be used for signature.</param>
-        /// <param name="algorithmEncrypt">The algorithm to be used for encryption.</param>
-        /// <returns></returns>
-        public static ProfileAccount Generate(
-                    IMeshMachine meshMachine,
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public ProfileAccount(
                     ProfileMesh profileMesh,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+                    KeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed,
+                    bool persist = false) {
+            MeshProfileUDF = profileMesh.UDF;
 
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+            var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
+            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
+            var keyAuthenticate = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixAuthenticate);
 
-            var keySignOffline = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-            var keySignOnline = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Exportable, keyUses: KeyUses.Encrypt);
+            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
+            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            KeyAuthentication = new PublicKey(keyAuthenticate.KeyPairPublic());
 
-            var account = new ProfileAccount() {
-                KeyOfflineSignature = new PublicKey(keySignOffline.KeyPairPublic()),
-                KeysOnlineSignature = new List<PublicKey> {
-                    new PublicKey(keySignOnline.KeyPairPublic())},
-                MeshProfileUDF = profileMesh.UDF,
-                KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic())
-                };
+            if (persist) {
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                }
 
-            account.Sign(keySignOffline);
-
-            return account;
+            Sign(keySign);
             }
+
+
+
+
+        ///// <summary>
+        ///// Generate a new ProfileAccount with a unique signature and encryption key.
+        ///// </summary>
+        ///// <param name="meshMachine">The machine context in which to generate and persist the key pairs.</param>
+        
+        ///// <param name="algorithmSign">The algorithm to be used for signature.</param>
+        ///// <param name="algorithmEncrypt">The algorithm to be used for encryption.</param>
+        ///// <returns></returns>
+        //public static ProfileAccount Generate(
+        //            IMeshMachine meshMachine,
+        //            ProfileMesh profileMesh,
+        //            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+
+        //    algorithmSign = algorithmSign.DefaultAlgorithmSign();
+        //    algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
+
+        //    var keySignOffline = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+        //    var keySignOnline = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+        //    var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Exportable, keyUses: KeyUses.Encrypt);
+
+        //    var account = new ProfileAccount() {
+        //        KeyOfflineSignature = new PublicKey(keySignOffline.KeyPairPublic()),
+        //        KeysOnlineSignature = new List<PublicKey> {
+        //            new PublicKey(keySignOnline.KeyPairPublic())},
+        //        MeshProfileUDF = profileMesh.UDF,
+        //        KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic())
+        //        };
+
+        //    account.Sign(keySignOffline);
+
+        //    return account;
+        //    }
 
 
         public AccountEntry ConnectDevice(
@@ -92,7 +124,14 @@ namespace Goedel.Mesh {
             return accountEntry;
             }
 
-
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Profile Account");
@@ -180,7 +219,7 @@ namespace Goedel.Mesh {
                         IMeshMachine meshMachine,
                         CatalogedDevice catalogedDevice,
                         ProfileAccount profileAccount
-                        ) {
+                        ) : base (){
 
             var profileDevice = catalogedDevice.ProfileDevice;
             //EnvelopedProfileAccount = profileAccount.DareEnvelope;
@@ -191,7 +230,6 @@ namespace Goedel.Mesh {
             KeyAuthentication = new KeyOverlay(meshMachine, profileDevice.KeyAuthentication);
             }
 
-
         public ConnectionAccount GetConnection(List<Permission> permissions) => new ConnectionAccount() {
             SubjectUDF = KeySignature.KeyPair.UDF,
             AuthorityUDF = AccountUDF,
@@ -200,6 +238,14 @@ namespace Goedel.Mesh {
             Permissions = permissions
             };
 
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Activation Account");
@@ -220,13 +266,18 @@ namespace Goedel.Mesh {
         /// Decode from DareEnvelope
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to collect keys from.</param>
         /// <returns>The decoded ProfileAccount.</returns>
-        public static new ActivationAccount Decode(DareEnvelope envelope) {
+        public static new ActivationAccount Decode(DareEnvelope envelope, KeyCollection keyCollection) {
             if (envelope == null) {
                 return null;
                 }
-            var result = FromJSON(envelope.GetBodyReader(), true);
+            var plaintext = envelope.GetPlaintext(keyCollection);
+
+            Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), true);
             result.DareEnvelope = envelope;
+
             return result;
             }
 
@@ -245,6 +296,14 @@ namespace Goedel.Mesh {
             Permissions = permissions;
             }
 
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
 
             builder.AppendIndent(indent, $"Connection Account");

@@ -35,29 +35,29 @@ namespace Goedel.Mesh.Client {
         public CatalogedAdmin() {
             }
 
-        /// <summary>
-        /// Generate a new Admin Entry
-        /// </summary>
-        /// <param name="profileDevice"></param>
-        /// <param name="algorithmSign"></param>
-        /// <param name="algorithmEncrypt"></param>
-        /// <returns></returns>
-        public static CatalogedAdmin Generate(
-                IMeshMachine meshMachine,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+        ///// <summary>
+        ///// Generate a new Admin Entry
+        ///// </summary>
+        ///// <param name="profileDevice"></param>
+        ///// <param name="algorithmSign"></param>
+        ///// <param name="algorithmEncrypt"></param>
+        ///// <returns></returns>
+        //public static CatalogedAdmin Generate(
+        //        IMeshMachine meshMachine,
+        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
 
-            var profileMaster = ProfileMesh.Generate(meshMachine, algorithmSign, algorithmEncrypt);
+        //    var profileMaster = ProfileMesh.Generate(meshMachine, algorithmSign, algorithmEncrypt);
 
 
-            return Generate(meshMachine, profileMaster);
-            }
+        //    return Generate(meshMachine, profileMaster);
+        //    }
 
-        public static CatalogedAdmin Generate(
-                IMeshMachine meshMachine,
-                ProfileMesh profileMaster) => new CatalogedAdmin() {
+        //public static CatalogedAdmin Generate(
+        //        IMeshMachine meshMachine,
+        //        ProfileMesh profileMaster) => new CatalogedAdmin() {
 
-                    };
+        //            };
 
 
         }

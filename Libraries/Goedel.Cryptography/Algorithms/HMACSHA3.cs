@@ -54,22 +54,13 @@ namespace Goedel.Cryptography.Algorithms {
 			key.AssertNotNull(NullKeyValue.Throw);
 			base.HashName = "SHA3Managed";
 
-			switch (hashBitLength) {
-				case 224:
-					base.BlockSizeValue = 144;
-					break;
-				case 256:
-					base.BlockSizeValue = 136;
-					break;
-				case 384:
-					base.BlockSizeValue = 104;
-					break;
-				case 512:
-					base.BlockSizeValue = 72;
-					break;
-				default:
-					throw new KeySizeNotSupported();
-				}
+			base.BlockSizeValue = hashBitLength switch {
+					224 => 144,
+					256 => 136,
+					384 => 104,
+					512 => 72,
+					_ => throw new KeySizeNotSupported(),
+					};
 			base.HashSizeValue = hashBitLength;
 			Initialize();
 			base.Key = (byte[])key.Clone();

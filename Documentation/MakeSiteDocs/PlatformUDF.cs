@@ -80,23 +80,23 @@ namespace ExampleGenerator {
         }
 
     public partial class Derive {
-        public DerivedKeyEC X25519 = new DerivedKeyEC(UDFAlgorithmIdentifier.X25519);
-        public DerivedKeyEC X448 = new DerivedKeyEC(UDFAlgorithmIdentifier.X448);
-        public DerivedKeyEC Ed25519 = new DerivedKeyEC(UDFAlgorithmIdentifier.Ed25519);
-        public DerivedKeyEC Ed448 = new DerivedKeyEC(UDFAlgorithmIdentifier.Ed448);
+        public DerivedKeyEC X25519 = new DerivedKeyEC(UdfAlgorithmIdentifier.X25519);
+        public DerivedKeyEC X448 = new DerivedKeyEC(UdfAlgorithmIdentifier.X448);
+        public DerivedKeyEC Ed25519 = new DerivedKeyEC(UdfAlgorithmIdentifier.Ed25519);
+        public DerivedKeyEC Ed448 = new DerivedKeyEC(UdfAlgorithmIdentifier.Ed448);
 
-        public DerivedKeyNIST P256 = new DerivedKeyNIST(UDFAlgorithmIdentifier.P256);
-        public DerivedKeyNIST P384 = new DerivedKeyNIST(UDFAlgorithmIdentifier.P384);
-        public DerivedKeyNIST P521 = new DerivedKeyNIST(UDFAlgorithmIdentifier.P521);
+        public DerivedKeyNIST P256 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P256);
+        public DerivedKeyNIST P384 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P384);
+        public DerivedKeyNIST P521 = new DerivedKeyNIST(UdfAlgorithmIdentifier.P521);
 
-        public DerivedKeyRSA RSA2048 = new DerivedKeyRSA(UDFAlgorithmIdentifier.RSA2048);
-        public DerivedKeyRSA RSA3072 = new DerivedKeyRSA(UDFAlgorithmIdentifier.RSA3072);
-        public DerivedKeyRSA RSA4096 = new DerivedKeyRSA(UDFAlgorithmIdentifier.RSA4096);
+        public DerivedKeyRSA RSA2048 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA2048);
+        public DerivedKeyRSA RSA3072 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA3072);
+        public DerivedKeyRSA RSA4096 = new DerivedKeyRSA(UdfAlgorithmIdentifier.RSA4096);
 
         public DerivedKeyRSA Any_RSA2048 =
-            new DerivedKeyRSA(UDFAlgorithmIdentifier.Any, UDFAlgorithmIdentifier.RSA2048);
+            new DerivedKeyRSA(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.RSA2048);
         public DerivedKeyEC Any_x25519 =
-            new DerivedKeyEC(UDFAlgorithmIdentifier.Any, UDFAlgorithmIdentifier.X25519);
+            new DerivedKeyEC(UdfAlgorithmIdentifier.Any, UdfAlgorithmIdentifier.X25519);
 
         }
 
@@ -111,12 +111,12 @@ namespace ExampleGenerator {
 
         public KeyDeriveHKDF HKDF;
 
-        public UDFAlgorithmIdentifier AlgorithmID;
+        public UdfAlgorithmIdentifier AlgorithmID;
 
-        public DerivedKey(UDFAlgorithmIdentifier type,
-                    UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) {
+        public DerivedKey(UdfAlgorithmIdentifier type,
+                    UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) {
 
-            AlgorithmID = specific == UDFAlgorithmIdentifier.Any ? type : specific;
+            AlgorithmID = specific == UdfAlgorithmIdentifier.Any ? type : specific;
 
             var seed = GC.UDF.KeySpecifier(type);
             var random = KeyDeriveHKDF.Random(seed, 128, "UDF examples".ToUTF8());
@@ -140,24 +140,24 @@ namespace ExampleGenerator {
         public byte[] Key;
         public byte[] OKM;
 
-        public DerivedKeyEC(UDFAlgorithmIdentifier type,
-                UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
+        public DerivedKeyEC(UdfAlgorithmIdentifier type,
+                UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
             switch (AlgorithmID) {
-                case UDFAlgorithmIdentifier.X25519: {
+                case UdfAlgorithmIdentifier.X25519: {
                     OKM = HKDF.Derive(null, 256);
                     break;
                     }
-                case UDFAlgorithmIdentifier.X448: {
+                case UdfAlgorithmIdentifier.X448: {
                     OKM = HKDF.Derive(null, 448);
                     break;
                     }
-                case UDFAlgorithmIdentifier.Ed25519: {
+                case UdfAlgorithmIdentifier.Ed25519: {
                     OKM = HKDF.Derive(null, 256);
                     break;
                     }
-                case UDFAlgorithmIdentifier.Ed448: {
+                case UdfAlgorithmIdentifier.Ed448: {
                     OKM = HKDF.Derive(null, 448);
                     break;
                     }
@@ -189,22 +189,22 @@ namespace ExampleGenerator {
         public BigInteger Key;
         public byte[] OKM;
 
-        public DerivedKeyNIST(UDFAlgorithmIdentifier type,
-                UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
+        public DerivedKeyNIST(UdfAlgorithmIdentifier type,
+                UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
             switch (AlgorithmID) {
-                case UDFAlgorithmIdentifier.P256: {
+                case UdfAlgorithmIdentifier.P256: {
                     OKM = HKDF.Derive(null, 320);
                     prime = p256;
                     break;
                     }
-                case UDFAlgorithmIdentifier.P384: {
+                case UdfAlgorithmIdentifier.P384: {
                     OKM = HKDF.Derive(null, 448);
                     prime = p384;
                     break;
                     }
-                case UDFAlgorithmIdentifier.P521: {
+                case UdfAlgorithmIdentifier.P521: {
                     OKM = HKDF.Derive(null, 592);
                     prime = p521;
                     break;
@@ -234,22 +234,22 @@ namespace ExampleGenerator {
 
         public BigInteger P;
         public BigInteger Q;
-        public DerivedKeyRSA(UDFAlgorithmIdentifier type,
-                UDFAlgorithmIdentifier specific = UDFAlgorithmIdentifier.Any) :
+        public DerivedKeyRSA(UdfAlgorithmIdentifier type,
+                UdfAlgorithmIdentifier specific = UdfAlgorithmIdentifier.Any) :
                         base(type, specific) {
 
             int bits = 0;
             switch (AlgorithmID) {
 
-                case UDFAlgorithmIdentifier.P256: {
+                case UdfAlgorithmIdentifier.P256: {
                     bits = 1024;
                     break;
                     }
-                case UDFAlgorithmIdentifier.P384: {
+                case UdfAlgorithmIdentifier.P384: {
                     bits = 1536;
                     break;
                     }
-                case UDFAlgorithmIdentifier.P521: {
+                case UdfAlgorithmIdentifier.P521: {
                     bits = 2048;
                     break;
                     }

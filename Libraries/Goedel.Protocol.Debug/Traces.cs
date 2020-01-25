@@ -118,6 +118,8 @@ namespace Goedel.Protocol.Debug {
     /// Capture a related set of traces.
     /// </summary>
     public class TracePoint {
+
+        ///<summary>Tag to label trace information with.</summary>
         public string Tag;
 
         /// <summary>
@@ -275,13 +277,14 @@ namespace Goedel.Protocol.Debug {
                 return "$$$$ Missing $$$$";
                 }
 
-            switch (Level) {
-                case 0: return StringHTTP(false);
-                case 1: return StringHTTP(true);
-                case 4: return StringJSON(false);
-                case 5: return StringJSON(true);
-                }
-            return StringHTTP(true);
+            return Level switch
+                {
+                    0 => StringHTTP(false),
+                    1 => StringHTTP(true),
+                    4 => StringJSON(false),
+                    5 => StringJSON(true),
+                    _ => StringHTTP(true),
+                    };
             }
 
 

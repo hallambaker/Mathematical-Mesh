@@ -1,5 +1,12 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using Goedel.Protocol;
 using Goedel.Utilities;
+
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Goedel.Mesh.Client {
 
@@ -46,7 +53,7 @@ namespace Goedel.Mesh.Client {
                 string localName = null,
                 string accountName = null) {
             var account = CatalogedDevice.GetAccount(localName, accountName);
-            return new ContextAccount(this, account);
+            return account == null ? null : new ContextAccount(this, account);
             }
 
 
@@ -62,10 +69,10 @@ namespace Goedel.Mesh.Client {
     public class ContextMeshPending : ContextMesh {
 
         public CatalogedPending PendingConnection => CatalogedMachine as CatalogedPending;
-        AcknowledgeConnection MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
-        RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
+        public AcknowledgeConnection MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
+        public RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 
-        ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
+        public ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
 
 
         KeyPair keyAuthentication;
@@ -81,15 +88,18 @@ namespace Goedel.Mesh.Client {
 
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
-                string serviceID,
-                string localName = null,
-                string PIN = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-            var profileDevice = ProfileDevice.Generate(meshHost.MeshMachine,
-                algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
-                algorithmAuthenticate: algorithmAuthenticate);
+            string serviceID,
+            string localName = null,
+            string PIN = null,
+            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+            CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+
+            var secretSeed = new PrivateKeyUDF (
+                    UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
+                    algorithmAuthenticate);
+
+            var profileDevice = new ProfileDevice (meshHost.KeyCollection, secretSeed, true);
 
             return ConnectService(meshHost, profileDevice, serviceID, localName, PIN);
             }
@@ -159,47 +169,43 @@ namespace Goedel.Mesh.Client {
             MeshClient ??= MeshMachine.GetMeshClient(ServiceID, keyAuthentication, null);
 
             var completeRequest = new CompleteRequest() {
-                DeviceUDF = ProfileDevice.UDF,
+                ResponseID = MessageConnectionResponse.GetResponseID(),
                 ServiceID = ServiceID
                 };
 
-            var statusResponse = MeshClient.Complete(completeRequest);
+            var completeResponse = MeshClient.Complete(completeRequest);
 
 
-            // OK so here we need to unpack the profile etc.
-            var catalogedEntry = CatalogedDevice.Decode(statusResponse.EnvelopedCatalogEntryDevice, MeshMachine.KeyCollection);
-            var profileMaster = ProfileMesh.Decode(statusResponse.EnvelopedProfileMaster);
+            //// OK so here we need to unpack the profile etc.
+            var respondConnection = RespondConnection.Decode(
+                    completeResponse.SignedResponse, MeshMachine.KeyCollection);
+
+            respondConnection.Validate(ProfileDevice, MeshMachine.KeyCollection);
+
+            var catalogedEntry = respondConnection.CatalogedDevice;
+            var activationDevice = catalogedEntry.GetActivationDevice(MeshMachine.KeyCollection);
+            var connectionDevice = catalogedEntry.ConnectionDevice;
+            var profileMaster = catalogedEntry.ProfileMesh;
 
 
-            // now create the host profile here.
-
+            // now create the host catalog entry
             var catalogedStandard = new CatalogedStandard() {
                 ID = ProfileDevice.UDF,
                 CatalogedDevice = catalogedEntry,
-                EnvelopedProfileMaster = statusResponse.EnvelopedProfileMaster
+                EnvelopedProfileMaster = profileMaster.DareEnvelope
                 };
-
             MeshMachine.MeshHost.Register(catalogedStandard);
 
-
+            // create the context mesh
             var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
 
-
+            // now create the account context for the account we asked to connect to and initialize
             var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID);
-
-            contextAccount.InitializeStores(statusResponse);
-
+            contextAccount.Sync();
+                      
             return contextAccount;
             }
 
-
-
-
-
-
-        //protected MeshService GetMeshClient(string serviceID) => 
-        //    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
-        //        ActivationAccount.AssertionAccountConnection, ContextMesh.ProfileMesh);
 
         }
     }

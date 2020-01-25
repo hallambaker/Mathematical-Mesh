@@ -1,25 +1,46 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
+using System;
+using System.Text;
+using Goedel.Utilities;
 
 
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// Return a new IMeshMachine.
+    /// </summary>
+    /// <returns>The created instance.</returns>
     public delegate IMeshMachine GetMachineDelegate();
 
 
-
+    /// <summary>
+    /// Support class for MeshMachine containing static methods and delegate dispatch.
+    /// </summary>
     public static class MeshMachine {
-        public static GetMachineDelegate GetMachine;
 
+        ///<summary>The default number of bits in a master key.</summary>
+        public static int DefaultMasterKeyBits = 256;
 
+        ///<summary>Factory returning an IMeshMachine instance</summary>
+        public static GetMachineDelegate IMeshMachineFactory;
+
+        ///<summary>Path to directory where the profiles are stored.</summary>
         public static string DirectoryProfiles;
+
 
         }
 
+    /// <summary>
+    /// Interface exposed by all Mesh Machine classes.
+    /// </summary>
     public interface IMeshMachine {
 
+        ///<summary>The directory the Mesh data is stored in.</summary>
         string DirectoryMesh { get; }
 
-
+        ///<summary>The key collection to use.</summary>
         KeyCollection KeyCollection { get; }
 
         /// <summary>
@@ -38,11 +59,10 @@ namespace Goedel.Mesh {
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any);
 
-
-
-        void OpenCatalog(Catalog catalog, string name);
-
-
         }
+
+
+
+
 
     }

@@ -27,7 +27,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
-
+#pragma warning disable IDE1006
 
 
 using Goedel.Cryptography.Jose;
@@ -64,10 +64,10 @@ namespace Goedel.Mesh.Server {
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
-        /// <param name="JSONReader">Input stream</param>
+        /// <param name="jsonReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) => 
-			Out = JSONReader.ReadTaggedObject(_TagDictionary);
+        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
+			Out = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -188,16 +188,16 @@ namespace Goedel.Mesh.Server {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountEntry FromJSON (JSONReader JSONReader, bool Tagged=true) {
-			if (JSONReader == null) {
+        public static new AccountEntry FromJSON (JSONReader jsonReader, bool Tagged=true) {
+			if (jsonReader == null) {
 				return null;
 				}
 			if (Tagged) {
-				var Out = JSONReader.ReadTaggedObject (_TagDictionary);
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as AccountEntry;
 				}
 		    var Result = new AccountEntry ();
-			Result.Deserialize (JSONReader);
+			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
 			}
@@ -205,35 +205,35 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Having read a tag, process the corresponding value data.
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
+        /// <param name="jsonReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
 			
 			switch (Tag) {
 				case "Directory" : {
-					Directory = JSONReader.ReadString ();
+					Directory = jsonReader.ReadString ();
 					break;
 					}
 				case "ServiceID" : {
-					ServiceID = JSONReader.ReadString ();
+					ServiceID = jsonReader.ReadString ();
 					break;
 					}
 				case "SignedProfileMesh" : {
 					// An untagged structure
 					SignedProfileMesh = new DareEnvelope ();
-					SignedProfileMesh.Deserialize (JSONReader);
+					SignedProfileMesh.Deserialize (jsonReader);
  
 					break;
 					}
 				case "SignedAssertionAccount" : {
 					// An untagged structure
 					SignedAssertionAccount = new DareEnvelope ();
-					SignedAssertionAccount.Deserialize (JSONReader);
+					SignedAssertionAccount.Deserialize (jsonReader);
  
 					break;
 					}
 				case "Status" : {
-					Status = JSONReader.ReadString ();
+					Status = jsonReader.ReadString ();
 					break;
 					}
 				default : {

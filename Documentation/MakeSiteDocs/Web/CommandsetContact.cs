@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebContact
 		//
 		public static void WebContact(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/contact.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/contact.md" };
-            obj._WebContact(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/contact.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/contact.md" };
+				obj._WebContact(Examples);
+				}
+			}
 		public void _WebContact(CreateExamples Examples) {
 
 				 MakeTitle ("contacts");
@@ -96,10 +97,11 @@ namespace ExampleGenerator {
 		// ContactReference
 		//
 		public static void ContactReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/contact.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/contact.md" };
-            obj._ContactReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/contact.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/contact.md" };
+				obj._ContactReference(Examples);
+				}
+			}
 		public void _ContactReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Contact;

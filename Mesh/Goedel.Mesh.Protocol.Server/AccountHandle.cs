@@ -129,5 +129,33 @@ namespace Goedel.Mesh.Server {
             Store.Append(AccountEntry.Directory, envelopes, Label);
 
 
+
+        /// <summary>
+        /// Post a message to the spool associated with the account. This is the only operation
+        /// that is supported for a device that is not connected to the account profile.
+        /// </summary>
+        /// <param name="dareMessage">The message to post.</param>
+        public void PostLocal(DareEnvelope dareMessage) {
+
+            // here we should perform an authorization operation against the store.
+
+            using var container = new Spool(AccountEntry.Directory, Spool.SpoolLocal);
+            container.Add(dareMessage);
+
+            }
+
+        public DareEnvelope GetLocal(string id) {
+            using var spoolLocal = GetStore(Spool.SpoolLocal);
+
+            foreach (var message in spoolLocal.Select(0, reverse:true)) {
+                if (message?.Header?.ContentMeta?.UniqueID == id) {
+                    return message;
+                    }
+
+                }
+
+
+            throw new NYI();
+            }
         }
     }

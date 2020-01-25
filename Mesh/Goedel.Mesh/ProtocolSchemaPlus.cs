@@ -158,5 +158,8 @@ namespace Goedel.Mesh {
             }
         }
 
-
+    public partial class CompleteResponse {
+        public CompleteResponse(Exception exception = null) : base(exception) {
+            }
+        }
     }

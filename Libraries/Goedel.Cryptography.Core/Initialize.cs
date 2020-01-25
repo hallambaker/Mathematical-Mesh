@@ -20,14 +20,11 @@ namespace Goedel.Cryptography {
             Initialize(ref Flag, InitializationCore, TestMode);
 
         /// <summary>
-        /// Initialization routine for all cryptographic and Mesh functions on the dotNet Core platform.
+        /// Initialization routine for all cryptographic functions on the dotNet Core platform.
         /// </summary>
         public static void InitializationCore(bool TestMode = false) {
             CryptographyCommon.Initialize();
             KeyCollection.Default = new Core.KeyCollectionCore();
-            //Platform.GetPlatformInformation = Core.KeyLocationsCore.GetPlatformInformation;
-
-            //var home = Platform.GetPlatformInformation(PlatformInformation.DirectoryApplicationHome);
             }
         }
     }

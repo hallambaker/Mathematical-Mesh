@@ -19,7 +19,6 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The master keys for administration.</summary>
-        KeyPair keyMasterSignature;
         KeyPair keyAdministratorSignature;
 
         //CryptoParameters ContainerCryptoParameters => new CryptoParameters();
@@ -43,11 +42,15 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Create a new personal mesh and return an administration context for it.
         /// </summary>
-        /// <param name="meshMachine">The machine context that the mesh is going to be created on.</param>
+        /// <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
         /// <param name="profileDevice">The device profile.</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        /// <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
+        /// <param name="deviceSecret">Specifies a seed from which to generate the ProfileDevice</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="meshHost"/>.</param>
         /// <returns>An administration context instance for the created profile.</returns>
         public static ContextMeshAdmin CreateMesh(
                 MeshHost meshHost,
@@ -56,17 +59,23 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
                 CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
                 byte[] masterSecret = null,
+                byte[] deviceSecret = null,
                 bool? persist = null) {
 
             // Create the master profile.
-            var profileMaster = ProfileMesh.Generate(
-                meshHost.MeshMachine, algorithmSign, algorithmEncrypt,
-                masterSecret, persist);
-            profileDevice ??= ProfileDevice.Generate(meshHost.MeshMachine,
-                algorithmSign: algorithmSign, algorithmEncrypt: algorithmEncrypt,
-                algorithmAuthenticate: algorithmAuthenticate);
+            var secretSeedMaster = new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileMaster, algorithmEncrypt, algorithmSign,
+                algorithmAuthenticate, masterSecret);
 
-            return CreateMesh(meshHost, profileMaster, profileDevice);
+            persist ??= masterSecret == null;
+            var profileMesh = new ProfileMesh(meshHost.KeyCollection, secretSeedMaster, persist==true);
+
+            var secretSeedDevice = new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
+                algorithmAuthenticate, deviceSecret);
+            profileDevice ??= new ProfileDevice(meshHost.KeyCollection, secretSeedDevice, true);
+
+            return CreateMesh(meshHost, profileMesh, profileDevice);
             }
 
         /// <summary>
@@ -84,14 +93,15 @@ namespace Goedel.Mesh.Client {
             Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
 
             // Add this device to the profile as an administrator device by adding the necessary activation.
-            var assertionDevicePrivate = new ActivationDevice(meshHost.MeshMachine, profileDevice);
-            var adminEntry = AddAdministrator(meshHost.MeshMachine, profileMaster, profileDevice, assertionDevicePrivate);
+            var activationDevice = new ActivationDevice(profileDevice, meshHost.KeyCollection);
+            var adminEntry = AddAdministrator(meshHost.MeshMachine, profileMaster, profileDevice, activationDevice);
 
             // Create an administration context
             var result = new ContextMeshAdmin(meshHost, adminEntry);
 
+
             // Use the administration context to create a connection for this device and add to the record
-            var catalogedDevice = result.CreateCataloguedDevice(profileDevice, assertionDevicePrivate);
+            var catalogedDevice = result.CreateCataloguedDevice(profileDevice, activationDevice);
             result.UpdateDevice(catalogedDevice);
 
             // Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
@@ -106,8 +116,7 @@ namespace Goedel.Mesh.Client {
         #region // Add devices
         /// <summary>
         /// Create an administrator catalog entry for the device <paramref name="profileDevice"/> to
-        /// the master profile <Add an administrator entry for the device <paramref name="profileDevice"/>
-        /// in the context <paramref name="meshMachine"/>.
+        /// the master profile in the context <paramref name="meshMachine"/>.
         /// <para>This is presented as a static method because creation of an administration context
         /// requires a signed AdminEntry to be established before a ContextAdmin can be created for 
         /// the device.</para>
@@ -141,40 +150,42 @@ namespace Goedel.Mesh.Client {
                 };
             }
 
-
-
         /// <summary>
         /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
         /// </summary>
         /// <param name="profileDevice">Profile of the device to be added.</param>
         /// <returns>The CatalogedDevice entry.</returns>
         public CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice) {
-            var assertionDevicePrivate = new ActivationDevice(MeshMachine, profileDevice);
-            var result = CreateCataloguedDevice(profileDevice, assertionDevicePrivate);
+            var activationDevice = new ActivationDevice(profileDevice, KeyCollection);
+            var result = CreateCataloguedDevice(profileDevice, activationDevice);
+
             return result;
             }
 
         /// <summary>
         /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
-        /// and activation <paramref name="assertionDevicePrivate"/>.
+        /// and activation <paramref name="activationDevice"/>.
         /// </summary>
         /// <param name="profileDevice">Profile of the device to be added.</param>
-        /// <param name="assertionDevicePrivate">The device key overlay.</param>
+        /// <param name="activationDevice">The device key overlay.</param>
         /// <returns>The CatalogedDevice entry.</returns>
-        CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice, ActivationDevice assertionDevicePrivate) {
-            assertionDevicePrivate.Encode(profileDevice.KeyEncryption.KeyPair, ProfileMesh.KeyEncryption.KeyPair);
+        CatalogedDevice CreateCataloguedDevice(
+                    ProfileDevice profileDevice, 
+                    ActivationDevice activationDevice) {
 
-            var assertionDeviceConnection = new ConnectionDevice(assertionDevicePrivate);
+            var connectionDevice = activationDevice.ConnectionDevice;
 
-            keyMasterSignature ??=                     MeshMachine.KeyCollection.LocatePrivateKeyPair(ProfileMesh.UDF);
-            Sign(assertionDeviceConnection);
+            // Wrap the connectionDevice and activationDevice in envelopes
+            Sign(connectionDevice);
+            activationDevice.Encode();
 
             var catalogEntryDevice = new Mesh.CatalogedDevice() {
-                UDF = assertionDevicePrivate.KeySignature.UDF,
-                DeviceUDF = profileDevice.UDF,
-                EnvelopedConnectionDevice = assertionDeviceConnection.DareEnvelope,
-                EnvelopedActivationDevice = assertionDevicePrivate.DareEnvelope,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope
+                UDF = activationDevice.KeySignature.UDF,
+                EnvelopedProfileMesh = ProfileMesh.DareEnvelope,
+                EnvelopedProfileDevice = profileDevice.DareEnvelope,
+                EnvelopedConnectionDevice = connectionDevice.DareEnvelope,
+                EnvelopedActivationDevice = activationDevice.DareEnvelope,
+                DeviceUDF = profileDevice.UDF
                 };
 
             return catalogEntryDevice;
@@ -245,7 +256,7 @@ namespace Goedel.Mesh.Client {
             // pull the master key
             var mastersecret = KeyCollection.LocatePrivateKey(ProfileMesh.KeyOfflineSignature.UDF);
             // convert to byte array;
-            var mastersecretBytes = (mastersecret as PrivateKeyUDFMaster).PrivateValue.FromBase32();
+            var mastersecretBytes = (mastersecret as PrivateKeyUDF).PrivateValue.FromBase32();
             Console.WriteLine(mastersecretBytes.ToStringBase16FormatHex());
             // split (n, t) ways
             var secret = new SharedSecret(mastersecretBytes);
@@ -282,7 +293,7 @@ namespace Goedel.Mesh.Client {
                 }
             (secretBytes[start++] == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
             var algorithm = secretBytes[start++]* 0x100 + secretBytes[start++];
-            (algorithm == (int)UDFAlgorithmIdentifier.MeshProfileMaster).AssertTrue();
+            (algorithm == (int)UdfAlgorithmIdentifier.MeshProfileMaster).AssertTrue();
 
             var length = secretBytes.Length - start;
             var masterSecret = new byte[length];

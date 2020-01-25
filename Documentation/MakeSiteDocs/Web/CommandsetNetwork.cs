@@ -15,10 +15,11 @@ namespace ExampleGenerator {
 		// WebNetwork
 		//
 		public static void WebNetwork(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Guide/network.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/network.md" };
-            obj._WebNetwork(Examples);
-            }
+				using (var _Output = new StreamWriter("Guide/network.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/network.md" };
+				obj._WebNetwork(Examples);
+				}
+			}
 		public void _WebNetwork(CreateExamples Examples) {
 
 				 MakeTitle ("network");
@@ -66,10 +67,11 @@ namespace ExampleGenerator {
 		// NetworkReference
 		//
 		public static void NetworkReference(CreateExamples Examples) { /* XFile  */
-            using var _Output = new StreamWriter("Reference/network.md");
-            var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/network.md" };
-            obj._NetworkReference(Examples);
-            }
+				using (var _Output = new StreamWriter("Reference/network.md")) {
+				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/network.md" };
+				obj._NetworkReference(Examples);
+				}
+			}
 		public void _NetworkReference(CreateExamples Examples) {
 
 				 var CommandSet = CommandLineInterpreter.DescribeCommandSet_Network;

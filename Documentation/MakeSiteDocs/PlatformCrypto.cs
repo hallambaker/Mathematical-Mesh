@@ -806,8 +806,8 @@ namespace ExampleGenerator {
 
         public CryptoGroup() {
 
-            KeyUDFGroup = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: GroupName.ToUTF8());
-            KeyUDFDevice = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: UserName.ToUTF8());
+            KeyUDFGroup = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: GroupName.ToUTF8());
+            KeyUDFDevice = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: UserName.ToUTF8());
 
 
 
@@ -888,8 +888,8 @@ namespace ExampleGenerator {
             var random1 = KeyDeriveHKDF.Random(seed, 128, "Signature".ToUTF8());
             var random2 = KeyDeriveHKDF.Random(seed, 128, "OverlaySignature".ToUTF8());
 
-            SeedAliceDevice = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: random1);
-            SeedAliceOverlay = UDF.DerivedKey(UDFAlgorithmIdentifier.Ed25519, data: random2);
+            SeedAliceDevice = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random1);
+            SeedAliceOverlay = UDF.DerivedKey(UdfAlgorithmIdentifier.Ed25519, data: random2);
 
             KeyPairDevice = UDF.DeriveKey(SeedAliceDevice, KeySecurity.Exportable) as KeyPairEd25519;
             KeyPairOverlay = UDF.DeriveKey(SeedAliceOverlay, KeySecurity.Exportable) as KeyPairEd25519;

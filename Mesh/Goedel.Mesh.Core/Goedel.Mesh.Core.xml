@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Core</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Mesh">
+            <summary>
+            Initialization class. Applications should perform a call to Mesh.Initialize 
+            before using Mesh library functions.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Mesh.Initialize(System.Boolean)">
+            <summary>
+            Thread safe generic initialization, calls the initialization for the
+            cryptographic support libraries exactly once. 
+            </summary>
+            <remarks>This method is defined in each of the platform specific packages, to
+            allow use of shared libraries for cross-platform support. If an implementation
+            is linked to multiple platform packages, the platform specific initialization must
+            be called for each.</remarks>
+        </member>
+        <member name="M:Goedel.Mesh.Mesh.InitializationCore(System.Boolean)">
+            <summary>
+            Initialization routine for all Mesh functions on the dotNet Core platform.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
+            <summary>
+            Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
+            KeyCollection of the machine instance.
+            </summary>
+            <param name="algorithmID">The type of keypair to create.</param>
+            <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+            <param name="keySecurity">The key security model</param>
+            <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+            the value of <paramref name="keySecurity"/></param>
+            <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
+            <returns>The created key pair</returns>
+        </member>
+        <member name="T:Goedel.Mesh.MeshMachineCore">
+            <summary>
+            
+            </summary>
+            <remarks>This implementation does not currently support concurrent access to the Mesh profile files
+            from separate processes. This support should be added my introducing a system wide lock that is
+            obtained before attempting a write operation and while opening a container.</remarks>
+        </member>
+        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(System.String,Goedel.Cryptography.KeyPair,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
+            <summary>
+            Return a MeshService client for the service ID <paramref name="serviceID"/>
+            using the authentication key <paramref name="keyAuthentication"/> and credential
+            <paramref name="assertionAccountConnection"/>. 
+            </summary>
+            <param name="serviceID">The service identifier to connect to.</param>
+            <param name="keyAuthentication">The private key to be used for authentication
+            (encryption).</param>
+            <param name="assertionAccountConnection">The credential binding the device
+            to the account.</param>
+            <param name="profileMaster">The master profile. This is required when requesting
+            an inbound connection or requesting that a new account be created and optional
+            otherwise.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

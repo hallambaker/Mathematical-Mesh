@@ -1,11 +1,13 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
+using Goedel.Utilities;
 
 using System.Text;
 namespace Goedel.Mesh {
 
-
+    public interface IProcessResult {
+        }
 
     public partial class MeshItem {
 
@@ -45,10 +47,13 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Alternative print routine for formatted output.
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
         /// </summary>
-        /// <param name="builder">A string builder to direct the output to.</param>
-        /// <param name="indent">Number of indents to be emitted at the start of each line.</param>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
         public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) =>
             _ = builder.AppendLine($"[{_Tag}]");
 
@@ -75,5 +80,28 @@ namespace Goedel.Mesh {
 
         }
 
+    public partial class Message : IProcessResult {
 
+
+
+        /// <summary>
+        /// Return the identifier for a response to this message.
+        /// </summary>
+        /// <returns>The response identifier.</returns>
+        public string GetResponseID() => MakeResponseID(MessageID);
+
+        public static string MakeResponseID(string udf) {
+            var buffer = udf.FromBase32();
+            var length = (buffer.Length).Minimum(128);
+            switch ((UDFTypeIdentifier)buffer[0]) {
+                case (UDFTypeIdentifier.DigestSHA_3_512): {
+                    return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmID.SHA_3_512);
+                    }
+                default: {
+                    return UDF.ContentDigestOfUDF(udf, length);
+                    }
+                }
+            }
+
+        }
     }

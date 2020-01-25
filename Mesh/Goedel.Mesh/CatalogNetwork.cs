@@ -82,16 +82,21 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => PrimaryKey(Protocol, Service);
 
+        /// <summary>
+        /// Compute a primary key from the values <paramref name="protocol"/> and
+        /// <paramref name="service"/>
+        /// </summary>
+        /// <param name="protocol">The protocol name.</param>
+        /// <param name="service">The service name</param>
+        /// <returns>The computed primary key.</returns>
         public static string PrimaryKey(string protocol, string service) =>
             $"{protocol ?? ""}:{service ?? ""}";
 
 
-        //public override List<string> _Keys => base._Keys;
-        //List<string> keys = new List<string> { "Service" };
-
-        //public override List<KeyValuePair<string, string>> _KeyValues => base._KeyValues;
-
-
+        /// <summary>
+        /// Converts the value of this instance to a <see langword="String"/>.
+        /// </summary>
+        /// <returns>The current string.</returns>
         public override string ToString() {
             var stringBuilder = new StringBuilder();
             if (Protocol != null) {

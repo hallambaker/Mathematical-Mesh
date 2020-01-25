@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Client {
 
         #region // fields and properties
         public IMeshMachineClient MeshMachine;
-        PersistHost containerProfile;
+        PersistHost ContainerHost { get; }
 
         ///<summary>The Key Collection of the Mesh Machine.</summary>
         public KeyCollection KeyCollection => keyCollection ??
@@ -35,7 +35,7 @@ namespace Goedel.Mesh.Client {
         #endregion
         #region // Boilerplate for disposal etc.
         ///<summary>Disposal routine.</summary>
-        protected override void Disposing() => containerProfile.Dispose();
+        protected override void Disposing() => ContainerHost.Dispose();
         #endregion
         #region // Constructors and factories
 
@@ -46,30 +46,34 @@ namespace Goedel.Mesh.Client {
         /// <param name="containerHost">The host catalog.</param>
         public MeshHost(PersistHost containerHost, IMeshMachineClient meshMachine) {
             this.MeshMachine = meshMachine;
-            containerProfile = containerHost;
+            ContainerHost = containerHost;
 
             foreach (var entry in containerHost.ObjectIndex) {
                 var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
-                switch (catalogedMachine) {
-                    case CatalogedAdmin adminEntry: {
-                        var context = new ContextMeshAdmin(this, adminEntry);
-                        Register(context);
-                        break;
-                        }
-                    case CatalogedStandard standardEntry: {
-                        var context = new ContextMesh(this, standardEntry);
-                        Register(context);
-                        break;
-                        }
-                    case CatalogedPending pendingEntry: {
-                        var context = new ContextMesh(this, pendingEntry);
-                        Register(context);
-                        break;
-                        }
-                    }
+                Register(catalogedMachine);
                 Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
                 }
 
+            }
+
+        void Register(CatalogedMachine catalogedMachine) {
+            switch (catalogedMachine) {
+                case CatalogedAdmin adminEntry: {
+                    var context = new ContextMeshAdmin(this, adminEntry);
+                    Register(context);
+                    break;
+                    }
+                case CatalogedStandard standardEntry: {
+                    var context = new ContextMesh(this, standardEntry);
+                    Register(context);
+                    break;
+                    }
+                case CatalogedPending pendingEntry: {
+                    var context = new ContextMeshPending(this, pendingEntry);
+                    Register(context);
+                    break;
+                    }
+                }
             }
 
         /// <summary>
@@ -114,6 +118,7 @@ namespace Goedel.Mesh.Client {
             if (DictionaryLocalContextMesh.TryGetValue(key, out context)) {
                 return context;
                 }
+
             return null;
             }
 
@@ -124,8 +129,12 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogItem">The item to be created.</param>
         /// <param name="create">If true, a new item will be created if it does not
         /// already exist.</param>
-        public virtual void Register(HostCatalogItem catalogItem, bool create = true) =>
-                containerProfile.Update(catalogItem, create);
+        public virtual void Register(HostCatalogItem catalogItem, bool create = true) {
+            var machine = ContainerHost.Update(catalogItem, create);
+            if (machine.JsonObject is CatalogedMachine catalogedMachine) {
+                Register(catalogedMachine);
+                }
+            }
 
 
         /// <summary>
@@ -133,7 +142,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="profile">The profile to delete</param>
         public virtual void Delete(HostCatalogItem profile) =>
-                containerProfile.Delete(profile._PrimaryKey);
+                ContainerHost.Delete(profile._PrimaryKey);
         #endregion
 
 
@@ -154,7 +163,7 @@ namespace Goedel.Mesh.Client {
 
             var context = ContextMeshAdmin.CreateMesh(
                     this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
-                    masterSecret, persist);
+                    masterSecret, persist: persist);
 
             Register(context);
             Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
@@ -171,7 +180,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="admin">Enable administration privileges (if available).</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
-            var key = localName ?? containerProfile.DefaultEntry.ID;
+            var key = localName ?? ContainerHost.DefaultEntry.ID;
             return LocateMesh(key);
             }
 
@@ -179,13 +188,12 @@ namespace Goedel.Mesh.Client {
         /// Attempt to complete the connection to a Mesh profile. If successful. update the local host persistence store
         /// and return a context for the newly acquired connection. Otherwise return null.
         /// </summary>
-        /// <param name="serviceID"></param>
         /// <param name="localName"></param>
         /// <returns></returns>
         public ContextAccount Complete(
                 string localName = null) {
 
-            var key = localName ?? containerProfile.DefaultPendingEntry.ID;
+            var key = localName ?? ContainerHost.DefaultPendingEntry.ID;
             var contextPending = LocateMesh(key) as ContextMeshPending;
             return contextPending.Complete();
             }
@@ -248,57 +256,6 @@ namespace Goedel.Mesh.Client {
 
             return contextAccount;
             }
-
-
-
-        #region // Store dictionary - might be the wrong tack
-        //public Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
-
-
-        //public string DirectoryAccount(string accountName) =>
-        //    Path.Combine(MeshMachine.DirectoryMesh, accountName);
-
-        //public Store GetStore(string accountName, string storeName, bool blind = false) {
-        //    var directoryAccount = DirectoryAccount (accountName);
-
-        //    if (DictionaryStores.TryGetValue(storeName, out var syncStore)) {
-        //        if (!blind & (syncStore.Store is CatalogBlind)) {
-        //            // if we have a blind store from a sync operation but need a populated one,
-        //            // remake it.
-        //            syncStore.Store.Dispose();
-        //            syncStore.Store = MakeStore(accountName, storeName);
-        //            }
-        //        return syncStore.Store;
-
-        //        }
-
-        //    var store = blind ? new CatalogBlind(directoryAccount, storeName) : MakeStore(accountName, storeName);
-
-        //    syncStore = new SyncStatus(store);
-        //    DictionaryStores.Add(storeName, syncStore);
-
-        //    return syncStore.Store;
-        //    }
-
-        //Store MakeStore(string accountName, string name) {
-        //    switch (name) {
-        //        case Spool.SpoolInbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case Spool.SpoolOutbound: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case Spool.SpoolArchive: return new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-
-        //        case CatalogCredential.Label: return new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogContact.Label: return new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogCalendar.Label: return new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogBookmark.Label: return new CatalogBookmark(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogNetwork.Label: return new CatalogNetwork(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogApplication.Label: return new CatalogApplication(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        case CatalogDevice.Label: return new CatalogDevice(DirectoryAccount, name, containerCryptoParameters, KeyCollection);
-        //        }
-
-        //    throw new NYI();
-        //    }
-
-        #endregion 
 
 
         }

@@ -156,14 +156,14 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="Request">The request object to send to the host.</param>
         /// <returns>The response object from the service</returns>
-        public override StatusResponse Complete(
+        public override CompleteResponse Complete(
                 CompleteRequest Request, JpcSession jpcSession = null) {
             jpcSession ??= JpcSession;
             try {
-                return Mesh.AccountComplete(jpcSession, Request);
+                return Mesh.AccountComplete(jpcSession, jpcSession.VerifiedAccount, Request);
                 }
             catch (System.Exception exception) {
-                return new StatusResponse(exception);
+                return new CompleteResponse(exception);
 
                 }
 
@@ -256,9 +256,8 @@ namespace Goedel.Mesh.Server {
                 PostRequest Request, JpcSession jpcSession) {
             jpcSession ??= JpcSession;
             try {
-                Assert.True(Request.Accounts.Count == 1 & Request.Message.Count == 1,
-                    NYI.Throw);
-                Mesh.MessagePost(jpcSession, Request.Accounts[0], Request.Message[0]);
+                Assert.True(Request.Message.Count == 1, NYI.Throw);
+                Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, Request.Accounts, Request.Message[0]);
                 return new PostResponse();
                 }
             catch (System.Exception exception) {

@@ -2,6 +2,7 @@
 using Goedel.Utilities;
 
 using System.Collections.Generic;
+using System;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -21,6 +22,10 @@ namespace Goedel.Mesh.Shell {
                 CatalogedMachine = contextMeshPending.CatalogedMachine
                 };
 
+            var profileDevice = contextMeshPending.ProfileDevice;
+            Console.WriteLine($"KeyOfflineSignature {profileDevice.KeyOfflineSignature.UDF}");
+            Console.WriteLine($"KeyEncryption {profileDevice.KeyEncryption.UDF}");
+            Console.WriteLine($"KeyAuthentication {profileDevice.KeyAuthentication.UDF}");
             return result;
             }
 
@@ -94,105 +99,28 @@ namespace Goedel.Mesh.Shell {
 
             // Hack: should be able to accept, reject specific requests, not just
             // the last one.
-            var message = contextAccount.GetPendingMessageConnectionRequest();
-            contextAccount.Process(message, accept);
+            var message = contextAccount.GetPendingMessageByID(messageID, out var found);
+
+            if (message == null) {
+                if (found) {
+                    // already processed
+                    throw new NYI();
+                    }
+                else {
+                    // Didn't receive that request
+                    throw new NYI();
+                    }
+                }
+            var processResult = contextAccount.Process(message, accept);
 
             // Hack: need to obtain the actual result.
-            var result = new ResultConnectProcess() {
-
+            var result = new ResultProcess() {
+                ProcessResult = processResult as Message
                 };
             return result;
 
 
             }
-
-        #region // dead code??
-
-        //using (var contextDevice = GetContextDevice(Options)) {
-        //    contextDevice.Sync();
-
-        //    var messageConnectionRequest = GetConnectionRequest(contextDevice, messageID);
-        //    messageConnectionRequest.AssertNotNull();
-
-        //    contextDevice.ProcessConnectionRequest(messageConnectionRequest, accept);
-
-        //    return new ResultConnectProcess() {
-        //        Success = true,
-        //        Accepted = accept,
-        //        Witness = messageConnectionRequest.Witness
-        //        };
-        //    }
-
-
-        //using (var contextDevice = GetContextDevice(Options)) {
-
-        //    // sync
-        //    contextDevice.Sync();
-
-        //    var messages = new List<MeshMessage>();
-        //    var result = new ResultPending() {
-        //        Success = true,
-        //        Messages = messages
-        //        };
-
-        //    // get the inbound spool
-        //    var completed = new Dictionary<string, MeshMessage>();
-
-        //    foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
-        //        var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
-        //        if (!completed.ContainsKey(meshMessage.MessageID)) {
-        //            switch (meshMessage) {
-        //                case MeshMessageComplete meshMessageComplete: {
-        //                    foreach (var reference in meshMessageComplete.References) {
-        //                        completed.Add(reference.MessageID, meshMessageComplete);
-        //                        }
-        //                    break;
-        //                    }
-        //                default: {
-        //                    messages.Add(meshMessage);
-        //                    break;
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    return result;
-        //    }
-
-
-        //MessageConnectionRequest GetConnectionRequest(
-        //        ContextAccount contextDevice,
-        //        string messageID) {
-        //    contextDevice.Sync();
-        //    var completed = new Dictionary<string, MeshMessage>();
-
-        //    foreach (var message in contextDevice.SpoolInbound.Select(1, true)) {
-        //        var meshMessage = MeshMessage.FromJSON(message.GetBodyReader());
-        //        if (!completed.ContainsKey(meshMessage.MessageID)) {
-        //            switch (meshMessage) {
-        //                case MeshMessageComplete meshMessageComplete: {
-        //                    foreach (var reference in meshMessageComplete.References) {
-        //                        completed.Add(reference.MessageID, meshMessageComplete);
-        //                        }
-        //                    break;
-        //                    }
-        //                case MessageConnectionRequest messageConnectionRequest: {
-        //                    if (messageConnectionRequest.Witness == messageID |
-        //                            messageConnectionRequest.MessageID == messageID) {
-        //                        return messageConnectionRequest;
-
-        //                        }
-
-        //                    break;
-        //                    }
-
-        //                }
-        //            }
-        //        }
-
-        //    throw new NYI();
-        //}
-
-        #endregion
 
 
         public override ShellResult DeviceDelete(DeviceDelete Options) {

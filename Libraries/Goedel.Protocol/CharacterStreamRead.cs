@@ -122,26 +122,18 @@ namespace Goedel.Protocol {
                 return NextHex(Stream);
                 }
 
-            switch (Next) {
-                case '\"':
-                    return '\"';
-                case '\\':
-                    return '\\';
-                case '/':
-                    return '/';
-                case '\b':
-                    return '\b';
-                case '\f':
-                    return '\f';
-                case '\n':
-                    return '\n';
-                case '\r':
-                    return '\r';
-                case '\t':
-                    return '\t';
-                }
-            return (char)0;
-
+            return Next switch
+                {
+                    '\"' => '\"',
+                    '\\' => '\\',
+                    '/' => '/',
+                    '\b' => '\b',
+                    '\f' => '\f',
+                    '\n' => '\n',
+                    '\r' => '\r',
+                    '\t' => '\t',
+                    _ => (char)0,
+                    };
             }
 
 

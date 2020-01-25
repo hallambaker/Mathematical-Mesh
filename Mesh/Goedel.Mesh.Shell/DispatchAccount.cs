@@ -82,11 +82,12 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountRegister(AccountRegister Options) {
-            using var contextAccount = GetContextAccount(Options);
+            using var contextAccount = GetContextAccount(Options); //GetContextMeshAdmin(Options);
             contextAccount.AddService(Options.NewAccountID.Value);
 
-            return new ResultCreateAccount() {
+            return new ResultRegisterService() {
                 Success = true,
+                ServiceID = contextAccount.ServiceID,
                 ActivationAccount = contextAccount.ActivationAccount,
                 ProfileAccount = contextAccount.ProfileAccount
                 };

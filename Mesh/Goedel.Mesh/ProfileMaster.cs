@@ -2,36 +2,23 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
 using System;
+using System.Text;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 
 
-    //public partial class PKIXPrivateKeyUDF : IPKIXPrivateKey {
-    //    public IPKIXPublicKey PublicParameters => throw new System.NotImplementedException();
-
-    //    public int[] OID => throw new System.NotImplementedException();
-
-    //    public byte[] DER() => throw new System.NotImplementedException();
-    //    public SubjectPublicKeyInfo SubjectPublicKeyInfo(int[] OID = null) => throw new System.NotImplementedException();
-    //    }
-
-
-
-
-
     public partial class ProfileMesh {
 
-        public static int DefaultMasterKeyBits = 256;
+        
 
-        public string UDF => KeyOfflineSignature.UDF;
-        public byte[] UDFBytes => KeyOfflineSignature.KeyPair.PKIXPublicKey.UDFBytes(512);
+        //public string UDF => KeyOfflineSignature.UDF;
+        //public byte[] UDFBytes => KeyOfflineSignature.KeyPair.PKIXPublicKey.UDFBytes(512);
 
-        public override string _PrimaryKey => KeyOfflineSignature.UDF;
+        //public override string _PrimaryKey => KeyOfflineSignature.UDF;
 
 
-        public const string MeshKeySign = "mmm/KeySign";
-        public const string MeshKeyEscrow = "mmm/KeyEscrow";
-        public const string MeshKeyEncrypt = "mmm/KeyEncrypt";
+
 
         /// <summary>
         /// Constructor for use by deserializers.
@@ -40,63 +27,35 @@ namespace Goedel.Mesh {
             }
 
 
+        //public ProfileMesh(
+        //            KeyPair keySign, KeyPair keyEscrow, KeyPair keyEncrypt) {
+        //    KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
+        //    KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+
+        //    }
+
+
+        /// <summary>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDFDevice"/>
+        /// seed.
+        /// </summary>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
         public ProfileMesh(
-                    KeyPair keySign, KeyPair keyEscrow, KeyPair keyEncrypt) {
+                    KeyCollection keyCollection,
+                    PrivateKeyUDF secretSeed,
+                    bool persist = false) {
+            var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
+            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
+ 
             KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
-            //MasterEscrowKeys = new List<PublicKey> { new PublicKey(keyEscrow.KeyPairPublic()) };
-            }
 
-        public static ProfileMesh Generate(
-                    IMeshMachine meshMachine,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                    byte[] masterSecret=null,
-                    bool? persist = null) {
-
-            
-
-            // generate the master secret (defaults to DefaultMasterKeyBits bits)
-            masterSecret ??= Platform.GetRandomBits(DefaultMasterKeyBits);
-            masterSecret[0] = masterSecret[0] == 0 ? (byte)1 : masterSecret[0];
-            var masterUDF = Cryptography.UDF.DerivedKey(UDFAlgorithmIdentifier.MeshProfileMaster, data: masterSecret);
-
-            
-            // Generate the subordinate keys.
-            GetKeySet(meshMachine, masterUDF, out var keySign, out var keyEscrow, out var keyEncrypt,
-                algorithmSign, algorithmEncrypt);
-
-            
-            // Check to see if we should persist the data
-            persist ??= masterSecret != null;
-            if (persist==true) {
-                // Store the master UDF under the UDF of the signature key generated from it.
-                var privateKeyUDF = new PrivateKeyUDFMaster() {
-                    PrivateValue = masterUDF,
-                    Exportable = true,
-
-                    };
-                meshMachine.KeyCollection.Persist(keySign.UDF, privateKeyUDF, true);
+            if (persist) {
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
                 }
-            Console.WriteLine($"Mesh Profile {keySign.UDF}");
-            return new ProfileMesh(keySign, keyEscrow, keyEncrypt);
-            }
-
-        static void GetKeySet(IMeshMachine meshMachine, string masterUDF,
-            out KeyPair keySign, out KeyPair keyEscrow, out KeyPair keyEncrypt,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default
-            ) {
-
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-
-            keySign = Cryptography.UDF.DeriveKey(masterUDF, meshMachine.KeyCollection,
-                KeySecurity.Ephemeral, keyUses: KeyUses.Sign, algorithmSign, MeshKeySign);
-            keyEscrow = Cryptography.UDF.DeriveKey(masterUDF, meshMachine.KeyCollection,
-                KeySecurity.Ephemeral, keyUses: KeyUses.Sign, algorithmSign, MeshKeyEscrow);
-            keyEncrypt = Cryptography.UDF.DeriveKey(masterUDF, meshMachine.KeyCollection,
-                KeySecurity.Ephemeral, keyUses: KeyUses.Sign, algorithmSign, MeshKeyEncrypt);
             }
 
 
@@ -108,6 +67,32 @@ namespace Goedel.Mesh {
             var result = FromJSON(message.GetBodyReader(), true);
             result.DareEnvelope = message;
             return result;
+            }
+
+
+        /// <summary>
+        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
+        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
+        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// </summary>
+        /// <param name="builder">The string builder to write to.</param>
+        /// <param name="indent">The number of units to indent the presentation.</param>
+        /// <param name="machine">Mesh machine providing cryptographic context.</param>
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
+
+            builder.AppendIndent(indent, $"Profile Mesh");
+            indent++;
+            DareEnvelope.Report(builder, indent);
+            indent++;
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+
+            if (KeysOnlineSignature != null) {
+                foreach (var online in KeysOnlineSignature) {
+                    builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
+                    }
+                }
+            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+
             }
 
         }

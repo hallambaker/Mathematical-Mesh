@@ -20,3 +20,11 @@ Namespace Goedel.Mesh
 			Console "The request is not authenticated for the specified operation"
 			Description
 				|The request is not authenticated  for the specified operation
+
+
+		Exception InvalidMessageID
+			Console "Mesh Messages MUST specify a valid message ID"
+			Description
+				|Mesh Messages MUST specify a valid message ID.
+
+

@@ -52,18 +52,14 @@ namespace Goedel.Cryptography.Jose {
             var keyUses = Use.GetUses();
 
 
-            switch (Curve) {
-                case "Ed25519":
-                    return new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
-                case "Ed448":
-                    return new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
-                case "X25519":
-                    return new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
-                case "X448":
-                    return new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448);
-                }
-
-            throw new NotSupportedException();
+            return Curve switch
+                {
+                    "Ed25519" => new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
+                    "Ed448" => new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
+                    "X25519" => new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
+                    "X448" => new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
+                    _ => throw new NotSupportedException(),
+                    };
             }
 
 
@@ -133,18 +129,14 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
             var keyUses = Use.GetUses();
-            switch (Curve) {
-                case "Ed25519":
-                    return new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
-                case "Ed448":
-                    return new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
-                case "X25519":
-                    return new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
-                case "X448":
-                    return new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448);
-
-                }
-            throw new NotSupportedException();
+            return Curve switch
+                {
+                    "Ed25519" => new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
+                    "Ed448" => new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
+                    "X25519" => new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
+                    "X448" => new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
+                    _ => throw new NotSupportedException(),
+                    };
             }
 
 

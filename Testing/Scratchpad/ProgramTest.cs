@@ -21,7 +21,7 @@ namespace Scratchpad {
 
 
 
-            ShellTests.Test().TestEscrow();
+            ShellTests.Test().TestConnectRequest();
 
 
             //TestGoedelCryptography.Test().X448SignedMultiplyFast(1000, 49);
