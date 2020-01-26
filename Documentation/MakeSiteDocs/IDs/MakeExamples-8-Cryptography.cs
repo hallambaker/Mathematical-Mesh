@@ -1,16 +1,10 @@
-using  System.Text;
-using  Goedel.Mesh;
-using  Goedel.Protocol;
-using  Goedel.Utilities;
- #pragma warning disable IDE0022
- #pragma warning disable IDE0060
- #pragma warning disable IDE1006
-using System;
+using Goedel.Utilities;
+#pragma warning disable IDE0022
+#pragma warning disable IDE0060
+#pragma warning disable IDE1006
 using System.IO;
-using System.Collections.Generic;
-using Goedel.Registry;
 namespace ExampleGenerator {
-	public partial class CreateExamples : global::Goedel.Registry.Script {
+    public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 

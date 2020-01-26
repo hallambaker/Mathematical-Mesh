@@ -5,18 +5,44 @@ using Goedel.Protocol;
 using Goedel.Utilities;
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 namespace Goedel.Mesh {
 
 
     public partial class ProfileDevice {
 
+        ///<summary>The UDF profile constant used for key derrivation 
+        ///<see cref="Constants.UDFActivationDevice"/></summary>
+        public override string UDFKeyDerrivation => Constants.UDFActivationDevice;
+
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
         public ProfileDevice() {
             }
+
+
+        /// <summary>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        /// seed.
+        /// </summary>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        /// <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public ProfileDevice(
+                    KeyCollection keyCollection,
+                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                byte[] secret = null,
+                bool? persist = null) : this (keyCollection,
+                    new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileDevice, 
+                        algorithmEncrypt, algorithmSign, algorithmAuthenticate, secret),
+                    persist: (persist != null ? persist==true : secret == null)) {}
 
 
         /// <summary>
@@ -43,59 +69,6 @@ namespace Goedel.Mesh {
                 keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
                 }
             }
-
-
-
-
-
-        ///// <summary>
-        ///// Create a new master profile.
-        ///// </summary>
-        ///// <param name="AlgorithmSign"></param>
-        ///// <param name="AlgorithmEncrypt"></param>
-        //public static ProfileDevice Generate(
-        //                KeyPair keyPublicSign,
-        //                KeyPair keyPublicEncrypt,
-        //                KeyPair keyPublicAuthenticate) {
-
-        //    var ProfileDevice = new ProfileDevice() {
-        //        KeyOfflineSignature = new PublicKey(keyPublicSign.KeyPairPublic()),
-        //        KeyEncryption = new PublicKey(keyPublicEncrypt.KeyPairPublic()),
-        //        KeyAuthentication = new PublicKey(keyPublicAuthenticate.KeyPairPublic())
-        //        };
-
-        //    var bytes = ProfileDevice.GetBytes(tag: true);
-
-        //    ProfileDevice.DareEnvelope = DareEnvelope.Encode(bytes,
-        //        signingKey: keyPublicSign);
-
-        //    return ProfileDevice;
-
-        //    }
-
-        ///// <summary>
-        ///// Generate a new profile.
-        ///// </summary>
-        ///// <param name="meshMachine">Machine context for persisting keys.</param>
-        ///// <param name="algorithmSign">The signature algorithm</param>
-        ///// <param name="algorithmEncrypt">The encryption algorithm</param>
-        ///// <param name="algorithmAuthenticate">The authentication algorithm</param>
-        ///// <returns>The generated, signed profile.</returns>
-        //public static ProfileDevice Generate(
-        //            IMeshMachine meshMachine,
-        //            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-        //            CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
-        //    algorithmSign = algorithmSign.DefaultAlgorithmSign();
-        //    algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-        //    algorithmAuthenticate = algorithmAuthenticate.DefaultAlgorithmAuthenticate();
-            
-        //    var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-        //    var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-        //    var keyAuthenticate = meshMachine.CreateKeyPair(algorithmAuthenticate, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-
-        //    return Generate(keySign, keyEncrypt, keyAuthenticate);
-        //    }
 
         /// <summary>
         /// Decode an enveloped profile device.
@@ -141,8 +114,12 @@ namespace Goedel.Mesh {
 
     public partial class ActivationDevice {
 
-        ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
-        public ProfileDevice ProfileDevice;
+        ///<summary>The UDF profile constant used for key derrivation. This is the
+        ///same as the value specified in the corresponding profile.</summary>
+        public override string UDFKeyDerrivation => ProfileDevice.UDFKeyDerrivation;
+
+        ///<summary>The connection value.</summary>
+        public override Connection Connection => ConnectionDevice;
 
         ///<summary>The <see cref="ConnectionDevice"/> instance binding the activated device
         ///to a MeshProfile.</summary>
@@ -160,15 +137,24 @@ namespace Goedel.Mesh {
         /// </summary>
         public ActivationDevice() { }
 
-
         /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDFDevice"/>
-        /// seed.
+        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
+        /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
+        /// calculated from the values specified for the activation type.
+        /// If the value <paramref name="masterSecret"/> is
+        /// specified, it is used as the seed value. Otherwise, a seed value of
+        /// length <paramref name="bits"/> is generated.
+        /// The public key value is calculated for  <see cref="KeyEncryption"/> ,
+        ///  <see cref="Activation.KeySignature"/>  and  <see cref="KeyAuthentication"/>,
+        /// and registered in the KeyCollection <paramref name="keyCollection"/>.
         /// </summary>
-        /// <param name="profileDevice">The device profile to activate.</param>
-        /// <param name="keyCollection">Key collection to write private key values to
-        /// for later use.</param>
-        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="profileDevice">The base profile that the activation activates.</param>
+        /// <param name="keyCollection">The key collection to register the 
+        /// <see cref="Activation.KeySignature"/> public key to.</param>
+        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
+        /// a seed value of <paramref name="bits"/> length is generated.</param>
+        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
+        /// is null.</param>
         public ActivationDevice(
                     ProfileDevice profileDevice,
                     KeyCollection keyCollection,
@@ -176,12 +162,13 @@ namespace Goedel.Mesh {
                     int bits = 256) : base (
                         profileDevice, keyCollection, UdfAlgorithmIdentifier.MeshProfileDevice,
                         Constants.UDFActivationDevice, masterSecret, bits) {
+            ProfileDevice = profileDevice;
 
             KeyEncryption = Combine(keyCollection, profileDevice.KeyEncryption,
-                ActivationKey, Constants.UDFActivationDevice, Constants.UDFMeshKeySufixEncrypt);
+                ActivationKey, Constants.UDFMeshKeySufixEncrypt);
 
             KeyAuthentication = Combine(keyCollection, profileDevice.KeyAuthentication,
-                ActivationKey, Constants.UDFActivationDevice, Constants.UDFMeshKeySufixAuthenticate);
+                ActivationKey, Constants.UDFMeshKeySufixAuthenticate);
 
             // Create the (unsigned) ConnectionDevice
             ConnectionDevice = new ConnectionDevice() {
@@ -191,27 +178,6 @@ namespace Goedel.Mesh {
                 };
             }
         
-
-
-
-        /// <summary>
-        /// Encrypt this activation under the ProfileDevice encryption key.
-        /// </summary>
-        public DareEnvelope Encode() {
-
-            var cryptoParameters = new CryptoParameters() {
-                EncryptionKeys = new List<KeyPair> { ProfileDevice.KeyEncryption.KeyPair }
-                };
-
-            var contentInfo = new Goedel.Cryptography.Dare.ContentMeta() { ContentType = "application/mmm" };
-
-            DareEnvelope = new DareEnvelope(
-                cryptoParameters,
-                GetBytes(tag: true),
-                contentMeta: contentInfo);
-
-            return DareEnvelope;
-            }
 
 
         /// <summary>
@@ -231,29 +197,9 @@ namespace Goedel.Mesh {
             Console.WriteLine(plaintext.ToUTF8());
             var result = FromJSON(plaintext.JSONReader(), true);
             result.DareEnvelope = envelope;
-            //result.keyCollection = keyCollection;
+
             return result;
             }
-
-        //public static ActivationDevice Decode(IMeshMachine meshMachine, DareEnvelope message) =>
-        //        FromJSON(message.GetBodyReader(), true);
-
-
-        //// is failing here because the device entry is not being written back to the catalog after the update.
-        //// fix this and then some skyrim.
-
-        //public ActivationAccount GetActivation(string accountName = null) {
-        //    foreach (var activation in Activations) {
-        //        switch (activation) {
-        //            case ActivationAccount activationAccount:
-        //                return activationAccount;
-        //            }
-
-        //        }
-
-
-        //    return null;
-        //    }
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

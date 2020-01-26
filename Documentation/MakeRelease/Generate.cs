@@ -21,12 +21,9 @@
 //  THE SOFTWARE.
 //  
 //  
-using System;
 using System.IO;
-using System.Collections.Generic;
-using Goedel.Registry;
 namespace Goedel.Tool.Version {
-	public partial class MakeRelease : global::Goedel.Registry.Script {
+    public partial class MakeRelease : global::Goedel.Registry.Script {
 
 		
 

@@ -70,10 +70,9 @@ namespace Goedel.Mesh.Client {
             persist ??= masterSecret == null;
             var profileMesh = new ProfileMesh(meshHost.KeyCollection, secretSeedMaster, persist==true);
 
-            var secretSeedDevice = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
-                algorithmAuthenticate, deviceSecret);
-            profileDevice ??= new ProfileDevice(meshHost.KeyCollection, secretSeedDevice, true);
+            profileDevice ??= new ProfileDevice(meshHost.KeyCollection,
+                algorithmEncrypt, algorithmSign, algorithmAuthenticate, 
+                deviceSecret, true);
 
             return CreateMesh(meshHost, profileMesh, profileDevice);
             }
@@ -173,17 +172,14 @@ namespace Goedel.Mesh.Client {
                     ProfileDevice profileDevice, 
                     ActivationDevice activationDevice) {
 
-            var connectionDevice = activationDevice.ConnectionDevice;
-
             // Wrap the connectionDevice and activationDevice in envelopes
-            Sign(connectionDevice);
-            activationDevice.Encode();
+            activationDevice.Package(keyAdministratorSignature);
 
             var catalogEntryDevice = new Mesh.CatalogedDevice() {
                 UDF = activationDevice.KeySignature.UDF,
                 EnvelopedProfileMesh = ProfileMesh.DareEnvelope,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedConnectionDevice = connectionDevice.DareEnvelope,
+                EnvelopedConnectionDevice = activationDevice.ConnectionDevice.DareEnvelope,
                 EnvelopedActivationDevice = activationDevice.DareEnvelope,
                 DeviceUDF = profileDevice.UDF
                 };
@@ -209,21 +205,22 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="localName">Local (friendly) name for the account.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm to use.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
         /// <returns>The created account context.</returns>
         public ContextAccount CreateAccount(
 
                     string localName,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
+
+            var profileAccount = new ProfileAccount(ProfileMesh, KeyCollection,
+                algorithmEncrypt, algorithmSign);
 
 
-            var profileAccount = ProfileAccount.Generate(MeshMachine, ProfileMesh,
-                        algorithmSign, algorithmEncrypt);
-
-            var accountEntry = profileAccount.ConnectDevice(MeshMachine, CatalogedDevice, null);
+            var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
             UpdateDevice(CatalogedDevice);
 
-            var contextAccount = MeshHost.AddAccount(this, accountEntry);
+            var contextAccount = MeshHost.AddAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.AddDevice(CatalogedDevice);

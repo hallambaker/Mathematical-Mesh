@@ -1,16 +1,13 @@
-using  System.Text;
-using  Goedel.Mesh;
-using  Goedel.Mesh.Shell;
-using  Goedel.Mesh.Test;
-using  Goedel.Protocol;
-using  Goedel.Command;
-using  Goedel.Test.Core ;
+using Goedel.Mesh.Shell;
+using Goedel.Mesh.Test;
+using Goedel.Protocol;
+using Goedel.Command;
+using Goedel.Test.Core;
 using System;
 using System.IO;
 using System.Collections.Generic;
-using Goedel.Registry;
 namespace ExampleGenerator {
-	public partial class CreateExamples : global::Goedel.Registry.Script {
+    public partial class CreateExamples : global::Goedel.Registry.Script {
 
 		
 

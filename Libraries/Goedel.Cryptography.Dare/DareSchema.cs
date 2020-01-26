@@ -22,10 +22,7 @@
 //  #% var InheritsOverride = "override"; // "virtual"
 
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
@@ -36,11 +33,11 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Cryptography.Dare {
 
 
-	/// <summary>
-	///
-	/// Support classes for JSON Object Signing and Encryption
-	/// </summary>
-	public abstract partial class Dare : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// Support classes for JSON Object Signing and Encryption
+    /// </summary>
+    public abstract partial class Dare : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

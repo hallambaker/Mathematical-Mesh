@@ -1,7 +1,6 @@
 ﻿using Goedel.Registry;
 using System;
 using System.IO;
-using System.Reflection;
 
 namespace Goedel.Command {
 

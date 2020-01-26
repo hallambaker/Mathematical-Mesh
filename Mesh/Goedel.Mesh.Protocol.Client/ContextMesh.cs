@@ -1,12 +1,6 @@
 ﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
 using Goedel.Utilities;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Goedel.Mesh.Client {
 
@@ -53,7 +47,7 @@ namespace Goedel.Mesh.Client {
                 string localName = null,
                 string accountName = null) {
             var account = CatalogedDevice.GetAccount(localName, accountName);
-            return account == null ? null : new ContextAccount(this, account);
+            return account == null ? null : new ContextAccount(this, account, CatalogedDevice.ProfileDevice);
             }
 
 

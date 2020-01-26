@@ -1,5 +1,4 @@
 ﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 using System;
@@ -249,9 +248,10 @@ namespace Goedel.Mesh.Client {
 
         public ContextAccount AddAccount(
                     ContextMesh contextMesh, AccountEntry accountEntry,
+                    ProfileDevice profileDevice,
                     string serviceID = null) {
 
-            var contextAccount = new ContextAccount(contextMesh, accountEntry, serviceID);
+            var contextAccount = new ContextAccount(contextMesh, accountEntry, profileDevice, serviceID);
 
 
             return contextAccount;

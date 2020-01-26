@@ -4,10 +4,14 @@ using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Goedel.Mesh.Client {
-    public abstract class ContextAccountEntry : Disposable, IKeyLocate, IDare  {
+
+    /// <summary>
+    /// Base class from which Contexts for Accounts and Groups are derrived. These are
+    /// separate contexts but share functions and thus code.
+    /// </summary>
+    public abstract class ContextAccountEntry : Disposable, IKeyLocate {
 
         ///<summary>The member's device signature key</summary>
         protected KeyPair keySignature { get; set; }
@@ -16,9 +20,29 @@ namespace Goedel.Mesh.Client {
         protected KeyPair keyEncryption { get; set; }
 
         #region Implement IKeyLocate
+
+
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
         public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
         public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
         public KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
         public KeyPair TryMatchRecipient(string keyID) => throw new NotImplementedException();
         #endregion
 

@@ -1,12 +1,9 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh {
     public partial class ProfileService {
-        public string UDF => KeyOfflineSignature.UDF;
 
         public ProfileService() { }
 
@@ -75,8 +72,6 @@ namespace Goedel.Mesh {
         }
 
     public partial class ProfileHost {
-
-        public string UDF => KeyOfflineSignature.UDF;
 
         public ProfileHost() { }
 

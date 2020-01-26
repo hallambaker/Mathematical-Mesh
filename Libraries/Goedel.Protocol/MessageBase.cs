@@ -21,12 +21,7 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
-using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
@@ -35,11 +30,11 @@ using Goedel.Protocol;
 namespace Goedel.Protocol {
 
 
-	/// <summary>
-	///
-	/// Base class for all PROTOGEN messages
-	/// </summary>
-	public abstract partial class Message : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// Base class for all PROTOGEN messages
+    /// </summary>
+    public abstract partial class Message : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

@@ -61,11 +61,6 @@ namespace Goedel.Mesh {
         }
 
     public partial class Assertion {
-        public virtual DareEnvelope Encode(KeyPair keyPair) {
-            DareEnvelope = DareEnvelope.Encode(GetBytes(tag: true),
-                signingKey: keyPair);
-            return DareEnvelope;
-            }
 
         public DareEnvelope Sign(KeyPair SignatureKey) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);

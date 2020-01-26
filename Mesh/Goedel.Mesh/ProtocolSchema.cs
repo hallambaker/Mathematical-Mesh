@@ -22,26 +22,22 @@
 //  #% var InheritsOverride = "override"; // "virtual"
 
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
-using Goedel.Mesh;
 using Goedel.Cryptography.Dare;
 
 
 namespace Goedel.Mesh {
 
 
-	/// <summary>
-	///
-	/// Protocol interactions supported by the Mesh Service.
-	/// </summary>
-	public abstract partial class MeshProtocol : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// Protocol interactions supported by the Mesh Service.
+    /// </summary>
+    public abstract partial class MeshProtocol : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

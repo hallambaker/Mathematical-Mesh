@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-//using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿//using MT = Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Goedel.Test {
     public class Directories {

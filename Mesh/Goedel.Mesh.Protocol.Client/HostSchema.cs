@@ -21,27 +21,22 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
-using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
 namespace Goedel.Mesh.Client {
 
 
-	/// <summary>
-	///
-	/// An entry in the Mesh linked logchain.
-	/// </summary>
-	public abstract partial class HostCatalogItem : global::Goedel.Protocol.JSONObject {
+    /// <summary>
+    ///
+    /// An entry in the Mesh linked logchain.
+    /// </summary>
+    public abstract partial class HostCatalogItem : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class

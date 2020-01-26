@@ -127,13 +127,10 @@
 		Description 
 			|Parent class from which all condition classes are derived.
 
-
-
-	Section 3 "Profile Classes"
+	Section 3 "Base Classes"
 		Description
-			|Profiles are self signed assertions.
-
-
+			|Abstract classes from which the Profile, Activation and Connection classes
+			|are derrived.
 
 	Structure Profile
 		Abstract
@@ -152,6 +149,45 @@
 				|A Personal profile contains at least one OSK which is used to sign 
 				|device administration application profiles.
 
+	Structure Connection
+		Inherits Assertion
+		String SubjectUDF
+			Description
+				|UDF of the connection target.
+		String AuthorityUDF
+			Description
+				|UDF of the connection source.
+
+	Structure Activation
+		Inherits Assertion
+		Description 
+			|Contains the private activation information for a Mesh application running on
+			|a specific device
+		Struct DareEnvelope EnvelopedConnection
+			Description
+				|The signed AssertionDeviceConnection.
+		String ActivationKey
+			Description
+				|The master secret from which all the key contributions are derrived.
+
+	Structure Permission
+		String Name
+		String Role
+		Struct DareEnvelope Capabilities
+			Description
+				|Keys or key contributions enabling the operation to be performed
+
+	Structure CatalogedEntry
+		Description
+			|Base class for cataloged Mesh data.
+
+	Section 3 "Mesh Profile Classes"
+		Description
+			|A Mesh profile does not have activation or connection classes associated with it.
+		Description
+			|It might be more consistent to represent administation devices as activations
+			|on the ProfileMesh class though.
+
 
 	Structure ProfileMesh
 		Inherits Profile
@@ -168,6 +204,10 @@
 				|Key used to pass encrypted data to the device such as a
 				|DeviceUseEntry
 
+	Section 3 "Mesh Device Classes"
+		Description
+			|
+
 	Structure ProfileDevice
 		Inherits Profile
 		Description 
@@ -183,15 +223,61 @@
 			Description
 				|Key used to authenticate requests made by the device.
 
+	Structure ActivationDevice // To do list accounts as permissions 
+		Inherits Activation
 
-	Structure ProfileService
-		Inherits Profile
-		Description 
-			|Profile of a Mesh Service
+
+		TStruct Activation Activations
+			Multiple
+			Description
+				|List of application and account activation data. Keys, etc.
+
+	Structure ConnectionDevice
+		Inherits Connection
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
+		Struct PublicKey KeySignature
+			Description
+				|The signature key for use of the device under the profile
+		Struct PublicKey KeyEncryption
+			Description
+				|The encryption key for use of the device under the profile
 		Struct PublicKey KeyAuthentication
 			Description
-				|Key used to authenticate service connections.
+				|The authentication key for use of the device under the profile
 
+	Structure CatalogedDevice
+		Inherits CatalogedEntry
+		Description
+			|Public device entry, indexed under the device ID
+		String UDF
+			Description
+				|UDF of the signature key of the device in the Mesh
+		Struct DareEnvelope EnvelopedProfileMesh
+			Description
+				|The Mesh profile
+		String DeviceUDF
+			Description
+				|UDF of the signature key of the device
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|The device profile
+		Struct DareEnvelope EnvelopedConnectionDevice
+			Description
+				|The public assertion demonstrating connection of the Device to the Mesh
+		Struct DareEnvelope EnvelopedActivationDevice
+			Description
+				|The activations of the device within the Mesh
+		Struct AccountEntry Accounts
+			Multiple
+			Description
+				|The accounts that this device is connected to
+
+	Section 3 "Mesh Account Classes"
+		Description
+			|
 
 	Structure ProfileAccount
 		Inherits Profile
@@ -211,61 +297,17 @@
 		Struct PublicKey KeyAuthentication
 			Description
 				|Key used to authenticate requests made by the device.
-				
-	Structure ProfileGroup
-		Inherits Profile
-		Description 
-			|Describes a group. Note that while a group is created by one person who
-			|becomes its first administrator, control of the group may pass to other
-			|administrators over time.
-		String ServiceIDs
-			Multiple
-			Description
-				|Service address(es).
-		Struct PublicKey KeyEncryption
-			Description
-				|Key currently used to encrypt data under this profile
 
-
-	Structure ProfileHost
-		Inherits Profile
-		Struct PublicKey KeyAuthentication
+	Structure ActivationAccount
+		Inherits Activation
+		String AccountUDF
 			Description
-				|Key used to authenticate service connections.
-
-	Section 3 "Connection Classes"
-
-	Structure Connection
-		Inherits Assertion
-		String SubjectUDF
+				|The UDF of the account
+		Struct KeyComposite KeyGroup
 			Description
-				|UDF of the connection target.
-		String AuthorityUDF
-			Description
-				|UDF of the connection source.
-
-	Structure Permission
-		String Name
-		String Role
-		Struct DareEnvelope Capabilities
-			Description
-				|Keys or key contributions enabling the operation to be performed
-
-	Structure ConnectionDevice
-		Inherits Connection
-		Struct Permission Permissions
-			Multiple
-			Description
-				|List of the permissions that the device has been granted.
-		Struct PublicKey KeySignature
-			Description
-				|The signature key for use of the device under the profile
-		Struct PublicKey KeyEncryption
-			Description
-				|The encryption key for use of the device under the profile
-		Struct PublicKey KeyAuthentication
-			Description
-				|The authentication key for use of the device under the profile
+				|The key contribution for the decryption key for the device. NB this is 
+				|NOT an overlay on the device signature key, it is an overlay on the 
+				|corresponding recryption key.
 
 	Structure ConnectionAccount
 		Inherits Connection
@@ -287,6 +329,50 @@
 			Description
 				|The authentication key for use of the device under the profile
 
+	Structure AccountEntry
+		Description
+			|Contains the Account information for an account with a CatalogedDevice.
+		String AccountUDF
+			Description
+				|UDF of the account profile
+		Struct DareEnvelope EnvelopedProfileAccount
+			Description
+				|The account profile
+		Struct DareEnvelope EnvelopedConnectionAccount	
+			Description
+				|The connection of this device to the account
+		Struct DareEnvelope EnvelopedActivationAccount	
+			Description
+				|The activation data for this device to the account	
+
+	Structure ConnectionApplication
+		Inherits Connection
+
+
+	Section 3 "Mesh Group Classes"
+		Description
+			|
+
+	Structure ProfileGroup
+		Inherits Profile
+		Description 
+			|Describes a group. Note that while a group is created by one person who
+			|becomes its first administrator, control of the group may pass to other
+			|administrators over time.
+		String ServiceIDs
+			Multiple
+			Description
+				|Service address(es).
+		Struct PublicKey KeyEncryption
+			Description
+				|Key currently used to encrypt data under this profile
+
+	Structure ActivationGroup
+		Inherits Activation
+		String GroupUDF
+			Description
+				|The UDF of the group
+
 	Structure ConnectionGroup
 		Description
 			|Describes the connection of a member to a group.
@@ -296,74 +382,38 @@
 				|The decryption key for the user within the group
 
 
+
+	Section 3 "Mesh Service Classes"
+		Description
+			|
+
+
+	Structure ProfileService
+		Inherits Profile
+		Description 
+			|Profile of a Mesh Service
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate service connections.
+
 	Structure ConnectionService
 		Inherits Connection
+
+	Section 3 "Mesh Host Classes"
+		Description
+			|
+
+
+	Structure ProfileHost
+		Inherits Profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate service connections.
 
 	Structure ConnectionHost
 		Inherits Connection
 
-	Structure ConnectionApplication
-		Inherits Connection
-
-
-	Section 3 "Activation Classes"
-
-	Structure Activation
-		Inherits Assertion
-		Description 
-			|Contains the private activation information for a Mesh application running on
-			|a specific device
-		String ActivationKey
-			Description
-				|The master secret from which all the key contributions are derrived.
-
-
-	Structure ActivationDevice // To do list accounts as permissions 
-		Inherits Activation
-		Struct DareEnvelope EnvelopedAssertionDeviceConnection
-			Description
-				|The signed AssertionDeviceConnection.
-
-		TStruct Activation Activations
-			Multiple
-			Description
-				|List of application and account activation data. Keys, etc.
-
 	
-	Structure ActivationAccount
-		Inherits Activation
-		String AccountUDF
-			Description
-				|The UDF of the account
-		Struct KeyComposite KeyGroup
-			Description
-				|The key contribution for the decryption key for the device. NB this is 
-				|NOT an overlay on the device signature key, it is an overlay on the 
-				|corresponding recryption key.
-		Struct KeyOverlay KeyEncryption
-			Description
-				|The key overlay used to generate the account encryption key from the
-				|device encryption key 		
-		Struct KeyOverlay KeyAuthentication
-			Description
-			Description
-				|The key overlay used to generate the account authentication key from the
-				|device authentication key 		
-		Struct KeyOverlay KeySignature
-			Description
-				|The key overlay used to generate the account signature key from the
-				|device signature key 
-
-
-	Structure ActivationGroup
-		Inherits Activation
-		String GroupUDF
-			Description
-				|The UDF of the group
-		Struct KeyOverlay KeyEncryption
-			Description
-				|The key overlay that compliments the member's group decryption key.		
-
 
 	Section 2 "Cataloged items"
 
@@ -456,51 +506,6 @@
 		Boolean Busy
 	
 	Section 2 "Catalog Entries"
-
-	Structure CatalogedEntry
-		Description
-			|Base class for cataloged Mesh data.
-
-	Structure CatalogedDevice
-		Inherits CatalogedEntry
-		Description
-			|Public device entry, indexed under the device ID
-		String UDF
-			Description
-				|UDF of the signature key of the device in the Mesh
-		Struct DareEnvelope EnvelopedProfileMesh
-			Description
-				|The Mesh profile
-		String DeviceUDF
-			Description
-				|UDF of the signature key of the device
-		Struct DareEnvelope EnvelopedProfileDevice
-			Description
-				|The device profile
-		Struct DareEnvelope EnvelopedConnectionDevice
-			Description
-				|The public assertion demonstrating connection of the Device to the Mesh
-		Struct DareEnvelope EnvelopedActivationDevice
-			Description
-				|The activations of the device within the Mesh
-		Struct AccountEntry Accounts
-			Multiple
-			Description
-				|The accounts that this device is connected to
-
-	Structure AccountEntry
-		String AccountUDF
-			Description
-				|UDF of the account profile
-		Struct DareEnvelope EnvelopedProfileAccount
-			Description
-				|The account profile
-		Struct DareEnvelope EnvelopedConnectionAccount	
-			Description
-				|The connection of this device to the account
-		Struct DareEnvelope EnvelopedActivationAccount	
-			Description
-				|The activation data for this device to the account
 
 
 	Structure CatalogedCredential

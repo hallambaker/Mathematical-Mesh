@@ -14,6 +14,11 @@ namespace Goedel.Mesh.Client {
         KeyCollection keyCollectionBase;
         MeshHost catalogHost;
 
+        /// <summary>
+        /// Maintain a client key collection.
+        /// </summary>
+        /// <param name="catalogHost">The machine parameters.</param>
+        /// <param name="keyCollection">The base key collection.</param>
         public KeyCollectionClient(MeshHost catalogHost, KeyCollection keyCollection) {
             keyCollectionBase = keyCollection;
             this.catalogHost = catalogHost;
@@ -23,24 +28,46 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Persist a key to the underlying key collection.
         /// </summary>
-        /// <param name="privateKey"></param>
-        /// <param name="exportable"></param>
+        /// <param name="udf">The identifier under which the key is to be persisted.</param>
+        /// <param name="privateKey">The key to persist.</param>
+        /// <param name="exportable">If true, the key is bound to the current machine and cannot
+        /// be exported.</param>
         public override void Persist(string udf, IPKIXPrivateKey privateKey, bool exportable) =>
             keyCollectionBase.Persist(udf, privateKey, exportable);
 
-
+        /// <summary>
+        /// Persist a key to the underlying key collection.
+        /// </summary>
+        /// <param name="udf">The identifier under which the key is to be persisted.</param>
+        /// <param name="joseKey">The key to persist.</param>
+        /// <param name="exportable">If true, the key is bound to the current machine and cannot
+        /// be exported.</param>
         public override void Persist(string udf, IJson joseKey, bool exportable) =>
             keyCollectionBase.Persist(udf, joseKey, exportable);
 
+        /// <summary>
+        /// Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
         public override KeyPair TryMatchRecipient(string keyID) =>
                     keyCollectionBase.TryMatchRecipient(keyID);
 
-        public override IJson LocatePrivateKey(string udf) => 
-            keyCollectionBase.LocatePrivateKey(udf);
+        /// <summary>
+        /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match.</param>
+        /// <returns>The key pair if found as a JSON key.</returns>
+        public override IJson LocatePrivateKey(string keyID) => 
+            keyCollectionBase.LocatePrivateKey(keyID);
 
-
-        public override KeyPair LocatePrivateKeyPair(string udf) => 
-            keyCollectionBase.LocatePrivateKeyPair(udf);
+        /// <summary>
+        /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
+        public override KeyPair LocatePrivateKeyPair(string keyID) => 
+            keyCollectionBase.LocatePrivateKeyPair(keyID);
 
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,

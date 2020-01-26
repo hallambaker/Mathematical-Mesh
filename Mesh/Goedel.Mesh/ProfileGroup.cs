@@ -1,10 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Utilities;
-using Goedel.Cryptography;
-using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Jose;
-using Goedel.Protocol;
-using Goedel.Utilities;
 
 namespace Goedel.Mesh {
 

@@ -1,9 +1,5 @@
 ﻿using Xunit;
 using Goedel.Mesh.Shell;
-using Goedel.Mesh.Test;
-using Goedel.Protocol;
-
-using System.Collections.Generic;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {

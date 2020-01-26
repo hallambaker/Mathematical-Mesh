@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Goedel.Cryptography {
+﻿namespace Goedel.Cryptography {
 
     /// <summary>
     /// Interface describing properties that allow export of a secret

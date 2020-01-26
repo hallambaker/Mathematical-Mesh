@@ -1,19 +1,15 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Goedel.FSR;
 
 
 // Goedel.Cryptography.KeyFile
-namespace Goedel.Cryptography.KeyFile{
+namespace Goedel.Cryptography.KeyFile {
 
 
-	// Prototypes for the actions. These must be implemented in 
-	// the plus class
+    // Prototypes for the actions. These must be implemented in 
+    // the plus class
 
-	/*
+    /*
 	public partial class AuthKeysFileLex {
         public virtual void Ignore (int c) {
 			}
@@ -26,7 +22,7 @@ namespace Goedel.Cryptography.KeyFile{
 		}
 	*/
 
-	public partial class AuthKeysFileLex : global::Goedel.FSR.Lexer {
+    public partial class AuthKeysFileLex : global::Goedel.FSR.Lexer {
        /// <summary>
         /// Create and initialize a lexical analyzer.
         /// </summary>
