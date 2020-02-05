@@ -21,7 +21,7 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Constructor for use by deserializers.
+        /// Blank constructor for use by deserializers.
         /// </summary>
         public ProfileAccount() {
             }

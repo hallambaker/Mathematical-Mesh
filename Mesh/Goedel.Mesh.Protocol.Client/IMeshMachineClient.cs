@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Client {
         /// (encryption).</param>
         /// <param name="assertionAccountConnection">The credential binding the device
         /// to the account.</param>
-        /// <param name="profileMaster">The master profile. This is required when requesting
+        /// <param name="profile">The profile. This is required when requesting
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>

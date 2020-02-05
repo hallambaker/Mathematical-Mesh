@@ -83,7 +83,7 @@
             Construct an instance from the specified tagged JSONReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
-            <param name="Out">The created object</param>
+            <param name="result">The created object</param>
         </member>
         <member name="P:Goedel.Mesh.Server.CatalogItem.Initialize">
             <summary>Initialization property. Access this property to force initialization 
@@ -141,7 +141,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -152,7 +152,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -161,8 +161,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Server.AccountEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -170,7 +170,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Server.PublicMeshServiceProvider">
             <summary>
@@ -311,9 +311,7 @@
             Process a connection request.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account that the device requests connection to.</param>
-            <param name="deviceProfile">Profile of the device requesting connection.</param>
-            <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
+            <param name="messageConnectionRequestClient">TThe message connection request.</param>
             <returns>The connection response.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Mesh.CompleteRequest)">
@@ -388,8 +386,8 @@
             <summary>
             Get access to an account record for an authenticated request.
             </summary>
-            <param name="verifiedAccount"></param>
-            <returns></returns>
+            <param name="account">The account to access.</param>
+            <returns>The access handle.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.GetAccountLocked(System.String)">
             <summary>
@@ -430,15 +428,12 @@
             </summary>
             <param name="serviceName">DNS service name</param>
             <param name="serviceDirectory">File name for the Mesh Store.</param>
-            <param name="portalStore">File name for the Portal Store.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPortalDirect.GetService(System.String)">
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="Account">The account to get.</param>
-            <param name="Portal">The portal to get the service from.</param>
-            <returns>The service instance</returns> 
+            <param name="serviceID">The account to get.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshPortalLocal">
             <summary>
@@ -452,15 +447,12 @@
             </summary>
             <param name="serviceName">DNS service name</param>
             <param name="serviceDirectory">File name for the Mesh Store.</param>
-            <param name="portalStore">File name for the Portal Store.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPortalLocal.GetService(System.String)">
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="Account">The account to get.</param>
-            <param name="Service">The service to get the service from.</param> 
-            <returns>The service instance</returns>
+            <param name="serviceID">The account to get.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.NamespaceDoc">
             <summary>

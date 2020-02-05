@@ -5,6 +5,9 @@ using Goedel.Cryptography.Jose;
 namespace Goedel.Mesh {
     public partial class ProfileService {
 
+        /// <summary>
+        /// Blank constructor for use by deserializers.
+        /// </summary>
         public ProfileService() { }
 
         /// <summary>
@@ -53,12 +56,17 @@ namespace Goedel.Mesh {
             return result;
             }
 
-        public static new ProfileService Decode(DareEnvelope message) {
-            if (message == null) {
+        /// <summary>
+        /// Decode from DareEnvelope
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <returns>The decoded ProfileService.</returns>
+        public static new ProfileService Decode(DareEnvelope envelope) {
+            if (envelope == null) {
                 return null;
                 }
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
             return result;
             }
 
@@ -71,37 +79,5 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class ProfileHost {
 
-        public ProfileHost() { }
-
-        public ProfileHost(KeyPair keySign,
-                    KeyPair keyAuth) {
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyAuthentication = new PublicKey(keyAuth.KeyPairPublic());
-            }
-
-        public static ProfileHost Generate(
-            IMeshMachine meshMachine,
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
-
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            var keyAuth = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
-            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-
-            var result = new ProfileHost(keySign, keyAuth);
-            result.Sign(keySign);
-            return result;
-            }
-
-        public static new ProfileHost Decode(DareEnvelope message) {
-            if (message == null) {
-                return null;
-                }
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
-            return result;
-            }
-
-        }
     }

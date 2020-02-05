@@ -19,7 +19,9 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Blank constructor for use by deserializers.
+        /// </summary>
         public ProfileGroup() {
             }
 
@@ -69,12 +71,19 @@ namespace Goedel.Mesh {
             }
 
 
+        /// <summary>
+        /// Add a member to the group.
+        /// </summary>
+        /// <param name="keyCollection">Key collection to acquire the group private key(s) from
+        /// </param>
+        /// <param name="user">The user to add.</param>
+        /// <returns>The group activation record for the user.</returns>
         public DeviceRecryptionKey AddMember(
-                    IMeshMachine meshMachine,
+                    KeyCollection keyCollection,
                     Contact user) {
 
 
-            var key = meshMachine.KeyCollection.LocatePrivateKeyPair(KeyEncryption.UDF) as KeyPairAdvanced;
+            var key = keyCollection.LocatePrivateKeyPair(KeyEncryption.UDF) as KeyPairAdvanced;
             throw new NYI();
 
             //key.GenerateRecryptionPair(out var serviceKey, out var deviceKey);
@@ -90,7 +99,9 @@ namespace Goedel.Mesh {
 
         }
 
-
+    /// <summary>
+    /// Remove and replace with activation/connection records.
+    /// </summary>
     public partial class DeviceRecryptionKey {
         public DeviceRecryptionKey() {
             }

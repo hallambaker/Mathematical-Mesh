@@ -23,12 +23,19 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
         public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
         public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
 
         /// <summary>
@@ -36,7 +43,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
+        public KeyPair LocatePrivateKeyPair(string keyID) => throw new NotImplementedException();
 
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
@@ -54,16 +61,17 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Create a new DARE Message from the specified parameters.
+        /// Create a new DARE Envelope from the specified parameters.
         /// </summary>
         /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
         /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
-        /// <param name="signingKey">The signature key.</param>
-        /// <param name="encryptionKey">The encryption key.</param>
         /// <param name="contentMeta">The content metadata</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
-        ///     as an EDSS header entry.</param>
+        /// as an EDSS header entry.</param>
+        /// <param name="recipients">If specified, encrypt the envelope with decryption blobs
+        /// for the specified recipients.</param>
+        /// <param name="sign">If true sign the envelope.</param>
         /// <returns></returns>
         public DareEnvelope DareEncode(
                     byte[] plaintext,
@@ -81,7 +89,6 @@ namespace Goedel.Mesh.Client {
                     encryptionKeys.Add(GetByAccountEncrypt(recipient));
                     }
                 }
-
 
             var cryptoParameters = new CryptoParameters(signer: signingKey, recipients: null);
             return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);

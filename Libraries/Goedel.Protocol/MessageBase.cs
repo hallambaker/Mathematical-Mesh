@@ -21,7 +21,12 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
+using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
@@ -30,11 +35,11 @@ using System.Collections.Generic;
 namespace Goedel.Protocol {
 
 
-    /// <summary>
-    ///
-    /// Base class for all PROTOGEN messages
-    /// </summary>
-    public abstract partial class Message : global::Goedel.Protocol.JSONObject {
+	/// <summary>
+	///
+	/// Base class for all PROTOGEN messages
+	/// </summary>
+	public abstract partial class Message : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -63,9 +68,9 @@ namespace Goedel.Protocol {
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
-        /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
-			Out = jsonReader.ReadTaggedObject(_TagDictionary);
+        /// <param name="result">The created object</param>
+        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -113,12 +118,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -126,41 +131,41 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (Service != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Service", 1);
-					_Writer.WriteString (Service);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Service", 1);
+					_writer.WriteString (Service);
 				}
 			if (ID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ID", 1);
-					_Writer.WriteBinary (ID);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ID", 1);
+					_writer.WriteBinary (ID);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Request FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new Request FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Request;
 				}
@@ -171,10 +176,10 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Service" : {
 					Service = jsonReader.ReadString ();
 					break;
@@ -256,12 +261,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -269,51 +274,51 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (__Status){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Status", 1);
-					_Writer.WriteInteger32 (Status);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Status", 1);
+					_writer.WriteInteger32 (Status);
 				}
 			if (__StatusExtended){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("StatusExtended", 1);
-					_Writer.WriteInteger32 (StatusExtended);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("StatusExtended", 1);
+					_writer.WriteInteger32 (StatusExtended);
 				}
 			if (StatusDescription != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("StatusDescription", 1);
-					_Writer.WriteString (StatusDescription);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("StatusDescription", 1);
+					_writer.WriteString (StatusDescription);
 				}
 			if (ID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ID", 1);
-					_Writer.WriteBinary (ID);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ID", 1);
+					_writer.WriteBinary (ID);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Response FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new Response FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Response;
 				}
@@ -324,10 +329,10 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Status" : {
 					Status = jsonReader.ReadInteger32 ();
 					break;
@@ -413,12 +418,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -426,70 +431,70 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (__Major){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Major", 1);
-					_Writer.WriteInteger32 (Major);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Major", 1);
+					_writer.WriteInteger32 (Major);
 				}
 			if (__Minor){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Minor", 1);
-					_Writer.WriteInteger32 (Minor);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Minor", 1);
+					_writer.WriteInteger32 (Minor);
 				}
 			if (Encodings != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Encodings", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Encodings", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Encodings) {
-					_Writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (URI != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("URI", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("URI", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in URI) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Version FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new Version FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Version;
 				}
@@ -503,10 +508,10 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Major" : {
 					Major = jsonReader.ReadInteger32 ();
 					break;
@@ -588,12 +593,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -601,55 +606,55 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (ID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ID", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ID", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in ID) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (Dictionary != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Dictionary", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Dictionary", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Dictionary) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Encoding FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new Encoding FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Encoding;
 				}
@@ -663,10 +668,10 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "ID" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
@@ -725,12 +730,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -738,32 +743,32 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
-			((Request)this).SerializeX(_Writer, false, ref _first);
+			((Request)this).SerializeX(_writer, false, ref _first);
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloRequest FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new HelloRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as HelloRequest;
 				}
@@ -777,12 +782,12 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				default : {
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -828,12 +833,12 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -841,54 +846,54 @@ namespace Goedel.Protocol {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
-			((Response)this).SerializeX(_Writer, false, ref _first);
+			((Response)this).SerializeX(_writer, false, ref _first);
 			if (Version != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Version", 1);
-					Version.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Version", 1);
+					Version.Serialize (_writer, false);
 				}
 			if (Alternates != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Alternates", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Alternates", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Alternates) {
-					_Writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloResponse FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new HelloResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as HelloResponse;
 				}
@@ -902,10 +907,10 @@ namespace Goedel.Protocol {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Version" : {
 					// An untagged structure
 					Version = new Version ();
@@ -928,7 +933,7 @@ namespace Goedel.Protocol {
 					break;
 					}
 				default : {
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

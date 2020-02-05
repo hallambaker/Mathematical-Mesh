@@ -22,6 +22,8 @@ namespace Goedel.Mesh.Client {
     public class MeshHost : Disposable {
 
         #region // fields and properties
+
+        ///<summary>The Mesh machine client.</summary>
         public IMeshMachineClient MeshMachine;
         PersistHost ContainerHost { get; }
 
@@ -244,19 +246,6 @@ namespace Goedel.Mesh.Client {
             return contextMeshAdmin.CreateAccount(localName);
 
             }
-
-
-        public ContextAccount AddAccount(
-                    ContextMesh contextMesh, AccountEntry accountEntry,
-                    ProfileDevice profileDevice,
-                    string serviceID = null) {
-
-            var contextAccount = new ContextAccount(contextMesh, accountEntry, profileDevice, serviceID);
-
-
-            return contextAccount;
-            }
-
 
         }
     }

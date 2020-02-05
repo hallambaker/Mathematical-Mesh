@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Goedel.ASN;
 
 // This is the generated code Don't edit.
@@ -14,7 +15,7 @@ using Goedel.ASN;
 
 namespace Goedel.ASN {  // default namespace
 
-    }
+	}
 namespace Goedel.Cryptography.PKIX {
 
     /// <summary>
@@ -1480,7 +1481,7 @@ namespace Goedel.Cryptography.PKIX {
 // Generate Classes
 namespace Goedel.ASN {  // default namespace
 
-    }
+	}
 namespace Goedel.Cryptography.PKIX {
     /// <summary>
 	/// Certificate 

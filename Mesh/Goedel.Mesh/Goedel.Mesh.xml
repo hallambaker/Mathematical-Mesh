@@ -50,7 +50,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -61,7 +61,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -70,8 +70,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.AccountEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -79,7 +79,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
@@ -119,7 +119,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -130,7 +130,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -139,8 +139,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -148,7 +148,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedApplication">
             <summary>
@@ -178,7 +178,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -189,7 +189,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -198,8 +198,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -207,7 +207,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="P:Goedel.Mesh.CatalogBlind.ContainerDefault">
             <summary>The catalog label</summary>
@@ -262,7 +262,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -273,7 +273,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -282,8 +282,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedBookmark.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -291,7 +291,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedTask">
             <summary>
@@ -330,7 +330,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -341,7 +341,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -350,8 +350,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedTask.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -359,7 +359,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedContact">
             <summary>
@@ -407,7 +407,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -418,7 +418,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -427,8 +427,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -436,7 +436,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Contact">
             <summary>
@@ -519,7 +519,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -530,7 +530,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -539,8 +539,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Contact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -548,7 +548,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogCredential.LocateByService(System.String)">
             <summary>
@@ -606,7 +606,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -617,7 +617,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -626,8 +626,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedCredential.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -635,7 +635,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="P:Goedel.Mesh.CatalogDevice.ContainerDefault">
             <summary>The catalog label</summary>
@@ -756,7 +756,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -767,7 +767,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -776,8 +776,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -785,7 +785,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedMember">
             <summary>
@@ -815,7 +815,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -826,7 +826,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -835,8 +835,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedMember.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -844,7 +844,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedGroup">
             <summary>
@@ -874,7 +874,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -885,7 +885,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -894,8 +894,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -903,7 +903,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogNetwork.LocateByService(System.String)">
             <summary>
@@ -970,7 +970,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -981,7 +981,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -990,8 +990,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedNetwork.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -999,7 +999,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Constants">
             <summary>
@@ -1396,7 +1396,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1407,7 +1407,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1416,8 +1416,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.KeyComposite.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1425,7 +1425,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.KeyOverlay">
             <summary>
@@ -1476,7 +1476,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1487,7 +1487,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1496,8 +1496,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.KeyOverlay.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1505,7 +1505,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.GetMachineDelegate">
             <summary>
@@ -1590,7 +1590,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1601,7 +1601,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1610,8 +1610,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Message.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1619,7 +1619,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.Message.GetResponseID">
             <summary>
@@ -1651,7 +1651,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1662,7 +1662,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1671,8 +1671,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MessageComplete.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1680,7 +1680,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.AcknowledgeConnection">
              <summary>
@@ -1724,7 +1724,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1735,7 +1735,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1744,8 +1744,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.AcknowledgeConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1753,7 +1753,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.RequestConnection">
              <summary>
@@ -1801,7 +1801,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1812,7 +1812,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1821,8 +1821,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1830,7 +1830,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.RespondConnection">
              <summary>
@@ -1870,7 +1870,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -1881,7 +1881,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -1890,8 +1890,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.RespondConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -1899,9 +1899,9 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.meshPortal">
+        <member name="T:Goedel.Mesh.MeshPortal">
             <summary>
             Describes a single instance of a named Mesh Service provider. 
             <para>
@@ -1916,15 +1916,14 @@
             MeshPortal instances result in dispatch to different Mesh services.</para>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.meshPortal.GetService(System.String)">
+        <member name="M:Goedel.Mesh.MeshPortal.GetService(System.String)">
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="service">Address of the portal service.</param>
-            <param name="account">Account name.</param>
+            <param name="serviceID">Address of the portal service.</param>
             <returns>Mesh service object for API access to the service.</returns>
         </member>
-        <member name="F:Goedel.Mesh.meshPortal.MeshServiceClient">
+        <member name="F:Goedel.Mesh.MeshPortal.MeshServiceClient">
             <summary>
             May be set to the default MeshService by a calling application.
             </summary>
@@ -1941,7 +1940,7 @@
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="Address">Portal account address or domain name</param>
+            <param name="serviceID">Address of the portal service.</param>
             <returns>Mesh service object for API access to the service.</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.GetService(System.String,System.String)">
@@ -2140,7 +2139,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2151,7 +2150,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2160,8 +2159,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2169,7 +2168,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
@@ -2235,7 +2234,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2246,7 +2245,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2255,8 +2254,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Profile.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2264,7 +2263,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Activation">
              <summary>
@@ -2383,7 +2382,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2394,7 +2393,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2403,8 +2402,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Activation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2412,7 +2411,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileAccount">
              <summary>
@@ -2531,7 +2530,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2542,7 +2541,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2551,8 +2550,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2560,7 +2559,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ActivationAccount">
             <summary>
@@ -2658,7 +2657,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2669,7 +2668,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2678,8 +2677,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2687,7 +2686,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionAccount">
             <summary>
@@ -2761,7 +2760,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2772,7 +2771,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2781,8 +2780,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2790,7 +2789,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileDevice">
              <summary>
@@ -2883,7 +2882,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -2894,7 +2893,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -2903,8 +2902,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ProfileDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -2912,7 +2911,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ActivationDevice">
             <summary>
@@ -3004,7 +3003,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3015,7 +3014,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3024,8 +3023,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3033,7 +3032,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionDevice">
             <summary>
@@ -3102,7 +3101,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3113,7 +3112,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3122,8 +3121,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3131,7 +3130,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileGroup">
              <summary>
@@ -3181,7 +3180,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3192,7 +3191,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3201,8 +3200,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3210,7 +3209,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DeviceRecryptionKey">
             <summary>
@@ -3256,7 +3255,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3267,7 +3266,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3276,8 +3275,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.DeviceRecryptionKey.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3285,7 +3284,67 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.ProfileHost">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileHost.KeyAuthentication">
+             <summary>
+            Key used to authenticate service connections.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileHost._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ProfileHost.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileMesh">
              <summary>
@@ -3350,7 +3409,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3361,7 +3420,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3370,8 +3429,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ProfileMesh.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3379,13 +3438,18 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ProfileService">
              <summary>
             
              Profile of a Mesh Service
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
@@ -3396,6 +3460,13 @@
             <param name="secretSeed">The secret seed value.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode from DareEnvelope
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded ProfileService.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileService.KeyAuthentication">
              <summary>
@@ -3422,7 +3493,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3433,7 +3504,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3442,8 +3513,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ProfileService.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3451,67 +3522,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.ProfileHost">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProfileHost.KeyAuthentication">
-             <summary>
-            Key used to authenticate service connections.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProfileHost._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.ProfileHost.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileHost._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="Writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileHost.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_Writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileHost.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.ProfileHost.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.MeshProtocol">
              <summary>
@@ -3539,7 +3550,7 @@
             Construct an instance from the specified tagged JSONReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
-            <param name="Out">The created object</param>
+            <param name="result">The created object</param>
         </member>
         <member name="P:Goedel.Mesh.MeshProtocol.Initialize">
             <summary>Initialization property. Access this property to force initialization 
@@ -3559,7 +3570,7 @@
             <summary>
             Create a client connection to the specified service.
             </summary>	
-            <param name="JPCRemoteSession">The remote session to connect to</param>
+            <param name="jpcRemoteSession">The remote session to connect to</param>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
             <summary>
@@ -3677,7 +3688,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3688,7 +3699,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3697,8 +3708,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MeshRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3706,7 +3717,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="P:Goedel.Mesh.MeshRequest._TagDictionary">
             <summary>
@@ -3757,7 +3768,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3768,7 +3779,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3777,8 +3788,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MeshRequestUser.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3786,7 +3797,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.MeshResponse">
              <summary>
@@ -3815,7 +3826,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3826,7 +3837,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3835,8 +3846,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MeshResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3844,7 +3855,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="P:Goedel.Mesh.MeshResponse._TagDictionary">
             <summary>
@@ -3900,7 +3911,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -3911,7 +3922,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -3920,8 +3931,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.KeyValue.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -3929,7 +3940,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConstraintsSelect">
              <summary>
@@ -3997,7 +4008,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4008,7 +4019,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4017,8 +4028,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConstraintsSelect.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4026,7 +4037,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConstraintsData">
              <summary>
@@ -4085,7 +4096,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4096,7 +4107,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4105,8 +4116,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConstraintsData.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4114,7 +4125,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.PolicyAccount">
              <summary>
@@ -4161,7 +4172,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4172,7 +4183,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4181,8 +4192,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.PolicyAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4190,7 +4201,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ContainerStatus">
             <summary>
@@ -4228,7 +4239,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4239,7 +4250,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4248,8 +4259,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ContainerStatus.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4257,7 +4268,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ContainerUpdate">
             <summary>
@@ -4288,7 +4299,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4299,7 +4310,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4308,8 +4319,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ContainerUpdate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4317,7 +4328,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.MeshHelloResponse">
             <summary>
@@ -4368,7 +4379,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4379,7 +4390,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4388,8 +4399,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MeshHelloResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4397,7 +4408,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CreateRequest">
              <summary>
@@ -4441,7 +4452,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4452,7 +4463,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4461,8 +4472,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CreateRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4470,7 +4481,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CreateResponse">
              <summary>
@@ -4509,7 +4520,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4520,7 +4531,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4529,8 +4540,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CreateResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4538,7 +4549,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DeleteRequest">
              <summary>
@@ -4568,7 +4579,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4579,7 +4590,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4588,8 +4599,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.DeleteRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4597,7 +4608,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DeleteResponse">
              <summary>
@@ -4625,7 +4636,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4636,7 +4647,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4645,8 +4656,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.DeleteResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4654,7 +4665,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CompleteRequest">
             <summary>
@@ -4688,7 +4699,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4699,7 +4710,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4708,8 +4719,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CompleteRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4717,7 +4728,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CompleteResponse">
             <summary>
@@ -4748,7 +4759,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4759,7 +4770,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4768,8 +4779,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CompleteResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4777,7 +4788,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.StatusRequest">
             <summary>
@@ -4819,7 +4830,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4830,7 +4841,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4839,8 +4850,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.StatusRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4848,7 +4859,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.StatusResponse">
             <summary>
@@ -4888,7 +4899,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4899,7 +4910,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4908,8 +4919,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.StatusResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4917,7 +4928,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DownloadRequest">
              <summary>
@@ -4960,7 +4971,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -4971,7 +4982,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -4980,8 +4991,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.DownloadRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -4989,7 +5000,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DownloadResponse">
              <summary>
@@ -5026,7 +5037,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5037,7 +5048,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5046,8 +5057,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.DownloadResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5055,7 +5066,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.UploadRequest">
              <summary>
@@ -5095,7 +5106,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5106,7 +5117,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5115,8 +5126,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.UploadRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5124,7 +5135,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.UploadResponse">
              <summary>
@@ -5164,7 +5175,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5175,7 +5186,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5184,8 +5195,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.UploadResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5193,7 +5204,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.EntryResponse">
             <summary>
@@ -5243,7 +5254,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5254,7 +5265,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5263,8 +5274,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.EntryResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5272,7 +5283,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.PostRequest">
              <summary>
@@ -5319,7 +5330,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5330,7 +5341,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5339,8 +5350,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.PostRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5348,7 +5359,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.PostResponse">
              <summary>
@@ -5376,7 +5387,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5387,7 +5398,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5396,8 +5407,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.PostResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5405,7 +5416,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectRequest">
             <summary>
@@ -5436,7 +5447,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5447,7 +5458,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5456,8 +5467,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5465,7 +5476,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectResponse">
             <summary>
@@ -5506,7 +5517,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5517,7 +5528,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5526,8 +5537,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5535,7 +5546,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.PublicKey">
              <summary>
@@ -5671,7 +5682,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5682,7 +5693,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5691,8 +5702,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.PublicKey.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5700,7 +5711,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.MeshItem">
              <summary>
@@ -5728,7 +5739,7 @@
             Construct an instance from the specified tagged JSONReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
-            <param name="Out">The created object</param>
+            <param name="result">The created object</param>
         </member>
         <member name="P:Goedel.Mesh.MeshItem.DareEnvelope">
             <summary>
@@ -5794,7 +5805,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5805,7 +5816,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5814,8 +5825,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.EscrowedKeySet.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5823,7 +5834,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Condition">
              <summary>
@@ -5851,7 +5862,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5862,7 +5873,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5871,8 +5882,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Condition.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5880,7 +5891,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Connection">
             <summary>
@@ -5916,7 +5927,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5927,7 +5938,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -5936,8 +5947,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Connection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -5945,7 +5956,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Permission">
             <summary>
@@ -5984,7 +5995,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -5995,7 +6006,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6004,8 +6015,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6013,7 +6024,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionApplication">
             <summary>
@@ -6039,7 +6050,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6050,7 +6061,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6059,8 +6070,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionApplication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6068,7 +6079,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ActivationGroup">
             <summary>
@@ -6099,7 +6110,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6110,7 +6121,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6119,8 +6130,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ActivationGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6128,7 +6139,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionGroup">
              <summary>
@@ -6161,7 +6172,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6172,7 +6183,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6181,8 +6192,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6190,7 +6201,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionService">
             <summary>
@@ -6216,7 +6227,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6227,7 +6238,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6236,8 +6247,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionService.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6245,7 +6256,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ConnectionHost">
             <summary>
@@ -6271,7 +6282,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6282,7 +6293,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6291,8 +6302,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ConnectionHost.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6300,7 +6311,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ContactMesh">
             <summary>
@@ -6334,7 +6345,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6345,7 +6356,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6354,8 +6365,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ContactMesh.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6363,7 +6374,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Role">
             <summary>
@@ -6401,7 +6412,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6412,7 +6423,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6421,8 +6432,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Role.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6430,7 +6441,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Address">
             <summary>
@@ -6464,7 +6475,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6475,7 +6486,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6484,8 +6495,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Address.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6493,7 +6504,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Location">
             <summary>
@@ -6547,7 +6558,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6558,7 +6569,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6567,8 +6578,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Location.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6576,7 +6587,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Reference">
             <summary>
@@ -6617,7 +6628,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6628,7 +6639,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6637,8 +6648,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Reference.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6646,7 +6657,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Task">
             <summary>
@@ -6725,7 +6736,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6736,7 +6747,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6745,8 +6756,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Task.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6754,7 +6765,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedContactRecryption">
             <summary>
@@ -6780,7 +6791,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6791,7 +6802,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6800,8 +6811,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedContactRecryption.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6809,7 +6820,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedApplicationSSH">
             <summary>
@@ -6835,7 +6846,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6846,7 +6857,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6855,8 +6866,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationSSH.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6864,7 +6875,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedApplicationMail">
             <summary>
@@ -6890,7 +6901,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6901,7 +6912,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6910,8 +6921,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationMail.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6919,7 +6930,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedApplicationNetwork">
             <summary>
@@ -6945,7 +6956,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -6956,7 +6967,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -6965,8 +6976,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -6974,7 +6985,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.MessagePIN">
             <summary>
@@ -7012,7 +7023,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7023,7 +7034,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7032,8 +7043,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.MessagePIN.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7041,7 +7052,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.OfferGroup">
             <summary>
@@ -7067,7 +7078,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7078,7 +7089,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7087,8 +7098,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.OfferGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7096,7 +7107,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.RequestContact">
             <summary>
@@ -7135,7 +7146,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7146,7 +7157,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7155,8 +7166,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.RequestContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7164,7 +7175,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ReplyContact">
             <summary>
@@ -7190,7 +7201,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7201,7 +7212,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7210,8 +7221,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ReplyContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7219,7 +7230,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.GroupInvitation">
             <summary>
@@ -7253,7 +7264,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7264,7 +7275,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7273,8 +7284,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.GroupInvitation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7282,7 +7293,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.RequestConfirmation">
             <summary>
@@ -7312,7 +7323,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7323,7 +7334,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7332,8 +7343,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.RequestConfirmation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7341,7 +7352,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.ResponseConfirmation">
             <summary>
@@ -7375,7 +7386,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7386,7 +7397,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7395,8 +7406,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.ResponseConfirmation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7404,7 +7415,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.RequestTask">
             <summary>
@@ -7430,7 +7441,7 @@
             <summary>
             Serialize this object to the specified output stream.
             </summary>
-            <param name="Writer">Output stream</param>
+            <param name="writer">Output stream</param>
             <param name="wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
@@ -7441,7 +7452,7 @@
             Unlike the Serlialize() method, this method is not inherited from the
             parent class allowing a specific version of the method to be called.
             </summary>
-            <param name="_Writer">Output stream</param>
+            <param name="_writer">Output stream</param>
             <param name="_wrap">If true, output is wrapped with object
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
@@ -7450,8 +7461,8 @@
             <summary>
             Deserialize a tagged stream
             </summary>
-            <param name="JSONReader">The input stream</param>
-            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.RequestTask.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
@@ -7459,7 +7470,7 @@
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
-            <param name="Tag">The tag</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -7469,13 +7480,10 @@
             </summary>
             <param name="dareMessage"></param>
         </member>
-        <member name="T:Goedel.Mesh.StoreFactoryDelegate">
+        <member name="T:Goedel.Mesh.Store">
             <summary>
-            Factory method returning a store of this type
+            Base class for managing Mesh stores (catalogs, spools).
             </summary>
-            <param name="directory">The directory in which the store is kept/is to be created.</param>
-            <param name="name">The name of the store (defaults to the store name)</param>
-            <returns>The created store</returns>
         </member>
         <member name="P:Goedel.Mesh.Store.ContainerDefault">
             <summary>The default name for the container</summary>
@@ -7508,6 +7516,44 @@
             <param name="keyCollection"></param>
             <param name="decrypt"></param>
             <param name="create"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Store.Append(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
+            <summary>
+            Append the list of envelopes <paramref name="envelopes"/> to the
+            container <paramref name="containerName"/> in <paramref name="directory"/>.
+            </summary>
+            <param name="directory">Directory in which the containers are kept.</param>
+            <param name="envelopes">The envelopes to add.</param>
+            <param name="containerName">The name of the container.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Store.FileName(System.String,System.String)">
+            <summary>
+            Compute the filename for the container <paramref name="containerName"/> 
+            in <paramref name="directory"/>.
+            </summary>
+            <param name="directory">Directory in which the containers are kept.</param>
+            <param name="containerName">The name of the container.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Store.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Append the envelopes <paramref name="envelope"/> to the
+            store.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Store.Select(System.Int32,System.Boolean)">
+            <summary>
+            Returns an enumerator for traversing the store. If <paramref name="reverse"/>
+            is true, the enumeration begins at the end of the container and envelopes
+            with index values greater or equal to <paramref name="minIndex"/> are returned.
+            Otherwise the first envelope returned is the one at index value <paramref name="minIndex"/>
+            and the enumeration continues to the end.
+            </summary>
+            <param name="minIndex">The lowest index value to return.</param>
+            <param name="reverse">If true, begin enumeration at the end of the container and
+            work backwards. Otherwise begin at <paramref name="minIndex"/> and move
+            forwards.</param>
+            <returns></returns>
         </member>
     </members>
 </doc>

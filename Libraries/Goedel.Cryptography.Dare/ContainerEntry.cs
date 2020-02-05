@@ -21,21 +21,26 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
+using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
+using Goedel.Cryptography.Jose;
 
 
 namespace Goedel.Cryptography.Dare {
 
 
-    /// <summary>
-    ///
-    /// Classes that describe the DARE Container Format.
-    /// </summary>
-    public abstract partial class ContainerData : global::Goedel.Protocol.JSONObject {
+	/// <summary>
+	///
+	/// Classes that describe the DARE Container Format.
+	/// </summary>
+	public abstract partial class ContainerData : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -63,9 +68,9 @@ namespace Goedel.Cryptography.Dare {
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
-        /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
-			Out = jsonReader.ReadTaggedObject(_TagDictionary);
+        /// <param name="result">The created object</param>
+        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -180,12 +185,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -193,71 +198,71 @@ namespace Goedel.Cryptography.Dare {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (DataEncoding != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DataEncoding", 1);
-					_Writer.WriteString (DataEncoding);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DataEncoding", 1);
+					_writer.WriteString (DataEncoding);
 				}
 			if (__Index){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Index", 1);
-					_Writer.WriteInteger32 (Index);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+					_writer.WriteInteger32 (Index);
 				}
 			if (ContainerType != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ContainerType", 1);
-					_Writer.WriteString (ContainerType);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ContainerType", 1);
+					_writer.WriteString (ContainerType);
 				}
 			if (__IsMeta){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("IsMeta", 1);
-					_Writer.WriteBoolean (IsMeta);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("IsMeta", 1);
+					_writer.WriteBoolean (IsMeta);
 				}
 			if (__Default){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Default", 1);
-					_Writer.WriteBoolean (Default);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Default", 1);
+					_writer.WriteBoolean (Default);
 				}
 			if (__TreePosition){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("TreePosition", 1);
-					_Writer.WriteInteger32 (TreePosition);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("TreePosition", 1);
+					_writer.WriteInteger32 (TreePosition);
 				}
 			if (__IndexPosition){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("IndexPosition", 1);
-					_Writer.WriteInteger32 (IndexPosition);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("IndexPosition", 1);
+					_writer.WriteInteger32 (IndexPosition);
 				}
 			if (__ExchangePosition){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ExchangePosition", 1);
-					_Writer.WriteInteger32 (ExchangePosition);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ExchangePosition", 1);
+					_writer.WriteInteger32 (ExchangePosition);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerInfo FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new ContainerInfo FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ContainerInfo;
 				}
@@ -271,10 +276,10 @@ namespace Goedel.Cryptography.Dare {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "DataEncoding" : {
 					DataEncoding = jsonReader.ReadString ();
 					break;
@@ -366,12 +371,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -379,70 +384,70 @@ namespace Goedel.Cryptography.Dare {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (__Full){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Full", 1);
-					_Writer.WriteBoolean (Full);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Full", 1);
+					_writer.WriteBoolean (Full);
 				}
 			if (Positions != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Positions", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Positions", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Positions) {
-					_Writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (Metas != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Metas", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Metas", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Metas) {
-					_Writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
-                    //_Writer.WriteObjectStart();
-                    //_Writer.WriteToken(_index._Tag, 1);
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
-					_index.Serialize (_Writer, true, ref firstinner);
-                    //_Writer.WriteObjectEnd();
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerIndex FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new ContainerIndex FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as ContainerIndex;
 				}
@@ -456,10 +461,10 @@ namespace Goedel.Cryptography.Dare {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Full" : {
 					Full = jsonReader.ReadBoolean ();
 					break;
@@ -548,12 +553,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -561,41 +566,41 @@ namespace Goedel.Cryptography.Dare {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (__Index){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Index", 1);
-					_Writer.WriteInteger32 (Index);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+					_writer.WriteInteger32 (Index);
 				}
 			if (__Position){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Position", 1);
-					_Writer.WriteInteger32 (Position);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Position", 1);
+					_writer.WriteInteger32 (Position);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexPosition FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new IndexPosition FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexPosition;
 				}
@@ -609,10 +614,10 @@ namespace Goedel.Cryptography.Dare {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Index" : {
 					Index = jsonReader.ReadInteger32 ();
 					break;
@@ -667,12 +672,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -680,41 +685,41 @@ namespace Goedel.Cryptography.Dare {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (Key != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Key", 1);
-					_Writer.WriteString (Key);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Key", 1);
+					_writer.WriteString (Key);
 				}
 			if (Value != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Value", 1);
-					_Writer.WriteString (Value);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Value", 1);
+					_writer.WriteString (Value);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyValue FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new KeyValue FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as KeyValue;
 				}
@@ -728,10 +733,10 @@ namespace Goedel.Cryptography.Dare {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Key" : {
 					Key = jsonReader.ReadString ();
 					break;
@@ -797,12 +802,12 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -810,72 +815,72 @@ namespace Goedel.Cryptography.Dare {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (Index != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Index", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Index) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteInteger32 (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteInteger32 (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (ContentType != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ContentType", 1);
-					_Writer.WriteString (ContentType);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ContentType", 1);
+					_writer.WriteString (ContentType);
 				}
 			if (Paths != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Paths", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Paths", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Paths) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (Labels != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Labels", 1);
-				_Writer.WriteArrayStart ();
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Labels", 1);
+				_writer.WriteArrayStart ();
 				bool _firstarray = true;
 				foreach (var _index in Labels) {
-					_Writer.WriteArraySeparator (ref _firstarray);
-					_Writer.WriteString (_index);
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
 					}
-				_Writer.WriteArrayEnd ();
+				_writer.WriteArrayEnd ();
 				}
 
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexMeta FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new IndexMeta FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as IndexMeta;
 				}
@@ -889,10 +894,10 @@ namespace Goedel.Cryptography.Dare {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Index" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();

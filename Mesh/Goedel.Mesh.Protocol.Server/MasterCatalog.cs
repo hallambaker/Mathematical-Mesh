@@ -21,22 +21,27 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
+using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
 namespace Goedel.Mesh.Server {
 
 
-    /// <summary>
-    ///
-    /// An entry in the Mesh linked logchain.
-    /// </summary>
-    public abstract partial class CatalogItem : global::Goedel.Protocol.JSONObject {
+	/// <summary>
+	///
+	/// An entry in the Mesh linked logchain.
+	/// </summary>
+	public abstract partial class CatalogItem : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -60,9 +65,9 @@ namespace Goedel.Mesh.Server {
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
-        /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
-			Out = jsonReader.ReadTaggedObject(_TagDictionary);
+        /// <param name="result">The created object</param>
+        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -125,12 +130,12 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -138,56 +143,56 @@ namespace Goedel.Mesh.Server {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (Directory != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Directory", 1);
-					_Writer.WriteString (Directory);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Directory", 1);
+					_writer.WriteString (Directory);
 				}
 			if (ServiceID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ServiceID", 1);
-					_Writer.WriteString (ServiceID);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceID", 1);
+					_writer.WriteString (ServiceID);
 				}
 			if (SignedProfileMesh != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignedProfileMesh", 1);
-					SignedProfileMesh.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignedProfileMesh", 1);
+					SignedProfileMesh.Serialize (_writer, false);
 				}
 			if (SignedAssertionAccount != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignedAssertionAccount", 1);
-					SignedAssertionAccount.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignedAssertionAccount", 1);
+					SignedAssertionAccount.Serialize (_writer, false);
 				}
 			if (Status != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Status", 1);
-					_Writer.WriteString (Status);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Status", 1);
+					_writer.WriteString (Status);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountEntry FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new AccountEntry FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as AccountEntry;
 				}
@@ -201,10 +206,10 @@ namespace Goedel.Mesh.Server {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "Directory" : {
 					Directory = jsonReader.ReadString ();
 					break;

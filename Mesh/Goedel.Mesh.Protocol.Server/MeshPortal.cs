@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Server {
     /// <summary>
     /// Abstract interface to a local service provider.
     /// </summary>
-    public abstract class MeshLocalPortal : meshPortal {
+    public abstract class MeshLocalPortal : MeshPortal {
         /// <summary>
         /// File name for local access to the mesh store.
         /// </summary>
@@ -62,7 +62,6 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="serviceName">DNS service name</param>
         /// <param name="serviceDirectory">File name for the Mesh Store.</param>
-        /// <param name="portalStore">File name for the Portal Store.</param>
         public MeshPortalDirect(string serviceName = null, string serviceDirectory = null) {
             ServiceName = serviceName ?? ServiceName;
             ServiceDirectory = serviceDirectory ?? ServiceDirectory;
@@ -77,9 +76,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Portal">The portal to get the service from.</param>
-        /// <returns>The service instance</returns> 
+        /// <param name="serviceID">The account to get.</param>
         public override MeshService GetService(string serviceID) {
             var Session = new DirectSession(serviceID);
             MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
@@ -104,7 +101,6 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="serviceName">DNS service name</param>
         /// <param name="serviceDirectory">File name for the Mesh Store.</param>
-        /// <param name="portalStore">File name for the Portal Store.</param>
         public MeshPortalLocal(string serviceName = null, string serviceDirectory = null) {
             ServiceName = serviceName ?? ServiceName;
             ServiceDirectory = serviceDirectory ?? ServiceDirectory;
@@ -114,9 +110,7 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Service">The service to get the service from.</param> 
-        /// <returns>The service instance</returns>
+        /// <param name="serviceID">The account to get.</param>
         public override MeshService GetService(string serviceID) {
             var Session = new LocalRemoteSession(MeshServiceHost, serviceID);
             MeshServiceClient = new MeshServiceClient(Session);

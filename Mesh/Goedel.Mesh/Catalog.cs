@@ -7,23 +7,45 @@ using System.Collections.Generic;
 
 
 namespace Goedel.Mesh {
-
+    /// <summary>
+    /// Enumeration describing the actions that catalogs support.
+    /// </summary>
     public enum CatalogAction {
+        ///<summary>Create a new entry.</summary>
         New,
+        ///<summary>Update an existing entry</summary>
         Update,
+        ///<summary>Delete an entry.</summary>
         Delete
         }
 
+    /// <summary>
+    /// Describes a single update to be applied to a single catalog. 
+    /// </summary>
     public struct CatalogUpdate {
+        ///<summary>The action to apply</summary>
         public CatalogAction Action;
+        
+        ///<summary>The entry to apply the action to</summary>
         public CatalogedEntry CatalogEntry;
+        ///<summary>The primary key under which the entry is cataloged.</summary>
         public string PrimaryKey;
+
+        /// <summary>
+        /// Construct a catalog update.
+        /// </summary>
+        /// <param name="action">The action to apply</param>
+        /// <param name="catalogEntry">The entry to apply the action to</param>
         public CatalogUpdate(CatalogAction action, CatalogedEntry catalogEntry) {
             Action = action;
             CatalogEntry = catalogEntry;
             PrimaryKey = catalogEntry._PrimaryKey;
             }
 
+        /// <summary>
+        /// Construct a catalog delete update.
+        /// </summary>
+        /// <param name="primaryKey">The primary key of the entry to delete.</param>
         public CatalogUpdate(string primaryKey) {
             Action = CatalogAction.Delete;
             CatalogEntry = null;

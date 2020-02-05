@@ -21,22 +21,27 @@
 //  
 //  #% var InheritsOverride = "override"; // "virtual"
 
+using System;
+using System.IO;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Goedel.Protocol;
 #pragma warning disable IDE1006
 
 
+using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 
 
 namespace Goedel.Mesh.Client {
 
 
-    /// <summary>
-    ///
-    /// An entry in the Mesh linked logchain.
-    /// </summary>
-    public abstract partial class HostCatalogItem : global::Goedel.Protocol.JSONObject {
+	/// <summary>
+	///
+	/// An entry in the Mesh linked logchain.
+	/// </summary>
+	public abstract partial class HostCatalogItem : global::Goedel.Protocol.JSONObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -63,9 +68,9 @@ namespace Goedel.Mesh.Client {
         /// Construct an instance from the specified tagged JSONReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
-        /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject Out) => 
-			Out = jsonReader.ReadTaggedObject(_TagDictionary);
+        /// <param name="result">The created object</param>
+        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
 
@@ -132,12 +137,12 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -145,56 +150,56 @@ namespace Goedel.Mesh.Client {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
 			if (ID != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("ID", 1);
-					_Writer.WriteString (ID);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ID", 1);
+					_writer.WriteString (ID);
 				}
 			if (Local != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Local", 1);
-					_Writer.WriteString (Local);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Local", 1);
+					_writer.WriteString (Local);
 				}
 			if (__Default){
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("Default", 1);
-					_Writer.WriteBoolean (Default);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Default", 1);
+					_writer.WriteBoolean (Default);
 				}
 			if (EnvelopedProfileMaster != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedProfileMaster", 1);
-					EnvelopedProfileMaster.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedProfileMaster", 1);
+					EnvelopedProfileMaster.Serialize (_writer, false);
 				}
 			if (CatalogedDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("CatalogedDevice", 1);
-					CatalogedDevice.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CatalogedDevice", 1);
+					CatalogedDevice.Serialize (_writer, false);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedMachine FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new CatalogedMachine FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedMachine;
 				}
@@ -208,10 +213,10 @@ namespace Goedel.Mesh.Client {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "ID" : {
 					ID = jsonReader.ReadString ();
 					break;
@@ -274,12 +279,12 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -287,32 +292,32 @@ namespace Goedel.Mesh.Client {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
-			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedStandard FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new CatalogedStandard FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedStandard;
 				}
@@ -326,12 +331,12 @@ namespace Goedel.Mesh.Client {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				default : {
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -378,12 +383,12 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -391,42 +396,42 @@ namespace Goedel.Mesh.Client {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
-			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
 			if (SignatureKey != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("SignatureKey", 1);
-					SignatureKey.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignatureKey", 1);
+					SignatureKey.Serialize (_writer, false);
 				}
 			if (DeviceUDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceUDF", 1);
-					_Writer.WriteString (DeviceUDF);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DeviceUDF", 1);
+					_writer.WriteString (DeviceUDF);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedAdmin FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new CatalogedAdmin FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedAdmin;
 				}
@@ -440,10 +445,10 @@ namespace Goedel.Mesh.Client {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "SignatureKey" : {
 					// An untagged structure
 					SignatureKey = new KeyOverlay ();
@@ -456,7 +461,7 @@ namespace Goedel.Mesh.Client {
 					break;
 					}
 				default : {
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}
@@ -513,12 +518,12 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Serialize this object to the specified output stream.
         /// </summary>
-        /// <param name="Writer">Output stream</param>
+        /// <param name="writer">Output stream</param>
         /// <param name="wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer Writer, bool wrap, ref bool first) =>
-			SerializeX (Writer, wrap, ref first);
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
 
 
         /// <summary>
@@ -526,52 +531,52 @@ namespace Goedel.Mesh.Client {
         /// Unlike the Serlialize() method, this method is not inherited from the
         /// parent class allowing a specific version of the method to be called.
         /// </summary>
-        /// <param name="_Writer">Output stream</param>
+        /// <param name="_writer">Output stream</param>
         /// <param name="_wrap">If true, output is wrapped with object
         /// start and end sequences '{ ... }'.</param>
         /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _Writer, bool _wrap, ref bool _first) {
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
 			PreEncode();
 			if (_wrap) {
-				_Writer.WriteObjectStart ();
+				_writer.WriteObjectStart ();
 				}
-			((CatalogedMachine)this).SerializeX(_Writer, false, ref _first);
+			((CatalogedMachine)this).SerializeX(_writer, false, ref _first);
 			if (DeviceUDF != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("DeviceUDF", 1);
-					_Writer.WriteString (DeviceUDF);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DeviceUDF", 1);
+					_writer.WriteString (DeviceUDF);
 				}
 			if (EnvelopedProfileDevice != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedProfileDevice", 1);
-					EnvelopedProfileDevice.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedProfileDevice", 1);
+					EnvelopedProfileDevice.Serialize (_writer, false);
 				}
 			if (EnvelopedMessageConnectionResponse != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedMessageConnectionResponse", 1);
-					EnvelopedMessageConnectionResponse.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedMessageConnectionResponse", 1);
+					EnvelopedMessageConnectionResponse.Serialize (_writer, false);
 				}
 			if (EnvelopedAccountAssertion != null) {
-				_Writer.WriteObjectSeparator (ref _first);
-				_Writer.WriteToken ("EnvelopedAccountAssertion", 1);
-					EnvelopedAccountAssertion.Serialize (_Writer, false);
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedAccountAssertion", 1);
+					EnvelopedAccountAssertion.Serialize (_writer, false);
 				}
 			if (_wrap) {
-				_Writer.WriteObjectEnd ();
+				_writer.WriteObjectEnd ();
 				}
 			}
 
         /// <summary>
         /// Deserialize a tagged stream
         /// </summary>
-        /// <param name="JSONReader">The input stream</param>
-		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CatalogedPending FromJSON (JSONReader jsonReader, bool Tagged=true) {
+        public static new CatalogedPending FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
-			if (Tagged) {
+			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedPending;
 				}
@@ -585,10 +590,10 @@ namespace Goedel.Mesh.Client {
         /// Having read a tag, process the corresponding value data.
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
-        /// <param name="Tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string Tag) {
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
-			switch (Tag) {
+			switch (tag) {
 				case "DeviceUDF" : {
 					DeviceUDF = jsonReader.ReadString ();
 					break;
@@ -615,7 +620,7 @@ namespace Goedel.Mesh.Client {
 					break;
 					}
 				default : {
-					base.DeserializeToken(jsonReader, Tag);
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

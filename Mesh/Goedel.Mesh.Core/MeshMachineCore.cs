@@ -54,8 +54,6 @@ namespace Goedel.Mesh {
         /// <param name="algorithmID">The type of keypair to create.</param>
         /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
         /// <param name="keySecurity">The key security model</param>
-        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
-        /// the value of <paramref name="keySecurity"/></param>
         /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The created key pair</returns>
         public virtual KeyPair CreateKeyPair(
@@ -130,7 +128,7 @@ namespace Goedel.Mesh {
         /// (encryption).</param>
         /// <param name="assertionAccountConnection">The credential binding the device
         /// to the account.</param>
-        /// <param name="profileMaster">The master profile. This is required when requesting
+        /// <param name="profile">The profile. This is required when requesting
         /// an inbound connection or requesting that a new account be created and optional
         /// otherwise.</param>
         /// <returns></returns>

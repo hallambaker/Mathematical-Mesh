@@ -26,8 +26,10 @@
 //     /dparser=False
 //     /dstack=False
 
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Goedel.Registry;
 using Goedel.Utilities;
 

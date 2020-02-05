@@ -10,7 +10,9 @@ using System.IO;
 namespace Goedel.Mesh.Client {
 
 
-
+    /// <summary>
+    /// Context for interacting with a Mesh profile as administrator.
+    /// </summary>
     public partial class ContextMeshAdmin : ContextMesh {
 
 
@@ -27,9 +29,10 @@ namespace Goedel.Mesh.Client {
 
         /// <summary>
         /// Constructor, returns an administration context instance for the catalog entry 
-        /// <paramref name="catalogedAdmin"/> on machine <paramref name="meshMachine"/>.
+        /// <paramref name="catalogedAdmin"/> on machine <paramref name="meshHost"/>.
         /// </summary>
-        /// <param name="catalogedAdmin"></param>
+        /// <param name="catalogedAdmin">Description of the administration profile.</param>
+        /// <param name="meshHost">The Mesh host to add the admin context to.</param>
         public ContextMeshAdmin(
                 MeshHost meshHost,
                 CatalogedAdmin catalogedAdmin) : base(meshHost, catalogedAdmin) {
@@ -124,16 +127,17 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileMaster">The master profile to add the device to as an administration device.</param>
         /// <param name="profileDevice">The device profile of the administration device to be added
         /// as the initial administrator.</param>
+        /// <param name="activationDevice">The device activation.</param>
         /// <returns>The catalog entry/</returns>
         static CatalogedAdmin AddAdministrator(
                     IMeshMachine meshMachine,
                     ProfileMesh profileMaster,
                     ProfileDevice profileDevice,
-                    ActivationDevice assertionDevicePrivate
+                    ActivationDevice activationDevice
                     ) {
             var keyOverlaySignature = new KeyOverlay(meshMachine, profileDevice.KeyOfflineSignature);
 
-            profileMaster.KeysOnlineSignature ??=                         new List<PublicKey>();
+            profileMaster.KeysOnlineSignature ??= new List<PublicKey>();
 
             profileMaster.KeysOnlineSignature.Add(new PublicKey(keyOverlaySignature.KeyPair));
 
@@ -142,7 +146,7 @@ namespace Goedel.Mesh.Client {
             profileMaster.Sign(keyMasterSignature);
 
             return new CatalogedAdmin() {
-                ID = assertionDevicePrivate.KeySignature.UDF,
+                ID = activationDevice.KeySignature.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedProfileMaster = profileMaster.DareEnvelope,
                 SignatureKey = keyOverlaySignature
@@ -220,7 +224,7 @@ namespace Goedel.Mesh.Client {
             var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
             UpdateDevice(CatalogedDevice);
 
-            var contextAccount = MeshHost.AddAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
+            var contextAccount = new ContextAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.AddDevice(CatalogedDevice);

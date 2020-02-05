@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Goedel.Command;
+using Goedel.Utilities;
 #pragma warning disable IDE1006
 #pragma warning disable CS1591
 
 namespace Goedel.Mesh.Shell {
 
-    // Enumeration type
-    public enum EnumReporting {
+	// Enumeration type
+	public enum EnumReporting {
         /// <summary>Case "json": Report output in JSON format</summary>
         eJson,
         /// <summary>Case "verbose": Verbose reports</summary>

@@ -90,9 +90,7 @@ namespace Goedel.Mesh.Server {
         /// Process a connection request.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account that the device requests connection to.</param>
-        /// <param name="deviceProfile">Profile of the device requesting connection.</param>
-        /// <param name="clientNonce">Client nonce to mask the device profile fingerprint.</param>
+        /// <param name="messageConnectionRequestClient">TThe message connection request.</param>
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(JpcSession jpcSession,
                         RequestConnection messageConnectionRequestClient) {
@@ -365,8 +363,8 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Get access to an account record for an authenticated request.
         /// </summary>
-        /// <param name="verifiedAccount"></param>
-        /// <returns></returns>
+        /// <param name="account">The account to access.</param>
+        /// <returns>The access handle.</returns>
         AccountHandleUnverified GetAccountUnverified(string account) =>
             new AccountHandleUnverified(GetAccountLocked(account));
 
