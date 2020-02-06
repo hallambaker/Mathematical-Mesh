@@ -254,7 +254,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// A persistence store with support for thread safe locking.
     /// </summary>
-    public class ContainerPersistenceStoreThreadSafe : ContainerPersistenceStore {
+    public class ContainerPersistenceStoreThreadSafe : PersistenceStore {
 
         #region Locking Mechanism
 

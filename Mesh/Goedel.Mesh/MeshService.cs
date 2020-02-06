@@ -60,7 +60,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// May be set to the default MeshService by a calling application.
         /// </summary>
-        public MeshService MeshServiceClient;
+        public MeshService MeshServiceClient { get; set; }
 
         }
 

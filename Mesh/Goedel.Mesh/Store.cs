@@ -40,13 +40,13 @@ namespace Goedel.Mesh {
         //protected override void Disposing() => Container?.Dispose();
 
         ///<summary>The cryptographic parameters</summary>
-        protected CryptoParameters CryptoParameters;
+        protected CryptoParameters CryptoParameters { get; set; }
 
         ///<summary>The key collection used for decryption</summary>
-        protected KeyCollection KeyCollection;
+        protected KeyCollection KeyCollection { get; set; }
 
         ///<summary>The container identifier. Must be unique within a given account.</summary>
-        public string ContainerName;
+        public string ContainerName { get; set; }
 
         ///<summary>The disposal routing</summary>
         protected override void Disposing() => Container?.Dispose();

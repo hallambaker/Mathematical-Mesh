@@ -10,6 +10,27 @@
              Contains the Account information for an account with a CatalogedDevice.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.AccountEntry.ProfileAccount">
+            <summary>Cached convenience accessor. Returns the corresponding 
+            <see cref="P:Goedel.Mesh.AccountEntry.ProfileAccount"/> .</summary>
+        </member>
+        <member name="P:Goedel.Mesh.AccountEntry.ConnectionAccount">
+            <summary>Cached convenience accessor. Returns the corresponding 
+            <see cref="P:Goedel.Mesh.AccountEntry.ConnectionAccount"/> .</summary>
+        </member>
+        <member name="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.KeyCollection)">
+            <summary>Cached convenience accessor. Returns the corresponding 
+            <see cref="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.KeyCollection)"/> .</summary>
+        </member>
+        <member name="M:Goedel.Mesh.AccountEntry.Validate">
+            <summary>
+            Verify the AccountEntry contains all the required fields and their contents 
+            are valid in the context of the corresponding <see cref="T:Goedel.Mesh.ProfileMesh"/> and
+            <see cref="P:Goedel.Mesh.AccountEntry.ProfileAccount"/>.
+            </summary>
+            <returns><see langword="true"/> if the validation succeeds, otherwise 
+            <see langword="false"/></returns>
+        </member>
         <member name="P:Goedel.Mesh.AccountEntry.AccountUDF">
              <summary>
             UDF of the account profile
@@ -81,9 +102,63 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.CatalogAction">
+            <summary>
+            Enumeration describing the actions that catalogs support.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogAction.New">
+            <summary>Create a new entry.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogAction.Update">
+            <summary>Update an existing entry</summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogAction.Delete">
+            <summary>Delete an entry.</summary>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogUpdate">
+            <summary>
+            Describes a single update to be applied to a single catalog. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogUpdate.Action">
+            <summary>The action to apply</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogUpdate.CatalogEntry">
+            <summary>The entry to apply the action to</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogUpdate.PrimaryKey">
+            <summary>The primary key under which the entry is cataloged.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.CatalogAction,Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Construct a catalog update.
+            </summary>
+            <param name="action">The action to apply</param>
+            <param name="catalogEntry">The entry to apply the action to</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(System.String)">
+            <summary>
+            Construct a catalog delete update.
+            </summary>
+            <param name="primaryKey">The primary key of the entry to delete.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Catalog">
+            <summary>
+            Base class for catalogs.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Catalog.PersistenceStore">
+            <summary>The persistence store.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Disposing">
+            <summary>
+            Disposal method, disposes the underlying persistence store if defined.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Constuctor
+            Base constuctor.
             </summary>
             <param name="directory">Directory to create the catalog in.</param>
             <param name="containerName">Container name.</param>
@@ -92,6 +167,100 @@
             <param name="readContainer">If true, read the container.</param>
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Status(System.String,System.String)">
+            <summary>
+            Returns the status of the underlying persistence store without binding to it.
+            </summary>
+            <param name="directory">The directory in which the store is held.</param>
+            <param name="storeName">The store name.</param>
+            <returns>A <see cref="T:Goedel.Mesh.ContainerStatus"/> reporting the current status of the store.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+            <summary>
+            Prepare the set of catalog updates <paramref name="updates"/> returning a list
+            of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/> applying the updates to the sequence.
+            </summary>
+            <param name="updates">The updates to apply.</param>
+            <returns>The processed updates.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+            <summary>
+            Commit the updates in <paramref name="updates"/> to the local persistence store.
+            </summary>
+            <param name="updates">The updates to apply.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+            <summary>
+            Apply the transactions specified in <paramref name="updates"/> to the catalog
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to apply the transactions to.</param>
+            <param name="updates">The updates to apply</param>
+            <returns>True if the transactions were accepted, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.NewEntry(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Add <paramref name="catalogedEntry"/> to the catalog as a new entry.
+            </summary>
+            <param name="catalogedEntry">The entry to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.UpdateEntry(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Update <paramref name="catalogedEntry"/> in the catalog.
+            </summary>
+            <param name="catalogedEntry">The entry to update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.DeleteEntry(System.String)">
+            <summary>
+            Delete the entry with unique id <paramref name="Key"/> from the catalog.
+            </summary>
+            <param name="Key">The entry to delete.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Apply the update in <paramref name="dareMessage"/> to the persistence store.
+            </summary>
+            <param name="dareMessage">The update to apply.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.New(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Add <paramref name="catalogEntry"/> to the catalog as a new entry.
+            </summary>
+            <param name="catalogEntry">The entry to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Update(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Update <paramref name="catalogEntry"/> in the catalog.
+            </summary>
+            <param name="catalogEntry">The entry to update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Delete(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Delete <paramref name="catalogEntry"/> from the catalog.
+            </summary>
+            <param name="catalogEntry">The entry to delete.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.Locate(System.String)">
+            <summary>
+            Locate the entry with key <paramref name="key"/>.
+            </summary>
+            <param name="key">Unique identifier of the entry to locate.</param>
+            <returns>The entry (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.GetEntry(System.String)">
+            <summary>
+            Return the entry with unique identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">Unique identifier of entry to return.</param>
+            <returns>The entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog.GetEnumerator">
+            <summary>
+            Returns an enumerator over the catalog entries. Most catalog classes offer typed
+            enumerators as an alternative.
+            </summary>
+            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogedEntry">
              <summary>
@@ -150,8 +319,76 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntry">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedEntry"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntry.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns>The next item in the enumeration</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntry.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogApplication">
+            <summary>
+            Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogApplication.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogApplication.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogApplication.LocateBySite(System.String)">
+            <summary>
+            Return the application entry for the site <paramref name="key"/>.
+            </summary>
+            <param name="key">Unique identifier of the device to return.</param>
+            <returns>The <see cref="T:Goedel.Mesh.CatalogedApplication"/> entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
         <member name="T:Goedel.Mesh.CatalogedApplication">
             <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedApplication._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedApplication.Key">
@@ -209,6 +446,37 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryApplication">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedApplication"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryApplication.#ctor(Goedel.Mesh.CatalogContact)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryApplication.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryApplication.EnumeratorCatalogEntryApplication">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedApplication"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogBlind">
+            <summary>
+            Dummy catalog class that binds to a persistence store as a collection of
+            opaque entries. Entries are not decrypted, only the ciphertext values are
+            available.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogBlind.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
@@ -220,6 +488,55 @@
             </summary>
             <param name="directory">The directory in which the catalog persistence container is stored.</param>
             <param name="containerName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogBlind.Get(System.String)">
+            <summary>
+            Return the envelope with unique identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">Unique identifier of entry to return.</param>
+            <returns>The envelope.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogBlind.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+            <summary>
+            Apply the transactions specified in <paramref name="updates"/> to the catalog
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to apply the transactions to.</param>
+            <param name="updates">The updates to apply</param>
+            <returns>True if the transactions were accepted, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogBlind.Report">
+            <summary>
+            Return a string describing the catalog entries.
+            </summary>
+            <returns>The string describing the catalog entries.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogBookmark">
+            <summary>
+            Bookmark catalog. Describes the bookmarks in the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogBookmark.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogBookmark.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogBookmark.AsCatalogEntryBookmark">
+            <summary>Enumerate the catalog as CatalogedBookmark instances.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
@@ -293,9 +610,108 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryBookmark">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedBookmark"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns>The next item in the enumeration</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryBookmark">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedBookmark"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryBookmark.#ctor(Goedel.Mesh.CatalogBookmark)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogBookmark"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryBookmark.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogCalendar">
+            <summary>
+            Calendar catalog. Describes the tasks in a Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogCalendar.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCalendar.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCalendar.AsCatalogEntryContact">
+            <summary>Enumerate the catalog as CatalogedTask instances.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogCalendar.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
         <member name="T:Goedel.Mesh.CatalogedTask">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedTask._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedTask.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedTask.#ctor(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Constructor creating a task from the enveloped task <paramref name="task"/>.
+            </summary>
+            <param name="task">The task to create.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedTask.#ctor(Goedel.Mesh.Task)">
+            <summary>
+            Constructor creating a task from the task <paramref name="task"/>.
+            </summary>
+            <param name="task">The task to create.</param>
         </member>
         <member name="P:Goedel.Mesh.CatalogedTask.EnvelopedTask">
             <summary>
@@ -361,9 +777,140 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryTask">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedTask"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryTask.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryTask">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogCalendar"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryTask.#ctor(Goedel.Mesh.CatalogCalendar)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogCalendar"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryTask.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogContact">
+            <summary>
+            Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogContact.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogContact.DictionaryByEmail">
+            <summary>Dictionary mapping email addresses to contacts.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogContact.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogContact.AsCatalogEntryContact">
+            <summary>Enumerate the catalog as CatalogedContact instances.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.UpdateEntry(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Update <paramref name="catalogedEntry"/>. This is overriden to manage the lookup 
+            by email dictionary.
+            </summary>
+            <param name="catalogedEntry">The entry to update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
+            <summary>
+            Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
+            is the user's own contact.
+            </summary>
+            <param name="contact">The enveloped contact to add.</param>
+            <param name="self">If true, mark as the user's own contact.</param>
+            <returns>The CatalogedContact entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Mesh.Contact,System.Boolean)">
+            <summary>
+            Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
+            is the user's own contact.
+            </summary>
+            <param name="contact">The contact to add.</param>
+            <param name="self">If true, mark as the user's own contact.</param>
+            <returns>The CatalogedContact entry.</returns>
+        </member>
         <member name="T:Goedel.Mesh.CatalogedContact">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedContact._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry. This is the UDF of the authentication key.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedContact.Contact">
+            <summary>Returns the inner contact value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedContact.#ctor">
+            <summary>
+            Default constructor for deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedContact.#ctor(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Create a cataloged contact from <paramref name="contact"/>.
+            </summary>
+            <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedContact.#ctor(Goedel.Mesh.Contact)">
+            <summary>
+            Create a cataloged contact from <paramref name="contact"/>.
+            </summary>
+            <param name="contact">The contact to create a catalog wrapper for.</param>
         </member>
         <member name="P:Goedel.Mesh.CatalogedContact.Self">
              <summary>
@@ -441,6 +988,13 @@
         <member name="T:Goedel.Mesh.Contact">
             <summary>
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode an enveloped <see cref="T:Goedel.Mesh.Contact"/> from the DareEnvelope <paramref name="envelope"/>.
+            </summary>
+            <param name="envelope">The envelope containing the contact</param>
+            <returns>The created contact.</returns>
         </member>
         <member name="P:Goedel.Mesh.Contact.MeshAccounts">
              <summary>
@@ -550,12 +1104,90 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryContact">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedContact"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryContact.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryContact">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedContact"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryContact.#ctor(Goedel.Mesh.CatalogContact)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogContact"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryContact.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogCredential">
+            <summary>
+            Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogCredential.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCredential.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogCredential.AsCatalogEntryCredential">
+            <summary>Enumerate the catalog as CatalogedCredential instances.</summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogCredential.LocateByService(System.String)">
             <summary>
             Locate credential matching the specified service name, ignoring the protocol value.
             </summary>
             <param name="key">The service to be matched.</param>
             <returns>If a match is found, returns the matching entry, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedCredential">
             <summary>
@@ -637,22 +1269,96 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryCredential">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedCredential"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryCredential.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryCredential">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedCredential"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryCredential.#ctor(Goedel.Mesh.CatalogCredential)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogCredential"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryCredential.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogDevice">
+            <summary>
+            Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogDevice.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogDevice.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogDevice.AsCatalogEntryDevice">
-            <summary>Enumerate the catalog as CatalogEntryDevice instances.</summary>
+            <summary>Enumerate the catalog as CatalogedDevice instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
             <summary>
-            Constructor for a catalog named <paramref name="containerName"/> in directory
+            Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
             and key collection <paramref name="keyCollection"/>.
             </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
             <param name="directory">The directory in which the catalog persistence container is stored.</param>
-            <param name="containerName">The catalog persistence container file name.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogDevice.Get(System.String)">
+            <summary>
+            Return the catalogued device with key <paramref name="key"/>.
+            </summary>
+            <param name="key">Unique identifier of the device to return.</param>
+            <returns>The <see cref="T:Goedel.Mesh.CatalogedDevice"/> entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogDevice.Report">
+            <summary>
+            Return a string describing the catalog entries.
+            </summary>
+            <returns>The string describing the catalog entries.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogedDevice">
              <summary>
@@ -672,10 +1378,28 @@
             deserialization.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileMesh">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileMesh"/>
+            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileMesh"/> value.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileDevice">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice"/>
+            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileDevice"/> value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationDevice(Goedel.Cryptography.KeyCollection)">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationDevice"/>
+            to return the <see cref="T:Goedel.Mesh.ActivationDevice"/> value.</summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.#ctor">
             <summary>
             Default constructor used for deserialization.
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDevice.ToString">
+            <summary>
+            Convert the cataloged device to a string.
+            </summary>
+            <returns>The string describing the cataloged device.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
             <summary>
@@ -686,6 +1410,15 @@
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="machine">Mesh machine providing cryptographic context.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Decode the envelope <paramref name="envelope"/> using keys from 
+            <paramref name="keyCollection"/> and return the resulting <see cref="T:Goedel.Mesh.CatalogedDevice"/>.
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Keys to be used to decode <paramref name="envelope"/>.</param>
+            <returns>The decoded <see cref="T:Goedel.Mesh.CatalogedDevice"/> (if successful).</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetAccount(System.String,System.String)">
             <summary>
@@ -787,8 +1520,96 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryDevice">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryDevice.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogedDevice">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedDevice.#ctor(Goedel.Mesh.CatalogDevice)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedDevice.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogMember">
+            <summary>
+            Device catalog. Describes the members of a Mesh Group.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogMember.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogMember.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogMember.AsCatalogedMember">
+            <summary>Enumerate the catalog as CatalogedMember instances.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        </member>
         <member name="T:Goedel.Mesh.CatalogedMember">
             <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedMember._PrimaryKey">
+            <summary>
+            The primary key used to catalog the entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedMember.#ctor">
+            <summary>
+            Default constructor for serialization.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedMember.UDF">
@@ -850,6 +1671,17 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>     
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedGroup.#ctor(Goedel.Mesh.ProfileGroup)">
+            <summary>
+            Construct a group entry from <paramref name="profileGroup"/>.
+            </summary>
+            <param name="profileGroup">The profile of the group to create an entry for.</param>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedGroup.Profile">
             <summary>
             </summary>
@@ -905,12 +1737,90 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogedMember">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedMember"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogedMember.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogedMember">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedMember.#ctor(Goedel.Mesh.CatalogMember)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogMember"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedMember.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogNetwork">
+            <summary>
+            Device catalog. Describes the network entries in a Mesh account.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogNetwork.Label">
+            <summary>The canonical label for the catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogNetwork.ContainerDefault">
+            <summary>The catalog label</summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogNetwork.AsCatalogEntryNetwork">
+            <summary>Enumerate the catalog as CatalogedNetwork instances.</summary>
+        </member>
         <member name="M:Goedel.Mesh.CatalogNetwork.LocateByService(System.String)">
             <summary>
             Locate credential matching the specified service name, ignoring the protocol value.
             </summary>
             <param name="key">The service to be matched.</param>
             <returns>If a match is found, returns the matching entry, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor for a catalog named <paramref name="storeName"/> in directory
+            <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+            and key collection <paramref name="keyCollection"/>.
+            </summary>
+            <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+            <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+            <param name="directory">The directory in which the catalog persistence container is stored.</param>
+            <param name="storeName">The catalog persistence container file name.</param>
+            <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+            <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogedNetwork">
             <summary>
@@ -1000,6 +1910,56 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryNetwork">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedNetwork"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns>The next item in the enumeration</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogEntryNetwork">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedNetwork"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryNetwork.#ctor(Goedel.Mesh.CatalogNetwork)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogNetwork"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogEntryNetwork.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.Constants">
             <summary>
@@ -1350,13 +2310,6 @@
             <param name="builder">The string builder.</param>
             <param name="indent">The indentation level.</param>
         </member>
-        <member name="M:Goedel.Mesh.IDare.DareDecode(Goedel.Cryptography.Dare.DareEnvelope,System.Boolean)">
-            <summary>
-            Decode a DARE envelope
-            </summary>
-            <param name="envelope">The envelope to decode.</param>
-            <returns>The plaintext payload data.</returns>
-        </member>
         <member name="T:Goedel.Mesh.KeyComposite">
             <summary>
             </summary>
@@ -1625,6 +2578,16 @@
             <summary>
             Return the identifier for a response to this message.
             </summary>
+            <returns>The response identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Message.MakeResponseID(System.String)">
+            <summary>
+            Generate the response identifier as a deterministic function of the request
+            identifier <paramref name="udf"/>
+             using the digest algorithm specified in the request identifier (if known
+            and supported), otherwise using SHA_3_512.
+            </summary>
+            <param name="udf">The request identifier to construct the response from.</param>
             <returns>The response identifier.</returns>
         </member>
         <member name="T:Goedel.Mesh.MessageComplete">
@@ -1923,7 +2886,7 @@
             <param name="serviceID">Address of the portal service.</param>
             <returns>Mesh service object for API access to the service.</returns>
         </member>
-        <member name="F:Goedel.Mesh.MeshPortal.MeshServiceClient">
+        <member name="P:Goedel.Mesh.MeshPortal.MeshServiceClient">
             <summary>
             May be set to the default MeshService by a calling application.
             </summary>
@@ -2170,6 +3133,20 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.Assertion.Sign(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Create an envelope with the signed assertion.
+            </summary>
+            <param name="SignatureKey">The key to sign the assertion under.</param>
+            <returns>The signed assertion.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode the specified <paramref name="dareEnvelope"/>>
+            </summary>
+            <param name="dareEnvelope">The envelope to decode.</param>
+            <returns>The decoded <see cref="T:Goedel.Mesh.Assertion"/></returns>
+        </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
             
@@ -2272,10 +3249,10 @@
              a specific device
              </summary>
         </member>
-        <member name="F:Goedel.Mesh.Activation.ProfileDevice">
-            <summary>The <see cref="F:Goedel.Mesh.Activation.ProfileDevice"/> that this activation activates.</summary>
+        <member name="P:Goedel.Mesh.Activation.ProfileDevice">
+            <summary>The <see cref="P:Goedel.Mesh.Activation.ProfileDevice"/> that this activation activates.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Activation.KeySignature">
+        <member name="P:Goedel.Mesh.Activation.KeySignature">
             <summary>The aggregate signature key</summary>
         </member>
         <member name="P:Goedel.Mesh.Activation.Connection">
@@ -2294,13 +3271,13 @@
             <paramref name="salt"/>. If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The <see cref="F:Goedel.Mesh.Activation.KeySignature"/> public key value is calculated for the specified 
+            The <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key value is calculated for the specified 
             parameters and registered in the KeyCollection <paramref name="keyCollection"/>.
             Other key pair properties should be populated by the caller.
             </summary>
             <param name="profile">The base profile that the activation activates.</param>
             <param name="keyCollection">The key collection to register the 
-            <see cref="F:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
+            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
             <param name="salt">The salt suffix used to derrive the key.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
@@ -2350,7 +3327,7 @@
             Encrypt this activation under the ProfileDevice encryption key.
             </summary>
             <returns>The actrivation profile encrypted under the encryption key of
-            the corresponding <see cref="F:Goedel.Mesh.Activation.ProfileDevice"/>.</returns>
+            the corresponding <see cref="P:Goedel.Mesh.Activation.ProfileDevice"/>.</returns>
         </member>
         <member name="P:Goedel.Mesh.Activation.EnvelopedConnection">
              <summary>
@@ -2424,7 +3401,7 @@
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.#ctor">
             <summary>
-            Constructor for use by deserializers.
+            Blank constructor for use by deserializers.
             </summary>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID,System.Byte[],System.Nullable{System.Boolean})">
@@ -2572,14 +3549,14 @@
         <member name="P:Goedel.Mesh.ActivationAccount.Connection">
             <summary>The connection value.</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationAccount.ConnectionAccount">
-            <summary>The <see cref="F:Goedel.Mesh.ActivationAccount.ConnectionAccount"/> instance binding the activated device
+        <member name="P:Goedel.Mesh.ActivationAccount.ConnectionAccount">
+            <summary>The <see cref="P:Goedel.Mesh.ActivationAccount.ConnectionAccount"/> instance binding the activated device
             to a MeshProfile.</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationAccount.KeyEncryption">
+        <member name="P:Goedel.Mesh.ActivationAccount.KeyEncryption">
             <summary>The aggregate encryption key</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationAccount.KeyAuthentication">
+        <member name="P:Goedel.Mesh.ActivationAccount.KeyAuthentication">
             <summary>The aggregate authentication key</summary>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
@@ -2595,13 +3572,13 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for  <see cref="F:Goedel.Mesh.ActivationAccount.KeyEncryption"/> ,
-             <see cref="F:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="F:Goedel.Mesh.ActivationAccount.KeyAuthentication"/>,
+            The public key value is calculated for  <see cref="P:Goedel.Mesh.ActivationAccount.KeyEncryption"/> ,
+             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="P:Goedel.Mesh.ActivationAccount.KeyAuthentication"/>,
             and registered in the KeyCollection <paramref name="keyCollection"/>.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
             <param name="keyCollection">The key collection to register the 
-            <see cref="F:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
+            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
@@ -2924,14 +3901,14 @@
         <member name="P:Goedel.Mesh.ActivationDevice.Connection">
             <summary>The connection value.</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationDevice.ConnectionDevice">
-            <summary>The <see cref="F:Goedel.Mesh.ActivationDevice.ConnectionDevice"/> instance binding the activated device
+        <member name="P:Goedel.Mesh.ActivationDevice.ConnectionDevice">
+            <summary>The <see cref="P:Goedel.Mesh.ActivationDevice.ConnectionDevice"/> instance binding the activated device
             to a MeshProfile.</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationDevice.KeyEncryption">
+        <member name="P:Goedel.Mesh.ActivationDevice.KeyEncryption">
             <summary>The aggregate encryption key</summary>
         </member>
-        <member name="F:Goedel.Mesh.ActivationDevice.KeyAuthentication">
+        <member name="P:Goedel.Mesh.ActivationDevice.KeyAuthentication">
             <summary>The aggregate authentication key</summary>
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.#ctor">
@@ -2947,13 +3924,13 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for  <see cref="F:Goedel.Mesh.ActivationDevice.KeyEncryption"/> ,
-             <see cref="F:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="F:Goedel.Mesh.ActivationDevice.KeyAuthentication"/>,
+            The public key value is calculated for  <see cref="P:Goedel.Mesh.ActivationDevice.KeyEncryption"/> ,
+             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="P:Goedel.Mesh.ActivationDevice.KeyAuthentication"/>,
             and registered in the KeyCollection <paramref name="keyCollection"/>.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
             <param name="keyCollection">The key collection to register the 
-            <see cref="F:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
+            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
@@ -3140,6 +4117,11 @@
              administrators over time.
              </summary>
         </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.#ctor">
+            <summary>
+            Blank constructor for use by deserializers.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.ProfileGroup.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
@@ -3149,6 +4131,15 @@
             <param name="secretSeed">The secret seed value.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.AddMember(Goedel.Cryptography.KeyCollection,Goedel.Mesh.Contact)">
+            <summary>
+            Add a member to the group.
+            </summary>
+            <param name="keyCollection">Key collection to acquire the group private key(s) from
+            </param>
+            <param name="user">The user to add.</param>
+            <returns>The group activation record for the user.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileGroup.ServiceIDs">
              <summary>
@@ -3212,6 +4203,9 @@
             <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.DeviceRecryptionKey">
+            <summary>
+            Remove and replace with activation/connection records.
+            </summary>
             <summary>
             </summary>
         </member>
@@ -3288,6 +4282,11 @@
         </member>
         <member name="T:Goedel.Mesh.ProfileHost">
             <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.#ctor">
+            <summary>
+            Blank constructor for use by deserializers.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileHost.KeyAuthentication">
@@ -3448,7 +4447,7 @@
         </member>
         <member name="M:Goedel.Mesh.ProfileService.#ctor">
             <summary>
-            Constructor for use by deserializers.
+            Blank constructor for use by deserializers.
             </summary>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
@@ -5555,7 +6554,7 @@
              trust assertions associated with a public key.
              </summary>
         </member>
-        <member name="F:Goedel.Mesh.PublicKey._KeyPair">
+        <member name="P:Goedel.Mesh.PublicKey.keyPair">
             <summary>
             The cryptolib representation of the Key Pair. This is the point of access
             for all cryptolib operations. 
@@ -5746,6 +6745,10 @@
             The DareEnvelope encapsulation of this object instance.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MeshItem.Initialize">
+            <summary>Initialization property, used to force initialization of the 
+            Json parser dictionaries.</summary>
+        </member>
         <member name="M:Goedel.Mesh.MeshItem.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
@@ -5753,6 +6756,13 @@
             <param name="JSONReader">The input stream</param>
             <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode the specified <paramref name="dareEnvelope"/>>
+            </summary>
+            <param name="dareEnvelope">The envelope to decode.</param>
+            <returns>The decoded <see cref="T:Goedel.Mesh.MeshItem"/></returns>
         </member>
         <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
             <summary>
@@ -7472,6 +8482,18 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.IProcessResult">
+            <summary>
+            Placeholder interface for returning the result of processing a message result
+            Will revisit late.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.IProcessResult.GetResponseID">
+            <summary>
+            Returns the response identifier.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Add an envelope to the spool. All information provided in the ContainerInfo
@@ -7494,13 +8516,13 @@
         <member name="P:Goedel.Mesh.Store.FrameCount">
             <summary>The frame count (returns -1 if no container has been created)</summary>
         </member>
-        <member name="F:Goedel.Mesh.Store.CryptoParameters">
+        <member name="P:Goedel.Mesh.Store.CryptoParameters">
             <summary>The cryptographic parameters</summary>
         </member>
-        <member name="F:Goedel.Mesh.Store.KeyCollection">
+        <member name="P:Goedel.Mesh.Store.KeyCollection">
             <summary>The key collection used for decryption</summary>
         </member>
-        <member name="F:Goedel.Mesh.Store.ContainerName">
+        <member name="P:Goedel.Mesh.Store.ContainerName">
             <summary>The container identifier. Must be unique within a given account.</summary>
         </member>
         <member name="M:Goedel.Mesh.Store.Disposing">

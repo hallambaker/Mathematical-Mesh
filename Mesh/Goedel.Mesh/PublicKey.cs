@@ -39,7 +39,7 @@ namespace Goedel.Mesh {
         /// The cryptolib representation of the Key Pair. This is the point of access
         /// for all cryptolib operations. 
         /// </summary>
-        protected KeyPair _KeyPair;
+        protected KeyPair keyPair { get; set; }
 
         /// <summary>
         /// The cryptolib representation of the Key Pair. This is the point of access
@@ -47,14 +47,14 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual KeyPair KeyPair {
             get {
-                if (_KeyPair == null) {
-                    _KeyPair = GetKeyPair();
+                if (keyPair == null) {
+                    keyPair = GetKeyPair();
                     }
 
-                return _KeyPair;
+                return keyPair;
                 }
             set {
-                _KeyPair = value;
+                keyPair = value;
                 UDF = KeyPair.UDF;
                 }
             }
@@ -96,7 +96,7 @@ namespace Goedel.Mesh {
         public bool Verify(string TestUDF) {
             var KeyPair = GetKeyPair();
             if (KeyPair.UDF == TestUDF) {
-                _KeyPair = KeyPair;
+                keyPair = KeyPair;
                 return true;
                 }
 
@@ -184,14 +184,14 @@ namespace Goedel.Mesh {
         /// Create a self signed root certificate
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
-        public void SelfSignCertificate(Application PKIXUse) => Certificate = new Certificate(_KeyPair, PKIXUse, null);
+        public void SelfSignCertificate(Application PKIXUse) => Certificate = new Certificate(keyPair, PKIXUse, null);
 
         /// <summary>
         /// Create an application or intermediary certificate
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
         /// <param name="Signer">The signing key (which must have an attached certificate).</param>
-        public void SignCertificate(Application PKIXUse, PublicKey Signer) => Certificate = new Certificate(_KeyPair, PKIXUse, Signer.Certificate);
+        public void SignCertificate(Application PKIXUse, PublicKey Signer) => Certificate = new Certificate(keyPair, PKIXUse, Signer.Certificate);
 
         /// <summary>
         /// Create an application certificate with the specified SubjectAltName.
@@ -204,7 +204,7 @@ namespace Goedel.Mesh {
             //NB it is essential that the assignment to the Certificate property
             //takes place AFTER the cert is signed. Otherwise the value of X509Certificate
             // is not set correctly.
-            var NewCert = new Certificate(_KeyPair, PKIXUse, SubjectAltName, SubjectAltName);
+            var NewCert = new Certificate(keyPair, PKIXUse, SubjectAltName, SubjectAltName);
             NewCert.Sign(Signer.Certificate);
 
             Certificate = NewCert;

@@ -208,13 +208,13 @@ namespace Goedel.Mesh {
 
         ///<summary>The <see cref="ConnectionAccount"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionAccount ConnectionAccount;
+        public ConnectionAccount ConnectionAccount { get; set; }
 
         ///<summary>The aggregate encryption key</summary>
-        public KeyPairAdvanced KeyEncryption;
+        public KeyPairAdvanced KeyEncryption { get; set; }
 
         ///<summary>The aggregate authentication key</summary>
-        public KeyPairAdvanced KeyAuthentication;
+        public KeyPairAdvanced KeyAuthentication { get; set; }
 
         /// <summary>
         /// Constructor for use by deserializers.

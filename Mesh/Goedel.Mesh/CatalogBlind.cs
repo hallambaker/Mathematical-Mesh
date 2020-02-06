@@ -9,9 +9,12 @@ using System.Text;
 namespace Goedel.Mesh {
 
 
-
+    /// <summary>
+    /// Dummy catalog class that binds to a persistence store as a collection of
+    /// opaque entries. Entries are not decrypted, only the ciphertext values are
+    /// available.
+    /// </summary>
     public class CatalogBlind : Catalog {
-
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => throw new NYI();
@@ -32,9 +35,14 @@ namespace Goedel.Mesh {
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
             base(directory, containerName, cryptoParameters, keyCollection,
-                readContainer: false, decrypt: false, create: false) => ContainerPersistence?.FastReadContainer();
+                readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastReadContainer();
 
 
+        /// <summary>
+        /// Return the envelope with unique identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">Unique identifier of entry to return.</param>
+        /// <returns>The envelope.</returns>
         public DareEnvelope Get(string key) {
 
             var entry = GetEntry(key);
@@ -42,7 +50,13 @@ namespace Goedel.Mesh {
             return envelope;
             }
 
-
+        /// <summary>
+        /// Apply the transactions specified in <paramref name="updates"/> to the catalog
+        /// <paramref name="catalog"/>.
+        /// </summary>
+        /// <param name="catalog">The catalog to apply the transactions to.</param>
+        /// <param name="updates">The updates to apply</param>
+        /// <returns>True if the transactions were accepted, otherwise false.</returns>
         public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
             Console.WriteLine("  Blind transaction!");
 
@@ -50,7 +64,10 @@ namespace Goedel.Mesh {
 
             }
 
-
+        /// <summary>
+        /// Return a string describing the catalog entries.
+        /// </summary>
+        /// <returns>The string describing the catalog entries.</returns>
         public string Report() {
 
             var builder = new StringBuilder();

@@ -37,8 +37,8 @@ namespace Goedel.Mesh {
 
     public partial class KeyOverlay {
 
-        public KeyPairAdvanced KeyPair;
-        public PublicKey PublicKey;
+        public KeyPairAdvanced KeyPair { get; set; }
+        public PublicKey PublicKey { get; set; }
 
         public KeyOverlay() {
 

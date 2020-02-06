@@ -116,10 +116,10 @@ namespace Goedel.Mesh {
     public partial class Activation {
 
         ///<summary>The <see cref="ProfileDevice"/> that this activation activates.</summary>
-        public ProfileDevice ProfileDevice;
+        public ProfileDevice ProfileDevice { get; set; }
 
         ///<summary>The aggregate signature key</summary>
-        public KeyPairAdvanced KeySignature;
+        public KeyPairAdvanced KeySignature { get; set; }
 
 
         ///<summary>The connection value.</summary>

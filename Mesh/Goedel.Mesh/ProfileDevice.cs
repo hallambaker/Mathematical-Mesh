@@ -123,13 +123,13 @@ namespace Goedel.Mesh {
 
         ///<summary>The <see cref="ConnectionDevice"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionDevice ConnectionDevice;
+        public ConnectionDevice ConnectionDevice { get; set; }
 
         ///<summary>The aggregate encryption key</summary>
-        public KeyPairAdvanced KeyEncryption;
+        public KeyPairAdvanced KeyEncryption { get; set; }
 
         ///<summary>The aggregate authentication key</summary>
-        public KeyPairAdvanced KeyAuthentication;
+        public KeyPairAdvanced KeyAuthentication { get; set; }
 
 
         /// <summary>

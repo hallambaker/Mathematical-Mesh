@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Persistence store based on a container interface.
     /// </summary>
-    public class ContainerPersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<ContainerStoreEntry> {
+    public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<ContainerStoreEntry> {
 
         // Test: Addition of signed frames to persistence stores (is failing)
 
@@ -116,7 +116,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">The key collection to use to resolve private keys.</param>
         /// <param name="readContainer">If true read the container to initialize the persistence store.</param>
         /// <param name="decrypt">If false, the contents of the store will never be decrypted (deprecated, use CatalogBlind)</param>
-        public ContainerPersistenceStore(string fileName, string contentType = null,
+        public PersistenceStore(string fileName, string contentType = null,
                     string comment = null,
                     FileStatus fileStatus = FileStatus.OpenOrCreate,
                     ContainerType containerType = ContainerType.Chain,
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container"></param>
         /// <param name="readContainer"></param>
-        public ContainerPersistenceStore(Container container, bool readContainer = true) {
+        public PersistenceStore(Container container, bool readContainer = true) {
             Container = container;
 
             if (readContainer & container.JBCDStream.Length > 0) {

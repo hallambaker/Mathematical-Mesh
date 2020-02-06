@@ -28,7 +28,7 @@ namespace Goedel.Mesh.Server {
         protected PublicMeshServiceProvider Provider;
 
         ///<summary>The underlying persistence store for the account catalog.</summary>
-        public ContainerPersistenceStore Container;
+        public PersistenceStore Container;
 
         ///<summary>The root directory in which the files are stored.</summary>
         public string DirectoryRoot;
@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Server {
             DirectoryRoot = directory;
             Directory.CreateDirectory(directory);
             var fileName = Path.Combine(directory, "Master.cat");
-            Container = new ContainerPersistenceStore(fileName, "application/mmm-catalog",
+            Container = new PersistenceStore(fileName, "application/mmm-catalog",
                 fileStatus: FileStatus.OpenOrCreate,
                 containerType: ContainerType.MerkleTree
                 );

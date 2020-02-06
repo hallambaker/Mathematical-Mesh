@@ -8,42 +8,18 @@ using System.Text;
 
 namespace Goedel.Mesh {
 
-    #region // Enumerators and associated classes
-
-    public class EnumeratorCatalogEntryNetwork : IEnumerator<CatalogedNetwork> {
-        IEnumerator<ContainerStoreEntry> BaseEnumerator;
-
-        public CatalogedNetwork Current => BaseEnumerator.Current.JsonObject as CatalogedNetwork;
-        object IEnumerator.Current => Current;
-        public void Dispose() => BaseEnumerator.Dispose();
-        public bool MoveNext() => BaseEnumerator.MoveNext();
-        public void Reset() => throw new NotImplementedException();
-
-        public EnumeratorCatalogEntryNetwork(ContainerPersistenceStore container) =>
-            BaseEnumerator = container.GetEnumerator();
-        }
-
-    public class AsCatalogEntryNetwork : IEnumerable<CatalogedNetwork> {
-        CatalogNetwork Catalog;
-
-        public AsCatalogEntryNetwork(CatalogNetwork catalog) => Catalog = catalog;
-
-        public IEnumerator<CatalogedNetwork> GetEnumerator() =>
-                    new EnumeratorCatalogEntryNetwork(Catalog.ContainerPersistence);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
-    #endregion
-
-
-
+    #region // The data classes CatalogNetwork, CatalogedNetwork
+    /// <summary>
+    /// Device catalog. Describes the network entries in a Mesh account.
+    /// </summary>
     public class CatalogNetwork : Catalog {
-
-        public const string Label = "mmm_Network";
-
+        ///<summary>The canonical label for the catalog</summary>
+        public const string Label = "mmm/Network";
+        
+        ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+
+        ///<summary>Enumerate the catalog as CatalogedNetwork instances.</summary>
         public AsCatalogEntryNetwork AsCatalogEntryNetwork => new AsCatalogEntryNetwork(this);
 
         /// <summary>
@@ -64,16 +40,28 @@ namespace Goedel.Mesh {
 
         //Locate(Key) as CatalogEntryCredential;
 
+        /// <summary>
+        /// Constructor for a catalog named <paramref name="storeName"/> in directory
+        /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
+        /// and key collection <paramref name="keyCollection"/>.
+        /// </summary>
+        /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+        /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
+        /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
+        /// <param name="storeName">The catalog persistence container file name.</param>
+        /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
+        /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
 
-        public CatalogNetwork(string directory, string ContainerName = null,
-            CryptoParameters cryptoParameters = null,
+        public CatalogNetwork(
+                    string directory,
+                    string storeName = null,
+                    CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
+                    bool decrypt = true,
                     bool create = true) :
-            base(directory, ContainerName, cryptoParameters, keyCollection, create: create) {
+            base(directory, storeName ?? Label,
+                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
-
-        public static Store Factory(string directory, string containerName = null) =>
-                new CatalogNetwork(directory, containerName);
 
         }
 
@@ -109,4 +97,70 @@ namespace Goedel.Mesh {
             }
 
         }
+
+    #endregion
+    #region // Enumerators and associated classes
+
+    /// <summary>
+    /// Enumerator class for sequences of <see cref="CatalogedNetwork"/> over a persistence
+    /// store.
+    /// </summary>
+    public class EnumeratorCatalogEntryNetwork : IEnumerator<CatalogedNetwork> {
+        IEnumerator<ContainerStoreEntry> BaseEnumerator;
+
+        ///<summary>The current item in the enumeration.</summary>
+        public CatalogedNetwork Current => BaseEnumerator.Current.JsonObject as CatalogedNetwork;
+        object IEnumerator.Current => Current;
+
+        /// <summary>
+        /// Disposal method.
+        /// </summary>
+        public void Dispose() => BaseEnumerator.Dispose();
+
+        /// <summary>
+        /// Move to the next item in the enumeration.
+        /// </summary>
+        /// <returns>The next item in the enumeration</returns>
+        public bool MoveNext() => BaseEnumerator.MoveNext();
+
+        /// <summary>
+        /// Restart the enumeration.
+        /// </summary>
+        public void Reset() => throw new NotImplementedException();
+        /// <summary>
+        /// Construct enumerator from <see cref="PersistenceStore"/>,
+        /// <paramref name="persistenceStore"/>.
+        /// </summary>
+        /// <param name="persistenceStore">The persistence store to enumerate.</param>
+        public EnumeratorCatalogEntryNetwork(PersistenceStore persistenceStore) =>
+            BaseEnumerator = persistenceStore.GetEnumerator();
+        }
+
+    /// <summary>
+    /// Enumerator class for sequences of <see cref="CatalogedNetwork"/> over a Catalog
+    /// </summary>
+    public class AsCatalogEntryNetwork : IEnumerable<CatalogedNetwork> {
+        CatalogNetwork catalog;
+
+        /// <summary>
+        /// Construct enumerator from <see cref="CatalogNetwork"/>,
+        /// <paramref name="catalog"/>.
+        /// </summary>
+        /// <param name="catalog">The catalog to enumerate.</param>
+        public AsCatalogEntryNetwork(CatalogNetwork catalog) => this.catalog = catalog;
+
+        /// <summary>
+        /// Return an enumerator for the catalog.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
+        public IEnumerator<CatalogedNetwork> GetEnumerator() =>
+                    new EnumeratorCatalogEntryNetwork(catalog.PersistenceStore);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
+        private IEnumerator GetEnumerator1() => this.GetEnumerator();
+        }
+
+    #endregion
+
+
     }

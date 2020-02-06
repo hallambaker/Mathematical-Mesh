@@ -32,7 +32,7 @@ namespace Goedel.Cryptography.Dare {
 
         ///<summary>If true the object haws been deleted and cannot be further modified.</summary>
 
-        public bool Deleted => ContentInfo?.Event == ContainerPersistenceStore.EventDelete;
+        public bool Deleted => ContentInfo?.Event == PersistenceStore.EventDelete;
 
         ///<summary>The JSONObject.</summary>
         public JSONObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);

@@ -53,7 +53,7 @@ namespace Goedel.XUnit {
         }
 
 
-    public class TestItemContainerPersistenceStore : ContainerPersistenceStore {
+    public class TestItemContainerPersistenceStore : PersistenceStore {
 
         IPersistenceIndex IndexKeyUserProfileUDF;
 

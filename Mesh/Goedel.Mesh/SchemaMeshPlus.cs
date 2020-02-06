@@ -6,8 +6,19 @@ using Goedel.Utilities;
 using System.Text;
 namespace Goedel.Mesh {
 
+    /// <summary>
+    /// Placeholder interface for returning the result of processing a message result
+    /// Will revisit late.
+    /// </summary>
     public interface IProcessResult {
+
+        /// <summary>
+        /// Returns the response identifier.
+        /// </summary>
+        /// <returns></returns>
+        public string GetResponseID();
         }
+
 
     public partial class MeshItem {
 
@@ -16,7 +27,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual DareEnvelope DareEnvelope { get; protected set; }
 
-
+        ///<summary>Initialization property, used to force initialization of the 
+        ///Json parser dictionaries.</summary>
         public static object Initialize => null;
 
         static MeshItem() => AddDictionary(ref _TagDictionary);
@@ -39,9 +51,14 @@ namespace Goedel.Mesh {
             throw new CannotCreateAbstract();
             }
 
-        public static MeshItem Decode(DareEnvelope message) {
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+        /// <summary>
+        /// Decode the specified <paramref name="dareEnvelope"/>>
+        /// </summary>
+        /// <param name="dareEnvelope">The envelope to decode.</param>
+        /// <returns>The decoded <see cref="MeshItem"/></returns>
+        public static MeshItem Decode(DareEnvelope dareEnvelope) {
+            var result = FromJSON(dareEnvelope.GetBodyReader(), true);
+            result.DareEnvelope = dareEnvelope;
             return result;
             }
 
@@ -60,16 +77,27 @@ namespace Goedel.Mesh {
 
         }
 
+
     public partial class Assertion {
 
+        /// <summary>
+        /// Create an envelope with the signed assertion.
+        /// </summary>
+        /// <param name="SignatureKey">The key to sign the assertion under.</param>
+        /// <returns>The signed assertion.</returns>
         public DareEnvelope Sign(KeyPair SignatureKey) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
             return DareEnvelope;
             }
 
-        public static new Assertion Decode(DareEnvelope message) {
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+        /// <summary>
+        /// Decode the specified <paramref name="dareEnvelope"/>>
+        /// </summary>
+        /// <param name="dareEnvelope">The envelope to decode.</param>
+        /// <returns>The decoded <see cref="Assertion"/></returns>
+        public static new Assertion Decode(DareEnvelope dareEnvelope) {
+            var result = FromJSON(dareEnvelope.GetBodyReader(), true);
+            result.DareEnvelope = dareEnvelope;
             return result;
             }
 
@@ -77,14 +105,20 @@ namespace Goedel.Mesh {
 
     public partial class Message : IProcessResult {
 
-
-
         /// <summary>
         /// Return the identifier for a response to this message.
         /// </summary>
         /// <returns>The response identifier.</returns>
         public string GetResponseID() => MakeResponseID(MessageID);
 
+        /// <summary>
+        /// Generate the response identifier as a deterministic function of the request
+        /// identifier <paramref name="udf"/>
+        ///  using the digest algorithm specified in the request identifier (if known
+        /// and supported), otherwise using SHA_3_512.
+        /// </summary>
+        /// <param name="udf">The request identifier to construct the response from.</param>
+        /// <returns>The response identifier.</returns>
         public static string MakeResponseID(string udf) {
             var buffer = udf.FromBase32();
             var length = (buffer.Length).Minimum(128);

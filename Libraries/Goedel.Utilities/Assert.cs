@@ -237,7 +237,14 @@ namespace Goedel.Utilities {
         /// cryptographic authentication check
         /// </summary>
         /// <param name="description"></param>
-        public static void TaskValidate(this string description) { }
+        public static void TaskValidate(this string description) => description.Keep();
+
+
+        /// <summary>
+        /// Utility routine used to flag possibly redundant code.
+        /// </summary>
+        /// <param name="description"></param>
+        public static void TaskRedundant(this string description) => description.Keep();
 
 
         /// <summary>
@@ -245,7 +252,7 @@ namespace Goedel.Utilities {
         /// functionality not yet implemented.
         /// </summary>
         /// <param name="description"></param>
-        public static void TaskTest(this string description) { }
+        public static void TaskTest(this string description) => description.Keep();
 
         /// <summary>
         /// Utility routine used to flag missing code to implement missing test for

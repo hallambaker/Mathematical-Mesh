@@ -10,76 +10,62 @@ using System.Text;
 
 namespace Goedel.Mesh {
 
-    #region // Enumerators and associated classes
 
-    public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogedDevice> {
-        IEnumerator<ContainerStoreEntry> BaseEnumerator;
-
-        public CatalogedDevice Current => BaseEnumerator.Current.JsonObject as CatalogedDevice;
-        object IEnumerator.Current => Current;
-        public void Dispose() => BaseEnumerator.Dispose();
-        public bool MoveNext() => BaseEnumerator.MoveNext();
-        public void Reset() => throw new NotImplementedException();
-
-        public EnumeratorCatalogEntryDevice(ContainerPersistenceStore container) => BaseEnumerator = container.GetEnumerator();
-        }
-
-    public class AsCatalogEntryDevice : IEnumerable<CatalogedDevice> {
-        CatalogDevice Catalog;
-
-        public AsCatalogEntryDevice(CatalogDevice catalog) => Catalog = catalog;
-
-        public IEnumerator<CatalogedDevice> GetEnumerator() =>
-                    new EnumeratorCatalogEntryDevice(Catalog.ContainerPersistence);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
-    #endregion
-
-
-
+    #region // The data classes CatalogDevice, CatalogedDevice
+    /// <summary>
+    /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
+    /// </summary>
     public class CatalogDevice : Catalog {
-        public const string Label = "mmm_Device";
+        ///<summary>The canonical label for the catalog</summary>
+        public const string Label = "mmm/Device";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
-        ///<summary>Enumerate the catalog as CatalogEntryDevice instances.</summary>
-        public AsCatalogEntryDevice AsCatalogEntryDevice => new AsCatalogEntryDevice(this);
+        ///<summary>Enumerate the catalog as CatalogedDevice instances.</summary>
+        public AsCatalogedDevice AsCatalogEntryDevice => new AsCatalogedDevice(this);
 
         /// <summary>
-        /// Constructor for a catalog named <paramref name="containerName"/> in directory
+        /// Constructor for a catalog named <paramref name="storeName"/> in directory
         /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
         /// and key collection <paramref name="keyCollection"/>.
         /// </summary>
+        /// <param name="create">Create a new persistence store on disk if it does not already exist.</param>
+        /// <param name="decrypt">Attempt to decrypt the contents of the catalog if encrypted.</param>
         /// <param name="directory">The directory in which the catalog persistence container is stored.</param>
-        /// <param name="containerName">The catalog persistence container file name.</param>
+        /// <param name="storeName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         public CatalogDevice(
                     string directory,
-                    string containerName = null,
+                    string storeName = null,
                     CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
-            base(directory, containerName ?? Label, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+            base(directory, storeName ?? Label, 
+                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
-
+        /// <summary>
+        /// Return the catalogued device with key <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">Unique identifier of the device to return.</param>
+        /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
         public CatalogedDevice Get(string key) => Locate(key) as CatalogedDevice;
 
 
-        public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
-            Console.WriteLine("  Device transaction!");
+        //public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+        //    Console.WriteLine("  Device transaction!");
 
-            return base.Transact(catalog, updates);
+        //    return base.Transact(catalog, updates);
 
-            }
+        //    }
 
-
+        /// <summary>
+        /// Return a string describing the catalog entries.
+        /// </summary>
+        /// <returns>The string describing the catalog entries.</returns>
         public string Report() {
 
             var builder = new StringBuilder();
@@ -111,15 +97,20 @@ namespace Goedel.Mesh {
             ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
         ConnectionDevice connectionDevice = null;
 
-
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileMesh"/>
+        ///to return the <see cref="ProfileMesh"/> value.</summary>
         public ProfileMesh ProfileMesh => profileMesh ??
             ProfileMesh.Decode(EnvelopedProfileMesh).CacheValue(out profileMesh);
         ProfileMesh profileMesh;
 
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
+        ///to return the <see cref="ProfileDevice"/> value.</summary>
         public ProfileDevice ProfileDevice => profileDevice ??
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
+        ///to return the <see cref="ActivationDevice"/> value.</summary>
         public ActivationDevice GetActivationDevice(KeyCollection keyCollection) =>
             activationDevice ?? (keyCollection == null ? null :
                 ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
@@ -132,7 +123,10 @@ namespace Goedel.Mesh {
             }
 
 
-
+        /// <summary>
+        /// Convert the cataloged device to a string.
+        /// </summary>
+        /// <returns>The string describing the cataloged device.</returns>
         public override string ToString() {
             var builder = new StringBuilder();
             ToBuilder(builder, 0);
@@ -179,6 +173,13 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Decode the envelope <paramref name="envelope"/> using keys from 
+        /// <paramref name="keyCollection"/> and return the resulting <see cref="CatalogedDevice"/>.
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Keys to be used to decode <paramref name="envelope"/>.</param>
+        /// <returns>The decoded <see cref="CatalogedDevice"/> (if successful).</returns>
         public static CatalogedDevice Decode(DareEnvelope envelope, KeyCollection keyCollection) {
             if (envelope == null) {
                 return null;
@@ -224,30 +225,30 @@ namespace Goedel.Mesh {
 
 
 
-        public virtual void Activate(List<Permission> permission, Activation activation) {
-            }
+        //public virtual void Activate(List<Permission> permission, Activation activation) {
+        //    }
 
 
-        public virtual void ActivateAdmin(Assertion assertion) {
+        //public virtual void ActivateAdmin(Assertion assertion) {
 
-            }
+        //    }
 
 
-        public virtual void ActivateAccount(ProfileAccount assertionAccount, List<Permission> permission) {
+        //public virtual void ActivateAccount(ProfileAccount assertionAccount, List<Permission> permission) {
 
-            }
+        //    }
 
-        public virtual void ActivateSSH(Assertion assertion) {
+        //public virtual void ActivateSSH(Assertion assertion) {
 
-            }
+        //    }
 
-        public virtual void ActivateMail(Assertion assertion) {
+        //public virtual void ActivateMail(Assertion assertion) {
 
-            }
+        //    }
 
-        public virtual void ActivateGroup(Assertion assertion) {
+        //public virtual void ActivateGroup(Assertion assertion) {
 
-            }
+        //    }
 
 
         /// <summary>
@@ -271,7 +272,6 @@ namespace Goedel.Mesh {
                 account.Validate();
                 }
 
-
             return true; // this will probably turn into exception return.
             }
 
@@ -279,7 +279,71 @@ namespace Goedel.Mesh {
         }
 
 
+    #endregion
+
+    #region // Enumerators and associated classes
+
+    /// <summary>
+    /// Enumerator class for sequences of <see cref="CatalogedDevice"/> over a persistence
+    /// store.
+    /// </summary>
+    public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogedDevice> {
+        IEnumerator<ContainerStoreEntry> baseEnumerator;
+
+        ///<summary>The current item in the enumeration.</summary>
+        public CatalogedDevice Current => baseEnumerator.Current.JsonObject as CatalogedDevice;
+        object IEnumerator.Current => Current;
+
+        /// <summary>
+        /// Disposal method.
+        /// </summary>
+        public void Dispose() => baseEnumerator.Dispose();
+
+        /// <summary>
+        /// Move to the next item in the enumeration.
+        /// </summary>
+        /// <returns><see langword="true"/> if there was a next item to return, otherwise,
+        /// <see langword="false"/>.</returns>
+        public bool MoveNext() => baseEnumerator.MoveNext();
+
+        /// <summary>
+        /// Restart the enumeration.
+        /// </summary>
+        public void Reset() => throw new NotImplementedException();
+
+        /// <summary>
+        /// Construct enumerator from <see cref="PersistenceStore"/>,
+        /// <paramref name="persistenceStore"/>.
+        /// </summary>
+        /// <param name="persistenceStore">The persistence store to enumerate.</param>
+        public EnumeratorCatalogEntryDevice(PersistenceStore persistenceStore) => baseEnumerator = persistenceStore.GetEnumerator();
+        }
 
 
+    /// <summary>
+    /// Enumerator class for sequences of <see cref="CatalogedDevice"/> over a Catalog
+    /// </summary>
+    public class AsCatalogedDevice : IEnumerable<CatalogedDevice> {
+        CatalogDevice catalog;
+
+        /// <summary>
+        /// Construct enumerator from <see cref="CatalogDevice"/>,
+        /// <paramref name="catalog"/>.
+        /// </summary>
+        /// <param name="catalog">The catalog to enumerate.</param>
+        public AsCatalogedDevice(CatalogDevice catalog) => this.catalog = catalog;
+
+        /// <summary>
+        /// Return an enumerator for the catalog.
+        /// </summary>
+        /// <returns>The enumerator.</returns>
+        public IEnumerator<CatalogedDevice> GetEnumerator() =>
+                    new EnumeratorCatalogEntryDevice(catalog.PersistenceStore);
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
+        private IEnumerator GetEnumerator1() => this.GetEnumerator();
+        }
+
+    #endregion
 
     }
