@@ -35,13 +35,21 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Constructor create service with the signature key <paramref name="keySign"/>
+        /// </summary>
+        /// <param name="keySign">The offline signature key.</param>
         public ProfileService(KeyPair keySign) => KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
 
 
 
 
-
+        /// <summary>
+        /// Generate a new <see cref="ProfileService"/>
+        /// </summary>
+        /// <param name="meshMachine">The mesh machine</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <returns>The service profile.</returns>
         public static ProfileService Generate(
             IMeshMachine meshMachine,
             CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
@@ -73,7 +81,12 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Create a host under this service.
+        /// </summary>
+        /// <param name="meshMachine">The machine.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <returns>The host profile.</returns>
         public ProfileHost CreateHost(IMeshMachine meshMachine,
                     CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) => ProfileHost.Generate(meshMachine, algorithmSign);
 

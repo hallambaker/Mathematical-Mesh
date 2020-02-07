@@ -49,6 +49,11 @@ namespace Goedel.Mesh.Shell {
             return result;
             }
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DevicePending(DevicePending Options) {
             using var contextAccount = GetContextAccount(Options);
             contextAccount.Sync();
@@ -87,10 +92,20 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceAccept(DeviceAccept Options) =>
             ProcessRequest(Options, Options.CompletionCode.Value, true);
 
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceReject(DeviceReject Options) =>
             ProcessRequest(Options, Options.CompletionCode.Value, false);
 
@@ -122,7 +137,11 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceDelete(DeviceDelete Options) {
             using var contextAccount = GetContextAccount(Options);
             var result = new Result() {
@@ -130,6 +149,12 @@ namespace Goedel.Mesh.Shell {
                 };
             throw new NYI();
             }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceList(DeviceList Options) {
             using var contextAccount = GetContextAccount(Options);
             var result = new Result() {
@@ -139,6 +164,11 @@ namespace Goedel.Mesh.Shell {
             return result;
             }
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
             using var contextAccount = GetContextAccount(Options);
             var result = new ResultAuthorize() {

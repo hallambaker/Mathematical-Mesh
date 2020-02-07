@@ -99,6 +99,7 @@ namespace Goedel.Mesh.Client {
         /// Decode a DARE envelope
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="verify">It true, verify the signature first.</param>
         /// <returns>The plaintext payload data.</returns>
         public byte[] DareDecode(
                     DareEnvelope envelope,

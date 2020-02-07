@@ -99,7 +99,7 @@ namespace Goedel.Mesh {
         /// </summary>
         // ToDo: Decide if we shouls use this template with the inner enumerator a private accessor or as public.
         private class EnumeratorCatalogEntryApplication : IEnumerator<CatalogedApplication> {
-            IEnumerator<ContainerStoreEntry> baseEnumerator;
+            IEnumerator<StoreEntry> baseEnumerator;
 
             public CatalogedApplication Current => baseEnumerator.Current.JsonObject as CatalogedApplication;
             object IEnumerator.Current => Current;

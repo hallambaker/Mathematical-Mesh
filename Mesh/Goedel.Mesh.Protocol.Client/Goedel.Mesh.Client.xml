@@ -10,6 +10,9 @@
              An entry in the Mesh linked logchain.
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.HostCatalogItem.Initialize">
+            <summary>Dummy property used to force initialization.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.HostCatalogItem._Tag">
             <summary>
             Tag identifying this class
@@ -37,6 +40,9 @@
             
              Describes a current or pending connection to a Mesh
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine._PrimaryKey">
+            <summary>The unique identifier.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedMachine.ID">
              <summary>
@@ -250,6 +256,11 @@
              Describes a pending connection to a Mesh account believed to have been 
              created and posted to a service.
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.MessageConnectionResponse">
+            <summary>
+            Cached convenience accessor returning the decoded <see cref="P:Goedel.Mesh.Client.CatalogedPending.MessageConnectionResponse"/>.
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending.DeviceUDF">
              <summary>
@@ -730,6 +741,7 @@
             Decode a DARE envelope
             </summary>
             <param name="envelope">The envelope to decode.</param>
+            <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextMeshAdmin">
@@ -853,8 +865,47 @@
             Context binding for a Group account
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.ContextGroup.CatalogedGroup">
+            <summary>The catalogued group description.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.CatalogedGroup)">
+            <summary>
+            Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
+            </summary>
+            <param name="catalogedGroup">Description of the group to return the
+            context for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String)">
+            <summary>
+            Add a member to the group.
+            </summary>
+            <param name="id">The member to add.</param>
+            <returns>The member catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Locate(System.String)">
+            <summary>
+            Locate the a member record in the group.
+            </summary>
+            <param name="id">The member to locate.</param>
+            <returns>The member catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Delete(Goedel.Mesh.CatalogedMember)">
+            <summary>
+            Delete a member from the group
+            </summary>
+            <param name="id">The member to delete.</param>
+            <returns>The member catalog entry.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Client.ContextMesh">
+            <summary>
+            Base context for interacting with a Mesh.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextMesh.MeshMachine">
             <summary>The Machine context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMesh.MeshHost">
+            <summary>The Mesh host</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextMesh.ProfileMesh">
             <summary>The master profile</summary>
@@ -865,6 +916,84 @@
         <member name="P:Goedel.Mesh.Client.ContextMesh.CatalogedDevice">
             <summary>For a non administrative device, the CatalogEntryDevice is in the 
             connection entry;</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMesh.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Default constructor.
+            </summary>
+            <param name="meshHost">The Mesh Host</param>
+            <param name="deviceConnection">The device connection record.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMesh.GetContextAccount(System.String,System.String)">
+            <summary>
+            Return an account context within the context of the Mesh.
+            </summary>
+            <param name="localName">Local name of the account.</param>
+            <param name="accountName">Service name of the account.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMesh.UpdateDevice(Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Update <paramref name="catalogedDevice"/> in the Mesh context.
+            </summary>
+            <param name="catalogedDevice">The device to update.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Client.ContextMeshPending">
+            <summary>
+            Context for a pending Mesh connection request. Is deleted and replaced by a full context
+            if accepted.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.PendingConnection">
+            <summary>Convenience accessor for the pending context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.MessageAcknowledgeConnection">
+            <summary>Convenience accessor for the connection request acknowledgement.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.MessageRequestConnection">
+            <summary>Convenience accessor for the original connection request.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.ProfileDevice">
+            <summary>Convenience accessor for the Profile Device</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.ServiceID">
+            <summary>Convenience accessor for the Account Service ID</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextMeshPending.MeshClient">
+            <summary>The Mesh Client.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="meshHost">The Mesh host</param>
+            <param name="catalogedMachine">The pending connection description.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Initiate a connection request.
+            </summary>
+            <param name="meshHost">The Mesh Host</param>
+            <param name="serviceID">The Service Identifier for the account to connect to.</param>
+            <param name="localName">Local friendly name for the account.</param>
+            <param name="pin">Pin code value (if supplied).</param>
+            <param name="algorithmEncrypt">The encryption algorithm to use.</param>
+            <param name="algorithmSign">The signature algorithm to use.</param>
+            <param name="algorithmAuthenticate">The authentication algorithm to use.</param>
+            <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
+            pending connection.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileDevice,System.String,System.String,System.String)">
+            <summary>
+            Initiate a connection request.
+            </summary>
+            <param name="meshHost">The Mesh Host</param>
+            <param name="serviceID">The Service Identifier for the account to connect to.</param>
+            <param name="localName">Local friendly name for the account.</param>
+            <param name="pin">Pin code value (if supplied).</param>
+            <param name="profileDevice">The device profile.</param>
+            <returns>The <see cref="T:Goedel.Mesh.Client.ContextMeshPending"/> record describing the state of the 
+            pending connection.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshPending.Complete">
             <summary>
@@ -1087,6 +1216,11 @@
         <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Throw">
             <summary>
             The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.IMeshMachineClient">
+            <summary>
+            Interface exposing the properties and methods required to obtain a Mesh Client.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
@@ -1316,17 +1450,59 @@
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
             <param name="readContainer">If true read the container to initialize the persistence store.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitNew(Goedel.Cryptography.Dare.ContainerStoreEntry)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
             Commit a New transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitDelete(Goedel.Cryptography.Dare.ContainerStoreEntry)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitUpdate(Goedel.Cryptography.Dare.StoreEntry)">
+            <summary>
+            Commit update to memory.
+            </summary>
+            <param name="containerStoreEntry">The store entry to commit.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitDelete(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>
             Commit a Delete transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactionServiced">
+            <summary>
+            Class backing a transaction manager that persists transactions to a Mesh
+            Service account and the local store.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.#ctor(Goedel.Mesh.Catalog,Goedel.Mesh.MeshService)">
+            <summary>
+            Constructor for a transaction manager
+            </summary>
+            <param name="catalog">The catalog to persist.</param>
+            <param name="meshClient">The Mesh client to use to service the account.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.New(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Queue request to create <paramref name="catalogEntry"/> as a new persisted object.
+            </summary>
+            <param name="catalogEntry">The object to create.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.Update(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Queue request to create or update <paramref name="catalogEntry"/>.
+            </summary>
+            <param name="catalogEntry">The object to update or create.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.Delete(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Queue request to delete <paramref name="catalogEntry"/>.
+            </summary>
+            <param name="catalogEntry">The object to delete.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.Commit">
+            <summary>
+            Commit a set of queued requests.
+            </summary>
         </member>
     </members>
 </doc>

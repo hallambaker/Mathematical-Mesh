@@ -288,7 +288,7 @@ namespace Goedel.Mesh {
     /// store.
     /// </summary>
     public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogedDevice> {
-        IEnumerator<ContainerStoreEntry> baseEnumerator;
+        IEnumerator<StoreEntry> baseEnumerator;
 
         ///<summary>The current item in the enumeration.</summary>
         public CatalogedDevice Current => baseEnumerator.Current.JsonObject as CatalogedDevice;

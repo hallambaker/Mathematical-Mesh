@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Mesh {
+
+    /// <summary>
+    /// Static extensions class.
+    /// </summary>
     public static class Extensions {
 
         //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
@@ -28,20 +32,28 @@ namespace Goedel.Mesh {
                 }
             }
 
-        public static ProfileMesh GetProfileMaster(this DareEnvelope dareMessage) {
-            var profile = ProfileMesh.FromJSON(dareMessage.GetBodyReader(), true);
-            // Task: here put code to verify the signature of the message against the master signature.
 
-            return profile;
-            }
+        //public static ProfileMesh GetProfileMaster(this DareEnvelope dareMessage) {
+        //    var profile = ProfileMesh.FromJSON(dareMessage.GetBodyReader(), true);
+        //    // Task: here put code to verify the signature of the message against the master signature.
 
-        public static ProfileDevice GetProfileDevice(this DareEnvelope dareMessage) {
-            var profile = ProfileDevice.FromJSON(dareMessage.GetBodyReader(), true);
-            // Task: here put code to verify the signature of the message against the master signature.
+        //    return profile;
+        //    }
 
-            return profile;
-            }
+        //public static ProfileDevice GetProfileDevice(this DareEnvelope dareMessage) {
+        //    var profile = ProfileDevice.FromJSON(dareMessage.GetBodyReader(), true);
+        //    // Task: here put code to verify the signature of the message against the master signature.
 
+        //    return profile;
+        //    }
+
+        /// <summary>
+        /// Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
+        /// <paramref name="keyCollection"/>
+        /// </summary>
+        /// <param name="keyCollection">The key collection to search.</param>
+        /// <param name="publicKeys">The list of public keys to match</param>
+        /// <returns>The key pair if found, otherwise <see langword="false"/></returns>
         public static KeyPair LocatePrivate(this KeyCollection keyCollection, List<PublicKey> publicKeys) {
 
             foreach (var publicKey in publicKeys) {

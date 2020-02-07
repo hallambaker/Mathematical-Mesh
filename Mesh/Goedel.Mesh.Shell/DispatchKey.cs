@@ -82,7 +82,7 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-        List<string> makeList(params string[] shares) {
+        List<string> MakeList(params string[] shares) {
             var result = new List<string>();
             foreach (var share in shares) {
                 if (share != null) {
@@ -93,6 +93,11 @@ namespace Goedel.Mesh.Shell {
             return result;
             }
 
+        /// <summary>
+        /// Recover key from <paramref name="Options"/>
+        /// </summary>
+        /// <param name="Options">Options containing shares.</param>
+        /// <returns>The recovered key.</returns>
         public override ShellResult KeyRecover(KeyRecover Options) {
             var s1 = Options.Share1.Value;
             var s2 = Options.Share2.Value;
@@ -103,7 +108,7 @@ namespace Goedel.Mesh.Shell {
             var s7 = Options.Share7.Value;
             var s8 = Options.Share8.Value;
 
-            var shares = makeList(s1, s2, s3, s4, s5, s6, s7, s7);
+            var shares = MakeList(s1, s2, s3, s4, s5, s6, s7, s8);
             var secret = new SharedSecret(shares);
 
             return new ResultKey() {

@@ -2270,6 +2270,11 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Extensions">
+            <summary>
+            Static extensions class.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Extensions.ToBuilder(Goedel.Mesh.MeshItem,System.Text.StringBuilder,System.Int32,System.String)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -2279,6 +2284,15 @@
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="nullText">Text to provide if the item is null.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.LocatePrivate(Goedel.Cryptography.KeyCollection,System.Collections.Generic.List{Goedel.Mesh.PublicKey})">
+            <summary>
+            Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
+            <paramref name="keyCollection"/>
+            </summary>
+            <param name="keyCollection">The key collection to search.</param>
+            <param name="publicKeys">The list of public keys to match</param>
+            <returns>The key pair if found, otherwise <see langword="false"/></returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.Report(Goedel.Cryptography.Dare.DareEnvelope,System.Text.StringBuilder,System.Int32)">
             <summary>
@@ -2313,6 +2327,33 @@
         <member name="T:Goedel.Mesh.KeyComposite">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyComposite.UDF">
+            <summary>Convenience accessor for the composite UDF.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyComposite.KeyPair">
+            <summary>The composite key pair.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyComposite.#ctor">
+            <summary>
+            Default constructor for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyComposite.#ctor(Goedel.Mesh.PublicKey,System.String)">
+            <summary>
+            Constructor from base key <paramref name="baseKey"/> with decryption service 
+            <paramref name="service"/>.
+            </summary>
+            <param name="baseKey">The base key.</param>
+            <param name="service">The decryption service.</param>
+        </member>
+        <member name="M:Goedel.Mesh.KeyComposite.#ctor(Goedel.Cryptography.KeyPairAdvanced,System.String)">
+            <summary>
+            Constructor from base key <paramref name="baseKey"/> with decryption service 
+            <paramref name="service"/>.
+            </summary>
+            <param name="baseKey">The base key.</param>
+            <param name="service">The decryption service.</param>
         </member>
         <member name="P:Goedel.Mesh.KeyComposite.Public">
              <summary>
@@ -2384,6 +2425,31 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.KeyOverlay.KeyPair">
+            <summary>The composite key pair.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyOverlay.PublicKey">
+            <summary>The composite public key.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyOverlay.#ctor">
+            <summary>
+            Default constructor for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyOverlay.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.PublicKey)">
+            <summary>
+            Constructor from <paramref name="baseKey"/> storing partial keys to <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The machine.</param>
+            <param name="baseKey">The base key to overlay.</param>
+        </member>
+        <member name="M:Goedel.Mesh.KeyOverlay.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Constructor from <paramref name="baseKey"/> storing partial keys to <paramref name="meshMachine"/>.
+            </summary>
+            <param name="meshMachine">The machine.</param>
+            <param name="baseKey">The base key to overlay.</param>
+        </member>
         <member name="M:Goedel.Mesh.KeyOverlay.GetPrivate(Goedel.Mesh.IMeshMachine)">
             <summary>
             Return a KeyPair instance that performs the combined key function. Note that the
@@ -2393,6 +2459,13 @@
             </summary>
             <param name="meshMachine">The machine on which private keys are to be resolved.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.KeyOverlay.GetPrivate(Goedel.Cryptography.KeyPairAdvanced)">
+            <summary>
+            Return the private key.
+            </summary>
+            <param name="keypairBase">The base key.</param>
+            <returns>The composite keypair.</returns>
         </member>
         <member name="P:Goedel.Mesh.KeyOverlay.UDF">
              <summary>
@@ -2507,6 +2580,13 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Encode the message using the signature key <paramref name="signingKey"/>.
+            </summary>
+            <param name="signingKey">The signature key.</param>
+            <returns>The enveloped, signed message.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Message.MessageID">
             <summary>
             </summary>
@@ -2594,6 +2674,31 @@
             <summary>
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MessageComplete.Accept">
+            <summary>Constant for the response Accept.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageComplete.Reject">
+            <summary>Constant for the response Reject.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageComplete.Read">
+            <summary>Constant for the response Read.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageComplete.Unread">
+            <summary>Constant for the response Unread.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessageComplete.#ctor">
+            <summary>
+            Constructor for use by deserializers.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessageComplete.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor for a completion message.
+            </summary>
+            <param name="messageID">The message the completion message completes.</param>
+            <param name="relationship">Relationship to the message.</param>
+            <param name="responseID">The response code.</param>
+        </member>
         <member name="P:Goedel.Mesh.MessageComplete._Tag">
             <summary>
             Tag identifying this class
@@ -2651,6 +2756,16 @@
              Connection request message generated by a service on receipt of a valid
              MessageConnectionRequestClient
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.AcknowledgeConnection.MessageConnectionRequest">
+            <summary>Convenience accessor for the inner <see cref="T:Goedel.Mesh.RequestConnection"/></summary>
+        </member>
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.AcknowledgeConnection"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection.EnvelopedRequestConnection">
              <summary>
@@ -2723,6 +2838,23 @@
             
              Connection request message. This message contains the information
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConnection.ProfileDevice">
+            <summary>Convenience accessor for the inner <see cref="P:Goedel.Mesh.RequestConnection.ProfileDevice"/></summary>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RequestConnection"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.Verify(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Verified decoding of the enveloped request <paramref name="envelope"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded profile (if signature verification succeeds).</returns>
         </member>
         <member name="P:Goedel.Mesh.RequestConnection.ServiceID">
              <summary>
@@ -2801,6 +2933,22 @@
              Respond to RequestConnection message to grant or refuse the connection
              request.
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.RespondConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.RespondConnection.Validate(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Validate the RespondConnection message in the context of <paramref name="profileDevice"/>
+            and <paramref name="keyCollection"/>.
+            </summary>
+            <param name="profileDevice">The profile device.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         </member>
         <member name="P:Goedel.Mesh.RespondConnection.Result">
              <summary>
@@ -4132,6 +4280,22 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="keySign">The signature key.</param>
+            <param name="keyEncrypt">The encryption key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Generate a new <see cref="T:Goedel.Mesh.ProfileGroup"/>
+            </summary>
+            <param name="meshMachine">The mesh machine.</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <returns>the created group.</returns>
+        </member>
         <member name="M:Goedel.Mesh.ProfileGroup.AddMember(Goedel.Cryptography.KeyCollection,Goedel.Mesh.Contact)">
             <summary>
             Add a member to the group.
@@ -4207,6 +4371,11 @@
             Remove and replace with activation/connection records.
             </summary>
             <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.DeviceRecryptionKey.#ctor">
+            <summary>
+            Constructor for use by deserializers.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.DeviceRecryptionKey.UDF">
@@ -4289,6 +4458,31 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.ProfileHost.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
+            <summary>
+            Construct a Profile Host instance using the key <paramref name="keySign"/> for signature and
+            <paramref name="keyAuth"/> for authentication.
+            </summary>
+            <param name="keySign">The signature key.</param>
+            <param name="keyAuth">The authentication key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Generate a new <see cref="T:Goedel.Mesh.ProfileHost"/> for <paramref name="meshMachine"/> using the 
+            signature algorithm <paramref name="algorithmSign"/>    
+            </summary>
+            <param name="meshMachine">The mesh machine description.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuth">The authentication algorithm.</param>
+            <returns>The created ProfileHost.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileHost.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileHost"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded profile.</returns>
+        </member>
         <member name="P:Goedel.Mesh.ProfileHost.KeyAuthentication">
              <summary>
             Key used to authenticate service connections.
@@ -4358,13 +4552,20 @@
         </member>
         <member name="M:Goedel.Mesh.ProfileMesh.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
-            Construct a new ProfileDevice instance from a <see cref="!:PrivateKeyUDFDevice"/>
+            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
             <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="secretSeed">The secret seed value.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileMesh.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileMesh"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
             <summary>
@@ -4460,12 +4661,34 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
+        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Constructor create service with the signature key <paramref name="keySign"/>
+            </summary>
+            <param name="keySign">The offline signature key.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Generate a new <see cref="T:Goedel.Mesh.ProfileService"/>
+            </summary>
+            <param name="meshMachine">The mesh machine</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <returns>The service profile.</returns>
+        </member>
         <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Decode from DareEnvelope
             </summary>
             <param name="envelope">The envelope to decode.</param>
             <returns>The decoded ProfileService.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProfileService.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Create a host under this service.
+            </summary>
+            <param name="meshMachine">The machine.</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <returns>The host profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileService.KeyAuthentication">
              <summary>
@@ -5269,6 +5492,14 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.ContainerStatus.ToBuilder(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Append the response description to <paramref name="builder"/> at an indentation
+            level of <paramref name="indent"/>.
+            </summary>
+            <param name="builder">The string builder to append the description to.</param>
+            <param name="indent">The indentation level.</param>
+        </member>
         <member name="T:Goedel.Mesh.ContainerUpdate">
             <summary>
             </summary>
@@ -5328,6 +5559,14 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.ContainerUpdate.ToBuilder(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Append the response description to <paramref name="builder"/> at an indentation
+            level of <paramref name="indent"/>.
+            </summary>
+            <param name="builder">The string builder to append the description to.</param>
+            <param name="indent">The indentation level.</param>
         </member>
         <member name="T:Goedel.Mesh.MeshHelloResponse">
             <summary>
@@ -5550,6 +5789,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.CreateResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
         <member name="T:Goedel.Mesh.DeleteRequest">
              <summary>
             
@@ -5665,6 +5910,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.DeleteResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.CompleteRequest">
             <summary>
@@ -5788,6 +6039,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.CompleteResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.StatusRequest">
             <summary>
@@ -5929,6 +6186,20 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.StatusResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
+        <member name="M:Goedel.Mesh.StatusResponse.ToBuilder(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Append the response description to <paramref name="builder"/> at an indentation
+            level of <paramref name="indent"/>.
+            </summary>
+            <param name="builder">The string builder to append the description to.</param>
+            <param name="indent">The indentation level.</param>
+        </member>
         <member name="T:Goedel.Mesh.DownloadRequest">
              <summary>
             
@@ -6067,6 +6338,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.DownloadResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
         <member name="T:Goedel.Mesh.UploadRequest">
              <summary>
             
@@ -6204,6 +6481,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.UploadResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.EntryResponse">
             <summary>
@@ -6417,6 +6700,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="M:Goedel.Mesh.PostResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
+        </member>
         <member name="T:Goedel.Mesh.ConnectRequest">
             <summary>
             </summary>
@@ -6546,6 +6835,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.ConnectResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.PublicKey">
              <summary>
@@ -8492,6 +8787,40 @@
             <summary>
             Returns the response identifier.
             </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.Spool">
+            <summary>
+            Base class for stores of type Spool.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Spool.SpoolOutbound">
+            <summary>Canonical name for outbound spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Spool.SpoolLocal">
+            <summary>Canonical name for local spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Spool.SpoolInbound">
+            <summary>Canonical name for inbound spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Spool.SpoolArchive">
+            <summary>Canonical name for archive spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.Status(System.String,System.String)">
+            <summary>
+            Return the status of the spool.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">

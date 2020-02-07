@@ -4,11 +4,14 @@ using Goedel.Utilities;
 
 namespace Goedel.Mesh.Client {
 
+    /// <summary>
+    /// Base context for interacting with a Mesh.
+    /// </summary>
     public partial class ContextMesh : Disposable {
         ///<summary>The Machine context.</summary>
         public IMeshMachineClient MeshMachine => MeshHost?.MeshMachine;
 
-
+        ///<summary>The Mesh host</summary>
         public MeshHost MeshHost { get; }
 
 
@@ -22,15 +25,19 @@ namespace Goedel.Mesh.Client {
         ///connection entry;</summary>
         public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
 
-        public ConnectionDevice ConnectionDevice =>
-            CatalogedDevice.ConnectionDevice;
+        //public ConnectionDevice ConnectionDevice =>
+        //    CatalogedDevice.ConnectionDevice;
 
-        public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
-
-
+        //public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
 
 
 
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
+        /// <param name="meshHost">The Mesh Host</param>
+        /// <param name="deviceConnection">The device connection record.</param>
         public ContextMesh(MeshHost meshHost, CatalogedMachine deviceConnection) {
             Assert.AssertNotNull(deviceConnection, NYI.Throw);
 
@@ -43,6 +50,12 @@ namespace Goedel.Mesh.Client {
 
         // The account activation was not added to activations.
 
+        /// <summary>
+        /// Return an account context within the context of the Mesh.
+        /// </summary>
+        /// <param name="localName">Local name of the account.</param>
+        /// <param name="accountName">Service name of the account.</param>
+        /// <returns></returns>
         public ContextAccount GetContextAccount(
                 string localName = null,
                 string accountName = null) {
@@ -50,7 +63,10 @@ namespace Goedel.Mesh.Client {
             return account == null ? null : new ContextAccount(this, account, CatalogedDevice.ProfileDevice);
             }
 
-
+        /// <summary>
+        /// Update <paramref name="catalogedDevice"/> in the Mesh context.
+        /// </summary>
+        /// <param name="catalogedDevice">The device to update.</param>
         public void UpdateDevice(CatalogedDevice catalogedDevice) {
 
             CatalogedMachine.CatalogedDevice = catalogedDevice;
@@ -59,35 +75,63 @@ namespace Goedel.Mesh.Client {
 
         }
 
-
+    /// <summary>
+    /// Context for a pending Mesh connection request. Is deleted and replaced by a full context
+    /// if accepted.
+    /// </summary>
     public class ContextMeshPending : ContextMesh {
 
+        ///<summary>Convenience accessor for the pending context.</summary>
         public CatalogedPending PendingConnection => CatalogedMachine as CatalogedPending;
-        public AcknowledgeConnection MessageConnectionResponse => PendingConnection?.MessageConnectionResponse;
-        public RequestConnection MessageConnectionRequest => MessageConnectionResponse?.MessageConnectionRequest;
 
-        public ProfileDevice ProfileDevice => MessageConnectionRequest?.ProfileDevice;
+        ///<summary>Convenience accessor for the connection request acknowledgement.</summary>
+        public AcknowledgeConnection MessageAcknowledgeConnection => PendingConnection?.MessageConnectionResponse;
+        
+        ///<summary>Convenience accessor for the original connection request.</summary>
+        public RequestConnection MessageRequestConnection => MessageAcknowledgeConnection?.MessageConnectionRequest;
+
+        ///<summary>Convenience accessor for the Profile Device</summary>
+        public ProfileDevice ProfileDevice => MessageRequestConnection?.ProfileDevice;
 
 
         KeyPair keyAuthentication;
 
-        public string ServiceID => MessageConnectionRequest?.ServiceID;
+        ///<summary>Convenience accessor for the Account Service ID</summary>
+        public string ServiceID => MessageRequestConnection?.ServiceID;
+
+        ///<summary>The Mesh Client.</summary>
         public MeshService MeshClient;
 
-        public ContextMeshPending(MeshHost meshHost, CatalogedMachine deviceConnection) :
-                    base(meshHost, deviceConnection) {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="meshHost">The Mesh host</param>
+        /// <param name="catalogedMachine">The pending connection description.</param>
+        public ContextMeshPending(MeshHost meshHost, CatalogedMachine catalogedMachine) :
+                    base(meshHost, catalogedMachine) {
             }
 
 
-
+        /// <summary>
+        /// Initiate a connection request.
+        /// </summary>
+        /// <param name="meshHost">The Mesh Host</param>
+        /// <param name="serviceID">The Service Identifier for the account to connect to.</param>
+        /// <param name="localName">Local friendly name for the account.</param>
+        /// <param name="pin">Pin code value (if supplied).</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm to use.</param>
+        /// <param name="algorithmSign">The signature algorithm to use.</param>
+        /// <param name="algorithmAuthenticate">The authentication algorithm to use.</param>
+        /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
+        /// pending connection.</returns>
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
-            string serviceID,
-            string localName = null,
-            string PIN = null,
-            CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-            CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                string serviceID,
+                string localName = null,
+                string pin = null,
+                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
 
             var secretSeed = new PrivateKeyUDF (
                     UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
@@ -95,26 +139,34 @@ namespace Goedel.Mesh.Client {
 
             var profileDevice = new ProfileDevice (meshHost.KeyCollection, secretSeed, true);
 
-            return ConnectService(meshHost, profileDevice, serviceID, localName, PIN);
+            return ConnectService(meshHost, profileDevice, serviceID, localName, pin);
             }
 
 
-
+        /// <summary>
+        /// Initiate a connection request.
+        /// </summary>
+        /// <param name="meshHost">The Mesh Host</param>
+        /// <param name="serviceID">The Service Identifier for the account to connect to.</param>
+        /// <param name="localName">Local friendly name for the account.</param>
+        /// <param name="pin">Pin code value (if supplied).</param>
+        /// <param name="profileDevice">The device profile.</param>
+        /// <returns>The <see cref="ContextMeshPending"/> record describing the state of the 
+        /// pending connection.</returns>
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
                 ProfileDevice profileDevice,
                 string serviceID,
                 string localName = null,
-                string PIN = null) {
+                string pin = null) {
 
             // generate MessageConnectionRequestClient
             var messageConnectionRequestClient = new RequestConnection() {
                 ServiceID = serviceID,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 ClientNonce = CryptoCatalog.GetBits(128),
-                PinUDF = UDF.PIN2PinID(PIN)
+                PinUDF = UDF.PIN2PinID(pin)
                 };
-
 
 
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
@@ -163,7 +215,7 @@ namespace Goedel.Mesh.Client {
             MeshClient ??= MeshMachine.GetMeshClient(ServiceID, keyAuthentication, null);
 
             var completeRequest = new CompleteRequest() {
-                ResponseID = MessageConnectionResponse.GetResponseID(),
+                ResponseID = MessageAcknowledgeConnection.GetResponseID(),
                 ServiceID = ServiceID
                 };
 

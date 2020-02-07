@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Persistence store based on a container interface.
     /// </summary>
-    public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<ContainerStoreEntry> {
+    public class PersistenceStore : Disposable, IPersistenceStoreWrite, IEnumerable<StoreEntry> {
 
         // Test: Addition of signed frames to persistence stores (is failing)
 
@@ -66,34 +66,34 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        public Dictionary<string, ContainerStoreEntry> ObjectIndex = new Dictionary<string, ContainerStoreEntry>();
+        public Dictionary<string, StoreEntry> ObjectIndex = new Dictionary<string, StoreEntry>();
 
         /// <summary>
         /// Index of items by _PrimaryKey
         /// </summary>
-        public Dictionary<string, ContainerStoreEntry> DeletedObjects = new Dictionary<string, ContainerStoreEntry>();
+        public Dictionary<string, StoreEntry> DeletedObjects = new Dictionary<string, StoreEntry>();
 
         /// <summary>
         /// Dictionary mapping keywords to index for that keyword.
         /// </summary>
-        public Dictionary<string, ContainerStoreIndex> IndexDictionary =
-                                new Dictionary<string, ContainerStoreIndex>();
+        public Dictionary<string, StoreIndex> IndexDictionary =
+                                new Dictionary<string, StoreIndex>();
 
         #region --- IEnumerable Implementation 
         ///<summary>Return an enumerator over a set of catalog items</summary>
-        public IEnumerator<ContainerStoreEntry> GetEnumerator() => new EnumeratorContainerStoreEntry(ObjectIndex);
+        public IEnumerator<StoreEntry> GetEnumerator() => new EnumeratorContainerStoreEntry(ObjectIndex);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
-        private class EnumeratorContainerStoreEntry : IEnumerator<ContainerStoreEntry> {
-            Dictionary<string, ContainerStoreEntry>.Enumerator BaseEnumerator;
-            public ContainerStoreEntry Current => BaseEnumerator.Current.Value;
+        private class EnumeratorContainerStoreEntry : IEnumerator<StoreEntry> {
+            Dictionary<string, StoreEntry>.Enumerator BaseEnumerator;
+            public StoreEntry Current => BaseEnumerator.Current.Value;
             object IEnumerator.Current => BaseEnumerator.Current.Value;
             public void Dispose() => BaseEnumerator.Dispose();
             public bool MoveNext() => BaseEnumerator.MoveNext();
             public void Reset() => throw new NotImplementedException();
-            public EnumeratorContainerStoreEntry(Dictionary<string, ContainerStoreEntry> baseEnumerator) =>
+            public EnumeratorContainerStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
                 BaseEnumerator = baseEnumerator.GetEnumerator();
             }
 
@@ -161,7 +161,7 @@ namespace Goedel.Cryptography.Dare {
                 var uniqueID = contentMeta.UniqueID;
 
                 ObjectIndex.TryGetValue(uniqueID, out var previous);
-                var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, previous, Container);
+                var ContainerStoreEntry = new StoreEntry(frameIndex, previous, Container);
 
 
                 ObjectIndex.Remove(uniqueID);
@@ -219,7 +219,7 @@ namespace Goedel.Cryptography.Dare {
             var contentMeta = frameIndex.Header.ContentMeta;
 
             ObjectIndex.TryGetValue(contentMeta.UniqueID, out var Previous);
-            var ContainerStoreEntry = new ContainerStoreEntry(frameIndex, Previous, Container, jSONObject);
+            var ContainerStoreEntry = new StoreEntry(frameIndex, Previous, Container, jSONObject);
 
             switch (contentMeta.Event) {
                 case EventNew: {
@@ -244,7 +244,7 @@ namespace Goedel.Cryptography.Dare {
         /// Commit a New transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected virtual void MemoryCommitNew(ContainerStoreEntry containerStoreEntry) {
+        protected virtual void MemoryCommitNew(StoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
             Assert.False(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
             ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
@@ -256,7 +256,7 @@ namespace Goedel.Cryptography.Dare {
         /// Commit an Update transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected virtual void MemoryCommitUpdate(ContainerStoreEntry containerStoreEntry) {
+        protected virtual void MemoryCommitUpdate(StoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
             if (ObjectIndex.ContainsKey(containerStoreEntry.UniqueID)) {
                 ObjectIndex.Remove(containerStoreEntry.UniqueID);
@@ -269,7 +269,7 @@ namespace Goedel.Cryptography.Dare {
         /// Commit a Delete transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected virtual void MemoryCommitDelete(ContainerStoreEntry containerStoreEntry) {
+        protected virtual void MemoryCommitDelete(StoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
             Assert.True(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
             ObjectIndex.Remove(containerStoreEntry.UniqueID);
@@ -281,7 +281,7 @@ namespace Goedel.Cryptography.Dare {
 
         // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
-        void KeyValueIndexAdd(ContainerStoreEntry containerStoreEntry) {
+        void KeyValueIndexAdd(StoreEntry containerStoreEntry) {
             if (containerStoreEntry.ContentInfo.KeyValues == null) {
                 return;
                 }
@@ -295,8 +295,8 @@ namespace Goedel.Cryptography.Dare {
 
         // Hack: Right now the key value pairs are only indexed when the object is initially
         // interned. These are immutable subsequently.
-        void KeyValueIndexDelete(ContainerStoreEntry containerStoreEntry) {
-            var First = containerStoreEntry.First as ContainerStoreEntry;
+        void KeyValueIndexDelete(StoreEntry containerStoreEntry) {
+            var First = containerStoreEntry.First as StoreEntry;
             if (First.ContentInfo.KeyValues == null) {
                 return;
                 }
@@ -338,13 +338,13 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="previous">The previous entry.</param>
         /// <param name="dareEnvelope">The serialized persistence data.</param>
         /// <returns></returns>
-        public virtual ContainerStoreEntry CommitToContainer(
+        public virtual StoreEntry CommitToContainer(
                 DareEnvelope dareEnvelope,
                 JSONObject item,
-                ContainerStoreEntry previous = null) {
+                StoreEntry previous = null) {
 
             Container.Append(dareEnvelope);
-            return new ContainerStoreEntry(Container, dareEnvelope, previous, item);
+            return new StoreEntry(Container, dareEnvelope, previous, item);
             }
 
 
@@ -383,7 +383,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="create">If true, create a new value if one does not already exist</param>
         /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual DareEnvelope PrepareUpdate(
-                    out ContainerStoreEntry previous,
+                    out StoreEntry previous,
                     JSONObject jsonObject,
                     bool create = true, Transaction transaction = null) {
             // Precondition UniqueID does not exist
@@ -398,7 +398,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             if (Exists) {
-                var First = previous?.First as ContainerStoreEntry;
+                var First = previous?.First as StoreEntry;
                 contentInfo.First = (int)First?.FrameCount;
                 contentInfo.Previous = (int)previous?.FrameCount;
                 }
@@ -413,13 +413,13 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>True if the object was updated, otherwise false.</returns>
         /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public DareEnvelope PrepareDelete(
-            out ContainerStoreEntry previous, string uniqueID, Transaction transaction = null) {
+            out StoreEntry previous, string uniqueID, Transaction transaction = null) {
             var Exists = ObjectIndex.TryGetValue(uniqueID, out previous);
             if (!Exists) {
                 return null;
                 }
 
-            var First = previous?.First as ContainerStoreEntry;
+            var First = previous?.First as StoreEntry;
             // Create new container
             var contentInfo = new ContentMeta() {
                 Event = EventDelete,
@@ -493,11 +493,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="key">The key for which the index is requested.</param>
         /// <param name="create">If true, will create an index if none is found.</param>
         /// <returns>The index.</returns>
-        public virtual ContainerStoreIndex GetContainerStoreIndex(string key, bool create = true) {
+        public virtual StoreIndex GetContainerStoreIndex(string key, bool create = true) {
             var found = IndexDictionary.TryGetValue(key, out var Index);
 
             if (!found & create) {
-                Index = new ContainerStoreIndex();
+                Index = new StoreIndex();
                 IndexDictionary.Add(key, Index);
                 }
 

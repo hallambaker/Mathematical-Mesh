@@ -51,14 +51,24 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="keySign">The signature key.</param>
+        /// <param name="keyEncrypt">The encryption key.</param>
         public ProfileGroup(
             KeyPair keySign, KeyPair keyEncrypt) {
             KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
             }
 
-
+        /// <summary>
+        /// Generate a new <see cref="ProfileGroup"/>
+        /// </summary>
+        /// <param name="meshMachine">The mesh machine.</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <returns>the created group.</returns>
         public static ProfileGroup Generate(
                     IMeshMachine meshMachine,
                     CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
@@ -103,14 +113,18 @@ namespace Goedel.Mesh {
     /// Remove and replace with activation/connection records.
     /// </summary>
     public partial class DeviceRecryptionKey {
+
+        /// <summary>
+        /// Constructor for use by deserializers.
+        /// </summary>
         public DeviceRecryptionKey() {
             }
 
-        public DeviceRecryptionKey(Contact user, KeyPair serviceKey, KeyPair deviceKey) {
-            }
+        //public DeviceRecryptionKey(Contact user, KeyPair serviceKey, KeyPair deviceKey) {
+        //    }
 
 
-        public GroupInvitation MakeInvitation(Contact user) => throw new NYI();
+        //public GroupInvitation MakeInvitation(Contact user) => throw new NYI();
 
         }
 

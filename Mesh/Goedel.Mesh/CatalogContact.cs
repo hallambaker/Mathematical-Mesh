@@ -162,7 +162,7 @@ namespace Goedel.Mesh {
     /// store.
     /// </summary>
     public class EnumeratorCatalogEntryContact : IEnumerator<CatalogedContact> {
-        IEnumerator<ContainerStoreEntry> baseEnumerator;
+        IEnumerator<StoreEntry> baseEnumerator;
 
         ///<summary>The current item in the enumeration.</summary>
         public CatalogedContact Current => baseEnumerator.Current.JsonObject as CatalogedContact;

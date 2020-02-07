@@ -5,9 +5,9 @@ namespace Goedel.Cryptography.Dare {
 
 
     /// <summary>
-    /// Index handle for data stored in a ContainerStoreIndex in-memory index.
+    /// Index handle for data stored in a <see cref="StoreIndex"/> in-memory index.
     /// </summary>
-    public class ContainerStoreEntry : IPersistenceEntry {
+    public class StoreEntry : IPersistenceEntry {
 
 
         #region // Propeties and fields
@@ -69,9 +69,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dareEnvelope">The envelope entry.</param>
         /// <param name="previous">Link to previous value of this object</param>
         /// <param name="item">The JSONObject representation.</param>
-        public ContainerStoreEntry(Container container,
+        public StoreEntry(Container container,
                     DareEnvelope dareEnvelope,
-                    ContainerStoreEntry previous,
+                    StoreEntry previous,
                     JSONObject item = null) {
             Container = container;
             jsonObject = item;
@@ -88,9 +88,9 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="previous">Link to previous value of this object</param>
         /// <param name="container"></param>
         /// <param name="item">The JSONObject representation.</param>
-        public ContainerStoreEntry(
+        public StoreEntry(
                     ContainerFrameIndex frameIndex,
-                    ContainerStoreEntry previous,
+                    StoreEntry previous,
                     Container container,
                     JSONObject item = null) {
             Container = container;

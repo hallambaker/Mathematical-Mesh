@@ -119,7 +119,7 @@ namespace Goedel.Cryptography.Dare {
     /// In-memory index structure for container data store. This offers the best performance
     /// but at a significantly higher memory overhead than an index-on disk approach.
     /// </summary>
-    public class ContainerStoreIndex : IPersistenceIndex {
+    public class StoreIndex : IPersistenceIndex {
 
         Dictionary<string, ContainerStoreIndexEntry> Dictionary =
                     new Dictionary<string, ContainerStoreIndexEntry>();
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContainerStoreEntry">The entry to add.</param>
         /// <param name="Value">The value to add it to</param>
-        public void Add(ContainerStoreEntry ContainerStoreEntry, string Value) {
+        public void Add(StoreEntry ContainerStoreEntry, string Value) {
             var Found = Dictionary.TryGetValue(Value, out var Existing);
             var New = new ContainerStoreIndexEntry(Existing, ContainerStoreEntry);
 
@@ -156,7 +156,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="ContainerStoreEntry">The entry to remove.</param>
         /// <param name="Value">The value to remove it from</param>
-        public void Delete(ContainerStoreEntry ContainerStoreEntry, string Value) {
+        public void Delete(StoreEntry ContainerStoreEntry, string Value) {
             var Found = Dictionary.TryGetValue(Value, out var Existing);
             if (!Found) {
                 return;

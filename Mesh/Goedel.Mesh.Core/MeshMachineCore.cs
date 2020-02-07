@@ -9,21 +9,33 @@ using System.IO;
 
 namespace Goedel.Mesh {
 
-
+    /// <summary>
+    /// The  Mesh server.
+    /// </summary>
     public class MeshMachineCoreServer : Disposable, IMeshMachine {
 
         #region // Properties
-        public virtual string DirectoryMaster { get; }
-        public virtual string DirectoryMesh { get; }
-        public virtual string DirectoryKeys { get; }
-        public virtual string DirectoryService { get; }
 
+        ///<summary>The directory used to store the master data.</summary>
+        public virtual string DirectoryMaster { get; }
+
+        ///<summary>The directory used to store the account mesh data.</summary>
+        public virtual string DirectoryMesh { get; }
+
+        ///<summary>The directory used to store host keys.</summary>
+        public virtual string DirectoryKeys { get; }
+
+        ///<summary>The host key collection.</summary>
         public virtual KeyCollection KeyCollection { get; }
 
+        ///<summary>The IANA media type for the host file data.</summary>
         public const string FileTypeHost = "application/mmm-host";
         #endregion
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="directory">Directory to store the server information.</param>
         public MeshMachineCoreServer(string directory) {
             DirectoryMaster = directory;
             DirectoryMesh = Path.Combine(directory, "Profiles");
@@ -36,12 +48,16 @@ namespace Goedel.Mesh {
 
 
 
-        #region // Disposing
-        protected override void Disposing() {
-            //CatalogHost.Dispose();
-            }
+        #region // Disposing (Currently null)
+        //protected override void Disposing() {
+        //    //CatalogHost.Dispose();
+        //    }
         #endregion
 
+        /// <summary>
+        /// Get the host key collection.
+        /// </summary>
+        /// <returns></returns>
         public virtual KeyCollection GetKeyCollection() =>
             new KeyCollectionCore();
 
@@ -63,8 +79,6 @@ namespace Goedel.Mesh {
                     KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,
                         KeyCollection, keySize, keyUses);
         #endregion 
-
-        public virtual void OpenCatalog(Catalog catalog, string Name) { }
         }
 
     /// <summary>
@@ -76,21 +90,34 @@ namespace Goedel.Mesh {
     public class MeshMachineCore : MeshMachineCoreServer, IMeshMachineClient {
 
         #region // Properties
-
+        ///<summary>The Mesh Host</summary>
         public MeshHost MeshHost { get; }
+
+        ///<summary>The file name of the host catalog.</summary>
 
         public string FileNameHost => Path.Combine(DirectoryMesh, "host.dare");
         #endregion
 
 
         #region // Disposing
+
+        /// <summary>
+        /// Disposing routine. Feee internal resources  and shut down the Mesh Host.
+        /// </summary>
         protected override void Disposing() => MeshHost.Dispose();
         #endregion
 
-
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public MeshMachineCore() : this(MeshMachine.DirectoryProfiles) {
             }
 
+        /// <summary>
+        /// Constructor, creating a service instance using <paramref name="directory"/>
+        /// to store persistent data.
+        /// </summary>
+        /// <param name="directory">Directory to store persistence data.</param>
         protected MeshMachineCore(string directory) : base(directory) {
             // Now read the container to get the directories.
             var containerHost = new PersistHost(FileNameHost, FileTypeHost,
@@ -109,13 +136,18 @@ namespace Goedel.Mesh {
 
         #region // Implementation
 
+        /// <summary>
+        /// Factory constructor.
+        /// </summary>
+        /// <returns></returns>
         public static IMeshMachine GetMachine() => new MeshMachineCore();
 
-        public virtual void Register(HostCatalogItem catalogItem) =>
-                MeshHost.Register(catalogItem);
 
-        public virtual void Delete(HostCatalogItem catalogItem) =>
-                MeshHost.Delete(catalogItem);
+        //public virtual void Register(HostCatalogItem catalogItem) =>
+        //        MeshHost.Register(catalogItem);
+
+        //public virtual void Delete(HostCatalogItem catalogItem) =>
+        //        MeshHost.Delete(catalogItem);
 
 
         /// <summary>

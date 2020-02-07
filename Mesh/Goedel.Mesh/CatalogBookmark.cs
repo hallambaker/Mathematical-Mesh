@@ -67,7 +67,7 @@ namespace Goedel.Mesh {
     /// store.
     /// </summary>
     public class EnumeratorCatalogEntryBookmark : IEnumerator<CatalogedBookmark> {
-        IEnumerator<ContainerStoreEntry> baseEnumerator;
+        IEnumerator<StoreEntry> baseEnumerator;
 
         ///<summary>The current item in the enumeration.</summary>
         public CatalogedBookmark Current => baseEnumerator.Current.JsonObject as CatalogedBookmark;

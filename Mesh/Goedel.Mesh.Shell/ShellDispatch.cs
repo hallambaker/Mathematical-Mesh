@@ -14,44 +14,74 @@ namespace Goedel.Mesh.Shell {
 
         //CommandLineInterpreter CommandLineInterpreter;
 
+        ///<summary>The MeshMachine</summary>
         public virtual IMeshMachineClient MeshMachine { get; }
+
+        ///<summary>Convenience accessor for the Mesh Host.</summary>
         public MeshHost MeshHost => MeshMachine.MeshHost;
 
-
-
-
-
-
+        ///<summary>The Host catalog.</summary>
         public virtual MeshHost CatalogHost => catalogHost ??
             MeshHost.GetCatalogHost(MeshMachine).CacheValue(out catalogHost);
         MeshHost catalogHost;
 
+        /// <summary>
+        /// The static main entry point for the shell.
+        /// </summary>
+        /// <param name="Args">The command line arguments.</param>
         public static void Main(string[] Args) {
             var CLI = new CommandLineInterpreter();
             var Dispatch = new Shell();
             CLI.MainMethod(Dispatch, Args);
             }
 
-
-
-        public bool Verbose { get; set; }
+        ///<summary>Report flag, if <see langword="true"/> results of operations
+        ///are reported to the console. Otherwise, no output is returned.</summary>
         public bool Report { get; set; }
+
+        ///<summary>Verbose flag, if <see langword="true"/> verbose results of operations
+        ///are reported to the console. Takes priority over <see cref="Report"/></summary>
+        public bool Verbose { get; set; }
+
+        ///<summary>JSON result flag, if <see langword="true"/> results of operations
+        ///are reported to the console in JSON encoding. Takes priority over
+        ///<see cref="Verbose"/> and <see cref="Report"/>.</summary>
         public bool Json { get; set; }
 
+        ///<summary>The current Mesh UDF.</summary>
         public string MeshID { get; set; }
 
         TextWriter output;
 
+        /// <summary>
+        /// Default constructor. If not null, output is directed to
+        /// <paramref name="output"/> Otherwise output is directed to the console.
+        /// </summary>
+        /// <param name="output">The output stream.</param>
         public Shell(TextWriter output = null) => this.output = output ?? Console.Out;
 
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.Ed448"/></summary>
         public CryptoAlgorithmID AlgorithmSign = CryptoAlgorithmID.Ed448;
-        public CryptoAlgorithmID AlgorithmAuthenticate = CryptoAlgorithmID.Ed448;
-        public CryptoAlgorithmID AlgorithmExchange = CryptoAlgorithmID.Ed448;
 
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.X448"/></summary>
+        public CryptoAlgorithmID AlgorithmAuthenticate = CryptoAlgorithmID.X448;
+
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.X448"/></summary>
+        public CryptoAlgorithmID AlgorithmExchange = CryptoAlgorithmID.X448;
+
+        ///<summary>The digest algorithm. Defaults to <see cref="CryptoAlgorithmID.SHA_2_512"/></summary>
         public CryptoAlgorithmID AlgorithmDigest = CryptoAlgorithmID.Default;
+
+        ///<summary>The MAC algorithm. Defaults to <see cref="CryptoAlgorithmID.HMAC_SHA_2_512"/></summary>
         public CryptoAlgorithmID AlgorithmMAC = CryptoAlgorithmID.Default;
+
+        ///<summary>The encryption algorithm. Defaults to <see cref="CryptoAlgorithmID.AES256CBC"/></summary>
         public CryptoAlgorithmID AlgorithmEncrypt = CryptoAlgorithmID.Default;
 
+        /// <summary>
+        /// Preprocess the common command options <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The options to process.</param>
         public override void _PreProcess(Command.Dispatch options) {
             if (options is IReporting Reporting) {
                 Verbose = Reporting.Verbose.Value;
@@ -79,7 +109,10 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-
+        /// <summary>
+        /// Set choices of cryptographic options.
+        /// </summary>
+        /// <param name="CryptoOptions">The cryptographic options.</param>
         void SetAlgorithms(ICryptoOptions CryptoOptions) {
             AlgorithmSign = CryptoAlgorithmID.Ed448;
             AlgorithmAuthenticate = CryptoAlgorithmID.Ed448;
@@ -128,7 +161,10 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-
+        /// <summary>
+        /// Perform post processing of the result of the shell operation.
+        /// </summary>
+        /// <param name="shellResult">The result returned by the operation.</param>
         public virtual void _PostProcess(ShellResult shellResult) {
             if (Json) {
                 // Only report the results in JSON format and without
@@ -143,6 +179,11 @@ namespace Goedel.Mesh.Shell {
                 }
             }
 
+        /// <summary>
+        /// Get a Mesh Client for the options <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">Options specifying the Mesh account id to bind to.</param>
+        /// <returns>The Mesh Client.</returns>
         public virtual MeshService GetMeshClient(IAccountOptions options) {
             var serviceID = options.ServiceID.Value;
 
@@ -150,16 +191,25 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-        /// <summary>
-        /// Get or create a device profile without an associated account.
-        /// </summary>
-        /// <param name="options">The shell options.</param>
-        /// <returns>The device context</returns>
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
+        ///// <summary>
+        ///// Get or create a device profile without an associated account.
+        ///// </summary>
+        ///// <param name="options">The shell options.</param>
+        ///// <returns>The device context</returns>
+        //public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
 
+        /// <summary>
+        /// Obtain an administration context for the options specified in <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The command options.</param>
+        /// <returns>The administration context.</returns>
         public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
 
-
+        /// <summary>
+        /// Obtain an account context for the options specified in <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The command options.</param>
+        /// <returns>The account context.</returns>
         public virtual ContextAccount GetContextAccount(IAccountOptions options) {
             options.Future();
             var contextMesh = MeshHost.GetContextMesh();
@@ -168,14 +218,22 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-
+        /// <summary>
+        /// Obtain a device context for the options specified in <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The command options.</param>
+        /// <returns>The device context.</returns>
         public virtual ContextAccount GetContextDevice(IAccountOptions options) {
             options.Future();
             throw new NYI();
             //CatalogHost.GetContextDevice();
             }
 
-
+        /// <summary>
+        /// Obtain a key collection for the options specified in <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The command options.</param>
+        /// <returns>The key collection.</returns>
 
         public KeyCollection KeyCollection(IAccountOptions options) {
 
@@ -183,7 +241,6 @@ namespace Goedel.Mesh.Shell {
 
             options.Future();
             return CatalogHost.KeyCollection;
-
             }
 
 
@@ -198,8 +255,9 @@ namespace Goedel.Mesh.Shell {
         /// for a key derrivation function that is used to generate the master key.</para>
         /// <para>Otherwise the message </para>
         /// </summary>
-        /// <param name="Options"></param>
-        /// <returns></returns>
+        /// <param name="Options">The command options.</param>
+        /// <param name="keyCollection">The key collection to use to obtain and store keys.</param>
+        /// <returns>The cryptographic parameter set.</returns>
         public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
             var cryptoParameters = new CryptoParameters();
 

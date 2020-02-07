@@ -35,7 +35,7 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDFDevice"/>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
         /// seed.
         /// </summary>
         /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
@@ -58,13 +58,17 @@ namespace Goedel.Mesh {
             }
 
 
-
-        public static new ProfileMesh Decode(DareEnvelope message) {
-            if (message == null) {
+        /// <summary>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileMesh"/>
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ProfileMesh Decode(DareEnvelope envelope) {
+            if (envelope == null) {
                 return null;
                 }
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
             return result;
             }
 

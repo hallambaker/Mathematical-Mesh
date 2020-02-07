@@ -8,13 +8,14 @@ using System.Collections.Generic;
 
 namespace Goedel.Mesh.Client {
 
-    public class AccountDescription {
-        public string Account;
-        public ProfileAccount ProfileMesh;
-        public ProfileDevice DefaultProfileDevice;
-        public Dictionary<string, Mesh.CatalogedDevice> Devices = new Dictionary<string, Mesh.CatalogedDevice>();
 
-        }
+    //public class AccountDescription {
+    //    public string Account;
+    //    public ProfileAccount ProfileMesh;
+    //    public ProfileDevice DefaultProfileDevice;
+    //    public Dictionary<string, Mesh.CatalogedDevice> Devices = new Dictionary<string, Mesh.CatalogedDevice>();
+
+    //    }
 
 
 
@@ -80,11 +81,14 @@ namespace Goedel.Mesh.Client {
         /// Commit a New transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected override void MemoryCommitNew(ContainerStoreEntry containerStoreEntry) =>
+        protected override void MemoryCommitNew(StoreEntry containerStoreEntry) =>
             MemoryCommitUpdate(containerStoreEntry);
 
-
-        protected override void MemoryCommitUpdate(ContainerStoreEntry containerStoreEntry) {
+        /// <summary>
+        /// Commit update to memory.
+        /// </summary>
+        /// <param name="containerStoreEntry">The store entry to commit.</param>
+        protected override void MemoryCommitUpdate(StoreEntry containerStoreEntry) {
             var catalogItem = containerStoreEntry.JsonObject as CatalogedMachine;
 
             if (catalogItem.Local != null) {
@@ -120,7 +124,7 @@ namespace Goedel.Mesh.Client {
         /// Commit a Delete transaction to memory
         /// </summary>
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        protected override void MemoryCommitDelete(ContainerStoreEntry containerStoreEntry) {
+        protected override void MemoryCommitDelete(StoreEntry containerStoreEntry) {
 
             }
 

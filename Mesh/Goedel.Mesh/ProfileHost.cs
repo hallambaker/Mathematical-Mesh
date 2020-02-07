@@ -10,18 +10,34 @@ namespace Goedel.Mesh {
         /// </summary>
         public ProfileHost() { }
 
+        /// <summary>
+        /// Construct a Profile Host instance using the key <paramref name="keySign"/> for signature and
+        /// <paramref name="keyAuth"/> for authentication.
+        /// </summary>
+        /// <param name="keySign">The signature key.</param>
+        /// <param name="keyAuth">The authentication key.</param>
         public ProfileHost(KeyPair keySign,
                     KeyPair keyAuth) {
             KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             KeyAuthentication = new PublicKey(keyAuth.KeyPairPublic());
             }
 
+        /// <summary>
+        /// Generate a new <see cref="ProfileHost"/> for <paramref name="meshMachine"/> using the 
+        /// signature algorithm <paramref name="algorithmSign"/>    
+        /// </summary>
+        /// <param name="meshMachine">The mesh machine description.</param>
+        /// <param name="algorithmSign">The signature algorithm</param>
+        /// <param name="algorithmAuth">The authentication algorithm.</param>
+        /// <returns>The created ProfileHost.</returns>
         public static ProfileHost Generate(
             IMeshMachine meshMachine,
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
+            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
+            CryptoAlgorithmID algorithmAuth = CryptoAlgorithmID.Default) {
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            var keyAuth = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
+            algorithmAuth = algorithmAuth.DefaultAlgorithmAuthenticate();
+            var keyAuth = meshMachine.CreateKeyPair(algorithmAuth, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
 
             var result = new ProfileHost(keySign, keyAuth);
@@ -29,12 +45,18 @@ namespace Goedel.Mesh {
             return result;
             }
 
-        public static new ProfileHost Decode(DareEnvelope message) {
-            if (message == null) {
+
+        /// <summary>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileHost"/>
+        /// </summary>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ProfileHost Decode(DareEnvelope envelope) {
+            if (envelope == null) {
                 return null;
                 }
-            var result = FromJSON(message.GetBodyReader(), true);
-            result.DareEnvelope = message;
+            var result = FromJSON(envelope.GetBodyReader(), true);
+            result.DareEnvelope = envelope;
             return result;
             }
 

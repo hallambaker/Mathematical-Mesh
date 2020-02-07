@@ -106,7 +106,7 @@ namespace Goedel.Mesh {
     /// </summary>
 
     public class EnumeratorCatalogEntryCredential : IEnumerator<CatalogedCredential> {
-        IEnumerator<ContainerStoreEntry> baseEnumerator;
+        IEnumerator<StoreEntry> baseEnumerator;
 
         ///<summary>The current item in the enumeration.</summary>
         public CatalogedCredential Current => baseEnumerator.Current.JsonObject as CatalogedCredential;

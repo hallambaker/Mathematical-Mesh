@@ -33,9 +33,10 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class AccountHandle : Disposable {
 
+        ///<summary>Convenience accessor to the Mesh Profile.</summary>
         public ProfileMesh ProfileMesh => AccountEntry.ProfileMesh;
 
-
+        ///<summary>Convenience accessor to the Account assertion.</summary>
         public ProfileAccount AssertionAccount => AccountEntry.AssertionAccount;
 
 
@@ -83,20 +84,21 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        public DareEnvelope GetCatalogEntryDevice(string deviceUDF) {
-            // NYI: pull up the device catalog for the account
-            // Identify the relevant device record
-            // return it.
 
-            Container.ToConsole(Store.FileName(AccountEntry.Directory, CatalogDevice.Label));
+        //public DareEnvelope GetCatalogEntryDevice(string deviceUDF) {
+        //    // NYI: pull up the device catalog for the account
+        //    // Identify the relevant device record
+        //    // return it.
 
-            using (var container = new CatalogBlind(AccountEntry.Directory, CatalogDevice.Label)) {
-                return container.Get(deviceUDF);
-                }
+        //    Container.ToConsole(Store.FileName(AccountEntry.Directory, CatalogDevice.Label));
+
+        //    using (var container = new CatalogBlind(AccountEntry.Directory, CatalogDevice.Label)) {
+        //        return container.Get(deviceUDF);
+        //        }
 
 
-            throw new NYI();
-            }
+        //    throw new NYI();
+        //    }
         }
 
     /// <summary>
@@ -106,27 +108,46 @@ namespace Goedel.Mesh.Server {
 
         //public string Directory => AccountEntry.Directory;
 
-
+        /// <summary>
+        /// Constructor returning a verified account handle for <paramref name="accountEntry"/>.
+        /// </summary>
+        /// <param name="accountEntry"></param>
         public AccountHandleVerified(AccountEntry accountEntry) : base(accountEntry) {
 
             }
 
+        /// <summary>
+        /// Return the status of the catalog <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">Catalog to return status on.</param>
+        /// <returns>The status vector.</returns>
+        public ContainerStatus GetStatusCatalog(string label) =>
+            Catalog.Status(AccountEntry.Directory, label);
 
-        public ContainerStatus GetStatusCatalog(string Label) =>
-            Catalog.Status(AccountEntry.Directory, Label);
+        /// <summary>
+        /// Return the status of the spool <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">Spool to return status on.</param>
+        /// <returns>The status vector.</returns>
+        public ContainerStatus GetStatusSpool(string label) =>
+            Spool.Status(AccountEntry.Directory, label);
 
-        public ContainerStatus GetStatusSpool(string Label) =>
-            Spool.Status(AccountEntry.Directory, Label);
+        /// <summary>
+        /// Open the store <paramref name="label"/> and return an accessor.
+        /// </summary>
+        /// <param name="label">The store to open</param>
+        /// <returns></returns>
+        public Store GetStore(string label) =>
+            new Store(AccountEntry.Directory, label);
 
-        public Store GetStore(string Label) =>
-            new Store(AccountEntry.Directory, Label);
-
-        public Catalog GetCatalog(string Label) =>
-            new Catalog(AccountEntry.Directory, Label);
-
-
-        public void StoreAppend(string Label, List<DareEnvelope> envelopes) =>
-            Store.Append(AccountEntry.Directory, envelopes, Label);
+        /// <summary>
+        /// Append the envelopes <paramref name="envelopes"/> to the store named
+        /// <paramref name="label"/>.
+        /// </summary>
+        /// <param name="label">The store to add the envelopes to.</param>
+        /// <param name="envelopes">The envelopes to append.</param>
+        public void StoreAppend(string label, List<DareEnvelope> envelopes) =>
+            Store.Append(AccountEntry.Directory, envelopes, label);
 
 
 
@@ -144,6 +165,11 @@ namespace Goedel.Mesh.Server {
 
             }
 
+        /// <summary>
+        /// Return the message with identifier <paramref name="id"/> from the local spool.
+        /// </summary>
+        /// <param name="id">Message to return.</param>
+        /// <returns>The message (if found).</returns>
         public DareEnvelope GetLocal(string id) {
             using var spoolLocal = GetStore(Spool.SpoolLocal);
 

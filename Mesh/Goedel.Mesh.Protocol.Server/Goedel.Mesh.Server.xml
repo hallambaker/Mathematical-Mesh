@@ -11,6 +11,12 @@
             security monitor for enforcing access control at the account level.
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandle.ProfileMesh">
+            <summary>Convenience accessor to the Mesh Profile.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountHandle.AssertionAccount">
+            <summary>Convenience accessor to the Account assertion.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Server.AccountHandle.AccountEntry">
             <summary>
             The account description. This is only accessible through the account handle.
@@ -50,12 +56,54 @@
             Verified account accessor, has access to spools and to catalogues
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.#ctor(Goedel.Mesh.Server.AccountEntry)">
+            <summary>
+            Constructor returning a verified account handle for <paramref name="accountEntry"/>.
+            </summary>
+            <param name="accountEntry"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetStatusCatalog(System.String)">
+            <summary>
+            Return the status of the catalog <paramref name="label"/>.
+            </summary>
+            <param name="label">Catalog to return status on.</param>
+            <returns>The status vector.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetStatusSpool(System.String)">
+            <summary>
+            Return the status of the spool <paramref name="label"/>.
+            </summary>
+            <param name="label">Spool to return status on.</param>
+            <returns>The status vector.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetStore(System.String)">
+            <summary>
+            Open the store <paramref name="label"/> and return an accessor.
+            </summary>
+            <param name="label">The store to open</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.StoreAppend(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+            <summary>
+            Append the envelopes <paramref name="envelopes"/> to the store named
+            <paramref name="label"/>.
+            </summary>
+            <param name="label">The store to add the envelopes to.</param>
+            <param name="envelopes">The envelopes to append.</param>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleVerified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="dareMessage">The message to post.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetLocal(System.String)">
+            <summary>
+            Return the message with identifier <paramref name="id"/> from the local spool.
+            </summary>
+            <param name="id">Message to return.</param>
+            <returns>The message (if found).</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
@@ -172,6 +220,32 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry._PrimaryKey">
+            <summary>The primary key</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.ProfileMesh">
+            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountEntry.ProfileMesh"/></summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.AccountEntry.AssertionAccount">
+            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountEntry.AssertionAccount"/></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.#ctor">
+            <summary>
+            Default constructor for serialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.#ctor(Goedel.Mesh.CreateRequest)">
+            <summary>
+            Constructor creating an Account entry from the request <paramref name="request"/>.
+            </summary>
+            <param name="request">The account creation request.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountEntry.Verify">
+            <summary>
+            Verification function.
+            </summary>
+            <returns>True if the account entry is properly formatted.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.PublicMeshServiceProvider">
             <summary>
             The host class. Receives a stream from the HTTP server caller and 
@@ -210,8 +284,8 @@
             <summary>
             The mesh service dispatcher.
             </summary>
-            <param name="Host">The service provider.</param>
-            <param name="Session">The authentication context.</param>
+            <param name="host">The service provider.</param>
+            <param name="session">The authentication context.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.AuthenticateToAccount(System.String)">
             <summary>
@@ -225,7 +299,8 @@
             require authentication or authorization since it is the method a client
             calls to determine what the requirements for these are.
             </summary>		
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.CreateAccount(Goedel.Mesh.CreateRequest,Goedel.Protocol.JpcSession)">
@@ -233,61 +308,72 @@
             Base method for implementing the transaction CreateAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Complete(Goedel.Mesh.CompleteRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction Download.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Status(Goedel.Mesh.StatusRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction Download.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.DeleteAccount(Goedel.Mesh.DeleteRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  DeleteAccount.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Download(Goedel.Mesh.DownloadRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Download.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Upload.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Post.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Connect(Goedel.Mesh.ConnectRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Connect.
             </summary>
-            <param name="Request">The request object to send to the host.</param>
+            <param name="request">The request object to send to the host.</param>
+            <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshPersist">
             <summary>
             The Mathematical Mesh persistence store.
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshPersist.Provider">
+            <summary>The mesh service provider.</summary>
         </member>
         <member name="F:Goedel.Mesh.Server.MeshPersist.Container">
             <summary>The underlying persistence store for the account catalog.</summary>
@@ -300,6 +386,7 @@
             Open or create the accounts persistence container.
             </summary>
             <param name="directory">The directory in which all the service data is stored.</param>
+            <param name="provider">The Mesh service provider.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountAdd(Goedel.Protocol.JpcSession,Goedel.Mesh.Server.AccountEntry)">
             <summary>
@@ -316,11 +403,11 @@
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountComplete(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Mesh.CompleteRequest)">
             <summary>
-            Update an account record. There must be an existing record and the request must
-            be appropriately authenticated.
+            Complete an account connection request.
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account for which the status is requested..</param>
+            <param name="completeRequest">The completion request.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountStatus(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount)">
             <summary>
@@ -362,8 +449,29 @@
             Process an inbound message to an account.
             </summary>
             <param name="jpcSession">The session connection data.</param>
+            <param name="account">The verified sending account.</param>
             <param name="accounts">The account to which the message is directed.</param>
-            <param name="dareMessage">The message</param>
+            <param name="dareMessage">The message.</param>
+            <returns>Identifier of the message posted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostLocal(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post message to the local pickup spool.
+            </summary>
+            <param name="jpcSession">The session connection data.</param>
+            <param name="account">The verified sending account.</param>
+            <param name="dareMessage">The message.</param>
+            <returns>Identifier of the message posted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostRemote(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post message to a remote user.
+            </summary>
+            <param name="jpcSession">The session connection data.</param>
+            <param name="account">The verified sending account.</param>
+            <param name="accounts">The account to which the message is directed.</param>
+            <param name="dareMessage">The message.</param>
+            <returns>Identifier of the message posted.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Envelope(Goedel.Mesh.Message)">
             <summary>

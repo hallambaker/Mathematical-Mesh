@@ -255,7 +255,7 @@ namespace Goedel.Mesh {
         /// <param name="key">Unique identifier of the entry to locate.</param>
         /// <returns>The entry (if found).</returns>
         public CatalogedEntry Locate(string key) =>
-            (PersistenceStore.Get(key) as ContainerStoreEntry)?.JsonObject as CatalogedEntry;
+            (PersistenceStore.Get(key) as StoreEntry)?.JsonObject as CatalogedEntry;
 
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">Unique identifier of entry to return.</param>
         /// <returns>The entry.</returns>
-        public ContainerStoreEntry GetEntry(string key) => PersistenceStore.Get(key) as ContainerStoreEntry;
+        public StoreEntry GetEntry(string key) => PersistenceStore.Get(key) as StoreEntry;
 
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Goedel.Mesh {
     /// store.
     /// </summary>
     public class EnumeratorCatalogEntry : IEnumerator<CatalogedEntry> {
-        IEnumerator<ContainerStoreEntry> baseEnumerator;
+        IEnumerator<StoreEntry> baseEnumerator;
 
         ///<summary>The current item in the enumeration.</summary>
         public CatalogedEntry Current => baseEnumerator.Current.JsonObject as CatalogedEntry;

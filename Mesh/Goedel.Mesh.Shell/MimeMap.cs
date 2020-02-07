@@ -2,8 +2,13 @@
 using System.IO;
 
 namespace Goedel.Mesh.Shell {
+
+    /// <summary>
+    /// Convert between IANA content types and file extensions.
+    /// </summary>
     public static class MimeMapping {
 
+        ///<summary>Dictionary mapping file extension to IANA content type.</summary>
         public static Dictionary<string, string> MimeMap = new Dictionary<string, string> {
                 { ".saml", "application/samlassertion+xml"},
                 { ".dns", "application/dns"},
@@ -25,7 +30,11 @@ namespace Goedel.Mesh.Shell {
                 { ".txt", "text/plain"}
             };
 
-
+        /// <summary>
+        /// Returns the IANA content type for <paramref name="fileName"/>.
+        /// </summary>
+        /// <param name="fileName">The file to process.</param>
+        /// <returns>The IANA content type if found.</returns>
         public static string GetMimeMapping(string fileName) {
             var extension = Path.GetExtension(fileName).ToLower();
             var found = MimeMap.TryGetValue(extension, out var value);

@@ -92,6 +92,13 @@ namespace Goedel.Mesh.Shell {
                 ProfileAccount = contextAccount.ProfileAccount
                 };
             }
+
+        /// <summary>
+        /// Dispatch method, returns a connection PIN code for the account.
+        /// Requires administrative privileges.
+        /// </summary>
+        /// <param name="Options">The dispatch options.</param>
+        /// <returns>The result of the operation.</returns>
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
             using var contextAccount = GetContextAccount(Options);
             var messageConnectionPIN = contextAccount.GetPIN();

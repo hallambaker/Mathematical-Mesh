@@ -5,12 +5,16 @@ namespace Goedel.Mesh.Client {
 
 
     public partial class HostCatalogItem {
+
+        ///<summary>Dummy property used to force initialization.</summary>
         public static object Initialize => null;
 
         static HostCatalogItem() => AddDictionary(ref _TagDictionary);
         }
 
     public partial class CatalogedMachine {
+
+        ///<summary>The unique identifier.</summary>
         public override string _PrimaryKey => ID;
 
 
@@ -19,7 +23,9 @@ namespace Goedel.Mesh.Client {
 
     public partial class CatalogedStandard {
 
-        public DareEnvelope EncodedProfileDevice => CatalogedDevice.EnvelopedProfileDevice;
+
+
+        //public DareEnvelope EncodedProfileDevice => CatalogedDevice.EnvelopedProfileDevice;
 
 
         }
@@ -64,6 +70,9 @@ namespace Goedel.Mesh.Client {
 
     public partial class CatalogedPending {
 
+        /// <summary>
+        /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
+        /// </summary>
         public AcknowledgeConnection MessageConnectionResponse => messageConnectionResponse ??
             AcknowledgeConnection.Decode(EnvelopedMessageConnectionResponse).
                 CacheValue(out messageConnectionResponse);

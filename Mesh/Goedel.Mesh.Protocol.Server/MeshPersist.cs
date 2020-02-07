@@ -25,6 +25,7 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class MeshPersist {
 
+        ///<summary>The mesh service provider.</summary>
         protected PublicMeshServiceProvider Provider;
 
         ///<summary>The underlying persistence store for the account catalog.</summary>
@@ -32,7 +33,6 @@ namespace Goedel.Mesh.Server {
 
         ///<summary>The root directory in which the files are stored.</summary>
         public string DirectoryRoot;
-
 
         static MeshPersist() {
             _ = MeshItem.Initialize;
@@ -44,6 +44,7 @@ namespace Goedel.Mesh.Server {
         /// Open or create the accounts persistence container.
         /// </summary>
         /// <param name="directory">The directory in which all the service data is stored.</param>
+        /// <param name="provider">The Mesh service provider.</param>
         public MeshPersist(PublicMeshServiceProvider provider, string directory) {
 
             Provider = provider;
@@ -56,10 +57,6 @@ namespace Goedel.Mesh.Server {
                 fileStatus: FileStatus.OpenOrCreate,
                 containerType: ContainerType.MerkleTree
                 );
-
-
-
-
             }
 
         /// <summary>
@@ -67,7 +64,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         public void AccountAdd(JpcSession jpcSession,
                         AccountEntry accountEntry) {
-            ContainerStoreEntry containerEntry;
+            StoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
             accountEntry.Directory = directory;
@@ -75,7 +72,7 @@ namespace Goedel.Mesh.Server {
             // Lock the container so that we can create the new account entry without 
             // causing contention.
             lock (Container) {
-                containerEntry = Container.New(accountEntry) as ContainerStoreEntry;
+                containerEntry = Container.New(accountEntry) as StoreEntry;
                 }
 
             lock (containerEntry) {
@@ -134,11 +131,11 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-        /// Update an account record. There must be an existing record and the request must
-        /// be appropriately authenticated.
+        /// Complete an account connection request.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
+        /// <param name="completeRequest">The completion request.</param>
         public CompleteResponse AccountComplete(JpcSession jpcSession, 
                     VerifiedAccount account, 
                     CompleteRequest completeRequest) {
@@ -283,12 +280,23 @@ namespace Goedel.Mesh.Server {
         /// Process an inbound message to an account.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The verified sending account.</param>
         /// <param name="accounts">The account to which the message is directed.</param>
-        /// <param name="dareMessage">The message</param>
-        public string MessagePost(JpcSession jpcSession, VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => accounts == null ? MessagePostLocal(jpcSession, account, dareMessage) :
-                 MessagePostRemote(jpcSession, account, accounts, dareMessage);//            using var accountUnverified = GetAccountUnverified(account);//            dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ??//new ContentMeta();//            var identifier = UDF.Nonce();//            dareMessage.Header.ContentMeta.UniqueID = identifier;//            accountUnverified.Post(dareMessage);//            return identifier;
+        /// <param name="dareMessage">The message.</param>
+        /// <returns>Identifier of the message posted.</returns>
+        public string MessagePost(
+                    JpcSession jpcSession, 
+                    VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => 
+            accounts == null ? MessagePostLocal(jpcSession, account, dareMessage) :
+                 MessagePostRemote(jpcSession, account, accounts, dareMessage);
 
-
+        /// <summary>
+        /// Post message to the local pickup spool.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The verified sending account.</param>
+        /// <param name="dareMessage">The message.</param>
+        /// <returns>Identifier of the message posted.</returns>
         public string MessagePostLocal(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
 
             var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
@@ -303,7 +311,19 @@ namespace Goedel.Mesh.Server {
             return identifier;
             }
 
-        public string MessagePostRemote(JpcSession jpcSession, VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => throw new NYI();
+        /// <summary>
+        /// Post message to a remote user.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The verified sending account.</param>
+        /// <param name="accounts">The account to which the message is directed.</param>
+        /// <param name="dareMessage">The message.</param>
+        /// <returns>Identifier of the message posted.</returns>
+        public string MessagePostRemote(
+                JpcSession jpcSession, 
+                VerifiedAccount account, 
+                List<string> accounts, 
+                DareEnvelope dareMessage) => throw new NYI();
 
 
         /// <summary>
@@ -381,7 +401,7 @@ namespace Goedel.Mesh.Server {
 
             try {
                 lock (Container) {
-                    var containerEntry = Container.Get(account) as ContainerStoreEntry;
+                    var containerEntry = Container.Get(account) as StoreEntry;
                     result = containerEntry?.JsonObject as AccountEntry;
                     Assert.NotNull(result);
 
@@ -402,19 +422,29 @@ namespace Goedel.Mesh.Server {
 
     public partial class AccountEntry {
 
+        ///<summary>The primary key</summary>
         public override string _PrimaryKey => ServiceID;
 
+        ///<summary>Cached convenience accessor for <see cref="ProfileMesh"/></summary>
         public ProfileMesh ProfileMesh => profileMesh ??
                 ProfileMesh.Decode(SignedProfileMesh).CacheValue(out profileMesh);
         ProfileMesh profileMesh;
 
+        ///<summary>Cached convenience accessor for <see cref="AssertionAccount"/></summary>
         public ProfileAccount AssertionAccount => assertionAccount ??
             ProfileAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
         ProfileAccount assertionAccount;
 
+        /// <summary>
+        /// Default constructor for serialization.
+        /// </summary>
         public AccountEntry() {
             }
 
+        /// <summary>
+        /// Constructor creating an Account entry from the request <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The account creation request.</param>
         public AccountEntry(CreateRequest request) {
             ServiceID = request.ServiceID;
             SignedProfileMesh = request.SignedProfileMesh;
@@ -423,6 +453,10 @@ namespace Goedel.Mesh.Server {
             Directory = ServiceID;
             }
 
+        /// <summary>
+        /// Verification function.
+        /// </summary>
+        /// <returns>True if the account entry is properly formatted.</returns>
         public bool Verify() => true; // NYI: Verification of signed profile.
 
         }

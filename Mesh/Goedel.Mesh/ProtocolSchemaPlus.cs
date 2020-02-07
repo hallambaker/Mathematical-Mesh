@@ -99,21 +99,42 @@ namespace Goedel.Mesh {
 
 
     public partial class CreateResponse {
+
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public CreateResponse(Exception exception = null) : base(exception) {
             }
         }
 
 
     public partial class DeleteResponse {
+
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public DeleteResponse(Exception exception = null) : base(exception) {
             }
         }
 
 
     public partial class StatusResponse {
+
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public StatusResponse(Exception exception = null) : base(exception) {
             }
 
+        /// <summary>
+        /// Append the response description to <paramref name="builder"/> at an indentation
+        /// level of <paramref name="indent"/>.
+        /// </summary>
+        /// <param name="builder">The string builder to append the description to.</param>
+        /// <param name="indent">The indentation level.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0) {
             builder.AppendIndent(indent, "Status");
             if (ContainerStatus != null) {
@@ -128,37 +149,71 @@ namespace Goedel.Mesh {
         }
 
     public partial class ContainerStatus {
+
+        /// <summary>
+        /// Append the response description to <paramref name="builder"/> at an indentation
+        /// level of <paramref name="indent"/>.
+        /// </summary>
+        /// <param name="builder">The string builder to append the description to.</param>
+        /// <param name="indent">The indentation level.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0) =>
             builder.AppendIndent(indent, $"{Container}:  {Index} {Digest?.ToStringBase64url()}");
         }
 
 
     public partial class ContainerUpdate {
+
+        /// <summary>
+        /// Append the response description to <paramref name="builder"/> at an indentation
+        /// level of <paramref name="indent"/>.
+        /// </summary>
+        /// <param name="builder">The string builder to append the description to.</param>
+        /// <param name="indent">The indentation level.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0) =>
             builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
         }
 
     public partial class UploadResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public UploadResponse(Exception exception = null) : base(exception) {
             }
         }
 
     public partial class PostResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public PostResponse(Exception exception = null) : base(exception) {
             }
         }
 
     public partial class DownloadResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public DownloadResponse(Exception exception = null) : base(exception) {
             }
         }
 
     public partial class ConnectResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public ConnectResponse(Exception exception = null) : base(exception) {
             }
         }
 
     public partial class CompleteResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
         public CompleteResponse(Exception exception = null) : base(exception) {
             }
         }

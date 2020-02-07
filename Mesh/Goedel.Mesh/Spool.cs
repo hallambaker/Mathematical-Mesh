@@ -2,24 +2,49 @@
 using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
-    public class Spool : Store {
-        public const string SpoolOutbound = "mmm_Outbound";
-        public const string SpoolLocal = "mmm_Local";
-        public const string SpoolInbound = "mmm_Inbound";
-        public const string SpoolArchive = "mmm_Archive";
 
-        public Spool(string directory, string containerName,
+    /// <summary>
+    /// Base class for stores of type Spool.
+    /// </summary>
+    public class Spool : Store {
+
+        ///<summary>Canonical name for outbound spool</summary>
+        public const string SpoolOutbound = "mmm/Outbound";
+
+        ///<summary>Canonical name for local spool</summary>
+        public const string SpoolLocal = "mmm/Local";
+
+        ///<summary>Canonical name for inbound spool</summary>
+        public const string SpoolInbound = "mmm/Inbound";
+
+        ///<summary>Canonical name for archive spool</summary>
+        public const string SpoolArchive = "mmm/Archive";
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="directory">The directory in which the spool is stored.</param>
+        /// <param name="storeName">The store name.</param>
+        /// <param name="cryptoParameters">The cryptographic parameters.</param>
+        /// <param name="keyCollection">The key collection to fetch keys from.</param>
+        public Spool(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
                     KeyCollection keyCollection = null) :
-                base(directory, containerName, cryptoParameters, keyCollection) {
+                base(directory, storeName, cryptoParameters, keyCollection) {
 
             }
 
-        public static ContainerStatus Status(string directory, string containerName) {
-            using var container = new Spool(directory, containerName);
+        /// <summary>
+        /// Return the status of the spool.
+        /// </summary>
+        /// <param name="directory">The directory in which the spool is stored.</param>
+        /// <param name="storeName">The store name.</param>
+        /// <returns></returns>
+        public static ContainerStatus Status(string directory, string storeName) {
+            using var store = new Spool(directory, storeName);
             return new ContainerStatus() {
-                Index = (int)container.Container.FrameCount,
-                Container = containerName
+                Index = (int)store.Container.FrameCount,
+                Container = storeName
                 };
             }
 
