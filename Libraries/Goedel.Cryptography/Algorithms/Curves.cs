@@ -246,7 +246,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="s">Scalar factor</param>
         /// <returns>The result of the multiplication</returns>
         public BigInteger ScalarMultiply(BigInteger s) {
-            ScalarAccumulate(U, s, out var x_2, out var z_2, out var x_3, out var z_3);
+            ScalarAccumulate(U, s, out var x_2, out var z_2, out _, out _);
             return Recover(x_2, z_2);
             }
 

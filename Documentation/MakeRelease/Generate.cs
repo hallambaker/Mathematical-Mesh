@@ -34,14 +34,14 @@ namespace Goedel.Tool.Version {
 		// MakeVersionID
 		//
 		public static void MakeVersionID (Distribution Distribution) { /* File  */
-			using (var _Output = new StreamWriter ("Sources\\prismproof\\Downloads\\release.mdx")) {
+			using var _Output = new StreamWriter ("Sources\\prismproof\\Downloads\\release.mdx");
 				var _Indent = ""; 
 				if (  (Distribution.Latest != null)  ) {
 					_Output.Write ("<a=\"Downloads/index.html\">Mesh Release {1}</a>\n{0}", _Indent, Distribution.Latest.Code);
 					} else {
 					_Output.Write ("<none>\n{0}", _Indent);
 					}
-				}
+		
 			}
 		
 
@@ -49,7 +49,7 @@ namespace Goedel.Tool.Version {
 		// MakeIndex
 		//
 		public static void MakeIndex (Distribution Distribution) { /* File  */
-			using (var _Output = new StreamWriter ("Sources\\prismproof\\Downloads\\index.md")) {
+			using var _Output = new StreamWriter ("Sources\\prismproof\\Downloads\\index.md");
 				var _Indent = ""; 
 				 var _Class = new MakeRelease () { _Output = _Output};
 				_Output.Write ("<title>Downloads\n{0}", _Indent);
@@ -109,7 +109,7 @@ namespace Goedel.Tool.Version {
 					}
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("</leftmain>\n{0}", _Indent);
-				}
+		
 			}
 		
 

@@ -1,6 +1,8 @@
 ﻿using Xunit;
 using Goedel.Mesh.Shell;
 
+#pragma warning disable IDE0059
+
 namespace Goedel.XUnit {
     public partial class ShellTests {
         public string AliceAccount1 = "personal";

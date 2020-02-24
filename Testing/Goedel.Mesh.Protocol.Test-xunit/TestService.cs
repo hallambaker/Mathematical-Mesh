@@ -10,6 +10,8 @@ using System.Collections.Generic;
 
 using Xunit;
 
+#pragma warning disable IDE0059
+
 namespace Goedel.XUnit {
     public class TestService {
         // Goal: Authenticate service requests and responses

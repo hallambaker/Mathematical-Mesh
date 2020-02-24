@@ -10,6 +10,10 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Goedel.Mesh.Shell {
+
+    /// <summary>
+    /// The command shell.
+    /// </summary>
     public partial class Shell : _Shell {
 
         //CommandLineInterpreter CommandLineInterpreter;

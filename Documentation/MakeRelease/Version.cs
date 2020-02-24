@@ -331,17 +331,15 @@ namespace Goedel.Tool.Version {
 
 
         private Goedel.Tool.Version._Choice New_Choice(string Label) {
-            switch (Label) {
-
-                case "Version": return NewVersion();
-                case "Platform": return NewPlatform();
-                case "File": return NewFile();
-                case "Description": return NewDescription();
-                case "Stable": return NewStable();
-
-				}
-
-            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
+            return Label switch
+                {
+                    "Version" => NewVersion(),
+                    "Platform" => NewPlatform(),
+                    "File" => NewFile(),
+                    "Description" => NewDescription(),
+                    "Stable" => NewStable(),
+                    _ => throw new NotFoundReserved("Reserved word not recognized \"" + Label + "\""),
+                    };
             }
 
 
@@ -387,16 +385,15 @@ namespace Goedel.Tool.Version {
 
 
         static Goedel.Tool.Version.ReleaseType _Reserved(string Label) {
-            switch (Label) {
-
-                case "Version": return Goedel.Tool.Version.ReleaseType.Version;
-                case "Platform": return Goedel.Tool.Version.ReleaseType.Platform;
-                case "File": return Goedel.Tool.Version.ReleaseType.File;
-                case "Description": return Goedel.Tool.Version.ReleaseType.Description;
-                case "Stable": return Goedel.Tool.Version.ReleaseType.Stable;
-
-                }
-            return Goedel.Tool.Version.ReleaseType._Bottom;
+            return Label switch
+                {
+                    "Version" => Goedel.Tool.Version.ReleaseType.Version,
+                    "Platform" => Goedel.Tool.Version.ReleaseType.Platform,
+                    "File" => Goedel.Tool.Version.ReleaseType.File,
+                    "Description" => Goedel.Tool.Version.ReleaseType.Description,
+                    "Stable" => Goedel.Tool.Version.ReleaseType.Stable,
+                    _ => Goedel.Tool.Version.ReleaseType._Bottom,
+                    };
             }
 
 

@@ -16,7 +16,7 @@ namespace Goedel.Mesh {
         public string ServiceDefault => ServiceIDs?[0];
 
 
-        KeyPair keySignOffline;
+        //KeyPair keySignOffline;
         KeyPair keySignOnline;
 
 

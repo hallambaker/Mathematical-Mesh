@@ -153,7 +153,7 @@ namespace ExampleGenerator {
 		// MeshExamplesMessageMail
 		//
 		public static void MeshExamplesMessageMail (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageMail.md")) {
+			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageMail.md");
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("For example, consider the following mail message:\n{0}", _Indent);
@@ -177,7 +177,7 @@ namespace ExampleGenerator {
 				_Output.Write ("This contains the same information as before but the mail message headers are \n{0}", _Indent);
 				_Output.Write ("now presented as  a list of Encoded Data Sequences.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
+		
 			}
 		
 
@@ -185,7 +185,7 @@ namespace ExampleGenerator {
 		// MeshExamplesMessageEDS
 		//
 		public static void MeshExamplesMessageEDS (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageEDS.md")) {
+			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessageEDS.md");
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The encoding of the 'From' header of the previous example as a plaintext EDS is as follows:\n{0}", _Indent);
@@ -193,7 +193,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Example.EDSText);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				}
+		
 			}
 		
 
@@ -201,7 +201,7 @@ namespace ExampleGenerator {
 		// MeshExamplesMessageEncrypted
 		//
 		public static void MeshExamplesMessageEncrypted (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\MeshExamplesMessageEncrypted.md")) {
+			using var _Output = new StreamWriter ("Examples\\MeshExamplesMessageEncrypted.md");
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The following is an encrypted version of the message shown earlier. \n{0}", _Indent);
@@ -213,7 +213,7 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (Example.MailMessageAsDAREEncrypted, false));
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
+		
 			}
 		
 
@@ -221,7 +221,7 @@ namespace ExampleGenerator {
 		// MeshExamplesMessage
 		//
 		public static void MeshExamplesMessage (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesDAREMessage.md")) {
+			using var _Output = new StreamWriter ("Examples\\ExamplesDAREMessage.md");
 				var _Indent = ""; 
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("#Test Examples\n{0}", _Indent);
@@ -366,7 +366,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
+		
 			}
 		}
 	}

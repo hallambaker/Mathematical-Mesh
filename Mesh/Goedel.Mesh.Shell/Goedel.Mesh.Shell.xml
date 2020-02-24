@@ -4,6 +4,11 @@
         <name>Goedel.Mesh.Shell</name>
     </assembly>
     <members>
+        <member name="T:Goedel.Mesh.Shell.Shell">
+            <summary>
+            The command shell.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.AccountHello(Goedel.Mesh.Shell.AccountHello)">
             <summary>
             Dispatch method

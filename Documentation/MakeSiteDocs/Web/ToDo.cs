@@ -14,7 +14,7 @@ namespace ExampleGenerator {
 		// ToDo
 		//
 		public static void ToDo (CreateExamples Examples) { /* File  */
-			using (var _Output = new StreamWriter ("todo.md")) {
+			using var _Output = new StreamWriter ("todo.md");
 				var _Indent = ""; 
 				_Output.Write ("<title>User Guide\n{0}", _Indent);
 				_Output.Write ("<titlebanner><h1>To Do List\n{0}", _Indent);
@@ -34,7 +34,7 @@ namespace ExampleGenerator {
 				_Output.Write ("</ul>\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Examples.ToDoList = null; // Cause future attempts to add entries to cause an error.
-				}
+		
 			}
 		}
 	}

@@ -454,7 +454,7 @@ namespace ExampleGenerator {
 		// ExamplesAdvancedQuantum
 		//
 		public static void ExamplesAdvancedQuantum (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\ExamplesAdvancedQuantum.md")) {
+			using var _Output = new StreamWriter ("Examples\\ExamplesAdvancedQuantum.md");
 				var _Indent = ""; 
 				_Output.Write ("##Example: Creating a Quantum Resistant Signature Fingerprint\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -494,7 +494,7 @@ namespace ExampleGenerator {
 				_Output.Write ("in at least one multi-party notary scheme.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				}
+		
 			}
 		
 
@@ -502,7 +502,7 @@ namespace ExampleGenerator {
 		// Blahhh
 		//
 		public static void Blahhh (CreateExamples Example) { /* File  */
-			using (var _Output = new StreamWriter ("Examples\\Blahhh.md")) {
+			using var _Output = new StreamWriter ("Examples\\Blahhh.md");
 				var _Indent = ""; 
 				_Output.Write ("The Recryption entry consists of Bob's address, the recryption key and the decryption\n{0}", _Indent);
 				_Output.Write ("key encrypted under Bob's encryption key:\n{0}", _Indent);
@@ -550,7 +550,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is obtained by point addition of the recryption and decryption\n{0}", _Indent);
 				_Output.Write ("values:\n{0}", _Indent);
-				}
+		
 			}
 		}
 	}
