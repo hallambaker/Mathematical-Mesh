@@ -172,7 +172,7 @@ namespace Goedel.Command {
         /// <param name="Extension">The extension.</param>
         /// <returns>File name.</returns>
         public string DefaultFile(string Source, string Extension = null) {
-            Extension = Extension ?? this.Extension;
+            Extension ??= this.Extension;
 
             Text = FileTools.DefaultFile(Extension, Source);
             return Text;
@@ -333,13 +333,17 @@ namespace Goedel.Command {
     /// Command line flag for file.
     /// </summary>
     public abstract class _Enumeration<T> : Type {
-        DescribeEntryEnumerate Description;
+
+        ///<summary>The entry description</summary>
+        public DescribeEntryEnumerate Description;
 
         ///<summary>The typed value</summary>
         public T Value;
 
         ///<summary>Base constructor</summary>
-        public _Enumeration(DescribeEntryEnumerate description, string Value = null) => Description = description;
+        public _Enumeration(DescribeEntryEnumerate description, string value = null) {
+            Description = description;
+            }
 
         }
 

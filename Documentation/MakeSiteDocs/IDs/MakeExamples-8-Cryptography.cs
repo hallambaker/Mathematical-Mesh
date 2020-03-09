@@ -27,10 +27,8 @@ namespace ExampleGenerator {
 		// ExamplesThreshold
 		//
 		public static void ExamplesThreshold(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ExamplesThreshold.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThreshold.md" };
-				obj._ExamplesThreshold(Example);
-				}
+			using var _Output = new StreamWriter("Examples\\ExamplesThreshold.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThreshold.md" };
+			obj._ExamplesThreshold(Example);
 			}
 		public void _ExamplesThreshold(CreateExamples Example) {
 
@@ -259,10 +257,8 @@ namespace ExampleGenerator {
 		// ExamplesThresholdSig
 		//
 		public static void ExamplesThresholdSig(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ExamplesThresholdSig.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThresholdSig.md" };
-				obj._ExamplesThresholdSig(Example);
-				}
+			using var _Output = new StreamWriter("Examples\\ExamplesThresholdSig.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesThresholdSig.md" };
+			obj._ExamplesThresholdSig(Example);
 			}
 		public void _ExamplesThresholdSig(CreateExamples Example) {
 

@@ -15,10 +15,8 @@ namespace ExampleGenerator {
 		// WebContainer
 		//
 		public static void WebContainer(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Guide/container.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/container.md" };
-				obj._WebContainer(Examples);
-				}
+			using var _Output = new StreamWriter("Guide/container.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Guide/container.md" };
+			obj._WebContainer(Examples);
 			}
 		public void _WebContainer(CreateExamples Examples) {
 
@@ -146,10 +144,8 @@ namespace ExampleGenerator {
 		// ContainerReference
 		//
 		public static void ContainerReference(CreateExamples Examples) { /* XFile  */
-				using (var _Output = new StreamWriter("Reference/container.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/container.md" };
-				obj._ContainerReference(Examples);
-				}
+			using var _Output = new StreamWriter("Reference/container.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Reference/container.md" };
+			obj._ContainerReference(Examples);
 			}
 		public void _ContainerReference(CreateExamples Examples) {
 

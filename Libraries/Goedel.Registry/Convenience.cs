@@ -33,6 +33,9 @@ namespace Goedel.Registry {
                 case "CS": {
                     return text.CS();
                     }
+
+                default:
+                    break;
                 }
             return text.CS();
             }

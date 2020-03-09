@@ -31,27 +31,7 @@ add   Add calendar entry from file
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> network add NetworkEntry1.json NetID1
-<rsp>{Username}@{Service} = [{Password}]</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> network add NetworkEntry1.json NetID1 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Service": "NetworkEntry1.json",
-      "Password": "NetID1"}}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network delete
 
@@ -67,26 +47,7 @@ delete   Delete calendar entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> network delete NetID2
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> network delete NetID2 /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network get
 
@@ -102,25 +63,7 @@ get   Lookup calendar entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> network get NetID2
-<rsp>Empty
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> network get NetID2 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": false}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network dump
 
@@ -135,24 +78,5 @@ dump   List network entries
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> network list
-<rsp>ERROR - The command  is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> network list /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command  is not known."}}
-</div>
-~~~~
-
+**Missing Example***
 

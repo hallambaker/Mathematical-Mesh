@@ -177,6 +177,9 @@ namespace Goedel.Cryptography.Jose {
                 case ResultECDH result: {
                     return new KeyAgreementECDH(result);
                     }
+
+                default:
+                    break;
                 }
             return null;
             }

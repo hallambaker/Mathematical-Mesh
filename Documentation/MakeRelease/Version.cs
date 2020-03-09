@@ -1,5 +1,5 @@
 ﻿
-//  Copyright (c) Comodo Group Inc. by 2017
+//  Copyright (c) ThresholdMode.Com by 2020
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ using Goedel.Utilities;
 //       Text
 //   TokenType
 
-#pragma warning disable IDE0022
+#pragma warning disable IDE0022, IDE0066, IDE1006, IDE0059
 namespace Goedel.Tool.Version {
 
 
@@ -331,15 +331,17 @@ namespace Goedel.Tool.Version {
 
 
         private Goedel.Tool.Version._Choice New_Choice(string Label) {
-            return Label switch
-                {
-                    "Version" => NewVersion(),
-                    "Platform" => NewPlatform(),
-                    "File" => NewFile(),
-                    "Description" => NewDescription(),
-                    "Stable" => NewStable(),
-                    _ => throw new NotFoundReserved("Reserved word not recognized \"" + Label + "\""),
-                    };
+            switch (Label) {
+
+                case "Version": return NewVersion();
+                case "Platform": return NewPlatform();
+                case "File": return NewFile();
+                case "Description": return NewDescription();
+                case "Stable": return NewStable();
+
+				}
+
+            throw new NotFoundReserved ("Reserved word not recognized \"" + Label + "\"");
             }
 
 
@@ -385,15 +387,16 @@ namespace Goedel.Tool.Version {
 
 
         static Goedel.Tool.Version.ReleaseType _Reserved(string Label) {
-            return Label switch
-                {
-                    "Version" => Goedel.Tool.Version.ReleaseType.Version,
-                    "Platform" => Goedel.Tool.Version.ReleaseType.Platform,
-                    "File" => Goedel.Tool.Version.ReleaseType.File,
-                    "Description" => Goedel.Tool.Version.ReleaseType.Description,
-                    "Stable" => Goedel.Tool.Version.ReleaseType.Stable,
-                    _ => Goedel.Tool.Version.ReleaseType._Bottom,
-                    };
+            switch (Label) {
+
+                case "Version": return Goedel.Tool.Version.ReleaseType.Version;
+                case "Platform": return Goedel.Tool.Version.ReleaseType.Platform;
+                case "File": return Goedel.Tool.Version.ReleaseType.File;
+                case "Description": return Goedel.Tool.Version.ReleaseType.Description;
+                case "Stable": return Goedel.Tool.Version.ReleaseType.Stable;
+
+                }
+            return Goedel.Tool.Version.ReleaseType._Bottom;
             }
 
 

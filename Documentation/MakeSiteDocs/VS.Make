@@ -29,8 +29,8 @@ LinkFiles = \
     Goedel.Test.Core.dll\
     Goedel.Test.dll\
     Goedel.Mesh.Core.dll\
-    Goedel.Mesh.Protocol.Client.dll\
-    Goedel.Mesh.Protocol.Server.dll\
+    Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Server.dll\
     Goedel.Mesh.Shell.dll\
     Goedel.Mesh.dll\
     Goedel.Mesh.Test.dll
@@ -43,6 +43,7 @@ ToolTargets = \
 	IDs\MakeExamples-4-Schema.cs\
 	IDs\MakeExamples-5-Protocol.cs\
 	IDs\MakeExamples-8-Cryptography.cs\
+	Web\CommandsetAccount.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
 	Web\CommandsetMesh.cs\
@@ -82,6 +83,9 @@ IDs\MakeExamples-5-Protocol.cs : IDs\MakeExamples-5-Protocol.script
 
 IDs\MakeExamples-8-Cryptography.cs : IDs\MakeExamples-8-Cryptography.script 
 	gscript IDs\MakeExamples-8-Cryptography.script  IDs\MakeExamples-8-Cryptography.cs
+
+Web\CommandsetAccount.cs : Web\CommandsetAccount.script 
+	gscript Web\CommandsetAccount.script  Web\CommandsetAccount.cs
 
 Web\ToDo.cs : Web\ToDo.script 
 	gscript Web\ToDo.script  Web\ToDo.cs
@@ -149,6 +153,8 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
+	
 
 postbuild : postbuildRecurse
 

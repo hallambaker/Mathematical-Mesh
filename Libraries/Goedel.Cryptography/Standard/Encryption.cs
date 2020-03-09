@@ -384,10 +384,13 @@ namespace Goedel.Cryptography.Standard {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.ECB, PaddingMode.None);
                     }
+
+ 
                 default: {
                     throw new CipherModeNotSupported();
                     }
                 }
+
             }
 
         /// <summary>

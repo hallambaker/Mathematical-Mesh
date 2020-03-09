@@ -69,26 +69,7 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp></div>
-~~~~
-
-Specifying the /json option returns a result of type ResultFile:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A /json
-<rsp>{
-  "ResultFile": {
-    "Success": true,
-    "Filename": "TestFile1.dare",
-    "TotalBytes": 14}}
-</div>
-~~~~
-
+**Missing Example***
 
 
 # dare decode
@@ -117,26 +98,7 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp>ERROR - The option  is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The option  is not known."}}
-</div>
-~~~~
-
+**Missing Example***
 
 # dare verify
 
@@ -160,26 +122,7 @@ currently active key collection and reports success or failure.
 The active key collection may be overriden using the `/mesh` option.
 
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp>ERROR - The option  is not known.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The option  is not known."}}
-</div>
-~~~~
-
+**Missing Example***
 
 # dare earl
 
@@ -220,24 +163,5 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The feature has not been implemented"}}
-</div>
-~~~~
-
+**Missing Example***
 

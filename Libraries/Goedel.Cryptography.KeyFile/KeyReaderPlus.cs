@@ -9,20 +9,20 @@ namespace Goedel.Cryptography.KeyFile {
     /// Read a PEM style private key file (unencrypted)
     /// </summary>
     public partial class KeyFileLex {
-        int Armor1 = 0;
-        int Armor2 = 0;
-        int Armor3 = 0;
-        int Armor4 = 0;
+        int armor1 = 0;
+        int armor2 = 0;
+        int armor3 = 0;
+        int armor4 = 0;
 
-        StringBuilder BuildTag1 = new StringBuilder();
-        StringBuilder BuildTag2 = new StringBuilder();
-        StringBuilder BuildBase64 = new StringBuilder();
+        StringBuilder buildTag1 = new StringBuilder();
+        StringBuilder buildTag2 = new StringBuilder();
+        StringBuilder buildBase64 = new StringBuilder();
 
-        StringBuilder BuildHeader = new StringBuilder();
+        //StringBuilder BuildHeader = new StringBuilder();
 
         /// <summary>List of headers</summary>
         public List<Header> Headers = new List<Header>();
-        Header CurrentHeader;
+        Header currentHeader;
 
         /// <summary>
         /// Do nothing
@@ -35,25 +35,25 @@ namespace Goedel.Cryptography.KeyFile {
         /// Count the inital staring armor tag
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count1(int c) => Armor1++;
+        public virtual void Count1(int c) => armor1++;
 
         /// <summary>
         /// Count the inital finishing armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count2(int c) => Armor2++;
+        public virtual void Count2(int c) => armor2++;
 
         /// <summary>
         /// Count the final staring armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count3(int c) => Armor3++;
+        public virtual void Count3(int c) => armor3++;
 
         /// <summary>
         /// Count the final finishing armor tag;
         /// </summary>
         /// <param name="c">Character that was read</param>
-        public virtual void Count4(int c) => Armor4++;
+        public virtual void Count4(int c) => armor4++;
 
         /// <summary>
         /// Record the initial item description
@@ -61,7 +61,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="c">Character that was read</param>
         public virtual void Tag1(int c) {
             if (!c.IsWhite()) {
-                BuildTag1.Append(c.ToASCII());
+                buildTag1.Append(c.ToASCII());
                 }
             }
 
@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="c">Character that was read</param> 
         public virtual void Base64(int c) {
             if (c.IsBase64()) {
-                BuildBase64.Append(c.ToASCII());
+                buildBase64.Append(c.ToASCII());
                 }
             }
 
@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// <param name="c">Character that was read</param>
         public virtual void Tag2(int c) {
             if (!c.IsWhite()) {
-                BuildTag2.Append(c.ToASCII());
+                buildTag2.Append(c.ToASCII());
                 }
             }
 
@@ -98,14 +98,14 @@ namespace Goedel.Cryptography.KeyFile {
                 }
             }
 
-        StringBuilder BuildTagEnd = new StringBuilder();
+        StringBuilder buildTagEnd = new StringBuilder();
         /// <summary>
         /// Verify the final End tag
         /// </summary>
         /// <param name="c">Character that was read</param>
         public virtual void End(int c) {
             if (!c.IsWhite()) {
-                BuildTagEnd.Append(c.ToASCII());
+                buildTagEnd.Append(c.ToASCII());
                 }
             }
 
@@ -124,32 +124,32 @@ namespace Goedel.Cryptography.KeyFile {
             }
 
 
-        StringBuilder BuildHeaderValue = new StringBuilder();
+        StringBuilder buildHeaderValue = new StringBuilder();
         /// <summary>
         /// Do nothing
         /// </summary>
         /// <param name="c">Character value read</param>
         public virtual void StartHeader(int c) {
-            CurrentHeader = new Header() {
-                Tag = BuildBase64.ToString()
+            currentHeader = new Header() {
+                Tag = buildBase64.ToString()
                 };
-            Headers.Add(CurrentHeader);
-            BuildBase64.Clear();
+            Headers.Add(currentHeader);
+            buildBase64.Clear();
             }
 
         /// <summary>
         /// Do nothing
         /// </summary>
         /// <param name="c">Character value read</param>
-        public virtual void HeaderAdd(int c) => BuildHeaderValue.Append(c.ToASCII());
+        public virtual void HeaderAdd(int c) => buildHeaderValue.Append(c.ToASCII());
 
         /// <summary>
         /// Do nothing
         /// </summary>
         /// <param name="c">Character value read</param>
         public virtual void CopyHeader(int c) {
-            CurrentHeader.Value = BuildHeaderValue.ToString();
-            BuildHeaderValue.Clear();
+            currentHeader.Value = buildHeaderValue.ToString();
+            buildHeaderValue.Clear();
             }
 
 
@@ -160,19 +160,19 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <returns>Summary of tagged data.</returns>
         public TaggedData GetTaggedData() {
-            bool Strict = Armor1 == Armor2 & Armor1 == Armor3 &
-                Armor1 == Armor4;
-            string Tag = BuildTag1.ToString();
+            bool Strict = armor1 == armor2 & armor1 == armor3 &
+                armor1 == armor4;
+            string Tag = buildTag1.ToString();
 
-            Strict &= Tag == BuildTag2.ToString() & BuildTagBegin.ToString() == "BEGIN" &
-                BuildTagEnd.ToString() == "END";
+            Strict &= Tag == buildTag2.ToString() & BuildTagBegin.ToString() == "BEGIN" &
+                buildTagEnd.ToString() == "END";
 
-            var Base64Data = BuildBase64.ToString();
+            var Base64Data = buildBase64.ToString();
             var Data = BaseConvert.FromBase64(Base64Data);
 
             var Result = new TaggedData {
                 Strict = Strict,
-                Count = Armor1,
+                Count = armor1,
                 Tag = Tag,
                 Data = Data,
                 Headers = Headers

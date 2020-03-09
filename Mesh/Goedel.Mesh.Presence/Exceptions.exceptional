@@ -1,0 +1,11 @@
+﻿
+Namespace Goedel.Mesh.Presence
+
+	Exception PresenceTBS
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+
+
+

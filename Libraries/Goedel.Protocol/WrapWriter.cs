@@ -244,6 +244,8 @@ namespace Goedel.Protocol {
                     case 3:
                         // Ignore surplus spaces afer break
                         break;
+                    default:
+                        break;
                     }
                 }
             else {
@@ -262,6 +264,8 @@ namespace Goedel.Protocol {
                     case 3:
                         breakBuffer = c.ToString();
                         state = 1;
+                        break;
+                    default:
                         break;
                     }
                 }

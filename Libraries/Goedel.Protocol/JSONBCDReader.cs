@@ -97,6 +97,8 @@ namespace Goedel.Protocol {
                         return LexerBinary(b, false);
                         }
 
+                    default:
+                        break;
                     }
 
                 switch (b) {
@@ -116,6 +118,9 @@ namespace Goedel.Protocol {
                     case JSONBCD.NegativeBigInteger: {
                         return LexerBigInteger(false);
                         }
+
+                    default:
+                        break;
                     }
 
 
@@ -142,6 +147,8 @@ namespace Goedel.Protocol {
                         break;
                         }
 
+                    default:
+                        break;
                     }
 
 
@@ -170,6 +177,9 @@ namespace Goedel.Protocol {
                     case JSONBCD.DecimalFloat128: {
                         return LexerRealOther(16);
                         }
+
+                    default:
+                        break;
                     }
                 } while (Dictionary);
             throw new UnknownTag();
@@ -243,6 +253,47 @@ namespace Goedel.Protocol {
                     binaryBuffer = -1;
                     return Terminal;
                     }
+
+                case Token.Invalid:
+                    break;
+                case Token.StartObject:
+                    break;
+                case Token.EndObject:
+                    break;
+                case Token.StartArray:
+                    break;
+                case Token.EndArray:
+                    break;
+                case Token.Colon:
+                    break;
+                case Token.Comma:
+                    break;
+                case Token.Tag:
+                    break;
+                case Token.Number:
+                    break;
+                case Token.Integer:
+                    break;
+                case Token.Real32:
+                    break;
+                case Token.Real64:
+                    break;
+                case Token.Litteral:
+                    break;
+                case Token.True:
+                    break;
+                case Token.False:
+                    break;
+                case Token.Null:
+                    break;
+                case Token.EndRecord:
+                    break;
+                case Token.JSONBCD:
+                    break;
+                case Token.Empty:
+                    break;
+                default:
+                    break;
                 }
 
             return Terminal;
@@ -331,6 +382,47 @@ namespace Goedel.Protocol {
                     GetToken();
                     return false; // end of object reached
                     }
+
+                case Token.Invalid:
+                    break;
+                case Token.StartObject:
+                    break;
+                case Token.StartArray:
+                    break;
+                case Token.EndArray:
+                    break;
+                case Token.Colon:
+                    break;
+                case Token.String:
+                    break;
+                case Token.Tag:
+                    break;
+                case Token.Number:
+                    break;
+                case Token.Integer:
+                    break;
+                case Token.Real32:
+                    break;
+                case Token.Real64:
+                    break;
+                case Token.Litteral:
+                    break;
+                case Token.True:
+                    break;
+                case Token.False:
+                    break;
+                case Token.Null:
+                    break;
+                case Token.EndRecord:
+                    break;
+                case Token.Binary:
+                    break;
+                case Token.JSONBCD:
+                    break;
+                case Token.Empty:
+                    break;
+                default:
+                    break;
                 }
             return true;
             }
@@ -351,6 +443,47 @@ namespace Goedel.Protocol {
                     GetToken();
                     return false; // end of object reached
                     }
+
+                case Token.Invalid:
+                    break;
+                case Token.StartObject:
+                    break;
+                case Token.EndObject:
+                    break;
+                case Token.StartArray:
+                    break;
+                case Token.Colon:
+                    break;
+                case Token.String:
+                    break;
+                case Token.Tag:
+                    break;
+                case Token.Number:
+                    break;
+                case Token.Integer:
+                    break;
+                case Token.Real32:
+                    break;
+                case Token.Real64:
+                    break;
+                case Token.Litteral:
+                    break;
+                case Token.True:
+                    break;
+                case Token.False:
+                    break;
+                case Token.Null:
+                    break;
+                case Token.EndRecord:
+                    break;
+                case Token.Binary:
+                    break;
+                case Token.JSONBCD:
+                    break;
+                case Token.Empty:
+                    break;
+                default:
+                    break;
                 }
             return true;
             }

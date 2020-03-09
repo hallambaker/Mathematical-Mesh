@@ -36,7 +36,7 @@ namespace Goedel.Command {
                     DescribeCommandEntry DefaultCommand,
                     SortedDictionary<string, DescribeCommand> Entries,
                     TextWriter Output = null) {
-            Output = Output ?? Console.Out;
+            Output ??= Console.Out;
 
             Output.WriteLine(Description);
             Output.WriteLine("");
@@ -60,68 +60,71 @@ namespace Goedel.Command {
         /// <param name="Options">The option values to set.</param>
         public static void ProcessOptions(string[] Args, int Index, Dispatch Options) {
             var Describe = Options.DescribeCommand;
-            using (var CommandLex = new CommandLex()) {
+            using var CommandLex = new CommandLex();
+            var Parameter = 0;
 
-                var Parameter = 0;
+            // Set all data slots to their default value
+            foreach (var Description in Describe.Entries) {
+                if (Description.Default != null) {
+                    Options._Data[Description.Index].Default(Description.Default);
+                    }
+                }
 
-                // Set all data slots to their default value
-                foreach (var Description in Describe.Entries) {
-                    if (Description.Default != null) {
-                        Options._Data[Description.Index].Default(Description.Default);
+            for (var i = Index; i < Args.Length; i++) {
+                var Arg = Args[i];
+                var Token = CommandLex.GetToken(Arg);
+
+                switch (Token) {
+                    case CommandLex.Token.Empty: {
+                        break;
                         }
-                    }
+                    case CommandLex.Token.Flag: {
+                        var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue;
+                        Assert.NotNull(Entry, UnknownOption.Throw);
+                        var Data = Options._Data[Entry.Index];
+                        if ((i + 1 < Args.Length) && !IsFlagged(Args[i + 1])) {
+                            i++;
+                            Arg = Args[i];
 
-                for (var i = Index; i < Args.Length; i++) {
-                    var Arg = Args[i];
-                    var Token = CommandLex.GetToken(Arg);
-
-                    switch (Token) {
-                        case CommandLex.Token.Empty: {
-                            break;
+                            SetValue(Data, Args[i]);
                             }
-                        case CommandLex.Token.Flag: {
-                            var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue;
-                            Assert.NotNull(Entry, UnknownOption.Throw);
-                            var Data = Options._Data[Entry.Index];
-                            if ((i + 1 < Args.Length) && !IsFlagged(Args[i + 1])) {
-                                i++;
-                                Arg = Args[i];
+                        Data.SetFlag(CommandLex.Not);
 
-                                SetValue(Data, Args[i]);
-                                }
-                            Data.SetFlag(CommandLex.Not);
-
-                            if (Data as _Flag != null) {
-                                (Data as _Flag).Value = !CommandLex.Not;
-                                Data.ByDefault = false;
-                                }
-                            break;
+                        if (Data as _Flag != null) {
+                            (Data as _Flag).Value = !CommandLex.Not;
+                            Data.ByDefault = false;
                             }
-                        case CommandLex.Token.FlagValue: {
-                            var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue; ;
-                            Assert.NotNull(Entry, UnknownOption.Throw);
-
-                            SetValue(Options._Data[Entry.Index], CommandLex.Value);
-
-                            break;
-                            }
-                        case CommandLex.Token.Value: {
-                            var Search = true;
-                            for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
-                                if (Describe.Entries[j] is DescribeEntryParameter) {
-                                    DescribeEntryParameter Entry = Describe.Entries[j] as DescribeEntryParameter;
-                                    SetValue(Options._Data[Entry.Index], CommandLex.Value);
-                                    Parameter = j + 1;
-                                    Search = false;
-                                    }
-                                }
-                            break;
-                            }
+                        break;
                         }
+                    case CommandLex.Token.FlagValue: {
+                        var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue; ;
+                        Assert.NotNull(Entry, UnknownOption.Throw);
+
+                        SetValue(Options._Data[Entry.Index], CommandLex.Value);
+
+                        break;
+                        }
+                    case CommandLex.Token.Value: {
+                        var Search = true;
+                        for (var j = Parameter; Search & j < Describe.Entries.Count; j++) {
+                            if (Describe.Entries[j] is DescribeEntryParameter) {
+                                DescribeEntryParameter Entry = Describe.Entries[j] as DescribeEntryParameter;
+                                SetValue(Options._Data[Entry.Index], CommandLex.Value);
+                                Parameter = j + 1;
+                                Search = false;
+                                }
+                            }
+                        break;
+                        }
+
+                    case CommandLex.Token.INVALID:
+                        break;
+                    default:
+                        break;
                     }
-                foreach (var Entry in Options._Data) {
-                    Entry.Complete(Options._Data);
-                    }
+                }
+            foreach (var Entry in Options._Data) {
+                Entry.Complete(Options._Data);
                 }
             }
 
@@ -297,7 +300,7 @@ namespace Goedel.Command {
                     char FlagIndicator,
                     TextWriter Output = null,
                     bool PrefixCommands = true) {
-            Output = Output ?? Console.Out;
+            Output ??= Console.Out;
             var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
             Output.WriteLine("{0}{1}   {2}", prefixCommand, Identifier, Brief);
@@ -307,6 +310,9 @@ namespace Goedel.Command {
                         Output.WriteLine("    {0}{1}  {2}", prefixCommand, Entry.Key, SubCommand.Brief);
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
             foreach (var Entry in Entries) {
@@ -315,6 +321,9 @@ namespace Goedel.Command {
                         Output.WriteLine("    {0}   {1}", Entry.Key, Parameter.Brief);
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
             foreach (var Entry in Entries) {
@@ -323,6 +332,9 @@ namespace Goedel.Command {
                         Output.WriteLine("    {0}{1}   {2}", FlagIndicator, Entry.Key, Option.Brief);
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
             }
@@ -348,7 +360,7 @@ namespace Goedel.Command {
                     char FlagIndicator,
                     TextWriter Output = null,
                     bool PrefixCommands = true) {
-            Output = Output ?? Console.Out;
+            Output ??= Console.Out;
             var prefixCommand = PrefixCommands ? FlagIndicator.ToString() : "";
 
             Output.WriteLine("{0}    {1}", Identifier, Brief);
@@ -358,6 +370,9 @@ namespace Goedel.Command {
                         Output.WriteLine("    {0}{1}", Entry.Key, describeCommandSet.Brief);
                         break;
                         }
+
+                    default:
+                        break;
                     }
 
                 }
@@ -367,6 +382,9 @@ namespace Goedel.Command {
                         Output.WriteLine("    {0}{1}   {2}", prefixCommand, Entry.Key, describeCommandEntry.Brief);
                         break;
                         }
+
+                    default:
+                        break;
                     }
 
                 }

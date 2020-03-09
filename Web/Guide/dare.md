@@ -8,12 +8,7 @@ DARE messages.
 
 The `dare encode` command is used to encode files as DARE Messages:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt
-<rsp></div>
-~~~~
+**Missing Example***
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
 
@@ -22,35 +17,19 @@ suppressed using the `/nohash` flag.
 
 The data contents may be encrypted and authenticated under a specified symmetric key:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp></div>
-~~~~
+**Missing Example***
 
 Specifying a directory instead of a file causes all the files in the directory to be 
 encoded:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp>ERROR - Access to the path 'C:\Users\hallam\Test\WorkingDirectory\TestDir1' is denied.
-</div>
-~~~~
+**Missing Example***
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
 or more recipients. In this example, Alice creates a message intended for Bob.
 Alice signs the message with her private signature key and encrypts it under Bob's
 public encryption key.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
-<rsp></div>
-~~~~
+**Missing Example***
 
 
 ## Verifying a DARE message.
@@ -58,90 +37,42 @@ public encryption key.
 The `dare verify` command is used to verify the signature and 
 digest values on a DARE Message without decoding the message body:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
-</div>
-~~~~
+**Missing Example***
 
 The command to verify a signed message is identical:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.mesh.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
-</div>
-~~~~
+**Missing Example***
 
 Messages that are encrypted and authenticated under a specified symmetric key 
 may be verified at the plaintext level if the key is known or the ciphertext 
 level otherwise.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp>ERROR - The option  is not known.
-</div>
-~~~~
+**Missing Example***
 
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.symmetric.dare'.
-</div>
-~~~~
+**Missing Example***
 
 ## Decoding a DARE message to a file.
 
 The `dare decode` command is used to decode and verify DARE Messages:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
-</div>
-~~~~
+**Missing Example***
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-<rsp>ERROR - The option  is not known.
-</div>
-~~~~
+**Missing Example***
 
 If the message is encrypted under our private encryption key, the tool will locate
 the necessary decryption key(s) automatically:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.mesh.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
-</div>
-~~~~
+**Missing Example***
 
 
 ## Creating an EARL.
 
 The `dare earl` command is used to create an EARL:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 A new secret is generated with the specified number of bits, this is then used
 to generate the key identifier and encrypt the input file to a file with the
@@ -150,24 +81,10 @@ name of the key identifier.
 The `/log` option causes the filename, encryption key and other details of
 the transaction to be written to a DARE Container Log.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare container create EarlLog.dlog /encrypt=alice@example.com
-<rsp>ERROR - The command  is not known.
-<cmd>Alice> dare earl TestFile1.txt /log=EarlLog.dlog
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 The `/new` option causes the file to be encoded if and only if it has not 
 been processed already.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare earl TestFile1.txt /new=EarlLog.dlog
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 

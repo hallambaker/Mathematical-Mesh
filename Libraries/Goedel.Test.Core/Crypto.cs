@@ -130,7 +130,7 @@ namespace Goedel.Test.Core {
 
     public class TestKeys {
 
-        KeyCollection KeyCollection;
+        public KeyCollection KeyCollection;
 
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;

@@ -135,6 +135,13 @@ namespace Goedel.Cryptography.PKIX {
                     PrintableString = Value;
                     break;
                     }
+
+                case StringType.Teletex:
+                    break;
+                case StringType.Universal:
+                    break;
+                default:
+                    break;
                 }
             }
         }

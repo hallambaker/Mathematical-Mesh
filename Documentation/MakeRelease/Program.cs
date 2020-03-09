@@ -45,7 +45,7 @@ namespace Goedel.Tool.Version {
                     var Version = Item as Version;
                     Version.Parse();
                     if (Version.Stable) {
-                        Distribution.Stable = Distribution.Stable ?? Version;
+                        Distribution.Stable ??= Version;
                         }
                     if (Version > Distribution.Latest) {
                         if (Distribution.Latest != null) {

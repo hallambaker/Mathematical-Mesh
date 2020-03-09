@@ -45,6 +45,120 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmID.HMAC_SHA_2_512:
                 case CryptoAlgorithmID.HMAC_SHA_2_512T128: return (256, 0);
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHA_3_512:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
 
 
@@ -81,6 +195,127 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmID.AES256HMAC: {
                     return Aes.CreateEncryptor(key, iv);
                     }
+
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHA_3_512:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }
@@ -115,6 +350,129 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmID.AES256HMAC: {
                     return Aes.CreateDecryptor(key, iV);
                     }
+
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHA_3_512:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES256:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }
@@ -136,7 +494,142 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmID.AES128HMAC: return new HMACSHA256();
                 case CryptoAlgorithmID.AES256HMAC: return new HMACSHA512();
-
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.Encryption:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHA_3_512:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES256:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.AES128GCM:
+                    break;
+                case CryptoAlgorithmID.AES128CTS:
+                    break;
+                case CryptoAlgorithmID.AES128CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES128ECB:
+                    break;
+                case CryptoAlgorithmID.AES256CBC:
+                    break;
+                case CryptoAlgorithmID.AES256GCM:
+                    break;
+                case CryptoAlgorithmID.AES256CTS:
+                    break;
+                case CryptoAlgorithmID.AES256CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES256ECB:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }
@@ -160,7 +653,142 @@ namespace Goedel.Cryptography {
 
                 case CryptoAlgorithmID.AES128HMAC: return new HMACSHA256(key);
                 case CryptoAlgorithmID.AES256HMAC: return new HMACSHA512(key);
-
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.Encryption:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHA_3_512:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES256:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.AES128GCM:
+                    break;
+                case CryptoAlgorithmID.AES128CTS:
+                    break;
+                case CryptoAlgorithmID.AES128CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES128ECB:
+                    break;
+                case CryptoAlgorithmID.AES256CBC:
+                    break;
+                case CryptoAlgorithmID.AES256GCM:
+                    break;
+                case CryptoAlgorithmID.AES256CTS:
+                    break;
+                case CryptoAlgorithmID.AES256CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES256ECB:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }
@@ -185,6 +813,138 @@ namespace Goedel.Cryptography {
                 case CryptoAlgorithmID.SHA_3_512: return new SHA3Managed(512);
                 case CryptoAlgorithmID.SHAKE_128: return new SHAKE128();
                 case CryptoAlgorithmID.SHAKE_256: return new SHAKE256();
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.Encryption:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES256:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.AES128GCM:
+                    break;
+                case CryptoAlgorithmID.AES128CTS:
+                    break;
+                case CryptoAlgorithmID.AES128HMAC:
+                    break;
+                case CryptoAlgorithmID.AES128CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES128ECB:
+                    break;
+                case CryptoAlgorithmID.AES256CBC:
+                    break;
+                case CryptoAlgorithmID.AES256GCM:
+                    break;
+                case CryptoAlgorithmID.AES256CTS:
+                    break;
+                case CryptoAlgorithmID.AES256HMAC:
+                    break;
+                case CryptoAlgorithmID.AES256CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES256ECB:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }

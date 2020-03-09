@@ -32,31 +32,7 @@ add   Add bookmark
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Uri": "http://example.com/",
-      "Title": "\"Example",
-      "Path": "Folder1/1"}}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network delete
 
@@ -73,26 +49,7 @@ delete   Delete bookmark entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark delete BookmarkPath2
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark delete BookmarkPath2 /json
-<rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Object reference not set to an instance of an object."}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network get
 
@@ -108,31 +65,7 @@ get   Lookup bookmark entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark get Folder1/2
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark get Folder1/2 /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Uri": "http://example.net/Bananas",
-      "Title": "\"Banana",
-      "Path": "Folder1/2"}}}
-</div>
-~~~~
-
+**Missing Example***
 
 # network list
 
@@ -147,43 +80,5 @@ list   List bookmark entries
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark list
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}{
-  "Uri": "http://example.com/Fred",
-  "Title": "\"The",
-  "Path": "Folder1/1a"}</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDump:
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark list /json
-<rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "Uri": "http://example.com/",
-        "Title": "\"Example",
-        "Path": "Folder1/1"},
-      {
-        "Uri": "http://example.net/Bananas",
-        "Title": "\"Banana",
-        "Path": "Folder1/2"},
-      {
-        "Uri": "http://example.com/Fred",
-        "Title": "\"The",
-        "Path": "Folder1/1a"}]}}
-</div>
-~~~~
-
+**Missing Example***
 

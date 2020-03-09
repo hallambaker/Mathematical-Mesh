@@ -138,6 +138,9 @@ namespace Goedel.Mesh {
                             }
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
 
@@ -183,6 +186,9 @@ namespace Goedel.Mesh {
                         DeleteEntry(update.PrimaryKey);
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
             return true;

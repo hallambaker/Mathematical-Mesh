@@ -171,6 +171,9 @@ namespace Goedel.Cryptography.Dare {
                         ObjectIndex.Add(uniqueID, ContainerStoreEntry);
                         break;
                         }
+
+                    default:
+                        break;
                     }
 
                 }

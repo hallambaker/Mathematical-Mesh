@@ -571,6 +571,7 @@ namespace Goedel.Cryptography.Dare {
                     result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
                     break;
                     }
+
                 default: {
                     throw new InvalidContainerTypeException();
                     }
@@ -673,7 +674,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="frame">The frame index</param>
         /// <returns>The frame position.</returns>
         public virtual long GetFramePosition(long frame) {
-            var found = FrameIndexToPositionDictionary.TryGetValue(frame, out var position);
+            FrameIndexToPositionDictionary.TryGetValue(frame, out var position);
             return position;
             }
 

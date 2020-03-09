@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+#pragma warning disable IDE0059
+
 namespace ExampleGenerator {
 
 
@@ -114,14 +116,14 @@ namespace ExampleGenerator {
 
             GitHub = true;
 
-            PlatformUDF();
-            PlatformCrypto();
-            PlatformDare();
+            //PlatformUDF();
+            //PlatformCrypto();
+            //PlatformDare();
 
-            LayerDevice();
-            LayerAccount();
-            LayerService();
-            LayerMessage();
+            //LayerDevice();
+            //LayerAccount();
+            //LayerService();
+            //LayerMessage();
 
 
             Directory.SetCurrentDirectory(outputPath);
@@ -133,14 +135,14 @@ namespace ExampleGenerator {
 
 
 
-            MakeUDFExamples(this);
+            //MakeUDFExamples(this);
 
-            MakeArchitectureExamples(this);
+            //MakeArchitectureExamples(this);
 
 
-            MakeDareExamples(this);
-            MakeSchemaExamples(this);
-            MakeProtocolExamples(this);
+            //MakeDareExamples(this);
+            //MakeSchemaExamples(this);
+            //MakeProtocolExamples(this);
 
 
             MakeCryptographyExamples(this);
@@ -149,7 +151,7 @@ namespace ExampleGenerator {
 
             }
 
-        public bool All = true;
+        public bool All = false;
 
 
         public void MakeClean() {

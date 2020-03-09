@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Services</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Services.ServicesTBS">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Services.ServicesTBS.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Mesh.Services.ServicesTBS.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Services.ServiceProtocol">
+             <summary>
+            
+             The Mesh Presence Protocol
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.ServiceProtocol._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Services.ServiceProtocol.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Services.ServiceProtocol._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Services.ServiceProtocol.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="jsonReader">Input stream</param>
+            <param name="result">The created object</param>
+        </member>
+        <member name="T:Goedel.Mesh.Services.MeshPresence">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Mesh.Services.MeshPresence.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresence.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Services.MeshPresence.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresence.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresence.JpcSession">
+            <summary>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresence.JPCInterface">
+            <summary>Base interface (used to create client wrapper stubs)</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Services.MeshPresenceClient">
+            <summary>
+            Client class for MeshPresence.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Mesh.Services.MeshPresenceClient.JpcSession">
+            <summary>
+            The active JpcSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Services.MeshPresenceClient.#ctor(Goedel.Protocol.JPCRemoteSession)">
+            <summary>
+            Create a client connection to the specified service.
+            </summary>	
+            <param name="jpcRemoteSession">The remote session to connect to</param>
+        </member>
+        <member name="T:Goedel.Mesh.Services.MeshPresenceProvider">
+            <summary>
+            Service class for MeshPresence.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Mesh.Services.MeshPresenceProvider.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Mesh.Services.MeshPresenceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JSONReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="session">The client context.</param>
+            <param name="jsonReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+    </members>
+</doc>

@@ -17,89 +17,34 @@ named bookmark catalogs per user and catalogs sharted between multiple users.
 
 The `bookmark add` command adds a bookmark entry to a catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}<cmd>Alice> bookmark add Folder1/2 http://example.net/Bananas "Banana Site"
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}<cmd>Alice> bookmark add Folder1/1a http://example.com/Fred "The Fred Space"
-<rsp>{
-  "Uri": "http://example.com/Fred",
-  "Title": "\"The",
-  "Path": "Folder1/1a"}</div>
-~~~~
+**Missing Example***
 
 
 ## Finding bookmarks
 
 The `bookmark get`  command retreives a bookmark  by its index label:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark get Folder1/2
-<rsp>{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}</div>
-~~~~
+**Missing Example***
 
 ## Deleting bookmarks
 
 Bookmark entries may be deleted using the  `bookmark delete` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark delete BookmarkPath2
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 ## Listing bookmarks
 
 A complete list of bookmarks is obtained using the  `bookmark list` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> bookmark list
-<rsp>{
-  "Uri": "http://example.com/",
-  "Title": "\"Example",
-  "Path": "Folder1/1"}{
-  "Uri": "http://example.net/Bananas",
-  "Title": "\"Banana",
-  "Path": "Folder1/2"}{
-  "Uri": "http://example.com/Fred",
-  "Title": "\"The",
-  "Path": "Folder1/1a"}</div>
-~~~~
+**Missing Example***
 
 ## Adding devices
 
 Devices are given authorization to access the bookmarks catalog using the 
  `device auth` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device auth Alice2 /bookmark
-<rsp></div>
-~~~~
+**Missing Example***
 
 The new device now has access to the Bookmarks catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice2> bookmark list
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***

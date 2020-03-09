@@ -48,27 +48,7 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the `group create` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> group create groupw@example.com
-<rsp>{
-  "Profile": {
-    "KeyOfflineSignature": {
-      "UDF": "MCJ5-HMK2-SUBS-MOCG-J5IS-S2GT-IY7D",
-      "PublicParameters": {
-        "PublicKeyECDH": {
-          "crv": "Ed448",
-          "Public": "bNfUzYfsJJthhioeCukz03BQ9wJWD-2i_0GoDznzdhqEu8eE9iVo
-  VAJDOF2gDnMxvkfnBsJk55GA"}}},
-    "KeyEncryption": {
-      "UDF": "MC25-LCSY-DUTQ-YBUL-XXCI-RLIZ-JHIL",
-      "PublicParameters": {
-        "PublicKeyECDH": {
-          "crv": "Ed448",
-          "Public": "sx8WWkgH6k4u8RchFZitCRTvncvWje1xog-cyx4kka9kwmFwlDTi
-  t2JXFFalq-LJ-RQlu9eIuP-A"}}}}}</div>
-~~~~
+**Missing Example***
 
 This command creates the group groupw@example.com. Since Alice created the
 account she is the administrator.
@@ -76,26 +56,12 @@ account she is the administrator.
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-
-~~~~
-<div="terminal">
-<cmd>Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupw@example.com
-<rsp>ERROR - The command  is not known.
-<cmd>Bob> dare decode  TestFile1-group.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-</div>
-~~~~
+**Missing Example***
 
 Since Alice is the group administrator, she can decrypt the file using her 
 administrator key:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode  TestFile1-group.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-</div>
-~~~~
+**Missing Example***
 
 
 ## Adding users
@@ -104,35 +70,17 @@ The `group add` command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> group add groupw@example.com bob@example.com
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 Bob can now decrypt the file.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode  TestFile1-group.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-</div>
-~~~~
+**Missing Example***
 
 ## Reporting users
 
 The `connect ` command returns a list of group members:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> group list groupw@example.com
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 The group currently has one administrator and one member.
 
@@ -140,22 +88,10 @@ The group currently has one administrator and one member.
 
 Users may be removed from a recryption group using the `group delete` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> group delete groupw@example.com bob@example.com
-<rsp>ERROR - The feature has not been implemented
-</div>
-~~~~
+**Missing Example***
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> dare decode  TestFile1-group.dare
-<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
-</div>
-~~~~
+**Missing Example***
 
 

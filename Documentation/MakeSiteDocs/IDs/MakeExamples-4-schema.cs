@@ -46,9 +46,9 @@ namespace ExampleGenerator {
 		// SchemaMaster
 		//
 		public static void SchemaMaster(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaMaster.md")) {
-				Example._SchemaMaster(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaMaster.md");
+			Example._Output = _Output;
+			Example._SchemaMaster(Example);
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
@@ -60,9 +60,9 @@ namespace ExampleGenerator {
 		// SchemaDevice
 		//
 		public static void SchemaDevice(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaDevice.md")) {
-				Example._SchemaDevice(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaDevice.md");
+			Example._Output = _Output;
+			Example._SchemaDevice(Example);
 			}
 		public void _SchemaDevice(CreateExamples Example) {
 
@@ -97,9 +97,9 @@ namespace ExampleGenerator {
 		// SchemaAccount
 		//
 		public static void SchemaAccount(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaAccount.md")) {
-				Example._SchemaAccount(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaAccount.md");
+			Example._Output = _Output;
+			Example._SchemaAccount(Example);
 			}
 		public void _SchemaAccount(CreateExamples Example) {
 
@@ -123,9 +123,9 @@ namespace ExampleGenerator {
 		// SchemaService
 		//
 		public static void SchemaService(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaService.md")) {
-				Example._SchemaService(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaService.md");
+			Example._Output = _Output;
+			Example._SchemaService(Example);
 			}
 		public void _SchemaService(CreateExamples Example) {
 
@@ -153,9 +153,9 @@ namespace ExampleGenerator {
 		// SchemaDevicePrivate
 		//
 		public static void SchemaDevicePrivate(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaDevicePrivate.md")) {
-				Example._SchemaDevicePrivate(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaDevicePrivate.md");
+			Example._Output = _Output;
+			Example._SchemaDevicePrivate(Example);
 			}
 		public void _SchemaDevicePrivate(CreateExamples Example) {
 
@@ -167,9 +167,9 @@ namespace ExampleGenerator {
 		// SchemaDeviceConnection
 		//
 		public static void SchemaDeviceConnection(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaDeviceConnection.md")) {
-				Example._SchemaDeviceConnection(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaDeviceConnection.md");
+			Example._Output = _Output;
+			Example._SchemaDeviceConnection(Example);
 			}
 		public void _SchemaDeviceConnection(CreateExamples Example) {
 
@@ -181,9 +181,9 @@ namespace ExampleGenerator {
 		// SchemaEntryDevice
 		//
 		public static void SchemaEntryDevice(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryDevice.md")) {
-				Example._SchemaEntryDevice(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryDevice.md");
+			Example._Output = _Output;
+			Example._SchemaEntryDevice(Example);
 			}
 		public void _SchemaEntryDevice(CreateExamples Example) {
 
@@ -195,9 +195,9 @@ namespace ExampleGenerator {
 		// SchemaEntryContact
 		//
 		public static void SchemaEntryContact(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryContact.md")) {
-				Example._SchemaEntryContact(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryContact.md");
+			Example._Output = _Output;
+			Example._SchemaEntryContact(Example);
 			}
 		public void _SchemaEntryContact(CreateExamples Example) {
 
@@ -209,9 +209,9 @@ namespace ExampleGenerator {
 		// SchemaEntryCredential
 		//
 		public static void SchemaEntryCredential(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryCredential.md")) {
-				Example._SchemaEntryCredential(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryCredential.md");
+			Example._Output = _Output;
+			Example._SchemaEntryCredential(Example);
 			}
 		public void _SchemaEntryCredential(CreateExamples Example) {
 
@@ -223,9 +223,9 @@ namespace ExampleGenerator {
 		// SchemaEntryNetwork
 		//
 		public static void SchemaEntryNetwork(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryNetwork.md")) {
-				Example._SchemaEntryNetwork(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryNetwork.md");
+			Example._Output = _Output;
+			Example._SchemaEntryNetwork(Example);
 			}
 		public void _SchemaEntryNetwork(CreateExamples Example) {
 
@@ -237,9 +237,9 @@ namespace ExampleGenerator {
 		// SchemaEntryBookmark
 		//
 		public static void SchemaEntryBookmark(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryBookmark.md")) {
-				Example._SchemaEntryBookmark(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryBookmark.md");
+			Example._Output = _Output;
+			Example._SchemaEntryBookmark(Example);
 			}
 		public void _SchemaEntryBookmark(CreateExamples Example) {
 
@@ -251,9 +251,9 @@ namespace ExampleGenerator {
 		// SchemaEntryTask
 		//
 		public static void SchemaEntryTask(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryTask.md")) {
-				Example._SchemaEntryTask(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryTask.md");
+			Example._Output = _Output;
+			Example._SchemaEntryTask(Example);
 			}
 		public void _SchemaEntryTask(CreateExamples Example) {
 
@@ -265,9 +265,9 @@ namespace ExampleGenerator {
 		// SchemaEntrySSH
 		//
 		public static void SchemaEntrySSH(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntrySSH.md")) {
-				Example._SchemaEntrySSH(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntrySSH.md");
+			Example._Output = _Output;
+			Example._SchemaEntrySSH(Example);
 			}
 		public void _SchemaEntrySSH(CreateExamples Example) {
 
@@ -279,9 +279,9 @@ namespace ExampleGenerator {
 		// SchemaEntryMail
 		//
 		public static void SchemaEntryMail(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaEntryMail.md")) {
-				Example._SchemaEntryMail(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaEntryMail.md");
+			Example._Output = _Output;
+			Example._SchemaEntryMail(Example);
 			}
 		public void _SchemaEntryMail(CreateExamples Example) {
 
@@ -293,9 +293,9 @@ namespace ExampleGenerator {
 		// SchemaMessageConnection
 		//
 		public static void SchemaMessageConnection(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaMessageConnection.md")) {
-				Example._SchemaMessageConnection(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaMessageConnection.md");
+			Example._Output = _Output;
+			Example._SchemaMessageConnection(Example);
 			}
 		public void _SchemaMessageConnection(CreateExamples Example) {
 
@@ -328,9 +328,9 @@ namespace ExampleGenerator {
 		// SchemaMessageContact
 		//
 		public static void SchemaMessageContact(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaMessageContact.md")) {
-				Example._SchemaMessageContact(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaMessageContact.md");
+			Example._Output = _Output;
+			Example._SchemaMessageContact(Example);
 			}
 		public void _SchemaMessageContact(CreateExamples Example) {
 
@@ -354,9 +354,9 @@ namespace ExampleGenerator {
 		// SchemaMessageConfirmation
 		//
 		public static void SchemaMessageConfirmation(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaMessageConfirmation.md")) {
-				Example._SchemaMessageConfirmation(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaMessageConfirmation.md");
+			Example._Output = _Output;
+			Example._SchemaMessageConfirmation(Example);
 			}
 		public void _SchemaMessageConfirmation(CreateExamples Example) {
 
@@ -376,9 +376,9 @@ namespace ExampleGenerator {
 		// SchemaMessageCompletion
 		//
 		public static void SchemaMessageCompletion(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\SchemaMessageCompletion.md")) {
-				Example._SchemaMessageCompletion(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\SchemaMessageCompletion.md");
+			Example._Output = _Output;
+			Example._SchemaMessageCompletion(Example);
 			}
 		public void _SchemaMessageCompletion(CreateExamples Example) {
 

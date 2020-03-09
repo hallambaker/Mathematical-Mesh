@@ -28,6 +28,9 @@ namespace ExampleGenerator {
                     return (curveEdwards.X,
                         curveEdwards.Y);
                     }
+
+                default:
+                    break;
                 }
 
             throw new NYI();
@@ -533,6 +536,9 @@ namespace ExampleGenerator {
                     SetParameters(keyPairEd448);
                     break;
                     }
+
+                default:
+                    break;
                 }
             Private ??= Dummy;
             Public ??= Dummy;

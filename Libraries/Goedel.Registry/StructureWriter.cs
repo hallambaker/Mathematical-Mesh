@@ -35,15 +35,15 @@ namespace Goedel.Registry {
         protected int Level = 0;
         /// <summary>If true, output is at start of line.</summary>
         protected bool StartOfLine;
-        bool First = true;
+        bool first = true;
 
         /// <summary>
         /// Called to start the line
         /// </summary>
         protected void StartLine() {
             StartOfLine = true;
-            if (First) {
-                First = false;
+            if (first) {
+                first = false;
                 return;
                 }
             TextWriter.WriteLine();
@@ -58,17 +58,12 @@ namespace Goedel.Registry {
         /// <param name="TextWriter">The output</param>
         /// <param name="OutputFormat">Format to write output in.</param>
         /// <returns>The created output writer.</returns>
-        public static StructureWriter GetStructureWriter(TextWriter TextWriter, OutputFormat OutputFormat) {
-            switch (OutputFormat) {
-                case Goedel.Registry.OutputFormat.Goedel:
-                    return new IndentWriter(TextWriter);
-                case Goedel.Registry.OutputFormat.XML:
-                    return new XMLWriter(TextWriter);
-                default:
-                    return null;
-                }
-
-            }
+        public static StructureWriter GetStructureWriter(TextWriter TextWriter, OutputFormat OutputFormat) => OutputFormat switch
+            {
+                Goedel.Registry.OutputFormat.Goedel => new IndentWriter(TextWriter),
+                Goedel.Registry.OutputFormat.XML => new XMLWriter(TextWriter),
+                _ => null,
+                };
 
         /// <summary>
         /// Constructor.

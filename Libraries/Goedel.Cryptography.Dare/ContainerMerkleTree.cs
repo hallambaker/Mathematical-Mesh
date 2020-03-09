@@ -60,7 +60,7 @@ namespace Goedel.Cryptography.Dare {
             return Result;
             }
 
-        readonly static byte[] EmptyBytes = new byte[0];
+        //readonly static byte[] EmptyBytes = new byte[0];
 
         /// <summary>
         /// Register a frame in the container access dictionaries.

@@ -126,6 +126,7 @@ namespace Goedel.Mesh {
                 case (UDFTypeIdentifier.DigestSHA_3_512): {
                     return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmID.SHA_3_512);
                     }
+
                 default: {
                     return UDF.ContentDigestOfUDF(udf, length);
                     }

@@ -481,6 +481,11 @@ namespace Goedel.Protocol {
                         Incomplete = true;
                         break;
                         }
+
+                    case Action.Ignore:
+                        break;
+                    default:
+                        break;
                     }
                 }
             return Token;
@@ -539,6 +544,47 @@ namespace Goedel.Protocol {
                     GetToken();
                     return false; // end of object reached
                     }
+
+                case Token.Invalid:
+                    break;
+                case Token.StartObject:
+                    break;
+                case Token.StartArray:
+                    break;
+                case Token.EndArray:
+                    break;
+                case Token.Colon:
+                    break;
+                case Token.String:
+                    break;
+                case Token.Tag:
+                    break;
+                case Token.Number:
+                    break;
+                case Token.Integer:
+                    break;
+                case Token.Real32:
+                    break;
+                case Token.Real64:
+                    break;
+                case Token.Litteral:
+                    break;
+                case Token.True:
+                    break;
+                case Token.False:
+                    break;
+                case Token.Null:
+                    break;
+                case Token.EndRecord:
+                    break;
+                case Token.Binary:
+                    break;
+                case Token.JSONBCD:
+                    break;
+                case Token.Empty:
+                    break;
+                default:
+                    break;
                 }
             throw new Exception("Expected , or }");
             }
@@ -562,6 +608,45 @@ namespace Goedel.Protocol {
                         }
                     return Result;
                     }
+
+                case Token.Invalid:
+                    break;
+                case Token.StartObject:
+                    break;
+                case Token.StartArray:
+                    break;
+                case Token.EndArray:
+                    break;
+                case Token.Colon:
+                    break;
+                case Token.Comma:
+                    break;
+                case Token.Number:
+                    break;
+                case Token.Integer:
+                    break;
+                case Token.Real32:
+                    break;
+                case Token.Real64:
+                    break;
+                case Token.Litteral:
+                    break;
+                case Token.True:
+                    break;
+                case Token.False:
+                    break;
+                case Token.Null:
+                    break;
+                case Token.EndRecord:
+                    break;
+                case Token.Binary:
+                    break;
+                case Token.JSONBCD:
+                    break;
+                case Token.Empty:
+                    break;
+                default:
+                    break;
                 }
             throw new Exception("Expected \"Tag\"");
             }

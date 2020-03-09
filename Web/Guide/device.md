@@ -10,14 +10,7 @@ The `device request` command is used on the new device
 to request connection to the user's profile. Alice need only specify 
 the mesh service account alice@example.com to which connection is requested:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice2> device request alice@example.com
-<rsp>   Witness value = M4J5-YPNB-2O3U-35FZ-PC6G-SP6R-4LBD
-   Personal Mesh = MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
-</div>
-~~~~
+**Missing Example***
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -32,69 +25,34 @@ complete the connection process.
 The `device pending` command gives a list of pending connection
 messages.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device pending
-<rsp></div>
-~~~~
+**Missing Example***
 
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device accept NCGP-WWTX-4HDR-YR2I-N5DO-TYBJ-C4X7
-<rsp></div>
-~~~~
+**Missing Example***
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device reject NAJK-KX55-GHUE-JZPZ-Q5N7-QMGD-SEUH
-<rsp></div>
-~~~~
+**Missing Example***
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice2> device complete
-<rsp>ERROR - Object reference not set to an instance of an object.
-<cmd>Alice2> account sync
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 ##Managing connected devices
 
 The `device list` command gives a list of devices in the device 
 catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device list
-<rsp></div>
-~~~~
+**Missing Example***
 
 The `device delete` command removes a device from the catalog:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device delete NCGP-WWTX-4HDR-YR2I-N5DO-TYBJ-C4X7
-<rsp>ERROR - The feature has not been implemented
-<cmd>Alice> device list
-<rsp></div>
-~~~~
+**Missing Example***
 
 
 ## Requesting a connection using a PIN
@@ -109,35 +67,17 @@ Connection requests may be authenticated by means of a PIN created on an
 administration device. The `device pin` command generates
 a new PIN code:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> account pin
-<rsp>PIN=NCGD-ZOQL-JRVF-TALA-EY (Expires=2020-01-23T01:18:57Z)
-</div>
-~~~~
+**Missing Example***
 
 The pin code can now be used to authenticate the connection request:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=NCGD-ZOQL-JRVF-TALA-EY
-<rsp>   Witness value = XNLM-MOF2-KNZS-3HCO-WOEO-BOTN-Y6G2
-   Personal Mesh = MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
-</div>
-~~~~
+**Missing Example***
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device pending
-<rsp></div>
-~~~~
+**Missing Example***
 
 
 ### Requesting a connection using an EARL
@@ -171,24 +111,12 @@ connection to a user account, the device requests connection to a special purpos
 account established for the purpose of providing a hailing account for enabling
 this type of device connection.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice4> device pre devices@example.com /key=udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 The device can attempt to complete the connection whenever it is provided with power 
 and network connectivity using the `profile sync` command.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice4> account sync
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -203,25 +131,13 @@ smart phone camera.
 A QR code or other scanning application can use the meshman tool to resolve the EARL 
 and retrieve the data using the `device earl` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> device earl udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice4> account sync
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 

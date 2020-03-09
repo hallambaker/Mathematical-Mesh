@@ -30,14 +30,11 @@ namespace Goedel.Mesh {
         /// <param name="saltSuffix">The salt suffix specifying the particular key
         /// type.</param>
         /// <returns>The aggregate public key parameters.</returns>
-        public KeyPairAdvanced Combine (
+        public KeyPairAdvanced Combine(
                 KeyCollection keyCollection,
                 PublicKey baseKey,
                 string secret,
-                string saltSuffix)  {
-            throw new NYI();
-
-            }
+                string saltSuffix) => throw new NYI();
 
         /// <summary>
         /// Derrive a key pair contribution to an aggregate key pair.
@@ -71,6 +68,9 @@ namespace Goedel.Mesh {
                     cryptoAlgorithmID = secretSeed.AlgorithmAuthenticateID;
                     break;
                     }
+
+                default:
+                    break;
                 }
 
             return Cryptography.UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,

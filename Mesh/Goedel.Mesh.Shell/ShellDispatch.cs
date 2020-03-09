@@ -161,6 +161,10 @@ namespace Goedel.Mesh.Shell {
                     return;
                     }
 
+                case CryptoAlgorithmClasses.NULL:
+                    break;
+                default:
+                    break;
                 }
 
             }

@@ -1,0 +1,19 @@
+﻿Protocol Goedel.Mesh.Services ServiceProtocol ServiceProtocol
+	Using Goedel.Mesh
+	Using Goedel.Cryptography.Dare
+	Extern MeshRequest
+	Extern MeshResponse
+
+	Description
+		|The Mesh Presence Protocol
+
+    Service MeshPresence "_mmmp._tcp" "mmmp" MeshRequest MeshResponse
+		Description
+			|
+
+	Section 2 "Registration Transactions"
+		Description
+			|
+
+
+

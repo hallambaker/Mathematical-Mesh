@@ -45,6 +45,17 @@ namespace Goedel.Cryptography.Core {
                     SetPlatformUnix();
                     break;
                     }
+
+                case PlatformID.Win32S:
+                    break;
+                case PlatformID.Win32Windows:
+                    break;
+                case PlatformID.WinCE:
+                    break;
+                case PlatformID.Xbox:
+                    break;
+                default:
+                    break;
                 }
 
 

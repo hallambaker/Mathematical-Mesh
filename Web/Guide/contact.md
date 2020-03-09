@@ -16,17 +16,7 @@ interfaces rather than a tool designed for daily use.
 The `contact add` command adds a contact entry to a catalog from
 a file. 
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact add email carol@example.com
-<rsp>{
-  "Self": false,
-  "Key": "NBXQ-D3ZF-GYIV-VQN2-LKOG-WV3V-OSIL",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
-~~~~
+**Missing Example***
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -38,73 +28,31 @@ JSON format:
 The `/self` option is used to mark the contact as being the user's own contact
 details:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact self email alice@example.com
-<rsp>{
-  "Self": true,
-  "Key": "NAB7-U4XN-VGYE-5JUS-SVXK-AGPN-VSEZ",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
-~~~~
+**Missing Example***
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> message accept tbs
-<rsp></div>
-~~~~
+**Missing Example***
 
 ## Finding contacts
 
 The `contact get` command retreives a contact by the contact's 
 email address or label:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact get carol@example.com
-<rsp>Empty
-</div>
-~~~~
+**Missing Example***
 
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact list
-<rsp>{
-  "Self": true,
-  "Key": "NAB7-U4XN-VGYE-5JUS-SVXK-AGPN-VSEZ",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}{
-  "Self": false,
-  "Key": "NBXQ-D3ZF-GYIV-VQN2-LKOG-WV3V-OSIL",
-  "EnvelopedContact": [{},
-    "ewogICJDb250YWN0IjogewogICAgIkFkZHJlc3Nlcy
-  I6IFt7CiAgICAgICAgIlVSSSI6ICJtYWlsdG86e2VtYWlsfSJ9XX19"]}</div>
-~~~~
+**Missing Example***
 
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> contact delete carol@example.com
-<rsp>ERROR - Object reference not set to an instance of an object.
-</div>
-~~~~
+**Missing Example***
 
 
 

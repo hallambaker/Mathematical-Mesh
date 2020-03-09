@@ -156,6 +156,8 @@ namespace Goedel.Protocol {
                     case '\\':
                         ReadJSONEscaped(Stream);
                         break;
+                    default:
+                        break;
                     }
                 }
 

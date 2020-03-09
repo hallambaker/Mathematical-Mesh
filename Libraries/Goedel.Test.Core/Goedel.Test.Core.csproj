@@ -1,8 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>ThresholdMode.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.Test.Core</Product>
+    <Description>Test support for .NET Core apps.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Test.Core</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\..\Mesh\Goedel.Mesh.Core\Goedel.Mesh.Core.csproj" />

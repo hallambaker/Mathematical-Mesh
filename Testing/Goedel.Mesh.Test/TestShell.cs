@@ -8,6 +8,8 @@ using Goedel.Utilities;
 using System;
 using System.Collections.Generic;
 
+#pragma warning disable IDE0059
+
 namespace Goedel.Mesh.Test {
 
     public partial class TestShell : Goedel.Mesh.Shell.Shell {

@@ -39,26 +39,7 @@ Nonce values should be used when it is important that a value be unpredictable b
 does not need to be kept secret. For example, the challenge in a challenge/response
 protocol.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> key nonce
-<rsp>NBJR-CKSN-H4LD-4FAW-P423-P3W3-6LPQ
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key nonce /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "NBJR-CKSN-H4LD-4FAW-P423-P3W3-6LPQ"}}
-</div>
-~~~~
-
+**Missing Example***
 
 # key secret
 
@@ -77,26 +58,7 @@ secret   Return a randomized secret value formatted as a UDF Encryption Key Type
 The `key secret` command returns a randomized secret value formatted as a UDF Encryption 
 key type.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> key secret
-<rsp>ECXT-YW2D-A3MH-J6VJ-TKFX-HMYP-PVFQ
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key secret /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "ECXT-YW2D-A3MH-J6VJ-TKFX-HMYP-PVFQ"}}
-</div>
-~~~~
-
+**Missing Example***
 
 
 # key earl
@@ -117,28 +79,7 @@ earl   Return a randomized secret value and locator as UDFs
 The `key earl` command returns a randomized secret value and a fingerprint of the secret 
 value, formatted as a UDF Encryption key type and Content Digest Type
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> key earl
-<rsp>EBWH-RCRW-FUOE-37TH-EDRM-2PBE-B463-FJ
-MC4V-MY6J-T2K2-3LJI-4332-OPA7-CV3Y-QXBI-ICF5-FFUB-IJR5-S7NC-7OTZ-SQHV
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key earl /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EBWH-RCRW-FUOE-37TH-EDRM-2PBE-B463-FJ",
-    "Identifier": "MC4V-MY6J-T2K2-3LJI-4332-OPA7-CV3Y-QXBI-ICF5-FFUB-IJR5-S7NC-7OTZ-SQHV"}}
-</div>
-~~~~
-
+**Missing Example***
 
 # key share
 
@@ -161,34 +102,7 @@ share   Split a secret value according to the specified shares and quorum
 The `key share` command returns a randomized secret value and a set of shares for the secret
 formatted as a UDF Encryption key type and Share types
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> key share
-<rsp>EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-MCTS-2NQA-AD5B-WFZE-NWH3-I5OI-TN6G-3MAK-TUHM-RMDK-NXO2-EZNT-XSMA
-SAQI-6LMK-TSHH-W7FZ-YRR6-TQY6-XSQQ-E
-SAQ3-PQLE-3GA5-TQWV-X7DH-FQ6N-AG4I-M
-SARO-AVJ7-CZ2T-QCHR-XMUP-XRD3-I3IA-U
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key share /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A",
-    "Identifier": "MCTS-2NQA-AD5B-WFZE-NWH3-I5OI-TN6G-3MAK-TUHM-RMDK-NXO2-EZNT-XSMA",
-    "Shares": ["SAQI-6LMK-TSHH-W7FZ-YRR6-TQY6-XSQQ-E",
-      "SAQ3-PQLE-3GA5-TQWV-X7DH-FQ6N-AG4I-M",
-      "SARO-AVJ7-CZ2T-QCHR-XMUP-XRD3-I3IA-U"]}}
-</div>
-~~~~
-
+**Missing Example***
 
 
 # key recover
@@ -215,25 +129,6 @@ recover   Recover a secret value from the shares provided
 The `key recover` command combines the specified set of share to recover the original secret 
 value as a UDF Encryption key type.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> key recover SAQI-6LMK-TSHH-W7FZ-YRR6-TQY6-XSQQ-E SARO-AVJ7-CZ2T-QCHR-XMUP-XRD3-I3IA-U
-<rsp>EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultKey:
-
-~~~~
-<div="terminal">
-<cmd>Alice> key recover SAQI-6LMK-TSHH-W7FZ-YRR6-TQY6-XSQQ-E SARO-AVJ7-CZ2T-QCHR-XMUP-XRD3-I3IA-U /json
-<rsp>{
-  "ResultKey": {
-    "Success": true,
-    "Key": "EBTJ-TMC7-TMOT-NHOJ-AFQM-E4DX-RF7A"}}
-</div>
-~~~~
-
+**Missing Example***
 
 

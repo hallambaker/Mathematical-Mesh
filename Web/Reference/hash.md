@@ -38,26 +38,7 @@ The `hash udf` command returns the UDF Content digest of the specified input
 file according to the precision, IANA media type and digest algorithm specified
 with the `/bits`, `/cty` and `/alg` options.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash udf TestFile1.txt
-<rsp>MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDigest:
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash udf TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "MDLI-GX2C-3OQB-BVWI-REXY-EB56-JG4R"}}
-</div>
-~~~~
-
+**Missing Example***
 
 
 # hash digest
@@ -79,26 +60,7 @@ The `hash digest` command returns the Content digest of the specified input
 file according to the digest algorithm specifiedwith the `/alg` option.
 
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash digest TestFile1.txt
-<rsp>A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDigest:
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash digest TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "A028D4F74B602BA45EB0A93C9A4677240DCF281A1A9322F183BD32F0BED82EC72DE9C3957B2F4C9A1CCF7ED14F85D73498DF38017E703D47EBB9F0B3BF116F69"}}
-</div>
-~~~~
-
+**Missing Example***
 
 The `/alg` option allows the digest algorithm to be specified.
 
@@ -131,26 +93,5 @@ key is used.
 If a MAC value is specified, it is compared to the calculated value and the value
 true returned if and only if it matches the value specified.
 
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash mac TestFile1.txt
-<rsp>ABY3-NMAW-LZ6K-QUFI-ZZWH-ORVP-2Y2M
-NB3N-X3D6-COWL-4EUP-B5QR-3QHN-NSUK
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDigest:
-
-~~~~
-<div="terminal">
-<cmd>Alice> hash mac TestFile1.txt /json
-<rsp>{
-  "ResultDigest": {
-    "Success": true,
-    "Digest": "ABY3-NMAW-LZ6K-QUFI-ZZWH-ORVP-2Y2M",
-    "Key": "NB3N-X3D6-COWL-4EUP-B5QR-3QHN-NSUK"}}
-</div>
-~~~~
-
+**Missing Example***
 

@@ -1,20 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Configurations>Debug;Release;Focus</Configurations>
+    <Company>ThresholdMode.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.Cryptography.Dare</Product>
+    <Description>Data At Rest Envelope and Sequence support.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.Cryptography.Dare</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Container.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Dare.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Focus|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Container.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\netstandard2.0\Goedel.Cryptography.Dare.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Cryptography.Container.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard2.0\Goedel.Cryptography.Dare.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

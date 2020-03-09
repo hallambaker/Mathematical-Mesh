@@ -80,11 +80,11 @@ namespace Goedel.Utilities {
         public static void Fail(ThrowDelegate Throw = null,
                     object Reason = null, string String = null, int Int = -1) {
 
-            Reason = Reason ?? new ExceptionData() {
+            Reason ??= new ExceptionData() {
                 String = String,
                 Int = Int
                 };
-            Throw = Throw ?? Utilities.NYI.Throw;
+            Throw ??= Utilities.NYI.Throw;
             throw Throw(Reason);
             }
 

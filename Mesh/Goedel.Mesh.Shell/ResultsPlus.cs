@@ -164,6 +164,9 @@ namespace Goedel.Mesh.Shell {
                 case CatalogedAdmin catalogedAdmin: {
                     break;
                     }
+
+                default:
+                    break;
                 }
 
 
@@ -197,6 +200,9 @@ namespace Goedel.Mesh.Shell {
                         }
                     break;
                     }
+
+                default:
+                    break;
                 }
             return Builder.ToString();
             }
@@ -254,6 +260,9 @@ namespace Goedel.Mesh.Shell {
                         Builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
                         break;
                         }
+
+                    default:
+                        break;
                     }
                 }
 

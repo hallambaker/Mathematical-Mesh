@@ -40,9 +40,9 @@ namespace ExampleGenerator {
 		// ProtocolHelloRequest
 		//
 		public static void ProtocolHelloRequest(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloRequest.md")) {
-				Example._ProtocolHelloRequest(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolHelloRequest.md");
+			Example._Output = _Output;
+			Example._ProtocolHelloRequest(Example);
 			}
 		public void _ProtocolHelloRequest(CreateExamples Example) {
 
@@ -59,9 +59,9 @@ namespace ExampleGenerator {
 		// ProtocolHelloResponse
 		//
 		public static void ProtocolHelloResponse(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHelloResponse.md")) {
-				Example._ProtocolHelloResponse(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolHelloResponse.md");
+			Example._Output = _Output;
+			Example._ProtocolHelloResponse(Example);
 			}
 		public void _ProtocolHelloResponse(CreateExamples Example) {
 
@@ -78,9 +78,9 @@ namespace ExampleGenerator {
 		// ProtocolHello
 		//
 		public static void ProtocolHello(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolHello.md")) {
-				Example._ProtocolHello(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolHello.md");
+			Example._Output = _Output;
+			Example._ProtocolHello(Example);
 			}
 		public void _ProtocolHello(CreateExamples Example) {
 
@@ -101,9 +101,9 @@ namespace ExampleGenerator {
 		// ProtocolAccountCreate
 		//
 		public static void ProtocolAccountCreate(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolAccountCreate.md")) {
-				Example._ProtocolAccountCreate(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolAccountCreate.md");
+			Example._Output = _Output;
+			Example._ProtocolAccountCreate(Example);
 			}
 		public void _ProtocolAccountCreate(CreateExamples Example) {
 
@@ -123,9 +123,9 @@ namespace ExampleGenerator {
 		// ProtocolAccountDelete
 		//
 		public static void ProtocolAccountDelete(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolAccountDelete.md")) {
-				Example._ProtocolAccountDelete(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolAccountDelete.md");
+			Example._Output = _Output;
+			Example._ProtocolAccountDelete(Example);
 			}
 		public void _ProtocolAccountDelete(CreateExamples Example) {
 
@@ -147,9 +147,9 @@ namespace ExampleGenerator {
 		// ProtocolStatus
 		//
 		public static void ProtocolStatus(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolStatus.md")) {
-				Example._ProtocolStatus(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolStatus.md");
+			Example._Output = _Output;
+			Example._ProtocolStatus(Example);
 			}
 		public void _ProtocolStatus(CreateExamples Example) {
 
@@ -170,9 +170,9 @@ namespace ExampleGenerator {
 		// ProtocolDownload
 		//
 		public static void ProtocolDownload(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolDownload.md")) {
-				Example._ProtocolDownload(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolDownload.md");
+			Example._Output = _Output;
+			Example._ProtocolDownload(Example);
 			}
 		public void _ProtocolDownload(CreateExamples Example) {
 
@@ -193,9 +193,9 @@ namespace ExampleGenerator {
 		// ProtocolUpload
 		//
 		public static void ProtocolUpload(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolUpload.md")) {
-				Example._ProtocolUpload(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolUpload.md");
+			Example._Output = _Output;
+			Example._ProtocolUpload(Example);
 			}
 		public void _ProtocolUpload(CreateExamples Example) {
 
@@ -216,9 +216,9 @@ namespace ExampleGenerator {
 		// ProtocolConnect
 		//
 		public static void ProtocolConnect(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolConnect.md")) {
-				Example._ProtocolConnect(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolConnect.md");
+			Example._Output = _Output;
+			Example._ProtocolConnect(Example);
 			}
 		public void _ProtocolConnect(CreateExamples Example) {
 
@@ -239,9 +239,9 @@ namespace ExampleGenerator {
 		// ProtocolConnectPIN
 		//
 		public static void ProtocolConnectPIN(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolConnectPIN.md")) {
-				Example._ProtocolConnectPIN(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolConnectPIN.md");
+			Example._Output = _Output;
+			Example._ProtocolConnectPIN(Example);
 			}
 		public void _ProtocolConnectPIN(CreateExamples Example) {
 
@@ -263,9 +263,9 @@ namespace ExampleGenerator {
 		// ProtocolConnectEARL
 		//
 		public static void ProtocolConnectEARL(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolConnectEARL.md")) {
-				Example._ProtocolConnectEARL(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolConnectEARL.md");
+			Example._Output = _Output;
+			Example._ProtocolConnectEARL(Example);
 			}
 		public void _ProtocolConnectEARL(CreateExamples Example) {
 
@@ -287,9 +287,9 @@ namespace ExampleGenerator {
 		// ProtocolPostClientService
 		//
 		public static void ProtocolPostClientService(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolPostClientService.md")) {
-				Example._ProtocolPostClientService(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolPostClientService.md");
+			Example._Output = _Output;
+			Example._ProtocolPostClientService(Example);
 			}
 		public void _ProtocolPostClientService(CreateExamples Example) {
 
@@ -311,9 +311,9 @@ namespace ExampleGenerator {
 		// ProtocolPostServiceService
 		//
 		public static void ProtocolPostServiceService(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ProtocolPostServiceService.md")) {
-				Example._ProtocolPostServiceService(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ProtocolPostServiceService.md");
+			Example._Output = _Output;
+			Example._ProtocolPostServiceService(Example);
 			}
 		public void _ProtocolPostServiceService(CreateExamples Example) {
 

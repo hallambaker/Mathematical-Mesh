@@ -1,0 +1,10 @@
+﻿
+Namespace Goedel.Mesh.Services
+
+	Exception ServicesTBS
+        Console "An internal error occurred"
+		Description
+			|An internal assertion check failed.
+
+
+

@@ -128,6 +128,12 @@ namespace Goedel.IO {
                     return System.IO.FileMode.OpenOrCreate;
                     }
 
+                case FileStatus.Read:
+                    break;
+                case FileStatus.Existing:
+                    break;
+                default:
+                    break;
                 }
             return System.IO.FileMode.Open;
             }
@@ -145,6 +151,19 @@ namespace Goedel.IO {
                 case FileStatus.Append: {
                     return System.IO.FileAccess.Write;
                     }
+
+                case FileStatus.New:
+                    break;
+                case FileStatus.Overwrite:
+                    break;
+                case FileStatus.Existing:
+                    break;
+                case FileStatus.OpenOrCreate:
+                    break;
+                case FileStatus.ConcurrentLocked:
+                    break;
+                default:
+                    break;
                 }
             return System.IO.FileAccess.ReadWrite;
             }
@@ -161,6 +180,19 @@ namespace Goedel.IO {
                 case FileStatus.ConcurrentLocked: {
                     return System.IO.FileShare.ReadWrite;
                     }
+
+                case FileStatus.Append:
+                    break;
+                case FileStatus.New:
+                    break;
+                case FileStatus.Overwrite:
+                    break;
+                case FileStatus.Existing:
+                    break;
+                case FileStatus.OpenOrCreate:
+                    break;
+                default:
+                    break;
                 }
             return System.IO.FileShare.Read;
             }
@@ -206,11 +238,9 @@ namespace Goedel.IO {
         /// <param name="filename">The file to read.</param>
         /// <returns>The text reader.</returns>
         public static string OpenReadToEnd(this string filename) {
-            using (var fileStream = filename.OpenFileRead()) {
-                using (var reader = new StreamReader(fileStream)) {
-                    return reader.ReadToEnd();
-                    }
-                }
+            using var fileStream = filename.OpenFileRead();
+            using var reader = new StreamReader(fileStream);
+            return reader.ReadToEnd();
             }
 
 
@@ -222,10 +252,9 @@ namespace Goedel.IO {
         /// <param name="data">The data that was read</param>
         /// <returns>The text reader.</returns>
         public static void OpenReadToEnd(this string filename, out byte[] data) {
-            using (var fileStream = filename.OpenFileRead()) {
-                data = new byte[fileStream.Length];
-                fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
-                }
+            using var fileStream = filename.OpenFileRead();
+            data = new byte[fileStream.Length];
+            fileStream.Read(data, 0, (int)fileStream.Length); // NYI support, test 64 bit file lengths
             }
 
         /// <summary>
@@ -319,11 +348,9 @@ namespace Goedel.IO {
         /// <param name="text">Text to write to file.</param>
         /// <returns>File stream to write to the file.</returns>
         public static void WriteFileNew(this string filename, string text) {
-            using (var outStream = filename.OpenFileNew()) {
-                using (var textWriter = new StreamWriter(outStream)) {
-                    textWriter.Write(text);
-                    }
-                }
+            using var outStream = filename.OpenFileNew();
+            using var textWriter = new StreamWriter(outStream);
+            textWriter.Write(text);
             }
 
         /// <summary>
@@ -334,9 +361,8 @@ namespace Goedel.IO {
         /// <param name="data">Data to write to file</param>
         /// <returns>File stream to write to the file.</returns>
         public static void WriteFileNew(this string filename, byte[] data) {
-            using (var outStream = filename.OpenFileNew()) {
-                outStream.Write(data, 0, data.Length);
-                }
+            using var outStream = filename.OpenFileNew();
+            outStream.Write(data, 0, data.Length);
             }
 
         /// <summary>
@@ -354,9 +380,8 @@ namespace Goedel.IO {
         /// <param name="input"></param>
         /// <param name="fileName"></param>
         public static void CopyToFile(this Stream input, string fileName) {
-            using (var outputStream = fileName.OpenFileWrite()) {
-                input.CopyTo(outputStream);
-                }
+            using var outputStream = fileName.OpenFileWrite();
+            input.CopyTo(outputStream);
             }
         }
     }

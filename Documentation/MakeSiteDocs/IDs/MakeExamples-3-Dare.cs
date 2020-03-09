@@ -32,10 +32,8 @@ namespace ExampleGenerator {
 		// MeshExamplesContainer
 		//
 		public static void MeshExamplesContainer(CreateExamples Example) { /* XFile  */
-				using (var _Output = new StreamWriter("Examples\\ExamplesContainer.md")) {
-				var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesContainer.md" };
-				obj._MeshExamplesContainer(Example);
-				}
+			using var _Output = new StreamWriter("Examples\\ExamplesContainer.md");			var obj = new CreateExamples() { _Output = _Output, _Indent = "", _Filename = "Examples\\ExamplesContainer.md" };
+			obj._MeshExamplesContainer(Example);
 			}
 		public void _MeshExamplesContainer(CreateExamples Example) {
 

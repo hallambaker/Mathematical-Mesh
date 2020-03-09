@@ -35,10 +35,9 @@ namespace Goedel.Command {
         /// <param name="Text">The command line to split.</param>
         /// <returns>The command line split into entries.</returns>
         public static string[] Split(string Text) {
-            using (var CommandSplitLex = new CommandSplitLex()) {
-                CommandSplitLex.GetToken(Text);
-                return CommandSplitLex.Value.ToArray();
-                }
+            using var CommandSplitLex = new CommandSplitLex();
+            CommandSplitLex.GetToken(Text);
+            return CommandSplitLex.Value.ToArray();
             }
 
         LexStringReader lexStringReader;

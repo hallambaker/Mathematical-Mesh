@@ -68,6 +68,13 @@ namespace Goedel.Protocol {
                 case DataEncoding.JSON_D: {
                     return GetJsonD(jsonObject, tagged);
                     }
+
+                case DataEncoding.ASN_1:
+                    break;
+                case DataEncoding.RFC822:
+                    break;
+                default:
+                    break;
                 }
 
             throw new NYI();
@@ -96,6 +103,13 @@ namespace Goedel.Protocol {
                 case DataEncoding.JSON_D: {
                     return new JSONCWriter(stream);
                     }
+
+                case DataEncoding.ASN_1:
+                    break;
+                case DataEncoding.RFC822:
+                    break;
+                default:
+                    break;
                 }
             throw new NYI();
             }

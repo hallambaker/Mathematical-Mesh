@@ -52,6 +52,8 @@ namespace Goedel.Mesh {
                     return;
                     }
 
+                default:
+                    break;
                 }
 
             }

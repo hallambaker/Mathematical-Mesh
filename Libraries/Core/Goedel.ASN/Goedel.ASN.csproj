@@ -1,9 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>Goedel.ASN</RootNamespace>
     <Configurations>Debug;Release;Focus</Configurations>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Company>ThresholdMode.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Goedel.ASN</Product>
+    <Description>ASN1 parsing library.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Goedel.ASN</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

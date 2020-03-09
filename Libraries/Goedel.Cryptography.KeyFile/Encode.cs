@@ -52,6 +52,17 @@ namespace Goedel.Cryptography.KeyFile {
                 case KeyFileFormat.OpenSSH: {
                     return ToOpenSSH(KeyPair);
                     }
+
+                case KeyFileFormat.Default:
+                    break;
+                case KeyFileFormat.X509DER:
+                    break;
+                case KeyFileFormat.PKCS12:
+                    break;
+                case KeyFileFormat.PKCS7:
+                    break;
+                default:
+                    break;
                 }
             return null;
             }

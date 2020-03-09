@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+#pragma warning disable IDE1006
+
 namespace Goedel.Registry {
 
     /// <summary>
@@ -243,9 +245,8 @@ namespace Goedel.Registry {
         /// <param name="Input">Input file.</param>
         /// <param name="Parse">Parse tree.</param>
         public void Process(Stream Input, Parser Parse) {
-            using (TextReader Reader = new StreamReader(Input)) {
-                Process(Reader, Parse);
-                }
+            using TextReader Reader = new StreamReader(Input);
+            Process(Reader, Parse);
             }
 
         /// <summary>
@@ -377,37 +378,26 @@ namespace Goedel.Registry {
                                             TokenText += c;
                                             }
                                         else if (State == 10) {
-                                            switch (c) {
-                                                case 'n':
-                                                    TokenText += '\n';
-                                                    break;
-                                                case 'r':
-                                                    TokenText += '\r';
-                                                    break;
-                                                case 'v':
-                                                    TokenText += '\v';
-                                                    break;
-                                                case 't':
-                                                    TokenText += '\t';
-                                                    break;
-                                                case '\"':
-                                                    TokenText += '\"';
-                                                    break;
-                                                case '\'':
-                                                    TokenText += '\'';
-                                                    break;
-                                                case '\\':
-                                                    TokenText += '\\';
-                                                    break;
-                                                case '0':
-                                                    TokenText += '\0';
-                                                    break;
-                                                default:
-                                                    throw new Exception("Unknown Character Escape Sequence");
-                                                }
+                                            TokenText += c switch
+                                                {
+                                                    'n' => '\n',
+                                                    'r' => '\r',
+                                                    'v' => '\v',
+                                                    't' => '\t',
+                                                    '\"' => '\"',
+                                                    '\'' => '\'',
+                                                    '\\' => '\\',
+                                                    '0' => '\0',
+                                                    _ => throw new Exception("Unknown Character Escape Sequence"),
+                                                    };
                                             }
                                         break;
                                         }
+
+                                    case ActionType.Null:
+                                        break;
+                                    default:
+                                        break;
                                     }
 
                                 State = NextState;

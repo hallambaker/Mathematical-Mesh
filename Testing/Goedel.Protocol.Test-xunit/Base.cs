@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 using Xunit;
 
+#pragma warning disable IDE0051
+
 namespace Goedel.XUnit {
 
     public partial class GoedelProtocol {

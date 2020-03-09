@@ -59,13 +59,13 @@ namespace ExampleGenerator {
 
 
             // Escrow round trip
-            ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
+            //ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
 
-            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
-            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+            //var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            //var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
-            ProfileRecover = testCLIAlice1.Example($"mesh recover {share1} {share2} /verify");
+            //ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+            //ProfileRecover = testCLIAlice1.Example($"mesh recover {share1} {share2} /verify");
 
 
             // Import and export test

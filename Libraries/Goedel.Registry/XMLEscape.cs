@@ -37,7 +37,7 @@ namespace Goedel.Registry {
         public static string AsXMLAttribute(this string Text) {
             var Result = new StringBuilder();
 
-            Text = Text ?? "null";
+            Text ??= "null";
             foreach (char c in Text) {
                 switch (c) {
                     case '<': Result.Append("&lt;"); break;

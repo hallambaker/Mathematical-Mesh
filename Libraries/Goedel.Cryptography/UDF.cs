@@ -185,6 +185,151 @@ namespace Goedel.Cryptography {
                     return DigestToUDFBinary(Platform.SHA3_512.Process(data),
                         contentType, bits, cryptoAlgorithmID, key);
                     }
+
+                case CryptoAlgorithmID.Unknown:
+                    break;
+                case CryptoAlgorithmID.NULL:
+                    break;
+                case CryptoAlgorithmID.Default:
+                    break;
+                case CryptoAlgorithmID.Bulk:
+                    break;
+                case CryptoAlgorithmID.BulkMask:
+                    break;
+                case CryptoAlgorithmID.BulkTagMask:
+                    break;
+                case CryptoAlgorithmID.Digest:
+                    break;
+                case CryptoAlgorithmID.MAC:
+                    break;
+                case CryptoAlgorithmID.Encryption:
+                    break;
+                case CryptoAlgorithmID.MaxDigest:
+                    break;
+                case CryptoAlgorithmID.MaxMAC:
+                    break;
+                case CryptoAlgorithmID.MaxEncryption:
+                    break;
+                case CryptoAlgorithmID.BaseMask:
+                    break;
+                case CryptoAlgorithmID.Meta:
+                    break;
+                case CryptoAlgorithmID.MetaMask:
+                    break;
+                case CryptoAlgorithmID.MetaTagMask:
+                    break;
+                case CryptoAlgorithmID.Signature:
+                    break;
+                case CryptoAlgorithmID.Exchange:
+                    break;
+                case CryptoAlgorithmID.Wrap:
+                    break;
+                case CryptoAlgorithmID.MaxSignature:
+                    break;
+                case CryptoAlgorithmID.MaxExchange:
+                    break;
+                case CryptoAlgorithmID.MaxWrap:
+                    break;
+                case CryptoAlgorithmID.SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.SHA_3_256:
+                    break;
+                case CryptoAlgorithmID.SHAKE_128:
+                    break;
+                case CryptoAlgorithmID.SHAKE_256:
+                    break;
+                case CryptoAlgorithmID.ModeCTS:
+                    break;
+                case CryptoAlgorithmID.ModeGCM:
+                    break;
+                case CryptoAlgorithmID.ModeHMAC:
+                    break;
+                case CryptoAlgorithmID.ModeCBCNone:
+                    break;
+                case CryptoAlgorithmID.ModeECB:
+                    break;
+                case CryptoAlgorithmID.AES256:
+                    break;
+                case CryptoAlgorithmID.AES128CBC:
+                    break;
+                case CryptoAlgorithmID.AES128GCM:
+                    break;
+                case CryptoAlgorithmID.AES128CTS:
+                    break;
+                case CryptoAlgorithmID.AES128HMAC:
+                    break;
+                case CryptoAlgorithmID.AES128CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES128ECB:
+                    break;
+                case CryptoAlgorithmID.AES256CBC:
+                    break;
+                case CryptoAlgorithmID.AES256GCM:
+                    break;
+                case CryptoAlgorithmID.AES256CTS:
+                    break;
+                case CryptoAlgorithmID.AES256HMAC:
+                    break;
+                case CryptoAlgorithmID.AES256CBCNone:
+                    break;
+                case CryptoAlgorithmID.AES256ECB:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
+                    break;
+                case CryptoAlgorithmID.Level_High:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS:
+                    break;
+                case CryptoAlgorithmID.EdDSA:
+                    break;
+                case CryptoAlgorithmID.Ed25519ctx:
+                    break;
+                case CryptoAlgorithmID.Ed25519ph:
+                    break;
+                case CryptoAlgorithmID.Ed448:
+                    break;
+                case CryptoAlgorithmID.Ed448ph:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                    break;
+                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                    break;
+                case CryptoAlgorithmID.RSAExch_P15:
+                    break;
+                case CryptoAlgorithmID.DH:
+                    break;
+                case CryptoAlgorithmID.ECDH:
+                    break;
+                case CryptoAlgorithmID.X25519:
+                    break;
+                case CryptoAlgorithmID.X448:
+                    break;
+                case CryptoAlgorithmID.XEd25519:
+                    break;
+                case CryptoAlgorithmID.XEd448:
+                    break;
+                case CryptoAlgorithmID.Direct:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES128:
+                    break;
+                case CryptoAlgorithmID.KW3394_AES256:
+                    break;
+                case CryptoAlgorithmID.AES128_GCM_KW:
+                    break;
+                case CryptoAlgorithmID.AES256_GCM_KW:
+                    break;
+                default:
+                    break;
                 }
             throw new InvalidAlgorithm();
             }
@@ -883,6 +1028,33 @@ namespace Goedel.Cryptography {
                 case UdfAlgorithmIdentifier.X448: {
                     return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
                     }
+
+                case UdfAlgorithmIdentifier.Any:
+                    break;
+                case UdfAlgorithmIdentifier.P256:
+                    break;
+                case UdfAlgorithmIdentifier.P384:
+                    break;
+                case UdfAlgorithmIdentifier.P521:
+                    break;
+                case UdfAlgorithmIdentifier.RSA2048:
+                    break;
+                case UdfAlgorithmIdentifier.RSA3072:
+                    break;
+                case UdfAlgorithmIdentifier.RSA4096:
+                    break;
+                case UdfAlgorithmIdentifier.MeshProfileMaster:
+                    break;
+                case UdfAlgorithmIdentifier.MeshProfileDevice:
+                    break;
+                case UdfAlgorithmIdentifier.MeshProfileAccount:
+                    break;
+                case UdfAlgorithmIdentifier.MeshActivationDevice:
+                    break;
+                case UdfAlgorithmIdentifier.MeshActivationAccount:
+                    break;
+                default:
+                    break;
                 }
             throw new NYI();
             }

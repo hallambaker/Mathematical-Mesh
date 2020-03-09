@@ -4,6 +4,15 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Configurations>Debug;Release;Focus</Configurations>
+    <Company>ThresholdMode.Com</Company>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+    <Product>Mesh Documentation</Product>
+    <Description>Make documentation for Mesh specifications.</Description>
+    <Copyright>© 2020</Copyright>
+    <Title>Mesh Documentation</Title>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+
   </PropertyGroup>
 
   <ItemGroup>

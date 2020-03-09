@@ -46,9 +46,9 @@ namespace ExampleGenerator {
 		// ArchVariousUDF
 		//
 		public static void ArchVariousUDF(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchVariousUDF.md")) {
-				Example._ArchVariousUDF(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchVariousUDF.md");
+			Example._Output = _Output;
+			Example._ArchVariousUDF(Example);
 			}
 		public void _ArchVariousUDF(CreateExamples Example) {
 
@@ -67,9 +67,9 @@ namespace ExampleGenerator {
 		// ArchitectureConnectEARL
 		//
 		public static void ArchitectureConnectEARL(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureConnectEARL.md")) {
-				Example._ArchitectureConnectEARL(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectEARL.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectEARL(Example);
 			}
 		public void _ArchitectureConnectEARL(CreateExamples Example) {
 
@@ -83,9 +83,9 @@ namespace ExampleGenerator {
 		// ArchSIN
 		//
 		public static void ArchSIN(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchSIN.md")) {
-				Example._ArchSIN(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchSIN.md");
+			Example._Output = _Output;
+			Example._ArchSIN(Example);
 			}
 		public void _ArchSIN(CreateExamples Example) {
 
@@ -105,9 +105,9 @@ namespace ExampleGenerator {
 		// Colophon
 		//
 		public static void Colophon(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\Colophon.md")) {
-				Example._Colophon(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\Colophon.md");
+			Example._Output = _Output;
+			Example._Colophon(Example);
 			}
 		public void _Colophon(CreateExamples Example) {
 
@@ -126,9 +126,9 @@ namespace ExampleGenerator {
 		// ArchitectureCreateMesh
 		//
 		public static void ArchitectureCreateMesh(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureCreateMesh.md")) {
-				Example._ArchitectureCreateMesh(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureCreateMesh.md");
+			Example._Output = _Output;
+			Example._ArchitectureCreateMesh(Example);
 			}
 		public void _ArchitectureCreateMesh(CreateExamples Example) {
 
@@ -140,9 +140,9 @@ namespace ExampleGenerator {
 		// ArchitectureAddAccount
 		//
 		public static void ArchitectureAddAccount(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureAddAccount.md")) {
-				Example._ArchitectureAddAccount(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureAddAccount.md");
+			Example._Output = _Output;
+			Example._ArchitectureAddAccount(Example);
 			}
 		public void _ArchitectureAddAccount(CreateExamples Example) {
 
@@ -154,9 +154,9 @@ namespace ExampleGenerator {
 		// ArchitectureAddService
 		//
 		public static void ArchitectureAddService(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureAddService.md")) {
-				Example._ArchitectureAddService(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureAddService.md");
+			Example._Output = _Output;
+			Example._ArchitectureAddService(Example);
 			}
 		public void _ArchitectureAddService(CreateExamples Example) {
 
@@ -168,9 +168,9 @@ namespace ExampleGenerator {
 		// ArchitectureCredential
 		//
 		public static void ArchitectureCredential(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureCredential.md")) {
-				Example._ArchitectureCredential(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureCredential.md");
+			Example._Output = _Output;
+			Example._ArchitectureCredential(Example);
 			}
 		public void _ArchitectureCredential(CreateExamples Example) {
 
@@ -182,9 +182,9 @@ namespace ExampleGenerator {
 		// ArchitectureConnectDirect
 		//
 		public static void ArchitectureConnectDirect(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureConnectDirect.md")) {
-				Example._ArchitectureConnectDirect(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectDirect.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectDirect(Example);
 			}
 		public void _ArchitectureConnectDirect(CreateExamples Example) {
 
@@ -209,9 +209,9 @@ namespace ExampleGenerator {
 		// ArchitectureConnectPIN
 		//
 		public static void ArchitectureConnectPIN(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureConnectPIN.md")) {
-				Example._ArchitectureConnectPIN(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectPIN.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectPIN(Example);
 			}
 		public void _ArchitectureConnectPIN(CreateExamples Example) {
 
@@ -242,9 +242,9 @@ namespace ExampleGenerator {
 		// ArchitectureConnectQR
 		//
 		public static void ArchitectureConnectQR(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureConnectQR.md")) {
-				Example._ArchitectureConnectQR(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureConnectQR.md");
+			Example._Output = _Output;
+			Example._ArchitectureConnectQR(Example);
 			}
 		public void _ArchitectureConnectQR(CreateExamples Example) {
 
@@ -291,9 +291,9 @@ namespace ExampleGenerator {
 		// ArchitectureContactDefinition
 		//
 		public static void ArchitectureContactDefinition(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureContactDefinition.md")) {
-				Example._ArchitectureContactDefinition(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureContactDefinition.md");
+			Example._Output = _Output;
+			Example._ArchitectureContactDefinition(Example);
 			}
 		public void _ArchitectureContactDefinition(CreateExamples Example) {
 
@@ -308,9 +308,9 @@ namespace ExampleGenerator {
 		// ArchitectureContactRequest
 		//
 		public static void ArchitectureContactRequest(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureContactRequest.md")) {
-				Example._ArchitectureContactRequest(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureContactRequest.md");
+			Example._Output = _Output;
+			Example._ArchitectureContactRequest(Example);
 			}
 		public void _ArchitectureContactRequest(CreateExamples Example) {
 
@@ -331,9 +331,9 @@ namespace ExampleGenerator {
 		// ArchitectureRecrypt
 		//
 		public static void ArchitectureRecrypt(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureRecrypt.md")) {
-				Example._ArchitectureRecrypt(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureRecrypt.md");
+			Example._Output = _Output;
+			Example._ArchitectureRecrypt(Example);
 			}
 		public void _ArchitectureRecrypt(CreateExamples Example) {
 
@@ -372,9 +372,9 @@ namespace ExampleGenerator {
 		// ArchitectureEscrow
 		//
 		public static void ArchitectureEscrow(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureEscrow.md")) {
-				Example._ArchitectureEscrow(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureEscrow.md");
+			Example._Output = _Output;
+			Example._ArchitectureEscrow(Example);
 			}
 		public void _ArchitectureEscrow(CreateExamples Example) {
 
@@ -386,9 +386,9 @@ namespace ExampleGenerator {
 		// ArchitectureRecovery
 		//
 		public static void ArchitectureRecovery(CreateExamples Example) { /* XFile  */
-				using (Example._Output = new StreamWriter("Examples\\ArchitectureRecovery.md")) {
-				Example._ArchitectureRecovery(Example);
-				}
+				using var _Output = new StreamWriter("Examples\\ArchitectureRecovery.md");
+			Example._Output = _Output;
+			Example._ArchitectureRecovery(Example);
 			}
 		public void _ArchitectureRecovery(CreateExamples Example) {
 

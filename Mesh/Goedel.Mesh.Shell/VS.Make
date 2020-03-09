@@ -23,7 +23,7 @@ LinkFiles = \
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
     Goedel.Protocol.dll\
-    Goedel.Mesh.Protocol.Client.dll\
+    Goedel.Mesh.Client.dll\
     Goedel.Mesh.dll
 
 ToolTargets = \
@@ -48,6 +48,8 @@ postbuildRecurse :
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)
+	version version.version AssemblyVersion.cs
+	
 
 postbuild : postbuildRecurse
 

@@ -31,29 +31,7 @@ add   Add password entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password
-<rsp>alice1@ftp.example.com = [password]
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultEntry:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password add ftp.example.com alice1 password /json
-<rsp>{
-  "ResultEntry": {
-    "Success": true,
-    "CatalogEntry": {
-      "Service": "ftp.example.com",
-      "Username": "alice1",
-      "Password": "password"}}}
-</div>
-~~~~
-
+**Missing Example***
 
 # password get
 
@@ -69,24 +47,7 @@ get   Lookup password entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> password delete www.example.com
-<rsp></div>
-~~~~
-
-Specifying the /json option returns a result of type Result:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password delete www.example.com /json
-<rsp>{
-  "Result": {
-    "Success": true}}
-</div>
-~~~~
-
+**Missing Example***
 
 # password delete
 
@@ -102,25 +63,7 @@ delete   Delete password entry
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list
-<rsp></div>
-~~~~
-
-Specifying the /json option returns a result of type ResultMachine:
-
-~~~~
-<div="terminal">
-<cmd>Alice> mesh list /json
-<rsp>{
-  "ResultMachine": {
-    "Success": true,
-    "CatalogedMachines": []}}
-</div>
-~~~~
-
+**Missing Example***
 
 # password list
 
@@ -136,33 +79,6 @@ list   List password entries
 <over>
 </div>
 ~~~~
-
-~~~~
-<div="terminal">
-<cmd>Alice> password list
-<rsp>alice1@ftp.example.com = [password]
-alice@example.com@www.example.com = [newpassword]
-</div>
-~~~~
-
-Specifying the /json option returns a result of type ResultDump:
-
-~~~~
-<div="terminal">
-<cmd>Alice> password list /json
-<rsp>{
-  "ResultDump": {
-    "Success": true,
-    "CatalogedEntries": [{
-        "Service": "ftp.example.com",
-        "Username": "alice1",
-        "Password": "password"},
-      {
-        "Service": "www.example.com",
-        "Username": "alice@example.com",
-        "Password": "newpassword"}]}}
-</div>
-~~~~
-
+**Missing Example***
 
 
