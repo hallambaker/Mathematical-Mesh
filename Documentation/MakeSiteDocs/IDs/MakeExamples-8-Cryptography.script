@@ -22,7 +22,6 @@
 
 #call DescribeKeyGen threshold.KeyGenX25519
 
-
 ###### X448
 
 #call DescribeKeyGen threshold.KeyGenX448
@@ -37,21 +36,29 @@
 
 #### Threshold Decryption
 
-###### Key Splitting X25519
+###### Direct Key Splitting X25519
 
 #call DescribeDecryptSplitting threshold.DecryptX25519
 
-###### Decryption X25519
+###### Direct Decryption X25519
 
 #call DescribeDecryptUse threshold.DecryptX25519
 
-###### Key Splitting X448
+###### Direct Key Splitting X448
 
 #call DescribeDecryptSplitting threshold.DecryptX448
 
-###### Decryption X448
+###### Direct Decryption X448
 
 #call DescribeDecryptUse threshold.DecryptX448
+
+###### Shamir Secret Sharing X448
+
+[TBS]
+
+###### Lagrange Decryption X448
+
+[TBS]
 
 #end xfile
 
@@ -171,17 +178,17 @@ The key parameters of the second key contribution are:
 #call DescribeKey KeyGen.Key2
 ~~~~
 
-The aggregate private key is:
+The composite private key is:
 
 ~~~~
 Scalar_A = (Scalar_1 + Scalar_2) mod L
   = #{KeyGen.KeyA.Scalar}
 
-Encoded Aggrgate Private Key:
+Encoded Composite Private Key:
 #{KeyGen.KeyA.Private.ToStringBase16FormatHex()}
 ~~~~
 
-The aggregate public key is:
+The composite public key is:
 
 ~~~~
 Point_A = Point_1 + Point_2
@@ -194,7 +201,7 @@ Encoded Public#{KeyGen.KeyA.Public.ToStringBase16FormatHex()}
 
 #if (KeyGen.KeyA.IsCurveX) 
 Note that in this case, the unsigned representation of the key is used as
-the aggregate key is intended for unsigned CurveX key agreement. If the
+the composite key is intended for unsigned CurveX key agreement. If the
 result is intended for use as a key contribution, the signed representation
 is required.
 
@@ -218,19 +225,19 @@ is required.
 #end method
 
 #xfile CreateExamples ExamplesThresholdSig "Examples\\ExamplesThresholdSig.md" CreateExamples Example
-#### Unanimous Threshold Signature Ed25519
+#### Direct Threshold Signature Ed25519
 
 #call Describe Example.ThresholdSignature.UnanimousEd25519
 
-#### Unanimous Threshold Signature Ed448
+#### Direct Threshold Signature Ed448
 
 #call Describe Example.ThresholdSignature.UnanimousEd448
 
-#### Quorate Threshold Signature Ed25519
+#### Shamir Threshold Signature Ed25519
 
 #call Describe Example.ThresholdSignature.QuorateEd25519
 
-#### Quorate Threshold Signature Ed448
+#### Shamir Threshold Signature Ed448
 
 #call Describe Example.ThresholdSignature.QuorateEd448
 
@@ -238,7 +245,7 @@ is required.
 
 #method Describe Quorate sig
 
-The administrator creates the aggregate key pair
+The administrator creates the composite key pair
 
 ~~~~
 #call DescribeKey sig.KeyAggregate
@@ -279,13 +286,13 @@ Alice and Carol select their values ra, rc
 
 ~~~~
 ra = #{sig.Ra}
-Ra = #{sig.RRa}
+Ra = #{sig.RRa.ToStringBase16FormatHex()}
 
 rc = #{sig.Rc}
-Rc = #{sig.RRc}
+Rc = #{sig.RRc.ToStringBase16FormatHex()}
 ~~~~
 
-The aggregate value R = R<sub>a</sub> + R<sub>c</sub>
+The composite value R = R<sub>a</sub> + R<sub>c</sub>
 
 ~~~~
 R =  #{sig.R.ToStringBase16FormatHex()}
@@ -313,13 +320,13 @@ Sa = #{sig.SSa}
 Sc = #{sig.SSc}
 ~~~~
 
-The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>
+The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub>
 
 ~~~~
 S =  #{sig.S}
 ~~~~
 
-The coordinator checks to see that the signature verifies:
+The dealer checks to see that the signature verifies:
 
 ~~~~
 S.B = R + kA = 
@@ -331,61 +338,64 @@ S.B = R + kA =
 
 
 #method Describe Unanimous sig
-The signers are Alice and Bob. Each creates a key pair:
+The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair:
 
 ~~~~
 #call DescribeKey sig.KeyAlice
 #call DescribeKey sig.KeyBob
 ~~~~
 
-The Aggregate Signature Key A = A<sub>a</sub> + A<sub>b</sub>
+The composite Signature Key A = A<sub>a</sub> + A<sub>b</sub>
 
 ~~~~
 #call DescribeKey sig.KeyAggregate
 ~~~~
 
-To sign the text "#{sig.TestData}", Alice and Bob first generate their values r
-which they multiply by the base point to obtain the value R<sub>i</sub>:
+To sign the text "#{sig.TestData}", Alice first generates her value r
+and multiplies it by the base point to obtain the value R<sub>a</sub>:
 
 ~~~~
 Alice:
 r_a =  #{sig.Ra}
-R_a =  #{sig.RRa}
-
-Bob:
-r_a =  #{sig.Rb}
-R_a =  #{sig.RRb}
+R_a =  #{sig.RRa.ToStringBase16FormatHex()}
 ~~~~
 
-The aggregate value R = R<sub>a</sub> + R<sub>b</sub>
+Alice passes her value R<sub>A</sub> to Bob along with the other 
+parameters required to calculate i. Bob then calculates his
+value R<sub>A</sub> and multiplies it by the base point to obtain 
+the value R<sub>b</sub>:
+
+~~~~
+Bob:
+r_b =  #{sig.Rb}
+R_b =  #{sig.RRb.ToStringBase16FormatHex()}
+~~~~
+
+Bob can now calculate the composite value R = R<sub>a</sub> + R<sub>b</sub>
+and thus the value k.
 
 ~~~~
 R =  #{sig.R.ToStringBase16FormatHex()}
-~~~~
-
-The value k is calculated 
-
-~~~~
 k =  #{sig.K}
 ~~~~
 
-Alice and Bob both calculate their signature scalar contribution:
+Bob calculates his signature scalar contribution and returns the value to Alice:
 
 ~~~~
-Alice:
-S_a =  #{sig.SSa}
-
 Bob:
 S_b =  #{sig.SSb}
 ~~~~
 
-The coordinator calculates the aggregate value S = S<sub>a</sub> + S<sub>b</sub>
+Alice can now calculate her signature scalar contribution and thus the signature 
+scalar S.
 
 ~~~~
+Alice:
+S_a =  #{sig.SSa}
 S =  #{sig.S}
 ~~~~
 
-The coordinator checks to see that the signature verifies:
+Alice checks to see that the signature verifies:
 
 ~~~~
 S.B = R + kA = 
