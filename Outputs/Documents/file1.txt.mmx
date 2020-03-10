@@ -1,0 +1,25 @@
+{
+  "protected": "
+ewogICJlbmMiOiAiQTI1NkNCQyJ9",
+  "iv": "
+ygOx7w4ORvPU7PRbDhVZHQ",
+  "recipients": [{
+      "Header": {
+        "alg": "DH",
+        "kid": "recrypt@example.com.mm--makt6-dhl2r-xl4gq-firw6-4dlmd-3u4lq",
+        "epk": {
+          "PublicKeyDH": {
+            "kid": "MAMQV-ZWBFB-SCETX-ZZPSL-77BQV-6MHHL",
+            "Domain": "
+YE6bnq1MlX5ojaJto6PLP_PEwA",
+            "Public": "
+AW1cUkuFzwVV9bg7zN3sCdsm-Q0KxxGiX8cU8G71ro8nQgsOnekFvbUA9Hfx6JTG
+I_E6VY33kTcwNUoD-WqR9ahpeNGq5fZIZ5MmPykWwW4u5yKkhi9056mJuikZiRar
+reiXsIvGz99bosUVEEhlQ6bz7iab5-21QWXolSziyzvibYWV5eZ8AOsIkOasNWvN
+gE6-xoMeuyHT4280WCHHB4JZ8BsNCE0jaZOLu-_dFZKNjx3XXGzZM75rAkNKvayR
+wkpVndZMQjuLE1jzBzk8o5MHBmfFs7YLD3X5we0j3XrYoM0vd9hEWFVYk_aA_9uY
+9zg_RqShuYfiysDdek4ntQA"}}},
+      "encrypted_key": "
+b2qMDBoCYEhs5rC2Y5PzwLzpeTHc5zeYBGivC0FffInbMR4L-Gb_aA"}],
+  "ciphertext": "
+SyVr2qIyZKK1Gdlhs1-J_SiZGFLJDiVZCmQv5zTgMb0"}

@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.IO</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.IO.NamespaceDoc">
+            <summary>
+            Various support functions for managing files.
+            </summary>
+        </member>
+        <member name="T:Goedel.IO.Debug">
+            <summary>
+            Class containing static helper methods. This should inherit from the Trace class
+            but that is sealed.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Debug.Initialize(System.Boolean)">
+            <summary>
+            Class initialization routine.
+            </summary>
+            <param name="TestMode">If true the first time the initialization is
+            called, initializes parameters in test mode.</param>
+        </member>
+        <member name="M:Goedel.IO.Debug.Initialization(System.Boolean)">
+            <summary>
+            Perform standard initialization
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Debug.WriteLine(System.String,System.Object[])">
+            <summary>
+            Convenience method to do formatted write to the trace output
+            </summary>
+            <param name="Format">A composite format string </param>
+            <param name="Arg">An array of objects to write using format</param>
+        </member>
+        <member name="M:Goedel.IO.Debug.Write(System.String,System.Object[])">
+            <summary>
+            Convenience method to do formatted write to the trace output
+            </summary>
+            <param name="Format">A composite format string </param>
+            <param name="Arg">An array of objects to write using format</param>
+        </member>
+        <member name="T:Goedel.IO.GoedelTraceListener">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.GoedelTraceListener.Write(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:Goedel.IO.GoedelTraceListener.WriteLine(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:Goedel.IO.Extension">
+            <summary>
+            Tools for managing directories
+            </summary>
+            <summary>
+            Extension methods to simplify file operations. While there 
+            is a combinatorial explosion of file access modes and sharing
+            permissions, only a few of these combinations make sense.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Extension.DirectoryDelete(System.String)">
+            <summary>
+            Delete a directory ignoring errors.
+            </summary>
+            <param name="Path">The directory to delete.</param>
+        </member>
+        <member name="T:Goedel.IO.Extension.ProcessBlock32PutDelegate">
+            <summary>
+            Delegate method for processing a block of data. The data block is limited in 
+            size to a 32 bit length.
+            </summary>
+            <param name="data">The data to be processed</param>
+            <param name="offset">Byte offset from the start of the data block.</param>
+            <param name="count">The number of bytes to process</param>
+        </member>
+        <member name="T:Goedel.IO.Extension.ProcessBlock32GetDelegate">
+            <summary>
+            Delegate method for processing a block of data. The data block is limited in 
+            size to a 32 bit length.
+            </summary>
+            <param name="data">The data to be processed</param>
+            <param name="offset">Byte offset from the start of the data block.</param>
+            <param name="count">The number of bytes to process</param>
+        </member>
+        <member name="M:Goedel.IO.Extension.ProcessRead(System.IO.Stream,Goedel.IO.Extension.ProcessBlock32PutDelegate,System.Int32)">
+            <summary>
+            Process data read from the input stream using the specified delegate.
+            </summary>
+            <param name="input">The input stream to be read</param>
+            <param name="process">The delegate to call</param>
+            <param name="bufferSize">The suggested buffer size.</param>
+        </member>
+        <member name="M:Goedel.IO.Extension.ProcessWrite(System.IO.Stream,Goedel.IO.Extension.ProcessBlock32GetDelegate,System.Int32)">
+            <summary>
+            Process data read from the input stream using the specified delegate.
+            </summary>
+            <param name="output">The input stream to be read</param>
+            <param name="process">The delegate to call</param>
+            <param name="bufferSize">The suggested buffer size.</param>
+        </member>
+        <member name="M:Goedel.IO.Extension.WriteSpaces(System.IO.TextWriter,System.Int32)">
+            <summary>
+            Write the specified number of spaces to the output stream
+            </summary>
+            <param name="output">Stream to write to</param>
+            <param name="spaces">Number of spaces to write</param>
+        </member>
+        <member name="M:Goedel.IO.Extension.FileMode(Goedel.IO.FileStatus)">
+            <summary>
+            Return the file mode corresponding to the specified status.
+            </summary>
+            <param name="fileStatus">Status to translate</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.FileStream(System.String,Goedel.IO.FileStatus)">
+            <summary>
+            Open a file stream with the specified file name and status
+            </summary>
+            <param name="fileName">The file name</param>
+            <param name="fileStatus">The file status</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.FileAccess(Goedel.IO.FileStatus)">
+            <summary>
+            Return the file access mode corresponding to the specified status.
+            </summary>
+            <param name="fileStatus">Status to translate</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.FileShare(Goedel.IO.FileStatus)">
+            <summary>
+            Return the file sharing mode corresponding to the specified status.
+            </summary>
+            <param name="fileStatus">Status to translate</param>
+            <returns>The result</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileRead(System.String)">
+            <summary>
+            Open a file for read access allowing other processes to read the file..
+            </summary>
+            <param name="filename">The file name</param>
+            <returns>A file stream</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileReadShared(System.String)">
+            <summary>
+            Open a file for read access in shared mode, allowing concurrent 
+            reads and writes.
+            </summary>
+            <param name="filename">The file name</param>
+            <returns>A file stream</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextReader(System.IO.FileStream)">
+            <summary>
+            Create a text reader on a file stream.
+            </summary>
+            <param name="fileStream">The base file.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextReader(System.String)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="filename">The file to read.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenReadToEnd(System.String)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="filename">The file to read.</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenReadToEnd(System.String,System.Byte[]@)">
+            <summary>
+            Create a text reader for a file permitting other processes to
+            perform concurrent reads.
+            </summary>
+            <param name="filename">The file to read.</param>
+            <param name="data">The data that was read</param>
+            <returns>The text reader.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileNew(System.String)">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="filename">The new file name.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileWrite(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileReadWrite(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileWriteShare(System.String)">
+            <summary>
+            Open an existing file for exclusive write access, or create new file.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileAppend(System.String)">
+            <summary>
+            Open a new or existing file for append only write access. Permit
+            concurrent reads but not writes.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenFileAppendShare(System.String)">
+            <summary>
+            Open a new or existing file for append only write access. Permit
+            concurrent reads and writes.
+            </summary>
+            <param name="Filename">The file to write to.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriter(System.IO.FileStream)">
+            <summary>
+            Open a text writer to the specified file stream.
+            </summary>
+            <param name="fileStream">The file stream to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriter(System.String)">
+            <summary>
+            Open a text writer to the specified file in append mode permitting
+            shared reads but not writes.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.OpenTextWriterNew(System.String)">
+            <summary>
+            Open a text writer to the specified file in append mode permitting
+            shared reads but not writes.
+            </summary>
+            <param name="filename">The file to write to.</param>
+            <returns>The text writer.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.WriteFileNew(System.String,System.String)">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="filename">The new file name.</param>
+            <param name="text">Text to write to file.</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.WriteFileNew(System.String,System.Byte[])">
+            <summary>
+            Create a new file for exclusive write access, overwriting 
+            any existing file.
+            </summary>
+            <param name="filename">The new file name.</param>
+            <param name="data">Data to write to file</param>
+            <returns>File stream to write to the file.</returns>
+        </member>
+        <member name="M:Goedel.IO.Extension.Write(System.IO.FileStream,System.Byte[])">
+            <summary>
+            Write binary data to filestream.
+            </summary>
+            <param name="FileStream">Filestream to write to</param>
+            <param name="Data">Data to write.</param>
+        </member>
+        <member name="M:Goedel.IO.Extension.CopyToFile(System.IO.Stream,System.String)">
+            <summary>
+            Create a file with the name <paramref name="fileName"/> and read data from the
+            stream <paramref name="input"/> and write it to the file.
+            </summary>
+            <param name="input"></param>
+            <param name="fileName"></param>
+        </member>
+        <member name="T:Goedel.IO.FileStatus">
+            <summary>Specify the file status</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.Read">
+            <summary>Open existing file for read only access</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.Append">
+            <summary>If file exists, use it, otherwise create a new file</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.New">
+            <summary>If file exists, throw an error, otherwise create a new file.</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.CreateNew">
+            <summary>If file exists, throw an error, otherwise create a new file.</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.Overwrite">
+            <summary>Create new file overwriting any existing file. (Alias for New.)</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.Create">
+            <summary>Create new file overwriting any existing file. (Alias for Overwrite.)</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.Existing">
+            <summary>Open existing file, abort if file does not exist</summary>
+        </member>
+        <member name="F:Goedel.IO.FileStatus.OpenOrCreate">
+            <summary>Open existing file or create new if it does not exist</summary>
+        </member>
+        <member name="T:Goedel.IO.InitializationDelegate">
+            <summary>
+            Delegate specifying an initialization routine to be called.
+            </summary>
+            <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
+        </member>
+        <member name="T:Goedel.IO.Initialization">
+            <summary>
+            Base class for all initialization classes.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.Initialization.Initialize(System.Boolean@,Goedel.IO.InitializationDelegate,System.Boolean)">
+            <summary>
+            Thread safe initialization. The delegate is called exactly once.
+            </summary>
+            <param name="initializationDelegate">Initialization delegate to be called exactly once.</param>
+            <param name="flag">Initialization flag. If true, the class has already been initialized and
+            will not be initialized a second time. Otherwise the <paramref name="initializationDelegate"/>
+            is called.</param>
+            <param name="TestMode">If true, initialize package using test mode configuration (if defined).</param>
+        </member>
+        <member name="T:Goedel.IO.StreamReaderBase">
+            <summary>
+            Base class for various stream reader classes to avoid the need to override the
+            unused methods every time.
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamReaderBase.CanRead">
+            <summary>
+            Gets a value indicating whether the current stream supports reading (is always false).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamReaderBase.CanSeek">
+            <summary>
+            Gets a value indicating whether the current stream supports seeking(is always false).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamReaderBase.CanWrite">
+            <summary>
+            Gets a value indicating whether the current stream supports writing(is always true).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamReaderBase.Position">
+            <summary>
+            Gets the position within the current stream. The set operation is not supported.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.StreamReaderBase.Flush">
+            <summary>
+            Clears all buffers for this stream and causes any buffered data to be written 
+            to the underlying device.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.StreamReaderBase.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Sets the position within the current buffered stream (not supported).
+            </summary>
+            <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
+            <param name="origin">A value of type SeekOrigin indicating the reference point used to obtain the new position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.IO.StreamReaderBase.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the output frame.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Goedel.IO.StreamReaderBase.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Write data to the output stream.
+            </summary>
+            <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from 
+            <paramref name="buffer"/> to the current stream.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/>
+            at which to begin copying bytes to the current stream.</param>
+            <param name="count">The number of bytes to be written to the current stream.</param>
+        </member>
+        <member name="T:Goedel.IO.StreamWriterBase">
+            <summary>
+            Base class for various stream reader classes to avoid the need to override the
+            unused methods every time.
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamWriterBase.CanRead">
+            <summary>
+            Gets a value indicating whether the current stream supports reading (is always false).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamWriterBase.CanSeek">
+            <summary>
+            Gets a value indicating whether the current stream supports seeking(is always false).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamWriterBase.CanWrite">
+            <summary>
+            Gets a value indicating whether the current stream supports writing(is always true).
+            </summary>
+        </member>
+        <member name="P:Goedel.IO.StreamWriterBase.Position">
+            <summary>
+            Gets the position within the current stream. The set operation is not supported.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.StreamWriterBase.Flush">
+            <summary>
+            Clears all buffers for this stream and causes any buffered data to be written 
+            to the underlying device.
+            </summary>
+        </member>
+        <member name="M:Goedel.IO.StreamWriterBase.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Sets the position within the current buffered stream (not supported).
+            </summary>
+            <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
+            <param name="origin">A value of type SeekOrigin indicating the reference point used to obtain the new position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.IO.StreamWriterBase.SetLength(System.Int64)">
+            <summary>
+            Sets the length of the output frame.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Goedel.IO.StreamWriterBase.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Copies bytes from the stream to an array.
+            </summary>
+            <param name="buffer">An array of bytes. When this method returns, the buffer contains the 
+            specified byte array with the values between <paramref name="offset"/> and 
+            (<paramref name="offset"/> + <paramref name="count"/> - 1) 
+            replaced by the bytes read from the current source.</param>
+            <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin storing 
+            the data read from the current stream.</param>
+            <param name="count">The maximum number of bytes to be read from the current stream.</param>
+            <returns>The total number of bytes read into the buffer. This can be less than the number of bytes 
+            requested if that many bytes are not currently available, or zero (0) if the end of the stream 
+            has been reached.</returns>
+        </member>
+    </members>
+</doc>

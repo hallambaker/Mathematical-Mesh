@@ -1,0 +1,2083 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Recrypt</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Recrypt.Extension">
+            <summary>Extension methods for recryption classes.</summary>
+            <summary>Extension methods for recryption</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Extension.GetRecryptProfile(Goedel.Mesh.Portal.Client.SessionPersonal,System.String)">
+            <summary>
+            Get the recryption profile
+            </summary>
+            <param name="PersonalSession">The personal session</param>
+            <param name="AccountID">The recryption account identifier.</param>
+            <returns>The recryption profile.</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Extension.RecryptProfile(Goedel.Mesh.SignedProfile)">
+            <summary>
+            Convenience function that converts a generic Signed Profile returned
+            by the Mesh to a PasswordProfile.
+            </summary>
+            <param name="SignedProfile">Generic signed profile</param>
+            <returns>Inner PasswordProfile if the Signed Profile contains one,
+            otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptException">
+            <summary>
+            Error occurred in Recrypt library
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptException.#ctor">
+            <summary>
+            Construct instance for exception "Error occurred in Recrypt library"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptException.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Error occurred in Recrypt library"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.ProfileInvalid">
+            <summary>
+            Profile not valid
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.ProfileInvalid.#ctor">
+            <summary>
+            Construct instance for exception "Profile not valid"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Recrypt.ProfileInvalid.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Profile not valid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Recrypt.ProfileInvalid.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Recrypt.ProfileInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.NoRecryptionRecord">
+            <summary>
+            There is no recryption record for the specified key combination
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.NoRecryptionRecord.#ctor">
+            <summary>
+            Construct instance for exception "There is no recryption record for the specified key combination"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Recrypt.NoRecryptionRecord.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "There is no recryption record for the specified key combination"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Recrypt.NoRecryptionRecord.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Recrypt.NoRecryptionRecord.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.NamespaceDoc">
+            <summary>
+            Mesh/Recrypt Protocol
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptPortal">
+            <summary>
+            Abstract interface to a service that supports the MeshPortal API calls.
+            Mostly for useful in test code where the ability to switch between a
+            direct and indirect portal connection is desirable. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptPortal.GetService(System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Address">Address of the portal service.</param>
+            <returns>Recrypt service object for API access to the service.</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptPortal.GetService(System.String,System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Portal">Address of the portal service.</param>
+            <param name="Account">Account name.</param>
+            <returns>Recrypt service object for API access to the service.</returns>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptPortal.Default">
+            <summary>
+            Specify the default portal. If not overriden, the default default is to
+            make a remote connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptPortal.RecryptServiceClient">
+            <summary>
+            May be set to the default RecryptService by a calling application.
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptPortalRemote">
+            <summary>
+            Connection to network service using HTTP client.
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptPortalRemote.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptPortalRemote.GetService(System.String,System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Domain">The DNS name of the service to get the service from.</param> 
+            <returns>The service instance</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptProfile">
+             <summary>
+            
+             Application profile for Confirm
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.PersonalUDF">
+            <summary>
+            The root of trust to which the profile is bound
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.#ctor">
+            <summary>
+            Create a new recryption profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.EncryptPair">
+            <summary>The encryption pair</summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.SignPair">
+            <summary>The signature pair</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.#ctor(Goedel.Mesh.PersonalProfile,System.String,System.String)">
+            <summary>
+            Create a new recryption profile with private profiles for the specified device.
+            At present a single recryption key is generated that is accessible to every 
+            authorized device.
+            </summary>
+            <param name="PersonalProfile">The personal profile</param>
+            <param name="AccountID">The account identifier</param>
+            <param name="Friendly">The friendly name</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.AddDevice(Goedel.Mesh.DeviceProfile,System.Boolean,Goedel.Mesh.ApplicationDevicePublic)">
+            <summary>
+            Create device specific data.
+            </summary>
+            <param name="Device">The device to add.</param>
+            <param name="Administration">If true, create an administration entry</param>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.Account">
+             <summary>
+            The account to which the profile is bound
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.EncryptKeys">
+             <summary>
+            Recryption blob encryption key. A user MAY have multiple decryption 
+            keys to allow keys to be bound to specific devices.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile.AuthKeys">
+             <summary>
+            A public keypair to verify group profile signatures. Multiple keys
+            MAY be provided so as to allow multiple devices to sign with device
+            specific keys
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfile._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfile.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptionGroup">
+             <summary>
+            
+             Describes a recryption group and set of members.
+             </summary>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptionGroup.RecryptionProvider">
+            <summary>The recryption service provider.</summary>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptionGroup.RecryptionKeyPair">
+            <summary>The recryption key pair.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.Generate">
+            <summary>
+            Initialize a newly created Recryption group.
+            </summary>
+            <param name="DeviceProfile">Initial device profile.</param>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.ValidatedCurrentEncryptionKey">
+            <summary>Get the current encryption key.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.AddMember(Goedel.Recrypt.RecryptProfile)">
+            <summary>
+            Add member to the recryption group.
+            </summary>
+            <param name="Recrypt">Member's recryption profile.</param>
+            <returns>The new member</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.RemoveMember(System.String)">
+            <summary>
+            Remove a member from the group.
+            </summary>
+            <param name="UserIdentifier"></param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.MakeUserDecryptionEntry(Goedel.Cryptography.KeyPair,Goedel.Mesh.PublicKey)">
+            <summary>
+            Create a decryption entry for the specified member.
+            </summary>
+            <param name="GroupPrivate">The group private key</param>
+            <param name="EncryptKey">The member's encryption key</param>
+            <returns>The user decryption data</returns>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup._PrimaryKey">
+            <summary>The primary key for this object </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.PrimaryKey(System.String)">
+            <summary>The primary key for an object</summary>
+            <param name="GroupName">The group name</param>
+            <returns>The primary key</returns>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptionGroup.Keys">
+            <summary>
+            There is one key index mapping encryption keys to groups.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup._KeyValues">
+            <summary>
+            The key values map encryption Key UDFs to the group that they are assigned to.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.GroupName">
+             <summary>
+            A user friendly account name in RFC821 format (user@example.com).
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.Master">
+             <summary>
+            Persistent master profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.Members">
+             <summary>
+            Member of a recryption group
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.ArchivedKeys">
+             <summary>
+            The set of past encryption keys associated with the group.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup.CurrentEncryptionKey">
+             <summary>
+            The current group encryption key signed under the Master Profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionGroup._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.GetKeyResponse">
+             <summary>
+            
+             Response to get key request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetKeyResponse.SignedKey">
+             <summary>
+            The signed key entry
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetKeyResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptionKey">
+             <summary>
+            
+             Describes a recryption key with optional additional description.
+             </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.GetEncryptionKey(Goedel.Cryptography.Jose.JoseWebSignature)">
+            <summary>
+            Get encryption key from signed data.
+            </summary>
+            <param name="SignedRecryptionKey">The signed recryption key.</param>
+            <returns>The recryption key.</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.Encrypt(System.String,System.String)">
+            <summary>
+            Encrypt content. The input is read from a file. The output is written to a file.
+            </summary>
+            <param name="Input">Filename of the file to read the plaintext from.</param>
+            <param name="Output">Filename of the file to write the ciphertext to.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.Encrypt(System.Byte[],System.String)">
+            <summary>
+            Encrypt content. The input is presented as a byte array. The output is written to a file.
+            </summary>
+            <param name="Input">The input data</param>
+            <param name="Output">Filename of the file to write the ciphertext to.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.Encrypt(System.Byte[],System.Byte[])">
+            <summary>
+            Encrypt content. The input and outputs are byte arrays.
+            </summary>
+            <param name="Input">The input data</param>
+            <param name="Output">The output data</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.EncryptDirectory(System.String,System.String,System.Boolean)">
+            <summary>
+            Encrypt content. The input is read from a file. The output is written to a file.
+            </summary>
+            <param name="Input">The directory to read files from</param>
+            <param name="Output">The output. This is a single file if SingleFile is true, 
+            otherwise is a directory.</param>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionKey.EncryptionKey">
+             <summary>
+            The current group encryption key
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptionKey._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptionKey.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptProtocol">
+             <summary>
+            
+             Mesh/Recrypt Protocol Schema
+             Mesh/Recrypt group administration protocol
+             </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProtocol.Tag">
+            <summary>
+            Schema tag.
+            </summary>
+            <returns>The tag value</returns>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProtocol._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptProtocol._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProtocol.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="JSONReader">Input stream</param>
+            <param name="Out">The created object</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptService.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptService.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptService.JPCSession">
+            <summary>
+            The active JPCSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Base method for implementing the transaction  Hello.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.CreateGroup(Goedel.Recrypt.CreateGroupRequest)">
+            <summary>
+            Base method for implementing the transaction  CreateGroup.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.UpdateGroup(Goedel.Recrypt.UpdateGroupRequest)">
+            <summary>
+            Base method for implementing the transaction  UpdateGroup.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.GetGroup(Goedel.Recrypt.GetGroupRequest)">
+            <summary>
+            Base method for implementing the transaction  GetGroup.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.AddMember(Goedel.Recrypt.AddMemberRequest)">
+            <summary>
+            Base method for implementing the transaction  AddMember.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.UpdateMember(Goedel.Recrypt.UpdateMemberRequest)">
+            <summary>
+            Base method for implementing the transaction  UpdateMember.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.GetKey(Goedel.Recrypt.GetKeyRequest)">
+            <summary>
+            Base method for implementing the transaction  GetKey.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptService.RecryptData(Goedel.Recrypt.RecryptDataRequest)">
+            <summary>
+            Base method for implementing the transaction  RecryptData.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptServiceClient">
+            <summary>
+            Client class for RecryptService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptServiceClient.JPCSession">
+            <summary>
+            The active JPCSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.#ctor(Goedel.Protocol.JPCRemoteSession)">
+            <summary>
+            Create a client connection to the specified service.
+            </summary>	
+            <param name="JPCRemoteSession">The remote session to connect to</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.CreateGroup(Goedel.Recrypt.CreateGroupRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.UpdateGroup(Goedel.Recrypt.UpdateGroupRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.GetGroup(Goedel.Recrypt.GetGroupRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.AddMember(Goedel.Recrypt.AddMemberRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.UpdateMember(Goedel.Recrypt.UpdateMemberRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.GetKey(Goedel.Recrypt.GetKeyRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceClient.RecryptData(Goedel.Recrypt.RecryptDataRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptServiceProvider">
+            <summary>
+            Client class for RecryptService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptServiceProvider.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptServiceProvider.Dispatch(Goedel.Protocol.JPCSession,Goedel.Protocol.JSONReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="Session">The client context.</param>
+            <param name="JSONReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptRequest">
+             <summary>
+            
+             Base class for all request messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptRequest._TagDictionary">
+            <summary>The tag dictionary.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptRequest.DeepCopy">
+            <summary>
+            Performs a deep recursive copy of the structure.
+            </summary>
+            <returns>Deep copy of the object with all referenced objects
+            copied.</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="F:Goedel.Recrypt.RecryptResponse._TagDictionary">
+            <summary>The tag dictionary.</summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptResponse.StatusCode">
+            <summary>
+            Numeric status return code value
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptResponse.StatusDescriptionCode">
+            <summary>
+            Description of the status code (for debugging).
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptResponse.DeepCopy">
+            <summary>
+            Performs a deep recursive copy of the structure.
+            </summary>
+            <returns>Deep copy of the object with all referenced objects
+            copied.</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.CreateGroupRequest">
+             <summary>
+            
+             Request creation of a recryption group. The only
+             request parameter describes the group to be created.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.CreateGroupRequest.RecryptionGroup">
+             <summary>
+            The Recryption Group to create	
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.CreateGroupRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.CreateGroupResponse">
+             <summary>
+            
+             Reports the success or failure of a CreateGroup request. The
+             operation either succeeds or fails, there are no returned
+             parameters
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.CreateGroupResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.CreateGroupResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.UpdateGroupRequest">
+             <summary>
+            
+             Request an update to a recryption group. 
+             Note that the update 
+             process is currently limited to 'strike and replace'. This is 
+             likely to become cumbersome if groups with very large numbers 
+             of entries are being maintained. It is likely that a future 
+             version of the protocol will support update requests that
+             implement commonly occurring tasks such as updates to 
+             add a new encryption key, etc.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateGroupRequest.RecryptionGroup">
+             <summary>
+            The Recryption Group to create	
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateGroupRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.UpdateGroupResponse">
+             <summary>
+            
+             Reports the success or failure of a UpdateGroup request. The
+             operation either succeeds or fails, there are no returned
+             parameters
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateGroupResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateGroupResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.GetGroupRequest">
+             <summary>
+            
+             Obtain recryption group data
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetGroupRequest.GroupID">
+             <summary>
+            The UDF fingerprint of the recryption group to add the member to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetGroupRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.GetGroupResponse">
+             <summary>
+            
+             Obtain recryption group response.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetGroupResponse.RecryptionGroup">
+             <summary>
+            The Recryption Group to create	
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetGroupResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.GetGroupResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.AddMemberRequest">
+             <summary>
+            
+             Add a member to a recryption group (not currently used)
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.AddMemberRequest.RecryptionGroup">
+             <summary>
+            The UDF fingerprint of the recryption group to add the member to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.AddMemberRequest.MemberEntry">
+             <summary>
+            Describes the member(s) to add
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.AddMemberRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.AddMemberResponse">
+             <summary>
+            
+             Reports the success or failure of a AddMember request. The
+             operation either succeeds or fails, there are no returned
+             parameters
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.AddMemberResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.AddMemberResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.UpdateMemberRequest">
+             <summary>
+            
+             Update a recryption group member entry (not currently used)
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateMemberRequest.RecryptionGroup">
+             <summary>
+            The UDF fingerprint of the recryption group in which the member entries is to be updated
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateMemberRequest.MemberEntry">
+             <summary>
+            Describes the member(s) to add
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateMemberRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.UpdateMemberResponse">
+             <summary>
+            
+             Reports the success or failure of a UpdateMember request. The
+             operation either succeeds or fails, there are no returned
+             parameters
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UpdateMemberResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.UpdateMemberResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.GetKeyRequest">
+             <summary>
+            
+             Request the current recryption key for the specified recryption group.
+             NB: At present the group key is NOT authenticated and thus a MITM can
+             perform a key substituition attack. This will be fixed in the next 
+             release.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetKeyRequest.GroupID">
+             <summary>
+            The recryption group for which the key data is requested.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.GetKeyRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.GetKeyRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptDataRequest">
+             <summary>
+            
+             Request that the service provide a recryption result for the specified
+             encrypted data and return it encrypted under the user's public key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataRequest.MemberUDF">
+             <summary>
+            The member Mesh profile UDF. Is this actually useful or necessary
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataRequest.MemberKeyUDF">
+             <summary>
+            The member key fingerprint
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataRequest.GroupKeyID">
+             <summary>
+            The key identifier of the group key to which the data is encrypted
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataRequest.EphemeralKey">
+             <summary>
+            The ephemeral key 
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptDataResponse">
+             <summary>
+            
+             Result of recryption request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataResponse.Partial">
+             <summary>
+            The partial decryption information to use to complete the key agreement
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataResponse.EncryptedPartial">
+             <summary>
+            The partial decryption information to use to complete the key agreement encrypted
+            under the user's key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataResponse.DecryptionKey">
+             <summary>
+            The decryption key to use to complete the decryption encrypted
+            under the user's key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDataResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDataResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.MeshRecrypt">
+             <summary>
+            
+             Mesh profile for Recrypt applications.
+             </summary>
+             <summary>
+            
+             Mesh/Recrypt Profile Schema
+             Mesh profile for Recrypt applications.
+             </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.MeshRecrypt.Initialize">
+            <summary>Initialize the Mesh/Recrypt libraries.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.MeshRecrypt.Tag">
+            <summary>
+            Schema tag.
+            </summary>
+            <returns>The tag value</returns>
+        </member>
+        <member name="P:Goedel.Recrypt.MeshRecrypt._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Recrypt.MeshRecrypt._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.MeshRecrypt.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="JSONReader">Input stream</param>
+            <param name="Out">The created object</param>
+        </member>
+        <member name="T:Goedel.Recrypt.UserDecryptionEntry">
+             <summary>
+            
+             Decryption entry for a particular user and group key
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry._PrimaryKey">
+            <summary>The primary key for this object </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.PrimaryKey(System.String,System.String)">
+            <summary>The primary key for an object </summary>
+            <param name="GroupKey">The group key</param>
+            <param name="MemberKey">The member key.</param>
+            <returns>The primary key.</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.RecryptData(Goedel.Recrypt.RecryptDataRequest)">
+            <summary>
+            Perform a RecryptData transaction.
+            </summary>
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry.EncryptionKeyUDF">
+             <summary>
+            Fingerprint of the encryption key to which this recryption data
+            corresponds
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry.MemberKeyUDF">
+             <summary>
+            Fingerprint of the user's key
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry.RecryptionKey">
+             <summary>
+            The recryption key to be used to recrypt for this user.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry.DecryptionKey">
+             <summary>
+            The user's decryption key encrypted under a one or more encryption
+            keys held by the user. The encrypted content is a PrivateKey structure
+            specifying the decryption key for the user.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.UserDecryptionEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.UserDecryptionEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.MemberEntry">
+             <summary>
+            
+             Describes a member of a recryption group
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.UDF">
+             <summary>
+            UDF fingerprint of the user's master profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.RecryptUDF">
+             <summary>
+            UDF fingerprint of the user's recryption profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.Name">
+             <summary>
+            User friendly account name
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.Privileges">
+             <summary>
+            A list of privileges assigned to the user.
+            Currently defined privileges are RECRYPT, ADMIN and SUPER. 
+            Recrypt grants a user the right to request decryption of 
+            data encrypted under the group key. ADMIN grants the right to
+            add or remove users from the group. SUPER grants the right to
+            add or remove administrators and super-administrators from the 
+            group.
+            Note that being granted the necessary privilege does not
+            in itself confer the ability to decrypt messages as this requires
+            access to the master private key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.Quotas">
+             <summary>
+            A list of quotas assigned to the user.
+            Each quota is described by the UDF fingerprint of the quota 
+            service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.Status">
+             <summary>
+            Member status. Valid values are ACTIVE, REVOKED and SUSPENDED.
+            Once added to a recryption group, a user can never be 'deleted'.
+            Instead their member record is marked as REVOKED or SUSPENDED which
+            causes the recryption service to refuse further recryption requests.
+            Note that it is entirely valid for newly created recryption group to
+            contain member entries that are inactive. This allows a key administrator
+            to generate key material for group members in anticipation of them requiring
+            access without immediately granting that access.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry.Entries">
+             <summary>
+            Decryption entry for a particular user and group key
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.MemberEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.MemberEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.MemberEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.MemberEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.MemberEntry.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.MemberEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptProfilePrivate">
+             <summary>
+            
+             Private portion of profile. This is unused. Decryption keys are 
+             provisioned on a per device basis to allow the use of co-generation techniques.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptProfilePrivate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfilePrivate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfilePrivate.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfilePrivate.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfilePrivate.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptProfilePrivate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptDevicePublic">
+             <summary>
+            
+             Contains public device description. This is unused as there is
+             no requirement to disclose the binding of keys to devices.
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDevicePublic._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePublic._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePublic.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePublic.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePublic.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePublic.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Recrypt.RecryptDevicePrivate">
+             <summary>
+            
+             Private data specific to the device
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDevicePrivate.DecryptKeys">
+             <summary>
+            Device specific recryption blob decryption key(s) or key contributions
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDevicePrivate.SignKeys">
+             <summary>
+            Device specific group profile signing key(s) or key contributions
+             </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.RecryptDevicePrivate._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePrivate._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePrivate.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePrivate.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePrivate.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Recrypt.RecryptDevicePrivate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+    </members>
+</doc>

@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}"
 	ProjectSection(SolutionItems) = preProject
-		Publish\Documents\Bib.xml = Publish\Documents\Bib.xml
+		Outputs\Documents\Bib.xml = Outputs\Documents\Bib.xml
 		Services\meshportal_windows\startserver.bat = Services\meshportal_windows\startserver.bat
 	EndProjectSection
 EndProject
@@ -63,25 +63,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Common", "Testing\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Test", "Libraries\Goedel.Test\Goedel.Test.csproj", "{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documents", "Publish\Documents\", "{D8E50764-8A70-446F-8509-88935CAFD3F2}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documents", "Outputs\Documents\", "{D8E50764-8A70-446F-8509-88935CAFD3F2}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_59545"
-		Debug.AspNetCompiler.PhysicalPath = "Publish\Documents\"
+		Debug.AspNetCompiler.PhysicalPath = "Outputs\Documents\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59545\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_59545"
-		Release.AspNetCompiler.PhysicalPath = "Publish\Documents\"
+		Release.AspNetCompiler.PhysicalPath = "Outputs\Documents\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59545\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "59545"
-		SlnRelativePath = "Publish\Documents\"
+		SlnRelativePath = "Outputs\Documents\"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MakeRelease", "Documentation\MakeRelease\MakeRelease.csproj", "{A0DE7974-409E-495A-82CF-238331A797C6}"

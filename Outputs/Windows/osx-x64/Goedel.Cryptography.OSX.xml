@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.OSX</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Cryptography.Cryptography">
+            <summary>
+            Base class for initialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Cryptography.Initialize(System.Boolean)">
+            <summary>
+            Perform initialization of the Goedel.Cryptography portable class
+            with delegates to the .NET framework methods.
+            </summary>
+            <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptographyOSX">
+            <summary>
+            Initialize for the Linux style key store
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographyOSX.Initialize(System.Boolean)">
+            <summary>
+            Perform initialization of the Goedel.Cryptography portable class
+            with delegates to the .NET framework methods.
+            </summary>
+            <param name="TestMode">If true initialize the system in test mode so that
+            settings may be tested and cleared without disrupting user work.</param>
+        </member>
+    </members>
+</doc>

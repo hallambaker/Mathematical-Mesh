@@ -1,0 +1,683 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Platform.Windows</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform">
+            <summary>
+            The collection of mail client entries from multiple applications.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform.DefaultWLMAccount">
+            <summary>
+            The default mail account for Windows Live Mail.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform.IntegrateLiveMail">
+            <summary>
+            The Windows Live Mail integration object.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform.ImportWindowsLiveMail">
+            <summary>
+            Import all accounts from Windows Live Mail.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform.FindLocal">
+            <summary>
+            Search local application configuration files to discover account 
+            details.
+            </summary>
+            <returns>List of the accounts found.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.IntegrateLiveMail">
+            <summary>
+            Windows Live Mail integration class.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.IntegrateLiveMail.DefaultMailAccount">
+            <summary>
+            Get the directory for the default mail account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.IntegrateLiveMail.StoreRoot">
+            <summary>
+            Get the root directory for the Windows Live Mail store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.IntegrateLiveMail.RegistryKey">
+            <summary>
+            Get a RegistryKey object for Windows Live Mail.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.IntegrateLiveMail.#ctor(Goedel.Mesh.Platform.Windows.MailClientCatalogPlatform)">
+            <summary>
+            Construct an integrator for the specified catalog and enumerate the accounts.
+            </summary>
+            <param name="Catalog">Mail account catalog to add to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.IntegrateLiveMail.EnumerateAccounts">
+            <summary>
+            Enumerate accounts in the store, creating and populating a MailAccountInfoWLM 
+            instance for each account.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM">
+            <summary>
+            MailAccountInfo class for Windows Live Mail account. Provides convenience 
+            accessors to the corresponding .oeaccount file.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.EmailAddress">
+            <summary>
+            The RFC822 Email address. [e.g. "alice@example.com"]
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.ReplyToAddress">
+            <summary>
+            The RFC822 Email address. [e.g. "alice@example.com"]
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.DisplayName">
+            <summary>
+            The Display Name. [e.g. "Alice Example"]
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.AccountName">
+            <summary>
+            The Account Name for display to the app user [e.g. "Example.com"]
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Inbound">
+            <summary>
+            Inbound Mail Connection
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Outbound">
+            <summary>
+            Outbound Mail Connection
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.GotSMIME">
+            <summary>
+            Does the account have S/MIME parameters already?
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.CertificateSign">
+            <summary>
+            Signing Certificate.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.CertificateEncrypt">
+            <summary>
+            Encryption Certificate.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.#ctor(System.String)">
+            <summary>
+            Construct an account information object from the specified
+            Windows Live Mail file.
+            </summary>
+            <param name="FileName">The configuration file for the account.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.#ctor">
+            <summary>
+            Construct an empty account information object.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Dump">
+            <summary>
+            Write out all settings to the console for debug purposes.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Read">
+            <summary>
+            Read the corrsponding .oeaccount file.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Update">
+            <summary>
+            Update an existing .oeaccount file.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.Create">
+            <summary>
+            Create a new account by writing the account settings to a .oeaccount 
+            file in the store root see:
+            https://msdn.microsoft.com/en-us/library/ms715237(v=vs.85).aspx.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MailAccountInfoWLM.GenerateSMIME">
+            <summary>
+            Generate keys and certificates for S/MIME
+            </summary>
+            <returns>true if new parameters were installed.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.IntegratorMailClient">
+            <summary>
+            Base class for Mail Client integration classes.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.IntegratorMailClient.Catalog">
+            <summary>
+            The catalog to connect to.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.IntegratorMailClient.EnumerateAccounts">
+            <summary>
+            Enumerate the accounts supported by the client.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.NamespaceDoc">
+            <summary>
+            Platform specific support for the Mesh on Windows.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.MeshWindows">
+            <summary>Windows specific constants and functions.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshWindows.FilePersonalProfile(System.String)">
+            <summary>
+            Construct filename for a mesh personal profile
+            </summary>
+            <param name="Fingerprint">Fingerprint identifying data</param>
+            <returns>The file name.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshWindows.FileDeviceProfile(System.String)">
+            <summary>
+            Construct filename for a mesh personal profile
+            </summary>
+            <param name="Fingerprint">Fingerprint identifying data</param>
+            <returns>The file name.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshWindows.FileApplicationlProfile(System.String)">
+            <summary>
+            Construct filename for a mesh personal profile
+            </summary>
+            <param name="Fingerprint">Fingerprint identifying data</param>
+            <returns>The file name.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.MeshMachineWindows">
+            <summary>Machine session class for Windows in native mode.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Initialize(System.Boolean)">
+            <summary>
+            Register the delegates for handling Windows native registrations with
+            the Registration class stubs.
+            </summary>
+            <param name="TestMode">If true, the application will be initialized in
+            test/debug mode.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.#ctor">
+            <summary>
+            Default constructor, get values from the current machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Reload">
+            <summary>
+            Return a new machine registration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Fill">
+            <summary>
+            Fetch the latest version of the profile version
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Erase">
+            <summary>Erase the profile and associated keys.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Add(Goedel.Mesh.SignedDeviceProfile)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.Add(Goedel.Mesh.SignedPersonalProfile)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.MeshMachineWindows.WriteToLocal(Goedel.Mesh.Portal.Client.SessionDevice,System.Boolean)">
+            <summary>
+            Write values to registry.
+            </summary>
+            <param name="Default">If true, make this the default.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.PortalCollectionWindows">
+            <summary>
+            Manage a collection of portals
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.PortalCollectionWindows.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="Portals">List of portal addresses</param>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.Register">
+            <summary>
+            Interface class to manage entries in the Windows Registry and file system. On
+            non-windows machines, this can simply map to flat files.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.WriteKey(System.String,System.String,System.String)">
+            <summary>
+            Create registry entries for the specified parameters and return the 
+            file name to write the data file to.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="Tag">The name of the key to write to.</param>
+            <param name="UDF">The fingerprint of the data object.</param>
+            <returns>File name for the data file</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.ReadFile(System.String,System.String)">
+            <summary>
+            Get the file name to read a file from the specified keyname and path.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="Path">The Registry Path to write to</param>
+            <returns>File name of the stored file.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.ReadFile(System.String,System.String,System.String)">
+            <summary>
+            Get the file name to read a file from the specified keyname and path.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="Path">The Registry Path to write to</param>
+            <param name="UDF">Fingerprint of the object to read.</param>
+            <returns>File name of the stored file.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.Write(System.String,System.String,System.String)">
+            <summary>
+            Create registry entries for the specified parameters.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="Entry">The name of the key to write to.</param>
+            <param name="UDF">The fingerprint of the data object.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.Read(System.String,System.String@)">
+            <summary>
+            Read registry entries for the specified parameters.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="UDF">The fingerprint of the data object.</param>
+            <returns>The registry value</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.Read(System.String,System.String,System.String@)">
+            <summary>
+            Read registry entries for the specified parameters.
+            </summary>
+            <param name="KeyName">The Registry key to write to.</param>
+            <param name="Entry">The name of the key to write to.</param>
+            <param name="UDF">The fingerprint of the data object.</param>
+            <returns>The registry value</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.GetKeys(System.String)">
+            <summary>
+            Get windows registry keys matching a key name.
+            </summary>
+            <param name="KeyName">The key to fetch.</param>
+            <returns>Dictionary mapping keys to values.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.Register.GetSubKeys(System.String)">
+            <summary>
+            Get registry sub keys
+            </summary>
+            <param name="KeyName">The registry key to retrieve.</param>
+            <returns>Set of registry keys</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.RegistryKeySet">
+            <summary>
+            A set of registry keys
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Platform.Windows.RegistryKeySet.Key">
+            <summary>The key value</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.RegistryKeySet.Default">
+            <summary>If true, there is a default value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.RegistryKeySet.#ctor(System.String,Microsoft.Win32.RegistryKey)">
+            <summary>
+            Get set of registry keys
+            </summary>
+            <param name="Key">Key to fetch</param>
+            <param name="RegistryKey">Key value</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.RegistryKeySet.GetValueMultiString(System.String)">
+            <summary>
+            Get a multiple string value.
+            </summary>
+            <param name="Key">key to fetch</param>
+            <returns>Array of strings</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.RegistryKeySet.GetValueString(System.String)">
+            <summary>
+            Get a single string value
+            </summary>
+            <param name="Key">The key</param>
+            <returns>A string value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.RegistryKeySet.Write(System.String,System.String)">
+            <summary>
+            Write a string value
+            </summary>
+            <param name="Key">The Key</param>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Platform.Windows.RegistryKeySet.Write(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Write a multiple string value
+            </summary>
+            <param name="Key">The Key</param>
+            <param name="Value">The value.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Platform.Windows.Constants">
+            <summary>
+            Constants specifying operating system locations and formats for the Mesh.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.TestMode">
+            <summary>
+            If true, use test mode locations.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RootName">
+            <summary>
+            Root for registry keys
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.AdminKey">
+            <summary>
+            The administration key.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RegistryRoot">
+            <summary>
+            The root entry for the CryptoMesh entries.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RegistryDevice">
+            <summary>
+            Root entry for device specific settings.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RegistryPersonal">
+            <summary>
+            Root entry for personal profiles shared across multiple machines.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RegistryApplication">
+            <summary>
+            Root entry for personal profiles shared across multiple machines.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RegistryAccounts">
+            <summary>
+            Root entry for registry account entries.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RoamingData">
+            <summary>
+            The application data path (may be shared across machines).
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.RoamingRoot">
+            <summary>
+            Root directory for CryptoMesh files.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.FileProfilesApplication">
+            <summary>
+            Root directory for personal profiles.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.FileProfilesPersonal">
+            <summary>
+            Root directory for personal profiles.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.NonRoamingData">
+            <summary>
+            The device specific data path.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.NonRoamingRoot">
+            <summary>
+            The root directory for device files.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.FileProfilesDevice">
+            <summary>
+            The root directory for device profiles.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.PersonalExtension">
+            <summary>Extension for personal profile files</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.DeviceExtension">
+            <summary>Extension for device profile files</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Platform.Windows.Constants.ApplicationExtension">
+            <summary>Extension for application profile files</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Mesh">
+            <summary>Initialization class for Mesh libraries on the Windows platform.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Mesh.Initialize(System.Boolean)">
+            <summary>
+            Initialize the cryptography, platform and Mesh machine libraries to
+            use the Windows native platform features. This library is only supported
+            on the Windows platform.
+            </summary>
+            <param name="TestMode">If true, use the test directory and registry key and
+            key store. This allows the machine to be reset after testing is complete
+            without risk to production data.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Integration.LiveMail.MessageAccount">
+            <summary>
+            Convenience class creating accessors for registry 'Class.Id'
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Integration.LiveMail.MessageAccount.#ctor">
+            <summary>
+            Construct a new empty instance.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Integration.LiveMail.MessageAccount.#ctor(System.String)">
+            <summary>
+            Construct a new instance from the specified file
+            </summary>
+            <param name="FileName">The file to read</param>/// 
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.Account_Name">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.Connection_Type">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.Make_Available_Offline">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Server">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_User_Name">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Password2">
+            <summary>
+            Accessor for key "Field.Key" of type BINARY
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Use_Sicily">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Port">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Secure_Connection">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Timeout">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Polling">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Sent_Items_Folder">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Drafts_Folder">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Prompt_for_Password">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Dirty">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Deleted_Items_Folder">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_Junk_E_mail_Folder">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_XLIST_Sent_Items">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_XLIST_Drafts">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_XLIST_Deleted_Items">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_XLIST_Junk_E_mail">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.IMAP_XLIST_Migration_Done">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Server">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_User_Name">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Password2">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Use_Sicily">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Port">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Secure_Connection">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Timeout">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Display_Name">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Organization_Name">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Email_Address">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Reply_To_Email_Address">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Certificate">
+            <summary>
+            Accessor for key "Field.Key" of type BINARY
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Encryption_Certificate">
+            <summary>
+            Accessor for key "Field.Key" of type BINARY
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Encryption_Algorithm">
+            <summary>
+            Accessor for key "Field.Key" of type SZ
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Integration.LiveMail.MessageAccount.SMTP_Prompt_for_Password">
+            <summary>
+            Accessor for key "Field.Key" of type DWORD
+            </summary>
+        </member>
+    </members>
+</doc>

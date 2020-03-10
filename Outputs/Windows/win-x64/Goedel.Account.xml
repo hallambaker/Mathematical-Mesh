@@ -1,0 +1,968 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Account</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Account.AccountException">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountException.#ctor">
+            <summary>
+            Construct instance for exception "Error occurred in Account library"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Account.AccountException.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Error occurred in Account library"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Account.AccountException.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Account.AccountException.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Account.AccountException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Account.ProfileInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.ProfileInvalid.#ctor">
+            <summary>
+            Construct instance for exception "Profile not valid"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Account.ProfileInvalid.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Profile not valid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Account.ProfileInvalid.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Account.ProfileInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Account.NamespaceDoc">
+            <summary>
+            Goedel Account Protocol Schema
+            </summary>
+        </member>
+        <member name="T:Goedel.Account.AccountPortal">
+            <summary>
+            Abstract interface to a service that supports the MeshPortal API calls.
+            Mostly for useful in test code where the ability to switch between a
+            direct and indirect portal connection is desirable. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountPortal.GetService(System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Address">Address of the portal service.</param>
+            <returns>Recrypt service object for API access to the service.</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountPortal.GetService(System.String,System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Portal">Address of the portal service.</param>
+            <param name="Account">Account name.</param>
+            <returns>Recrypt service object for API access to the service.</returns>
+        </member>
+        <member name="P:Goedel.Account.AccountPortal.Default">
+            <summary>
+            Specify the default portal. If not overriden, the default default is to
+            make a remote connection.
+            </summary>
+        </member>
+        <member name="F:Goedel.Account.AccountPortal.AccountServiceClient">
+            <summary>
+            May be set to the default RecryptService by a calling application.
+            </summary>
+        </member>
+        <member name="T:Goedel.Account.AccountPortalRemote">
+            <summary>
+            Connection to network service using HTTP client.
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountPortalRemote.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountPortalRemote.GetService(System.String,System.String)">
+            <summary>
+            Return a RecryptService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Domain">The DNS name of the service to get the service from.</param> 
+            <returns>The service instance</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountProtocol">
+             <summary>
+            
+             Mesh/Account protocol schema.
+             </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountProtocol.Tag">
+            <summary>
+            Schema tag.
+            </summary>
+            <returns>The tag value</returns>
+        </member>
+        <member name="P:Goedel.Account.AccountProtocol._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Account.AccountProtocol._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountProtocol.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="JSONReader">Input stream</param>
+            <param name="Out">The created object</param>
+        </member>
+        <member name="T:Goedel.Account.AccountService">
+            <summary>
+            The new base class for the client and service side APIs.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Account.AccountService.WellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountService.GetWellKnown">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Account.AccountService.Discovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountService.GetDiscovery">
+            <summary>
+            Well Known service identifier.
+            </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountService.JPCSession">
+            <summary>
+            The active JPCSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Account.AccountService.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Base method for implementing the transaction  Hello.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountService.Create(Goedel.Account.CreateRequest)">
+            <summary>
+            Base method for implementing the transaction  Create.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountService.Delete(Goedel.Account.DeleteRequest)">
+            <summary>
+            Base method for implementing the transaction  Delete.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountService.Update(Goedel.Account.UpdateRequest)">
+            <summary>
+            Base method for implementing the transaction  Update.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountService.Get(Goedel.Account.GetRequest)">
+            <summary>
+            Base method for implementing the transaction  Get.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountServiceClient">
+            <summary>
+            Client class for AccountService.
+            </summary>		
+        </member>
+        <member name="P:Goedel.Account.AccountServiceClient.JPCSession">
+            <summary>
+            The active JPCSession.
+            </summary>		
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.#ctor(Goedel.Protocol.JPCRemoteSession)">
+            <summary>
+            Create a client connection to the specified service.
+            </summary>	
+            <param name="JPCRemoteSession">The remote session to connect to</param>
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.Create(Goedel.Account.CreateRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.Delete(Goedel.Account.DeleteRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.Update(Goedel.Account.UpdateRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountServiceClient.Get(Goedel.Account.GetRequest)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountServiceProvider">
+            <summary>
+            Client class for AccountService.
+            </summary>		
+        </member>
+        <member name="F:Goedel.Account.AccountServiceProvider.Service">
+            <summary>
+            Interface object to dispatch requests to.
+            </summary>	
+        </member>
+        <member name="M:Goedel.Account.AccountServiceProvider.Dispatch(Goedel.Protocol.JPCSession,Goedel.Protocol.JSONReader)">
+            <summary>
+            Dispatch object request in specified authentication context.
+            </summary>			
+            <param name="Session">The client context.</param>
+            <param name="JSONReader">Reader for data object.</param>
+            <returns>The response object returned by the corresponding dispatch.</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountRequest">
+             <summary>
+            
+             Base class for all request messages.
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.AccountRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="F:Goedel.Account.AccountRequest._TagDictionary">
+            <summary>
+            The tag dictionary for decoding
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountRequest.DeepCopy">
+            <summary>
+            Performs a deep recursive copy of the structure.
+            </summary>
+            <returns>Deep copy of the object with all referenced objects
+            copied.</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountResponse">
+             <summary>
+            
+             Base class for all response messages. Contains only the
+             status code and status description fields.
+             A service MAY return either the response message specified
+             for that transaction or any parent of that message. 
+             Thus the RecryptResponse message MAY be returned in response 
+             to any request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="F:Goedel.Account.AccountResponse._TagDictionary">
+            <summary>
+            The tag dictionary for decoding
+            </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountResponse.StatusCode">
+            <summary>
+            Numeric status return code value
+            </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountResponse.StatusDescriptionCode">
+            <summary>
+            Description of the status code (for debugging).
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountResponse.DeepCopy">
+            <summary>
+            Performs a deep recursive copy of the structure.
+            </summary>
+            <returns>Deep copy of the object with all referenced objects
+            copied.</returns>
+        </member>
+        <member name="T:Goedel.Account.AccountData">
+             <summary>
+            
+             The data associated with an account
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.AccountID">
+             <summary>
+            The account identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.Created">
+             <summary>
+            Date and time that the account identifier was created.
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.Status">
+             <summary>
+            Account status
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.MeshUDF">
+             <summary>
+            Fingerprint of the user's mesh profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.Portal">
+             <summary>
+            Mesh Portal identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.Profiles">
+             <summary>
+            Service specific data
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData.UDF">
+             <summary>
+            The Unique identifier for the account assigned by the service.
+            UDF val
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.AccountData._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.AccountData._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.AccountData.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountData.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.AccountData.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.AccountData.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.CreateRequest">
+             <summary>
+            
+             Create a new account
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.CreateRequest.Data">
+             <summary>
+            Describes the account to be created
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.CreateRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.CreateRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.CreateRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.CreateRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.CreateRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.CreateRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.CreateResponse">
+             <summary>
+            
+             Response to create request
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.CreateResponse.UDF">
+             <summary>
+            Unique identifier of the account
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.CreateResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.CreateResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.CreateResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.CreateResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.CreateResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.CreateResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.DeleteRequest">
+             <summary>
+            
+             Delete an account
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.DeleteRequest.AccountId">
+             <summary>
+            The account to delete
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.DeleteRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.DeleteRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.DeleteRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.DeleteRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.DeleteRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.DeleteRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.DeleteResponse">
+             <summary>
+            
+             Result
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.DeleteResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.DeleteResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.DeleteResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.DeleteResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.DeleteResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.DeleteResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.UpdateRequest">
+             <summary>
+            
+             Update an account profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.UpdateRequest.Data">
+             <summary>
+            The account to update
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.UpdateRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.UpdateRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.UpdateRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.UpdateRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.UpdateRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.UpdateRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.UpdateResponse">
+             <summary>
+            
+             Result
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.UpdateResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.UpdateResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.UpdateResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.UpdateResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.UpdateResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.UpdateResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.GetRequest">
+             <summary>
+            
+             Fetches an account profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.GetRequest.AccountId">
+             <summary>
+            The account to fetch
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.GetRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.GetRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.GetRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.GetRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.GetRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.GetRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Account.GetResponse">
+             <summary>
+            
+             Result
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.GetResponse.Data">
+             <summary>
+            Describes the account (if found)
+             </summary>
+        </member>
+        <member name="P:Goedel.Account.GetResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Account.GetResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Account.GetResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.GetResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Account.GetResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Account.GetResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+    </members>
+</doc>

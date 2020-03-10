@@ -1,0 +1,355 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Portal.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Portal.Server.PublicMeshServiceProvider">
+            <summary>
+            The host class. Receives a stream from the HTTP server caller and 
+            dispatches the specified server.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshServiceProvider.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initialize a Mesh Service Provider.
+            </summary>
+            <param name="Domain">The domain of the service provider.</param>
+            <param name="MeshStore">The mesh persistence store filename.</param>
+            <param name="PortalStore">The portal persistence store fielname.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Server.PublicMeshServiceProvider.Mesh">
+            <summary>
+            The mesh persistence provider.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.PublicMeshService">
+            <summary>
+            The session class implements the Mesh session.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Server.PublicMeshService.Mesh">
+            <summary>
+            The mesh persistence provider.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.#ctor(Goedel.Mesh.Portal.Server.PublicMeshServiceProvider,Goedel.Protocol.JPCSession)">
+            <summary>
+            The mesh service dispatcher.
+            </summary>
+            <param name="Host">The service provider.</param>
+            <param name="Session">The authentication context.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Respond with the 'hello' version and encoding info.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.ValidateAccount(Goedel.Mesh.Portal.ValidateRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.CreateAccount(Goedel.Mesh.Portal.CreateRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.DeleteAccount(Goedel.Mesh.Portal.DeleteRequest)">
+            <summary>
+            Delete an account from a portal.
+            </summary>
+            <param name="Request">The request object.</param>
+            <returns>The result object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.Publish(Goedel.Mesh.Portal.PublishRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.Get(Goedel.Mesh.Portal.GetRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.Transfer(Goedel.Mesh.Portal.TransferRequest)">
+            <summary>
+            Request a transfer of a part of the mesh log to another node
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.Status(Goedel.Mesh.Portal.StatusRequest)">
+            <summary>
+            Return the current status of the Mesh log.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.ConnectStart(Goedel.Mesh.Portal.ConnectStartRequest)">
+            <summary>
+            Add a pending device request for an account
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.ConnectStatus(Goedel.Mesh.Portal.ConnectStatusRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.ConnectPending(Goedel.Mesh.Portal.ConnectPendingRequest)">
+            <summary>
+             Get pending device add requests for an account
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.PublicMeshService.ConnectComplete(Goedel.Mesh.Portal.ConnectCompleteRequest)">
+            <summary>
+            Base class for implementing the transaction.
+            </summary>		
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns> 
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.MeshPersist">
+            <summary>
+            The Mathematical Mesh persistence store.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Server.MeshPersist.Domain">
+            <summary>
+            The DNS name of this service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Construct a persistence store for the specified domain, with the
+            specified store and portal stores.
+            </summary>
+            <param name="Domain">Domain name of the service</param>
+            <param name="Store">store name for the profile persistence store.</param>
+            <param name="Portal">Store name for the portal persistence store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.CheckAccount(System.String)">
+            <summary>Test to see if an account name is available. Note that 
+            a subsequence CreateAccount request can fail even if a previous call 
+            to CheckAccount succeeded as the account name may have been issued in the 
+            interim or may fail for other reasons.
+            </summary>
+            <param name="AccountID">The requested account name</param>
+            <returns>True is the name is available, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.CreateAccount(System.String,Goedel.Mesh.SignedProfile)">
+            <summary>
+            Create an account with the specified account name and profile.
+            <para>The profile is validated for consistency and rejected if 
+            validation fails.</para>
+            <para>The new account is registered in the Portal log under  
+            AccountName@Domain as the unique identifier. The profile is 
+            registered in the mesh under the </para>
+            </summary>
+            <param name="AccountID">The requested account name.</param>
+            <param name="Profile">A signed Personal Profile.</param>
+            <returns>True if the transaction was successful, otherwise false.  </returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.DeleteAccount(System.String)">
+            <summary>
+            Create an account with the specified account name and profile.
+            <para>The profile is validated for consistency and rejected if 
+            validation fails.</para>
+            <para>The new account is registered in the Portal log under  
+            AccountName@Domain as the unique identifier. The profile is 
+            registered in the mesh under the </para>
+            </summary>
+            <param name="AccountID">The requested account name.</param>
+            <returns>True if the transaction was successful, otherwise false.  </returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetAccount(System.String)">
+            <summary>
+            Get Account with the specified identifier.
+            </summary>
+            <param name="AccountId">Identifier to retrieve.</param>
+            <returns>The account object.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetPending(Goedel.Mesh.Account)">
+            <summary>
+            Get the list of connections pending on an account.
+            </summary>
+            <param name="Account">The account identifier to get the connections pending for.</param>
+            <returns>The pendiong connections.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.AddProfile(Goedel.Mesh.SignedProfile)">
+            <summary>
+            Check the specified personal profile and add it to the mesh.
+            </summary>
+            <param name="Profile">The profile to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetProfile(System.String)">
+            <summary>
+            Get a profile with the specified UDF key.
+            </summary>
+            <param name="UDF">Fingerprint of requested profile.</param>
+            <returns>The profile (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.UpdateProfile(Goedel.Mesh.Entry)">
+            <summary>
+            Publish an entry
+            </summary>
+            <param name="Profile">The profile to publish</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetPersonalProfile(System.String)">
+            <summary>
+            Get the personal profile with the specified ID.
+            </summary>
+            <param name="ID">The identifier of the profile to get.</param>
+            <returns>The profile if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetSignedPersonalProfile(System.String)">
+            <summary>
+            Get the signed personal profile with the specified ID.
+            </summary>
+            <param name="ID">The identifier of the profile to get.</param>
+            <returns>The profile if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.PostConnectionRequest(Goedel.Mesh.SignedConnectionRequest,System.String)">
+            <summary>
+            Post a new connection request to the specified account.
+            </summary>
+            <param name="SignedConnectionRequest">The request to post</param>
+            <param name="AccountId">The account to post it to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetPendingRequests(System.String)">
+            <summary>
+            Get the list of signed pending connection requests.
+            </summary>
+            <param name="AccountId">The account to query.</param>
+            <returns>The list of requests.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.CloseConnectionRequest(System.String,Goedel.Mesh.SignedConnectionResult)">
+            <summary>
+            Close a connection request.
+            </summary>
+            <param name="AccountId">The account identifier to close the request on.</param>
+            <param name="SignedResult">The status to be posted to the close.</param>
+            <returns>true if the connection request could be found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetRequestStatus(System.String,System.String)">
+            <summary>
+            Get the status of a pending connection request.
+            </summary>
+            <param name="AccountId">The account to query.</param>
+            <param name="DeviceUDF">The device that is attempting to connect.</param>
+            <returns>Status of the pending request.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPersist.GetChainToken">
+            <summary>
+            Get the current chain token for the mesh store for use
+            in notarized transactions.
+            </summary>
+            <returns>The most recent entry in the log chain.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.MeshLocalPortal">
+            <summary>
+            Abstract interface to a local service provider.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Server.MeshLocalPortal.MeshStore">
+            <summary>
+            File name for local access to the mesh store.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Server.MeshLocalPortal.PortalStore">
+            <summary>
+            File name for local access to the portal store.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Server.MeshLocalPortal.ServiceName">
+            <summary>
+            The service name (default to mesh.prismproof.org)
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Server.MeshLocalPortal.MeshServiceHost">
+            <summary>
+            The local PublicMeshServiceHost.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.MeshPortalDirect">
+            <summary>
+            Direct connection to service provider via API calls. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalDirect.#ctor">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalDirect.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Create a new portal using the specified stores.
+            </summary>
+            <param name="ServiceName">DNS service name</param>
+            <param name="MeshStore">File name for the Mesh Store.</param>
+            <param name="PortalStore">File name for the Portal Store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalDirect.#ctor(System.String,System.String)">
+            <summary>
+            Create a new portal using the specified stores.
+            </summary>
+            <param name="MeshStore">File name for the Mesh Store.</param>
+            <param name="PortalStore">File name for the Portal Store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalDirect.Init(System.String,System.String,System.String)">
+            <summary>
+            Initialize the portal
+            </summary>
+            <param name="ServiceName">DNS service name</param>
+            <param name="MeshStore">File name for the Mesh Store.</param>
+            <param name="PortalStore">File name for the Portal Store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalDirect.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Portal">The portal to get the service from.</param>
+            <returns>The service instance</returns> 
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.MeshPortalLocal">
+            <summary>
+            Direct connection to service provider via JSON encoding, decoding and dispatch.
+            Useful for producing documentation and for testing.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalLocal.#ctor">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Server.MeshPortalLocal.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Service">The service to get the service from.</param> 
+            <returns>The service instance</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Server.NamespaceDoc">
+            <summary>
+            Mesh Portal Server implementation
+            </summary>
+        </member>
+    </members>
+</doc>

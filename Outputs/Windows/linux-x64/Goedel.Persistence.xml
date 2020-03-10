@@ -1,0 +1,1234 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Persistence</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Persistence.Dump">
+            <summary>
+            Dumps out a log persistence store at the DataItem level.
+            LogEntries such as headers, etc. are not included.
+            </summary>
+        </member>
+        <member name="T:Goedel.Persistence.Extension">
+            <summary>
+            Extension methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Extension.ToKeyValuePairs(System.Collections.Generic.List{Goedel.Persistence.IndexTerm})">
+            <summary>
+            Convert list of index terms to key value pairs.
+            </summary>
+            <param name="Input">List of index terms to convert</param>
+            <returns>The input list as a KeyValue pair.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Extension.ToIndexTerms(System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+            <summary>
+            Convert list of key value pairs to index terms.
+            </summary>
+            <param name="Data">List of key valye pairs to convert</param>
+            <returns>The input list as a KeyValue Pair.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.IPersistenceStoreRead">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreRead.GetIndex(System.String,System.Boolean)">
+            <summary>
+            Return an index for the specified key, creating it if necessary.
+            </summary>
+            <param name="Key">The key for which the index is requested.</param>
+            <param name="Create">If true, will create an index if none is found.</param>
+            <returns>The index.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreRead.Get(System.String)">
+            <summary>
+            Get object instance by unique identifier
+            </summary>
+            <param name="UniqueID">The unique identifier of the object instance to locate.</param>
+            <returns>True if found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreRead.Contains(System.String)">
+            <summary>
+            Determines if a object instance with the specified unique identifier is registered.
+            </summary>
+            <param name="UniqueID">The unique identifier of the object instance to locate.</param>
+            <returns>True if found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreRead.Last(System.String,System.String)">
+            <summary>
+            The last object instance that matches the specified key/value condition.
+            </summary>
+            <param name="Key">The key</param>
+            <param name="Value">The value to match</param>
+            <returns>The object instance if found, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.IPersistenceStoreWrite">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreWrite.New(Goedel.Protocol.JSONObject)">
+            <summary>
+            Add new JSON object to the store with the specified identifier, unique ID and keys.
+            </summary>
+            <param name="Object">Object to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreWrite.Update(Goedel.Protocol.JSONObject,System.Boolean)">
+            <summary>
+            Add new JSON object to the store with the specified identifier, unique ID and keys.
+            </summary>
+            <param name="Object">Object to add.</param>
+            <param name="Create">If true, create a new value if one does not already exist</param>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceStoreWrite.Delete(System.String)">
+            <summary>
+            Delete a persistence entry
+            </summary>
+            <threadsafety static="true" instance="true"/>
+            <param name="UniqueID">The UniqueID of the object to delete</param>
+            <returns>True if the object was updated, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.IPersistenceIndex">
+            <summary>
+            Persistence store index
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceIndex.Last(System.String)">
+            <summary>
+            Return an IPersistenceIndexEntry index entry to the last object instance that matches 
+            the specified value. Additional values may be obtained by calling an enumerator
+            on the index entry.
+            </summary>
+            <param name="Value">The value to match</param>
+            <returns>The index entry to the object instance if found, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.IPersistenceIndexEntry">
+            <summary>
+            Persistence store index result. Contains a link to the current value and an 
+            iterator over future values.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceIndexEntry.Data">
+            <summary>
+            The Data Entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceIndexEntry.Insert(Goedel.Persistence.IPersistenceIndexEntry,Goedel.Persistence.IPersistenceEntry)">
+            <summary>
+            Insert a new Index entry to a list of index entries.
+            </summary>
+            <param name="Existing">The entry that will becomd the Previous entry,
+            if null, starts a new list.</param>
+            <param name="EntryData">The entry data for the new index value.</param>
+            <returns>The new entry.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IPersistenceIndexEntry.Remove(Goedel.Persistence.IPersistenceIndexEntry)">
+            <summary>
+            Remove an entry from a list of index entries.
+            </summary>
+            <param name="Entry"></param>
+        </member>
+        <member name="T:Goedel.Persistence.IPersistenceEntry">
+            <summary>
+            Persistence store entry
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.UniqueID">
+            <summary>
+            Unique identifier of entry;
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.Deleted">
+            <summary>
+            If true the object haws been deleted and cannot be further modified.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.Created">
+            <summary>
+            The time at which the object instance was created.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.Modified">
+            <summary>
+            The time at which the object instance value was created. 
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.Data">
+            <summary>
+            The binary data
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.JSONReader">
+            <summary>
+            A deserialization reader for the data according to the encoding specified by 
+            the container header.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.Previous">
+            <summary>
+            The previous object instance value for this object instance.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IPersistenceEntry.First">
+            <summary>
+            The first object instance value for this object instance.
+            </summary>
+        </member>
+        <member name="T:Goedel.Persistence.LogPersistenceStore">
+            <summary>
+            A persistence store based on an append-only log.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.#ctor(System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            Open or create a persistence store in specified mode with 
+            the specified file name, content type and optional comment.
+            </summary>
+            <param name="FileName">Log file.</param>
+            <param name="ReadOnly">If true, persistence store must exist
+            and will be opened in read-only mode. If false, persistence store
+            is opened in read/write mode and a new store will be created
+            if none exists.</param>
+            <param name="Type">Type of data to store (the schema name).</param>
+            <param name="Comment">Comment to be written to the log.</param>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.UnprotectedStore(Goedel.Persistence.DataItem)">
+            <summary>
+            Virtual method that is called by the management class to 
+            perform the actual write operation to the store. Note that the caller is
+            responsible for ensuring all necessary locks are acquired to ensure
+            thread safety.
+            </summary>
+            <param name="DataItem">The data to be written.</param>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.Write(Goedel.Persistence.LogEntry)">
+            <summary>
+            Virtual method that is called to append an entry to the end of the log. 
+            </summary>
+            <param name="LogEntry">The entry to write.</param>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.Read">
+            <summary>
+            Read a data record
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.LogPersistenceStore.ReadRecord(Goedel.Protocol.JSONReader)">
+            <summary>
+            Read a data record.
+            </summary>
+            <param name="JSONReader"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Persistence.NamespaceDoc">
+            <summary>
+            Support for persisting JSON data structures to disk.
+            </summary>
+        </member>
+        <member name="T:Goedel.Persistence.PersistenceStore">
+            <summary>
+            The parent class for all persistence stores.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Lock">
+            <summary>
+            Global Reader-Writer lock for accessing the store.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.TransactionIDPrefix">
+            <summary>
+            Prefix to be added to transaction identifiers.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Reads">
+            <summary>
+            Number of read requests processed this session.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Adds">
+            <summary>
+            Number of write requests processed this session.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Timeouts">
+            <summary>
+            Number of transactions that timed out this session.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Entries">
+            <summary>
+            The in-memory append only list of entries.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.Catalog">
+            <summary>
+            Catalog of active indexes.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceStore.ObjectIndex">
+            <summary>
+            Index of objects by Primary key.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.PersistenceStore.TimeOut">
+            <summary>
+            Timeout for acquiring lock in miliseconds.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.GetTransactionID">
+            <summary>
+            Returns a globally unique, monotonically increasing transaction ID.
+            </summary>
+            <returns>The transaction identifier.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.GetEnumerator">
+            <summary>
+            Return an enumerator.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.PersistenceStore.KeyEntryEnum">
+            <summary>
+            The enumeration entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.KeyEntryEnum.#ctor(Goedel.Persistence.PersistenceStore)">
+            <summary>
+            Create an enumerator for the specified store.
+            </summary>
+            <param name="KeyStore">The store to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.KeyEntryEnum.MoveNext">
+            <summary>
+            Get the next entry.
+            </summary>
+            <returns>True if successful, false if no more entries exist.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.KeyEntryEnum.Reset">
+            <summary>
+            Return the enumerator to the first entry.
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.PersistenceStore.KeyEntryEnum.Current">
+            <summary>
+            The current data item.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.KeyEntryEnum.Dispose">
+            <summary>
+            Dispose method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.#ctor">
+            <summary>
+            Default constructor (eliminate?)
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.Store(Goedel.Persistence.DataItem)">
+            <summary>
+            Protected write to the store.
+            </summary>
+            <param name="DataItem">Data item to write.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.GetData(System.String,System.String)">
+            <summary>
+            Protected index retrieval from the store.
+            </summary>
+            <param name="Key">Key to search on.</param>
+            <param name="Value">Value to find.</param>
+            <returns>Item if found, null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.UnprotectedStore(Goedel.Persistence.DataItem)">
+            <summary>
+            Unprotected write to the store. Can only be accessed or 
+            overriden in delegate classes.
+            </summary>
+            <param name="DataItem">Data item to write.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.UnprotectedGetData(System.String,System.String)">
+            <summary>
+            Unprotected read.
+            </summary>
+            <param name="Key">Key to search on.</param>
+            <param name="Value">Value to find.</param>
+            <returns>Item if found, null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.New(Goedel.Protocol.JSONObject)">
+            <summary>
+            Add new JSON object to the store with the specified identifier, unique ID and keys.
+            </summary>
+            <param name="Object">Object to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.Update(Goedel.Protocol.JSONObject)">
+            <summary>
+            Add new JSON object to the store with the specified identifier, unique ID and keys.
+            </summary>
+            <param name="Object">Object to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.New(Goedel.Persistence.DataItem)">
+            <summary>
+            Add new DataItem to the store.
+            </summary>
+            <param name="DataItem">Data item to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.Update(Goedel.Persistence.DataItem)">
+            <summary>
+            Update existing DataItem in the store.
+            </summary>
+            <param name="DataItem">Data item to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.Delete(System.String)">
+            <summary>
+            Delete DataItem from the store.
+            </summary>
+            <param name="UniqueID">Unique ID of Data item to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.Get(System.String,System.String)">
+            <summary>
+            Locate objects matching the specified key and value.
+            </summary>
+            <param name="Key">Key to match.</param>
+            <param name="Value">Value to match</param>
+            <returns>Data collection if a match is found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceStore.GetIndex(System.String,System.Boolean)">
+            <summary>
+            Return an index for the specified key, creating it if specified.
+            </summary>
+            <param name="Type">Key to match.</param>
+            <param name="Create">If true, will create an index if none is found.</param>
+            <returns>The index if found or created, otherwise null.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.LogEntry">
+             <summary>
+            
+             Record persistence entries in a log format.
+             </summary>
+        </member>
+        <member name="M:Goedel.Persistence.LogEntry.Tag">
+            <summary>
+            Schema tag.
+            </summary>
+            <returns>The tag value</returns>
+        </member>
+        <member name="P:Goedel.Persistence.LogEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.LogEntry._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.LogEntry.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="JSONReader">Input stream</param>
+            <param name="Out">The created object</param>
+        </member>
+        <member name="T:Goedel.Persistence.DataItem">
+             <summary>
+            
+             A log entry
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.TransactionID">
+             <summary>
+            Unique Transaction ID. Text format ensures that the ID is easily
+            visible in binary formats etc.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.PrimaryKey">
+             <summary>
+            Unique primary key.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.PriorTransactionID">
+             <summary>
+            Specifies the immediately prior transaction that affected
+            this identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Action">
+             <summary>
+            Type of transaction, valid values include:
+            Delete (the key is removed)
+            New (the key is created)
+            Modify (the data associated with the key is modified)
+            Drop (the key is no longer active and will not be modified again)
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Added">
+             <summary>
+            Time at which the item was added to the log
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Keys">
+             <summary>
+            Index terms for data item
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Text">
+             <summary>
+            Text data.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Pending">
+             <summary>
+            If true, transaction is pending and will not be final until
+            a commit transaction is posted.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Commit">
+             <summary>
+            If true, all pending transactions with the specified TransactionID
+            are committed and cannot roll back.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Rollback">
+             <summary>
+            If true, all pending transactions with the specified TransactionID
+            are aborted and ignored.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.JSONReader">
+            <summary>
+            Returns a new JSONReader for the data entry.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.#ctor(System.String,System.String,System.String,System.Collections.Generic.List{Goedel.Persistence.IndexTerm})">
+            <summary>
+            Construct a data item with the specified transaction identifier, uniqueID, text data and keys.
+            </summary>
+            <param name="TransactionID">The transation identifier.</param>
+            <param name="UniqueId">The unique identifier of the data entry.</param>
+            <param name="Text">The data.</param>
+            <param name="Keys">Index terms.</param>
+        </member>
+        <member name="P:Goedel.Persistence.DataItem.Persisted">
+            <summary>
+            Has the data item been written to persistent store?
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.AddKey(System.String,System.String)">
+            <summary>
+             Add a key to the persistence store index
+            </summary>
+            <param name="Key">Key to add entry to</param>
+            <param name="Data">Data to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.DataItem.AddKey(Goedel.Persistence.PersistenceIndex,System.String)">
+            <summary>
+            Add a key to the persistence store index
+            </summary>
+            <param name="Index">Index to add key to</param>
+            <param name="Data">Data to add.</param>
+        </member>
+        <member name="T:Goedel.Persistence.Header">
+             <summary>
+            
+             Initial entry in a log file, specify the creation date, type of log,
+             etc.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.Type">
+             <summary>
+            Log Type, usually 'Consolidated' 'Data' 'Index'
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.Content">
+             <summary>
+            Content type identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.Comment">
+             <summary>
+            Optional description of the log type
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.Digest">
+             <summary>
+            Digest Algorithm
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.LastDigest">
+             <summary>
+            Final value of last log
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header.Delta">
+             <summary>
+            If populated, this is a delta log.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Header._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Header._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Header.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Header.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Header.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.Header.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.Delta">
+             <summary>
+            
+             Describe a log that records the changes made since a specific 
+             checkpoint 
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Delta.Parent">
+             <summary>
+            Filename of master log this is a delta to
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Delta.Previous">
+             <summary>
+            Filename of previous delta log				 
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Delta._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Delta._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Delta.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Delta.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Delta.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.Delta.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.IndexTerm">
+             <summary>
+            
+             Record a collected index.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexTerm.Type">
+             <summary>
+            Key under which index term is listed
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexTerm.Term">
+             <summary>
+            Data associated with key
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexTerm._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTerm.#ctor(System.String,System.String)">
+            <summary>
+            An index term
+            </summary>
+            <param name="Type">The term type</param>
+            <param name="Term">The term value</param>
+        </member>
+        <member name="T:Goedel.Persistence.Final">
+             <summary>
+            
+             Specify the digest value of a log up to but not including the 
+             record with the fingerprint.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Final.Digest">
+             <summary>
+            Digest of this log up to but not including this record
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Final._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Final._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Final.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Final.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Final.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.Final.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.Terminal">
+             <summary>
+            
+             Final entry in a log, contains indexes that specify the location
+             of the index records.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Terminal.Indexes">
+             <summary>
+            Location of index records for specified key(s)
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Terminal._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Terminal._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Terminal.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Terminal.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Terminal.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.Terminal.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.IndexIndex">
+             <summary>
+            
+             Record an index location in the current log file.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexIndex.Key">
+             <summary>
+            Key under which index term is listed
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexIndex.Offset">
+             <summary>
+            Location in file at which offset occurs
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexIndex._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IndexIndex._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IndexIndex.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexIndex.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexIndex.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.IndexIndex.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.Index">
+             <summary>
+            
+             An index record. These are written out to a log file after it is closed 
+             to permit rapid access.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Index.Key">
+             <summary>
+            Key that is indexed
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Index.Entries">
+             <summary>
+            List of occurrences of the specified index term.	
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.Index._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.Index._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.Index.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Index.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.Index.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.Index.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.IndexEntry">
+             <summary>
+            
+             An index entry.
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexEntry.Data">
+             <summary>
+            Data associated with key
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexEntry.Offset">
+             <summary>
+            Location in file at which offset occurs
+             </summary>
+        </member>
+        <member name="P:Goedel.Persistence.IndexEntry._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IndexEntry._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Persistence.IndexEntry.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexEntry.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Persistence.IndexEntry.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Persistence.IndexEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Persistence.IndexTermExtended">
+            <summary>
+            An index term that specifies the index it is linked to.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.IndexTermExtended.PersistenceIndex">
+            <summary>
+            The parent index.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.IndexTermExtended.#ctor(Goedel.Persistence.PersistenceIndex,System.String)">
+            <summary>
+            Construct a class with the specified index and term.
+            </summary>
+            <param name="PersistenceIndex">The parent index.</param>
+            <param name="Term">The term.</param>
+        </member>
+        <member name="T:Goedel.Persistence.DataCollection">
+            <summary>
+            A collection of data items. 
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.DataCollection.DataItems">
+            <summary>
+            The items in the collection.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.DataCollection.#ctor(Goedel.Persistence.DataItem)">
+            <summary>
+            Construct a data collection with the specified member.
+            </summary>
+            <param name="DataItem">Initial member</param>
+        </member>
+        <member name="M:Goedel.Persistence.DataCollection.Add(Goedel.Persistence.DataItem)">
+            <summary>
+            Add the specified member to the collection.
+            </summary>
+            <param name="DataItem">Data item to add</param>
+        </member>
+        <member name="T:Goedel.Persistence.PersistenceObjectIndex">
+            <summary>
+            Tracks persistent objects by unique identifier
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceObjectIndex.Dictionary">
+            <summary>
+            Dictionary mapping keys to object instances.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceObjectIndex.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceObjectIndex.Add(Goedel.Persistence.DataItem)">
+            <summary>
+            Add data item to the dictonary, overwriting the existing version
+            if any.
+            </summary>
+            <param name="DataItem">Data item to add.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceObjectIndex.Contains(System.String)">
+            <summary>
+            Find the data collection with the specified key value.
+            </summary>
+            <param name="Value">Key value to find.</param>
+            <returns>True if key found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceObjectIndex.Get(System.String)">
+            <summary>
+            Find the data collection with the specified key value.
+            </summary>
+            <param name="Value">Key value to find.</param>
+            <returns>Data item if found.</returns>
+        </member>
+        <member name="T:Goedel.Persistence.PersistenceIndex">
+            <summary>
+            Index to data in a persistence store using in-memory index.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceIndex.Parent">
+            <summary>
+            Persistence store this index belongs to.
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceIndex.Type">
+            <summary>
+            Type of data being indexed
+            </summary>
+        </member>
+        <member name="F:Goedel.Persistence.PersistenceIndex.DictionaryKeyId">
+            <summary>
+            Dictionary mapping keys to data collections.
+            </summary>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceIndex.#ctor(Goedel.Persistence.PersistenceStore,System.String)">
+            <summary>
+            Construct a new index for the specified store to index data of the
+            specified type.
+            </summary>
+            <param name="Parent">Persistence store to be indexed.</param>
+            <param name="Type">Type of data to index.</param>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceIndex.Contains(System.String)">
+            <summary>
+            Find the data collection with the specified key value.
+            </summary>
+            <param name="Value">Key value to find.</param>
+            <returns>True if value found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceIndex.Get(System.String)">
+            <summary>
+            Find the data collection with the specified key value.
+            </summary>
+            <param name="Value">Key value to find.</param>
+            <returns>The data collection if found, null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Persistence.PersistenceIndex.GetLast(System.String)">
+            <summary>
+            Get the most recently added value with a specified key.
+            </summary>
+            <param name="Value">Key value to find.</param>
+            <returns>The data collection if found, null otherwise.</returns>
+        </member>
+    </members>
+</doc>

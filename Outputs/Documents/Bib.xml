@@ -1,0 +1,628 @@
+  <reference anchor="FedRes2016">
+  <front>
+    <title>The Federal Reserve Payments Study 2016</title>
+    <author>
+      <organization abbrev='Federal Reserve'>Federal Reserve</organization>
+    </author>
+    <date month='December' year='2016' />    
+  </front>
+  <format type="pdf" target="https://www.federalreserve.gov/newsevents/press/other/2016-payments-study-20161222.pdf"/>
+</reference>
+
+<reference anchor="ECMA-262">
+  <front>
+    <title>
+      ECMAScript® 2017
+      Language Specification
+    </title>
+    <author>
+      <organization abbrev='Ecma International'>Ecma International</organization>
+    </author>
+    <date month='June' year='2017' />
+  </front>
+  <format type="pdf" target="https://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf"/>
+</reference>
+
+<reference anchor="Dobertin95">
+  <front>
+    <title>
+      Cryptanalysis of MD5 Compress
+    </title>
+    <author>
+      <organization abbrev=''>Eurocrypt 1996</organization>
+    </author>
+  </front>
+  <format type="ps" target="ftp://ftp.iks-jena.de/mitarb/lutz/crypt/hash/dobbertin.ps"/>
+</reference>
+
+<reference anchor="FIPS197">
+  <front>
+    <title>
+      Advanced Encryption Standard (AES)
+    </title>
+    <author>
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='November' year='2001' />
+  </front>
+  <format type="pdf" target="https://doi.org/10.6028/NIST.FIPS.197"/>
+</reference>
+
+
+
+<reference anchor="SHA-2">
+  <front>
+    <title>
+      Secure Hash Standard
+    </title>
+    <author>
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.180-4"/>
+</reference>
+
+
+<reference anchor="SHA-3">
+  <front>
+    <title>
+      SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions
+    </title>
+    <author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+      
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='August' year='2015' />
+  </front>
+  <format type="pdf" target="https://dx.doi.org/10.6028/NIST.FIPS.202"/>
+</reference>
+
+
+<reference anchor="SHA-3-Derived">
+  <front>
+    <title>
+      SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash and ParallelHash
+      SHARE
+
+    </title>
+    <author fullname="John M. Kelsey" initials="J. M." surname="Kelsey">
+
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <author fullname="Shu-jen H. Chang" initials="S. H." surname="Chang">
+      <organization abbrev='NIST'>NIST</organization>
+    </author>      
+      <author fullname="Ray A. Perlner" initials="R. A." surname="Perlner">
+        <organization abbrev='NIST'>NIST</organization>
+      </author>
+        <date month='December' year='2016' />
+  </front>
+  <format type="pdf" target="https://doi.org/10.6028/NIST.SP.800-185"/>
+</reference>
+
+<reference anchor="AES-GCM">
+  <front>
+    <title>
+      Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC
+    </title>
+    <author fullname="Morris J. Dworkin" initials="M. J." surname="Dworkin">
+
+      <organization abbrev='NIST'>NIST</organization>
+    </author>
+    <date month='November' year='2007' />
+  </front>
+  <format type="pdf" target="https://doi.org/10.6028/NIST.SP.800-38D"/>
+</reference>
+
+<reference anchor="PHB2008">
+  <front>
+    <title>The dotCrime Manifesto: How to Stop Internet Crime</title>
+    <author initials='P' surname='Hallam_Baker' fullname='Phillip Hallam_Baker'>
+      <date month='January' year='2008' />
+    </author>
+    <date month='September' year='2013' />
+  </front>
+</reference>
+
+<reference anchor="IEEE754">
+  <front>
+    <title>IEEE Standard for Floating-Point Arithmetic</title>
+    <author>
+      <organization>IEEE Computer Society </organization>
+    </author>
+    <date day="29" month="August" year="2008"/>
+  </front>
+  <seriesInfo name="IEEE" value="754-2008"/>
+  <seriesInfo name="DOI" value="10.1109/IEEESTD.2008.4610935"/>
+</reference>
+
+<reference anchor="INTEL">
+  <front>
+    <title>
+      <title>Unknown</title>
+    </title>
+    <author>
+      <organization>Intel Corp.</organization>
+    </author>
+  </front>
+</reference><!-- RFC2119 Added Wed, 23 Aug 2017 13:38:47 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2119.xml -->
+
+
+<reference anchor="ZIPFILE">
+  <front>
+    <title>
+      APPNOTE.TXT - .ZIP File Format Specification
+    </title>
+    <author>
+      <organization>PKWARE Inc</organization>
+    </author>
+    <date month='October' year='2014' />
+  </front>
+  <format type="txt" target="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"/>
+</reference>
+
+
+<reference anchor="BLOCKCHAIN">
+  <front>
+    <title>
+      Blockchain Specification
+    </title>
+    <author>
+      <organization >Chain.com</organization>
+    </author>
+  </front>
+  <format type="html" target="https://chain.com/docs/1.2/protocol/specifications/blockchain"/>
+</reference>
+
+
+<reference anchor="X3DH">
+  <front>
+    <title>
+      The X3DH Key Agreement Protocol
+    </title>
+    <author initials='M' surname='Marlinspike' fullname='Moxie Marlinspike'>
+    </author>
+        <author initials='T' surname='Perrin' fullname='Trevor Perrin'>
+    </author>
+    <date month='November' year='2011' />
+  </front>
+  <format type="html" target="https://signal.org/docs/specifications/x3dh/"/>
+</reference>
+
+
+<reference anchor="Kudla2005">
+  <front>
+    <title>
+      Modular Security Proofs for Key Agreement Protocols
+    </title>
+    <author initials='C' surname='Kudla' fullname='Caroline Kudla'>
+    </author>
+        <author initials='K' surname='Paterson' fullname='Kenneth G. Paterson'>
+    </author>
+        <author>
+      <organization abbrev=''>11th International Conference on the Theory and Application of Cryptology and Information Security</organization>
+    </author>
+    <date year='2005' />
+  </front>
+  <format type="html" target="http://www.isg.rhul.ac.uk/~kp/ModularProofs.pdf"/>
+</reference><!-- RFC6763 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6763.xml -->
+
+
+<reference  anchor='RFC6763' target='https://www.rfc-editor.org/info/rfc6763'>
+<front>
+<title>DNS-Based Service Discovery</title>
+<author initials='S.' surname='Cheshire' fullname='S. Cheshire'><organization /></author>
+<author initials='M.' surname='Krochmal' fullname='M. Krochmal'><organization /></author>
+<date year='2013' month='February' />
+<abstract><t>This document specifies how DNS resource records are named and structured to facilitate service discovery.  Given a type of service that a client is looking for, and a domain in which the client is looking for that service, this mechanism allows clients to discover a list of named instances of that desired service, using standard DNS queries. This mechanism is referred to as DNS-based Service Discovery, or DNS-SD.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6763'/>
+<seriesInfo name='DOI' value='10.17487/RFC6763'/>
+</reference>
+
+<!-- RFC5785 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5785.xml -->
+
+
+<reference  anchor='RFC5785' target='https://www.rfc-editor.org/info/rfc5785'>
+<front>
+<title>Defining Well-Known Uniform Resource Identifiers (URIs)</title>
+<author initials='M.' surname='Nottingham' fullname='M. Nottingham'><organization /></author>
+<author initials='E.' surname='Hammer-Lahav' fullname='E. Hammer-Lahav'><organization /></author>
+<date year='2010' month='April' />
+<abstract><t>This memo defines a path prefix for &quot;well-known locations&quot;, &quot;/.well-known/&quot;, in selected Uniform Resource Identifier (URI) schemes.   [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='5785'/>
+<seriesInfo name='DOI' value='10.17487/RFC5785'/>
+</reference>
+
+<!-- RFC3986 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.3986.xml -->
+
+
+<reference  anchor='RFC3986' target='https://www.rfc-editor.org/info/rfc3986'>
+<front>
+<title>Uniform Resource Identifier (URI): Generic Syntax</title>
+<author initials='T.' surname='Berners-Lee' fullname='T. Berners-Lee'><organization /></author>
+<author initials='R.' surname='Fielding' fullname='R. Fielding'><organization /></author>
+<author initials='L.' surname='Masinter' fullname='L. Masinter'><organization /></author>
+<date year='2005' month='January' />
+<abstract><t>A Uniform Resource Identifier (URI) is a compact sequence of characters that identifies an abstract or physical resource.  This specification defines the generic URI syntax and a process for resolving URI references that might be in relative form, along with guidelines and security considerations for the use of URIs on the Internet.  The URI syntax defines a grammar that is a superset of all valid URIs, allowing an implementation to parse the common components of a URI reference without knowing the scheme-specific requirements of every possible identifier.  This specification does not define a generative grammar for URIs; that task is performed by the individual specifications of each URI scheme.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='STD' value='66'/>
+<seriesInfo name='RFC' value='3986'/>
+<seriesInfo name='DOI' value='10.17487/RFC3986'/>
+</reference>
+
+<!-- RFC2782 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.2782.xml -->
+
+
+<reference  anchor='RFC2782' target='https://www.rfc-editor.org/info/rfc2782'>
+<front>
+<title>A DNS RR for specifying the location of services (DNS SRV)</title>
+<author initials='A.' surname='Gulbrandsen' fullname='A. Gulbrandsen'><organization /></author>
+<author initials='P.' surname='Vixie' fullname='P. Vixie'><organization /></author>
+<author initials='L.' surname='Esibov' fullname='L. Esibov'><organization /></author>
+<date year='2000' month='February' />
+<abstract><t>This document describes a DNS RR which specifies the location of the server(s) for a specific protocol and domain.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='2782'/>
+<seriesInfo name='DOI' value='10.17487/RFC2782'/>
+</reference>
+
+<!-- RFC5322 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.5322.xml -->
+
+
+<reference  anchor='RFC5322' target='https://www.rfc-editor.org/info/rfc5322'>
+<front>
+<title>Internet Message Format</title>
+<author initials='P.' surname='Resnick' fullname='P. Resnick' role='editor'><organization /></author>
+<date year='2008' month='October' />
+<abstract><t>This document specifies the Internet Message Format (IMF), a syntax for text messages that are sent between computer users, within the framework of &quot;electronic mail&quot; messages.  This specification is a revision of Request For Comments (RFC) 2822, which itself superseded Request For Comments (RFC) 822, &quot;Standard for the Format of ARPA Internet Text Messages&quot;, updating it to reflect current practice and incorporating incremental changes that were specified in other RFCs.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='5322'/>
+<seriesInfo name='DOI' value='10.17487/RFC5322'/>
+</reference>
+
+<!-- RFC6698 Added Thu, 14 Jun 2018 12:19:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6698.xml -->
+
+
+<reference  anchor='RFC6698' target='https://www.rfc-editor.org/info/rfc6698'>
+<front>
+<title>The DNS-Based Authentication of Named Entities (DANE) Transport Layer Security (TLS) Protocol: TLSA</title>
+<author initials='P.' surname='Hoffman' fullname='P. Hoffman'><organization /></author>
+<author initials='J.' surname='Schlyter' fullname='J. Schlyter'><organization /></author>
+<date year='2012' month='August' />
+<abstract><t>Encrypted communication on the Internet often uses Transport Layer Security (TLS), which depends on third parties to certify the keys used.  This document improves on that situation by enabling the administrators of domain names to specify the keys used in that domain's TLS servers.  This requires matching improvements in TLS client software, but no change in TLS server software.  [STANDARDS-TRACK]</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6698'/>
+<seriesInfo name='DOI' value='10.17487/RFC6698'/>
+</reference>
+
+<reference  anchor='Davis2001' target='http://world.std.com/~dtd/sign_encrypt/sign_encrypt7.html'>
+<front>
+<title>Defective Sign &amp; Encrypt in S/MIME, PKCS#7, MOSS, PEM, PGP, and XML</title>
+<author initials='D.' surname='Davis' fullname='Don Davis'><organization /></author>
+<date year='2001' month='May' />
+</front>
+</reference>
+
+
+<reference  anchor='Schneier2013' target='https://www.schneier.com/blog/archives/2013/10/defending_again_1.html'>
+<front>
+<title>Defending Against Crypto Backdoors</title>
+<author initials='B.' surname='Schneier' fullname='Bruce Schneier'><organization /></author>
+<date year='2013' month='October' />
+</front>
+</reference>
+
+<reference  anchor='Shannon1949' target='http://netlab.cs.ucla.edu/wiki/files/shannon1949.pdf'>
+<front>
+<title>Communication Theory of Secrecy Systems</title>
+<author initials='C. E.' surname='Shannon' fullname='Claude Shannon'><organization /></author>
+<date year='1949' />
+</front>
+</reference>
+<reference  anchor='Intel2018' target='https://www.theinquirer.net/inquirer/news/3036660/intel-10nm-cannon-lake-processors-delayed-again-until-late-2019'>
+<front>
+<title>Intel delays 10nm Cannon Lake processors, again, until late 2019</title>
+<author initials='L.' surname='Bell' fullname='Lee Bell'><organization>the Inquirer</organization></author>
+<date year='2018' month='July' />
+</front>
+</reference>
+
+<reference  anchor='Adrian2015' target='https://weakdh.org/imperfect-forward-secrecy-ccs15.pdf'>
+<front>
+<title>Weak Diffie-Hellman and the Logjam Attack</title>
+<author initials='D.' surname='Adrian' fullname='David Adrian'><organization /></author>
+<date year='2015' month='October' />
+</front>
+</reference>
+
+<reference  anchor='Ratchet' target='https://signal.org/docs/specifications/doubleratchet/'>
+<front>
+<title>The Double Ratchet Algorithm</title>
+<author initials='M.' surname='Marlinspike' fullname='Moxie Marlinspike'><organization /></author>
+<author initials='T.' surname='Perrin' fullname='Trevor Perrin'><organization /></author>
+<date year='2016' month='November' />
+</front>
+</reference>
+<reference  anchor='Diffie76' target='https://ee.stanford.edu/~hellman/publications/24.pdf'>
+<front>
+<title>New Directions in Cryptography </title>
+      <author initials='W.' surname='Diffie' fullname='Whitfield Diffie'><organization /></author>
+    <author initials='M. E.' surname='Hellman' fullname='Martin E. Hellman'><organization /></author>
+<date year='1976' month='November' />
+</front>
+</reference>
+<reference  anchor='Kohnfelder78' target='http://theory.csail.mit.edu/~cis/theses/kohnfelder-bs.pdf'>
+<front>
+<title>Towards a Practical Public-Key Cryptosystem</title>
+<author initials='L. M.' surname='Kohnfelder' fullname='Loren Kohnfelder'><organization /></author>
+<date year='1978' month='May' />
+</front>
+</reference>
+<reference  anchor='Bitcoin2017' target='https://www.theguardian.com/technology/2017/nov/27/bitcoin-mining-consumes-electricity-ireland'>
+<front>
+<title>Bitcoin mining consumes more electricity a year than Ireland</title>
+<author initials='A.' surname='Hern' fullname='Alex Hern'><organization /></author>
+<date year='2017' month='November' />
+</front>
+</reference>
+
+<reference  anchor='Haber91' target='https://www.anf.es/pdf/Haber_Stornetta.pdf'>
+<front>
+<title>How to Time-Stamp a Digital Document</title>
+  <author initials='S.' surname='Haber' fullname='Stuart Haber'><organization /></author>
+    <author initials='W. S.' surname='Stornetta' fullname='W. Scott Stornetta'><organization /></author>
+<date year='1991' />
+</front>
+</reference>
+<reference  anchor='Bitcoin' target='https://www.wired.com/story/after-10-years-bitcoin-changed-everything-nothing/'>
+<front>
+<title>After 10 Years, Bitcoin Has Changed Everything—And Nothing</title>
+  <author initials='K.' surname='Finley' fullname='Klint Finley'><organization /></author>
+<date year='2018' month='November'/>
+</front>
+</reference>
+
+<reference  anchor='Namecoin' target='https://namecoin.org/'>
+<front>
+<title>Namecoin Web Site</title>
+    <author fullname='Namecoin Inc.'><organization /></author>
+<date year='2019' />
+</front>
+</reference>
+
+<reference  anchor='XMLSchema' target='https://www.w3.org/TR/xmlschema11-1/'>
+<front>
+<title>W3C XML Schema Definition Language (XSD) 1.1 Part 1: Structures</title>
+  <author initials='S.' surname='Gao' fullname='Shudi  Gao'><organization /></author>
+  <author initials='C. M.' surname='Sperberg-McQueen' fullname='C. M. Sperberg-McQueen'><organization /></author>
+  <author initials='H. S.' surname='Thompson' fullname='Henry S. Thompson'><organization /></author>
+  <author initials='N.' surname='Mendelsohn' fullname='Noah Mendelsohn'><organization /></author>
+  <author initials='D.' surname='Beech' fullname='David Beech'><organization /></author>
+  <author initials='M.' surname='Maloney' fullname='Murray Maloney'><organization /></author>
+<date year='2012'  month='April' day='5'/>
+</front>
+</reference><!-- draft-hallambaker-mesh-architecture Added Thu, 04 Apr 2019 10:56:07 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh Part I: Architecture Guide</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='August' day='31' year='2018' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  The architecture of the Mesh and examples of typical applications are described.  This document is also available online at http://mathmesh.com/Documents/draft-hallambaker-mesh- architecture.html [1] .</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-06' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-06.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Thu, 04 Apr 2019 10:56:07 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='April' day='11' year='2018' />
+
+<abstract><t>The Mathematical Mesh ?The Mesh? is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.  This document is also available online at http://mathmesh.com/Documents/draft-hallambaker-mesh-developer.html [1] .</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-07' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-07.txt' />
+</reference>
+
+<!-- RFC4716 Added Thu, 04 Apr 2019 10:56:07 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.4716.xml -->
+
+
+<reference  anchor='RFC4716' target='https://www.rfc-editor.org/info/rfc4716'>
+<front>
+<title>The Secure Shell (SSH) Public Key File Format</title>
+<author initials='J.' surname='Galbraith' fullname='J. Galbraith'><organization /></author>
+<author initials='R.' surname='Thayer' fullname='R. Thayer'><organization /></author>
+<date year='2006' month='November' />
+<abstract><t>This document formally documents an existing public key file format in use for exchanging public keys between different Secure Shell (SSH) implementations.</t><t>In addition, this document defines a standard textual representation for SSH public key fingerprints.  This memo provides information for the Internet community.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='4716'/>
+<seriesInfo name='DOI' value='10.17487/RFC4716'/>
+</reference>
+
+
+
+<reference  anchor='Kocher96' target='https://web.eecs.umich.edu/~genkin/teaching/fall2019/EECS598-12_files/TimingAttacks.pdf'>
+<front>
+<title>Timing attacks on implementations of Diffie-Hellman, RSA, DSS, and other systems.</title>
+<author initials='P. C.' surname='Kocher' fullname='Paul C. Kocher'><organization /></author>
+<date year='1996' />
+</front>
+<annotation>
+  In Neal Koblitz, editor, Advances in Cryptology - CRYPTO ’96, 
+  16th Annual International Cryptology Conference, Santa Barbara, 
+  California, USA, August 18-22, 1996, Proceedings, volume 1109 of 
+  Lecture Notes in Computer Science, pages 104–113. Springer, 1996
+</annotation>
+</reference>
+
+
+<reference  anchor='Lopez99' target='https://link.springer.com/chapter/10.1007/3-540-48059-5_27'>
+<front>
+<title>Fast multiplication on elliptic curves over GF(2m) without precomputation.</title>
+<author initials='J.' surname='L´opez' fullname='Julio L´opez'><organization /></author>
+<author initials='R.' surname='Dahab' fullname='Ricardo Dahab'><organization /></author>
+<date year='1999'/>
+</front>
+<annotation>
+  In C¸etin Kaya Ko¸c and Christof Paar, editors, Cryptographic 
+  Hardware and Embedded Systems, First International Workshop, CHES’99, 
+  Worcester, MA, USA, August 12-13, 1999, Proceedings, volume 1717 of 
+  Lecture Notes in Computer Science, pages 316–327. Springer, 1999.
+</annotation>
+</reference>
+
+
+<reference  anchor='Okeya01' target='https://link.springer.com/content/pdf/10.1007/3-540-44709-1_12.pdf'>
+<front>
+<title>Efficient elliptic curve cryptosystems from a scalar multiplication algorithm with recovery of the y-coordinate on a Montgomeryform elliptic curve.</title>
+<author initials='K.' surname='Okeya' fullname='Katsuyuki Okeya'><organization /></author>
+<author initials='K.' surname='Sakurai' fullname='Kouichi Sakurai'><organization /></author>
+<date year='2001'/>
+</front>
+<annotation>
+  In C¸etin Kaya Ko¸c, David Naccache, and Christof Paar, editors, 
+  Cryptographic Hardware and Embedded Systems - CHES 2001, Third 
+  International Workshop, Paris, France, May 14-16, 2001, Proceedings, 
+  volume 2162 of Lecture Notes in Computer Science, pages 126–141. 
+  Springer
+</annotation>
+</reference>
+
+
+
+<reference  anchor='Costello17' target='https://arxiv.org/abs/1703.01863'>
+<front>
+<title>Montgomery curves and their arithmetic</title>
+<author initials='C.' surname='Costello' fullname='Craig Costello'><organization /></author>
+<author initials='B.' surname='Smith' fullname='Benjamin Smith'><organization /></author>
+<date year='2017'/>
+</front>
+</reference>
+
+<reference  anchor='Komlo' target='https://crysp.uwaterloo.ca/software/frost/frost-techreport-20200120.pdf'>
+  <front>
+    <title>
+      FROST: Flexible Round-Optimized Schnorr Threshold Signatures
+    </title>
+    <author initials='C.' surname='Komlo' fullname='Chelsea Komlo'>
+      <organization>University of Waterloo, Zcash Foundation</organization>
+    </author>
+    <author initials='I.' surname='Goldberg' fullname='Ian Goldberg'>
+      <organization>University of Waterloo</organization>
+    </author>
+    <date year='2020'/>
+  </front>
+</reference>
+
+
+<reference  anchor='Feldman87' target='https://www.cs.umd.edu/~gasarch/TOPICS/secretsharing/feldmanVSS.pdf'>
+  <front>
+    <title>
+      A Practical Scheme for Non-interactive Verifiable Secret Sharing.
+    </title>
+    <author initials='P.' surname='Feldman' fullname='Paul Feldman'>
+      <organization></organization>
+    </author>
+    <annotation>
+      In Proceedings of the 28th Annual Symposium on Foundations of Computer Science, 
+      SFCS ’87, pages 427–438, Washington, DC, USA, IEEE Computer
+      Society
+    </annotation>
+      <date year='1987'/>
+  </front>
+</reference>
+
+<reference  anchor='Pedersen91a' target='https://link.springer.com/chapter/10.1007/3-540-46416-6_47'>
+  <front>
+    <title>
+      A Threshold Cryptosystem without a Trusted Party (Extended Abstract)
+    </title>
+    <author initials='T. P.' surname='Pedersen' fullname='Torben P. Pedersen'>
+    </author>
+    <annotation>
+      In Advances in Cryptology - EUROCRYPT ’91, Workshop on
+      the Theory and Application of of Cryptographic Techniques, Brighton, UK, April
+      8-11, 1991, Proceedings, volume 547 of Lecture Notes in Computer Science,
+      pages 522–526. Springer
+    </annotation>
+    <date year='1991'/>
+  </front>
+</reference>
+
+<reference  anchor='Pedersen91b' target='https://link.springer.com/chapter/10.1007/3-540-46766-1_9'>
+  <front>
+    <title>
+      Non-interactive and information-theoretic secure verifiable
+      secret sharing.
+    </title>
+    <author initials='T. P.' surname='Pedersen' fullname='Torben P. Pedersen'>
+    </author>
+    <date year='1991'/>
+    <annotation>In Proceedings of the 11th Annual International Cryptology 
+    Conference on Advances in Cryptology, CRYPTO ’91, pages 129–140. SpringerVerlag</annotation>
+  </front>
+</reference>
+
+<reference  anchor='Schnorr89' target='https://link.springer.com/chapter/10.1007/0-387-34805-0_22'>
+  <front>
+    <title>
+      Efficient Identification and Signatures for Smart Cards.
+    </title>
+    <author initials='C.' surname='Schnorr' fullname='Claus-Peter Schnorr'>
+    </author>
+    <date year='1989'/>
+    <annotation>
+      In CRYPTO.
+    </annotation>
+  </front>
+</reference>
+
+<reference  anchor='Shamir79' target='https://cs.jhu.edu/~sdoshi/crypto/papers/shamirturing.pdf'>
+  <front>
+    <title>
+      How to share a secret.
+    </title>
+    <author initials='A.' surname='Shamir' fullname='Adi Shamirt'>
+    </author>
+    <date year='1979'/>
+    <annotation>
+      Communications of the ACM, 22:612–613
+    </annotation>
+  </front>
+</reference>
+
+

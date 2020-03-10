@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Recrypt.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Recrypt.Server.NamespaceDoc">
+            <summary>
+            Mesh/Recrypt Server API
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptLocalPortal">
+            <summary>
+            Abstract interface to a local service provider.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.Server.RecryptLocalPortal.ServiceName">
+            <summary>The service name</summary>
+        </member>
+        <member name="F:Goedel.Recrypt.Server.RecryptLocalPortal.RecryptServiceHost">
+            <summary>
+            The local PublicMeshServiceHost.
+            </summary>
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptPortalDirect">
+            <summary>
+            Direct connection to service provider via API calls. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptPortalDirect.#ctor(System.String,System.String)">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+            <param name="ServiceName">The canonical service name</param>
+            <param name="Store">The file to store the account data to</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptPortalDirect.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Portal">The portal to get the service from.</param>
+            <returns>The service instance</returns> 
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptPortalLocal">
+            <summary>
+            Direct connection to service provider via JSON encoding, decoding and dispatch.
+            Useful for producing documentation and for testing.
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptPortalLocal.#ctor(System.String)">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+            <param name="ServiceName">The service name</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptPortalLocal.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Service">The service to get the service from.</param> 
+            <returns>The service instance</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptStore">
+            <summary>Recryption persistence store.</summary>
+        </member>
+        <member name="F:Goedel.Recrypt.Server.RecryptStore.DefaultStore">
+            <summary>The default store file name</summary>
+        </member>
+        <member name="P:Goedel.Recrypt.Server.RecryptStore.Domain">
+            <summary>
+            The DNS name of this service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.#ctor(System.String,System.String)">
+            <summary>
+            Construct a persistence store for the specified domain, with the
+            specified store and portal stores.
+            </summary>
+            <param name="Domain">Domain name of the service</param>
+            <param name="Store">store name for the account persistence store.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.CreateGroup(Goedel.Recrypt.RecryptionGroup)">
+            <summary>
+            Create a new recryption group
+            </summary>
+            <param name="RecryptionGroup">The parameters of the group to create</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.UpdateGroup(Goedel.Recrypt.RecryptionGroup)">
+            <summary>
+            Replace recryption group definition.
+            </summary>
+            <param name="RecryptionGroup">The parameters of the group to update</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.GetGroup(System.String)">
+            <summary>
+            Return group data by group name
+            </summary>
+            <param name="GroupName">The group name.</param>
+            <returns>The group name</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.GetUserDecryptionEntry(Goedel.Recrypt.RecryptionGroup,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Get the member with the specified UDF
+            </summary>
+            <param name="MemberEntry">The member entry.</param>
+            <param name="EncryptionKeyUDF">The encryption key fingerprint.</param>
+            <param name="MemberKeyUDF">List of member key fingerprints.</param>
+            <returns>Decryption information for the specified user.</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptStore.GetUserDecryptionEntry(System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Get the member with the specified identifiers.
+            </summary>
+            <param name="GroupKeyID">The group key.</param>
+            <param name="MemberID">The member identifier</param>
+            <param name="MemberKeyUDF">The member key fingerprint.</param>
+            <returns>Decryption information for the specified user.</returns>
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptLocalServiceProvider">
+            <summary>
+            The host class. Receives a stream from the HTTP server caller and 
+            dispatches the specified server.
+            </summary>
+        </member>
+        <member name="P:Goedel.Recrypt.Server.RecryptLocalServiceProvider.RecryptStore">
+            <summary>The recryption service store.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptLocalServiceProvider.#ctor(System.String,System.String)">
+            <summary>
+            Initialize a Mesh Service Provider.
+            </summary>
+            <param name="Domain">The domain of the service provider.</param>
+            <param name="Store">The persistence store filename.</param>
+        </member>
+        <member name="T:Goedel.Recrypt.Server.RecryptServiceLocal">
+            <summary>Recryption service running on the local host.</summary>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.#ctor(Goedel.Recrypt.Server.RecryptLocalServiceProvider,Goedel.Protocol.JPCSession)">
+            <summary>
+            The mesh service dispatcher.
+            </summary>
+            <param name="Host">The service provider.</param>
+            <param name="Session">The authentication context.</param>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Implements the transaction Hello.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.CreateGroup(Goedel.Recrypt.CreateGroupRequest)">
+            <summary>
+            Implements the transaction CreateGroup.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.UpdateGroup(Goedel.Recrypt.UpdateGroupRequest)">
+            <summary>
+            Implements the transaction CreateGroup.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.GetGroup(Goedel.Recrypt.GetGroupRequest)">
+            <summary>
+            GetGroup Transaction Dispatch.
+            </summary>
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.GetKey(Goedel.Recrypt.GetKeyRequest)">
+            <summary>
+            GetKey Transaction Dispatch.
+            </summary>
+            <param name="Request">The request object</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Recrypt.Server.RecryptServiceLocal.RecryptData(Goedel.Recrypt.RecryptDataRequest)">
+            <summary>
+            Implements the transaction Recrypt Data.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+    </members>
+</doc>

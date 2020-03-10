@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Confirm.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Confirm.Server.ConfirmLocalPortal">
+            <summary>
+            Abstract interface to a local service provider.
+            </summary>
+        </member>
+        <member name="P:Goedel.Confirm.Server.ConfirmLocalPortal.ServiceName">
+            <summary>The service name.</summary>
+        </member>
+        <member name="F:Goedel.Confirm.Server.ConfirmLocalPortal.ConfirmServiceHost">
+            <summary>
+            The local PublicMeshServiceHost.
+            </summary>
+        </member>
+        <member name="T:Goedel.Confirm.Server.ConfirmPortalDirect">
+            <summary>
+            Direct connection to service provider via API calls. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmPortalDirect.#ctor(System.String,System.String)">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+            <param name="ServiceName">The canonical service name</param>
+            <param name="Store">The file to store the account data to</param>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmPortalDirect.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Portal">The portal to get the service from.</param>
+            <returns>The service instance</returns> 
+        </member>
+        <member name="T:Goedel.Confirm.Server.ConfirmPortalLocal">
+            <summary>
+            Direct connection to service provider via JSON encoding, decoding and dispatch.
+            Useful for producing documentation and for testing.
+            </summary>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmPortalLocal.#ctor(System.String)">
+            <summary>
+            Create new portal using the default stores.
+            </summary>
+            <param name="ServiceName">The service name</param>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmPortalLocal.GetService(System.String,System.String)">
+            <summary>
+            Return a MeshService object for the named portal service.
+            </summary>
+            <param name="Account">The account to get.</param>
+            <param name="Service">The service to get the service from.</param> 
+            <returns>The service instance</returns>
+        </member>
+        <member name="T:Goedel.Confirm.Server.ConfirmStore">
+            <summary>Confirmation persistence store.</summary>
+        </member>
+        <member name="F:Goedel.Confirm.Server.ConfirmStore.DefaultStore">
+            <summary>The default store file name</summary>
+        </member>
+        <member name="P:Goedel.Confirm.Server.ConfirmStore.Domain">
+            <summary>
+            The DNS name of this service.
+            </summary>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmStore.#ctor(System.String,System.String)">
+            <summary>
+            Confirmation store, wraps the actual persistent transactions.
+            </summary>
+            <param name="Domain">The service domain.</param>
+            <param name="Store">The persistence log file.</param>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmStore.EnquiryPost(Goedel.Confirm.RequestEntry)">
+            <summary>
+            Post new confirmation request
+            </summary>
+            <param name="RequestEntry">Request to post</param>
+            <returns>Broker generated transaction identifier</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmStore.EnquiryStatus(System.String,System.Boolean)">
+            <summary>
+            Request status of previous request
+            </summary>
+            <param name="BrokerID">Identifier of request to respond to.</param>
+            <param name="Cancel">If true, the request will be cancelled.</param>
+            <returns>The response entry.</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmStore.GetPending(System.String,System.Int32,System.Int32)">
+            <summary>
+            Get list of pending requests
+            </summary>
+            <param name="AccountID">The account identifier</param>
+            <param name="MaxResponse">The maximum number of responses</param>
+            <param name="AfterId">Return responses after the specified identifier</param>
+            <returns>The list of request entries</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmStore.Response(Goedel.Confirm.ResponseEntry)">
+            <summary>
+            Post response to a request
+            </summary>
+            <param name="ResponseEntry">The response entry to post.</param>
+        </member>
+        <member name="T:Goedel.Confirm.Server.ConfirmLocalServiceProvider">
+            <summary>
+            The service provider class, exposes the persistent state.
+            </summary>
+        </member>
+        <member name="P:Goedel.Confirm.Server.ConfirmLocalServiceProvider.ConfirmStore">
+            <summary>The confirmation persistence store.</summary>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmLocalServiceProvider.#ctor(System.String,System.String)">
+            <summary>
+            Initialize a Mesh Service Provider.
+            </summary>
+            <param name="Domain">The domain of the service provider.</param>
+            <param name="Store">The persistence store filename.</param>
+        </member>
+        <member name="T:Goedel.Confirm.Server.ConfirmServiceLocal">
+            <summary>Copnfirmation service running on the local host.</summary>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.#ctor(Goedel.Confirm.Server.ConfirmLocalServiceProvider,Goedel.Protocol.JPCSession)">
+            <summary>
+            Construct a service from a service provider and a JPCsession.
+            </summary>
+            <param name="ServiceProvider">The service provider</param>
+            <param name="Session">The JPC Session.</param>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.Hello(Goedel.Protocol.HelloRequest)">
+            <summary>
+            Base method for implementing the transaction  Hello.
+            </summary>
+            <param name="Request">The request object to send to the host.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.Enquire(Goedel.Confirm.EnquireRequest)">
+            <summary>
+            Enquire transaction dispatch
+            </summary>
+            <param name="Request">The request object.</param>
+            <returns>The response object.</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.Status(Goedel.Confirm.StatusRequest)">
+            <summary>
+            Status transaction dispatch
+            </summary>
+            <param name="Request">The request object.</param>
+            <returns>The response object.</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.Pending(Goedel.Confirm.PendingRequest)">
+            <summary>
+            Pending transaction dispatch
+            </summary>
+            <param name="Request">The request object.</param>
+            <returns>The response object.</returns>
+        </member>
+        <member name="M:Goedel.Confirm.Server.ConfirmServiceLocal.Respond(Goedel.Confirm.RespondRequest)">
+            <summary>
+            Respond transaction dispatch
+            </summary>
+            <param name="Request">The request object.</param>
+            <returns>The response object.</returns>
+        </member>
+        <member name="T:Goedel.Confirm.Server.NamespaceDoc">
+            <summary>
+            Confirmation service Server implementation
+            </summary>
+        </member>
+    </members>
+</doc>

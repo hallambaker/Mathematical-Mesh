@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Cryptography.Windows</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Cryptography.Windows.DPAPI">
+            <summary>
+            Provide access to the Windows Data Protection API. This binds data to the user's
+            public key so that th user's password is required to unlock it.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.DPAPI.KeyType">
+            <summary>The key type</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DPAPI.KeyType.UserKey">
+            <summary>Key is bound to user</summary>
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DPAPI.KeyType.MachineKey">
+            <summary>Key is bound to machine</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DPAPI.Encrypt(System.Byte[],Goedel.Cryptography.Windows.DPAPI.KeyType,System.String,System.Byte[])">
+            <summary>
+            Encrypt data using DAPI
+            </summary>
+            <param name="KeyType">The Key type, user or machine</param>
+            <param name="PlainTextBytes">The data to be encrypted</param>
+            <param name="EntropyBytes">Additional Key material used to salt the key</param>
+            <param name="Description">Description of the stored data</param>
+            <returns>The encrypted data.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DPAPI.Decrypt(System.Byte[],System.String@,System.Byte[])">
+            <summary>
+            Decrypt data stored using the Data Protection API
+            </summary>
+            <param name="CipherTextBytes">The encrypted data</param>
+            <param name="Description">Description of the encrypted data</param>
+            <param name="EntropyBytes">Additional Key material</param>
+            <returns>The decrypted data.</returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.DecryptionFailed">
+            <summary>
+            Encrypted data could not be decrypted. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DecryptionFailed.#ctor">
+            <summary>
+            Construct instance for exception "Could not decrypt user data"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DecryptionFailed.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Could not decrypt user data"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.DecryptionFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DecryptionFailed.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.DecryptionFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.EncryptionFailed">
+            <summary>
+            Data could not be encrypted. 
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.EncryptionFailed.#ctor">
+            <summary>
+            Construct instance for exception "Could not encrypt user data"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.EncryptionFailed.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Could not encrypt user data"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.EncryptionFailed.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.EncryptionFailed.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.EncryptionFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.InsufficientMemory">
+            <summary>
+            Memory allocation failed.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.InsufficientMemory.#ctor">
+            <summary>
+            Construct instance for exception "Memory allocation failed"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.InsufficientMemory.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Memory allocation failed"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.InsufficientMemory.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.InsufficientMemory.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Cryptography.Windows.InsufficientMemory.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyStore.WriteToKeyStore(Goedel.Cryptography.PKIX.IPKIXPrivateKey,Goedel.Cryptography.KeySecurity)">
+            <summary>
+            Write a key to the machine keystore
+            </summary>
+            <param name="Data">The key data</param>
+            <param name="KeySecurity">The storage security level</param>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyStore.FindInKeyStore(System.String,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Retrieve record from the local key store. 
+            </summary>
+            <param name="UDF">The key identifier</param>
+            <param name="KeyType">Key type, if known</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyStore.EraseFromDevice(System.String,Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Erase Key record from the local key store. 
+            </summary>
+            <param name="UDF">The key identifier</param>
+            <param name="KeyType">Key type, if known</param>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.KeyContainer">
+            <summary>Key container class. This makes use of windows specific platform
+            encryption to bind keys to the user's log in password in a transparent fashion.</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyContainer.GetKeyContainerNames">
+            <summary>
+            Get the set of key container names.
+            </summary>
+            <returns>The set of container names.</returns>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyContainer.EraseTest">
+            <summary>Erase all test data from the system. Use with care!</summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Windows.KeyContainer.Delete(System.String)">
+            <summary>Delete the specified key</summary>
+            <param name="Key">Key to delete.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.Windows.NamespaceDoc">
+            <summary>
+            Cryptographi functions bound to the Windows environment.
+            </summary>
+        </member>
+        <member name="T:Goedel.Cryptography.Cryptography">
+            <summary>
+            Base class for initialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.Cryptography.Initialize(System.Boolean)">
+            <summary>
+            Perform initialization of the Goedel.Cryptography portable class
+            with delegates to the .NET framework methods.
+            </summary>
+            <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        </member>
+        <member name="T:Goedel.Cryptography.CryptographyWindows">
+            <summary>
+            Windows specific cryptographic routines. These are principally the interfaces to
+            the registry and the key stores.
+            </summary>
+        </member>
+        <member name="M:Goedel.Cryptography.CryptographyWindows.Initialize(System.Boolean)">
+            <summary>
+            Perform initialization of the Goedel.Cryptography portable class
+            with delegates to the .NET framework methods.
+            </summary>
+            <param name="TestMode">If true, the application will be initialized in test/debug mode.</param>
+        </member>
+    </members>
+</doc>

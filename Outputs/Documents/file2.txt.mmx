@@ -1,0 +1,12 @@
+{
+  "protected": "
+ewogICJlbmMiOiAiQTI1NkNCQyJ9",
+  "iv": "
+A2_lFRKGaXJrtJ0gUx2k9g",
+  "recipients": [{
+      "Header": {
+        "kid": "MAVDU-OZURP-2JUXK-TVTML-2O6XP-UDGV3"},
+      "encrypted_key": "
+ioOcN16BKnhno_xB2-JFvQgVBqKuCKw8l9BEb-VOeqLKjuRDAB34sw"}],
+  "ciphertext": "
+skikfm9XOvuql_kHX0Ub9tqxS0BqiBTssZG9x2zbUtM"}

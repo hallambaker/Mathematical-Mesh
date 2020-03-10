@@ -1,0 +1,1661 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Goedel.Mesh.Portal.Client</name>
+    </assembly>
+    <members>
+        <member name="T:Goedel.Mesh.Portal.Client.RegistrationType">
+            <summary>
+            Describe the means by which a registration is made.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.RegistrationType.Registry">
+            <summary>
+            Data is stored in a Windows registry key
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.RegistrationType.File">
+            <summary>
+            Data is stored in a file in the ~/.mmm directory.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.RegistrationType.Removed">
+            <summary>
+            Data was previously registered but has been deleted.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.MeshMachine">
+            <summary>
+            Describes a set of registered profiles on a particular machine, usually the
+            current machine.
+            </summary>
+            <summary>
+            The MeshSession is a MeshMachine bound to a particular portal which supports Mesh
+            portal operations such as write to portal and read from portal.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshMachine.ConnectStartRequests">
+            <summary>List of pending connection requests.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.PersonalProfilesUDF">
+            <summary>
+            The a dictionary of personal profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.PersonalProfilesPortal">
+            <summary>
+            The a dictionary of personal profiles indexed by portal account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.ApplicationProfiles">
+            <summary>
+            A dictionary of application profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.ApplicationProfilesByUDF">
+            <summary>
+            A dictionary of application profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.ApplicationProfilesByAccount">
+            <summary>
+            A dictionary of application profiles indexed by account ID.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.ApplicationProfilesDefault">
+            <summary>
+            A dictionary of default application profiles indexed by application identifier;
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.DeviceProfiles">
+            <summary>
+            A dictionary of device profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.UDF">
+            <summary>The fingerprint of the device</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.Personal">
+            <summary>The default profile</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.Device">
+            <summary>The default device</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachine.Current">
+            <summary>
+            The registration on the current machine. This will be read from either
+            the Windows registry (Windows) or the ~/.mmm directory (OSX, Linux).
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Erase">
+            <summary>
+            Erase the (test) configuration data on the current machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Reload">
+            <summary>
+            Reload configuration data from the current machine persistent store.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Add(Goedel.Mesh.SignedDeviceProfile)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Add(Goedel.Mesh.SignedPersonalProfile,Goedel.Mesh.Portal.ConnectStartRequest)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <param name="Request">The connection start request.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Add(Goedel.Mesh.SignedPersonalProfile)">
+            <summary>
+            Bind the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Add(Goedel.Mesh.Portal.Client.SessionApplication)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="ApplicationProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.FindByUDF(System.String,Goedel.Mesh.Portal.Client.SessionDevice@)">
+            <summary>
+            Locate a device profile by identifier
+            </summary>
+            <param name="RegistrationDevice">The returned profile.</param>
+            <param name="ID">UDF fingerprint of the profile or short form ID</param>
+            <returns>True if the profile is found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.FindByUDF(System.String,Goedel.Mesh.Portal.Client.SessionApplication@)">
+            <summary>
+            Locate an application profile by identifier
+            </summary>
+            <param name="SessionApplication">The returned profile.</param>
+            <param name="ID">UDF fingerprint of the profile or short form ID</param>
+            <returns>True if the profile is found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.FindByUDF(System.String,Goedel.Mesh.Portal.Client.SessionPersonal@)">
+            <summary>
+            Locate a personal profile by identifier
+            </summary>
+            <param name="SessionPersonal">The returned profile.</param>
+            <param name="ID">UDF fingerprint of the profile or short form ID</param>
+            <returns>True if the profile is found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.FindByAccount(System.String,Goedel.Mesh.Portal.Client.SessionPersonal@)">
+            <summary>
+            Locate a device profile by identifier
+            </summary>
+            <param name="SessionPersonal">The returned profile.</param>
+            <param name="ID">UDF fingerprint of the profile or short form ID</param>
+            <returns>True if the profile is found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.WriteToLocal(Goedel.Mesh.Portal.Client.SessionDevice,System.Boolean)">
+            <summary>
+            Write values to registry.
+            </summary>
+            <param name="Default">If true, make this the default.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Find(Goedel.Mesh.Portal.Client.SessionApplication@,System.String,System.String,System.String,System.String)">
+            <summary>
+            Find an application profile of a given type.
+            </summary>
+            <param name="Type">The type of profile to find.</param>
+            <param name="PortalAddress">The portal address to fetch the profile from.</param>
+            <param name="UDF">The profile fingerprint.</param>
+            <param name="ShortId">The profile short name.</param>
+            <param name="RegistrationApplication">The returned profile.</param>
+            <returns>True if a matching profile is found, otherwise, false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Find(System.String)">
+            <summary>
+            Find an application profile of a given type.
+            </summary>
+            <param name="Type">The type of profile to find.</param>
+            <param name="PortalAddress">The portal address to fetch the profile from.</param>
+            <param name="UDF">The profile fingerprint.</param>
+            <param name="ShortId">The profile short name.</param>
+            <param name="RegistrationApplication">The returned profile.</param>
+            <returns>True if a matching profile is found, otherwise, false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Bind(System.String)">
+            <summary>Bind the session to the specified portal.</summary>
+            <param name="Portal">The portal to bind to.</param>
+            <returns>The mesh client.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.EraseTest">
+            <summary>
+            Erase all configuration data from the current machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.CreateDevice(System.String,System.String,System.Nullable{System.Boolean})">
+            <summary>
+            Create a new device profile and register it to the current machine.
+            </summary>
+            <param name="ID">The device short identifier, if null, the UDF is used.</param>
+            <param name="Description">Device description, if null, defaults to 'unknown'</param>
+            <param name="Default">If true, the new profile will be made
+            the default. If null, the new profile will become the default
+            if there is no default specified already. Otherwise, the default
+            is unchanged.</param>
+            <returns>Session for the newly created device profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.GetDevice(System.String)">
+            <summary>
+            Get a device profile.
+            </summary>
+            <param name="UDF">Fingerprint of profile.</param>
+            <returns>The profile (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.GetDevice(System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Get or create a device profile registered to the current machine.
+            </summary>
+            <param name="DeviceNew">If true, create a new profile. Otherwise create a 
+            new profile if and only if DeviceUDF is null and no default profile is registered.</param>
+            <param name="DeviceUDF">Specify the device profile by UDF fingerprint.</param>
+            <param name="DeviceID">The identifier for device profile if created.</param>
+            <param name="DeviceDescription">The device description for the device profile if created.</param>
+            <returns>A device session for the newly created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.CreateAccount(System.String,Goedel.Mesh.PersonalProfile,Goedel.Mesh.Portal.Client.MeshClient)">
+            <summary>
+            Begin creation of a portal account.
+            </summary>
+            <param name="PortalAddress">The portal address to bind to.</param>
+            <param name="MeshClient">The Mesh Client to use (if available)</param>
+            <param name="Profile">The profile to bind.</param>
+            <returns>Registration created account (if successful)</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Validate(System.String,Goedel.Mesh.Portal.Client.MeshClient)">
+            <summary>
+            Request validation of a proposed portal account name. Note that reporting the
+            account name as available neither commits the service to reserve the name for
+            the user or even create an account for them at all.
+            </summary>
+            <param name="PortalAddress">The portal address</param>
+            <param name="MeshClient">The Mesh Client to use (if available)</param>
+            <returns>The validation response message returned by the service.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.AddPersonal(System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Create a new personal profile and register to the local (non-persistent) cache,
+            creating a new device profile if required and registering to persistent storage.
+            </summary>
+            <param name="DeviceNew">If true, force creation of a new device profile.</param>
+            <param name="DeviceUDF">The device profile fingerprint.</param>
+            <param name="DeviceID">The device identifier to use if a new device profile is created.</param>
+            <param name="DeviceDescription">The device description to use if a new device profile is created.</param>
+            <returns>Session for the created Personal profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.AddPersonal(Goedel.Mesh.Portal.Client.SessionDevice)">
+            <summary>
+            Create a new personal profile and register to the local (non-persistent) cache.
+            The profile created is typically 
+            </summary>
+            <param name="RegistrationDevice">The initial administration device.</param>
+            <returns>Session for the created Personal profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.AddPersonal(Goedel.Mesh.PersonalProfile)">
+            <summary>
+            Register the specified personal profile
+            </summary>
+            <param name="PersonalProfile">The profile to register.</param>
+            <returns>The profile registration.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Recover(Goedel.Cryptography.Secret)">
+            <summary>
+            Recover profile using a recovery secret as search key and decryption key.
+            </summary>
+            <param name="Secret">The recovery secret.</param>
+            <returns>Session for the created Personal profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Sync">
+            <summary>
+            Attempt to synchronize the catalog to get the authoritative sources.
+            </summary>
+            <returns>True if synchronization attempt succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Commit">
+            <summary>
+            Commit local changes to upstream.
+            </summary>
+            <returns>True if synchronization attempt succeeded.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Add(Goedel.Mesh.PersonalProfile)">
+            <summary>
+            Add a personal profile to the current machine
+            </summary>
+            <param name="Profile">Profile to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.GetPersonal(System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Get a personal profile.
+            </summary>
+            <param name="UDF">Profile fingerprint.</param>
+            <param name="PortalID">Portal account.</param>
+            <param name="Cached">Search local cache</param>
+            <param name="Portal">Search portal</param>
+            <returns>The personal profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Connect(Goedel.Mesh.Portal.Client.SessionDevice,System.String,System.String@)">
+            <summary>
+            Initiate a connection request.
+            </summary>
+            <param name="Device">The device profile to register.</param>
+            <param name="Address">The portal address to connect to.</param>
+            <param name="Authenticator">Authenticator string to be used to validate the connection.</param>
+            <returns>The connection start request object.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachine.Await(Goedel.Mesh.Portal.ConnectStartRequest,System.Int32)">
+            <summary>
+            Complete a connection request.
+            </summary>
+            <param name="Connect">The connection start request information.</param>
+            <param name="TimeOut">Timeout in seconds. Wait forever if timeout is -1.</param>
+            <returns>The returned connection status.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.Registration">
+            <summary>
+            Describes a registration
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Registration.SignedProfile">
+            <summary>
+            The registered signed profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Registration.UDF">
+            <summary>
+            The profile fingerprint
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Registration.Path">
+            <summary>
+            The location of the registration.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Registration.Type">
+            <summary>
+            The type of registration (i.e. Registry or file)
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Registration.MakeDefault">
+            <summary>
+            Make this the default registration for its type
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Registration.Delete">
+            <summary>
+            Delete the associated profile from the registry
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Registration.WriteToLocal(System.Boolean)">
+            <summary>
+            Write data to the local machine.
+            </summary>
+            <param name="Default">If true, make this the default.</param>        
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Registration.Write(System.Boolean)">
+            <summary>
+            Write out the configuration to the portal and the current machine
+            </summary>
+            <param name="Default">If true, make this the default.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Registration.Read">
+            <summary>
+            Read the configuration from the portal using the current machine as backup
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.PortalRegistration">
+            <summary>
+            Describes a registration
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.PortalRegistration.Portals">
+            <summary>
+            List of the accounts through which the profile is registered.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalRegistration.GetFromPortal">
+            <summary>
+            Fetch the latest version of the profile version
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalRegistration.WriteToPortal">
+            <summary>Update remote store</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalRegistration.Write(System.Boolean)">
+            <summary>
+            Write out the configuration to the portal and the current machine
+            </summary>
+            <param name="Default">If true, make this the default.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalRegistration.Read">
+            <summary>
+            Read the configuration from the portal using the current machine as backup
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.PortalCollection">
+            <summary>
+            Class to track the portal collection. Implements Add, Remove and 
+            IEnumerable interfaces (enabling foreach to be used);
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.PortalCollection.Default">
+            <summary>
+            The Default portal
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.#ctor">
+            <summary>
+            Create empty list
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Create from an initialized list of portals. This mechanism simply
+            adds the portal to the collection, it does not cause it to be
+            registered.
+            </summary>
+            <param name="Portals">Initialized list of portal addresses</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.#ctor(System.Collections.Generic.IEnumerable{Goedel.Mesh.Portal.Client.SerializationPortal})">
+            <summary>
+            Create from an initialized list of portals. This mechanism simply
+            adds the portal to the collection, it does not cause it to be
+            registered.
+            </summary>
+            <param name="Portals">Initialized list of portal descriptions.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.Add(System.String)">
+            <summary>
+            Add a portal to the collection
+            </summary>
+            <param name="Portal">The portal to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.Remove(System.String)">
+            <summary>
+            Remove a portal address from the collection, return false if not found
+            </summary>
+            <param name="Portal">The portal address to remove.</param>
+            <returns>True if the portal was found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.ToList">
+            <summary>
+            Return the portal collection as a list
+            </summary>
+            <returns>The list of portals.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.ToArray">
+            <summary>
+            Return the portal collection as an array
+            </summary>
+            <returns>The array of portals.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.GetEnumerator">
+            <summary>Enumerator method.</summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalCollection.Serialize">
+            <summary>Serialize the registration to a portal</summary>
+            <returns>The list of serialized portal entries.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.Internal">
+            <summary>
+            An internal assertion check failed.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Internal.#ctor">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Internal.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An internal error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Internal.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.Internal.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.Gateway">
+            <summary>
+            Error occurred in Gateway
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Gateway.#ctor">
+            <summary>
+            Construct instance for exception "Error occurred in Gateway"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Gateway.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Error occurred in Gateway"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Gateway.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.Gateway.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.Gateway.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.NoPortalAccount">
+            <summary>
+            No Portal account specified
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.NoPortalAccount.#ctor">
+            <summary>
+            Construct instance for exception "No Portal account specified"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.NoPortalAccount.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "No Portal account specified"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.NoPortalAccount.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.NoPortalAccount.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.PortalConnectFail">
+            <summary>
+            Could not connect to portal
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalConnectFail.#ctor">
+            <summary>
+            Construct instance for exception "Could not connect to portal"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalConnectFail.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Could not connect to portal"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PortalConnectFail.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.PortalConnectFail.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.PublicationRequestRefused">
+            <summary>
+            Portal refused profile publication request
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PublicationRequestRefused.#ctor">
+            <summary>
+            Construct instance for exception "Portal refused profile publication request"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PublicationRequestRefused.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "Portal refused profile publication request"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.PublicationRequestRefused.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.PublicationRequestRefused.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.FileContainerReaderDecrypting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.FileContainerReaderDecrypting.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,System.String,System.Boolean,Goedel.IO.FileStatus)">
+            <summary>
+            Open an existing file container in read mode.
+            </summary>
+            <param name="FileName">The file name to read</param>
+            <param name="ReadIndex">If true, read the container index to permit random access</param>
+            <param name="FileStatus">The mode to open the file in, this must be a mode
+            that permits read access.</param>
+            <returns>File Container instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.FileContainerReaderDecrypting.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,System.Byte[])">
+            <summary>
+            Open 
+            </summary>
+            <param name="Data"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.FileContainerReaderDecrypting.GetExchange(System.Collections.Generic.List{Goedel.Cryptography.Jose.Recipient},Goedel.Cryptography.CryptoAlgorithmID)">
+            <summary>
+            Perform a Key Exchange
+            </summary>
+            <param name="Recipients">The list of recipients</param>
+            <param name="AlgorithmID">The bulk encryption algorithm</param>
+            <returns>The result of the key exchange.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.FileContainerReaderDecrypting.TryMatchRecipient(Goedel.Cryptography.Jose.Recipient)">
+            <summary>
+            Attempt to find a private key for the specified recipient entry.
+            </summary>
+            <param name="Recipient">The recipient to match</param>
+            <returns>True if a match is found, otherwise false.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.MeshClient">
+            <summary>
+            High level Mesh Client interface.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshClient.MeshService">
+            <summary>
+            The MeshProtocol Service provider.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshClient.AccountID">
+            <summary>
+            The account Identifier.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshClient.AccountName">
+            <summary>
+            The account name.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshClient.UDF">
+            <summary>
+            Fingerprint of the Personal Profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshClient.Connected">
+            <summary>
+            True if the client is connected to an active MeshService.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshClient.SignedPersonalProfile">
+            <summary>
+            The active personal profile (with signature).
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshClient.PersonalProfile">
+            <summary>
+            The active personal profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshClient.SignedDeviceProfile">
+            <summary>
+            The active device profile (with signature).
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.#ctor(System.String,System.String)">
+            <summary>
+            Connect up to the specified Mesh Portal
+            </summary>
+            <param name="Service">The service to connect to.</param> 
+            <param name="PortalAccount">The portal to connect to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.MakeDefault(System.String)">
+            <summary>
+            Make the current portal and account name the default
+            </summary>
+            <param name="UDF">Fingerprint of the profile to make default.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.Validate(System.String)">
+            <summary>
+            Check to see if an account name is acceptable for use at a portal.
+            Note that a positive response to a validation request does not
+            guarantee that the account name will be available for a subsequent
+            call to CreatePersonalProfile.
+            </summary>
+            <param name="Account">The requested account name.</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.CreatePortalAccount(System.String,Goedel.Mesh.SignedPersonalProfile)">
+            <summary>
+            Create a new account and set the personal profile
+            </summary>
+            <param name="AccountID">The requested account identifier.</param>
+            <param name="SignedCurrentProfile">The personal profile to use.</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.Publish(Goedel.Mesh.OfflineEscrowEntry)">
+            <summary>
+            Publish an offline escrow entry to the mesh.
+            </summary>
+            <param name="OfflineEscrowEntry">The escrow entry to publish</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.Publish(Goedel.Mesh.SignedProfile)">
+            <summary>
+            Publish a signed profile entry to the mesh.
+            </summary>
+            <param name="SignedProfile">The profile to publish</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.Recover(System.String)">
+            <summary>
+            Recover an offline escrow entry
+            </summary>
+            <param name="Identifier">The UDF of the decryption key</param>
+            <returns>Offline escrow entry (if found), null otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.GetPersonalProfile">
+            <summary>
+            Get the active profile associated with the current account.
+            </summary>
+            <returns>The signed personal profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.GetApplicationProfile(System.String)">
+            <summary>
+            Retrieve an application profile by unique ID.
+            </summary>
+            <param name="ID">the unique id of the profile.</param>
+            <returns>The signed application profile if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.ConnectRequest(Goedel.Mesh.SignedDeviceProfile,Goedel.Mesh.Portal.ConnectStartRequest@,System.Collections.Generic.List{Goedel.Mesh.ApplicationDevicePublic})">
+            <summary>
+            Initiate a device connection request.
+            </summary>
+            <param name="SignedDeviceProfile">The device profile to register.</param>
+            <param name="DeviceData">List of application data</param>
+            <param name="DeviceRequest">The device request data</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.ConnectStatus(System.String)">
+            <summary>
+            Get status for a pending device connection request.
+            </summary>
+            <param name="UDF">Fingerprint of the device that requested the connection.</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.ConnectPending">
+            <summary>
+            Get a list of pending device connection requests.
+            </summary>
+            <returns>The service response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshClient.ConnectClose(Goedel.Mesh.SignedConnectionRequest,Goedel.Mesh.ConnectionStatus)">
+            <summary>
+            Close a pending device connection request. NB: It is the responsibility of the caller
+            to make any changes to the profile.
+            </summary>
+            <param name="SignedConnectionRequest">The connection request to close.</param>
+            <param name="ConnectionStatus">The status to set.</param>
+            <returns>The service response.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.MeshMachineCached">
+            <summary>
+            A Mesh machine that is maintained entirely in memory. This is the parent 
+            class for most production MeshMachine classes.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Reload">
+            <summary>
+            Return a new machine registration.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.SignedProfile">
+            <summary>
+            The registered signed profile. This is always null for a machine registration
+            as it reflects a collection of profiles rather than a single profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.PersonalProfilesUDF">
+            <summary>
+            The a dictionary of personal profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.PersonalProfilesPortal">
+            <summary>
+            The a dictionary of personal profiles indexed by portal account.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.ApplicationProfilesByUDF">
+            <summary>
+            A dictionary of application profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.ApplicationProfilesByAccount">
+            <summary>
+            A dictionary of application profiles indexed by account ID.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.ApplicationProfilesDefault">
+            <summary>
+            A dictionary of default application profiles indexed by application identifier;
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.DeviceProfiles">
+            <summary>
+            A dictionary of device profiles indexed by fingerprint.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.Personal">
+            <summary>The default personal profile</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.SetDefaultPersonal(Goedel.Mesh.Portal.Client.SessionPersonal,System.Nullable{System.DateTime})">
+            <summary>
+            Set the default personal profile registration.
+            </summary>
+            <param name="Registration">The registration to set as default</param>
+            <param name="DefaultTime">If non-null, the registration is only set to be default</param>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshMachineCached.Device">
+            <summary>The default device profile</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.SetDefaultDevice(Goedel.Mesh.Portal.Client.SessionDevice,System.Nullable{System.DateTime})">
+            <summary>
+            Set the default device profile registration.
+            </summary>
+            <param name="Registration">The registration to set as default</param>
+            <param name="DefaultTime">If non-null, the registration is only set to be default</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.MakeDefault">
+            <summary>
+            Make this the default personal profile for future operations.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Write(System.Boolean)">
+            <summary>
+            Write out the configuration to the current machine.
+            </summary>
+            <param name="Default">If true, make this the default profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Read">
+            <summary>
+            Write out the configuration to the current machine.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Erase">
+            <summary>Erase the profile and associated keys.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Add(Goedel.Mesh.SignedDeviceProfile)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Register(Goedel.Mesh.Portal.Client.SessionDevice)">
+            <summary>
+            Register the specified device session in the local persistent store.
+            </summary>
+            <param name="Profile">The profile to add</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Add(Goedel.Mesh.SignedPersonalProfile)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Register(Goedel.Mesh.Portal.Client.SessionPersonal)">
+            <summary>
+            Register the specified personal session in the local persistent store.
+            </summary>
+            <param name="Profile">The profile to add</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.Add(Goedel.Mesh.Portal.Client.SessionApplication)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="ApplicationProfile">Profile to add.</param>
+            <returns>Registration for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.WriteToLocal(Goedel.Mesh.Portal.Client.SessionPersonal,System.Boolean)">
+            <summary>
+            Write profile to persistent storage. Since this is an ephemeral store, do nothing.
+            </summary>
+            <param name="SessionPersonal">The profile data to write.</param>
+            <param name="Default">If true, make this the default profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.WriteToLocal(Goedel.Mesh.Portal.Client.SessionApplication,System.Boolean)">
+            <summary>
+            Write profile to persistent storage. Since this is an ephemeral store, do nothing.
+            </summary>
+            <param name="SessionApplication">The profile data to write.</param>
+            <param name="Default">If true, make this the default profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshMachineCached.WriteToLocal(Goedel.Mesh.Portal.Client.SessionDevice,System.Boolean)">
+            <summary>
+            Write values to registry.
+            </summary>
+            <param name="Default">If true, make this the default.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.MeshApplicationType">
+            <summary>
+            Mesh application profile types.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshApplicationType.Password">
+            <summary>Password profile</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshApplicationType.SSH">
+            <summary>SSH profile</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshApplicationType.Mail">
+            <summary>Mail Profile</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshApplicationType.Network">
+            <summary>Network profile type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshApplicationType.Remesh">
+            <summary>Mesh/Remesh profile</summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.NamespaceDoc">
+            <summary>
+            Mesh Portal Client implementation
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.MeshItem">
+             <summary>
+            
+             Serialization of registered profile
+             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshItem.Tag">
+            <summary>
+            Schema tag.
+            </summary>
+            <returns>The tag value</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.MeshItem._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.MeshItem._TagDictionary">
+            <summary>
+            Dictionary mapping tags to factory methods
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.MeshItem.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+            <summary>
+            Construct an instance from the specified tagged JSONReader stream.
+            </summary>
+            <param name="JSONReader">Input stream</param>
+            <param name="Out">The created object</param>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.Serialization">
+             <summary>
+            
+             Base class for profile serialization
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Serialization.Default">
+             <summary>
+            If present, the profile was made default at the specified date and time. 
+            The default profile being the profile with the latest value for
+            Default.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.Serialization._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Serialization._Factory">
+            <summary>
+            Factory method. Throws exception as this is an abstract class.
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Serialization.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Serialization.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Serialization.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.Serialization.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SerializationPersonal">
+             <summary>
+            
+             Serialize personal profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationPersonal.Profile">
+             <summary>
+            The profile being serialized.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationPersonal.Portals">
+             <summary>
+            List of portals the profile is registered to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationPersonal._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPersonal.FromFile(System.String)">
+            <summary>
+            Read a personal profile from a file
+            </summary>
+            <param name="FileName">The file to read</param>
+            <returns>The profile serialization record.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SerializationPortal">
+             <summary>
+            
+             Describe a portal connection.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationPortal.Address">
+             <summary>
+            Portal address.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationPortal._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPortal._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPortal.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPortal.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPortal.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationPortal.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SerializationApplication">
+             <summary>
+            
+             Serialize application profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationApplication.Profile">
+             <summary>
+            The profile being serialized.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationApplication._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationApplication.FromFile(System.String)">
+            <summary>
+            Read an application profile from a file
+            </summary>
+            <param name="FileName">The file to read</param>
+            <returns>The profile serialization record.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SerializationDevice">
+             <summary>
+            
+             Serialize device profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationDevice.Profile">
+             <summary>
+            The profile being serialized.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SerializationDevice._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="Writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_Writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="JSONReader">The input stream</param>
+            <param name="Tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SerializationDevice.FromFile(System.String)">
+            <summary>
+            Read a device profile from a file
+            </summary>
+            <param name="FileName">The file to read</param>
+            <returns>The profile serialization record.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SessionApplication">
+            <summary>
+            Describes the registration of a device profile on a machine.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.SessionApplication.SessionPersonal">
+            <summary>The personal session</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.ApplicationProfile">
+            <summary>
+            The most recent cached profile data, if available.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.SignedApplicationProfile">
+            <summary>
+            The Device profile
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.ApplicationProfile,System.Boolean)">
+            <summary>
+            Constuct session from a new profile.
+            </summary>
+            <param name="SessionPersonal"></param>
+            <param name="ApplicationProfile"></param>
+            <param name="Write"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.#ctor(Goedel.Mesh.ApplicationProfile,Goedel.Mesh.Portal.Client.SessionPersonal)">
+            <summary>
+            Construct a session from the local storage
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.SessionApplication.DecryptDeviceProfiles">
+            <summary>
+            The list of decrypt devices registered for this application.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Portal.Client.SessionApplication.AdminDeviceProfiles">
+            <summary>
+            The list of administration devices registered for this application.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.FindByDecryption(System.String)">
+            <summary>Find a device registration that can decrypt the specified data.</summary>
+            <param name="DecryptionUDF">Data to decrypt</param>
+            <returns>Device session</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.FindByDecryption(System.Collections.Generic.List{Goedel.Cryptography.Jose.Recipient})">
+            <summary>
+            Find a device session that can decrypt JWE data.
+            </summary>
+            <param name="Recipients">The JWE Recipients list.</param>
+            <returns>The first device registration that can decrypt the data (if found)</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.Portals">
+            <summary>
+            List of the accounts through which the profile is registered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.SignedProfile">
+            <summary>
+            The registered signed profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.UDF">
+            <summary>
+            The profile fingerprint
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.AddDevice(Goedel.Mesh.DeviceProfile,System.Boolean)">
+            <summary>
+            Add a new device to the access list for this application.
+            </summary>
+            <param name="DeviceProfile">The device to add.</param>
+            <param name="Administration">If true, give the device administration rights.</param>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.ApplicationProfilePrivate">
+            <summary>Return the private portion of the application profile that is common to all devices.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionApplication.ApplicationDevicePrivate">
+            <summary>Return the private portion of the application profile that is specific to this device.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.GetFromPortal">
+            <summary>
+            Fetch the latest version of the profile version
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.WriteToLocal(System.Boolean)">
+            <summary>
+            Update the associated profile in the registry
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.WriteToPortal">
+            <summary>
+            Update the associated profile in the registry
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionApplication.MakeDefault">
+            <summary>
+            Make this the default registration for its type
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionMail.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.MailProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionSSH.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.SSHProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionCredential.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.CredentialProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionBookmark.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.BookmarkProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionContact.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.ContactProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionNetwork.#ctor(Goedel.Mesh.Portal.Client.SessionPersonal,Goedel.Mesh.NetworkProfile,System.Boolean)">
+            <summary>
+            Construct a SessionRecryption from a personal session.
+            </summary>
+            <param name="SessionPersonal">The personal session to construct from.</param>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SessionDevice">
+            <summary>
+            Describes the registration of a device profile on a machine.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionDevice.SignedProfile">
+            <summary>
+            The registered signed profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionDevice.SignedDeviceProfile">
+            <summary>
+            The Device profile
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionDevice.DeviceProfile">
+            <summary>
+            The most recent cached profile data, if available.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionDevice.#ctor(Goedel.Mesh.SignedDeviceProfile,Goedel.Mesh.Portal.Client.MeshMachine)">
+            <summary>
+            Add the associated profile to the machine store.
+            </summary>
+            <param name="SignedDeviceProfile">The device profile</param>
+            <param name="RegistrationMachine">The machine session.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionDevice.BeginConnect(System.String,System.String)">
+            <summary>
+            Begin the process of connecting to a profile at the specified portal
+            </summary>
+            <param name="PortalID">The portal to connect to</param>
+            <param name="PIN">Optional one time authenticator.</param>
+            <returns>Personal Session.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionDevice.UDF">
+            <summary>
+            The profile fingerprint
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionDevice.Write(System.Boolean)">
+            <summary>
+            Write to the local persistent cache.
+            </summary>
+            <param name="Default">If true, make this profile the default.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionDevice.Read">
+            <summary>
+            No idea.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionDevice.IsDefault">
+            <summary>
+            If true, this is the default profile.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionDevice.Serialize">
+            <summary>
+            Return a serialization of the session data for this profile.
+            </summary>
+            <returns>The serialization object.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Portal.Client.SessionPersonal">
+            <summary>
+            Describes the registration of as profile on as machine. This includes
+            the fingerprint, the cached profile data and the list of portal entries
+            to which the profile is bound.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.MeshMachine">
+            <summary>
+            Shortcut for the Mesh Machine
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.SignedProfile">
+            <summary>
+            The registered signed profile.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.PersonalProfile">
+            <summary>
+            The most recent cached profile data, if available.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.MeshClient">
+            <summary>
+            Client which may be used to interact with the portal on which this
+            profile is registered.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.SignedPersonalProfile">
+            <summary>
+            The most recent cached profile data, if available.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.UDF">
+            <summary>
+            The profile fingerprint
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.Profiles">
+            <summary>
+            Profiles associated with this account in chronological order.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.#ctor(Goedel.Mesh.SignedPersonalProfile,Goedel.Mesh.Portal.Client.MeshMachine,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Register a personal profile in the Windows registry
+            </summary>
+            <param name="Profile">The personal profile.</param>
+            <param name="MeshMachine">The machine session.</param>
+            <param name="Portals">The list of portals.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.Escrow(System.Int32,System.Int32)">
+            <summary>
+            Escrow the personal profile to the bound portal.
+            </summary>
+            <param name="Shares">Number of escrow shares (must be greater than Quorum)</param>
+            <param name="Quorum">Quorum required for recovery.</param>
+            <returns>True if escrow record was accepted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.Escrow(Goedel.Mesh.OfflineEscrowEntry)">
+            <summary>
+            Push an OfflineEscrowEntry to the bound portal. This may be a personal profile or 
+            other data to be escrowed.
+            </summary>
+            <param name="OfflineEscrowEntry">The offline escrow entry to register.</param>
+            <returns>True if escrow record was accepted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.AddPortal(System.String,Goedel.Mesh.Portal.Client.MeshClient,System.Boolean)">
+            <summary>
+            Add a portal to this registration
+            </summary>
+            <param name="AccountID">The portal account.</param>
+            <param name="MeshClient">A Mesh Client connected to the portal.</param>
+            <param name="Create">If true, the mesh client should request the account be created.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.ConnectPending">
+            <summary>
+            Complete process of connecting to a profile.
+            </summary>
+            <returns>The result of the pending connections query.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.ConnectClose(Goedel.Mesh.SignedConnectionRequest,Goedel.Mesh.ConnectionStatus)">
+            <summary>
+            Complete process of connecting to a profile.
+            </summary>
+            <param name="Request">The connection request</param>
+            <param name="Status">The connection status result.</param>
+            <returns>The response from the service.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.GetPin(System.String,System.Int32)">
+            <summary>
+            Provide a PIN for authenticating the specified account ID
+            </summary>
+            <param name="AccountID">The account identifier</param>
+            <param name="length">The PIN length</param>
+            <returns>The PIN value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.CompleteConnect">
+            <summary>
+            Complete process of connecting to a profile.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.GetFromPortal">
+            <summary>
+            Fetch the latest version of the profile version
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.WriteToPortal">
+            <summary>
+            Update the associated profile in the registry
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Portal.Client.SessionPersonal.IsDefault">
+            <summary>
+            Report if the profile is the default personal profile or not.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.Serialize">
+            <summary>
+            Serialize for storage in a file.
+            </summary>
+            <returns>The serialization object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.GetApplication(System.String)">
+            <summary>
+            Obtain an application session for the specified identifier.
+            </summary>
+            <param name="Identifier">The type of application session to get.</param>
+            <returns>The application session.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.GetApplicationsByType(System.String)">
+            <summary>
+            Obtain an application session for the specified identifier.
+            </summary>
+            <param name="Type">The type of application</param>
+            <returns>List of applications matching the specified type.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.MatchDevices(System.Collections.Generic.List{System.String})">
+            <summary>
+            Return a list of device sessions with fingerprints that match the specified
+            list of device identifiers.
+            </summary>
+            <param name="DeviceIdentifiers">The device identifier fingerprints to match.</param>
+            <returns>The list of matching devices.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Portal.Client.SessionPersonal.GetUserProfile(System.String,System.Collections.Generic.List{System.String},System.String,Goedel.Mesh.PersonalProfile@,Goedel.Mesh.ApplicationProfile@)">
+            <summary>
+            Get a user and application profile matching the specified parameters.
+            </summary>
+            <param name="UDF">NYI</param>
+            <param name="Portal">List of portals to check</param>
+            <param name="ApplicationId">Application to fetch</param>
+            <param name="PersonalProfile">Returned personal profile.</param>
+            <param name="ApplicationProfile">Returned application profile.</param>
+        </member>
+    </members>
+</doc>
