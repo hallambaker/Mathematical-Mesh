@@ -130,7 +130,7 @@ namespace ExampleGenerator {
             var CreateExamples = new CreateExamples();
             WebDocs(this);
 
-            Directory.SetCurrentDirectory("../Release/Documents");
+            Directory.SetCurrentDirectory("../Publish/Documents");
             GitHub = false;
 
 

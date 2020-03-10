@@ -17,11 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Protocol.Debug", "Li
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{3D90AC6A-EA0E-4F46-9869-97D10826AE7E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{7D0B89C4-CDA3-483E-970D-E8E9E9F692F6}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}"
 	ProjectSection(SolutionItems) = preProject
-		Release\Documents\Bib.xml = Release\Documents\Bib.xml
+		Publish\Documents\Bib.xml = Publish\Documents\Bib.xml
 		Services\meshportal_windows\startserver.bat = Services\meshportal_windows\startserver.bat
 	EndProjectSection
 EndProject
@@ -65,74 +63,30 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test.Common", "Testing\Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Test", "Libraries\Goedel.Test\Goedel.Test.csproj", "{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "Release\Docker\docker-compose.dcproj", "{F087915D-9857-4A59-B7D6-43CF90C69604}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documents", "Release\Documents\", "{D8E50764-8A70-446F-8509-88935CAFD3F2}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Documents", "Publish\Documents\", "{D8E50764-8A70-446F-8509-88935CAFD3F2}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_59545"
-		Debug.AspNetCompiler.PhysicalPath = "Release\Documents\"
+		Debug.AspNetCompiler.PhysicalPath = "Publish\Documents\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59545\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/localhost_59545"
-		Release.AspNetCompiler.PhysicalPath = "Release\Documents\"
+		Release.AspNetCompiler.PhysicalPath = "Publish\Documents\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_59545\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "59545"
-		SlnRelativePath = "Release\Documents\"
+		SlnRelativePath = "Publish\Documents\"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MakeRelease", "Documentation\MakeRelease\MakeRelease.csproj", "{A0DE7974-409E-495A-82CF-238331A797C6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentProject", "Documentation\Documents\ContentProject\ContentProject.csproj", "{1D184FDB-2B58-465F-8AEB-191B27C0A58E}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Sources", "..\WebPublish\Sources\", "{4A16CF88-5DDA-49D2-BF06-501F36788E3D}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_55259"
-		Debug.AspNetCompiler.PhysicalPath = "..\WebPublish\Sources\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55259\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_55259"
-		Release.AspNetCompiler.PhysicalPath = "..\WebPublish\Sources\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_55259\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "55259"
-		SlnRelativePath = "..\WebPublish\Sources\"
-	EndProjectSection
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "prismproof", "..\WebPublish\Sites\prismproof\", "{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}"
-	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		Debug.AspNetCompiler.VirtualPath = "/localhost_60086"
-		Debug.AspNetCompiler.PhysicalPath = "..\WebPublish\Sites\prismproof\"
-		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60086\"
-		Debug.AspNetCompiler.Updateable = "true"
-		Debug.AspNetCompiler.ForceOverwrite = "true"
-		Debug.AspNetCompiler.FixedNames = "false"
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.VirtualPath = "/localhost_60086"
-		Release.AspNetCompiler.PhysicalPath = "..\WebPublish\Sites\prismproof\"
-		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_60086\"
-		Release.AspNetCompiler.Updateable = "true"
-		Release.AspNetCompiler.ForceOverwrite = "true"
-		Release.AspNetCompiler.FixedNames = "false"
-		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "60086"
-		SlnRelativePath = "..\WebPublish\Sites\prismproof\"
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scratchpad", "Testing\Scratchpad\Scratchpad.csproj", "{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}"
 EndProject
@@ -188,11 +142,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Protocol.Test-x
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{479601E3-3DC5-40DA-BA5E-403D5346E50D}"
 	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		readme.md = readme.md
 		ToDo.md = ToDo.md
 	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Old", "Old", "{5EC947D2-D40F-437D-B78C-F2C6C2776342}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mesh_core", "Applications\mesh_core\mesh_core.csproj", "{FF1DDFF4-731E-4822-8D51-F559379B873E}"
 EndProject
@@ -830,41 +784,6 @@ Global
 		{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}.Release|x64.Build.0 = Release|Any CPU
 		{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8A74D219-ED84-4943-BBA7-E4B00AACBAF4}.Release|x86.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|x64.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Debug|x86.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|Any CPU.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|x64.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|x64.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|x86.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.DotNet|x86.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Focus|Any CPU.ActiveCfg = Focus|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Focus|x64.ActiveCfg = Focus|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Focus|x64.Build.0 = Focus|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Focus|x86.ActiveCfg = Focus|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Focus|x86.Build.0 = Focus|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|Any CPU.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|Any CPU.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|x64.ActiveCfg = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|x64.Build.0 = Debug|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|x86.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Publish|x86.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|Any CPU.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|Any CPU.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|x64.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|x64.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|x86.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.RaspberryPi|x86.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|x64.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|x64.Build.0 = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|x86.ActiveCfg = Release|Any CPU
-		{F087915D-9857-4A59-B7D6-43CF90C69604}.Release|x86.Build.0 = Release|Any CPU
 		{D8E50764-8A70-446F-8509-88935CAFD3F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8E50764-8A70-446F-8509-88935CAFD3F2}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{D8E50764-8A70-446F-8509-88935CAFD3F2}.Debug|x64.Build.0 = Debug|Any CPU
@@ -963,76 +882,6 @@ Global
 		{1D184FDB-2B58-465F-8AEB-191B27C0A58E}.Release|x64.Build.0 = Release|Any CPU
 		{1D184FDB-2B58-465F-8AEB-191B27C0A58E}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D184FDB-2B58-465F-8AEB-191B27C0A58E}.Release|x86.Build.0 = Release|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Debug|x86.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|Any CPU.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.DotNet|x86.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Focus|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Focus|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Focus|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Focus|x86.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|Any CPU.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Publish|x86.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|Any CPU.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.RaspberryPi|x86.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|x64.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|x64.Build.0 = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|x86.ActiveCfg = Debug|Any CPU
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D}.Release|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Debug|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|Any CPU.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.DotNet|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Focus|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Focus|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Focus|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Focus|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Focus|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|Any CPU.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Publish|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|Any CPU.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.RaspberryPi|x86.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|x64.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|x64.Build.0 = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|x86.ActiveCfg = Debug|Any CPU
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D}.Release|x86.Build.0 = Debug|Any CPU
 		{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0842BD6-DF8A-4B36-9CF2-3507682B7C88}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -2106,12 +1955,9 @@ Global
 		{BC20B849-1839-4F07-82C3-E2D705DEBA79} = {3D90AC6A-EA0E-4F46-9869-97D10826AE7E}
 		{896FC296-8EB1-426D-9D34-3F0AB0C73E22} = {6319D855-7BE8-4691-9638-2183778EE5B7}
 		{8A74D219-ED84-4943-BBA7-E4B00AACBAF4} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
-		{F087915D-9857-4A59-B7D6-43CF90C69604} = {5EC947D2-D40F-437D-B78C-F2C6C2776342}
-		{D8E50764-8A70-446F-8509-88935CAFD3F2} = {7D0B89C4-CDA3-483E-970D-E8E9E9F692F6}
+		{D8E50764-8A70-446F-8509-88935CAFD3F2} = {479601E3-3DC5-40DA-BA5E-403D5346E50D}
 		{A0DE7974-409E-495A-82CF-238331A797C6} = {3D90AC6A-EA0E-4F46-9869-97D10826AE7E}
 		{1D184FDB-2B58-465F-8AEB-191B27C0A58E} = {3D90AC6A-EA0E-4F46-9869-97D10826AE7E}
-		{4A16CF88-5DDA-49D2-BF06-501F36788E3D} = {7D0B89C4-CDA3-483E-970D-E8E9E9F692F6}
-		{6E8C8C89-4F68-463A-A6E0-D68D2A48E58D} = {7D0B89C4-CDA3-483E-970D-E8E9E9F692F6}
 		{D0842BD6-DF8A-4B36-9CF2-3507682B7C88} = {E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}
 		{2710747A-139D-4D0C-8F6E-79C40C050EC1} = {21335470-2C7E-418E-A7CD-9EB6D3A45190}
 		{0FA406E8-EE81-45DA-BCF8-1F72C66A2EA0} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
