@@ -8,13 +8,13 @@ namespace Goedel.Protocol {
     /// <summary>
     /// JSON reader supporting JSON-B, JSON-C and JSON-D extended encodings.
     /// </summary>
-    public class JSONBCDReader : JSONReader {
+    public class JsonBcdReader : JSONReader {
 
         /// <summary>
         /// Returns a factory delegate that returns a reader of this type.
         /// </summary>
         public static new JSONReaderFactoryDelegate JSONReaderFactory => ReaderFactoryMethod;
-        static JSONReader ReaderFactoryMethod(byte[] Data) => new JSONBCDReader(Data);
+        static JSONReader ReaderFactoryMethod(byte[] Data) => new JsonBcdReader(Data);
 
 
 
@@ -25,13 +25,13 @@ namespace Goedel.Protocol {
         /// Construct a JSONReader from a byte Stream.
         /// </summary>
         /// <param name="Input">The stream to be read.</param>
-        public JSONBCDReader(Stream Input) : base(Input) { }
+        public JsonBcdReader(Stream Input) : base(Input) { }
 
         /// <summary>
         /// Construct a JSONReader from a byte array.
         /// </summary>
         /// <param name="Input">The data to be read.</param>
-        public JSONBCDReader(byte[] Input) : base(Input) { }
+        public JsonBcdReader(byte[] Input) : base(Input) { }
 
 
 

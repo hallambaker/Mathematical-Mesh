@@ -1,16 +1,75 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
 
 using System.Numerics;
 
 using Xunit;
+using Goedel.Cryptography.Jose;
 
 #pragma warning disable IDE0059
 
 
 namespace Goedel.XUnit {
     public partial class TestGoedelCryptography {
+
+
+
+        [Theory]
+        [InlineData(10, CryptoAlgorithmId.X25519)]
+        [InlineData(10, CryptoAlgorithmId.X448)]
+        [InlineData(10, CryptoAlgorithmId.Ed25519)]
+        [InlineData(10, CryptoAlgorithmId.Ed448)]
+        public void EncodingTest(int iterations, CryptoAlgorithmId cryptoAlgorithmId) {
+            for (var i = 0; i < iterations; i++) {
+                EncodingTestInner(cryptoAlgorithmId);
+                }
+            }
+
+        [Theory]
+        [InlineData(10)]
+        public void EncodingTests(int iterations) {
+            for (var i = 0; i < iterations; i++) {
+                EncodingTestInnerX448();
+                }
+            }
+
+        public bool EncodingTestInner(CryptoAlgorithmId cryptoAlgorithmId) {
+
+            var keypair = KeyPair.Factory(cryptoAlgorithmId, KeySecurity.Ephemeral);
+
+
+            var encoding = Key.FactoryPublic(keypair);
+
+            var decoding = encoding.KeyPair;
+
+            keypair.UDF.Equals(decoding.UDF);
+
+            return true;
+            }
+
+
+        public bool EncodingTestInnerX448() {
+
+            var keypair = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Ephemeral) as KeyPairX448;
+
+
+            var encoding = Key.FactoryPublic(keypair);
+
+            var decoding = encoding.KeyPair as KeyPairX448;
+
+            keypair.UDF.Equals(decoding.UDF);
+
+            keypair.PublicKey.Public.AssertEqual(decoding.PublicKey.Public);
+            keypair.PublicKey.Public.U.AssertEqual(decoding.PublicKey.Public.U);
+            keypair.PublicKey.Public.V.AssertEqual(decoding.PublicKey.Public.V);
+            keypair.PublicKey.Public.Odd.AssertEqual(decoding.PublicKey.Public.Odd);
+
+            return true;
+            }
+
+
 
         [Fact]
         public void CheckV() {
@@ -352,7 +411,11 @@ namespace Goedel.XUnit {
         [Theory]
         [InlineData(1000, 500)]
         [InlineData(1000, 50)]
-        public void X448SignedMultiply(BigInteger total, BigInteger part) {
+        public void X448SignedMultiply(int totalIn, int partIn) {
+
+            BigInteger total = totalIn;
+            BigInteger part = partIn;
+
 
             var q = CurveX448.Base;
             var q1 = q.Multiply(part+1);
@@ -404,7 +467,9 @@ namespace Goedel.XUnit {
         [Theory]
         [InlineData(1000, 500)]
         [InlineData(1000, 50)]
-        public void X448SignedMultiplyFast(BigInteger total, BigInteger part) {
+        public void X448SignedMultiplyFast(int totalIn, int partIn) {
+            BigInteger total = totalIn;
+            BigInteger part = partIn;
 
             var q = CurveX448.Base;
             var q1 = q.Multiply(part + 1);

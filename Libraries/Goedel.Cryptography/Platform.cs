@@ -103,7 +103,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeyType">Key type, if known</param>
         /// <returns></returns>
         public delegate KeyPair FindInKeyStoreDelegate(string UDF,
-                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default);
+                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default);
 
         /// <summary>
         /// Retrieve record from the local key store. 
@@ -113,7 +113,7 @@ namespace Goedel.Cryptography {
         public static FindInKeyStoreDelegate FindInKeyStore = FindInKeyStoreDefault;
 
         static KeyPair FindInKeyStoreDefault(string UDF,
-                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default) =>
+                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
                     throw new PlatformNotInitialized();
 
 
@@ -124,7 +124,7 @@ namespace Goedel.Cryptography {
         /// <param name="KeyType">Key type, if known</param>
         /// <returns>True if key was found, otherwise false</returns>
         public delegate bool EraseFromKeyStoreDelegate(string UDF,
-                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default);
+                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default);
 
         /// <summary>
         /// Retrieve record from the local key store. 
@@ -134,7 +134,7 @@ namespace Goedel.Cryptography {
         public static EraseFromKeyStoreDelegate EraseFromKeyStore = EraseFromKeyStoreDefault;
 
         static bool EraseFromKeyStoreDefault(string UDF,
-                CryptoAlgorithmID KeyType = CryptoAlgorithmID.Default) =>
+                CryptoAlgorithmId KeyType = CryptoAlgorithmId.Default) =>
                     throw new PlatformNotInitialized();
 
 

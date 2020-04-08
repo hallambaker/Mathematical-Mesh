@@ -71,7 +71,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="machine">Mesh machine providing cryptographic context.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) =>
+        public virtual void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) =>
             _ = builder.AppendLine($"[{_Tag}]");
 
 
@@ -124,7 +124,7 @@ namespace Goedel.Mesh {
             var length = (buffer.Length).Minimum(128);
             switch ((UDFTypeIdentifier)buffer[0]) {
                 case (UDFTypeIdentifier.DigestSHA_3_512): {
-                    return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmID.SHA_3_512);
+                    return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmId.SHA_3_512);
                     }
 
                 default: {

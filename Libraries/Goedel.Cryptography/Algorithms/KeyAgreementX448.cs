@@ -1,4 +1,5 @@
 ﻿using Goedel.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 
@@ -70,7 +71,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// Construct a point from a U coordinate.
         /// </summary>
         /// <param name="data">The encoded U coordinate</param>
-        public CurveX448(byte[] data) : this(DecodePoint(data)) { }
+        public CurveX448(byte[] data) => (U, Odd) = DecodePointParameters(data);
 
         #endregion
 
@@ -111,7 +112,7 @@ namespace Goedel.Cryptography.Algorithms {
             }
 
 
-        static byte[] EncodePointUnsigned(BigInteger u) => u.ByteArrayLittleEndian(32);
+        static byte[] EncodePointUnsigned(BigInteger u) => u.ByteArrayLittleEndian(56);
         static byte[] EncodePointSigned(BigInteger u, bool? odd = null) {
             var prefix = u.ByteArrayLittleEndian(56);
             var result = new byte[57];
@@ -134,23 +135,38 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="data">The encoded data</param>
         /// <returns>The point created</returns>
-        public static BigInteger DecodePoint(byte[] data) {
-            if (data.Length == 56) {
-                return data.BigIntegerLittleEndian();
-                }
-            else if (data.Length == 57) {
-                throw new NYI();
-                }
-
-            throw new NYI();
+        public static CurveX448 DecodePoint(byte[] data) {
+            (var Y, var odd) = DecodePointParameters(data);
+            return new CurveX448(Y, odd);
             }
+
 
         /// <summary>
         /// Construct a point on the curve from a buffer.
         /// </summary>
         /// <param name="data">The encoded data</param>
         /// <returns>The point created</returns>
-        public static BigInteger DecodeScalar(byte[] data) {
+        public static (BigInteger u, bool? odd) DecodePointParameters(byte[] data) {
+            if (data.Length == 56) {
+                return (data.BigIntegerLittleEndian(), null);
+                }
+
+
+            if ((data[56] & 0x80) == 0) {
+                return (data.BigIntegerLittleEndian(), false);
+                }
+            var copy = data.Duplicate();
+            copy[56] = (byte)(data[56] & 0x7f);
+            var u1 = copy.BigIntegerLittleEndian();
+            return (u1, true);
+            }
+
+            /// <summary>
+            /// Construct a point on the curve from a buffer.
+            /// </summary>
+            /// <param name="data">The encoded data</param>
+            /// <returns>The point created</returns>
+            public static BigInteger DecodeScalar(byte[] data) {
             var copy = data.Duplicate();
             copy[0] &= 252;
             copy[55] |= 128;
@@ -191,7 +207,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="publicKey">The public key values.</param>
         public CurveX448Public(CurveX448 publicKey) {
             this.Public = publicKey;
-            this.Encoding = publicKey.Encode();
+            this.Encoding = publicKey.Encode(true);
             }
 
         /// <summary>
@@ -199,7 +215,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="encoding">The encoded public key value.</param>
         public CurveX448Public(byte[] encoding) {
-            this.Public = new CurveX448 (encoding);
+            this.Public = CurveX448.DecodePoint(encoding);
             this.Encoding = encoding;
             }
         /// <summary>
@@ -242,6 +258,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The composite key</returns>
         public CurveX448Public Combine(CurveX448Public contribution) {
             var NewPublic = Public.Add(contribution.Public);
+
+            Console.WriteLine($"Combine  : {Public.Odd} + {contribution.Public.Odd} = {NewPublic.Odd}");
+
+
             return new CurveX448Public((CurveX448)NewPublic);
             }
 

@@ -16,12 +16,12 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
-        /// Calculate the expected payload length for the specified <paramref name="ContentLength"/>.
+        /// Calculate the expected payload length for the specified <paramref name="contentLength"/>.
         /// </summary>
-        /// <param name="ContentLength">The unencrypted content length.</param>
+        /// <param name="contentLength">The unencrypted content length.</param>
         /// <returns>The corresponding payload length.</returns>
-        public long OutputLength(long ContentLength) =>
-            CryptoStack == null ? ContentLength : CryptoStack.CipherTextLength(ContentLength);
+        public long OutputLength(long contentLength) =>
+            CryptoStack == null ? contentLength : CryptoStack.CipherTextLength(contentLength);
 
         /// <summary>
         /// If true, the header specifies a key exchange.
@@ -143,22 +143,22 @@ namespace Goedel.Cryptography.Dare {
         /// Construct a stream that will write the body data with whatever crypto stream
         /// modules are required.
         /// </summary>
-        /// <param name="Output">The ultimate output stream.</param>
+        /// <param name="output">The ultimate output stream.</param>
         /// <returns></returns>
-        public Stream BodyWriter(Stream Output) {
+        public Stream BodyWriter(Stream output) {
             if (CryptoStack == null) {
-                return Output;
+                return output;
                 }
-            currentBodyWriter = CryptoStack.GetEncoder(Output, PackagingFormat.Direct);
+            currentBodyWriter = CryptoStack.GetEncoder(output, PackagingFormat.Direct);
             return currentBodyWriter.Writer;
             }
 
         /// <summary>
         /// Close the body writer stack and free all associated resources.
         /// </summary>
-        public void CloseBodyWriter(out DareTrailer DARETrailer) {
+        public void CloseBodyWriter(out DareTrailer dareTrailer) {
             currentBodyWriter.Close();
-            DARETrailer = GetTrailer(currentBodyWriter);
+            dareTrailer = GetTrailer(currentBodyWriter);
             currentBodyWriter?.Dispose();
             currentBodyWriter = null;
             }
@@ -171,19 +171,19 @@ namespace Goedel.Cryptography.Dare {
         /// unique salt will be assigned.
         /// </summary>
         /// <param name="Plaintext">The EDS plaintext.</param>
-        /// <param name="DARETrailer">Prototype trailer containing the calculated digest value.</param>
+        /// <param name="dareTrailer">Prototype trailer containing the calculated digest value.</param>
         /// <returns>The EDS</returns>
-        public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer DARETrailer) =>
-            CryptoStack.Encode(Plaintext, out DARETrailer);
+        public byte[] EnhanceBody(byte[] Plaintext, out DareTrailer dareTrailer) =>
+            CryptoStack.Encode(Plaintext, out dareTrailer);
 
 
         /// <summary>
         /// Convert an int64 counter to a unique salt value.
         /// </summary>
-        /// <param name="SaltValue"></param>
+        /// <param name="saltValue"></param>
         /// <returns></returns>
-        public static byte[] MakeSalt(long SaltValue) {
-            var Salt = SaltValue;
+        public static byte[] MakeSalt(long saltValue) {
+            var Salt = saltValue;
 
             var Index = 0;
             while (Salt > 0xFF) {
@@ -193,7 +193,7 @@ namespace Goedel.Cryptography.Dare {
 
             var Result = new byte[Index + 1];
 
-            Salt = SaltValue;
+            Salt = saltValue;
             Index = 0;
             Result[Index++] = (byte)(Salt & 0xFF);
             while (Salt > 0xFF) {
@@ -204,7 +204,7 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
-        CryptoAlgorithmID EncryptId;
+        CryptoAlgorithmId encryptId;
 
 
 
@@ -223,7 +223,7 @@ namespace Goedel.Cryptography.Dare {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
-            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
+            CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
                 Recipients, Signatures, keyCollection) {
                 Salt = Salt
                 };
@@ -237,11 +237,11 @@ namespace Goedel.Cryptography.Dare {
         /// header.
         /// </summary>
         /// <returns>The created CryptoStack</returns>
-        public CryptoStack GetCryptoStack(IKeyLocate KeyCollection, bool decrypt = true) {
+        public CryptoStack GetCryptoStack(IKeyLocate keyCollection, bool decrypt = true) {
             var EncryptID = EncryptionAlgorithm.FromJoseID();
 
-            var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmID.NULL,
-                Recipients, Signatures, KeyCollection, decrypt: decrypt) {
+            var CryptoStack = new CryptoStack(EncryptID, CryptoAlgorithmId.NULL,
+                Recipients, Signatures, keyCollection, decrypt: decrypt) {
                 Salt = Salt
 
                 };
@@ -251,31 +251,31 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Return a decoder for the specified data source.
         /// </summary>
-        /// <param name="JSONBCDReader">The data source.</param>
-        /// <param name="Reader">The stream to read the decoded data from.</param>
-        /// <param name="KeyCollection">Key collection to be used to resolve private
+        /// <param name="jsonBcdReader">The data source.</param>
+        /// <param name="reader">The stream to read the decoded data from.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve private
         /// keys.</param>
         /// <returns>The decoder. </returns>
         public CryptoStackStream GetDecoder(
-                        JSONBCDReader JSONBCDReader,
-                        out Stream Reader,
-                       IKeyLocate KeyCollection = null) {
+                        JsonBcdReader jsonBcdReader,
+                        out Stream reader,
+                       IKeyLocate keyCollection = null) {
 
             var EncryptID = EncryptionAlgorithm.FromJoseID();
-            CryptoStack = GetCryptoStack(KeyCollection);
+            CryptoStack = GetCryptoStack(keyCollection);
 
-            return CryptoStack.GetDecoder(JSONBCDReader, out Reader);
+            return CryptoStack.GetDecoder(jsonBcdReader, out reader);
             }
 
         /// <summary>
         /// Attempt decryption of the master key by matching a recipient entry to the 
         /// keys in the specified key collection.
         /// </summary>
-        /// <param name="KeyCollection">The key collection to use or the default collection
+        /// <param name="keyCollection">The key collection to use or the default collection
         /// if null.</param>
-        public void DecryptMaster(IKeyLocate KeyCollection) {
-            EncryptId = EncryptionAlgorithm.FromJoseID();
-            masterSecret = KeyCollection.Decrypt(Recipients, EncryptId);
+        public void DecryptMaster(IKeyLocate keyCollection) {
+            encryptId = EncryptionAlgorithm.FromJoseID();
+            masterSecret = keyCollection.Decrypt(Recipients, encryptId);
             }
 
         /// <summary>
@@ -294,25 +294,25 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Attempt to decrypt a decryption blob from a list of recipient entries.
         /// </summary>
-        /// <param name="KeyCollection">The key collection to be used to resolve keys.</param>
-        /// <param name="Recipients">The recipient entry.</param>
-        /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
+        /// <param name="keyCollection">The key collection to be used to resolve keys.</param>
+        /// <param name="recipients">The recipient entry.</param>
+        /// <param name="algorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public static byte[] Decrypt(this IKeyLocate KeyCollection,
-                    List<DareRecipient> Recipients,
-                    CryptoAlgorithmID AlgorithmID) {
-            foreach (var Recipient in Recipients) {
+        public static byte[] Decrypt(this IKeyLocate keyCollection,
+                    List<DareRecipient> recipients,
+                    CryptoAlgorithmId algorithmID) {
+            foreach (var recipient in recipients) {
 
-                var DecryptionKey = KeyCollection.TryMatchRecipient(Recipient.KeyIdentifier);
+                var decryptionKey = keyCollection.TryMatchRecipient(recipient.KeyIdentifier);
 
                 // Recipient has the following fields of interest
                 // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key
                 // Recipient.Header.Epk  -- The ephemeral public key
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
-                if (DecryptionKey != null) {
-                    return DecryptionKey.Decrypt(Recipient.WrappedMasterKey, Recipient.Epk.KeyPair,
-                        algorithmID: AlgorithmID, salt: DareRecipient.KDFSalt);
+                if (decryptionKey != null) {
+                    return decryptionKey.Decrypt(recipient.WrappedMasterKey, recipient.Epk.KeyPair,
+                        algorithmID: algorithmID, salt: DareRecipient.KDFSalt);
                     }
                 }
 
@@ -330,16 +330,16 @@ namespace Goedel.Cryptography.Dare {
             }
 
         /// <summary>
-        /// Prototype trailer containing the  digest value calculated by <paramref name="Writer"/>.
+        /// Prototype trailer containing the  digest value calculated by <paramref name="writer"/>.
         /// </summary>
-        /// <param name="Writer">The crypto stream used to transform the payload.</param>
+        /// <param name="writer">The crypto stream used to transform the payload.</param>
         /// <returns>The prototype trailer.</returns>
-        public static DareTrailer GetTrailer(CryptoStackStreamWriter Writer) {
+        public static DareTrailer GetTrailer(CryptoStackStreamWriter writer) {
             DareTrailer Result = null;
 
-            if (Writer.DigestValue != null) {
+            if (writer.DigestValue != null) {
                 Result = new DareTrailer() {
-                    PayloadDigest = Writer.DigestValue
+                    PayloadDigest = writer.DigestValue
                     };
                 }
             return Result;

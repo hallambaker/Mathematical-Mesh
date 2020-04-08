@@ -27,7 +27,7 @@ namespace Goedel.Cryptography {
         /// <param name="context">Optional context value.</param>
         /// <returns>The signature context.</returns>
         public abstract ThresholdSignatureEdwards SignHashThreshold(byte[] data,
-                CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null);
 
 
@@ -112,17 +112,17 @@ namespace Goedel.Cryptography {
         /// <returns>The encoded value of the additive point R in encoded form.</returns>
         public byte[] CompleteR(
                     byte[] data,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null) {
             K = PublicKey.GetK(algorithmID, R.Encode(), data, context);
 
-            Console.WriteLine($"Prime {Prime}");
-            Console.WriteLine($"Public Key {PublicKey.DomainParameters.Q}");
+            //Console.WriteLine($"Prime {Prime}");
+            //Console.WriteLine($"Public Key {PublicKey.DomainParameters.Q}");
 
-            Console.WriteLine($"Sign 0");
-            Console.WriteLine($"   K=  {K}");
-            Console.WriteLine($"   R");
-            Console.WriteLine(R.Encode().ToStringBase16FormatHex());
+            //Console.WriteLine($"Sign 0");
+            //Console.WriteLine($"   K=  {K}");
+            //Console.WriteLine($"   R");
+            //Console.WriteLine(R.Encode().ToStringBase16FormatHex());
             return R.Encode();
             }
 
@@ -138,11 +138,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>The signature scalar value S.</returns>
         public BigInteger CompleteS(bool validate = true) {
-            Console.WriteLine($"Verify");
-            Console.WriteLine($"   K=  {K}");
-            Console.WriteLine($"   S=  {S}");
-            Console.WriteLine($"   R");
-            Console.WriteLine(R.Encode().ToStringBase16FormatHex());
+            //Console.WriteLine($"Verify");
+            //Console.WriteLine($"   K=  {K}");
+            //Console.WriteLine($"   S=  {S}");
+            //Console.WriteLine($"   R");
+            //Console.WriteLine(R.Encode().ToStringBase16FormatHex());
 
             if (validate) {
                 PublicKey.Verify(K, S, R).AssertTrue();
@@ -252,7 +252,7 @@ namespace Goedel.Cryptography {
                     byte[] aggregateR,
                     CurveEdwards A,
                     byte[] data,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null,
                     bool prehash = true) =>
             GetS(aggregateR, A, data, 1, algorithmID, context, prehash);
@@ -274,7 +274,7 @@ namespace Goedel.Cryptography {
                     CurveEdwards A,
                     byte[] data,
                     BigInteger lagrange,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null,
                     bool prehash = true);
 
@@ -313,7 +313,7 @@ namespace Goedel.Cryptography {
                     CurveEdwards A,
                     byte[] data,
                     BigInteger lagrange,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null,
                     bool prehash = true) {
 
@@ -365,7 +365,7 @@ namespace Goedel.Cryptography {
                     CurveEdwards A,
                     byte[] data,
                     BigInteger lagrange,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null,
                     bool prehash = true) {
 

@@ -100,8 +100,9 @@ namespace Goedel.Cryptography {
         /// Factory method to construct a KeyPair for the public key <paramref name="publicKey"/>.
         /// </summary>
         /// <param name="publicKey">The private key to construct parameters for.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The KeyPair that was constructed</returns>
-        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey);
+        public abstract KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey, KeyUses keyUses = KeyUses.Any);
 
         /// <summary>
         /// Search all the local machine stores to find a key pair with the specified
@@ -109,7 +110,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="udf">Fingerprint of key</param>
         /// <returns>The key pair found</returns>
-        public static KeyPair FindLocalAdvanced(string udf) => Platform.FindInKeyStore(udf, CryptoAlgorithmID.DH);
+        public static KeyPair FindLocalAdvanced(string udf) => Platform.FindInKeyStore(udf, CryptoAlgorithmId.DH);
 
         /// <summary>
         /// Perform a partial key agreement.
@@ -142,10 +143,12 @@ namespace Goedel.Cryptography {
         /// Combine the public parameters with another public key to create the composite public key pair
         /// </summary>
         /// <param name="contribution">The public key parameters to combine</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The generated public key pair.</returns>
-        public KeyPairAdvanced CombinePublic(KeyPairAdvanced contribution) {
+        public KeyPairAdvanced CombinePublic(KeyPairAdvanced contribution,
+                    KeyUses keyUses = KeyUses.Any) {
             var PublicKey = IKeyAdvancedPublic.Combine(contribution.IKeyAdvancedPublic);
-            return KeyPair(PublicKey);
+            return KeyPair(PublicKey, keyUses);
             }
 
         /// <summary>

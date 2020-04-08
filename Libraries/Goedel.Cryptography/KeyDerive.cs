@@ -69,7 +69,7 @@ namespace Goedel.Cryptography {
     public class KeyDeriveHKDF : KeyDerive {
 
         //CryptoProviderAuthentication Provider;
-        CryptoAlgorithmID algorithm;
+        CryptoAlgorithmId algorithm;
 
         /// <summary>The Pseudorandom key constructed from the IKM and salt</summary>
         public byte[] PRK { get; set; }
@@ -84,7 +84,7 @@ namespace Goedel.Cryptography {
         /// <param name="salt">A salt to vary the key derivation by application</param>
         /// <param name="algorithm">The MAC algorithm to use</param>
         public KeyDeriveHKDF(byte[] ikm, string salt = null,
-                CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) :
+                CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) :
                         this(ikm, salt?.ToBytes(), algorithm) {
             }
 
@@ -96,7 +96,7 @@ namespace Goedel.Cryptography {
         /// <param name="salt">A salt to vary the key derivation by application</param>
         /// <param name="algorithm">The MAC algorithm to use</param>
         public KeyDeriveHKDF(byte[] ikm, byte[] salt = null,
-                CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
             this.algorithm = algorithm;
             PRK = Extract(this.algorithm, ikm, salt);
             }
@@ -129,7 +129,7 @@ namespace Goedel.Cryptography {
         /// <returns></returns>
         public static byte[] Derive(
                 byte[] ikm, byte[] salt = null, byte[] info = null, int length = 0,
-                CryptoAlgorithmID algorithm = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId algorithm = CryptoAlgorithmId.Default) {
             var kdf = new KeyDeriveHKDF(ikm, salt, algorithm);
             return kdf.Derive(info, length);
             }
@@ -146,8 +146,8 @@ namespace Goedel.Cryptography {
         /// <param name="salt">Optional salt value.</param>
         /// <returns>The pseudo-random output.</returns>
         public static byte[] Random(byte[] ikm, int length = 128, byte[] salt = null) {
-            var prk = Extract(CryptoAlgorithmID.Default, ikm, salt);
-            return Expand(CryptoAlgorithmID.Default, prk, length);
+            var prk = Extract(CryptoAlgorithmId.Default, ikm, salt);
+            return Expand(CryptoAlgorithmId.Default, prk, length);
 
             }
 
@@ -159,7 +159,7 @@ namespace Goedel.Cryptography {
         /// <param name="IKM">The initial keying material</param>
         /// <param name="Salt">Salt to be used to vary the derived key across domains.</param>
         /// <returns>The extracted value.</returns>
-        public static byte[] Extract(CryptoAlgorithmID algorithm,
+        public static byte[] Extract(CryptoAlgorithmId algorithm,
                     byte[] IKM, byte[] Salt = null) {
             var (size, _) = algorithm.GetKeySize();
 
@@ -175,7 +175,7 @@ namespace Goedel.Cryptography {
         /// <param name="length">Length of output key in bits</param>
         /// <param name="info">Information data</param>
         /// <returns>The expanded value.</returns>
-        public static byte[] Expand(CryptoAlgorithmID algorithm,
+        public static byte[] Expand(CryptoAlgorithmId algorithm,
             byte[] prk, int length, byte[] info = null) {
 
             var (size, _) = algorithm.GetKeySize();

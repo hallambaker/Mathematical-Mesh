@@ -21,14 +21,14 @@ namespace Goedel.XUnit {
 
 
         [Theory]
-        [InlineData(CryptoAlgorithmID.Ed448)]
-        [InlineData(CryptoAlgorithmID.Ed25519)]
+        [InlineData(CryptoAlgorithmId.Ed448)]
+        [InlineData(CryptoAlgorithmId.Ed25519)]
         //[InlineData(CryptoAlgorithmID.X448)]
         //[InlineData(CryptoAlgorithmID.X25519)]
-        [InlineData(CryptoAlgorithmID.DH)]
-        [InlineData(CryptoAlgorithmID.RSAExch)]
-        [InlineData(CryptoAlgorithmID.RSASign)]
-        public void RoundTripKeyEphemeral(CryptoAlgorithmID cryptoAlgorithmID) {
+        [InlineData(CryptoAlgorithmId.DH)]
+        [InlineData(CryptoAlgorithmId.RSAExch)]
+        [InlineData(CryptoAlgorithmId.RSASign)]
+        public void RoundTripKeyEphemeral(CryptoAlgorithmId cryptoAlgorithmID) {
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Ephemeral);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;
@@ -41,14 +41,14 @@ namespace Goedel.XUnit {
             }
 
         [Theory]
-        [InlineData(CryptoAlgorithmID.Ed448)]
-        [InlineData(CryptoAlgorithmID.Ed25519)]
+        [InlineData(CryptoAlgorithmId.Ed448)]
+        [InlineData(CryptoAlgorithmId.Ed25519)]
         //[InlineData(CryptoAlgorithmID.X448)]
         //[InlineData(CryptoAlgorithmID.X25519)]
-        [InlineData(CryptoAlgorithmID.DH)]
-        [InlineData(CryptoAlgorithmID.RSAExch)]
-        [InlineData(CryptoAlgorithmID.RSASign)]
-        public void RoundTripKeyExportable(CryptoAlgorithmID cryptoAlgorithmID) {
+        [InlineData(CryptoAlgorithmId.DH)]
+        [InlineData(CryptoAlgorithmId.RSAExch)]
+        [InlineData(CryptoAlgorithmId.RSASign)]
+        public void RoundTripKeyExportable(CryptoAlgorithmId cryptoAlgorithmID) {
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Exportable);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;

@@ -40,7 +40,7 @@
 		Description
 			|Information enabling administration of a Master profile. It adds an overlay key
 			|for the administration key.
-		Struct KeyOverlay SignatureKey
+		Struct Key SignatureKey
 			Description
 				|Overlay for the signature key.
 		String DeviceUDF

@@ -67,16 +67,6 @@
 				|The decryption key encrypted under the user's device key.	
 
 
-	Structure KeyOverlay
-		String UDF
-			Description
-				|Fingerprint of the resulting composite key (to allow verification)
-		String BaseUDF
-			Description
-				|Fingerprint specifying the base key
-		TStruct Key Overlay
-			Description
-				|The overlay key contribution.
 
 	Structure EscrowedKeySet
 		Description
@@ -303,11 +293,6 @@
 		String AccountUDF
 			Description
 				|The UDF of the account
-		Struct KeyComposite KeyGroup
-			Description
-				|The key contribution for the decryption key for the device. NB this is 
-				|NOT an overlay on the device signature key, it is an overlay on the 
-				|corresponding recryption key.
 
 	Structure ConnectionAccount
 		Inherits Connection

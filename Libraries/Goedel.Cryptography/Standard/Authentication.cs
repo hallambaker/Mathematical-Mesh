@@ -71,7 +71,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncoder(
                             CryptoProviderBulk Bulk = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null
                             ) {
 
@@ -97,7 +97,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeAuthenticator(
                             byte[] Key = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null) {
             var Result = new CryptoDataEncoder(CryptoAlgorithmID, this) {
                 OutputStream = OutputStream ?? new MemoryStream(),
@@ -142,12 +142,12 @@ namespace Goedel.Cryptography.Standard {
     /// Provider for HMAC SHA-2 256 bits.
     /// </summary>
     public class CryptoProviderHMACSHA2_256 : CryptoProviderAuthentication {
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.HMAC_SHA_2_256;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_256;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -179,7 +179,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) => new CryptoProviderHMACSHA2_256();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId Ignore) => new CryptoProviderHMACSHA2_256();
 
         /// <summary>
         /// Constructor, algorithm takes no parameters.
@@ -194,12 +194,12 @@ namespace Goedel.Cryptography.Standard {
     /// </summary>
     public class CryptoProviderHMACSHA2_512 : CryptoProviderAuthentication {
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.HMAC_SHA_2_512;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.HMAC_SHA_2_512;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="KeySize">The key size (ignored)</param>
         /// <param name="Ignore">The cryptographic algorithn (ignored)</param>
         /// <returns></returns>
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID Ignore) => new CryptoProviderHMACSHA2_512();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId Ignore) => new CryptoProviderHMACSHA2_512();
 
         /// <summary>
         /// Constructor, algorithm takes no parameters.

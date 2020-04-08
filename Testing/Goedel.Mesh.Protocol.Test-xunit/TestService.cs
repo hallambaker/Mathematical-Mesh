@@ -286,6 +286,8 @@ namespace Goedel.XUnit {
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
                 out var contextAccountBob, AccountBob);
 
+
+            // This test is failing because the message from Bob isn't passed to Alice.
             // Bob ---> Alice
             contextAccountBob.ContactRequest(AccountAlice);
 

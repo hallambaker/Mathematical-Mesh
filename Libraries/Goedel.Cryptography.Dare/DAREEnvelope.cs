@@ -252,9 +252,9 @@ namespace Goedel.Cryptography.Dare {
             }
         #endregion
         #region // Payload decoding routines 
-        JSONBCDReader JsonReader { get; }
+        JsonBcdReader JsonReader { get; }
 
-        DareEnvelope(JSONBCDReader jsonReader, DareHeader header) {
+        DareEnvelope(JsonBcdReader jsonReader, DareHeader header) {
             JsonReader = jsonReader;
             Header = header;
             }
@@ -269,7 +269,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(byte[] data, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
-            var JSONBCDReader = new JSONBCDReader(data);
+            var JSONBCDReader = new JsonBcdReader(data);
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
             }
 
@@ -302,7 +302,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(Stream stream, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
-            var JSONBCDReader = new JSONBCDReader(stream); // Hack: should merge this with GetPlaintext
+            var JSONBCDReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
             return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
             }
 
@@ -314,7 +314,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="decrypt">If true, attempt to decrypt the message body as it is read.</param>
         /// <param name="keyCollection">Key collection to be used to discover decryption keys</param>
         /// <returns>The created object.</returns>		
-        public static DareEnvelope FromJSON(JSONBCDReader jsonReader, bool tagged = true,
+        public static DareEnvelope FromJSON(JsonBcdReader jsonReader, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
             Assert.False(tagged, NYI.Throw);
 
@@ -327,7 +327,7 @@ namespace Goedel.Cryptography.Dare {
             using (var Buffer = new MemoryStream()) {
                 var Decoder = Message.Header.GetDecoder(
                             jsonReader, out var Reader,
-                            KeyCollection: keyCollection);
+                            keyCollection: keyCollection);
                 Reader.CopyTo(Buffer);
                 Decoder.Close();
                 Message.Body = Buffer.ToArray();
@@ -341,7 +341,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The stream from which data is to be read.</param>
         /// <returns>The DareEnvelope instance.</returns>
-        public static DareEnvelope DecodeHeader(JSONBCDReader jsonReader) {
+        public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
             Assert.True(jsonReader.StartArray());
             var Header = DareHeader.FromJSON(jsonReader, false);
             Assert.NotNull(Header);
@@ -477,11 +477,11 @@ contentMeta, cloaked, dataSequences, chunk);
             long length = -1;
             keyCollection ??= KeyCollection.Default;
 
-            var JSONBCDReader = new JSONBCDReader(inputStream);
+            var JSONBCDReader = new JsonBcdReader(inputStream);
             using var message = DecodeHeader(JSONBCDReader);
             var decoder = message.Header.GetDecoder(
                         JSONBCDReader, out var Reader,
-                        KeyCollection: keyCollection);
+                        keyCollection: keyCollection);
 
             if (outputStream != null) {
                 Reader.CopyTo(outputStream);
@@ -523,7 +523,7 @@ contentMeta, cloaked, dataSequences, chunk);
 
             keyCollection ??= KeyCollection.Default;
 
-            using (var JSONBCDReader = new JSONBCDReader(inputStream)) {
+            using (var JSONBCDReader = new JsonBcdReader(inputStream)) {
                 //var Message = DecodeHeader(JSONBCDReader);
 
                 //var Decoder = Message.Header.GetDecoder(

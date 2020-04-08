@@ -101,7 +101,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>Dictionary mapping mesh local name to Context.</summary>
         protected Dictionary<string, ContextMesh> DictionaryLocalContextMesh = new Dictionary<string, ContextMesh>();
 
-        void Register(ContextMesh contextMesh) {
+        public void Register(ContextMesh contextMesh) {
             var machine = contextMesh.CatalogedMachine;
             DictionaryUDFContextMesh.AddSafe(machine.ID, contextMesh);
             if (machine.Local != null) {
@@ -159,9 +159,9 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh</returns>
         public ContextMeshAdmin CreateMesh(
                 string localName,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                 byte[] masterSecret = null,
                 bool? persist = null) {
 
@@ -211,9 +211,9 @@ namespace Goedel.Mesh.Client {
                 string serviceID,
                 string localName = null,
                 string PIN = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) =>
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) =>
             ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
 
 
@@ -225,9 +225,9 @@ namespace Goedel.Mesh.Client {
         public ContextMeshAdmin RecoverMesh(
                 string localName,
                 IEnumerable<string> shares = null,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
                 ) {
             var secret = new SharedSecret(shares);
             throw new NYI();
@@ -242,9 +242,9 @@ namespace Goedel.Mesh.Client {
         /// <returns>Context for administering the Mesh account</returns>
         public ContextAccount CreateMeshWithAccount(
                 string localName,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
             var contextMeshAdmin = CreateMesh(localName);
             return contextMeshAdmin.CreateAccount(localName);
 

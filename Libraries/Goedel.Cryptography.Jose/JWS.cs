@@ -74,7 +74,7 @@ namespace Goedel.Cryptography.Jose {
                     DataEncoding Encoding = DataEncoding.JSON,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
                 this(JSONObject.GetBytes(Encoding), SigningKey, ContentType, Algorithm) {
             }
 
@@ -89,7 +89,7 @@ namespace Goedel.Cryptography.Jose {
         public JoseWebSignature(byte[] Data,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) {
 
             var Encoder = CryptoCatalog.Default.GetDigest(Algorithm);
             _CryptoDataDigest = Encoder.Process(Data);
@@ -114,7 +114,7 @@ namespace Goedel.Cryptography.Jose {
                     string Text,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
                 this(System.Text.Encoding.UTF8.GetBytes(Text),
                         SigningKey, ContentType, Algorithm) { }
 
@@ -127,7 +127,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ProviderAlgorithm">The provider algorithm</param>
         /// <returns>The signature instance.</returns>
         public Signature AddSignature(KeyPair SignerKey,
-                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default,
                 string ContentType = null) {
 
             Signatures ??= new List<Signature>();

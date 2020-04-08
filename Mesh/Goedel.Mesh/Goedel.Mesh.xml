@@ -1401,7 +1401,7 @@
             </summary>
             <returns>The string describing the cataloged device.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -1961,6 +1961,102 @@
             </summary>
             <returns>The enumerator.</returns>
         </member>
+        <member name="T:Goedel.Mesh.MeshKeyType">
+            <summary>Enumeration for Key types</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.IndexSeedType">
+            <summary>Mask to recover seed type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MaskSeedType">
+            <summary>Mask to recover seed type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MaskKeyUse">
+            <summary>Mask to recover seed type</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.Sign">
+            <summary>offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.OnlineSign">
+            <summary>Master profile online signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.Encrypt">
+            <summary>Encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.Authenticate">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.PartialUser">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.PartialService">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MasterProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MasterOfflineSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MasterOnlineSign">
+            <summary>Master profile online signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.MasterEncrypt">
+            <summary>Master profile encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.DeviceProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.DeviceSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.DeviceEncrypt">
+            <summary>Master profile encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.DeviceAuthenticate">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.AccountProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.AccountSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.AccountEncrypt">
+            <summary>Master profile encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.AccountAuthenticate">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupEncrypt">
+            <summary>Master profile encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupAuthenticate">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupUser">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.GroupService">
+            <summary>Master profile authentication</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.ServiceProfile">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.ServiceSign">
+            <summary>Master profile offline signature</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.ServiceEncrypt">
+            <summary>Master profile encryption</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshKeyType.ServiceAuthenticate">
+            <summary>Master profile authentication</summary>
+        </member>
         <member name="T:Goedel.Mesh.Constants">
             <summary>
             Collected constants used in the Mathematical Mesh
@@ -2005,75 +2101,6 @@
         <member name="F:Goedel.Mesh.Constants.UDFActivationService">
             <summary>Salt value for creating a ProfileAccount Encryption Key</summary>
         </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyMasterEncrypt">
-            <summary>Salt value for creating a ProfileMaster Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyMasterSign">
-            <summary>Salt value for creating a ProfileMaster Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceEncrypt">
-            <summary>Salt value for creating a ProfileDevice Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceSign">
-            <summary>Salt value for creating a ProfileDevice Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceAuthenticate">
-            <summary>Salt value for creating a ProfileDevice Authentication Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountEncrypt">
-            <summary>Salt value for creating a ProfileAccount Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountSign">
-            <summary>Salt value for creating a ProfileAccount Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountAuthenticate">
-            <summary>Salt value for creating a ProfileAccount Authentication Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupEncrypt">
-            <summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupSign">
-            <summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupAuthenticate">
-            <summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupEncryptActivation">
-            <summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupSignActivation">
-            <summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyGroupAuthenticateActivation">
-            <summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyServiceEncrypt">
-            <summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyServiceSign">
-            <summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyServiceAuthenticate">
-            <summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceEncryptActivation">
-            <summary>Salt value for creating a ActivationDevice Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceSignActivation">
-            <summary>Salt value for creating a ActivationDevice Signature  Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyDeviceAuthenticateActivation">
-            <summary>Salt value for creating a ActivationDevice Authentication Activation Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountEncryptActivation">
-            <summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountSignActivation">
-            <summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Constants.MeshKeyAccountAuthenticateActivation">
-            <summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        </member>
         <member name="F:Goedel.Mesh.Constants.TransactionResultAccept">
             <summary>Transaction result tag Accept</summary>
         </member>
@@ -2082,6 +2109,9 @@
         </member>
         <member name="F:Goedel.Mesh.Constants.TransactionResultPending">
             <summary>Transaction result tag Pending</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.TransactionResultExpired">
+            <summary>Transaction result tag Expired</summary>
         </member>
         <member name="F:Goedel.Mesh.Constants.DefaultAlgorithmEncryptID">
             <summary>The default encryption algorithm</summary>
@@ -2092,38 +2122,38 @@
         <member name="F:Goedel.Mesh.Constants.DefaultAlgorithmAuthenticateID">
             <summary>The default authentication algorithm</summary>
         </member>
-        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmEncrypt(Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmEncrypt(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Convenience function that returns the value <see cref="F:Goedel.Mesh.Constants.DefaultAlgorithmEncryptID"/> if
-            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/> 
+            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/> 
             and <paramref name="cryptoAlgorithmID"/>
             otherwise.
             </summary>
             <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
             <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/>.</returns>
+            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmSign(Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmSign(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Convenience function that returns the value <see cref="F:Goedel.Mesh.Constants.DefaultAlgorithmSignID"/> if
-            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/> 
+            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/> 
             and <paramref name="cryptoAlgorithmID"/>
             otherwise.
             </summary>
             <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
             <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/>.</returns>
+            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmAuthenticate(Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.Constants.DefaultAlgorithmAuthenticate(Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Convenience function that returns the value <see cref="F:Goedel.Mesh.Constants.DefaultAlgorithmAuthenticateID"/> if
-            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/> 
+            <paramref name="cryptoAlgorithmID"/> is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/> 
             and <paramref name="cryptoAlgorithmID"/>
             otherwise.
             </summary>
             <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
             <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Default"/>.</returns>
+            specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>.</returns>
         </member>
         <member name="T:Goedel.Mesh.Internal">
             <summary>
@@ -2324,6 +2354,96 @@
             <param name="builder">The string builder.</param>
             <param name="indent">The indentation level.</param>
         </member>
+        <member name="M:Goedel.Mesh.Extensions.GetMeshKeyType(Goedel.Cryptography.UdfAlgorithmIdentifier)">
+            <summary>
+            Return the mesh key group from <paramref name="udfAlgorithmIdentifier"/>.
+            </summary>
+            <param name="udfAlgorithmIdentifier">The UDF key type identifier.</param>
+            <returns>The Mesh key group identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.GetCryptoAlgorithmID(Goedel.Mesh.MeshKeyType,Goedel.Cryptography.Jose.PrivateKeyUDF)">
+            <summary>
+            Return the <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> identifier for the mesh key type
+            <paramref name="meshKeyType"/> derrived from the seed <paramref name="secretSeed"/>.
+            </summary>
+            <param name="meshKeyType">The Mesh Key identifier.</param>
+            <param name="secretSeed">The secret seed.</param>
+            <returns>The  <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ParseMeshKeyType(Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyUses@,System.String@,System.Boolean)">
+            <summary>
+            Return the <see cref="T:Goedel.Cryptography.KeyUses"/> and salt suffix values for the Mesh key type 
+            <paramref name="meshKeyType"/>.
+            </summary>
+            <param name="meshKeyType">The Mesh Key identifier.</param>
+            <param name="keyUses">The PKIX key uses.</param>
+            <param name="suffix">The salt suffix to apply.</param>
+            <param name="activate">If true return the activation value (currently unused.)</param>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Derive a base private key of type <paramref name="meshKeyType"/> from the 
+            secret seed value <paramref name="secretSeed"/> and register the private component
+            in <paramref name="keyCollection"/>.
+            </summary>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Derive an activation private key of type <paramref name="meshKeyType"/> from the 
+            secret seed value <paramref name="baseSeed"/>, activation value 
+            <paramref name="activationSeed"/> and register the private component
+            in <paramref name="keyCollection"/>.
+            </summary>
+            <param name="activationSeed">The activation seed value.</param>
+            <param name="baseSeed">The secret seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Derive an activation private key of type <paramref name="meshKeyType"/> from the 
+            secret seed value <paramref name="baseSeed"/>, activation value 
+            <paramref name="activationSeed"/> and register the private component
+            in <paramref name="keyCollection"/>.
+            </summary>
+            <param name="activationSeed">The activation seed value.</param>
+            <param name="baseSeed">The secret seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Mesh.PublicKey,System.String,Goedel.Mesh.MeshKeyType)">
+            <summary>
+            Derive an activation public key of type <paramref name="meshKeyType"/> 
+            activation value <paramref name="activationSeed"/> and base key 
+            <paramref name="baseKey"/>.
+            </summary>
+            <param name="baseKey">The base public key</param>
+            <param name="activationSeed">The activation seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <returns>The derrived key.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Cryptography.KeyPair,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Derive an activation public key of type <paramref name="meshKeyType"/> 
+            activation value <paramref name="activationSeed"/> and base key 
+            <paramref name="baseKey"/>.
+            </summary>
+            <param name="baseKey">The base public key</param>
+            <param name="activationSeed">The activation seed value.</param>
+            <param name="meshKeyType">The mesh key type.</param>
+            <param name="keyCollection">The key collection to register the private key to
+            (the key is always generated as ephemeral.)</param>
+            <returns>The derrived key.</returns>
+        </member>
         <member name="T:Goedel.Mesh.KeyComposite">
             <summary>
             </summary>
@@ -2421,118 +2541,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.KeyOverlay">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay.KeyPair">
-            <summary>The composite key pair.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay.PublicKey">
-            <summary>The composite public key.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.#ctor">
-            <summary>
-            Default constructor for deserialization.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Mesh.PublicKey)">
-            <summary>
-            Constructor from <paramref name="baseKey"/> storing partial keys to <paramref name="meshMachine"/>.
-            </summary>
-            <param name="meshMachine">The machine.</param>
-            <param name="baseKey">The base key to overlay.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.#ctor(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.KeyPairAdvanced)">
-            <summary>
-            Constructor from <paramref name="baseKey"/> storing partial keys to <paramref name="meshMachine"/>.
-            </summary>
-            <param name="meshMachine">The machine.</param>
-            <param name="baseKey">The base key to overlay.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.GetPrivate(Goedel.Mesh.IMeshMachine)">
-            <summary>
-            Return a KeyPair instance that performs the combined key function. Note that the
-            combined key is only exportable if the base and overlay keys are. Also the 
-            implementation may be achieved by reconstructing the key or by performing the 
-            components separately.
-            </summary>
-            <param name="meshMachine">The machine on which private keys are to be resolved.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.GetPrivate(Goedel.Cryptography.KeyPairAdvanced)">
-            <summary>
-            Return the private key.
-            </summary>
-            <param name="keypairBase">The base key.</param>
-            <returns>The composite keypair.</returns>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay.UDF">
-             <summary>
-            Fingerprint of the resulting composite key (to allow verification)
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay.BaseUDF">
-             <summary>
-            Fingerprint specifying the base key
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay.Overlay">
-             <summary>
-            The overlay key contribution.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.KeyOverlay._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.KeyOverlay.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.KeyOverlay.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.GetMachineDelegate">
             <summary>
             Return a new IMeshMachine.
@@ -2564,7 +2572,7 @@
         <member name="P:Goedel.Mesh.IMeshMachine.KeyCollection">
             <summary>The key collection to use.</summary>
         </member>
-        <member name="M:Goedel.Mesh.IMeshMachine.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
+        <member name="M:Goedel.Mesh.IMeshMachine.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
             <summary>
             Factory method to generate a keypair of a type specified by <paramref name="algorithmID"/>
             and the specified parameters using the default implementation registered with the
@@ -3181,7 +3189,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Combine(Goedel.Cryptography.KeyCollection,Goedel.Mesh.PublicKey,System.String,System.String)">
+        <member name="M:Goedel.Mesh.Assertion.Combine(Goedel.Cryptography.KeyCollection,Goedel.Mesh.PublicKey,System.String,Goedel.Cryptography.KeyUses,System.String)">
             <summary>
             Combine the public key value <paramref name="baseKey"/> with a key derrived from
             <paramref name="secret"/> using the UDF salt value specified by <see
@@ -3190,10 +3198,22 @@
             <param name="keyCollection">The key collection to register the 
             generated public key to.</param>
             <param name="baseKey">The base key parameters.</param>
+            <param name="keyUses">The key uses the key will be used for.</param>
             <param name="secret">The UDF used to derrive the key.</param>
             <param name="saltSuffix">The salt suffix specifying the particular key
             type.</param>
             <returns>The aggregate public key parameters.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.KeyCollection,System.String,System.String)">
+            <summary>
+            Derrive a key pair contribution to an aggregate key pair.
+            </summary>
+            <param name="keyCollection">The keyCollection to manage and persist 
+            the generated keys. This should be null for an activation key.</param>
+            <param name="secretSeed">The secret seed value.</param>
+            <param name="saltSuffix">The salt suffix specifying the particular key
+            type.</param>
+            <returns>The derrived key pair.</returns>
         </member>
         <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.String)">
             <summary>
@@ -3403,6 +3423,9 @@
         <member name="P:Goedel.Mesh.Activation.KeySignature">
             <summary>The aggregate signature key</summary>
         </member>
+        <member name="P:Goedel.Mesh.Activation.UDF">
+            <summary>The UDF identifier</summary>
+        </member>
         <member name="P:Goedel.Mesh.Activation.Connection">
             <summary>The connection value.</summary>
         </member>
@@ -3411,7 +3434,7 @@
             Base constructor.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Activation.#ctor(Goedel.Mesh.Profile,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.UdfAlgorithmIdentifier,System.String,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.Activation.#ctor(Goedel.Mesh.Profile,Goedel.Cryptography.UdfAlgorithmIdentifier,System.Byte[],System.Int32)">
             <summary>
             Constructor creating a new <see cref="T:Goedel.Mesh.Activation"/> for a profile of type
             <paramref name="profile"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
@@ -3427,48 +3450,10 @@
             <param name="keyCollection">The key collection to register the 
             <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
-            <param name="salt">The salt suffix used to derrive the key.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
-            <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-            is null.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Activation.GetPrivate(Goedel.Cryptography.KeyCollection,Goedel.Mesh.PublicKey,System.String)">
-            <summary>
-             Get a private key by combining the device and activation keys. The activation
-             key is generated from <see cref="P:Goedel.Mesh.Activation.ActivationKey"/>.
-            </summary>
-            <param name="keyCollection"></param>
-            <param name="deviceKey"></param>
-            <param name="saltSuffix"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Activation.GetkeyEncryptionPrivate(Goedel.Cryptography.KeyCollection,Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Get the encryption private key.
-            </summary>
-            <param name="keyCollection">The key collection to register the 
-            aggregate public key to.</param>
-            <param name="profileDevice">The base device profile.</param>
-            <returns>The signature private key.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Activation.GetkeySignaturePrivate(Goedel.Cryptography.KeyCollection,Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Get the signature private key.
-            </summary>
-            <param name="keyCollection">The key collection to register the 
-            aggregate public key to.</param>
-            <param name="profileDevice">The base device profile.</param>
-            <returns>The signature private key.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Activation.GetkeyAuthenticationPrivate(Goedel.Cryptography.KeyCollection,Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Get the authentication private key.
-            </summary>
-            <param name="keyCollection">The key collection to register the 
-            aggregate public key to.</param>
-            <param name="profileDevice">The base device profile.</param>
-            <returns>The signature private key.</returns>
+            <param name="bits">The size of the seed to be generated if 
+            <paramref name="masterSecret"/> is null.</param>
         </member>
         <member name="M:Goedel.Mesh.Activation.Package(Goedel.Cryptography.KeyPair)">
             <summary>
@@ -3552,7 +3537,7 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID,System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -3591,7 +3576,7 @@
             within the account.</param>
             <returns>The account description.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -3701,18 +3686,12 @@
             <summary>The <see cref="P:Goedel.Mesh.ActivationAccount.ConnectionAccount"/> instance binding the activated device
             to a MeshProfile.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.KeyEncryption">
-            <summary>The aggregate encryption key</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.KeyAuthentication">
-            <summary>The aggregate authentication key</summary>
-        </member>
         <member name="M:Goedel.Mesh.ActivationAccount.#ctor">
             <summary>
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyCollection,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.ActivationAccount.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
             <summary>
             Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
             <paramref name="profileDevice"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
@@ -3720,13 +3699,10 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for  <see cref="P:Goedel.Mesh.ActivationAccount.KeyEncryption"/> ,
-             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="P:Goedel.Mesh.ActivationAccount.KeyAuthentication"/>,
-            and registered in the KeyCollection <paramref name="keyCollection"/>.
+            The public key value is calculated for the public key pairs and the corresponding
+            <see cref="P:Goedel.Mesh.ActivationAccount.ConnectionAccount"/> generated for the public values.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
-            <param name="keyCollection">The key collection to register the 
-            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
@@ -3740,26 +3716,19 @@
             <param name="keyCollection">Key collection to collect keys from.</param>
             <returns>The decoded ProfileAccount.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-            a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            a leading indent of <paramref name="indent"/> units. The key collection 
+            <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The Key collection.</param>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount.AccountUDF">
              <summary>
             The UDF of the account
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationAccount.KeyGroup">
-             <summary>
-            The key contribution for the decryption key for the device. NB this is 
-            NOT an overlay on the device signature key, it is an overlay on the 
-            corresponding recryption key.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount._Tag">
@@ -3822,7 +3791,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -3931,7 +3900,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID,System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -3961,7 +3930,7 @@
             <param name="envelope">The enveloped profile.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -4053,12 +4022,6 @@
             <summary>The <see cref="P:Goedel.Mesh.ActivationDevice.ConnectionDevice"/> instance binding the activated device
             to a MeshProfile.</summary>
         </member>
-        <member name="P:Goedel.Mesh.ActivationDevice.KeyEncryption">
-            <summary>The aggregate encryption key</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ActivationDevice.KeyAuthentication">
-            <summary>The aggregate authentication key</summary>
-        </member>
         <member name="M:Goedel.Mesh.ActivationDevice.#ctor">
             <summary>
             Default Constructor
@@ -4072,8 +4035,8 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for  <see cref="P:Goedel.Mesh.ActivationDevice.KeyEncryption"/> ,
-             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="P:Goedel.Mesh.ActivationDevice.KeyAuthentication"/>,
+            The public key value is calculated for  <see cref="!:KeyEncryption"/> ,
+             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="!:KeyAuthentication"/>,
             and registered in the KeyCollection <paramref name="keyCollection"/>.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
@@ -4093,15 +4056,15 @@
             <param name="keyCollection">Key collection to collect keys from.</param>
             <returns>New instance of the serialized data.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the mesh machine <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">Mesh machine providing cryptographic context.</param>
         </member>
         <member name="P:Goedel.Mesh.ActivationDevice.Activations">
              <summary>
@@ -4176,7 +4139,7 @@
             <param name="envelope">The DareEnvelope to decode</param>
             <returns>The decoded <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -4287,7 +4250,7 @@
             <param name="keySign">The signature key.</param>
             <param name="keyEncrypt">The encryption key.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a new <see cref="T:Goedel.Mesh.ProfileGroup"/>
             </summary>
@@ -4466,7 +4429,7 @@
             <param name="keySign">The signature key.</param>
             <param name="keyAuth">The authentication key.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.ProfileHost.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a new <see cref="T:Goedel.Mesh.ProfileHost"/> for <paramref name="meshMachine"/> using the 
             signature algorithm <paramref name="algorithmSign"/>    
@@ -4567,7 +4530,7 @@
             <param name="envelope">The envelope to decode.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -4667,7 +4630,7 @@
             </summary>
             <param name="keySign">The offline signature key.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a new <see cref="T:Goedel.Mesh.ProfileService"/>
             </summary>
@@ -4682,7 +4645,7 @@
             <param name="envelope">The envelope to decode.</param>
             <returns>The decoded ProfileService.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmID)">
+        <member name="M:Goedel.Mesh.ProfileService.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Create a host under this service.
             </summary>
@@ -7059,7 +7022,7 @@
             <param name="dareEnvelope">The envelope to decode.</param>
             <returns>The decoded <see cref="T:Goedel.Mesh.MeshItem"/></returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Mesh.IMeshMachine)">
+        <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from

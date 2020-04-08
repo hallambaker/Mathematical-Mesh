@@ -69,12 +69,20 @@ namespace Goedel.Cryptography {
         ///<summary>Delegate returning a new KeyCollection</summary>
         public static KeyCollectionDelegate NewKeyCollection;
 
+        ///<summary>Key pairs by UDF value.</summary>
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
 
-        Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new Dictionary<string, KeyPair>();
-        Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
+        ///<summary>Key pairs by SIN value.</summary>
+        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINEncrypt = new Dictionary<string, KeyPair>();
+        
+        ///<summary>Encryption keypairs by account identifier.</summary>
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountEncrypt = new Dictionary<string, KeyPair>();
+        
+        ///<summary>Signature keypairs by SIN</summary>
+        protected Dictionary<string, KeyPair> DictionaryKeyPairBySINSign = new Dictionary<string, KeyPair>();
+
+        ///<summary>Signature keypairs by Account</summary>
+        protected Dictionary<string, KeyPair> DictionaryKeyPairByAccountSign = new Dictionary<string, KeyPair>();
 
 
         //Dictionary<string, KeyPair> DictionaryKeyPairPrivateByUDF = new Dictionary<string, KeyPair>();
@@ -86,6 +94,10 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyPair">The key pair to add.</param>
         public virtual void Add(KeyPair keyPair) {
+            if (keyPair == null) {
+                return;
+                }
+
             lock (ExclusiveAccess) {
                 DictionaryKeyPairByUDF.AddSafe(keyPair.UDF, keyPair);
                 if (keyPair.Locator != null) {
@@ -113,9 +125,15 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual KeyPair TryMatchRecipient(string keyID) {
+        public virtual KeyPair TryMatchRecipient(string keyID) => TryMatchRecipientKeyPair(keyID);
 
 
+        /// <summary>
+        /// Attempt to find a private key for the specified recipient entry.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match</param>
+        /// <returns>True if a match is found, otherwise false.</returns>
+        protected KeyPair TryMatchRecipientKeyPair(string keyID) {
             // Search our this.SessionPersonal = SessionPersonal;
             if (DictionaryKeyPairByUDF.TryGetValue(keyID, out var KeyPair)) {
                 return KeyPair;

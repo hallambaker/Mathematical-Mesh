@@ -15,7 +15,7 @@ namespace Goedel.Mesh {
     /// </summary>
     public class CatalogApplication : Catalog {
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm/Application";
+        public const string Label = "mmm_Application";
         
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;

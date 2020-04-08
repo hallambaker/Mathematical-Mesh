@@ -68,7 +68,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncoder(
                             CryptoProviderBulk Bulk = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null
                             ) {
 
@@ -141,7 +141,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="Bulk">Provider to use to process the bulk data
         /// signature operations where the asymmetric operation is performed after the
         /// bulk operation completes. </param> 
-        public CryptoDataEncoderDigest(CryptoAlgorithmID Identifier,
+        public CryptoDataEncoderDigest(CryptoAlgorithmId Identifier,
                         CryptoProviderBulk Bulk) :
                             base(Identifier, Bulk) {
             }
@@ -159,12 +159,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHA2_256 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_256;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_256;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -199,7 +199,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA2_256();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHA2_256();
 
 
         }
@@ -209,12 +209,12 @@ namespace Goedel.Cryptography.Standard {
     /// </summary>
     public class CryptoProviderSHA2_512 : CryptoProviderDigest {
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -242,8 +242,8 @@ namespace Goedel.Cryptography.Standard {
         public static new CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog ??= CryptoCatalog.Default;
 
-            var Default = Catalog.Add(CryptoAlgorithmID.SHA_2_512, 512, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.SHA_2_512T128, 128, _AlgorithmClass, Factory);
+            var Default = Catalog.Add(CryptoAlgorithmId.SHA_2_512, 512, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.SHA_2_512T128, 128, _AlgorithmClass, Factory);
 
             return Default;
             }
@@ -254,7 +254,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => Truncate > 0 ? Truncate : 512;
 
         private static CryptoProvider Factory(int KeySize,
-                            CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) => new CryptoProviderSHA2_512(KeySize, ID);
+                            CryptoAlgorithmId ID = CryptoAlgorithmId.SHA_2_512) => new CryptoProviderSHA2_512(KeySize, ID);
 
         /// <summary>
         /// Create a SHA-2-256 digest provider.
@@ -262,7 +262,7 @@ namespace Goedel.Cryptography.Standard {
         /// <param name="KeySize">Key size.</param>
         /// <param name="ID">Cryptgraphic algorithm.</param>
         public CryptoProviderSHA2_512(int KeySize = 512,
-                    CryptoAlgorithmID ID = CryptoAlgorithmID.SHA_2_512) {
+                    CryptoAlgorithmId ID = CryptoAlgorithmId.SHA_2_512) {
 
             if (KeySize > 0 & KeySize < 512) {
                 Truncate = KeySize;
@@ -279,12 +279,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHA1 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_1_DEPRECATED;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_1_DEPRECATED;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -320,7 +320,7 @@ namespace Goedel.Cryptography.Standard {
 
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA1();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHA1();
 
 
         }
@@ -334,12 +334,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHA3_256 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_3_256;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_256;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -374,7 +374,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => 256;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA3_256();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHA3_256();
 
 
         }
@@ -386,12 +386,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHA3_512 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHA_3_512;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -426,7 +426,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => 512;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHA3_512();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHA3_512();
 
 
         }
@@ -439,12 +439,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHAKE128 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHAKE_128;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_128;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -479,7 +479,7 @@ namespace Goedel.Cryptography.Standard {
         public override int Size => 128;
 
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHAKE128();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE128();
 
         }
 
@@ -490,12 +490,12 @@ namespace Goedel.Cryptography.Standard {
     public class CryptoProviderSHAKE256 : CryptoProviderDigest {
 
 
-        static CryptoAlgorithmID _CryptoAlgorithmID = CryptoAlgorithmID.SHAKE_256;
+        static CryptoAlgorithmId _CryptoAlgorithmID = CryptoAlgorithmId.SHAKE_256;
 
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => _CryptoAlgorithmID;
+        public override CryptoAlgorithmId CryptoAlgorithmID => _CryptoAlgorithmID;
 
         /// <summary>
         /// Return a CryptoAlgorithm structure with properties describing this provider.
@@ -529,7 +529,7 @@ namespace Goedel.Cryptography.Standard {
         /// </summary>
         public override int Size => 256;
 
-        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmID DigestAlgorithm) => new CryptoProviderSHAKE256();
+        private static CryptoProvider Factory(int KeySize, CryptoAlgorithmId DigestAlgorithm) => new CryptoProviderSHAKE256();
 
         }
 

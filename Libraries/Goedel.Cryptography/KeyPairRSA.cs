@@ -78,8 +78,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Base">The base algorithm</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
-        public override CryptoAlgorithmID SignatureAlgorithmID(CryptoAlgorithmID Base) =>
-                CryptoAlgorithmID.RSASign | Base.Bulk();
+        public override CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId Base) =>
+                CryptoAlgorithmId.RSASign | Base.Bulk();
 
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Goedel.Cryptography {
                     int keySize = 0,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) {
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.NULL) {
             keySize = keySize == 0 ? 2048 : keySize;
 
             var cspParameters = new CspParameters() { Flags = CspProviderFlags.CreateEphemeralKey };
@@ -228,7 +228,7 @@ namespace Goedel.Cryptography {
         public static KeyPair KeyPairFactory(
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     int keySize = 2048) =>
                     throw new NotImplementedException();
 
@@ -285,7 +285,7 @@ namespace Goedel.Cryptography {
         public override byte[] Decrypt(
                 byte[] EncryptedKey,
                 KeyPair Ephemeral = null,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 KeyAgreementResult Partial = null,
                 byte[] Salt = null) => Provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
 
@@ -299,7 +299,7 @@ namespace Goedel.Cryptography {
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
                 byte[] Data,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 byte[] Context = null) => Provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Goedel.Cryptography {
         /// <param name="Digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
         public override bool VerifyHash(byte[] Digest, byte[] Signature,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) => Provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => Provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
         #endregion
         }
 

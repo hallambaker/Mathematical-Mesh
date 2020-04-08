@@ -26,6 +26,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to register the 
         /// generated public key to.</param>
         /// <param name="baseKey">The base key parameters.</param>
+        /// <param name="keyUses">The key uses the key will be used for.</param>
         /// <param name="secret">The UDF used to derrive the key.</param>
         /// <param name="saltSuffix">The salt suffix specifying the particular key
         /// type.</param>
@@ -34,7 +35,42 @@ namespace Goedel.Mesh {
                 KeyCollection keyCollection,
                 PublicKey baseKey,
                 string secret,
-                string saltSuffix) => throw new NYI();
+                KeyUses keyUses,
+                string saltSuffix) {
+
+            // This fails because the basePrivate isn't registered properly.
+            // we need to be able to derive the stuff from the underlying secret.
+            // One thing to check is that the secret seed is even catalogued at all!
+
+            var basePrivate = baseKey.KeyPair as KeyPairAdvanced;
+            
+            var contribution = Cryptography.UDF.DeriveKey(secret, keyCollection,
+                    KeySecurity.Ephemeral, keyUses: keyUses, basePrivate.CryptoAlgorithmId, saltSuffix) as KeyPairAdvanced;
+
+            var combinedPublic = basePrivate.CombinePublic(contribution);
+
+            return combinedPublic;
+            }
+
+        /// <summary>
+        /// Derrive a key pair contribution to an aggregate key pair.
+        /// </summary>
+        /// <param name="keyCollection">The keyCollection to manage and persist 
+        /// the generated keys. This should be null for an activation key.</param>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="saltSuffix">The salt suffix specifying the particular key
+        /// type.</param>
+        /// <returns>The derrived key pair.</returns>
+        public KeyPair Derive(
+                KeyCollection keyCollection,
+                string secretSeed,
+                string saltSuffix) {
+
+            throw new NYI();
+
+            //return Cryptography.UDF.DeriveKey(secretSeed, keyCollection,
+            //    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
+            }
 
         /// <summary>
         /// Derrive a key pair contribution to an aggregate key pair.
@@ -51,7 +87,7 @@ namespace Goedel.Mesh {
                 string saltSuffix) {
 
             var keyUses = KeyUses.Sign;
-            var cryptoAlgorithmID = CryptoAlgorithmID.NULL;
+            var cryptoAlgorithmID = CryptoAlgorithmId.NULL;
             switch (saltSuffix) {
                 case Constants.UDFMeshKeySufixEncrypt: {
                     keyUses = KeyUses.Encrypt;
@@ -111,6 +147,10 @@ namespace Goedel.Mesh {
             return false;
             }
 
+        public PrivateKeyUDF GetPrivateKeyUDF(IMeshMachine meshMachine) =>
+            meshMachine.KeyCollection.LocatePrivateKey(UDF) as PrivateKeyUDF;
+
+
         }
 
     public partial class Activation {
@@ -119,8 +159,10 @@ namespace Goedel.Mesh {
         public ProfileDevice ProfileDevice { get; set; }
 
         ///<summary>The aggregate signature key</summary>
-        public KeyPairAdvanced KeySignature { get; set; }
+        protected KeyPairAdvanced KeySignature { get; set; }
 
+        ///<summary>The UDF identifier</summary>
+        public string UDF => KeySignature.UDF;
 
         ///<summary>The connection value.</summary>
         public virtual Connection Connection => throw new NYI();
@@ -131,6 +173,7 @@ namespace Goedel.Mesh {
         public Activation() {
             }
 
+        protected MeshKeyType MeshKeyType;
 
         /// <summary>
         /// Constructor creating a new <see cref="Activation"/> for a profile of type
@@ -147,71 +190,21 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to register the 
         /// <see cref="KeySignature"/> public key to.</param>
         /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
-        /// <param name="salt">The salt suffix used to derrive the key.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
         /// a seed value of <paramref name="bits"/> length is generated.</param>
-        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-        /// is null.</param>
+        /// <param name="bits">The size of the seed to be generated if 
+        /// <paramref name="masterSecret"/> is null.</param>
         protected Activation(
                 Profile profile,
-                KeyCollection keyCollection,
                 UdfAlgorithmIdentifier udfAlgorithmIdentifier,
-                string salt,
                 byte[] masterSecret = null,
                 int bits = 256) {
-            masterSecret ??= Platform.GetRandomBits(bits);
-            ActivationKey = Cryptography.UDF.DerivedKey(
-                    udfAlgorithmIdentifier, data: masterSecret);
+            MeshKeyType = udfAlgorithmIdentifier.GetMeshKeyType();
+            ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
 
-            KeySignature = Combine(keyCollection, profile.KeyOfflineSignature,
-                ActivationKey, Constants.UDFMeshKeySufixSign);
-
-
+            KeySignature = profile.KeyOfflineSignature.ActivatePublic(ActivationKey,
+               MeshKeyType | MeshKeyType.Sign);
             }
-
-        /// <summary>
-        ///  Get a private key by combining the device and activation keys. The activation
-        ///  key is generated from <see cref="ActivationKey"/>.
-        /// </summary>
-        /// <param name="keyCollection"></param>
-        /// <param name="deviceKey"></param>
-        /// <param name="saltSuffix"></param>
-        /// <returns></returns>
-        public static KeyPairAdvanced GetPrivate(
-                KeyCollection keyCollection, PublicKey deviceKey, string saltSuffix) =>
-                    throw new NYI();
-
-
-        /// <summary>
-        /// Get the encryption private key.
-        /// </summary>
-        /// <param name="keyCollection">The key collection to register the 
-        /// aggregate public key to.</param>
-        /// <param name="profileDevice">The base device profile.</param>
-        /// <returns>The signature private key.</returns>
-        public KeyPairAdvanced GetkeyEncryptionPrivate(KeyCollection keyCollection, ProfileDevice profileDevice) =>
-            GetPrivate(keyCollection, profileDevice.KeyEncryption, Constants.UDFMeshKeySufixEncrypt);
-
-        /// <summary>
-        /// Get the signature private key.
-        /// </summary>
-        /// <param name="keyCollection">The key collection to register the 
-        /// aggregate public key to.</param>
-        /// <param name="profileDevice">The base device profile.</param>
-        /// <returns>The signature private key.</returns>
-        public KeyPairAdvanced GetkeySignaturePrivate(KeyCollection keyCollection, ProfileDevice profileDevice) =>
-            GetPrivate(keyCollection, profileDevice.KeyOfflineSignature, Constants.UDFMeshKeySufixSign);
-
-        /// <summary>
-        /// Get the authentication private key.
-        /// </summary>
-        /// <param name="keyCollection">The key collection to register the 
-        /// aggregate public key to.</param>
-        /// <param name="profileDevice">The base device profile.</param>
-        /// <returns>The signature private key.</returns>
-        public KeyPairAdvanced GetkeyAuthenticationPrivate(KeyCollection keyCollection, ProfileDevice profileDevice) =>
-            GetPrivate(keyCollection, profileDevice.KeyAuthentication, Constants.UDFMeshKeySufixAuthenticate);
-
 
 
         /// <summary>

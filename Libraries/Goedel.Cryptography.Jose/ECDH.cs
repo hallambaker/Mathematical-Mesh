@@ -54,10 +54,10 @@ namespace Goedel.Cryptography.Jose {
 
             return Curve switch
                 {
-                    "Ed25519" => new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
-                    "Ed448" => new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
-                    "X25519" => new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
-                    "X448" => new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmID.Ed448),
+                    "Ed25519" => new KeyPairEd25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed25519),
+                    "Ed448" => new KeyPairEd448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.Ed448),
+                    "X25519" => new KeyPairX25519(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X25519),
+                    "X448" => new KeyPairX448(Public, KeySecurity.Public, keyUses, CryptoAlgorithmId.X448),
                     _ => throw new NotSupportedException(),
                     };
             }
@@ -131,10 +131,10 @@ namespace Goedel.Cryptography.Jose {
             var keyUses = Use.GetUses();
             return Curve switch
                 {
-                    "Ed25519" => new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
-                    "Ed448" => new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
-                    "X25519" => new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
-                    "X448" => new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmID.Ed448),
+                    "Ed25519" => new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed25519),
+                    "Ed448" => new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed448),
+                    "X25519" => new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmId.X25519),
+                    "X448" => new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmId.X448),
                     _ => throw new NotSupportedException(),
                     };
             }

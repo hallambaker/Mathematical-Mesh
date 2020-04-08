@@ -19,22 +19,22 @@ namespace Goedel.XUnit {
         // Some algorithm variations are intentionally omitted from the support library.
         // To enable testing in the future, the corresponding test vectors are specified
         // in the test set with the algorithm ID set to null;
-        static CryptoAlgorithmID SHA_1 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_2_224 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_2_256 = CryptoAlgorithmID.SHA_2_256;
-        static CryptoAlgorithmID SHA_2_384 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_2_512 = CryptoAlgorithmID.SHA_2_512;
-        static CryptoAlgorithmID SHA_2_512T128 = CryptoAlgorithmID.SHA_2_512T128;
+        static CryptoAlgorithmId SHA_1 = CryptoAlgorithmId.NULL;
+        static CryptoAlgorithmId SHA_2_224 = CryptoAlgorithmId.NULL;
+        static CryptoAlgorithmId SHA_2_256 = CryptoAlgorithmId.SHA_2_256;
+        static CryptoAlgorithmId SHA_2_384 = CryptoAlgorithmId.NULL;
+        static CryptoAlgorithmId SHA_2_512 = CryptoAlgorithmId.SHA_2_512;
+        static CryptoAlgorithmId SHA_2_512T128 = CryptoAlgorithmId.SHA_2_512T128;
         //static CryptoAlgorithmID SHA_3_224 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_3_256 = CryptoAlgorithmID.SHA_3_256;
+        static CryptoAlgorithmId SHA_3_256 = CryptoAlgorithmId.SHA_3_256;
         //static CryptoAlgorithmID SHA_3_384 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.SHA_3_512;
-        static CryptoAlgorithmID SHAKE_128 = CryptoAlgorithmID.SHAKE_128;
-        static CryptoAlgorithmID SHAKE_256 = CryptoAlgorithmID.SHAKE_256;
+        static CryptoAlgorithmId SHA_3_512 = CryptoAlgorithmId.SHA_3_512;
+        static CryptoAlgorithmId SHAKE_128 = CryptoAlgorithmId.SHAKE_128;
+        static CryptoAlgorithmId SHAKE_256 = CryptoAlgorithmId.SHAKE_256;
 
-        static CryptoAlgorithmID SHA_3_224 = CryptoAlgorithmID.NULL;
+        static CryptoAlgorithmId SHA_3_224 = CryptoAlgorithmId.NULL;
         //static CryptoAlgorithmID SHA_3_256 = CryptoAlgorithmID.NULL;
-        static CryptoAlgorithmID SHA_3_384 = CryptoAlgorithmID.NULL;
+        static CryptoAlgorithmId SHA_3_384 = CryptoAlgorithmId.NULL;
         //static CryptoAlgorithmID SHA_3_512 = CryptoAlgorithmID.NULL;
 
         public class TestVectors_SHA_NIST : IEnumerable<object[]> {
@@ -156,7 +156,7 @@ namespace Goedel.XUnit {
         public void TestSHA_Direct(string Message, int Repeat, List<TestVector> TestData) {
             Xunit.Assert.True(Repeat == 1);
             foreach (var TestVector in TestData) {
-                if (TestVector.ID != CryptoAlgorithmID.NULL) {
+                if (TestVector.ID != CryptoAlgorithmId.NULL) {
                     var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
                     TestVector.Verify(Provider, Message, TestVector);
                     }
@@ -167,7 +167,7 @@ namespace Goedel.XUnit {
         [ClassData(typeof(TestVectors_SHA_NIST_Long))]
         public void TestSHA_Stream(string Message, int Repeat, List<TestVector> TestData) {
             foreach (var TestVector in TestData) {
-                if (TestVector.ID != CryptoAlgorithmID.NULL) {
+                if (TestVector.ID != CryptoAlgorithmId.NULL) {
                     var Provider = CryptoCatalog.Default.GetDigest(TestVector.ID);
                     TestVector.Verify_Streamed(Provider, Message, Repeat, TestVector);
                     }
@@ -178,7 +178,7 @@ namespace Goedel.XUnit {
         }
 
     public class TestVector {
-        public CryptoAlgorithmID ID { get; set; }
+        public CryptoAlgorithmId ID { get; set; }
         public byte[] Digest { get; set; }
 
 
@@ -203,7 +203,7 @@ namespace Goedel.XUnit {
             }
 
 
-        public TestVector(CryptoAlgorithmID CryptoAlgorithmID, String Digest) {
+        public TestVector(CryptoAlgorithmId CryptoAlgorithmID, String Digest) {
             ID = CryptoAlgorithmID;
             this.Digest = Digest.FromBase16();
 

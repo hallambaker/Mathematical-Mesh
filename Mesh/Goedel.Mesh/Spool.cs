@@ -9,16 +9,16 @@ namespace Goedel.Mesh {
     public class Spool : Store {
 
         ///<summary>Canonical name for outbound spool</summary>
-        public const string SpoolOutbound = "mmm/Outbound";
+        public const string SpoolOutbound = "mmm_Outbound";
 
         ///<summary>Canonical name for local spool</summary>
-        public const string SpoolLocal = "mmm/Local";
+        public const string SpoolLocal = "mmm_Local";
 
         ///<summary>Canonical name for inbound spool</summary>
-        public const string SpoolInbound = "mmm/Inbound";
+        public const string SpoolInbound = "mmm_Inbound";
 
         ///<summary>Canonical name for archive spool</summary>
-        public const string SpoolArchive = "mmm/Archive";
+        public const string SpoolArchive = "mmm_Archive";
 
         /// <summary>
         /// Constructor.

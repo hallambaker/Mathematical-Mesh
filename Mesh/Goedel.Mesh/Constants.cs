@@ -2,6 +2,118 @@
 
 namespace Goedel.Mesh {
 
+    ///<summary>Enumeration for Key types</summary>
+    public enum MeshKeyType {
+
+        ///<summary>Mask to recover seed type</summary>
+        IndexSeedType = 0x10,
+
+        ///<summary>Mask to recover seed type</summary>
+        MaskSeedType = 0xF * IndexSeedType,
+
+        ///<summary>Mask to recover seed type</summary>
+        MaskKeyUse = 0x0F,
+
+
+        // ** Key uses
+        ///<summary>offline signature</summary>
+        Sign = 0x00,
+
+        ///<summary>Master profile online signature</summary>
+        OnlineSign = 0x01,
+
+        ///<summary>Encryption</summary>
+        Encrypt = 0x02,
+
+        ///<summary>Master profile authentication</summary>
+        Authenticate = 0x03,
+
+        ///<summary>Master profile authentication</summary>
+        PartialUser = 0x04,
+
+        ///<summary>Master profile authentication</summary>
+        PartialService = 0x05,
+
+
+        // ** Master Profile
+        ///<summary>Master profile offline signature</summary>
+        MasterProfile = IndexSeedType * 1,
+
+        ///<summary>Master profile offline signature</summary>
+        MasterOfflineSign = MasterProfile,
+
+        ///<summary>Master profile online signature</summary>
+        MasterOnlineSign = OnlineSign,
+
+        ///<summary>Master profile encryption</summary>
+        MasterEncrypt = Encrypt,
+
+
+        // ** Device Profile
+        ///<summary>Master profile offline signature</summary>
+        DeviceProfile = IndexSeedType * 2,
+
+        ///<summary>Master profile offline signature</summary>
+        DeviceSign = DeviceProfile + Sign,
+
+
+        ///<summary>Master profile encryption</summary>
+        DeviceEncrypt = DeviceSign + Encrypt,
+
+        ///<summary>Master profile authentication</summary>
+        DeviceAuthenticate = DeviceSign + Authenticate,
+
+
+        // ** Account Profile
+        ///<summary>Master profile offline signature</summary>
+        AccountProfile = IndexSeedType * 3,
+
+        ///<summary>Master profile offline signature</summary>
+        AccountSign = AccountProfile + Sign,
+
+        ///<summary>Master profile encryption</summary>
+        AccountEncrypt = AccountSign + Encrypt,
+
+        ///<summary>Master profile authentication</summary>
+        AccountAuthenticate = AccountSign + Authenticate,
+
+
+        // ** Group Profile
+        ///<summary>Master profile offline signature</summary>
+        GroupProfile = IndexSeedType * 4,
+
+        ///<summary>Master profile offline signature</summary>
+        GroupSign = GroupProfile + Sign,
+
+        ///<summary>Master profile encryption</summary>
+        GroupEncrypt = GroupSign + Encrypt,
+
+        ///<summary>Master profile authentication</summary>
+        GroupAuthenticate = GroupSign + Authenticate,
+
+        ///<summary>Master profile authentication</summary>
+        GroupUser = GroupSign + PartialUser,
+
+        ///<summary>Master profile authentication</summary>
+        GroupService = GroupSign + PartialService,
+
+
+        // ** Service Profile
+        ///<summary>Master profile offline signature</summary>
+        ServiceProfile = IndexSeedType * 5,
+
+        ///<summary>Master profile offline signature</summary>
+        ServiceSign = AccountProfile + Sign,
+
+        ///<summary>Master profile encryption</summary>
+        ServiceEncrypt = AccountSign + Encrypt,
+
+        ///<summary>Master profile authentication</summary>
+        ServiceAuthenticate = AccountSign + Authenticate,
+
+        }
+
+
     /// <summary>
     /// Collected constants used in the Mathematical Mesh
     /// </summary>
@@ -43,96 +155,6 @@ namespace Goedel.Mesh {
         public const string UDFActivationService = "ActivationService";
 
 
-
-        ///<summary>Salt value for creating a ProfileMaster Encryption Key</summary>
-        public const string MeshKeyMasterEncrypt = "mmm/ProfileMeshEncrypt";
-        ///<summary>Salt value for creating a ProfileMaster Signature Key</summary>
-        public const string MeshKeyMasterSign           = "mmm/ProfileMeshSign";
-
-
-        ///<summary>Salt value for creating a ProfileDevice Encryption Key</summary>
-        public const string MeshKeyDeviceEncrypt = "mmm/ProfileDeviceEncrypt";
-        ///<summary>Salt value for creating a ProfileDevice Signature Key</summary>
-        public const string MeshKeyDeviceSign           = "mmm/ProfileDeviceSign";
-        ///<summary>Salt value for creating a ProfileDevice Authentication Key</summary>
-        public const string MeshKeyDeviceAuthenticate   = "mmm/ProfileDeviceEscrow";
-
-
-        ///<summary>Salt value for creating a ProfileAccount Encryption Key</summary>
-        public const string MeshKeyAccountEncrypt = "mmm/ProfileAccountEncrypt";
-        ///<summary>Salt value for creating a ProfileAccount Signature Key</summary>
-        public const string MeshKeyAccountSign          = "mmm/ProfileAccountSign";
-        ///<summary>Salt value for creating a ProfileAccount Authentication Key</summary>
-        public const string MeshKeyAccountAuthenticate  = "mmm/ProfileAccountAuthenticate";
-
-        // Group
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ///<summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        public const string MeshKeyGroupEncrypt= "mmm/ProfileGroupEncrypt";
-        ///<summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        public const string MeshKeyGroupSign = "mmm/ProfileGroupAccountSign";
-        ///<summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        public const string MeshKeyGroupAuthenticate = "mmm/ProfileGroupAuthenticate";
-
-        ///<summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        public const string MeshKeyGroupEncryptActivation = "mmm/ProfileGroupEncryptActivation";
-        ///<summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        public const string MeshKeyGroupSignActivation = "mmm/ProfileGroupAccountSignActivation";
-        ///<summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        public const string MeshKeyGroupAuthenticateActivation = "mmm/ProfileGroupAuthenticateActivation";
-
-        // Service
-
-        ///<summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        public const string MeshKeyServiceEncrypt = "mmm/ProfileServiceEncrypt";
-        ///<summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        public const string MeshKeyServiceSign = "mmm/ProfileServiceAccountSign";
-        ///<summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        public const string MeshKeyServiceAuthenticate = "mmm/ProfileServiceAuthenticate";
-
-
-
-        ///<summary>Salt value for creating a ActivationDevice Encryption Key</summary>
-        public const string MeshKeyDeviceEncryptActivation = "mmm/ActivationDeviceEncrypt";
-        ///<summary>Salt value for creating a ActivationDevice Signature  Key</summary>
-        public const string MeshKeyDeviceSignActivation = "mmm/ActivationDeviceSign";
-        ///<summary>Salt value for creating a ActivationDevice Authentication Activation Key</summary>
-        public const string MeshKeyDeviceAuthenticateActivation = "mmm/ActivationDeviceAuthenticate";
-
-
-        ///<summary>Salt value for creating a ActivationAccount Encryption Key</summary>
-        public const string MeshKeyAccountEncryptActivation = "mmm/ActivationAccountEncrypt";
-        ///<summary>Salt value for creating a ActivationAccount Signature Key</summary>
-        public const string MeshKeyAccountSignActivation = "mmm/ActivationAccountSign";
-        ///<summary>Salt value for creating a ActivationAccount Authentication  Key</summary>
-        public const string MeshKeyAccountAuthenticateActivation = "mmm/ActivationAccountAuthenticate";
-
-
-
-
-
         // Transaction related constants
 
         ///<summary>Transaction result tag Accept</summary>
@@ -144,50 +166,53 @@ namespace Goedel.Mesh {
         ///<summary>Transaction result tag Pending</summary>
         public const string TransactionResultPending = "Pending";
 
+        ///<summary>Transaction result tag Expired</summary>
+        public const string TransactionResultExpired = "Expired";
+
 
         // CryptoAlgorithmID related constants and convenience functions
 
         ///<summary>The default encryption algorithm</summary>
-        public const CryptoAlgorithmID DefaultAlgorithmEncryptID = CryptoAlgorithmID.Ed448;
+        public const CryptoAlgorithmId DefaultAlgorithmEncryptID = CryptoAlgorithmId.X448;
         ///<summary>The default signature algorithm</summary>
-        public const CryptoAlgorithmID DefaultAlgorithmSignID = CryptoAlgorithmID.Ed448;
+        public const CryptoAlgorithmId DefaultAlgorithmSignID = CryptoAlgorithmId.Ed448;
         ///<summary>The default authentication algorithm</summary>
-        public const CryptoAlgorithmID DefaultAlgorithmAuthenticateID = CryptoAlgorithmID.Ed448;
+        public const CryptoAlgorithmId DefaultAlgorithmAuthenticateID = CryptoAlgorithmId.X448;
 
         /// <summary>
         /// Convenience function that returns the value <see cref="DefaultAlgorithmEncryptID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmID.Default"/> 
+        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
         /// and <paramref name="cryptoAlgorithmID"/>
         /// otherwise.
         /// </summary>
         /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
         /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmID.Default"/>.</returns>
-        public static CryptoAlgorithmID DefaultAlgorithmEncrypt(this CryptoAlgorithmID cryptoAlgorithmID) =>
+        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+        public static CryptoAlgorithmId DefaultAlgorithmEncrypt(this CryptoAlgorithmId cryptoAlgorithmID) =>
             cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmEncryptID);
 
         /// <summary>
         /// Convenience function that returns the value <see cref="DefaultAlgorithmSignID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmID.Default"/> 
+        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
         /// and <paramref name="cryptoAlgorithmID"/>
         /// otherwise.
         /// </summary>
         /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
         /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmID.Default"/>.</returns>
-        public static CryptoAlgorithmID DefaultAlgorithmSign(this CryptoAlgorithmID cryptoAlgorithmID) =>
+        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+        public static CryptoAlgorithmId DefaultAlgorithmSign(this CryptoAlgorithmId cryptoAlgorithmID) =>
             cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmSignID);
 
         /// <summary>
         /// Convenience function that returns the value <see cref="DefaultAlgorithmAuthenticateID"/> if
-        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmID.Default"/> 
+        /// <paramref name="cryptoAlgorithmID"/> is <see cref="CryptoAlgorithmId.Default"/> 
         /// and <paramref name="cryptoAlgorithmID"/>
         /// otherwise.
         /// </summary>
         /// <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
         /// <returns>The value <paramref name="cryptoAlgorithmID"/> with the
-        /// specified substitution if the value is <see cref="CryptoAlgorithmID.Default"/>.</returns>
-        public static CryptoAlgorithmID DefaultAlgorithmAuthenticate(this CryptoAlgorithmID cryptoAlgorithmID) =>
+        /// specified substitution if the value is <see cref="CryptoAlgorithmId.Default"/>.</returns>
+        public static CryptoAlgorithmId DefaultAlgorithmAuthenticate(this CryptoAlgorithmId cryptoAlgorithmID) =>
             cryptoAlgorithmID.DefaultMeta(DefaultAlgorithmAuthenticateID);
 
         }

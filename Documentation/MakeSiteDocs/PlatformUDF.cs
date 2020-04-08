@@ -58,7 +58,7 @@ namespace ExampleGenerator {
             UDFSplitSecret = new SharedSecret(128);
             UDFSplitShares = UDFSplitSecret.Split(5, 3, out UDFSplitPolynomial);
 
-            PublicKeyed25519 = KeyPair.Factory(CryptoAlgorithmID.Ed25519, KeySecurity.Exportable)
+            PublicKeyed25519 = KeyPair.Factory(CryptoAlgorithmId.Ed25519, KeySecurity.Exportable)
                 as KeyPairEd25519;
 
             //var test = PublicKeyed25519.KeyInfoData;
@@ -126,7 +126,7 @@ namespace ExampleGenerator {
 
             Salt = GC.UDF.KeySpecifier(AlgorithmID);
 
-            HKDF = new KeyDeriveHKDF(IKM, Salt, CryptoAlgorithmID.HMAC_SHA_2_512);
+            HKDF = new KeyDeriveHKDF(IKM, Salt, CryptoAlgorithmId.HMAC_SHA_2_512);
 
             }
 

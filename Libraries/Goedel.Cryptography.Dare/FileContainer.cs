@@ -433,7 +433,7 @@ position: Reader.container.PositionFinalFrameStart);
         /// <param name="Recipients">The list of recipients</param>
         /// <param name="AlgorithmID">The bulk encryption algorithm</param>
         /// <returns>The result of the key exchange.</returns>
-        public virtual byte[] GetExchange(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) => Decrypt(Recipients, AlgorithmID);
+        public virtual byte[] GetExchange(List<Recipient> Recipients, CryptoAlgorithmId AlgorithmID) => Decrypt(Recipients, AlgorithmID);
 
 
 
@@ -443,7 +443,7 @@ position: Reader.container.PositionFinalFrameStart);
         /// <param name="Recipients">The recipient entry.</param>
         /// <param name="AlgorithmID">The symmetric encryption cipher (used to decrypt the wrapped key).</param>
         /// <returns></returns>
-        public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmID AlgorithmID) {
+        public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmId AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
                 var DecryptionKey = KeyCollection.Default.TryMatchRecipient(Recipient.Header.Kid);

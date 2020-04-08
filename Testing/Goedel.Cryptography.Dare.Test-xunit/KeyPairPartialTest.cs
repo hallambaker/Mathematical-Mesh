@@ -25,7 +25,7 @@ namespace Goedel.XUnit {
         public override byte[] Decrypt(
                     byte[] encryptedKey,
                     KeyPair ephemeral = null,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     KeyAgreementResult partial = null,
                     byte[] salt = null) {
 

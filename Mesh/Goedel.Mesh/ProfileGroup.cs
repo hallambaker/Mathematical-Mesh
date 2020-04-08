@@ -71,8 +71,8 @@ namespace Goedel.Mesh {
         /// <returns>the created group.</returns>
         public static ProfileGroup Generate(
                     IMeshMachine meshMachine,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default) {
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
             algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);

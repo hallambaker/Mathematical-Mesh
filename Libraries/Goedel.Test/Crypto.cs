@@ -14,8 +14,8 @@ namespace Goedel.Test {
         public CryptoParametersTest(
                     List<string> recipients = null,
                     List<string> signers = null,
-                    CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
-                    CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) :
+                    CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                    CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) :
             base(new KeyCollectionCore(), recipients, signers, encryptID: encryptID, digestID: digestID) {
             }
 

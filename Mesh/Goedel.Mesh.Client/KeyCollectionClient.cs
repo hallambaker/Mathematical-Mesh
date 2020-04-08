@@ -51,7 +51,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
         public override KeyPair TryMatchRecipient(string keyID) =>
-                    keyCollectionBase.TryMatchRecipient(keyID);
+            keyCollectionBase.TryMatchRecipient(keyID) ?? TryMatchRecipientKeyPair(keyID);
 
         /// <summary>
         /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.

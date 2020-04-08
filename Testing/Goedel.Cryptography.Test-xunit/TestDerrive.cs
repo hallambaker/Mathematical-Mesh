@@ -64,7 +64,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestDerive_5869_Separate() {
             foreach (var TestVector in TestVectors_Derive_5869_SHA256) {
-                var SHA256 = CryptoAlgorithmID.HMAC_SHA_2_256;
+                var SHA256 = CryptoAlgorithmId.HMAC_SHA_2_256;
                 TestVector.Verify(SHA256);
                 }
             }
@@ -77,7 +77,7 @@ namespace Goedel.XUnit {
             Xunit.Assert.Throws<ImplementationLimit>(() => {
                 foreach (var TestVector in TestVectors_Derive_5869_SHA256) {
 
-                    var SHA256 = CryptoAlgorithmID.HMAC_SHA_2_256;
+                    var SHA256 = CryptoAlgorithmId.HMAC_SHA_2_256;
                     var KDF = new KeyDeriveHKDF(
                                 TestVectors_Derive_5869_SHA256[0].IKM,
                                 TestVectors_Derive_5869_SHA256[0].Salt, SHA256);
@@ -117,7 +117,7 @@ namespace Goedel.XUnit {
         //    OKM.AssertEqual(Result_OKM);
         //    }
 
-        public void Verify(CryptoAlgorithmID ID) {
+        public void Verify(CryptoAlgorithmId ID) {
             var KDF = new KeyDeriveHKDF(IKM, Salt, ID);
             var OKM = KDF.Derive(Info, L * 8);
 

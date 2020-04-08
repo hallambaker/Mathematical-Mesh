@@ -36,27 +36,27 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestInstanceB() => TestEncodeDecode(TestDataBasic,
-                        DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory);
 
         [Fact]
         public void TestArrayB() => TestEncodeDecode(TestDataArray,
-                        DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory);
 
         [Fact]
         public void TestStructB() => TestEncodeDecode(TestDataStruct,
-                        DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory);
 
 
         [Fact]
         public void TestInstanceB2() => TestEncodeDecode(TestDataBasic,
-                        DataEncoding.JSON, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonBcdReader.JSONReaderFactory);
 
         [Fact]
         public void TestArrayB2() => TestEncodeDecode(TestDataArray,
-                        DataEncoding.JSON, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonBcdReader.JSONReaderFactory);
         [Fact]
         public void TestStructB2() => TestEncodeDecode(TestDataStruct,
-                        DataEncoding.JSON, JSONBCDReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonBcdReader.JSONReaderFactory);
 
 
         [Fact]
@@ -97,13 +97,13 @@ namespace Goedel.XUnit {
                 yield return new object[] { TestDataArray, DataEncoding.JSON, JSONReader.JSONReaderFactory };
                 yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONReader.JSONReaderFactory };
 
-                yield return new object[] { TestDataBasic, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
-                yield return new object[] { TestDataArray, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
-                yield return new object[] { TestDataStruct, DataEncoding.JSON_B, JSONBCDReader.JSONReaderFactory };
+                yield return new object[] { TestDataBasic, DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory };
+                yield return new object[] { TestDataStruct, DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory };
 
-                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
-                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
-                yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONBCDReader.JSONReaderFactory };
+                yield return new object[] { TestDataBasic, DataEncoding.JSON, JsonBcdReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON, JsonBcdReader.JSONReaderFactory };
+                yield return new object[] { TestDataStruct, DataEncoding.JSON, JsonBcdReader.JSONReaderFactory };
                 }
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

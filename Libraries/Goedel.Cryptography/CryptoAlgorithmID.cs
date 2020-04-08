@@ -36,7 +36,7 @@ namespace Goedel.Cryptography {
     /// <para>0x00000000-0x0000FFFF: Bulk algorithms (digest, encryption, etc)</para>
     /// <para>0x00010000-0x7FFF0000: Asymmetric algorithms and Key Wrap.</para>
     /// </summary>
-    public enum CryptoAlgorithmID {
+    public enum CryptoAlgorithmId {
         ///<summary>Unknown/unsupported</summary>
         Unknown = -2,
 

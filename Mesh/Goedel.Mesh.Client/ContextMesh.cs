@@ -1,8 +1,16 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
 using Goedel.Utilities;
+using Goedel.Mesh;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh.Client {
+
+
+
+
 
     /// <summary>
     /// Base context for interacting with a Mesh.
@@ -14,39 +22,95 @@ namespace Goedel.Mesh.Client {
         ///<summary>The Mesh host</summary>
         public MeshHost MeshHost { get; }
 
+        ///<summary>The key collection</summary>
+        public KeyCollection KeyCollection => MeshHost.KeyCollection;
+
+
+        ///<summary>The cataloged device</summary>
+        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
+
+        ///<summary>The connection device</summary>
+        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionDevice;
 
         ///<summary>The master profile</summary>
-        public ProfileMesh ProfileMesh { get; }
+        public ProfileMesh ProfileMesh => CatalogedDevice?.ProfileMesh;
+
+        ///<summary>The device profile</summary>
+        public ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
+
+        ///<summary>The device activation</summary>
+        public ActivationDevice ActivationDevice => CatalogedDevice?.GetActivationDevice(KeyCollection);
 
         ///<summary>The Device Entry in the CatalogHost</summary>
         public CatalogedMachine CatalogedMachine;
 
-        ///<summary>For a non administrative device, the CatalogEntryDevice is in the 
-        ///connection entry;</summary>
-        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
-
-        //public ConnectionDevice ConnectionDevice =>
-        //    CatalogedDevice.ConnectionDevice;
 
         //public ContextMeshAdmin ContextMeshAdmin => this as ContextMeshAdmin;
 
+        ///<summary>The device key generation seed</summary>
+        protected PrivateKeyUDF DeviceKeySeed;
 
+        KeyPair deviceDecrypt;
 
+        KeyPair keySignature;
+        KeyPair keyEncryption;
+        KeyPair keyAuthentication;
 
         /// <summary>
         /// Default constructor.
         /// </summary>
         /// <param name="meshHost">The Mesh Host</param>
-        /// <param name="deviceConnection">The device connection record.</param>
-        public ContextMesh(MeshHost meshHost, CatalogedMachine deviceConnection) {
-            Assert.AssertNotNull(deviceConnection, NYI.Throw);
+        /// <param name="catalogedMachine">The cataloged Mesh record.</param>
+        public ContextMesh(MeshHost meshHost, CatalogedMachine catalogedMachine) {
+            Assert.AssertNotNull(catalogedMachine, NYI.Throw);
 
             MeshHost = meshHost;
-            CatalogedMachine = deviceConnection;
+            CatalogedMachine = catalogedMachine;
 
-            ProfileMesh = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
+            // set profile device up here
+            // 
 
+
+
+            DeviceKeySeed = ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
+            deviceDecrypt = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
+
+            Console.WriteLine($"Device Encrypt {deviceDecrypt}");
+            KeyCollection.Add(deviceDecrypt);
+
+            // register the private decryption key here.
+
+            if (CatalogedDevice != null) {
+                var activationKey = ActivationDevice.ActivationKey;
+                activationKey.AssertNotNull(Internal.Throw);
+
+                keySignature = DeviceKeySeed.ActivatePrivate(
+                    activationKey, MeshKeyType.DeviceSign, KeyCollection);
+                keyEncryption = DeviceKeySeed.ActivatePrivate(
+                    activationKey, MeshKeyType.DeviceEncrypt, KeyCollection);
+                keyAuthentication = DeviceKeySeed.ActivatePrivate(
+                    activationKey, MeshKeyType.DeviceAuthenticate, KeyCollection);
+
+                
+                
+                (keySignature.UDF).AssertEqual(ConnectionDevice.KeySignature.UDF);
+                
+                
+                // These are failing because the underlying combination schemes are failing.
+                (keyEncryption.UDF).AssertEqual(ConnectionDevice.KeyEncryption.UDF);
+                (keyAuthentication.UDF).AssertEqual(ConnectionDevice.KeyAuthentication.UDF);
+
+                }
             }
+
+
+        public KeyPair ActivateKey(string activationKey, MeshKeyType meshKeyType) {
+
+            DeviceKeySeed ??= ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
+            return DeviceKeySeed.ActivatePrivate(
+                    activationKey, meshKeyType, KeyCollection);
+            }
+
 
         // The account activation was not added to activations.
 
@@ -67,10 +131,10 @@ namespace Goedel.Mesh.Client {
         /// Update <paramref name="catalogedDevice"/> in the Mesh context.
         /// </summary>
         /// <param name="catalogedDevice">The device to update.</param>
-        public void UpdateDevice(CatalogedDevice catalogedDevice) {
+        public void UpdateDevice() {
 
-            CatalogedMachine.CatalogedDevice = catalogedDevice;
-            MeshMachine.MeshHost.Register(CatalogedMachine);
+            //CatalogedMachine.CatalogedDevice = catalogedDevice;
+            MeshHost.Register(this);
             }
 
         }
@@ -90,11 +154,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the original connection request.</summary>
         public RequestConnection MessageRequestConnection => MessageAcknowledgeConnection?.MessageConnectionRequest;
 
-        ///<summary>Convenience accessor for the Profile Device</summary>
-        public ProfileDevice ProfileDevice => MessageRequestConnection?.ProfileDevice;
-
-
         KeyPair keyAuthentication;
+        KeyPair keyEncryption;
+        KeyPair keySignature;
 
         ///<summary>Convenience accessor for the Account Service ID</summary>
         public string ServiceID => MessageRequestConnection?.ServiceID;
@@ -109,6 +171,13 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedMachine">The pending connection description.</param>
         public ContextMeshPending(MeshHost meshHost, CatalogedMachine catalogedMachine) :
                     base(meshHost, catalogedMachine) {
+
+            
+            keyAuthentication = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceAuthenticate);
+            keyEncryption= DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
+            keySignature = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceSign);
+
+            KeyCollection.Add(keyEncryption);
             }
 
 
@@ -129,9 +198,9 @@ namespace Goedel.Mesh.Client {
                 string serviceID,
                 string localName = null,
                 string pin = null,
-                CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-                CryptoAlgorithmID algorithmAuthenticate = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
 
             var secretSeed = new PrivateKeyUDF (
                     UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
@@ -209,8 +278,6 @@ namespace Goedel.Mesh.Client {
 
             "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
-            keyAuthentication ??= MeshMachine.KeyCollection.LocatePrivateKeyPair(
-                        ProfileDevice.KeyAuthentication.UDF);
 
             MeshClient ??= MeshMachine.GetMeshClient(ServiceID, keyAuthentication, null);
 
@@ -220,16 +287,29 @@ namespace Goedel.Mesh.Client {
                 };
 
             var completeResponse = MeshClient.Complete(completeRequest);
-
+            completeResponse.Success().AssertTrue(ConnectionAccountUnknown.Throw);
 
             //// OK so here we need to unpack the profile etc.
             var respondConnection = RespondConnection.Decode(
-                    completeResponse.SignedResponse, MeshMachine.KeyCollection);
+                    completeResponse.SignedResponse, KeyCollection);
 
-            respondConnection.Validate(ProfileDevice, MeshMachine.KeyCollection);
+            respondConnection.Validate(ProfileDevice, KeyCollection);
+
+            switch (respondConnection.Result) {
+                case Constants.TransactionResultReject: throw new ConnectionRefused();
+                case Constants.TransactionResultPending: throw new ConnectionPending();
+                case Constants.TransactionResultExpired: throw new ConnectionExpired();
+                }
+
+
+
+            // Check the return result here!
+
+            respondConnection.Result.AssertEqual(Constants.TransactionResultAccept);
+
 
             var catalogedEntry = respondConnection.CatalogedDevice;
-            var activationDevice = catalogedEntry.GetActivationDevice(MeshMachine.KeyCollection);
+            var activationDevice = catalogedEntry.GetActivationDevice(KeyCollection);
             var connectionDevice = catalogedEntry.ConnectionDevice;
             var profileMaster = catalogedEntry.ProfileMesh;
 
@@ -240,13 +320,16 @@ namespace Goedel.Mesh.Client {
                 CatalogedDevice = catalogedEntry,
                 EnvelopedProfileMaster = profileMaster.DareEnvelope
                 };
-            MeshMachine.MeshHost.Register(catalogedStandard);
+            MeshHost.Register(catalogedStandard);
 
             // create the context mesh
             var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
 
             // now create the account context for the account we asked to connect to and initialize
             var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID);
+
+            Directory.CreateDirectory(contextAccount.DirectoryAccount);
+
             contextAccount.Sync();
                       
             return contextAccount;

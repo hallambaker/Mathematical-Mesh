@@ -46,9 +46,13 @@ namespace Goedel.Mesh {
                     KeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
-            var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
-            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
- 
+            //var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
+            //var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
+
+            var meshKeyType = MeshKeyType.MasterProfile;
+            var keySign = secretSeed.BasePrivate( meshKeyType | MeshKeyType.Sign);
+            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
+
             KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
             KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
 
@@ -81,7 +85,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="machine">Mesh machine providing cryptographic context.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Profile Mesh");
             indent++;

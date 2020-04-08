@@ -221,7 +221,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public override bool CanWrite => false;
 
-        JSONBCDReader jbcdReader;
+        JsonBcdReader jbcdReader;
 
         /// <summary>
         /// Create a CryptoStack
@@ -230,7 +230,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="mac"></param>
         /// <param name="digest"></param>
         public CryptoStackStreamReader(
-                    JSONBCDReader stream,
+                    JsonBcdReader stream,
                     HashAlgorithm mac,
                     HashAlgorithm digest) : base(mac, digest) {
             this.jbcdReader = stream;

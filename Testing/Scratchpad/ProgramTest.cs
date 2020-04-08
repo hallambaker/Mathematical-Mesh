@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Utilities;
 using Goedel.XUnit;
+using Goedel.Mesh;
 
 using System;
 
@@ -19,55 +20,32 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-
-
-            ShellTests.Test().TestConnectRequest();
-
-
-            //TestGoedelCryptography.Test().X448SignedMultiplyFast(1000, 49);
-
-            //TestGoedelCryptography.Test().X448SignedMultiply(1000, 500);
-            //TestGoedelCryptography.Test().X448SignedMultiply(1000, 49);
-
-
-
-            // The tests we need to clear to get the group encryption stuff going:
-
-            //int succeeded = 0;
-            //for (int i = 0; i < 100; i++) {
-
-            //    var success = TestGoedelCryptography.Test().TryX25519AgreeRecryption();
-            //    if (success) {
-            //        succeeded++;
-            //        }
-
-            //    Console.WriteLine($"{success}");
-            //    }
-
-            //Console.WriteLine($"Total Success={succeeded}/100");
-
-            //TestGoedelCryptography.Test().X25519AgreeRecryption();
-
-            //TestDare.Test().MessageGroup();
-            //TestDare.Test().MessageEncrypted();
-
+            // Service Tests
+            //TestService.Test().MeshDeviceConnectApprove();
+            //TestService.Test().MeshDeviceConnectPIN();
+            //TestService.Test().MeshCatalogMultipleDevice();
             //TestService.Test().MeshCatalogAccount();
-            //TestService.Test().MeshCatalogGroup();
+
+
+            // This test is failing because the message from Bob isn't passed to Alice.
+            TestService.Test().MeshMessageContact();
+            //TestService.Test().MeshMessageConfirm();
+
+            //TestService.Test().MeshServiceFull();
+
+
+
 
             // From the command line:
-            //ShellTests.Test().TestFileEncrypt();
-            //ShellTests.Test().TestFileSignEncrypt();
-            //ShellTests.Test().TestMessageGroup();
 
             // Archive related shell commands
             //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();
             //ShellTests.Test().TestContainerCatalogEncrypt();
 
-            // Application related shell commands
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
+            //ShellTests.Test().TestFileEncrypt();
+            //ShellTests.Test().TestFileSignEncrypt();
+
 
             // Shell connect tests
             //ShellTests.Test().TestProfileConnect();
@@ -77,34 +55,25 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectEARL();
             //ShellTests.Test().TestProfileConnectPin();
 
-
             // The whole Escrow thing
             //ShellTests.Test().TestProfileEscrow();
 
+            // Application related shell commands
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
+
+
+
+            // All the tests related to Groups.
+            //TestService.Test().MeshCatalogGroup();
+            //ShellTests.Test().TestMessageGroup();
             }
 
 
-        /*
-         * Need to have a better theory of how MessagIDs are processed and some specific tests
-         * 
-         * message status {accountA} has to be fixed up
-         *  - detect completion of connection
-         *  - detect outstanding connection requests
-         * 
-         * May well be something strange going on with the handling/enumeration of spools
-         *  - Is it possible to traverse in reverse
-         * 
-         * Track read / unread messages
-         * 
-         * Correct bug when connecting a third device to a profile - getting just the original
-         * request.
-         * 
-         * 
-         */
-
 
         public static void Find(
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_3_512) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_3_512) {
             //  Magic number for SHA2 is 4187123
             //  Magic number for SHA3 is  774665
             for (var i = 0; true; i++) {

@@ -5,7 +5,7 @@ using Goedel.Utilities;
 namespace Goedel.Cryptography {
 
     /// <summary>
-    /// KeyPair binding for Ed448 signature and exchange.
+    /// KeyPair binding for X448 signature and exchange.
     /// </summary>
     public class KeyPairX448 : KeyPairECDH {
 
@@ -57,9 +57,9 @@ namespace Goedel.Cryptography {
                     byte[] key,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X448);
             this.keyType = keyType;
             KeyUses = keyUses;
             if (keyType == KeySecurity.Public) {
@@ -72,12 +72,12 @@ namespace Goedel.Cryptography {
                 var exportable = keyType.IsExportable();
                 PrivateKey = new CurveX448Private(key, exportable);
                 PublicKey = PrivateKey.Public;
-                PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
+                PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
                 if (exportable) {
                     PKIXPrivateKeyECDH = new PKIXPrivateKeyX448(key, PKIXPublicKeyECDH);
                     }
                 }
-            PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
+            PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
             }
 
 
@@ -95,8 +95,8 @@ namespace Goedel.Cryptography {
         public KeyPairX448(byte[] ikm, byte[] salt,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
-                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 448, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) :
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 448, CryptoAlgorithmId.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
             }
 
         /// <summary>
@@ -112,10 +112,11 @@ namespace Goedel.Cryptography {
                     CurveX448Private privateKey = null,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X448);
             PrivateKey = privateKey;
-            //encodedPrivateKey = privateKey.Private.ToByteArrayLittleEndian(56);
+            PublicKey = privateKey.Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
             keyType = keySecurity;
             KeyUses = keyUses;
             }
@@ -130,7 +131,7 @@ namespace Goedel.Cryptography {
         public static KeyPairX448 Generate(
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
             new KeyPairX448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
         ///// <summary>
@@ -151,12 +152,15 @@ namespace Goedel.Cryptography {
         /// <param name="Public">The public key value</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         public KeyPairX448(IKeyAdvancedPublic Public,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-            CryptoAlgorithmID = cryptoAlgorithmID == CryptoAlgorithmID.Default ?
-                CryptoAlgorithmID.Ed448 : cryptoAlgorithmID;
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default,
+                    KeyUses keyUses = KeyUses.Any) {
+            CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
+                CryptoAlgorithmId.X448 : cryptoAlgorithmID;
             PublicKey = Public as CurveX448Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
+            KeyUses = keyUses;
             }
 
 
@@ -176,15 +180,17 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="PublicKey">The public key</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey) =>
-            new KeyPairX448((CurveEdwards448Public)PublicKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic PublicKey,
+                    KeyUses keyUses = KeyUses.Any) =>
+            new KeyPairX448((CurveX448Public)PublicKey, keyUses: keyUses);
 
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.
         /// </summary>
         /// <returns>The new keypair that contains only the public values.</returns>
-        public override KeyPair KeyPairPublic() => new KeyPairEd448(PublicKey);
+        public override KeyPair KeyPairPublic() => new KeyPairX448(PublicKey);
 
         /// <summary>
         /// Persist the key to a key collection. Note that it is only possible to store a 
@@ -241,7 +247,7 @@ namespace Goedel.Cryptography {
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(byte[] EncryptedKey,
             KeyPair Ephemeral = null,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             KeyAgreementResult Partial = null, byte[] Salt = null) {
 
             var keyPairX448 = Ephemeral as KeyPairX448;
@@ -260,7 +266,7 @@ namespace Goedel.Cryptography {
         /// for protocol isolation.</param>
         /// <returns>The signature data</returns>
         public override byte[] SignHash(byte[] Data,
-                CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 byte[] Context = null) => throw new InvalidOperation();
 
         /// <summary>
@@ -275,7 +281,7 @@ namespace Goedel.Cryptography {
         public override bool VerifyHash(
             byte[] Data,
             byte[] Signature,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 byte[] Context = null) => throw new InvalidOperation();
         #endregion
         }

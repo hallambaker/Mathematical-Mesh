@@ -32,27 +32,27 @@ namespace Goedel.Cryptography.Dare {
         List<KeyPair> signerKeys;
 
         /// <summary>The authentication algorithm to use</summary>
-        public CryptoAlgorithmID DigestID;
+        public CryptoAlgorithmId DigestID;
 
         /// <summary>The encryption algorithm to use</summary>
-        public CryptoAlgorithmID EncryptID;
+        public CryptoAlgorithmId EncryptID;
 
 
 
         /// <summary>
         /// If true, data is to be encrypted.
         /// </summary>
-        public bool Encrypt => EncryptID != CryptoAlgorithmID.NULL;
+        public bool Encrypt => EncryptID != CryptoAlgorithmId.NULL;
 
         /// <summary>
         /// If true, data is to be digested.
         /// </summary>
-        public bool Digest => DigestID != CryptoAlgorithmID.NULL;
+        public bool Digest => DigestID != CryptoAlgorithmId.NULL;
 
 
 
-        void SetEncrypt() => EncryptID = EncryptID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : EncryptID;
-        void SetDigest() => DigestID = DigestID == CryptoAlgorithmID.NULL ? CryptoAlgorithmID.Default : DigestID;
+        void SetEncrypt() => EncryptID = EncryptID == CryptoAlgorithmId.NULL ? CryptoAlgorithmId.Default : EncryptID;
+        void SetDigest() => DigestID = DigestID == CryptoAlgorithmId.NULL ? CryptoAlgorithmId.Default : DigestID;
 
         /// <summary>
         /// If true, data is to be signed.
@@ -84,8 +84,8 @@ namespace Goedel.Cryptography.Dare {
                         List<string> signers = null,
                         KeyPair recipient = null,
                         KeyPair signer = null,
-                        CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
-                        CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) {
+                        CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
+                        CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
             this.DigestID = digestID;
             this.EncryptID = encryptID;
 

@@ -17,7 +17,7 @@ namespace Goedel.Mesh {
     /// </summary>
     public class CatalogDevice : Catalog {
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm/Device";
+        public const string Label = "mmm_Device";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
@@ -141,7 +141,8 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="machine">Mesh machine providing cryptographic context.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, IMeshMachine machine = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection2 = null) {
+
 
             builder.AppendIndent(indent, $"ContextDevice");
 
@@ -153,7 +154,7 @@ namespace Goedel.Mesh {
             ProfileMesh.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
-            GetActivationDevice(machine?.KeyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
+            GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             if (Accounts == null) {
                 builder.AppendIndent(indent, $"Accounts: None");
@@ -166,7 +167,7 @@ namespace Goedel.Mesh {
 
                     account.ProfileAccount.ToBuilder(builder, indent, "[Profile Account Missing]");
                     account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
-                    account.GetActivationAccount(machine?.KeyCollection).ToBuilder(builder, indent, "[Profile Device Missing]");
+                    account.GetActivationAccount(keyCollection).ToBuilder(builder, indent, "[Profile Device Missing]");
                     }
 
                 }

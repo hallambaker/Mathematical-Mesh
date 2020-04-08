@@ -444,7 +444,7 @@ ContentType = #{ContentType.ToUTF8().ToStringBase16FormatHex()}
 
 ######Using SHA-2-512 Digest
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
 
 This fingerprint MAY be specified with higher or lower precision as appropriate.
 
@@ -461,7 +461,7 @@ This fingerprint MAY be specified with higher or lower precision as appropriate.
 
 ######Using SHA-3-512 Digest
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
 
 ######Using SHA-2-512 Digest with Compression 
 #% var DataStringc2 = $"UDF Compressed Document {4187123}";
@@ -476,7 +476,7 @@ Data = "#{Datac2.ToStringBase16FormatHex()}"
 
 The UTF8 Content Digest is given as:
 
-#% instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmID.SHA_2_512, null);
+#% instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
 
 ######Using SHA-3-512 Digest with Compression 
 #% var DataStringc3 = $"UDF Compressed Document {774665}";
@@ -490,14 +490,14 @@ Data = #{Datac3.ToStringBase16FormatHex()}
 ~~~~
 
 The UTF8 SHA-3-512 Content Digest is
-#{UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmID.SHA_3_512)}
+#{UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512)}
 
 #end file
 
-#method3 MakeUTFExtendedExample string DataString CryptoAlgorithmID cryptoAlgorithmID string key
+#method3 MakeUTFExtendedExample string DataString CryptoAlgorithmId CryptoAlgorithmId string key
 #% var DataBytes = DataString.ToUTF8();
 #% var ContentType = "text/plain";
-#% var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+#% var HashData = DataBytes.GetDigest(CryptoAlgorithmId);
 #% var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
 #% byte[] UDFData ;
 
@@ -509,13 +509,13 @@ H(&<Data>) = #!
 #{UDFDataBuffer.ToStringBase16FormatHex()}
 
 #if (key == null)
-#% UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+#% UDFData = UDFDataBuffer.GetDigest(CryptoAlgorithmId);
 H(&<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #else
 #% var keyBytes = key.ToUTF8();
 #% var macKey = UDF.KeyStringToKey(key,512);
-#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+#% UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
+#% var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmId.HMAC_SHA_2_512);
 PRK(Key) =  #!
 #{keyDerive.PRK.ToStringBase16FormatHex()}
 
@@ -524,7 +524,7 @@ HKDF(Key) =  #!
 
 MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  #!
 #end if
-#% var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, cryptoAlgorithmID, key);
+#% var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
 #{UDFData.ToStringBase16FormatHex()}
 
 The prefixed Binary Data Sequence is thus#{binaryUDF.ToStringBase16FormatHex()}
@@ -556,9 +556,9 @@ Key =  #{ key.ToUTF8().ToStringBase16FormatHex()}
 Processing is performed in the same manner as an unkeyed fingerprint except that
 compression is never used:
 
-#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+#% instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
 #!The SHA-3-512 commitment with the same inputs is:
-#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmID.SHA_3_512, key)}
+#!#{UDF.DataToFormat(Data, ContentType, 125, CryptoAlgorithmId.SHA_3_512, key)}
 #end file
 
 

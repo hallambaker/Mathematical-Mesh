@@ -215,7 +215,7 @@ namespace Goedel.Cryptography.Algorithms {
         public CurveX25519 Agreement(CurveX25519[] Carry) {
             Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
 
-            var Total = Carry[0]; 
+            var Total = Carry[0].Copy(); 
             for(var i = 1; i < Carry.Length; i++) {
                 
                 Total.Accumulate(Carry[i]);

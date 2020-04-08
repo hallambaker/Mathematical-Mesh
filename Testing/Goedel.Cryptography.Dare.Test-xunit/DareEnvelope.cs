@@ -102,7 +102,7 @@ namespace Goedel.XUnit {
             var Recipients = new List<string> { "Alice@example.com" };
             var CryptoParameters = new CryptoParametersTest(
                         recipients: Recipients,
-                        digestID: CryptoAlgorithmID.SHA_2_512);
+                        digestID: CryptoAlgorithmId.SHA_2_512);
 
             var Test1 = Platform.GetRandomBytes(100);
 

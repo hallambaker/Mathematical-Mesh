@@ -18,7 +18,7 @@ namespace Goedel.Mesh {
 
 
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm/Contact";
+        public const string Label = "mmm_Contact";
 
         //public CatalogedContact Self { get; set; }
 

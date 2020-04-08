@@ -123,7 +123,7 @@ namespace Goedel.Cryptography {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataEncoder MakeAuthenticator(
                             byte[] Key = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null);
 
         }
@@ -248,7 +248,7 @@ namespace Goedel.Cryptography {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataEncoder MakeEncryptor(
                             byte[] Key = null, byte[] IV = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null);
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Goedel.Cryptography {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataDecoder MakeDecryptor(
                             byte[] Key, byte[] IV,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null
                             );
 

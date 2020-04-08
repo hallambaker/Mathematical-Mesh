@@ -21,7 +21,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyDerive">Key derivation function used to calculate a signature witness 
         /// value (if required).</param>
         public DareSignature(KeyPair SignerKey, byte[] DigestValue,
-                    CryptoAlgorithmID DigestId, KeyDerive KeyDerive = null) {
+                    CryptoAlgorithmId DigestId, KeyDerive KeyDerive = null) {
             SignatureValue = SignerKey.SignHash(DigestValue, DigestId);
             KeyIdentifier = SignerKey.UDF;
             Alg = SignerKey.SignatureAlgorithmID(DigestId).ToJoseID();
@@ -50,7 +50,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="SignerKey">The verification key parameters.</param>
         /// <param name="DigestId">The digest identifier used to create the 
         /// signature value.</param>
-        public DareSigner(KeyPair SignerKey, CryptoAlgorithmID DigestId) {
+        public DareSigner(KeyPair SignerKey, CryptoAlgorithmId DigestId) {
 
             var Alg = SignerKey.SignatureAlgorithmID(DigestId);
 

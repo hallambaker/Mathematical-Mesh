@@ -19,17 +19,17 @@ namespace Goedel.XUnit {
         public void TestRFC8032(TestVectorAsymmetric Test) => Test.Test();
 
         [Theory]
-        [InlineData(CryptoAlgorithmID.DH)]
-        [InlineData(CryptoAlgorithmID.Ed25519)]
-        [InlineData(CryptoAlgorithmID.Ed448)]
-        public void EncryptTest(CryptoAlgorithmID algorithmID) => TestVectorAsymmetric.EncryptTest(algorithmID);
+        [InlineData(CryptoAlgorithmId.DH)]
+        [InlineData(CryptoAlgorithmId.Ed25519)]
+        [InlineData(CryptoAlgorithmId.Ed448)]
+        public void EncryptTest(CryptoAlgorithmId algorithmID) => TestVectorAsymmetric.EncryptTest(algorithmID);
 
         }
 
     public class TestVectorAsymmetric {
 
 
-        public CryptoAlgorithmID Algorithm;
+        public CryptoAlgorithmId Algorithm;
 
 
         public string SecretKey;
@@ -44,23 +44,8 @@ namespace Goedel.XUnit {
         public byte[] ContextData => Context.FromBase16();
 
 
-        //public void Test() {
 
-        //    switch (Algorithm) {
-        //        case CryptoAlgorithmID.Ed25519:
-        //        case CryptoAlgorithmID.Ed25519ctx:
-        //        case CryptoAlgorithmID.Ed25519ph:
-        //            Ed25519();
-        //            break;
-        //        case CryptoAlgorithmID.Ed448:
-        //        case CryptoAlgorithmID.Ed448ph:
-        //            Ed448();
-        //            break;
-        //        }
-        //    }
-
-
-        public static void EncryptTest(CryptoAlgorithmID Algorithm) {
+        public static void EncryptTest(CryptoAlgorithmId Algorithm) {
             var KeyPrivate = KeyPair.Factory(Algorithm, KeySecurity.Ephemeral);
             var KeyPublic = KeyPrivate.KeyPairPublic();
             EncryptTest(KeyPublic, KeyPrivate);
@@ -143,8 +128,8 @@ namespace Goedel.XUnit {
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        static TestVectorAsymmetric TEST1 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519,
+        public static TestVectorAsymmetric TEST1 = new TestVectorAsymmetric() {
+            Algorithm = CryptoAlgorithmId.Ed25519,
             SecretKey = @"
    9d61b19deffd5a60ba844af492ec2cc4
    4449c5697b326919703bac031cae7f60",
@@ -159,7 +144,7 @@ namespace Goedel.XUnit {
    d25bf5f0595bbe24655141438e7a100b"
             };
         static TestVectorAsymmetric TEST2 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519,
+            Algorithm = CryptoAlgorithmId.Ed25519,
             SecretKey = @"
    4ccd089b28ff96da9db6c346ec114e0f
    5b8a319f35aba624da8cf6ed4fb8a6fb",
@@ -175,7 +160,7 @@ namespace Goedel.XUnit {
    387b2eaeb4302aeeb00d291612bb0c00"
             };
         static TestVectorAsymmetric TEST3 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519,
+            Algorithm = CryptoAlgorithmId.Ed25519,
             SecretKey = @"
    c5aa8df43f9f837bedb7442f31dcb7b1
    66d38535076f094b85ce3a2e0b4458f7",
@@ -191,7 +176,7 @@ namespace Goedel.XUnit {
    4a7c15e9716ed28dc027beceea1ec40a"
             };
         static TestVectorAsymmetric TEST1024 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519,
+            Algorithm = CryptoAlgorithmId.Ed25519,
             SecretKey = @"
    f5e5767cf153319517630f226876b86c
    8160cc583bc013744c6bf255f5cc0ee5",
@@ -270,7 +255,7 @@ namespace Goedel.XUnit {
    5e8fcd4f681e30a6ac00a9704a188a03"
             };
         static TestVectorAsymmetric TESTSHAABC = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519,
+            Algorithm = CryptoAlgorithmId.Ed25519,
             SecretKey = @"
    833fe62409237b9d62ec77587520911e
    9a759cec1d19755b7da901b96dca3d42",
@@ -289,7 +274,7 @@ namespace Goedel.XUnit {
    3dca179c138ac17ad9bef1177331a704"
             };
         static TestVectorAsymmetric TESTfoo = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519ctx,
+            Algorithm = CryptoAlgorithmId.Ed25519ctx,
             SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -307,7 +292,7 @@ namespace Goedel.XUnit {
    f6cca685a587b4b21f4b888e4e7edb0d"
             };
         static TestVectorAsymmetric TESTbar = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519ctx,
+            Algorithm = CryptoAlgorithmId.Ed25519ctx,
             SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -325,7 +310,7 @@ namespace Goedel.XUnit {
    5a5ca2df6668346291c2043d4eb3e90d"
             };
         static TestVectorAsymmetric TESTfoo2 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519ctx,
+            Algorithm = CryptoAlgorithmId.Ed25519ctx,
             SecretKey = @"
    0305334e381af78f141cb666f6199f57
    bc3495335a256a95bd2a55bf546663f6",
@@ -343,7 +328,7 @@ namespace Goedel.XUnit {
    4085ae75890d02df26269d8945f84b0b"
             };
         static TestVectorAsymmetric TESTfoo3 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519ctx,
+            Algorithm = CryptoAlgorithmId.Ed25519ctx,
             SecretKey = @"
    ab9c2853ce297ddab85c993b3ae14bca
    d39b2c682beabc27d6d4eb20711d6560",
@@ -361,7 +346,7 @@ namespace Goedel.XUnit {
    d4cd10b0be49a68da2b2e0dc0ad8960f"
             };
         static TestVectorAsymmetric TESTabc = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed25519ph,
+            Algorithm = CryptoAlgorithmId.Ed25519ph,
             SecretKey = @"
    833fe62409237b9d62ec77587520911e
    9a759cec1d19755b7da901b96dca3d42",
@@ -377,7 +362,7 @@ namespace Goedel.XUnit {
    a10b8c61e636062aaad11c2a26083406"
             };
         static TestVectorAsymmetric TESTBlank = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    6c82a562cb808d10d632be89c8513ebf
    6c929f34ddfa8c9f63c9960ef6e348a3
@@ -400,7 +385,7 @@ namespace Goedel.XUnit {
    2600"
             };
         static TestVectorAsymmetric TEST1Octet = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    c4eab05d357007c632f3dbb48489924d
    552b08fe0c353a0d4a1f00acda2c463a
@@ -424,7 +409,7 @@ namespace Goedel.XUnit {
    3a00"
             };
         static TestVectorAsymmetric TEST1OctetContext = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    c4eab05d357007c632f3dbb48489924d
    552b08fe0c353a0d4a1f00acda2c463a
@@ -450,7 +435,7 @@ namespace Goedel.XUnit {
    3c00"
             };
         static TestVectorAsymmetric TEST11Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    cd23d24f714274e744343237b93290f5
    11f6425f98e64459ff203e8985083ffd
@@ -474,7 +459,7 @@ namespace Goedel.XUnit {
    0e00"
             };
         static TestVectorAsymmetric TEST12Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    258cdd4ada32ed9c9ff54e63756ae582
    fb8fab2ac721f2c8e676a72768513d93
@@ -498,7 +483,7 @@ namespace Goedel.XUnit {
    3c00"
             };
         static TestVectorAsymmetric TEST13Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    7ef4e84544236752fbb56b8f31a23a10
    e42814f5f55ca037cdcc11c64c9a3b29
@@ -522,7 +507,7 @@ namespace Goedel.XUnit {
    3100"
             };
         static TestVectorAsymmetric TEST64Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    d65df341ad13e008567688baedda8e9d
    cdc17dc024974ea5b4227b6530e339bf
@@ -549,7 +534,7 @@ namespace Goedel.XUnit {
    3900"
             };
         static TestVectorAsymmetric TEST256Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    2ec5fe3c17045abdb136a5e6a913e32a
    b75ae68b53d2fc149b77e504132d3756
@@ -588,7 +573,7 @@ namespace Goedel.XUnit {
    3d00"
             };
         static TestVectorAsymmetric TEST1023Octets = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448,
+            Algorithm = CryptoAlgorithmId.Ed448,
             SecretKey = @"
    872d093780f5d3730df7c212664b37b8
    a0f24f56810daa8382cd4fa3f77634ec
@@ -675,7 +660,7 @@ namespace Goedel.XUnit {
    1a00"
             };
         static TestVectorAsymmetric TESTabc44 = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448ph,
+            Algorithm = CryptoAlgorithmId.Ed448ph,
             SecretKey = @"
    833fe62409237b9d62ec77587520911e
    9a759cec1d19755b7da901b96dca3d42
@@ -699,7 +684,7 @@ namespace Goedel.XUnit {
    0f00"
             };
         static TestVectorAsymmetric TESTabccontext = new TestVectorAsymmetric() {
-            Algorithm = CryptoAlgorithmID.Ed448ph,
+            Algorithm = CryptoAlgorithmId.Ed448ph,
             SecretKey = @"
    833fe62409237b9d62ec77587520911e
    9a759cec1d19755b7da901b96dca3d42

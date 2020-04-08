@@ -547,7 +547,7 @@ namespace Goedel.Cryptography.Dare {
                         JBCDStream jbcdStream,
                         CryptoParameters cryptoParameters,
                         ContainerType containerType = ContainerType.Chain,
-                        CryptoAlgorithmID digestAlgorithm = CryptoAlgorithmID.Default) {
+                        CryptoAlgorithmId digestAlgorithm = CryptoAlgorithmId.Default) {
             Container result;
 
             switch (containerType) {

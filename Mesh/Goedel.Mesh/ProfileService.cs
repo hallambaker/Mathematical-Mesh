@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         /// <returns>The service profile.</returns>
         public static ProfileService Generate(
             IMeshMachine meshMachine,
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
 
 
@@ -88,7 +88,7 @@ namespace Goedel.Mesh {
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <returns>The host profile.</returns>
         public ProfileHost CreateHost(IMeshMachine meshMachine,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) => ProfileHost.Generate(meshMachine, algorithmSign);
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) => ProfileHost.Generate(meshMachine, algorithmSign);
 
         }
 

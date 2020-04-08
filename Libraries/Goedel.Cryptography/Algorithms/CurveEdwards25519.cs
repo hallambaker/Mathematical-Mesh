@@ -272,7 +272,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="y">The y value.</param>
         /// <returns>The domain parameter.</returns>
         public override byte[] Domain(
-                CryptoAlgorithmID cryptoAlgorithm,
+                CryptoAlgorithmId cryptoAlgorithm,
                 byte[] y) => Dom2(cryptoAlgorithm, y);
 
         /// <summary>
@@ -284,160 +284,19 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="y">The y value.</param>
         /// <returns>The domain parameter.</returns>
         public static byte[] Dom2(
-            CryptoAlgorithmID cryptoAlgorithm,
+            CryptoAlgorithmId cryptoAlgorithm,
             byte[] y) {
             byte x = 0;
             switch (cryptoAlgorithm) {
-                case CryptoAlgorithmID.Ed25519: return null;
-                case CryptoAlgorithmID.Ed25519ph: {
+                case CryptoAlgorithmId.Ed25519: return null;
+                case CryptoAlgorithmId.Ed25519ph: {
                     x = 1;
                     break;
                     }
-                case CryptoAlgorithmID.Ed25519ctx: {
+                case CryptoAlgorithmId.Ed25519ctx: {
                     x = 0;
                     break;
                     }
-
-                case CryptoAlgorithmID.Unknown:
-                    break;
-                case CryptoAlgorithmID.NULL:
-                    break;
-                case CryptoAlgorithmID.Default:
-                    break;
-                case CryptoAlgorithmID.Bulk:
-                    break;
-                case CryptoAlgorithmID.BulkMask:
-                    break;
-                case CryptoAlgorithmID.BulkTagMask:
-                    break;
-                case CryptoAlgorithmID.Digest:
-                    break;
-                case CryptoAlgorithmID.MAC:
-                    break;
-                case CryptoAlgorithmID.Encryption:
-                    break;
-                case CryptoAlgorithmID.MaxDigest:
-                    break;
-                case CryptoAlgorithmID.MaxMAC:
-                    break;
-                case CryptoAlgorithmID.MaxEncryption:
-                    break;
-                case CryptoAlgorithmID.BaseMask:
-                    break;
-                case CryptoAlgorithmID.Meta:
-                    break;
-                case CryptoAlgorithmID.MetaMask:
-                    break;
-                case CryptoAlgorithmID.MetaTagMask:
-                    break;
-                case CryptoAlgorithmID.Signature:
-                    break;
-                case CryptoAlgorithmID.Exchange:
-                    break;
-                case CryptoAlgorithmID.Wrap:
-                    break;
-                case CryptoAlgorithmID.MaxSignature:
-                    break;
-                case CryptoAlgorithmID.MaxExchange:
-                    break;
-                case CryptoAlgorithmID.MaxWrap:
-                    break;
-                case CryptoAlgorithmID.SHA_2_256:
-                    break;
-                case CryptoAlgorithmID.SHA_2_512:
-                    break;
-                case CryptoAlgorithmID.SHA_2_512T128:
-                    break;
-                case CryptoAlgorithmID.SHA_3_256:
-                    break;
-                case CryptoAlgorithmID.SHA_3_512:
-                    break;
-                case CryptoAlgorithmID.SHAKE_128:
-                    break;
-                case CryptoAlgorithmID.SHAKE_256:
-                    break;
-                case CryptoAlgorithmID.ModeCTS:
-                    break;
-                case CryptoAlgorithmID.ModeGCM:
-                    break;
-                case CryptoAlgorithmID.ModeHMAC:
-                    break;
-                case CryptoAlgorithmID.ModeCBCNone:
-                    break;
-                case CryptoAlgorithmID.ModeECB:
-                    break;
-                case CryptoAlgorithmID.AES256:
-                    break;
-                case CryptoAlgorithmID.AES128CBC:
-                    break;
-                case CryptoAlgorithmID.AES128GCM:
-                    break;
-                case CryptoAlgorithmID.AES128CTS:
-                    break;
-                case CryptoAlgorithmID.AES128HMAC:
-                    break;
-                case CryptoAlgorithmID.AES128CBCNone:
-                    break;
-                case CryptoAlgorithmID.AES128ECB:
-                    break;
-                case CryptoAlgorithmID.AES256CBC:
-                    break;
-                case CryptoAlgorithmID.AES256GCM:
-                    break;
-                case CryptoAlgorithmID.AES256CTS:
-                    break;
-                case CryptoAlgorithmID.AES256HMAC:
-                    break;
-                case CryptoAlgorithmID.AES256CBCNone:
-                    break;
-                case CryptoAlgorithmID.AES256ECB:
-                    break;
-                case CryptoAlgorithmID.HMAC_SHA_2_256:
-                    break;
-                case CryptoAlgorithmID.HMAC_SHA_2_512:
-                    break;
-                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
-                    break;
-                case CryptoAlgorithmID.Level_High:
-                    break;
-                case CryptoAlgorithmID.RSASign_PSS:
-                    break;
-                case CryptoAlgorithmID.Ed448:
-                    break;
-                case CryptoAlgorithmID.Ed448ph:
-                    break;
-                case CryptoAlgorithmID.RSASign_SHA_2_256:
-                    break;
-                case CryptoAlgorithmID.RSASign_SHA_2_512:
-                    break;
-                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
-                    break;
-                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
-                    break;
-                case CryptoAlgorithmID.RSAExch_P15:
-                    break;
-                case CryptoAlgorithmID.DH:
-                    break;
-                case CryptoAlgorithmID.ECDH:
-                    break;
-                case CryptoAlgorithmID.X25519:
-                    break;
-                case CryptoAlgorithmID.X448:
-                    break;
-                case CryptoAlgorithmID.XEd25519:
-                    break;
-                case CryptoAlgorithmID.XEd448:
-                    break;
-                case CryptoAlgorithmID.Direct:
-                    break;
-                case CryptoAlgorithmID.KW3394_AES128:
-                    break;
-                case CryptoAlgorithmID.KW3394_AES256:
-                    break;
-                case CryptoAlgorithmID.AES128_GCM_KW:
-                    break;
-                case CryptoAlgorithmID.AES256_GCM_KW:
-                    break;
                 default:
                     break;
                 }
@@ -467,8 +326,14 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The SHA-2-512 hash of the inputs as a big integer reduced modulo the sub group</returns>
         public static BigInteger HashModQ(byte[] A0, byte[] A1, byte[] A2, byte[] A3 = null) {
 
+            //Console.WriteLine($"A0 = {A0?.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"A1 = {A1?.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"A2 = {A2?.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"A3 = {A3?.ToStringBase16FormatHex()}");
+
             using var Sha512 = SHA512.Create();
             if (A0 != null) {
+                
                 Sha512.Digest(A0);
                 }
             if (A1 != null) {
@@ -496,11 +361,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <remarks>This method does not prehash the message data since if
         /// prehashing is desired, it is because the data needs to be hashed
         /// before being presented.</remarks>
-        /// <param name="Message">The message data.</param>
+        /// <param name="message">The message data.</param>
         /// <param name="Signature">The encoded signature data.</param>
-        /// <param name="Context">Context value, if used.</param>
+        /// <param name="domain">The domain value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public bool VerifySignature(byte[] Message, byte[] Signature, byte[] Context = null) {
+        public bool VerifySignature(byte[] message, byte[] Signature, byte[] domain = null) {
 
             // 1. To verify a signature on a message M using public key A, with F
             //    being 0 for Ed25519ctx, 1 for Ed25519ph, and if Ed25519ctx or
@@ -529,7 +394,9 @@ namespace Goedel.Cryptography.Algorithms {
                 return false;
                 }
 
-            var k = HashModQ(Context, Rs, Message);
+            var k = GetK(domain, Rs, message);
+
+            //Console.WriteLine($"Verify value of k {k}");
 
             return Verify(k, s, R);
             }

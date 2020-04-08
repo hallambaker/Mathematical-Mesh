@@ -91,8 +91,8 @@ namespace Goedel.Cryptography.Jose {
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID SignID = CryptoAlgorithmID.Default
+                    CryptoAlgorithmId EncryptID = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId SignID = CryptoAlgorithmId.Default
                     ) :
                 this(JSONObject.GetBytes(Encoding),
                     EncryptionKey, SigningKey, ContentType, EncryptID, SignID) {
@@ -113,8 +113,8 @@ namespace Goedel.Cryptography.Jose {
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID SignID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId EncryptID = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId SignID = CryptoAlgorithmId.Default,
                     string KID = null
                     ) {
 
@@ -159,8 +159,8 @@ namespace Goedel.Cryptography.Jose {
         public JoseWebEncryption(byte[] Data,
                     byte[] Secret, string Prefix = null,
                     string ContentType = null,
-                    CryptoAlgorithmID EncryptID = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID AuthenticateID = CryptoAlgorithmID.Default
+                    CryptoAlgorithmId EncryptID = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId AuthenticateID = CryptoAlgorithmId.Default
                     ) {
 
             var Provider = CryptoCatalog.Default.GetEncryption(EncryptID);
@@ -200,7 +200,7 @@ namespace Goedel.Cryptography.Jose {
         public JoseWebEncryption(string Text,
                     byte[] Secret, string Prefix = null,
                     string ContentType = null,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
                 this(System.Text.Encoding.UTF8.GetBytes(Text),
                         Secret, Prefix, ContentType, Algorithm) { }
 
@@ -218,7 +218,7 @@ namespace Goedel.Cryptography.Jose {
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
                     string ContentType = null,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default) :
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default) :
                 this(System.Text.Encoding.UTF8.GetBytes(Text),
                         EncryptionKey, SigningKey, ContentType, Algorithm) { }
 
@@ -293,7 +293,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KID">Key ID</param>
         /// <returns>The recipient instance</returns>
         public Recipient AddRecipient(KeyPair EncryptionKey, string KID = null,
-                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default) {
 
             EncryptionKey.Encrypt(CryptoDataEncrypt.Key, out var Exchange, out var Ephemeral);
             var Recipient = new Recipient(Exchange, EncryptionKey, Ephemeral, KID);
@@ -315,7 +315,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ProviderAlgorithm">Algorithm parameters (if supported)</param>
         /// <returns>The recipient instance</returns>
         public Recipient AddRecipient(byte[] Secret, string Info = null,
-                CryptoAlgorithmID ProviderAlgorithm = CryptoAlgorithmID.Default) {
+                CryptoAlgorithmId ProviderAlgorithm = CryptoAlgorithmId.Default) {
 
             var Identifier = UDF.SymmetricKeyUDF(Secret);
             Info ??= Identifier;
@@ -597,7 +597,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KID">Recipient Key ID.</param>
         public Recipient(byte[] ExchangeData, KeyPair RecipientKey, KeyPair Ephemeral, string KID = null) {
             Header = new Header() {
-                Alg = RecipientKey?.CryptoAlgorithmID.Meta().ToJoseID(),
+                Alg = RecipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
                 Kid = KID ?? RecipientKey?.UDF
                 };
             if (Ephemeral != null) {

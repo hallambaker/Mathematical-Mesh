@@ -137,7 +137,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestDH_KeyGen() {
-            var Encrypter = KeyPair.Factory(CryptoAlgorithmID.DH, KeySecurity.Ephemeral);
+            var Encrypter = KeyPair.Factory(CryptoAlgorithmId.DH, KeySecurity.Ephemeral);
 
             var EncrypterKeyPair = Encrypter as KeyPairDH;
 

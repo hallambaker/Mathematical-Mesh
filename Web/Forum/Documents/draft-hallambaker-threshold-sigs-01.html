@@ -1,0 +1,1978 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="Common,Latin" name="scripts">
+    <meta content="initial-scale=1.0" name="viewport">
+    <title>Threshold Signatures in Elliptic Curves</title>
+    <meta name="author" content="Phillip Hallam-Baker">
+    <meta name="description" content="A Threshold signature scheme is described. The signatures created are computationally indistinguishable from those produced using the Ed25519 and Ed448 curves as specified in RFC8032 except in that they are non-deterministic. Threshold signatures are a form of digital signature whose creation requires two or more parties to interact but does not disclose the number or identities of the parties involved. https://mailarchive.ietf.org/arch/browse/cfrg/Discussion of this draft should take place on the CFRG mailing list (cfrg@irtf.org), which is archived at . ">
+    <meta content="rfctool 2.0" name="generator">
+    <meta content="Threshold Cryptography" name="keyword">
+    <meta content="Elliptic Curve" name="keyword">
+    <meta content="Threshold Signature" name="keyword">
+    <meta content="Digital Signature" name="keyword">
+    <link href="#copyright" rel="license">
+    <style type="text/css">
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+@viewport {
+  zoom: 1.0;
+  width: extend-to-zoom;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.filename
+{
+    font-size: 20px;
+    color: darkgray;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+  color: blueviolet;
+}
+h2
+{
+    font-size: 22px;
+    margin-top: -20px; /* provide offset for in-page anchors */
+    padding-top: 33px;
+    color: blueviolet;
+}
+h3
+{
+    font-size: 18px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h4
+{
+    font-size: 16px;
+    margin-top: -36px; /* provide offset for in-page anchors */
+    padding-top: 42px;
+    color: blueviolet;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  border: none;
+  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+     support flexbox yet.
+  */
+  display: table;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+  font-weight: bold;
+}
+    dl.nohang > dt
+    {
+        float: none;
+        font-weight: bold;
+    }
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #3E8EDE;
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef {
+  color: blueviolet;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre, code {
+  background-color: #f9f9f9;
+  font-family: 'Roboto Mono', monospace;
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #777;
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #999;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.reference dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.reference dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.reference .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #b76427;
+  background-color: rgba(249, 232, 105, 0.3);
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: rgba(249, 232, 105, 0.3);
+  border-radius: 3px;
+}
+.cref {
+  background-color: rgba(249, 232, 105, 0.3);
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  /* Just get rid of the idiot stuff: */
+  /*
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { 
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }*/
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+	/*
+  body {
+    font-family: 'Noto Serif', "Times New Roman", Times, serif;
+    width: 100%;
+  }*/
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+	break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+}
+    </style>
+    <link href="rfc-local.css" rel="stylesheet" type="text/css">
+    <link href="urn:issn:2070-1721" rel="alternate">
+<link rel="icon" href="data:image/svg+xml;base64,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">  </head>
+  <body>
+    <table class="ears">
+      <thead>
+        <tr>
+          <td class="left"/>
+          <td class="center">Threshold Signatures in Elliptic Curves</td>
+          <td class="right">March 2020</td>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td class="left">Hallam-Baker</td>
+          <td class="center">Expires September 10, 2020</td>
+          <td class="right">[Page]</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div id="external-metadata" class="document-information">
+    </div>
+    <div id="internal-metadata" class="document-information">
+      <dl id="identifiers">
+        <dt class="label-workgroup">Workgroup:</dt>
+        <dd class="workgroup">Network Working Group</dd>
+        <dt class="label-stream">Stream:</dt>
+        <dd class="stream">Internet-Draft</dd>
+        <dt class="label-category">Intended status:</dt>
+        <dd class="category">Informational</dd>
+        <dt>Published:</dt>
+        <dd>
+          <time class="published" datetime="2020-03-09">9 March 2020</time>
+        </dd>
+        <dt class="label-issn">ISSN:</dt>
+        <dd class="issn">2070-1721</dd>
+        <dt>Expires</dt>
+        <dd>
+          <time class="expires" datetime="2020-09-10">10 September 2020</time>
+        </dd>
+        <dt>Authors:</dt>
+        <dd class="authors">
+          <div class="author">
+<div class="author-name">Phillip Hallam-Baker</div><div class="org">ThresholdSecrets.com</div>          </div>
+        </dd>
+      </dl>
+    </div>
+    <h1 id="title">
+      Threshold Signatures in Elliptic Curves
+      <h1 id="idnum">draft-hallambaker-threshold-sigs-01</h1>
+    </h1>
+    <section id="abstract">
+      <h3>
+        <a class="selfRef" href="#abstract">Abstract</a>
+      </h3>
+      <p id="s-abstract-1">A Threshold signature scheme is described. The signatures created are computationally indistinguishable from those produced using the Ed25519 and Ed448 curves as specified in RFC8032 except in that they are non-deterministic. Threshold signatures are a form of digital signature whose creation requires two or more parties to interact but does not disclose the number or identities of the parties involved.<a class="pilcrow" href="#s-abstract-1">&para;</a></p>
+      <p id="s-abstract-2"><a class="eref" href="http://whatever">https://mailarchive.ietf.org/arch/browse/cfrg/</a>Discussion of this draft should take place on the CFRG mailing list (cfrg@irtf.org), which is archived at .<a class="pilcrow" href="#s-abstract-2">&para;</a></p>
+    </section>
+    
+    <section id="n-status-of-this-memo">
+      <h3 id="bp-1">
+        <a class="selfRef" href="#bp-1"></a>
+        <a class="selfRef" href="#n-status-of-this-memo">Status of This Memo</a>
+      </h3>
+      <p id="bp-1-1">This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.<a class="pilcrow" href="#bp-1-1">&para;</a></p>
+      <p id="bp-1-2">Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts. The list of current Internet-Drafts is at <a class="eref" href="http://datatracker.ietf.org/drafts/current/">http://datatracker.ietf.org/drafts/current/</a>.<a class="pilcrow" href="#bp-1-2">&para;</a></p>
+      <p id="bp-1-3">Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."<a class="pilcrow" href="#bp-1-3">&para;</a></p>
+      <p id="bp-1-4">This Internet-Draft will expire on September 10, 2020<a class="pilcrow" href="#bp-1-4">&para;</a></p>
+    </section>
+    
+    <section id="n-copyright-notice">
+      <h3 id="bp-2">
+        <a class="selfRef" href="#bp-2"></a>
+        <a class="selfRef" href="#n-copyright-notice">Copyright Notice</a>
+      </h3>
+      <p id="bp-2-1">Copyright (c) IETF Trust and the persons identified as the document authors. All rights reserved.<a class="pilcrow" href="#bp-2-1">&para;</a></p>
+      <p id="bp-2-2">This document is subject to BCP 78 and the IETF Trust’s Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document. Please review these documents carefully, as they describe your rights and restrictions with respect to this document.<a class="pilcrow" href="#bp-2-2">&para;</a></p>
+    </section>
+    
+    <section id="toc">
+      <h3>
+        <a class="selfRef" href="#toc">Table of Contents</a>
+      </h3>
+      <nav class="toc">
+        <ul class="toc">
+          <li class="toc">
+            <a href="#s-1">1.</a><a href="#n-introduction">Introduction</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-1_1">1.1.</a><a href="#n-applications">Applications</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-1_1_1">1.1.1.</a><a href="#n-hsm-binding">HSM Binding</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_1_2">1.1.2.</a><a href="#n-code-signing">Code Signing</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-1_1_3">1.1.3.</a><a href="#n-signing-by-redundant-services">Signing by Redundant Services</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-2">2.</a><a href="#n-definitions">Definitions</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-2_1">2.1.</a><a href="#n-requirements-language">Requirements Language</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_2">2.2.</a><a href="#n-defined-terms">Defined Terms</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_3">2.3.</a><a href="#n-related-specifications">Related Specifications</a>
+              </li>
+              <li class="toc">
+                <a href="#s-2_4">2.4.</a><a href="#n-implementation-status">Implementation Status</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-3">3.</a><a href="#n-principles">Principles</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-3_1">3.1.</a><a href="#n-direct-shared-threshold-signature">Direct shared threshold signature</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_2">3.2.</a><a href="#n-shamir-shared-threshold-signature">Shamir shared threshold signature</a>
+              </li>
+              <li class="toc">
+                <a href="#s-3_3">3.3.</a><a href="#n-stateless-computation-of-final-share">Stateless computation of final share</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_3_1">3.3.1.</a><a href="#n-side-channel-resistance">Side channel resistance</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="toc">
+                <a href="#s-3_4">3.4.</a><a href="#n-security-analysis">Security Analysis</a>
+                <ul class="toc">
+                  <li class="toc">
+                    <a href="#s-3_4_1">3.4.1.</a><a href="#rvalue">Calculation of r values</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_2">3.4.2.</a><a href="#n-replay-attack">Replay Attack</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_3">3.4.3.</a><a href="#n-malicious-contribution-attack">Malicious Contribution Attack</a>
+                  </li>
+                  <li class="toc">
+                    <a href="#s-3_4_4">3.4.4.</a><a href="#roguekey">Rogue Key Attack</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-4">4.</a><a href="#n-ed2519-signature">Ed2519 Signature</a>
+          </li>
+          <li class="toc">
+            <a href="#s-5">5.</a><a href="#n-ed448-signature">Ed448 Signature</a>
+          </li>
+          <li class="toc">
+            <a href="#s-6">6.</a><a href="#n-test-vectors">Test Vectors</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-6_1">6.1.</a><a href="#n--direct-threshold-signature-ed25519-"> Direct Threshold Signature Ed25519 </a>
+              </li>
+              <li class="toc">
+                <a href="#s-6_2">6.2.</a><a href="#n--direct-threshold-signature-ed448-"> Direct Threshold Signature Ed448 </a>
+              </li>
+              <li class="toc">
+                <a href="#s-6_3">6.3.</a><a href="#n--shamir-threshold-signature-ed25519-"> Shamir Threshold Signature Ed25519 </a>
+              </li>
+              <li class="toc">
+                <a href="#s-6_4">6.4.</a><a href="#n--shamir-threshold-signature-ed448-"> Shamir Threshold Signature Ed448 </a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-7">7.</a><a href="#n-security-considerations">Security Considerations</a>
+            <ul class="toc">
+              <li class="toc">
+                <a href="#s-7_1">7.1.</a><a href="#n-rogue-key-attack">Rogue Key attack</a>
+              </li>
+              <li class="toc">
+                <a href="#s-7_2">7.2.</a><a href="#n-disclosure-or-reuse-of-the-value-r">Disclosure or reuse of the value r</a>
+              </li>
+              <li class="toc">
+                <a href="#s-7_3">7.3.</a><a href="#n-resource-exhaustion-attack">Resource exhaustion attack</a>
+              </li>
+              <li class="toc">
+                <a href="#s-7_4">7.4.</a><a href="#n-signature-uniqueness">Signature Uniqueness</a>
+              </li>
+            </ul>
+          </li>
+          <li class="toc">
+            <a href="#s-8">8.</a><a href="#n-iana-considerations">IANA Considerations</a>
+          </li>
+          <li class="toc">
+            <a href="#s-9">9.</a><a href="#n-acknowledgements">Acknowledgements</a>
+          </li>
+          <li class="toc">
+<a href="#n-references">References</a>
+            <ul class="toc">
+              <li class="toc">
+<a href="#n-normative">Normative References</a>
+              </li>
+              <li class="toc">
+<a href="#n-informative">Informative References</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="toc">
+          <li class="toc">
+            <a href="#"></a><a href="#n-authors">Author's Address</a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+    
+    <section id="n-introduction">
+      <h3 id="s-1">
+        <a class="selfRef" href="#s-1">1.</a>
+        <a class="selfRef" href="#n-introduction">Introduction</a>
+      </h3>
+      <p id="s-1-1">Threshold encryption and key generation provide compelling advantages over single private key approaches because splitting the private key permits the use of that key to be divided between two or more roles.<a class="pilcrow" href="#s-1-1">&para;</a></p>
+      <p id="s-1-2">All existing digital signatures allow the signer role to be divided between multiple parties by attaching multiple signatures to the signed document. This approach, known as multi-signatures, is distinguished from a threshold signature scheme in that the identity and roles of the individual signers is exposed. In a threshold signature scheme, the creation of a single signature requires the participation of multiple signers and the signature itself does not reveal the means by which it was constructed.<a class="pilcrow" href="#s-1-2">&para;</a></p>
+      <p id="s-1-3">Rather than considering multi-signatures or threshold signatures to be inherently superior, it is more useful to regard both as two points on a continuum of choices:<a class="pilcrow" href="#s-1-3">&para;</a></p>
+      <dl id="s-1-4-" class="nohang">
+        <dt id="s-1-4">Multi-signatures <a class="pilcrow" href="#s-1-4">&para;</a></dt>
+        <dd id="null">Multiple digital signatures on the same document. Multi-signatures are simple to create and provide the verifier with more information but require the acceptance criteria to be specified independently of the signature itself. This requires that the application logic or PKI provide some means of describing the criteria to be applied. <a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1-5">Multi-party key release<a class="pilcrow" href="#s-1-5">&para;</a></dt>
+        <dd id="null">A single signature created using a single private key stored in an encrypted form whose use requires participation of multiple key decryption shares.<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1-6">Threshold signatures <a class="pilcrow" href="#s-1-6">&para;</a></dt>
+        <dd id="null">A single signature created using multiple signature key shares. Signature creation may be subject to complex criteria such as requiring an (n,t) quorum of signers but these criteria are fixed at the time the signature is created<a class="pilcrow" href="#">&para;</a></dd>
+        <dt id="s-1-7">Aggregate Signatures <a class="pilcrow" href="#s-1-7">&para;</a></dt>
+        <dd id="null">A single signature created using multiple signature key shares such that validation of the aggregate signature serves to validate the participation of each of the individual signers. <a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-1-8">This document builds on the approach described in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a> to define a scheme that creates threshold signatures that are computationally indistinguishable from those produced according to the algorithm specified in <a class="xref" href="#RFC8032">[RFC8032]</a>. The scheme does not support the creation of aggregate signatures.<a class="pilcrow" href="#s-1-8">&para;</a></p>
+      <p id="s-1-9">The approach used is based on that developed in FROST <a class="xref" href="#Komlo">[Komlo]</a>. This document describes the signature scheme itself. The techniques used to generate keys are described separately in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a>.<a class="pilcrow" href="#s-1-9">&para;</a></p>
+      <p id="s-1-10">As in the base document, we first describe signature generation for the case that <i>n</i> = <i>t</i> using 'direct' coefficients, that is the secret scalar is the sum of the secret shares. We then show how the scheme is modified using Shamir secret sharing <a class="xref" href="#Shamir79">[Shamir79]</a> and Lagrange coefficients for the case that <i>n</i> &gt; <i>t</i>.<a class="pilcrow" href="#s-1-10">&para;</a></p>
+    </section>
+    
+    <section id="n-applications">
+      <h4 id="s-1_1">
+        <a class="selfRef" href="#s-1_1">1.1.</a>
+        <a class="selfRef" href="#n-applications">Applications</a>
+      </h4>
+      <p id="s-1_1-1">Threshold signatures have application in any situation where it is desired to have finer grain control of signing operations without this control structure being visible to external applications. It is of particular interest in situations where legacy applications do not support multi-signatures.<a class="pilcrow" href="#s-1_1-1">&para;</a></p>
+    </section>
+    
+    <section id="n-hsm-binding">
+      <h5 id="s-1_1_1">
+        <a class="selfRef" href="#s-1_1_1">1.1.1.</a>
+        <a class="selfRef" href="#n-hsm-binding">HSM Binding</a>
+      </h5>
+      <p id="s-1_1_1-1">Hardware Security Modules (HSMs) prevent accidental disclosures of signature keys by binding private keys to a hardware device from which it cannot be extracted without substantial effort. This provides effective mitigation of the chief causes of key disclosure but requires the signer to rely on the trustworthiness of a device that represents a black box they have no means of auditing.<a class="pilcrow" href="#s-1_1_1-1">&para;</a></p>
+      <p id="s-1_1_1-2">Threshold signatures allow the signer to take advantage of the key binding control provided by an HSM without trusting it. The HSM only contributes one of the key shares used to create the signature. The other is provided by the application code (or possibly an additional HSM).  <a class="pilcrow" href="#s-1_1_1-2">&para;</a></p>
+    </section>
+    
+    <section id="n-code-signing">
+      <h5 id="s-1_1_2">
+        <a class="selfRef" href="#s-1_1_2">1.1.2.</a>
+        <a class="selfRef" href="#n-code-signing">Code Signing</a>
+      </h5>
+      <p id="s-1_1_2-1">Code signing is an important security control used to enable rapid detection of malware by demonstrating the source of authorized code distributions but places a critical reliance on the security of the signer's private key. Inadvertent disclosure of code signing keys is commonplace as they are typically stored in a form that allows them to be used in automatic build processes. Popular source code repositories are regularly scanned by attackers seeking to discover private signature keys and passwords embedded in scripts.<a class="pilcrow" href="#s-1_1_2-1">&para;</a></p>
+      <p id="s-1_1_2-2">Threshold signatures allow the code signing operation to be divided between a developer key and an HSM held locally or by a signature service. The threshold shares required to create the signature can be mapped onto the process roles and personnel responsible for authorizing code release. This last concern might be of particular advantage in open source projects where the concentration of control embodied in a single code signing key has proved to be difficult to reconcile with community principles.<a class="pilcrow" href="#s-1_1_2-2">&para;</a></p>
+    </section>
+    
+    <section id="n-signing-by-redundant-services">
+      <h5 id="s-1_1_3">
+        <a class="selfRef" href="#s-1_1_3">1.1.3.</a>
+        <a class="selfRef" href="#n-signing-by-redundant-services">Signing by Redundant Services</a>
+      </h5>
+      <p id="s-1_1_3-1">Redundancy is as desirable for trusted services as for any other service. But in the case that multiple hosts are tasked with compiling a data set and signing the result, there is a risk of different hosts obtaining a different view of the data set due to timing or other concerns. This presents the risk of the hosts signing inconsistent views of the data set.<a class="pilcrow" href="#s-1_1_3-1">&para;</a></p>
+      <p id="s-1_1_3-2">Use of threshold signatures allows the criteria for agreeing on the data set to be signed to be mapped directly onto the requirement for creating a signature. So if there are three hosts and two must agree to create a signature, three signature shares are created and with a threshold of two. <a class="pilcrow" href="#s-1_1_3-2">&para;</a></p>
+    </section>
+    
+    <section id="n-definitions">
+      <h3 id="s-2">
+        <a class="selfRef" href="#s-2">2.</a>
+        <a class="selfRef" href="#n-definitions">Definitions</a>
+      </h3>
+      <p id="s-2-1">This section presents the related specifications and standard, the terms that are used as terms of art within the documents and the terms used as requirements language.<a class="pilcrow" href="#s-2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-requirements-language">
+      <h4 id="s-2_1">
+        <a class="selfRef" href="#s-2_1">2.1.</a>
+        <a class="selfRef" href="#n-requirements-language">Requirements Language</a>
+      </h4>
+      <p id="s-2_1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as described in <a class="xref" href="#RFC2119">[RFC2119]</a>.<a class="pilcrow" href="#s-2_1-1">&para;</a></p>
+    </section>
+    
+    <section id="n-defined-terms">
+      <h4 id="s-2_2">
+        <a class="selfRef" href="#s-2_2">2.2.</a>
+        <a class="selfRef" href="#n-defined-terms">Defined Terms</a>
+      </h4>
+      <p id="s-2_2-1">See  <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a>.<a class="pilcrow" href="#s-2_2-1">&para;</a></p>
+    </section>
+    
+    <section id="n-related-specifications">
+      <h4 id="s-2_3">
+        <a class="selfRef" href="#s-2_3">2.3.</a>
+        <a class="selfRef" href="#n-related-specifications">Related Specifications</a>
+      </h4>
+      <p id="s-2_3-1">This document extends the approach described in  <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a> to support threshold signatures. The deterministic mechanism described in specification <a class="xref" href="#draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</a> is used to generate the private keys used in the test vectors.<a class="pilcrow" href="#s-2_3-1">&para;</a></p>
+    </section>
+    
+    <section id="n-implementation-status">
+      <h4 id="s-2_4">
+        <a class="selfRef" href="#s-2_4">2.4.</a>
+        <a class="selfRef" href="#n-implementation-status">Implementation Status</a>
+      </h4>
+      <p id="s-2_4-1">The implementation status of the reference code base is described in the companion document <a class="xref" href="#draft-hallambaker-mesh-developer">[draft-hallambaker-mesh-developer]</a>.<a class="pilcrow" href="#s-2_4-1">&para;</a></p>
+    </section>
+    
+    <section id="n-principles">
+      <h3 id="s-3">
+        <a class="selfRef" href="#s-3">3.</a>
+        <a class="selfRef" href="#n-principles">Principles</a>
+      </h3>
+      <p id="s-3-1">The threshold signatures created according to the algorithms described in this document are compatible with but not identical to the signatures created according to the scheme described in <a class="xref" href="#RFC8032">[RFC8032]</a>. In particular:<a class="pilcrow" href="#s-3-1">&para;</a></p>
+      <ul id="s-3-2-">
+        <li id="s-3-2">The signature verification algorithm is unchanged.<a class="pilcrow" href="#s-3-2">&para;</a></li>
+        <li id="s-3-3">The unanimous threshold scheme produces values of <i>R</i> and <i>S</i> that are deterministic but different from the values that would be obtained by using the aggregate private key to sign the same document.<a class="pilcrow" href="#s-3-3">&para;</a></li>
+        <li id="s-3-4">The deterministic quorate threshold scheme produces values of <i>R</i> and <i>S</i> that are deterministic for a given set of signers but will change for a different set of signers or if the aggregate private key was used to sign the same document.<a class="pilcrow" href="#s-3-4">&para;</a></li>
+        <li id="s-3-5">·The non-deterministic quorate threshold scheme produces values of <i>R</i> and <i>S</i> that will be different each time the document is signed.<a class="pilcrow" href="#s-3-5">&para;</a></li>
+      </ul>
+      <p id="s-3-6">Recall that a digital signature as specified by <a class="xref" href="#RFC8032">[RFC8032]</a> consists of a pair of values <i>S</i>, <i>R</i> calculated as follows:<a class="pilcrow" href="#s-3-6">&para;</a></p>
+      <p id="s-3-7"><i>R</i> = <i>r.B</i><a class="pilcrow" href="#s-3-7">&para;</a></p>
+      <p id="s-3-8">S = <i>r</i> + <i>k.s</i> mod <i>L</i><a class="pilcrow" href="#s-3-8">&para;</a></p>
+      <dl id="s-3-9-" class="nohang">
+        <dt id="s-3-9">Where <a class="pilcrow" href="#s-3-9">&para;</a></dt>
+        <dd id="null"><i>B</i> is the base point of the elliptic curve.<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>r</i> is an unique, unpredictable integer value such that 0  r  L<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>k</i> is the result of applying a message digest function determined by the curve (Ed25519, Ed448) to a set of parameters known to the verifier which include the values <i>R</i>, <i>A</i> and PH(<i>M</i>).<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>A</i> is the public key of the signer, <i>A</i> = <i>s.B</i><a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">PH(<i>M</i>) is the prehash function of the message value.<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>s</i> is the secret scalar value<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>L</i> is the order of the elliptic curve group.<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3-10">To verify the signature, the verifier checks that:<a class="pilcrow" href="#s-3-10">&para;</a></p>
+      <p id="s-3-11"><i>S.B</i> = <i>R</i> + <i>k.A</i> <a class="pilcrow" href="#s-3-11">&para;</a></p>
+      <p id="s-3-12">This equality must hold for a valid signature since:<a class="pilcrow" href="#s-3-12">&para;</a></p>
+      <dl id="s-3-13-" class="nohang">
+        <dt id="s-3-13"><i>S.B </i><a class="pilcrow" href="#s-3-13">&para;</a></dt>
+        <dd id="null">= (<i>r</i> + <i>k.s</i>).<i>B</i> <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= <i>r.B</i> +<i>k</i>.(<i>s.B</i>) <a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null">= <i>R</i> + <i>k.A</i><a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      <p id="s-3-14">The value <i>r</i> plays a critical role in the signature scheme as it serves to prevent disclosure of the secret scalar. If the value <i>r</i> is known, <i>s</i> can be calculated as <i>s</i> = (<i>S-r</i>).<i>k</i><sup>-1</sup> mod <i>L</i>. It is therefore essential that the value <i>r</i> be unguessable.<a class="pilcrow" href="#s-3-14">&para;</a></p>
+      <p id="s-3-15">Furthermore, if the same value of <i>r</i> is used to sign two different documents, this results two signatures with the same value <i>R</i> and different values of <i>k</i> and <i>S</i>. Thus<a class="pilcrow" href="#s-3-15">&para;</a></p>
+      <p id="s-3-16"><i>S<sub>1</sub></i> = <i>r</i> + <i>k<sub>1</sub></i>.<i>s</i> mod <i>L</i><a class="pilcrow" href="#s-3-16">&para;</a></p>
+      <p id="s-3-17">S<sub>2</sub> = <i>r</i> + <i>k<sub>2</sub>.s mod L</i><a class="pilcrow" href="#s-3-17">&para;</a></p>
+      <p id="s-3-18">s = (<i>S<sub>1</sub></i> - <i>S<sub>2</sub></i>)(<i>k<sub>1</sub></i> - <i>k<sub>2</sub></i>)<sup>-1</sup> mod <i>L</i><a class="pilcrow" href="#s-3-18">&para;</a></p>
+      <p id="s-3-19">The method of constructing <i>r</i> <span class="bcp14">MUST</span> ensure that it is unique and unguessable.<a class="pilcrow" href="#s-3-19">&para;</a></p>
+    </section>
+    
+    <section id="n-direct-shared-threshold-signature">
+      <h4 id="s-3_1">
+        <a class="selfRef" href="#s-3_1">3.1.</a>
+        <a class="selfRef" href="#n-direct-shared-threshold-signature">Direct shared threshold signature</a>
+      </h4>
+      <p id="s-3_1-1">A threshold signature R, S is constructed by summing a set of signature contributions from two or more signers. For the case that the composite private key is the sum of the key shares (<i>n</i> = <i>t</i>), each signer <i>i</i> provides a contribution as follows:<a class="pilcrow" href="#s-3_1-1">&para;</a></p>
+      <p id="s-3_1-2">A<sub>i</sub> = s<sub>i</sub>.B<a class="pilcrow" href="#s-3_1-2">&para;</a></p>
+      <p id="s-3_1-3">R<sub>i</sub> = r<sub>i</sub>.B<a class="pilcrow" href="#s-3_1-3">&para;</a></p>
+      <p id="s-3_1-4">S<sub>i</sub> = r<sub>i</sub> + k.s<sub>i</sub> mod L<a class="pilcrow" href="#s-3_1-4">&para;</a></p>
+      <p id="s-3_1-5">Where s<sub>i</sub> and r<sub>i</sub> are the secret scalar and unguessable value for the individual signer.<a class="pilcrow" href="#s-3_1-5">&para;</a></p>
+      <p id="s-3_1-6">The contributions of signers {1, 2, … n} are then combined as follows:<a class="pilcrow" href="#s-3_1-6">&para;</a></p>
+      <p id="s-3_1-7">R = R<sub>1</sub> + R<sub>2</sub> + … + R<sub>n</sub><a class="pilcrow" href="#s-3_1-7">&para;</a></p>
+      <p id="s-3_1-8">S = S<sub>1</sub> + S<sub>2</sub> + … + S<sub>n</sub><a class="pilcrow" href="#s-3_1-8">&para;</a></p>
+      <p id="s-3_1-9">A = s.B <a class="pilcrow" href="#s-3_1-9">&para;</a></p>
+      <p id="s-3_1-10">Where s =  (s<sub>1</sub> + s<sub>2</sub> + … + s<sub>n</sub>) mod L<a class="pilcrow" href="#s-3_1-10">&para;</a></p>
+      <p id="s-3_1-11">The threshold signature is verified in the same manner as before:<a class="pilcrow" href="#s-3_1-11">&para;</a></p>
+      <p id="s-3_1-12">S.B = R + k.A<a class="pilcrow" href="#s-3_1-12">&para;</a></p>
+      <p id="s-3_1-13">Substituting for S.B we get:<a class="pilcrow" href="#s-3_1-13">&para;</a></p>
+      <p id="s-3_1-14">= (S<sub>1</sub> + S<sub>2</sub> + … + S<sub>n</sub>).B<a class="pilcrow" href="#s-3_1-14">&para;</a></p>
+      <p id="s-3_1-15">= S<sub>1</sub>.B + S<sub>2</sub>.B + … + S<sub>n</sub>.B<a class="pilcrow" href="#s-3_1-15">&para;</a></p>
+      <p id="s-3_1-16">= (r<sub>1</sub> + k.s<sub>1</sub>).B + (r<sub>2</sub> + k.s<sub>2</sub>).B + … + (r<sub>n</sub> + k.s<sub>n</sub>).B<a class="pilcrow" href="#s-3_1-16">&para;</a></p>
+      <p id="s-3_1-17">= (r<sub>1</sub>.B + k.s<sub>1</sub>.B) + (r<sub>2</sub>.B + k.s<sub>2</sub>.B) + … + (r<sub>n</sub>.B + k.s<sub>n</sub>.B)<a class="pilcrow" href="#s-3_1-17">&para;</a></p>
+      <p id="s-3_1-18">= (R1 + k.A1) + (R1 + k.A1) + … + (Rn + k.An)<a class="pilcrow" href="#s-3_1-18">&para;</a></p>
+      <p id="s-3_1-19">Substituting for R + k.A we get:<a class="pilcrow" href="#s-3_1-19">&para;</a></p>
+      <p id="s-3_1-20">= R<sub>1</sub> + R<sub>2</sub> + … + R<sub>n</sub> + k.(A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n</sub>)<a class="pilcrow" href="#s-3_1-20">&para;</a></p>
+      <p id="s-3_1-21">= R<sub>1</sub> + R<sub>2</sub> + … + R<sub>n</sub> + k.A<sub>1</sub> + k.A<sub>2</sub> + … + k.A<sub>n</sub><a class="pilcrow" href="#s-3_1-21">&para;</a></p>
+      <p id="s-3_1-22">= (R<sub>1</sub> + k.A<sub>1</sub>) + (R<sub>1</sub> + k.A<sub>1</sub>) + … + (R<sub>n</sub> + k.A<sub>n</sub>)<a class="pilcrow" href="#s-3_1-22">&para;</a></p>
+      <p id="s-3_1-23">As expected, the operation of threshold signature makes use of the same approach as threshold key generation and threshold decryption as described in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a>. As with threshold decryption it is not necessary for each key share holder to have a public key corresponding to their key share. All that is required is that the sum of the secret scalar values used in calculation of the signature modulo the group order be the value of the aggregate secret scalar corresponding to the aggregate secret key.<a class="pilcrow" href="#s-3_1-23">&para;</a></p>
+      <p id="s-3_1-24">While verification of <a class="xref" href="#RFC8032">[RFC8032]</a> signatures is unchanged, the use of threshold signatures requires a different approach to signing. In particular, the fact that the value k is bound to the value R means that the participants in the threshold signature scheme must agree on the value R before the value k can be calculated. Since k is required to calculate the signature contributions S<sub>i</sub> can be calculated, it is thus necessary to calculate the values R<sub>i</sub> and S<sub>i</sub> in separate phases. The process of using a threshold signature to sign a document thus has the following stages orchestrated by a dealer  as follows:<a class="pilcrow" href="#s-3_1-24">&para;</a></p>
+      <ol id="s-3_1-25-">
+        <li id="s-3_1-25">The dealer determines the values F, C and PH(M) as specified in <a class="xref" href="#RFC8032">[RFC8032]</a> and transmits them to the signers {1, 2, … n}.<a class="pilcrow" href="#s-3_1-25">&para;</a></li>
+        <li id="s-3_1-26">Each signer generates a random value r<sub>i</sub> such that 1  r<sub>i</sub>  L, calculates the value R<sub>i</sub> = r<sub>i</sub>.B and returns R to the dealer .<a class="pilcrow" href="#s-3_1-26">&para;</a></li>
+        <li id="s-3_1-27">The dealer calculates the value R = R<sub>1</sub> + R<sub>2</sub> + … + R<sub>n</sub> and transmits R and A to the signers {1, 2, … n}.<a class="pilcrow" href="#s-3_1-27">&para;</a></li>
+        <li id="s-3_1-28">Each signer uses the suppled data to determine the value k and hence S<sub>i</sub> = r<sub>i</sub> + k.s<sub>i</sub> mod L and transmits it to the dealer .<a class="pilcrow" href="#s-3_1-28">&para;</a></li>
+        <li id="s-3_1-29">The dealer calculates the value S = S<sub>1</sub> + S<sub>2</sub> + … + S<sub>n</sub> and verifies that the resulting signature R, S verifies according to the mechanism specified in <a class="xref" href="#RFC8032">[RFC8032]</a>. If the signature is correct, the dealer  publishes it. Otherwise, the dealer  <span class="bcp14">MAY</span> identify the signer(s) that provided incorrect contributions by verifying the values R<sub>i</sub> and S<sub>i</sub> for each.<a class="pilcrow" href="#s-3_1-29">&para;</a></li>
+      </ol>
+      <p id="s-3_1-30">For clarity, the dealer role is presented here as being implemented by a single party. <a class="pilcrow" href="#s-3_1-30">&para;</a></p>
+    </section>
+    
+    <section id="n-shamir-shared-threshold-signature">
+      <h4 id="s-3_2">
+        <a class="selfRef" href="#s-3_2">3.2.</a>
+        <a class="selfRef" href="#n-shamir-shared-threshold-signature">Shamir shared threshold signature</a>
+      </h4>
+      <p id="s-3_2-1">To construct a threshold signature using shares created using Shamir Secret Sharing, each private key value <i>s<sub>i</sub></i> is multiplied by the Lagrange coefficient <i>l<sub>i</sub></i> corresponding to the set of shares used to construct the signature:<a class="pilcrow" href="#s-3_2-1">&para;</a></p>
+      <p id="s-3_2-2">A<sub>i</sub> = s<sub>i</sub>l<sub>i</sub>.B<a class="pilcrow" href="#s-3_2-2">&para;</a></p>
+      <p id="s-3_2-3">R<sub>i</sub> = r<sub>i</sub>.B<a class="pilcrow" href="#s-3_2-3">&para;</a></p>
+      <p id="s-3_2-4"><i>S<sub>i</sub> = ri + klisi mod L</i><a class="pilcrow" href="#s-3_2-4">&para;</a></p>
+      <p id="s-3_2-5">It is convenient to combine the derivation of <i>S<sub>i</sub></i> for the additive and Shamir shared threshold signatures by introducing a key multiplier coefficient <i>c<sub>i</sub></i>:<a class="pilcrow" href="#s-3_2-5">&para;</a></p>
+      <p id="s-3_2-6"><i>S<sub>i</sub> = ri + kcisi mod L</i><a class="pilcrow" href="#s-3_2-6">&para;</a></p>
+      <dl id="s-3_2-7-" class="nohang">
+        <dt id="s-3_2-7">Where<a class="pilcrow" href="#s-3_2-7">&para;</a></dt>
+        <dd id="null"><i>c<sub>i</sub></i> = 1 for the additive shared threshold signature<a class="pilcrow" href="#">&para;</a></dd>
+        <dd id="null"><i>c<sub>i</sub></i> = <i>l<sub>i</sub></i> for the Shamir shared threshold signature<a class="pilcrow" href="#">&para;</a></dd>
+      </dl>
+      
+      <section id="n-stateless-computation-of-final-share">
+        <h4 id="s-3_3">
+          <a class="selfRef" href="#s-3_3">3.3.</a>
+          <a class="selfRef" href="#n-stateless-computation-of-final-share">Stateless computation of final share</a>
+        </h4>
+      </section>
+      <p id="s-3_3-1">One of the chief drawbacks to the algorithm described above is that it requires signers to perform two steps with state carried over from the first to the second to avoid reuse of the value <i>r<sub>i</sub></i>. This raises particular concern for implementations such as signature services or HSMs where maintaining state imposes a significant cost.<a class="pilcrow" href="#s-3_3-1">&para;</a></p>
+      <p id="s-3_3-2">Fortunately, it is possible to modify the algorithm so that the final signer does not need to maintain state between steps:<a class="pilcrow" href="#s-3_3-2">&para;</a></p>
+      <ol id="s-3_3-3-">
+        <li id="s-3_3-3">All the signers except the final signer <i>F</i> generate their value <i>r<sub>i</sub></i> and submit the corresponding value <i>R<sub>i</sub></i> to the dealer<a class="pilcrow" href="#s-3_3-3">&para;</a></li>
+        <li id="s-3_3-4">Dealer calculates the value <i>R</i> - <i>R<sub>F</sub></i> and sends it to the final signer together with the all the other parameters required to calculate <i>k</i> and the  final signer's key multiplier coefficient <i>c<sub>F</sub></i>.<a class="pilcrow" href="#s-3_3-4">&para;</a></li>
+        <li id="s-3_3-5">The final signer generates its value <i>r<sub>F</sub></i><a class="pilcrow" href="#s-3_3-5">&para;</a></li>
+        <li id="s-3_3-6">The final signer calculates the value <i>R<sub>F</sub></i> from which the values <i>R</i> and <i>k</i> can now be determined.<a class="pilcrow" href="#s-3_3-6">&para;</a></li>
+        <li id="s-3_3-7">The final signer calculates its key share contribution <i>S<sub>F</sub> = rF + kcFsF mod L.</i><a class="pilcrow" href="#s-3_3-7">&para;</a></li>
+        <li id="s-3_3-8">The final signer returns the values <i>S<sub>F</sub></i> and <i>R</i> to the dealer.<a class="pilcrow" href="#s-3_3-8">&para;</a></li>
+        <li id="s-3_3-9">The dealer reports the value R to the other signers and continues the signature process as before.<a class="pilcrow" href="#s-3_3-9">&para;</a></li>
+      </ol>
+      <p id="s-3_3-10">While this approach to stateless computation of the signature contributions is limited to the final share, this is sufficient to cover the overwhelming majority of real-world applications where <i>n</i> = <i>t</i> = 2.<a class="pilcrow" href="#s-3_3-10">&para;</a></p>
+      <p id="s-3_3-11">Note that the final signer <span class="bcp14">MAY</span> calculate its value <i>r<sub>F</sub></i> deterministically provided that the parameters <i>R</i> - <i>R<sub>F</sub></i> and <i>c<sub>F</sub></i> are used in its determination. Other signers <span class="bcp14">MUST NOT</span> use a deterministic means of generating their value <i>r<sub>i</sub></i> since the information known to them at the time this parameter is generated is not sufficient to fix the value of <i>R</i>.<a class="pilcrow" href="#s-3_3-11">&para;</a></p>
+    </section>
+    
+    <section id="n-side-channel-resistance">
+      <h5 id="s-3_3_1">
+        <a class="selfRef" href="#s-3_3_1">3.3.1.</a>
+        <a class="selfRef" href="#n-side-channel-resistance">Side channel resistance</a>
+      </h5>
+      <p id="s-3_3_1-1">The use of Kocher side channel resistance as described in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a> entails randomly splitting the private key into two shares and performing the private key operation separately on each share to avoid repeated operations using the same private key value at the cost of performing each operation twice.<a class="pilcrow" href="#s-3_3_1-1">&para;</a></p>
+      <p id="s-3_3_1-2">This additional overhead <span class="bcp14">MAY</span> be eliminated when threshold approaches are used by applying blinding factors whose sum is zero to each of the threshold shares.<a class="pilcrow" href="#s-3_3_1-2">&para;</a></p>
+      <p id="s-3_3_1-3">For example, if generation of the threshold signature is divided between an application program A and an HSM B using the final share approach to avoid maintaining state in the HSM, we might generate a blinding factor thus:<a class="pilcrow" href="#s-3_3_1-3">&para;</a></p>
+      <ol id="s-3_3_1-4-">
+        <li id="s-3_3_1-4">A generates a random nonce <i>n<sub>A</sub></i> and sends it to B with the other parameters required to generate the signature.<a class="pilcrow" href="#s-3_3_1-4">&para;</a></li>
+        <li id="s-3_3_1-5">B generates a random nonce <i>n<sub>B</sub></i><a class="pilcrow" href="#s-3_3_1-5">&para;</a></li>
+        <li id="s-3_3_1-6">B calculates the blinding factor <i>x</i> by calculating <i>H</i>(<i>n<sub>A, </sub>nB) where H is a strong cryptographic digest function and converting the result to an integer in the range 1  x  L.</i><a class="pilcrow" href="#s-3_3_1-6">&para;</a></li>
+        <li id="s-3_3_1-7">B calculates the signature parameters as before except that the threshold signature contribution is now <i>S<sub>B</sub> = rB + k(cBsB + x) mod L.</i><a class="pilcrow" href="#s-3_3_1-7">&para;</a></li>
+        <li id="s-3_3_1-8">B returns the nonce <i>n<sub>B</sub></i> to A with the other parameters.<a class="pilcrow" href="#s-3_3_1-8">&para;</a></li>
+        <li id="s-3_3_1-9">A calculates the blinding factor <i>x</i> using the same approach as B<a class="pilcrow" href="#s-3_3_1-9">&para;</a></li>
+        <li id="s-3_3_1-10">A calculates the signature parameters as before except that the threshold signature contribution is now <i>S<sub>A</sub> = rA + k(cAsA - x) mod L.</i><a class="pilcrow" href="#s-3_3_1-10">&para;</a></li>
+      </ol>
+      <p id="s-3_3_1-11">This approach <span class="bcp14">MAY</span> be extended to the case that <i>t</i> &gt; 2 by substituting a Key Derivation Function (e.g. <a class="xref" href="#RFC5860">[RFC5860]</a>) for the digest function.<a class="pilcrow" href="#s-3_3_1-11">&para;</a></p>
+    </section>
+    
+    <section id="n-security-analysis">
+      <h4 id="s-3_4">
+        <a class="selfRef" href="#s-3_4">3.4.</a>
+        <a class="selfRef" href="#n-security-analysis">Security Analysis</a>
+      </h4>
+      <p id="s-3_4-1">We consider a successful breach of the threshold signature scheme to be any attack that allows the attacker to create a valid signature for any message without the participation of the required threshold of signers.<a class="pilcrow" href="#s-3_4-1">&para;</a></p>
+      <p id="s-3_4-2">Potential breaches include:<a class="pilcrow" href="#s-3_4-2">&para;</a></p>
+      <ul id="s-3_4-3-">
+        <li id="s-3_4-3">Disclosure of the signature key or signature key share.<a class="pilcrow" href="#s-3_4-3">&para;</a></li>
+        <li id="s-3_4-4">Modification of signature data relating to message M to allow creation of a signature for message M'.<a class="pilcrow" href="#s-3_4-4">&para;</a></li>
+        <li id="s-3_4-5">Ability of one of the signers to choose the value of the aggregate public key. <a class="pilcrow" href="#s-3_4-5">&para;</a></li>
+        <li id="s-3_4-6">Access control attacks inducing a signer to create a signature contribution that was not properly authenticated or authorized.<a class="pilcrow" href="#s-3_4-6">&para;</a></li>
+      </ul>
+      <p id="s-3_4-7">We regard attacks on the access control channel to be out of scope for the threshold signature algorithm, though they are certainly a concern for any system in which a threshold signature algorithm is employed.<a class="pilcrow" href="#s-3_4-7">&para;</a></p>
+      <p id="s-3_4-8">We do not consider the ability of a signer to cause creation of an invalid signature to represent a breach.<a class="pilcrow" href="#s-3_4-8">&para;</a></p>
+    </section>
+    
+    <section id="rvalue">
+      <h5 id="s-3_4_1">
+        <a class="selfRef" href="#s-3_4_1">3.4.1.</a>
+        <a class="selfRef" href="#rvalue">Calculation of r values</a>
+      </h5>
+      <p id="s-3_4_1-1">The method of constructing the values <i>r<sub>i</sub></i> <span class="bcp14">MUST</span> ensure that each is unique and unguessable both to external parties, the signers and the dealer. The deterministic method specified in <a class="xref" href="#RFC8032">[RFC8032]</a> cannot be applied to generation of the values r<sub>i</sub> as it allows the dealer to cause signers to reveal their key shares by requesting multiple signature contributions for the same message but with different values of <i>k</i>. In particular, requesting signature contributions for the same message:<a class="pilcrow" href="#s-3_4_1-1">&para;</a></p>
+      <p id="s-3_4_1-2">With different Lagrange coefficients.<a class="pilcrow" href="#s-3_4_1-2">&para;</a></p>
+      <p id="s-3_4_1-3">With a false value of <i>R</i><a class="pilcrow" href="#s-3_4_1-3">&para;</a></p>
+      <p id="s-3_4_1-4">To avoid these attacks, the value r<sub>i</sub> is generated using a secure random number generator. This approach requires the signer to ensure that values are never reused requiring that the signing API maintain state between the first and second rounds of the algorithm.<a class="pilcrow" href="#s-3_4_1-4">&para;</a></p>
+      <p id="s-3_4_1-5">While there are many approaches to deterministic generation of r<sub>i</sub> that appear to be sound, closer inspection has demonstrated these to be vulnerable to rogue key and rogue contribution attacks. <a class="pilcrow" href="#s-3_4_1-5">&para;</a></p>
+    </section>
+    
+    <section id="n-replay-attack">
+      <h5 id="s-3_4_2">
+        <a class="selfRef" href="#s-3_4_2">3.4.2.</a>
+        <a class="selfRef" href="#n-replay-attack">Replay Attack</a>
+      </h5>
+      <p id="s-3_4_2-1">The most serious concern in the implementation of any Schnorr type signature scheme is the need to ensure that the value r<sub>i</sub> is never revealed to any other party and is never used to create signatures for two different values of k.s<sub>i</sub>.<a class="pilcrow" href="#s-3_4_2-1">&para;</a></p>
+      <p id="s-3_4_2-2">Ensuring this does not occur imposes significant design constraints as creating a correct signature contribution requires that the signer use the same value of r<sub>i</sub> to construct its value or R<sub>i</sub> and S<sub>i</sub>.<a class="pilcrow" href="#s-3_4_2-2">&para;</a></p>
+      <p id="s-3_4_2-3">For example, a HSM device may be required to perform multiple signature operations simultaneously. Since the storage capabilities of an HSM device are typically constrained, it is tempting to attempt to avoid the need to track the value of r<sub>i</sub> within the device itself using an appropriately authenticated and encrypted opaque state token. Such mechanisms provide the HSM with the value of r<sub>i</sub> but do not and cannot provide protection against a replay attack in which the same state token is presented with a request to sign different values of k.<a class="pilcrow" href="#s-3_4_2-3">&para;</a></p>
+    </section>
+    
+    <section id="n-malicious-contribution-attack">
+      <h5 id="s-3_4_3">
+        <a class="selfRef" href="#s-3_4_3">3.4.3.</a>
+        <a class="selfRef" href="#n-malicious-contribution-attack">Malicious Contribution Attack</a>
+      </h5>
+      <p id="s-3_4_3-1">In a malicious contribution attack, one or more parties present a signature contribution that does not meet the criteria R<sub>i</sub> = r<sub>i</sub>.B and S<sub>i</sub> = r<sub>i</sub> + ks<sub>i</sub>.<a class="pilcrow" href="#s-3_4_3-1">&para;</a></p>
+      <p id="s-3_4_3-2">Such an attack is not considered to be a breach as it merely causes the signature process to fail. <a class="pilcrow" href="#s-3_4_3-2">&para;</a></p>
+    </section>
+    
+    <section id="roguekey">
+      <h5 id="s-3_4_4">
+        <a class="selfRef" href="#s-3_4_4">3.4.4.</a>
+        <a class="selfRef" href="#roguekey">Rogue Key Attack</a>
+      </h5>
+      <p id="s-3_4_4-1">A threshold signature scheme that allows the participants to 'bring their own key' may be vulnerable to a rogue key attack in which a signer is able to select the value of the aggregate public signature key by selecting a malicious public signature key value.<a class="pilcrow" href="#s-3_4_4-1">&para;</a></p>
+      <p id="s-3_4_4-2">The scheme described in this document is a threshold signature scheme and does not support this feature. Consequently, this attack is not relevant. It is described here for illustrative purposes only.<a class="pilcrow" href="#s-3_4_4-2">&para;</a></p>
+      <p id="s-3_4_4-3">This particular attack only applies when the individual signers create their own signature shares. It is not a concern when the signature shares are created by splitting a master signature private key.<a class="pilcrow" href="#s-3_4_4-3">&para;</a></p>
+      <p id="s-3_4_4-4">Consider the case where the aggregate public key signature is calculated from the sum of public signature key share values presented by the signers:<a class="pilcrow" href="#s-3_4_4-4">&para;</a></p>
+      <p id="s-3_4_4-5">A = A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n</sub><a class="pilcrow" href="#s-3_4_4-5">&para;</a></p>
+      <p id="s-3_4_4-6">If the public key values are presented in turn, the last signer presenting their key share can force the selection of any value of A that they choose by selecting A<sub>n</sub> = A<sub>m</sub> -  (A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n-1</sub>)<a class="pilcrow" href="#s-3_4_4-6">&para;</a></p>
+      <p id="s-3_4_4-7">The attacker can thus gain control of the aggregate signature key by choosing A<sub>m</sub> = s<sub>m</sub>.B where s<sub>m</sub> is a secret scalar known only to the attacker. But does so at the cost of not knowing the value s<sub>n</sub> and so the signer cannot participate in the signature protocol. <a class="pilcrow" href="#s-3_4_4-7">&para;</a></p>
+      <p id="s-3_4_4-8">This attack allows the attacker and the attacker alone to create signatures which are validated under the aggregate signature key.<a class="pilcrow" href="#s-3_4_4-8">&para;</a></p>
+      <p id="s-3_4_4-9">The attack is a consequence of the mistaken assumption that a signature created under the signature key A<sub>1</sub> + A<sub>2</sub> + … + A<sub>n</sub> provides evidence of the individual participation of the corresponding key holders without separate validation of the aggregate key.<a class="pilcrow" href="#s-3_4_4-9">&para;</a></p>
+      <p id="s-3_4_4-10">Enabling the use of threshold signature techniques by ad-hoc groups of signers using their existing signature keys as signature key shares presents serious technical challenges that are outside the scope of this specification.<a class="pilcrow" href="#s-3_4_4-10">&para;</a></p>
+    </section>
+    
+    <section id="n-ed2519-signature">
+      <h3 id="s-4">
+        <a class="selfRef" href="#s-4">4.</a>
+        <a class="selfRef" href="#n-ed2519-signature">Ed2519 Signature</a>
+      </h3>
+      <p id="s-4-1">The means by which threshold shares are created is described in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a>.<a class="pilcrow" href="#s-4-1">&para;</a></p>
+      <p id="s-4-2">The dealer selects the signers who are to construct the signature. Each signer then computes the value R<sub>i</sub>:<a class="pilcrow" href="#s-4-2">&para;</a></p>
+      <ol id="s-4-3-">
+        <li id="s-4-3">Randomly generate an integer r<sub>i</sub> such that 1  r<sub>i</sub>  L.<a class="pilcrow" href="#s-4-3">&para;</a></li>
+        <li id="s-4-4">Compute the point R<sub>i</sub> = r<sub>i</sub>B.  For efficiency, do this by first reducing r<sub>i</sub> modulo L, the group order of B.  Let the string R<sub>i</sub> be the encoding of this point.<a class="pilcrow" href="#s-4-4">&para;</a></li>
+        <li id="s-4-5">Transmit the value R<sub>i</sub> to the dealer <a class="pilcrow" href="#s-4-5">&para;</a></li>
+        <li id="s-4-6">At some later point, the dealer <span class="bcp14">MAY</span> complete the signature by returning the values F, C, A and R as specified in <a class="xref" href="#RFC8032">[RFC8032]</a> together with the key multiplier coefficient c<sub>i</sub>. The signers <span class="bcp14">MAY</span> then complete their signature contributions:<a class="pilcrow" href="#s-4-6">&para;</a></li>
+        <li id="s-4-7">Compute SHA512(dom2(F, C) || R || A || PH(M)), and interpret the 64-octet digest as a little-endian integer k.<a class="pilcrow" href="#s-4-7">&para;</a></li>
+        <li id="s-4-8">Compute S<sub>i</sub> = (r<sub>i</sub> + kc<sub>i</sub>s<sub>i</sub>) mod L.  For efficiency, again reduce k modulo L first.<a class="pilcrow" href="#s-4-8">&para;</a></li>
+        <li id="s-4-9">Return the values R<sub>i</sub>, S<sub>i</sub> to the dealer .<a class="pilcrow" href="#s-4-9">&para;</a></li>
+      </ol>
+      <p id="s-4-10">The dealer then completes the signature by:<a class="pilcrow" href="#s-4-10">&para;</a></p>
+      <ol id="s-4-11-">
+        <li id="s-4-11">Computing the composite value S = S<sub>1</sub> + S<sub>2</sub> + … + S<sub>n</sub><a class="pilcrow" href="#s-4-11">&para;</a></li>
+        <li id="s-4-12">Verifying that the signature R, S is valid.<a class="pilcrow" href="#s-4-12">&para;</a></li>
+        <li id="s-4-13">Publishing the signature.<a class="pilcrow" href="#s-4-13">&para;</a></li>
+      </ol>
+      
+      <section id="n-ed448-signature">
+        <h3 id="s-5">
+          <a class="selfRef" href="#s-5">5.</a>
+          <a class="selfRef" href="#n-ed448-signature">Ed448 Signature</a>
+        </h3>
+      </section>
+      <p id="s-5-1">The means by which threshold shares are created is described in <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a>.<a class="pilcrow" href="#s-5-1">&para;</a></p>
+      <p id="s-5-2">The dealer selects the signers who are to construct the signature. Each signer then computes the value R<sub>i</sub>:<a class="pilcrow" href="#s-5-2">&para;</a></p>
+      <ol id="s-5-3-">
+        <li id="s-5-3">Randomly generate an integer r<sub>i</sub> such that 1  r<sub>i</sub>  L.<a class="pilcrow" href="#s-5-3">&para;</a></li>
+        <li id="s-5-4">Compute the point R<sub>i</sub> = r<sub>i</sub>B.  For efficiency, do this by first reducing r<sub>i</sub> modulo L, the group order of B.  Let the string R<sub>i</sub> be the encoding of this point.<a class="pilcrow" href="#s-5-4">&para;</a></li>
+      </ol>
+      <p id="s-5-5">Transmit the value R<sub>i</sub> to the dealer <a class="pilcrow" href="#s-5-5">&para;</a></p>
+      <ol id="s-5-6-">
+        <li id="s-5-6">At some later point, the dealer <span class="bcp14">MAY</span> complete the signature by returning the values F, C, A and R as specified in <a class="xref" href="#RFC8032">[RFC8032]</a> together with the key multiplier coefficient c<sub>i</sub>. The signers <span class="bcp14">MAY</span> then complete the signature contributions:<a class="pilcrow" href="#s-5-6">&para;</a></li>
+        <li id="s-5-7">Compute SHAKE256(dom4(F, C) || R || A || PH(M), 114), and interpret the 114-octet digest as a little-endian integer k.<a class="pilcrow" href="#s-5-7">&para;</a></li>
+        <li id="s-5-8">Compute S<sub>i</sub> = (r<sub>i</sub> + kc<sub>i</sub>s<sub>i</sub>) mod L.  For efficiency, again reduce k modulo L first.<a class="pilcrow" href="#s-5-8">&para;</a></li>
+        <li id="s-5-9">Return the values R<sub>i</sub>, S<sub>i</sub> to the dealer.<a class="pilcrow" href="#s-5-9">&para;</a></li>
+      </ol>
+      <p id="s-5-10">The dealer then completes the signature by:<a class="pilcrow" href="#s-5-10">&para;</a></p>
+      <ol id="s-5-11-">
+        <li id="s-5-11">Computing the composite value S = S<sub>1</sub> + S<sub>2</sub> + … + S<sub>n</sub><a class="pilcrow" href="#s-5-11">&para;</a></li>
+        <li id="s-5-12">Verifying that the signature R, S is valid.<a class="pilcrow" href="#s-5-12">&para;</a></li>
+        <li id="s-5-13">Publishing the signature.<a class="pilcrow" href="#s-5-13">&para;</a></li>
+      </ol>
+      
+      <section id="n-test-vectors">
+        <h3 id="s-6">
+          <a class="selfRef" href="#s-6">6.</a>
+          <a class="selfRef" href="#n-test-vectors">Test Vectors</a>
+        </h3>
+      </section>
+      
+      <section id="n--direct-threshold-signature-ed25519-">
+        <h4 id="s-6_1">
+          <a class="selfRef" href="#s-6_1">6.1.</a>
+          <a class="selfRef" href="#n--direct-threshold-signature-ed25519-"> Direct Threshold Signature Ed25519 </a>
+        </h4>
+      </section>
+      <p id="s-6_1-1">The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair: <a class="pilcrow" href="#s-6_1-1">&para;</a></p>
+      <pre id="s-6_1-2">ED25519Alice's Key (ED25519)
+    UDF:        ZAAA-GTSI-GXED-255X-XALI-CEXS-XKEY
+    Scalar:     56271244081186130980636545017945156580516101894352492
+        459594967614223399428880
+    Encoded Private
+  33 40 0E 22  D8 67 17 F4  8A 9F 6A 46  61 B4 0E AD
+  8C D0 DD C3  79 CD 85 BD  95 5C 90 B9  6C CB 8C 23
+    X: 11116793672970427161790264469280294507189044728140547954071022
+        7976454124042406369344932655633664630560242213431409139866940
+        284702002648469365756492647970
+    Y: 61655404171611396573021808119108664749574235125343680206454285
+        6299141386615046548323087409388548650272224487089895079970526
+        0143544115364878870129761259200
+    Encoded Public
+  E2 AB 8F 37  62 C8 7B F9  E9 BC 59 0C  2E 99 A5 58
+  0C C3 19 D5  CD DA 53 DF  3E C1 F0 C0  FE D3 55 5E
+ED25519Bob's Key (ED25519)
+    UDF:        ZAAA-GTSI-G2ED-255X-XBOB-XSXK-EY
+    Scalar:     54940772670153459146152925564198105262971485730889818
+        986727608573229799020168
+    Encoded Private
+  68 9A 68 92  8A 06 17 84  35 3C B7 08  F8 56 00 3F
+  BA 31 8C 42  B0 42 FE 2D  18 F2 7F AB  CD 10 49 F1
+    X: 14271495069349838216379540196263140964032393512903842206168182
+        5518850827098876289800868735522232908519794251130907125878675
+        6343411484065706313568410880015
+    Y: 28094328948004112428189466223757440886388684291254605355859923
+        6240968229706795825282419594219442074647093851302547452470435
+        9438513477629978601366725015573
+    Encoded Public
+  32 E5 8D 5E  66 B2 F9 E9  14 79 08 71  96 3B 9A 75
+  A2 31 59 4B  8E ED 18 EF  BD FF 11 D4  47 2A 8C F4<a class="pilcrow" href="#s-6_1-2">&para;</a></pre>
+      <p id="s-6_1-3">The composite Signature Key A = A<sub>a</sub> + A<sub>b</sub> <a class="pilcrow" href="#s-6_1-3">&para;</a></p>
+      <pre id="s-6_1-4">Aggregate Key = Alice + Bob ()
+    UDF:        TBS
+    Scalar:     26569330913556569171916721364983482306308422345436973
+        56293312113171384684213
+    Encoded Private
+  B5 CE 0E B3  9C CF 18 99  CF 8D 4C BB  AE 81 79 1F
+  CE 13 AA 3E  63 59 5B AC  8D 2C EB A4  55 C5 DF 05
+    X: 67872685043898469012456949773240814121645904736114813455820339
+        8688906486811443744733724675994181258029547346985079901494367
+        752381127781166234556148580090
+    Y: 36481740058369645484420180976004932062085375941522344052907594
+        0118552792158551197107484892204562290802810655253510302448455
+        4128548992118101415797909250954
+    Encoded Public
+  29 65 63 86  4F FB 10 8D  BA 7A 0A 68  04 6D 00 DA
+  9B 1D C3 A4  AF BA 95 B4  5D 27 B4 35  00 2F DF 32<a class="pilcrow" href="#s-6_1-4">&para;</a></pre>
+      <p id="s-6_1-5">To sign the text "This is a test", Alice first generates her value r and multiplies it by the base point to obtain the value R<sub>a</sub>: <a class="pilcrow" href="#s-6_1-5">&para;</a></p>
+      <pre id="s-6_1-6">Alice:
+r_a =  47498736868184230171598682949552850028048129926454476046383202
+    22101432831360
+R_a =
+  37 4D BC B2  FC 26 43 69  DA B7 DF 78  F7 05 63 1D
+  C4 96 FB FB  D6 CC 6A 9E  92 ED E7 35  93 44 B8 14<a class="pilcrow" href="#s-6_1-6">&para;</a></pre>
+      <p id="s-6_1-7">Alice passes her value R<sub>A</sub> to Bob along with the other  parameters required to calculate i. Bob then calculates his value R<sub>A</sub> and multiplies it by the base point to obtain  the value R<sub>b</sub>: <a class="pilcrow" href="#s-6_1-7">&para;</a></p>
+      <pre id="s-6_1-8">Bob:
+r_b =  52485056662860498129500187267044856221580824276836907703860095
+    4226327269184
+R_b =
+  AB A1 A8 28  11 6E FC A0  E9 8B CF 53  A2 4C AF F8
+  66 59 69 4B  2F 37 93 77  92 3A 70 95  33 DE 5B 54<a class="pilcrow" href="#s-6_1-8">&para;</a></pre>
+      <p id="s-6_1-9">Bob can now calculate the composite value R = R<sub>a</sub> + R<sub>b</sub> and thus the value k. <a class="pilcrow" href="#s-6_1-9">&para;</a></p>
+      <pre id="s-6_1-10">R =
+  5B 68 76 8C  CA 23 E6 84  36 92 76 F1  9E FF 08 8F
+  0A 16 A9 55  E3 96 9C 84  36 28 89 DB  06 16 43 44
+k =  2386567530061545624821866403866306492890802298065266303263411446
+    38069188344<a class="pilcrow" href="#s-6_1-10">&para;</a></pre>
+      <p id="s-6_1-11">Bob calculates his signature scalar contribution and returns the value to Alice: <a class="pilcrow" href="#s-6_1-11">&para;</a></p>
+      <pre id="s-6_1-12">Bob:
+S_b =  28944981827334439860137457106479900995796126061421325490732808
+    17601718529025<a class="pilcrow" href="#s-6_1-12">&para;</a></pre>
+      <p id="s-6_1-13">Alice can now calculate her signature scalar contribution and thus the signature  scalar S. <a class="pilcrow" href="#s-6_1-13">&para;</a></p>
+      <pre id="s-6_1-14">Alice:
+S_a =  42757354096062105044904298703340896803929542552166792901005683
+    43184517117786
+S =  7170233592339654490504175580982079779972566861358811839173849160
+    786235646811<a class="pilcrow" href="#s-6_1-14">&para;</a></pre>
+      <p id="s-6_1-15">Alice checks to see that the signature verifies: <a class="pilcrow" href="#s-6_1-15">&para;</a></p>
+      <pre id="s-6_1-16">S.B = R + kA =
+    X: 40361643976948744971992641065784582623361456745859092512349846
+        75625733276535
+    Y: 41192378513331957483774498173296750751876504986403840969777850
+        360997558579289<a class="pilcrow" href="#s-6_1-16">&para;</a></pre>
+    </section>
+    
+    <section id="n--direct-threshold-signature-ed448-">
+      <h4 id="s-6_2">
+        <a class="selfRef" href="#s-6_2">6.2.</a>
+        <a class="selfRef" href="#n--direct-threshold-signature-ed448-"> Direct Threshold Signature Ed448 </a>
+      </h4>
+      <p id="s-6_2-1">The signers are Alice and Bob's Threshold Signature Service 'Bob'. Each creates a key pair: <a class="pilcrow" href="#s-6_2-1">&para;</a></p>
+      <pre id="s-6_2-2">ED448Alice's Key (ED448)
+    UDF:        ZAAA-ITSI-GXED-44XA-LICE-XSXK-EY
+    Scalar:     63495803583658817688110446314786076976347236361354035
+        5597788771064742993095132758589292255654895141583596922516472
+        738879360490167934280
+    Encoded Private
+  A0 53 4C 93  3C 34 00 76  AE 5D B5 4A  C2 71 5F 43
+  E1 D6 63 2C  5C 56 53 C8  98 A0 8F 03  FF F5 22 96
+  91 45 8C 2B  CF E3 FD 7E  2A 9E 0B D6  F4 CC 66 61
+  43 62 72 7B  34 B4 79 92
+    X: 24743197509267833262111449556527285120868167712209919570838426
+        3466168536901525943558973091346360088759980994772668117646359
+        614426660579
+    Y: 21342899120576770537664462049685258390853729788303428349051130
+        8752175233505795318243164692156369495328007220135137156078814
+        081547431302
+    Encoded Public
+  0A 3B F3 27  E7 E1 67 63  2C 59 E2 1C  D1 84 C7 83
+  E8 1E D1 68  9F 32 A1 16  99 00 5C DA  29 B9 6C 08
+  E4 15 57 7E  E5 63 C2 32  08 23 41 68  5F 49 1F FF
+  BC 4D CD 3A  4E A6 85 49  00
+ED448Bob's Key (ED448)
+    UDF:        ZAAA-ITSI-G2ED-44XB-OBXS-XKEY
+    Scalar:     72649803773199751564998543891898904839718409312910780
+        0262041941160989643727331987658132182181970054245587322070535
+        846720571414845714224
+    Encoded Private
+  BC 53 B4 74  3E A7 A7 FA  9F 05 9A BC  8C 22 26 15
+  A1 4E BB 10  0E B5 59 6B  DE 9C 1B E9  F2 3C 65 42
+  E7 B4 47 18  60 AC 18 A6  D2 78 B8 BC  CE F5 F4 28
+  B2 3A FF 08  61 EF 6B 7C
+    X: 58235851934808640621920816872959059172692411187640950432203039
+        8116748997750134460231406698091317008063030408798536634284207
+        667468558264
+    Y: 34390767697909283892495761259186538632120422458392131201372282
+        6056455656591826216381185634080685718154852726725624178995827
+        091591132128
+    Encoded Public
+  93 63 5A 45  2D 4C 94 32  45 23 CD E2  A8 46 E4 78
+  A0 80 59 DA  36 CB 6B 0C  06 64 6F BE  51 AB C0 BF
+  1E DB A8 3F  2B 3B 80 0F  BF 00 E6 78  DD E0 83 E9
+  AC 20 02 55  87 07 39 38  00<a class="pilcrow" href="#s-6_2-2">&para;</a></pre>
+      <p id="s-6_2-3">The composite Signature Key A = A<sub>a</sub> + A<sub>b</sub> <a class="pilcrow" href="#s-6_2-3">&para;</a></p>
+      <pre id="s-6_2-4">Aggregate Key = Alice + Bob ()
+    UDF:        TBS
+    Scalar:     89488306051273634069773238262841883041784075539841550
+        3672228636597106090916876462340541507950185640860121886233669
+        49466515613996100051
+    Encoded Private
+  D3 29 DD AB  F6 0D 99 8B  75 65 B8 06  36 C9 3A 2C
+  D4 08 C3 9B  7C F9 77 8C  68 29 0E 3D  5D C7 3E 00
+  92 8B DC AE  26 FB 16 39  CD 25 1B 23  4A 5A 05 61
+  1D 5C C4 70  0A C9 84 1F
+    X: 17985659098670117617173315763082238685735647626871251468000984
+        2080317111091696183607307614171726960576308774975742249260532
+        199160570999
+    Y: 31506323224859159594386181995639405170623657273945727288760063
+        1624406694682617334725040181287905351066763414658543828623841
+        509161975864
+    Encoded Public
+  9B 3E DF 49  55 40 9F 7B  EA 0B AA 40  B7 3D 15 82
+  60 9F 7C 40  CF 67 DE 56  56 0D 03 87  63 3B 15 F2
+  45 33 FE 48  BD 2D A0 A2  8B CC 74 DA  94 0F 39 00
+  AC 39 CB 0A  9F A4 EB B0  00<a class="pilcrow" href="#s-6_2-4">&para;</a></pre>
+      <p id="s-6_2-5">To sign the text "This is a test", Alice first generates her value r and multiplies it by the base point to obtain the value R<sub>a</sub>: <a class="pilcrow" href="#s-6_2-5">&para;</a></p>
+      <pre id="s-6_2-6">Alice:
+r_a =  68686103432614286085087961100697733989779035076023642515818127
+    98858367044290553184740969706908768491109520568381137474912463623
+    0094998
+R_a =
+  84 D1 68 50  1E BB 9D 40  17 52 C5 D2  96 41 DE FC
+  22 D9 04 02  82 27 1B 32  CD 1D 8C 53  85 AB 40 79
+  F5 00 C2 4C  89 A6 71 0A  39 08 A6 98  4C 2A FE FD
+  B9 F7 66 FC  E9 F2 20 B9  80<a class="pilcrow" href="#s-6_2-6">&para;</a></pre>
+      <p id="s-6_2-7">Alice passes her value R<sub>A</sub> to Bob along with the other  parameters required to calculate i. Bob then calculates his value R<sub>A</sub> and multiplies it by the base point to obtain  the value R<sub>b</sub>: <a class="pilcrow" href="#s-6_2-7">&para;</a></p>
+      <pre id="s-6_2-8">Bob:
+r_b =  76096557183484521564781984661044762292570684233728343619181213
+    42816465520852868086783053490696058232580309131924136177891398775
+    9613091
+R_b =
+  F3 60 25 C5  13 CE AA A9  B2 7E 9D 05  5B B1 F5 6B
+  4F 5B A5 EC  49 3F 39 A4  B5 C3 3C 7F  80 17 44 5B
+  02 83 FD 12  06 A2 DF E8  C6 46 1D 2A  6C 8E 75 70
+  02 53 71 3F  95 C2 71 A8  00<a class="pilcrow" href="#s-6_2-8">&para;</a></pre>
+      <p id="s-6_2-9">Bob can now calculate the composite value R = R<sub>a</sub> + R<sub>b</sub> and thus the value k. <a class="pilcrow" href="#s-6_2-9">&para;</a></p>
+      <pre id="s-6_2-10">R =
+  25 F2 BA FD  D1 BB 3F 38  7B 4F 26 63  47 9A 78 81
+  4F CB 1F 82  8D F9 84 D4  34 96 E1 5A  4A 52 46 2C
+  13 EF 67 37  E0 61 13 9F  B2 1F 7E C5  B9 56 7F B6
+  CA 88 D7 0B  CC BC 96 C5  00
+k =  1280456290623708148598382410642762981433750669722496871781111755
+    77910741520269875312421999840786826452062625868870120134096187323
+    572465<a class="pilcrow" href="#s-6_2-10">&para;</a></pre>
+      <p id="s-6_2-11">Bob calculates his signature scalar contribution and returns the value to Alice: <a class="pilcrow" href="#s-6_2-11">&para;</a></p>
+      <pre id="s-6_2-12">Bob:
+S_b =  13468720239873188337021798218509333541110080817756031277945581
+    40664081463680336638329881442786750747115016847691428033880365372
+    48950911<a class="pilcrow" href="#s-6_2-12">&para;</a></pre>
+      <p id="s-6_2-13">Alice can now calculate her signature scalar contribution and thus the signature  scalar S. <a class="pilcrow" href="#s-6_2-13">&para;</a></p>
+      <pre id="s-6_2-14">Alice:
+S_a =  11878333834477344997625309702086496132606331016796170754366862
+    41133668758758146277756495968716749041239572075324760597254347275
+    98536495
+S =  7176085966960361070914012723395716314875377817369250525275188838
+    46290182823087058924419858586576028721485985925272008086975089878
+    37627<a class="pilcrow" href="#s-6_2-14">&para;</a></pre>
+      <p id="s-6_2-15">Alice checks to see that the signature verifies: <a class="pilcrow" href="#s-6_2-15">&para;</a></p>
+      <pre id="s-6_2-16">S.B = R + kA =
+    X: 16291004486439090147776612791895755846785064919509905636229908
+        328194692798396
+    Y: 46841527536088411435030533441004631079380726947860208328057908
+        29635735834402<a class="pilcrow" href="#s-6_2-16">&para;</a></pre>
+    </section>
+    
+    <section id="n--shamir-threshold-signature-ed25519-">
+      <h4 id="s-6_3">
+        <a class="selfRef" href="#s-6_3">6.3.</a>
+        <a class="selfRef" href="#n--shamir-threshold-signature-ed25519-"> Shamir Threshold Signature Ed25519 </a>
+      </h4>
+      <p id="s-6_3-1">The administrator creates the composite key pair <a class="pilcrow" href="#s-6_3-1">&para;</a></p>
+      <pre id="s-6_3-2">ED25519Aggregate Key (ED25519)
+    UDF:        ZAAA-GTSI-GQED-255X-XAGG-REGA-TEXK-EY
+    Scalar:     39348647608109113656999806950437958090469802387424444
+        589375066079861075223816
+    Encoded Private
+  37 39 5E 7A  8B A5 A0 19  46 4B 58 22  EA 24 A5 71
+  45 2C 2A AC  7A 3E FB CA  CE 3F D4 12  9A BA EB 70
+    X: 14198837758377867455716504277518729070915183249890461230792115
+        9904969716778427995951234766002164511738587575257530388758374
+        7824906047250057721855068523970
+    Y: 20211025649802071998810413948266748565975140520947927724517956
+        2067625505077751598018629551746824533726709810990193455662385
+        6152736116303441031851305458040
+    Encoded Public
+  6E 13 79 B4  39 DA 97 9C  5A 34 CE 79  CD 1B 50 DF
+  A0 76 AD 49  81 6D 52 59  A4 2C DB CE  44 FF 3E F5<a class="pilcrow" href="#s-6_3-2">&para;</a></pre>
+      <p id="s-6_3-3">Three key shares are required for Alice, Bob and Carol with a threshold of two.  The parameters of the Shamir Secret Sharing polynomial are: <a class="pilcrow" href="#s-6_3-3">&para;</a></p>
+      <pre id="s-6_3-4">a0 = 3934864760810911365699980695043795809046980238742444458937506607
+    9861075223816
+a1 = 4447543804183276703367140352869026105461853047473514285943821414
+    241349264676<a class="pilcrow" href="#s-6_3-4">&para;</a></pre>
+      <p id="s-6_3-5">The key share values for the participants are <a class="pilcrow" href="#s-6_3-5">&para;</a></p>
+      <pre id="s-6_3-6">xa = 1
+ya = 3741579482988170765278279250490187507889572786185132393071818643
+    89698982558
+
+xb = 2
+yb = 4821701752482093779894968277918044856250810326092027525251003278
+    631048247234
+
+xc = 3
+yc = 2032239979333108269288922067744076720855547014185634205192873754
+    586943260921<a class="pilcrow" href="#s-6_3-6">&para;</a></pre>
+      <p id="s-6_3-7">Alice and Carol are selected to sign the message "This is another test" <a class="pilcrow" href="#s-6_3-7">&para;</a></p>
+      <p id="s-6_3-8">The Lagrange coefficients are: <a class="pilcrow" href="#s-6_3-8">&para;</a></p>
+      <pre id="s-6_3-9">la = 3618502788666131106986593281521497120428558179689953803000975469
+    142727125496
+lc = 3618502788666131106986593281521497120428558179689953803000975469
+    142727125494<a class="pilcrow" href="#s-6_3-9">&para;</a></pre>
+      <p id="s-6_3-10">Alice and Carol select their values ra, rc <a class="pilcrow" href="#s-6_3-10">&para;</a></p>
+      <pre id="s-6_3-11">ra = 5377248352669516780549162073457874087773506582785629831437934867
+    461127075879
+Ra =
+  2F 0E 76 87  F3 98 84 41  03 29 5F 5A  84 7D 62 34
+  A3 9B 64 8C  34 11 99 F1  D5 A9 63 0E  8E 3D 6C C9
+
+rc = 4232465617601402201287633784079511069602658258584839658166776648
+    89765437047
+Rc =
+  53 7C 5B 73  DE 10 64 82  3C CF CF 19  5F E8 83 24
+  A0 14 A3 F2  FF 7E 4D 0D  42 42 8E B3  03 66 49 04<a class="pilcrow" href="#s-6_3-11">&para;</a></pre>
+      <p id="s-6_3-12">The composite value R = R<sub>a</sub> + R<sub>c</sub> <a class="pilcrow" href="#s-6_3-12">&para;</a></p>
+      <pre id="s-6_3-13">R =
+  5E BA 21 F2  87 4E C8 4E  B8 4B E9 5C  1E 3A B2 67
+  B8 D0 E3 B3  98 C8 DB E0  E6 50 35 8D  47 9B C1 E1<a class="pilcrow" href="#s-6_3-13">&para;</a></pre>
+      <p id="s-6_3-14">The value k is  <a class="pilcrow" href="#s-6_3-14">&para;</a></p>
+      <pre id="s-6_3-15">k = 31647328596154272207177743411362878636270581278391351236822318404
+    2871610589<a class="pilcrow" href="#s-6_3-15">&para;</a></pre>
+      <p id="s-6_3-16">The values R and k (or the document to be signed) and the  Lagrange coefficients are passed to Alice and Carol who use them to  calculate their secret scalar values: <a class="pilcrow" href="#s-6_3-16">&para;</a></p>
+      <pre id="s-6_3-17">sa = 5612369224482256147917418875735281261834359179277698589607727965
+    84548473837;
+sc = 2602382798999576972342132247649458760000784672597136700404538591
+    849255495034<a class="pilcrow" href="#s-6_3-17">&para;</a></pre>
+      <p id="s-6_3-18">The signature contributions can now be calulated: <a class="pilcrow" href="#s-6_3-18">&para;</a></p>
+      <pre id="s-6_3-19">Sa = 6873614337238287985974631938614575791975512646788133685349814447
+    956390424246
+Sc = 6734965213168676845758127805874268408589146808656626354387236455
+    007092488600<a class="pilcrow" href="#s-6_3-19">&para;</a></pre>
+      <p id="s-6_3-20">The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub> <a class="pilcrow" href="#s-6_3-20">&para;</a></p>
+      <pre id="s-6_3-21">S =  6371573973074702617759573181445849959707543096064852433735099964
+    678028661857<a class="pilcrow" href="#s-6_3-21">&para;</a></pre>
+      <p id="s-6_3-22">The dealer checks to see that the signature verifies: <a class="pilcrow" href="#s-6_3-22">&para;</a></p>
+      <pre id="s-6_3-23">S.B = R + kA =
+    X: 50976148565709102066754003035356376378566475226930883450768310
+        75625019906058
+    Y: 74629887867177957343114045996705864971381351024041289421281109
+        60605559633693<a class="pilcrow" href="#s-6_3-23">&para;</a></pre>
+    </section>
+    
+    <section id="n--shamir-threshold-signature-ed448-">
+      <h4 id="s-6_4">
+        <a class="selfRef" href="#s-6_4">6.4.</a>
+        <a class="selfRef" href="#n--shamir-threshold-signature-ed448-"> Shamir Threshold Signature Ed448 </a>
+      </h4>
+      <p id="s-6_4-1">The administrator creates the composite key pair <a class="pilcrow" href="#s-6_4-1">&para;</a></p>
+      <pre id="s-6_4-2">ED448Aggregate Key (ED448)
+    UDF:        ZAAA-ITSI-GQED-44XA-GGRE-GATE-XKEY
+    Scalar:     50890460656419721531273587958284096015810982760541575
+        4207268050539683337837216003977228732536078674802149039736292
+        653681850024283019712
+    Encoded Private
+  78 22 7E 3B  89 95 80 5D  04 19 DC 27  F1 7F 9B E4
+  86 2B 0B DD  55 64 EE 04  19 49 4D DE  B9 04 3B 9E
+  8B 7D DC EC  EC 8F DD 1D  E7 88 86 FD  11 FD 78 EF
+  1A 8B 84 8F  77 00 73 65
+    X: 44109173355278142669484438370724914685176368933547176239809629
+        7503768465595321590690311221269514682222687386378631457535068
+        446135118173
+    Y: 53219402718535721212460981200104434180077825188675868294070079
+        5084662920552823356888138706016038637934794839496624474125511
+        419755284720
+    Encoded Public
+  43 61 20 A0  B1 DF AA BD  6B 55 00 97  A3 BE CB B8
+  09 57 20 88  16 69 E4 B9  E1 7E 9C 13  C0 41 5B CB
+  4D 3E E4 99  2E 2D 48 89  1C C0 FB 26  58 C2 DD 5C
+  C1 DC 17 82  D7 A0 43 EE  80<a class="pilcrow" href="#s-6_4-2">&para;</a></pre>
+      <p id="s-6_4-3">Three key shares are required for Alice, Bob and Carol with a threshold of two.  The parameters of the Shamir Secret Sharing polynomial are: <a class="pilcrow" href="#s-6_4-3">&para;</a></p>
+      <pre id="s-6_4-4">a0 = 5089046065641972153127358795828409601581098276054157542072680505
+    39683337837216003977228732536078674802149039736292653681850024283
+    019712
+a1 = 3934291191212650584059669841203896874838912563882890929786754329
+    01065050103930671683138406271792350963735688973370364434513108789
+    92904<a class="pilcrow" href="#s-6_4-4">&para;</a></pre>
+      <p id="s-6_4-5">The key share values for the participants are <a class="pilcrow" href="#s-6_4-5">&para;</a></p>
+      <pre id="s-6_4-6">xa = 1
+ya = 3118475254618553241339722078876528141267932728756118294017944444
+    35183096299031399695530728818078200859172750635470321098006758306
+    3279
+
+xb = 2
+yb = 4246138716674505908193642049091549688965705836758502759188548773
+    44583359733833811652691479153600171049652964036917396544313784620
+    56183
+
+xc = 3
+yc = 8180429907887156492253311890295446563804618400641393688975303102
+    45648409837764483335829885425392522013388653010287760978826893410
+    49087<a class="pilcrow" href="#s-6_4-6">&para;</a></pre>
+      <p id="s-6_4-7">Alice and Carol are selected to sign the message "This is another test" <a class="pilcrow" href="#s-6_4-7">&para;</a></p>
+      <p id="s-6_4-8">The Lagrange coefficients are: <a class="pilcrow" href="#s-6_4-8">&para;</a></p>
+      <pre id="s-6_4-9">la = 9085484053695086131866547598600056679420517008591475753518627489
+    75730019807697928580978776458461879816551468545458311523868779298
+    24891
+lc = 9085484053695086131866547598600056679420517008591475753518627489
+    75730019807697928580978776458461879816551468545458311523868779298
+    24889<a class="pilcrow" href="#s-6_4-9">&para;</a></pre>
+      <p id="s-6_4-10">Alice and Carol select their values ra, rc <a class="pilcrow" href="#s-6_4-10">&para;</a></p>
+      <pre id="s-6_4-11">ra = 1610705867304076392921723072340177274788014288395871190735371844
+    45304821479265411365593663429368194644596000340187951474891649791
+    38278
+Ra =
+  CF 97 83 F4  16 2D EF A1  85 95 8F 65  68 BC 59 56
+  94 9F 51 61  A7 F9 95 27  81 E6 83 7F  0A E6 16 C0
+  50 8D 8A D5  B6 47 3C 64  E0 34 1B AB  F3 BF 89 96
+  41 5D A8 29  06 04 F9 D3  00
+
+rc = 1513721922038322665004883340036457345550315134561588659560214983
+    90578815745979201541151452164958584639864068264575123975657731927
+    908051
+Rc =
+  7A 5A E9 4E  9B E9 9E 66  C1 E2 CE 3A  B5 CD 73 FA
+  4C C7 9E E9  C3 59 37 46  11 55 62 6A  DC 69 8D 7F
+  63 20 CF B0  30 6D 77 5E  B4 5F 09 B3  8A ED C6 36
+  64 8F 6B 70  02 DE AB 45  00<a class="pilcrow" href="#s-6_4-11">&para;</a></pre>
+      <p id="s-6_4-12">The composite value R = R<sub>a</sub> + R<sub>c</sub> <a class="pilcrow" href="#s-6_4-12">&para;</a></p>
+      <pre id="s-6_4-13">R =
+  D0 51 EC 22  5C 8A 25 9E  E7 B6 0B 1E  26 54 0F 51
+  4C 65 1C B5  24 B1 89 91  FA 63 32 39  89 89 24 9B
+  03 3E E6 83  1A 74 FA 79  0D E5 90 D7  C2 7C 3B FF
+  22 D5 B2 7F  B7 14 C8 F0  80<a class="pilcrow" href="#s-6_4-13">&para;</a></pre>
+      <p id="s-6_4-14">The value k is  <a class="pilcrow" href="#s-6_4-14">&para;</a></p>
+      <pre id="s-6_4-15">k = 11205778835971090763459400118127617086725238194171737531994098751
+    92020469089993225609677938158558606382862723600565685005808743888
+    1311<a class="pilcrow" href="#s-6_4-15">&para;</a></pre>
+      <p id="s-6_4-16">The values R and k (or the document to be signed) and the  Lagrange coefficients are passed to Alice and Carol who use them to  calculate their secret scalar values: <a class="pilcrow" href="#s-6_4-16">&para;</a></p>
+      <pre id="s-6_4-17">sa = 9553255341887869118067505910431535900610706917904893497621319156
+    41007484252552638535308385781173609945427381140778859688569793044
+    19808;
+sc = 4995269099751507885739891653452333397518207808270778909030975938
+    52905814888815686913063833745765618809857142040314431034455332593
+    00346<a class="pilcrow" href="#s-6_4-17">&para;</a></pre>
+      <p id="s-6_4-18">The signature contributions can now be calulated: <a class="pilcrow" href="#s-6_4-18">&para;</a></p>
+      <pre id="s-6_4-19">Sa = 1288724802012784524546710951030879127642885816514372129177355341
+    52388852607084448690299630591486640562077067211721300969711457389
+    734384
+Sc = 9245427182572705582371845728508254342708120847149751739704864321
+    05098990035212645834079206651328626851538428963929848345208375317
+    71245<a class="pilcrow" href="#s-6_4-19">&para;</a></pre>
+      <p id="s-6_4-20">The dealer calculates the composite value S = S<sub>a</sub> + S<sub>b</sub> <a class="pilcrow" href="#s-6_4-20">&para;</a></p>
+      <pre id="s-6_4-21">S =  3961707095310378564105860041616932260295944995110521524441162756
+    77527476490661275575117959649271272839206163990226234994585390618
+    55850<a class="pilcrow" href="#s-6_4-21">&para;</a></pre>
+      <p id="s-6_4-22">The dealer checks to see that the signature verifies: <a class="pilcrow" href="#s-6_4-22">&para;</a></p>
+      <pre id="s-6_4-23">S.B = R + kA =
+    X: 89820587157297640914878146420868301420919058721019003413415111
+        40349053172466
+    Y: 29679650828270530327946891692133348611591938177520550739646498
+        568569373309365<a class="pilcrow" href="#s-6_4-23">&para;</a></pre>
+    </section>
+    
+    <section id="n-security-considerations">
+      <h3 id="s-7">
+        <a class="selfRef" href="#s-7">7.</a>
+        <a class="selfRef" href="#n-security-considerations">Security Considerations</a>
+      </h3>
+      <p id="s-7-1">All the security considerations of <a class="xref" href="#RFC7748">[RFC7748]</a>, <a class="xref" href="#RFC8032">[RFC8032]</a> and <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a> apply and are hereby incorporated by reference.<a class="pilcrow" href="#s-7-1">&para;</a></p>
+    </section>
+    
+    <section id="n-rogue-key-attack">
+      <h4 id="s-7_1">
+        <a class="selfRef" href="#s-7_1">7.1.</a>
+        <a class="selfRef" href="#n-rogue-key-attack">Rogue Key attack</a>
+      </h4>
+      <p id="s-7_1-1">The rogue key attack described in  <a class="xref" href="#draft-hallambaker-threshold">[draft-hallambaker-threshold]</a> is of particular concern to generation of threshold signatures.<a class="pilcrow" href="#s-7_1-1">&para;</a></p>
+      <p id="s-7_1-2">If <i>A</i> and <i>B</i> are public keys, the intrinsic degree of trust in the composite keypair <i>A</i> + <i>B</i> is that of the lesser of <i>A</i> and <i>B</i>.<a class="pilcrow" href="#s-7_1-2">&para;</a></p>
+    </section>
+    
+    <section id="n-disclosure-or-reuse-of-the-value-r">
+      <h4 id="s-7_2">
+        <a class="selfRef" href="#s-7_2">7.2.</a>
+        <a class="selfRef" href="#n-disclosure-or-reuse-of-the-value-r">Disclosure or reuse of the value r</a>
+      </h4>
+      <p id="s-7_2-1">As in any Schnorr signature scheme, compromise of the value <i>r</i> results in compromise of the private key. The base signature specification <a class="xref" href="#RFC8032">[RFC8032]</a> describes a deterministic construction of <i>r</i> that ensures confidentiality and uniqueness for a given value of <i>k</i>.<a class="pilcrow" href="#s-7_2-1">&para;</a></p>
+      <p id="s-7_2-2">As described above, this approach is not applicable to the generation of values of <i>r<sub>i</sub></i> to compute threshold signature contributions. Accordingly the requirements of <a class="xref" href="#RFC4086">[RFC4086]</a> regarding requirements for randomness <span class="bcp14">MUST</span> be observed.<a class="pilcrow" href="#s-7_2-2">&para;</a></p>
+      <p id="s-7_2-3">Implementations <span class="bcp14">MUST NOT</span> use a deterministic generation of the value <i>r<sub>i</sub></i> for any threshold contribution except for calculating the final contribution when all the other parameters required to calculate <i>k</i> are known.<a class="pilcrow" href="#s-7_2-3">&para;</a></p>
+    </section>
+    
+    <section id="n-resource-exhaustion-attack">
+      <h4 id="s-7_3">
+        <a class="selfRef" href="#s-7_3">7.3.</a>
+        <a class="selfRef" href="#n-resource-exhaustion-attack">Resource exhaustion attack</a>
+      </h4>
+      <p id="s-7_3-1">Implementation of the general two stage signing algorithm requires that signers track generation and use of the values <i>r<sub>i</sub></i> to avoid reuse for different values of <i>R<sub>i</sub></i>. Implementations <span class="bcp14">MUST</span> ensure that exhaustion of this resource by one party does not cause other parties to be denied service.<a class="pilcrow" href="#s-7_3-1">&para;</a></p>
+    </section>
+    
+    <section id="n-signature-uniqueness">
+      <h4 id="s-7_4">
+        <a class="selfRef" href="#s-7_4">7.4.</a>
+        <a class="selfRef" href="#n-signature-uniqueness">Signature Uniqueness</a>
+      </h4>
+      <p id="s-7_4-1">Signatures generated in strict conformance with <a class="xref" href="#RFC8032">[RFC8032]</a> are guaranteed to be unique such that signing the same document with the same key will always result in the same signature value.<a class="pilcrow" href="#s-7_4-1">&para;</a></p>
+      <p id="s-7_4-2">The signature modes described in this document are computationally indistinguishable from those created in accordance with <a class="xref" href="#RFC8032">[RFC8032]</a> but are not unique.<a class="pilcrow" href="#s-7_4-2">&para;</a></p>
+      <p id="s-7_4-3">Implementations <span class="bcp14">MUST</span> not use threshold signatures in applications where signature values are used in place of cryptographic digests as unique content identifiers.<a class="pilcrow" href="#s-7_4-3">&para;</a></p>
+    </section>
+    
+    <section id="n-iana-considerations">
+      <h3 id="s-8">
+        <a class="selfRef" href="#s-8">8.</a>
+        <a class="selfRef" href="#n-iana-considerations">IANA Considerations</a>
+      </h3>
+      <p id="s-8-1">This document requires no IANA actions.<a class="pilcrow" href="#s-8-1">&para;</a></p>
+    </section>
+    
+    <section id="n-acknowledgements">
+      <h3 id="s-9">
+        <a class="selfRef" href="#s-9">9.</a>
+        <a class="selfRef" href="#n-acknowledgements">Acknowledgements</a>
+      </h3>
+      <p id="s-9-1">[TBS]<a class="pilcrow" href="#s-9-1">&para;</a></p>
+    </section>
+    
+    <section id="n-references">
+      <h2>
+        <a class="selfRef" href="#n-references">References</a>
+      </h2>
+      <section id="n-normative">
+        <h3>
+          <a class="selfRef" href="#n-normative">Normative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="RFC8032">[RFC8032]</dt>
+          <dd>
+            <span class="refAuthor">S. Josefsson</span>
+            <span>and</span>
+            <span class="refAuthor">I. Liusvaara</span>
+            "<span class="refTitle">Edwards-Curve Digital Signature Algorithm (EdDSA)</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">8032</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC8032</span>
+            </span>
+            <time class="refDate" datetime="2017-01">January 2017</time>
+          </dd>
+          <dt id="RFC2119">[RFC2119]</dt>
+          <dd>
+            <span class="refAuthor">S. Bradner</span>
+            "<span class="refTitle">Key words for use in RFCs to Indicate Requirement Levels</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">BCP</span>
+              <span class="refSeriesValue">14</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">2119</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC2119</span>
+            </span>
+            <time class="refDate" datetime="1997-03">March 1997</time>
+          </dd>
+          <dt id="RFC7748">[RFC7748]</dt>
+          <dd>
+            <span class="refAuthor">A. Langley</span>
+            <span>and</span>
+            <span class="refAuthor">M. Hamburg</span>
+            <span>and</span>
+            <span class="refAuthor">S. Turner</span>
+            "<span class="refTitle">Elliptic Curves for Security</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">7748</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC7748</span>
+            </span>
+            <time class="refDate" datetime="2016-01">January 2016</time>
+          </dd>
+          <dt id="RFC4086">[RFC4086]</dt>
+          <dd>
+            <span class="refAuthor">D. Eastlake 3rd</span>
+            <span>and</span>
+            <span class="refAuthor">J. Schiller</span>
+            <span>and</span>
+            <span class="refAuthor">S. Crocker</span>
+            "<span class="refTitle">Randomness Requirements for Security</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">BCP</span>
+              <span class="refSeriesValue">106</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">4086</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC4086</span>
+            </span>
+            <time class="refDate" datetime="2005-06">June 2005</time>
+          </dd>
+          <dt id="draft-hallambaker-threshold">[draft-hallambaker-threshold]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Threshold Key Generation and Decryption in Ed25519 and Ed448</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-threshold-00</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-threshold-00.txt</a>&gt;
+            <time class="refDate" datetime="2020-01-5">5 January 2020</time>
+          </dd>
+          <dt id="draft-hallambaker-mesh-udf">[draft-hallambaker-mesh-udf]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Mathematical Mesh 3.0 Part II: Uniform Data Fingerprint.</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-mesh-udf-08</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-udf-08.txt</a>&gt;
+            <time class="refDate" datetime="2020-01-6">6 January 2020</time>
+          </dd>
+        </dl>
+      </section>
+      
+      <section id="n-informative">
+        <h3>
+          <a class="selfRef" href="#n-informative">Informative References</a>
+        </h3>
+        <dl class="reference">
+          <dt id="Komlo">[Komlo]</dt>
+          <dd>
+            <span class="refAuthor">Chelsea Komlo</span>
+            <span>and</span>
+            <span class="refAuthor">Ian Goldberg</span>
+            "<span class="refTitle">FROST: Flexible Round-Optimized Schnorr Threshold Signatures </span>"
+            <time class="refDate" datetime="2020">2020</time>
+          </dd>
+          <dt id="Shamir79">[Shamir79]</dt>
+          <dd>
+            <span class="refAuthor">Adi Shamirt</span>
+            "<span class="refTitle">How to share a secret. </span>"
+            <time class="refDate" datetime="1979">1979</time>
+          </dd>
+          <dt id="RFC5860">[RFC5860]</dt>
+          <dd>
+            <span class="refAuthor">M. Vigoureux</span>
+            <span>and</span>
+            <span class="refAuthor">D. Ward</span>
+            <span>and</span>
+            <span class="refAuthor">M. Betts</span>
+            "<span class="refTitle">Requirements for Operations, Administration, and Maintenance (OAM) in MPLS Transport Networks</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">RFC</span>
+              <span class="refSeriesValue">5860</span>
+            </span>
+            <span Class="refSeries">
+              <span class="refSeriesName">DOI</span>
+              <span class="refSeriesValue">10.17487/RFC5860</span>
+            </span>
+            <time class="refDate" datetime="2010-05">May 2010</time>
+          </dd>
+          <dt id="draft-hallambaker-mesh-developer">[draft-hallambaker-mesh-developer]</dt>
+          <dd>
+            <span class="refAuthor">Phillip Hallam-Baker</span>
+            "<span class="refTitle">Mathematical Mesh: Reference Implementation</span>"
+            <span Class="refSeries">
+              <span class="refSeriesName">Internet-Draft</span>
+              <span class="refSeriesValue">draft-hallambaker-mesh-developer-09</span>
+            </span>
+            &lt;<a class="refTarget">http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-09.txt</a>&gt;
+            <time class="refDate" datetime="2019-10-23">23 October 2019</time>
+          </dd>
+        </dl>
+      </section>
+      
+    </section>
+    
+    <section id="n-authors">
+      <h2>
+        <a class="selfRef" href="#n-authors">Author's Address</a>
+      </h2>
+      <hr class="addr"/>
+      <address class="vcard">
+        <div class="nameRole">
+          <span class="fn">Phillip Hallam-Baker</span>
+        </div>
+        <div class="org">ThresholdSecrets.com</div>
+        <div>
+          <span>Email:</span>
+          <a class="email" href="mailto:phill@hallambaker.com     ">phill@hallambaker.com     </a>
+        </div>
+      </address>
+    </section>
+    
+    <div class="docInfo">
+      <span class="prepared">
+        Prepared: 
+        <time datetime="2020-03-09">2020-03-09</time>
+      </span>
+      <span class="rendered">
+        Rendered: 
+        <time datetime="2020-03-09">2020-03-09</time>
+      </span>
+    </div>
+    
+    <script src="xml2rfc.js" type="text/javascript"></script>
+  </body>
+</html>

@@ -231,7 +231,7 @@ namespace Goedel.Cryptography {
                     int keySize = 0,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL) =>
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.NULL) =>
             new KeyPairDH(keySize, keySecurity);
 
 
@@ -276,9 +276,11 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="publicKey">The public key</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
         public override KeyPairAdvanced KeyPair(
-                    IKeyAdvancedPublic publicKey)
+                    IKeyAdvancedPublic publicKey,
+                    KeyUses keyUses = KeyUses.Any)
             => new KeyPairDH((DiffeHellmanPublic)publicKey);
         #endregion
 
@@ -337,7 +339,7 @@ namespace Goedel.Cryptography {
         public override byte[] Decrypt(
                     byte[] EncryptedKey,
                     KeyPair Ephemeral,
-                    CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                     KeyAgreementResult Partial = null,
                     byte[] Salt = null) {
 
@@ -361,7 +363,7 @@ namespace Goedel.Cryptography {
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
             byte[] Data,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             byte[] Context = null) => throw new NotImplementedException();
 
         /// <summary>
@@ -376,7 +378,7 @@ namespace Goedel.Cryptography {
         public override bool VerifyHash(
             byte[] Digest,
             byte[] Signature,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default, byte[] Context = null) => throw new NotImplementedException();
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => throw new NotImplementedException();
 
 
         #endregion

@@ -32,8 +32,8 @@ namespace Goedel.Mesh {
         /// <returns>The created ProfileHost.</returns>
         public static ProfileHost Generate(
             IMeshMachine meshMachine,
-            CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-            CryptoAlgorithmID algorithmAuth = CryptoAlgorithmID.Default) {
+            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+            CryptoAlgorithmId algorithmAuth = CryptoAlgorithmId.Default) {
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
             algorithmAuth = algorithmAuth.DefaultAlgorithmAuthenticate();

@@ -356,7 +356,7 @@ namespace Goedel.Mesh.Client {
         ///Overlay for the signature key.
         /// </summary>
 
-		public virtual KeyOverlay						SignatureKey  {get; set;}
+		public virtual Key						SignatureKey  {get; set;}
         /// <summary>
         ///UDF of the connected device
         /// </summary>
@@ -451,7 +451,7 @@ namespace Goedel.Mesh.Client {
 			switch (tag) {
 				case "SignatureKey" : {
 					// An untagged structure
-					SignatureKey = new KeyOverlay ();
+					SignatureKey = new Key ();
 					SignatureKey.Deserialize (jsonReader);
  
 					break;

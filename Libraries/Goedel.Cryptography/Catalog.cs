@@ -48,19 +48,19 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>The default digest algorithm.</summary>
-        public CryptoAlgorithmID AlgorithmDigest { get; set; } = CryptoAlgorithmID.NULL;
+        public CryptoAlgorithmId AlgorithmDigest { get; set; } = CryptoAlgorithmId.NULL;
 
         /// <summary>The default symmetric encryption algorithm.</summary>
-        public CryptoAlgorithmID AlgorithmEncryption { get; set; } = CryptoAlgorithmID.NULL;
+        public CryptoAlgorithmId AlgorithmEncryption { get; set; } = CryptoAlgorithmId.NULL;
 
         /// <summary>The default message authentication code algorithm.</summary>
-        public CryptoAlgorithmID AlgorithmMAC { get; set; } = CryptoAlgorithmID.NULL;
+        public CryptoAlgorithmId AlgorithmMAC { get; set; } = CryptoAlgorithmId.NULL;
 
         /// <summary>The default asymmetric encryption algorithm.</summary>
-        public CryptoAlgorithmID AlgorithmExchange { get; set; } = CryptoAlgorithmID.NULL;
+        public CryptoAlgorithmId AlgorithmExchange { get; set; } = CryptoAlgorithmId.NULL;
 
         /// <summary>The default signature algorithm.</summary>
-        public CryptoAlgorithmID AlgorithmSignature { get; set; } = CryptoAlgorithmID.NULL;
+        public CryptoAlgorithmId AlgorithmSignature { get; set; } = CryptoAlgorithmId.NULL;
 
 
         /// <summary>
@@ -68,28 +68,28 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="Base">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmID SignatureDefaults(CryptoAlgorithmID Base) => Base.Default(AlgorithmDigest, AlgorithmSignature);
+        public CryptoAlgorithmId SignatureDefaults(CryptoAlgorithmId Base) => Base.Default(AlgorithmDigest, AlgorithmSignature);
 
         /// <summary>
         /// Set undefined identifier components to default exchange and encryption.
         /// </summary>
         /// <param name="Base">The base id</param>
         /// <returns>The defaulted algorithm relative to the base.</returns>
-        public CryptoAlgorithmID EncryptionDefaults(CryptoAlgorithmID Base) => Base.Default(AlgorithmExchange, AlgorithmEncryption);
+        public CryptoAlgorithmId EncryptionDefaults(CryptoAlgorithmId Base) => Base.Default(AlgorithmExchange, AlgorithmEncryption);
 
 
-        static CryptoAlgorithmID SetDefault(CryptoAlgorithmID Current, CryptoAlgorithm New, CryptoAlgorithmID ID,
+        static CryptoAlgorithmId SetDefault(CryptoAlgorithmId Current, CryptoAlgorithm New, CryptoAlgorithmId ID,
                 CryptoAlgorithmClasses Class) {
 
-            if (Current == CryptoAlgorithmID.NULL & (New.AlgorithmClass == Class)) {
+            if (Current == CryptoAlgorithmId.NULL & (New.AlgorithmClass == Class)) {
                 Current = ID;
                 }
             return Current;
             }
 
         /// <summary>Map crypto identifier to crypto algorithm.</summary>
-        public Dictionary<CryptoAlgorithmID, CryptoAlgorithm> Dictionary { get; } =
-            new Dictionary<CryptoAlgorithmID, CryptoAlgorithm>();
+        public Dictionary<CryptoAlgorithmId, CryptoAlgorithm> Dictionary { get; } =
+            new Dictionary<CryptoAlgorithmId, CryptoAlgorithm>();
 
         /// <summary>
         /// Add a cryptographic algorithm provider to the catalog
@@ -126,7 +126,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
         /// <returns>The catalog entry.</returns>
         public CryptoAlgorithm Add(
-            CryptoAlgorithmID CryptoAlgorithmID,
+            CryptoAlgorithmId CryptoAlgorithmID,
             int KeySize,
             CryptoAlgorithmClasses AlgorithmClass,
             CryptoProviderFactoryDelegate CryptoProviderFactory) {
@@ -142,7 +142,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">The algorithm to return the output data length for.</param>
         /// <returns>The output data length in bytes.</returns>
-        public int ResultInBytes(CryptoAlgorithmID ID) {
+        public int ResultInBytes(CryptoAlgorithmId ID) {
             var Found = Dictionary.TryGetValue(ID, out var Meta);
             if (Found) {
                 return Meta.KeySize / 8;
@@ -158,7 +158,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Combined algorithm identifier.</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProvider Get(CryptoAlgorithmID ID) {
+        public CryptoProvider Get(CryptoAlgorithmId ID) {
 
             // Look for an exact match first implementing the combined ID
             var Found = Dictionary.TryGetValue(ID, out var Meta);
@@ -180,21 +180,21 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderDigest GetDigest(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmDigest)) as CryptoProviderDigest;
+        public CryptoProviderDigest GetDigest(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmDigest)) as CryptoProviderDigest;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderAuthentication GetAuthentication(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmMAC)) as CryptoProviderAuthentication;
+        public CryptoProviderAuthentication GetAuthentication(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmMAC)) as CryptoProviderAuthentication;
 
         /// <summary>
         /// Get a cryptographic provider  by algorithm identifier
         /// </summary>
         /// <param name="ID">Algorithm identifier</param>
         /// <returns>Cryptographic provider if found or null otherwise.</returns>
-        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmID ID) => Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
+        public CryptoProviderEncryption GetEncryption(CryptoAlgorithmId ID) => Get(ID.DefaultBulk(AlgorithmEncryption)) as CryptoProviderEncryption;
 
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Goedel.Cryptography {
     /// <param name="KeySize">Key size parameter (if needed).</param>
     /// <param name="BulkAlgorithmID">Algorithm identifier of bulk algorithm (if needed).</param>
     /// <returns></returns>
-    public delegate CryptoProvider GetCryptoProviderGenerateDelegate(int KeySize, CryptoAlgorithmID BulkAlgorithmID);
+    public delegate CryptoProvider GetCryptoProviderGenerateDelegate(int KeySize, CryptoAlgorithmId BulkAlgorithmID);
 
 
     /// <summary>
@@ -242,7 +242,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public abstract CryptoAlgorithmID CryptoAlgorithmID { get; }
+        public abstract CryptoAlgorithmId CryptoAlgorithmID { get; }
 
         /// <summary>
         /// Default algorithm key or output size.
@@ -277,7 +277,7 @@ namespace Goedel.Cryptography {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public abstract CryptoDataEncoder MakeEncoder(
                             CryptoProviderBulk Bulk = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null
                             );
 
@@ -306,7 +306,7 @@ namespace Goedel.Cryptography {
         /// <returns>The processed data.</returns>
         public virtual CryptoData Encode(
                     byte[] Data,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default
                     ) {
 
             var encoder = MakeEncoder(Algorithm: Algorithm);
@@ -325,7 +325,7 @@ namespace Goedel.Cryptography {
         /// <returns>The processed data.</returns>
         public virtual CryptoData Encode(
                     string Text,
-                    CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default
+                    CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default
                     ) {
             var Data = System.Text.Encoding.UTF8.GetBytes(Text);
             return Encode(Data, Algorithm);

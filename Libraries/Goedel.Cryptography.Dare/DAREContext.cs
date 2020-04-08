@@ -23,20 +23,20 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Create a DARERecipient using the specified cryptographic parameters.
         /// </summary>
-        /// <param name="MasterKey">The master key</param>
-        /// <param name="PublicKey">The recipient public key.</param>
+        /// <param name="masterKey">The master key</param>
+        /// <param name="publicKey">The recipient public key.</param>
         /// <returns>The recipient informatin object.</returns>
-        public DareRecipient(byte[] MasterKey, KeyPair PublicKey) {
+        public DareRecipient(byte[] masterKey, KeyPair publicKey) {
             //var ExchangeProvider = PublicKey.ExchangeProvider();
             //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 
 
-            PublicKey.Encrypt(MasterKey, out var Exchange, out var Ephemeral, salt: KDFSalt);
+            publicKey.Encrypt(masterKey, out var Exchange, out var Ephemeral, salt: KDFSalt);
 
 
             var JoseKey = Key.GetPublic(Ephemeral);
 
-            KeyIdentifier = PublicKey.UDF;
+            KeyIdentifier = publicKey.UDF;
             Epk = JoseKey;
             WrappedMasterKey = Exchange;
 

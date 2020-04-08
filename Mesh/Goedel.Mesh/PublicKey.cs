@@ -104,7 +104,7 @@ namespace Goedel.Mesh {
             }
 
 
-        private KeyPair GetKeyPair() {
+        public KeyPair GetKeyPair() {
             if (PrivateParameters != null) {
                 return PrivateParameters.GetKeyPair(KeySecurity.Bound);
                 }

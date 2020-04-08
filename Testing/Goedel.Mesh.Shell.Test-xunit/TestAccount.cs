@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using Goedel.Mesh.Shell;
+using Goedel.Utilities;
 
 #pragma warning disable IDE0059
 
@@ -83,9 +84,10 @@ namespace Goedel.XUnit {
 
             var testCLIMallet1 = GetTestCLI(MalletDevice1);
 
-            var ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
+            // Issue: check to see that there is an entry in the Host catalog.
+            var ProfileCreateAlice = testCLIAlice1.ExampleNoCatch($"mesh create");
 
-            var ProfileCreateAliceAccount = testCLIAlice1.Example($"account create");
+            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create");
 
             var ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             var ResultHello = ProfileHello[0].Result as ResultHello;
@@ -94,6 +96,8 @@ namespace Goedel.XUnit {
             //JSONReader.Trace = true;
 
             // here add the service
+
+            // Error: This is failing because there is no entry in Alice/Keys and Profiles/Host.Dare is empty
             var CommandsAddServiceAlice = testCLIAlice1.ExampleNoCatch($"account register {AliceService1}");
             var ProfileSync = testCLIAlice1.Example($"account sync");
 
@@ -124,7 +128,9 @@ namespace Goedel.XUnit {
             // Test ability to synchronize
 
             var AliceDevice2Sync = testCLIAlice2.ExampleNoCatch($"device complete");
-            var MalletDevice2Sync = testCLIMallet1.ExampleNoCatch($"device complete");
+            var MalletDevice2Sync = testCLIMallet1.Example($"device complete");
+            MalletDevice2Sync[0].Result.Success.AssertEqual(false);
+
 
             }
         }

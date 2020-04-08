@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
             var bits = Options.Bits.ValueDefaulted(140);
-            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
             var expect = Options.Expect.Value;
 
 
@@ -47,7 +47,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult HashDigest(HashDigest Options) {
             var inputFile = Options.Input.Value;
-            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
 
             return new ResultDigest() {
                 Success = true,
@@ -65,7 +65,7 @@ namespace Goedel.Mesh.Shell {
             var inputFile = Options.Input.Value;
             var bits = Options.Bits.ValueDefaulted(140);
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
-            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+            var hashAlgorithm = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
             var expect = Options.Expect.Value;
 
             var key = Options.DigestKey.Value ?? Cryptography.UDF.Nonce();

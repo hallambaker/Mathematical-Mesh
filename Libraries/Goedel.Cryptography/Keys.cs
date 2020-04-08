@@ -32,7 +32,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Cryptographic Algorithm Identifier
         /// </summary>
-        public CryptoAlgorithmID CryptoAlgorithmID {
+        public CryptoAlgorithmId CryptoAlgorithmId {
             get; set;
             }
 
@@ -137,7 +137,7 @@ namespace Goedel.Cryptography {
                     int keySize = 0,
                     KeySecurity keyType = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.NULL);
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.NULL);
 
 
     /// <summary>

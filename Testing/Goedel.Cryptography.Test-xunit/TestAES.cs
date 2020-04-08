@@ -24,7 +24,7 @@ namespace Goedel.XUnit {
         List<TestVectorAES> testVectors_AES_NIST = new List<TestVectorAES>() {
             // TestCase 2:1/2
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128CBCNone,
+                ID = CryptoAlgorithmId.AES128CBCNone,
                 Key = "2b7e151628aed2a6abf7158809cf4f3c".FromBase16(),
                 IV = "000102030405060708090a0b0c0d0e0f".FromBase16(),
                 Plaintext = NIST_Plaintext,
@@ -35,7 +35,7 @@ namespace Goedel.XUnit {
                 },
             // TestCase 2:5/6
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256CBCNone,
+                ID = CryptoAlgorithmId.AES256CBCNone,
                 Key = "603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4".FromBase16(),
                 IV = "000102030405060708090a0b0c0d0e0f".FromBase16(),
                 Plaintext = NIST_Plaintext,
@@ -49,7 +49,7 @@ namespace Goedel.XUnit {
             // http://csrc.nist.gov/groups/ST/toolkit/BCM/documents/proposedmodes/gcm/gcm-revised-spec.pdf
             // GCM 1
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "00000000000000000000000000000000".FromBase16(),
                 IV =            "000000000000000000000000".FromBase16(),
                 Plaintext =     new byte [0],
@@ -58,7 +58,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 2
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "00000000000000000000000000000000".FromBase16(),
                 IV =            "000000000000000000000000".FromBase16(),
                 Plaintext =     "00000000000000000000000000000000".FromBase16(),
@@ -67,7 +67,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 3
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbaddecaf888".FromBase16(),
                 Plaintext =     ("d9313225f88406e5a55909c5aff5269a"
@@ -82,7 +82,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 4
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbaddecaf888".FromBase16(),
                 AAD =            "feedfacedeadbeeffeedfacedeadbeefabaddad2".FromBase16(),
@@ -98,7 +98,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 5
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbad".FromBase16(),
                 AAD =            "feedfacedeadbeeffeedfacedeadbeefabaddad2".FromBase16(),
@@ -114,7 +114,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 6
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES128GCM,
+                ID = CryptoAlgorithmId.AES128GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            ("9313225df88406e555909c5aff5269aa"
                                 + "6a7a9538534f7da1e4c303d2a318a728"
@@ -134,7 +134,7 @@ namespace Goedel.XUnit {
 
             // GCM 13
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "0000000000000000000000000000000000000000000000000000000000000000".FromBase16(),
                 IV =            "000000000000000000000000".FromBase16(),
                 Plaintext =     new byte [0],
@@ -143,7 +143,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 14
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "0000000000000000000000000000000000000000000000000000000000000000".FromBase16(),
                 IV =            "000000000000000000000000".FromBase16(),
                 Plaintext =     "00000000000000000000000000000000".FromBase16(),
@@ -152,7 +152,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 15
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbaddecaf888".FromBase16(),
                 Plaintext =     ("d9313225f88406e5a55909c5aff5269a"
@@ -167,7 +167,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 16
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbaddecaf888".FromBase16(),
                 AAD =            "feedfacedeadbeeffeedfacedeadbeefabaddad2".FromBase16(),
@@ -183,7 +183,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 17
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            "cafebabefacedbad".FromBase16(),
                 AAD =            "feedfacedeadbeeffeedfacedeadbeefabaddad2".FromBase16(),
@@ -199,7 +199,7 @@ namespace Goedel.XUnit {
                 },
             // GCM 18
             new TestVectorAES() {
-                ID = CryptoAlgorithmID.AES256GCM,
+                ID = CryptoAlgorithmId.AES256GCM,
                 Key =           "feffe9928665731c6d6a8f9467308308feffe9928665731c6d6a8f9467308308".FromBase16(),
                 IV =            ("9313225df88406e555909c5aff5269aa"
                                 + "6a7a9538534f7da1e4c303d2a318a728"
@@ -222,8 +222,8 @@ namespace Goedel.XUnit {
         public void TestAES_NIST() {
             foreach (var TestVector in testVectors_AES_NIST) {
 
-                if ((TestVector.ID == CryptoAlgorithmID.AES128CBCNone) |
-                        (TestVector.ID == CryptoAlgorithmID.AES256CBCNone)) {
+                if ((TestVector.ID == CryptoAlgorithmId.AES128CBCNone) |
+                        (TestVector.ID == CryptoAlgorithmId.AES256CBCNone)) {
                     var Provider = CryptoCatalog.Default.GetEncryption(TestVector.ID);
 
                     TestVector.Verify(Provider);
@@ -239,8 +239,8 @@ namespace Goedel.XUnit {
         public void TestAES_NIST_Streaming() {
             foreach (var TestVector in testVectors_AES_NIST) {
 
-                if ((TestVector.ID == CryptoAlgorithmID.AES128CBCNone) |
-                        (TestVector.ID == CryptoAlgorithmID.AES256CBCNone)) {
+                if ((TestVector.ID == CryptoAlgorithmId.AES128CBCNone) |
+                        (TestVector.ID == CryptoAlgorithmId.AES256CBCNone)) {
                     var Provider = CryptoCatalog.Default.GetEncryption(TestVector.ID);
 
                     TestVector.Verify_Streamed(Provider);
@@ -256,7 +256,7 @@ namespace Goedel.XUnit {
 
 
     public class TestVectorAES {
-        public CryptoAlgorithmID ID { get; set; }
+        public CryptoAlgorithmId ID { get; set; }
 
         public byte[] Key { get; set; }
 

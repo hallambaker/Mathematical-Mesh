@@ -669,22 +669,22 @@
             <param name="output">The output stream.</param>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmSign">
-            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.Ed448"/></summary>
+            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Ed448"/></summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmAuthenticate">
-            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.X448"/></summary>
+            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.X448"/></summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmExchange">
-            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.X448"/></summary>
+            <summary>The signature algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.X448"/></summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmDigest">
-            <summary>The digest algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.SHA_2_512"/></summary>
+            <summary>The digest algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.SHA_2_512"/></summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmMAC">
-            <summary>The MAC algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.HMAC_SHA_2_512"/></summary>
+            <summary>The MAC algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.HMAC_SHA_2_512"/></summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.Shell.AlgorithmEncrypt">
-            <summary>The encryption algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmID.AES256CBC"/></summary>
+            <summary>The encryption algorithm. Defaults to <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.AES256CBC"/></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell._PreProcess(Goedel.Command.Dispatch)">
             <summary>

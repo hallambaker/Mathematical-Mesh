@@ -17,22 +17,24 @@ namespace Goedel.Mesh.Client {
         ///<summary>The unique identifier.</summary>
         public override string _PrimaryKey => ID;
 
+        ///<summary>The device profile</summary>
+        public virtual ProfileDevice ProfileDevice => throw new NYI();
 
         }
 
 
     public partial class CatalogedStandard {
 
-
-
-        //public DareEnvelope EncodedProfileDevice => CatalogedDevice.EnvelopedProfileDevice;
+        ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
+        public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
 
 
         }
 
     public partial class CatalogedAdmin {
 
-
+        ///<summary>The device profile (from <see cref="CatalogedDevice"/>)</summary>
+        public override ProfileDevice ProfileDevice => CatalogedDevice?.ProfileDevice;
 
         /// <summary>
         /// Default constructor used for deserialization.
@@ -40,35 +42,15 @@ namespace Goedel.Mesh.Client {
         public CatalogedAdmin() {
             }
 
-        ///// <summary>
-        ///// Generate a new Admin Entry
-        ///// </summary>
-        ///// <param name="profileDevice"></param>
-        ///// <param name="algorithmSign"></param>
-        ///// <param name="algorithmEncrypt"></param>
-        ///// <returns></returns>
-        //public static CatalogedAdmin Generate(
-        //        IMeshMachine meshMachine,
-        //        CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default,
-        //        CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default) {
-
-        //    var profileMaster = ProfileMesh.Generate(meshMachine, algorithmSign, algorithmEncrypt);
-
-
-        //    return Generate(meshMachine, profileMaster);
-        //    }
-
-        //public static CatalogedAdmin Generate(
-        //        IMeshMachine meshMachine,
-        //        ProfileMesh profileMaster) => new CatalogedAdmin() {
-
-        //            };
-
-
         }
 
 
     public partial class CatalogedPending {
+
+        ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+        public override ProfileDevice ProfileDevice => 
+                    ProfileDevice.Decode(EnvelopedProfileDevice);
+
 
         /// <summary>
         /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.

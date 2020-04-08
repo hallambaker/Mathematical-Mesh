@@ -320,11 +320,18 @@ namespace Goedel.Mesh.Server {
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePostRemote(
-                JpcSession jpcSession, 
-                VerifiedAccount account, 
-                List<string> accounts, 
-                DareEnvelope dareMessage) => throw new NYI();
+                JpcSession jpcSession,
+                VerifiedAccount account,
+                List<string> accounts,
+                DareEnvelope dareMessage) {
+            throw new NYI();
 
+            // Is the message for delivery to a local user?
+
+
+            // Post to the outbound spool
+
+            }
 
         /// <summary>
         /// Create a message envelope for a message originated by the service. The message is

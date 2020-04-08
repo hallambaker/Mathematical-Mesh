@@ -211,7 +211,7 @@ namespace Goedel.Cryptography.Algorithms {
             Cswap(swap, ref x_2, ref x_3);
             Cswap(swap, ref z_2, ref z_3);
 
-            Console.WriteLine($"x_2  {x_2.IsEven}  z_2  {z_2.IsEven}");
+            //Console.WriteLine($"x_2  {x_2.IsEven}  z_2  {z_2.IsEven}");
             }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Goedel.Cryptography.Algorithms {
         public (BigInteger, BigInteger) ScalarAccumulate(BigInteger u, BigInteger s) {
             ScalarAccumulate(u, s, out var x_2, out var z_2, out var x_3, out var z_3);
 
-            Console.WriteLine($"x_2  {x_2.IsEven}  z_2  {z_2.IsEven}");
+            //Console.WriteLine($"x_2  {x_2.IsEven}  z_2  {z_2.IsEven}");
 
             var sU = Recover(x_2, z_2);
             var s1U = (x_3 * (BigInteger.ModPow(z_3, (Prime - 2), Prime))).Mod(Prime);
@@ -273,6 +273,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the multiplication</returns>
         public CurveMontgomery MultiplySigned(BigInteger s) {
             var (u, v) = ScalarMultiplySigned(s);
+
+            //Console.WriteLine($"Multiply {v}"); 
             return Factory(u, !v.IsEven);
             }
 
@@ -383,6 +385,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public CurveMontgomery Add(CurveMontgomery point) {
             var (u, v) = Add(this, point);
+
+            //Console.WriteLine($"Add {v}");
+
             return Factory(u, !v.IsEven);
             }
 
@@ -414,7 +419,7 @@ namespace Goedel.Cryptography.Algorithms {
             var DDD = (DD * D).Mod(Prime);
 
             var u3 = (DD - A - u1 - u2).Mod(Prime);
-            var v3 = ((u1 + u1 + u2 + A) * B * CINV) - DDD - v1;
+            var v3 = (((u1 + u1 + u2 + A) * B * CINV) - DDD - v1).Mod(Prime);
             
             CheckCurve(u3, v3).AssertTrue();
 
@@ -467,7 +472,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="point">Second point</param>
         /// <returns>The result of the addition.</returns>
-        public virtual void Accumulate(CurveMontgomery point) => throw new NYI();
+        public virtual void Accumulate(CurveMontgomery point) => 
+                    (U, V) = Add(this, point);
+
+
 
 
         }
@@ -638,7 +646,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="context">Optional context data</param>
         /// <returns>The scalar value representing the data being signed.</returns>
         public BigInteger GetK(
-            CryptoAlgorithmID algorithmID,
+            CryptoAlgorithmId algorithmID,
             byte[] encodedR,
             byte[] data,
             byte[] context = null) => GetK(Domain(algorithmID, context), encodedR, data);
@@ -666,7 +674,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="y">The y value.</param>
         /// <returns>The domain parameter.</returns>
         public abstract byte[] Domain(
-            CryptoAlgorithmID cryptoAlgorithm,
+            CryptoAlgorithmId cryptoAlgorithm,
             byte[] y);
 
         /// <summary>
@@ -794,6 +802,10 @@ namespace Goedel.Cryptography.Algorithms {
             var (r, Rs) = PreSign(message, domain);
             var k = PublicPoint.GetK(domain, Rs, message);
             var S = Sign(k, r);
+
+
+            //Console.WriteLine($"Verify value of k {k}");
+
             return EncodeSignature(Rs, S);
             }
 

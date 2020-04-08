@@ -57,7 +57,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCoreServer.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmID,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
+        <member name="M:Goedel.Mesh.MeshMachineCoreServer.CreateKeyPair(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeySecurity,System.Int32,Goedel.Cryptography.KeyUses)">
             <summary>
             Generate a keypair of a type specified by <paramref name="algorithmID"/> and bind to the 
             KeyCollection of the machine instance.

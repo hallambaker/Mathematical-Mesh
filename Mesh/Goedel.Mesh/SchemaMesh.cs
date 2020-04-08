@@ -62,7 +62,6 @@ namespace Goedel.Mesh {
 			{"PublicKey", PublicKey._Factory},
 			{"KeyComposite", KeyComposite._Factory},
 			{"DeviceRecryptionKey", DeviceRecryptionKey._Factory},
-			{"KeyOverlay", KeyOverlay._Factory},
 			{"EscrowedKeySet", EscrowedKeySet._Factory},
 			{"Assertion", Assertion._Factory},
 			{"Condition", Condition._Factory},
@@ -633,145 +632,6 @@ namespace Goedel.Mesh {
 					EnvelopedRecryptionKeyDevice = new DareEnvelope ();
 					EnvelopedRecryptionKeyDevice.Deserialize (jsonReader);
  
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class KeyOverlay : MeshItem {
-        /// <summary>
-        ///Fingerprint of the resulting composite key (to allow verification)
-        /// </summary>
-
-		public virtual string						UDF  {get; set;}
-        /// <summary>
-        ///Fingerprint specifying the base key
-        /// </summary>
-
-		public virtual string						BaseUDF  {get; set;}
-        /// <summary>
-        ///The overlay key contribution.
-        /// </summary>
-
-		public virtual Key						Overlay  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "KeyOverlay";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyOverlay();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (UDF != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UDF", 1);
-					_writer.WriteString (UDF);
-				}
-			if (BaseUDF != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("BaseUDF", 1);
-					_writer.WriteString (BaseUDF);
-				}
-			if (Overlay != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Overlay", 1);
-					// expand this to a tagged structure
-					//Overlay.Serialize (_writer, false);
-					{
-						_writer.WriteObjectStart();
-						_writer.WriteToken(Overlay._Tag, 1);
-						bool firstinner = true;
-						Overlay.Serialize (_writer, true, ref firstinner);
-						_writer.WriteObjectEnd();
-						}
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new KeyOverlay FromJSON (JSONReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as KeyOverlay;
-				}
-		    var Result = new KeyOverlay ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "UDF" : {
-					UDF = jsonReader.ReadString ();
-					break;
-					}
-				case "BaseUDF" : {
-					BaseUDF = jsonReader.ReadString ();
-					break;
-					}
-				case "Overlay" : {
-					Overlay = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -2816,13 +2676,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						AccountUDF  {get; set;}
-        /// <summary>
-        ///The key contribution for the decryption key for the device. NB this is 
-        ///NOT an overlay on the device signature key, it is an overlay on the 
-        ///corresponding recryption key.
-        /// </summary>
-
-		public virtual KeyComposite						KeyGroup  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2872,11 +2725,6 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("AccountUDF", 1);
 					_writer.WriteString (AccountUDF);
 				}
-			if (KeyGroup != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyGroup", 1);
-					KeyGroup.Serialize (_writer, false);
-				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2912,13 +2760,6 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "AccountUDF" : {
 					AccountUDF = jsonReader.ReadString ();
-					break;
-					}
-				case "KeyGroup" : {
-					// An untagged structure
-					KeyGroup = new KeyComposite ();
-					KeyGroup.Deserialize (jsonReader);
- 
 					break;
 					}
 				default : {

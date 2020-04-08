@@ -50,11 +50,11 @@ namespace ExampleGenerator {
 
             //TestLagrange();
 
-            UnanimousEd448 = new Unanimous(CryptoAlgorithmID.Ed448);
-            QuorateEd448 = new Quorate(CryptoAlgorithmID.Ed448);
+            UnanimousEd448 = new Unanimous(CryptoAlgorithmId.Ed448);
+            QuorateEd448 = new Quorate(CryptoAlgorithmId.Ed448);
 
-            UnanimousEd25519 = new Unanimous(CryptoAlgorithmID.Ed25519);
-            QuorateEd25519 = new Quorate(CryptoAlgorithmID.Ed25519);
+            UnanimousEd25519 = new Unanimous(CryptoAlgorithmId.Ed25519);
+            QuorateEd25519 = new Quorate(CryptoAlgorithmId.Ed25519);
 
 
             }
@@ -102,14 +102,14 @@ namespace ExampleGenerator {
         public CurveEdwards SB;
         public BigInteger SBX => SB.X0;
         public BigInteger SBY => SB.Y0;
-        public CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmId CryptoAlgorithmID;
 
 
         public CurveEdwards PublicSignatureKey;
 
         public ThresholdCoordinatorEdwards ThresholdCoordinate;
 
-        public SigExample(CryptoAlgorithmID cryptoAlgorithmID) => CryptoAlgorithmID = cryptoAlgorithmID;
+        public SigExample(CryptoAlgorithmId cryptoAlgorithmID) => CryptoAlgorithmID = cryptoAlgorithmID;
 
         public ThresholdSignatureEdwards Threshold1;
         public ThresholdSignatureEdwards Threshold2;
@@ -220,7 +220,7 @@ namespace ExampleGenerator {
 
 
 
-        public Unanimous(CryptoAlgorithmID cryptoAlgorithmID) : base(cryptoAlgorithmID) {
+        public Unanimous(CryptoAlgorithmId cryptoAlgorithmID) : base(cryptoAlgorithmID) {
 
             KeyAlice = new CurveKey(cryptoAlgorithmID, true, "TSIG1", "Alice's Key");
             KeyBob = new CurveKey(cryptoAlgorithmID, true, "TSIG2", "Bob's Key");
@@ -268,7 +268,7 @@ namespace ExampleGenerator {
 
 
 
-        public Quorate(CryptoAlgorithmID cryptoAlgorithmID): base (cryptoAlgorithmID) {
+        public Quorate(CryptoAlgorithmId cryptoAlgorithmID): base (cryptoAlgorithmID) {
 
             KeyAggregate = new CurveKey(cryptoAlgorithmID, true, "TSIGQ", "Aggregate Key");
             
@@ -395,13 +395,13 @@ namespace ExampleGenerator {
 
 
         public Threshold() {
-            KeyGenX25519 = new KeyGen(CryptoAlgorithmID.X25519);
-            KeyGenX448 = new KeyGen(CryptoAlgorithmID.X448);
-            KeyGenEd25519 = new KeyGen(CryptoAlgorithmID.Ed25519);
-            KeyGenEd448 = new KeyGen(CryptoAlgorithmID.Ed448);
+            KeyGenX25519 = new KeyGen(CryptoAlgorithmId.X25519);
+            KeyGenX448 = new KeyGen(CryptoAlgorithmId.X448);
+            KeyGenEd25519 = new KeyGen(CryptoAlgorithmId.Ed25519);
+            KeyGenEd448 = new KeyGen(CryptoAlgorithmId.Ed448);
 
-            DecryptX25519 = new Decrypt(CryptoAlgorithmID.X25519);
-            DecryptX448 = new Decrypt(CryptoAlgorithmID.X448);
+            DecryptX25519 = new Decrypt(CryptoAlgorithmId.X25519);
+            DecryptX448 = new Decrypt(CryptoAlgorithmId.X448);
             }
         }
 
@@ -467,7 +467,7 @@ namespace ExampleGenerator {
         static readonly byte[] Dummy = { 0 };
 
         public string Name = "TBS";
-        public CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmId CryptoAlgorithmID;
         public KeyPairAdvanced KeyPair;
 
         public bool IsCurveX => (KeyPair is KeyPairX25519) | (KeyPair is KeyPairX448);
@@ -498,7 +498,7 @@ namespace ExampleGenerator {
             }
 
         public CurveKey(
-                CryptoAlgorithmID cryptoAlgorithmID, 
+                CryptoAlgorithmId cryptoAlgorithmID, 
                 bool extended, 
                 string prefix = null, 
                 string name=null) {
@@ -597,7 +597,7 @@ namespace ExampleGenerator {
 
 
     public partial class Decrypt {
-        public CryptoAlgorithmID CryptoAlgorithmID;
+        public CryptoAlgorithmId CryptoAlgorithmID;
 
         public CurveKey KeyE;
 
@@ -616,7 +616,7 @@ namespace ExampleGenerator {
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);
 
-        public Decrypt(CryptoAlgorithmID cryptoAlgorithmID) {
+        public Decrypt(CryptoAlgorithmId cryptoAlgorithmID) {
             CryptoAlgorithmID = cryptoAlgorithmID;
 
             // Create the key split first!
@@ -656,7 +656,7 @@ namespace ExampleGenerator {
         public CurveKey Key2;
         public CurveKey KeyA;
 
-        public KeyGen(CryptoAlgorithmID cryptoAlgorithmID) {
+        public KeyGen(CryptoAlgorithmId cryptoAlgorithmID) {
             
             Key1 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key1");
             Key2 = new CurveKey(cryptoAlgorithmID, true, "TKG", "Key2");
@@ -765,7 +765,7 @@ namespace ExampleGenerator {
         public override byte[] Decrypt(
                     byte[] encryptedKey,
                     KeyPair ephemeral = null,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     KeyAgreementResult partial = null,
                     byte[] salt = null) {
 

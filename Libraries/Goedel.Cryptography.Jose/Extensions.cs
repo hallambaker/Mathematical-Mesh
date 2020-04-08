@@ -11,7 +11,7 @@
         /// <param name="algID">The JOSE digest algorithm identifier.</param>
         /// <returns>The digest value.</returns>
         public static byte[] GetDigestOfFile(this string fileName, string algID) =>
-             CryptoStreamFromID.GetDigestOfFile(fileName, algID.ToCryptoAlgorithmID(CryptoAlgorithmID.SHA_2_512));
+             CryptoStreamFromID.GetDigestOfFile(fileName, algID.ToCryptoAlgorithmID(CryptoAlgorithmId.SHA_2_512));
 
         }
     }

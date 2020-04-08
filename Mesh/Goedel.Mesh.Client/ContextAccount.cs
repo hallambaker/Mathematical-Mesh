@@ -40,9 +40,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>The enclosing mesh context.</summary>
         public ContextMesh ContextMesh;
 
-
-        //public MeshHost MeshHost => MeshMachine.MeshHost;
-
         ///<summary>The enclosing mesh context as an administrative context (if rights granted.</summary>
         ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
 
@@ -63,7 +60,7 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The Machine context.</summary>
         IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
-        KeyCollection KeyCollection => MeshMachine.KeyCollection;
+        KeyCollection KeyCollection => ContextMesh.KeyCollection;
 
         ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
         CryptoParameters containerCryptoParameters;
@@ -74,11 +71,14 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the signature key fingerprint.</summary>
         public string KeySignatureUDF => keySignature.UDF;
         ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
-        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
+        public string KeyAuthenticationUDF => keyAuthentication.UDF;
 
 
+        ///<summary>The user's own contact information</summary>
+        public DareEnvelope ContactSelf;
 
-        KeyPair KeyAuthentication { get; set; }
+
+        KeyPair keyAuthentication { get; set; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
         public MeshService MeshClient => meshClient ?? GetMeshClient(ServiceID).CacheValue(out meshClient);
@@ -100,7 +100,9 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         protected override void Disposing() => spoolInbound?.Dispose();
 
-
+        //KeyPair compositeSign;
+        //KeyPair compositeEncrypt;
+        //KeyPair compositeAuthenticate;
 
 
         /// <summary>
@@ -121,12 +123,15 @@ namespace Goedel.Mesh.Client {
             AccountEntry = accountEntry;
             ServiceID = serviceID ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
-            // Set up the crypto keys so that we can open the application catalog
+            var activationKey = ActivationAccount.ActivationKey;
+            keySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
+            keyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
+            keyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
-            keySignature = ActivationAccount.GetkeySignaturePrivate (KeyCollection, profileDevice);
-            keyEncryption = ActivationAccount.GetkeySignaturePrivate(KeyCollection, profileDevice);
-            KeyAuthentication = ActivationAccount.GetkeySignaturePrivate(KeyCollection, profileDevice);
-            
+            keySignature.UDF.AssertEqual(ConnectionAccount.KeySignature.UDF);
+            keyEncryption.UDF.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
+            keyAuthentication.UDF.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
+
             KeyCollection.Add(keyEncryption);
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
@@ -139,7 +144,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="serviceID">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
         protected MeshService GetMeshClient(string serviceID) =>
-                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+                    MeshMachine.GetMeshClient(serviceID, keyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
         /// <summary>
@@ -221,10 +226,8 @@ namespace Goedel.Mesh.Client {
                 }
             foreach (var device in updates) {
                 catalog.Update(device);
-                if (device.UDF == ContextMesh.CatalogedDevice.UDF) {
-                    ContextMesh.UpdateDevice(device);
-                    }
                 }
+            ContextMesh.UpdateDevice();
             }
 
         /// <summary>
@@ -829,7 +832,8 @@ namespace Goedel.Mesh.Client {
 
             var message = new RequestContact() {
                 Recipient = serviceID,
-                Subject = serviceID
+                Subject = serviceID,
+                Self = ContactSelf
                 };
 
             SendMessage(message, serviceID);
@@ -975,8 +979,8 @@ namespace Goedel.Mesh.Client {
         /// <returns></returns>
 
         public ContextGroup CreateGroup(string groupName,
-                    CryptoAlgorithmID algorithmEncrypt = CryptoAlgorithmID.Default,
-                    CryptoAlgorithmID algorithmSign = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
             // create the group keys
 

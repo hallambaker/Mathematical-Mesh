@@ -88,17 +88,33 @@ namespace Goedel.Cryptography {
         ///<summary>Mesh master profile</summary>
         MeshProfileMaster = 256,
 
-        ///<summary>Mesh device profile</summary>
-        MeshProfileDevice = 257,
+        ///<summary>Mesh master profile</summary>
+        MeshActivationMaster = 257,
 
         ///<summary>Mesh device profile</summary>
-        MeshProfileAccount = 258,
+        MeshProfileDevice = 258,
 
         ///<summary>Mesh device profile</summary>
         MeshActivationDevice = 259,
 
         ///<summary>Mesh device profile</summary>
-        MeshActivationAccount = 260
+        MeshProfileAccount = 250,
+
+
+        ///<summary>Mesh device profile</summary>
+        MeshActivationAccount = 261,
+
+        ///<summary>Mesh device profile</summary>
+        MeshProfileGroup = 262,
+
+        ///<summary>Mesh device profile</summary>
+        MeshActivationGroup = 263,
+
+        ///<summary>Mesh device profile</summary>
+        MeshProfileService = 264,
+
+        ///<summary>Mesh device profile</summary>
+        MeshActivationService = 265
         }
 
 
@@ -174,159 +190,159 @@ namespace Goedel.Cryptography {
                 byte[] data,
                 string contentType,
                 int bits = 0,
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
                 string key = null) {
             switch (cryptoAlgorithmID) {
-                case CryptoAlgorithmID.SHA_2_512: {
+                case CryptoAlgorithmId.SHA_2_512: {
                     return DigestToUDFBinary(Platform.SHA2_512.Process(data),
                         contentType, bits, cryptoAlgorithmID, key);
                     }
-                case CryptoAlgorithmID.SHA_3_512: {
+                case CryptoAlgorithmId.SHA_3_512: {
                     return DigestToUDFBinary(Platform.SHA3_512.Process(data),
                         contentType, bits, cryptoAlgorithmID, key);
                     }
 
-                case CryptoAlgorithmID.Unknown:
+                case CryptoAlgorithmId.Unknown:
                     break;
-                case CryptoAlgorithmID.NULL:
+                case CryptoAlgorithmId.NULL:
                     break;
-                case CryptoAlgorithmID.Default:
+                case CryptoAlgorithmId.Default:
                     break;
-                case CryptoAlgorithmID.Bulk:
+                case CryptoAlgorithmId.Bulk:
                     break;
-                case CryptoAlgorithmID.BulkMask:
+                case CryptoAlgorithmId.BulkMask:
                     break;
-                case CryptoAlgorithmID.BulkTagMask:
+                case CryptoAlgorithmId.BulkTagMask:
                     break;
-                case CryptoAlgorithmID.Digest:
+                case CryptoAlgorithmId.Digest:
                     break;
-                case CryptoAlgorithmID.MAC:
+                case CryptoAlgorithmId.MAC:
                     break;
-                case CryptoAlgorithmID.Encryption:
+                case CryptoAlgorithmId.Encryption:
                     break;
-                case CryptoAlgorithmID.MaxDigest:
+                case CryptoAlgorithmId.MaxDigest:
                     break;
-                case CryptoAlgorithmID.MaxMAC:
+                case CryptoAlgorithmId.MaxMAC:
                     break;
-                case CryptoAlgorithmID.MaxEncryption:
+                case CryptoAlgorithmId.MaxEncryption:
                     break;
-                case CryptoAlgorithmID.BaseMask:
+                case CryptoAlgorithmId.BaseMask:
                     break;
-                case CryptoAlgorithmID.Meta:
+                case CryptoAlgorithmId.Meta:
                     break;
-                case CryptoAlgorithmID.MetaMask:
+                case CryptoAlgorithmId.MetaMask:
                     break;
-                case CryptoAlgorithmID.MetaTagMask:
+                case CryptoAlgorithmId.MetaTagMask:
                     break;
-                case CryptoAlgorithmID.Signature:
+                case CryptoAlgorithmId.Signature:
                     break;
-                case CryptoAlgorithmID.Exchange:
+                case CryptoAlgorithmId.Exchange:
                     break;
-                case CryptoAlgorithmID.Wrap:
+                case CryptoAlgorithmId.Wrap:
                     break;
-                case CryptoAlgorithmID.MaxSignature:
+                case CryptoAlgorithmId.MaxSignature:
                     break;
-                case CryptoAlgorithmID.MaxExchange:
+                case CryptoAlgorithmId.MaxExchange:
                     break;
-                case CryptoAlgorithmID.MaxWrap:
+                case CryptoAlgorithmId.MaxWrap:
                     break;
-                case CryptoAlgorithmID.SHA_2_256:
+                case CryptoAlgorithmId.SHA_2_256:
                     break;
-                case CryptoAlgorithmID.SHA_2_512T128:
+                case CryptoAlgorithmId.SHA_2_512T128:
                     break;
-                case CryptoAlgorithmID.SHA_3_256:
+                case CryptoAlgorithmId.SHA_3_256:
                     break;
-                case CryptoAlgorithmID.SHAKE_128:
+                case CryptoAlgorithmId.SHAKE_128:
                     break;
-                case CryptoAlgorithmID.SHAKE_256:
+                case CryptoAlgorithmId.SHAKE_256:
                     break;
-                case CryptoAlgorithmID.ModeCTS:
+                case CryptoAlgorithmId.ModeCTS:
                     break;
-                case CryptoAlgorithmID.ModeGCM:
+                case CryptoAlgorithmId.ModeGCM:
                     break;
-                case CryptoAlgorithmID.ModeHMAC:
+                case CryptoAlgorithmId.ModeHMAC:
                     break;
-                case CryptoAlgorithmID.ModeCBCNone:
+                case CryptoAlgorithmId.ModeCBCNone:
                     break;
-                case CryptoAlgorithmID.ModeECB:
+                case CryptoAlgorithmId.ModeECB:
                     break;
-                case CryptoAlgorithmID.AES256:
+                case CryptoAlgorithmId.AES256:
                     break;
-                case CryptoAlgorithmID.AES128CBC:
+                case CryptoAlgorithmId.AES128CBC:
                     break;
-                case CryptoAlgorithmID.AES128GCM:
+                case CryptoAlgorithmId.AES128GCM:
                     break;
-                case CryptoAlgorithmID.AES128CTS:
+                case CryptoAlgorithmId.AES128CTS:
                     break;
-                case CryptoAlgorithmID.AES128HMAC:
+                case CryptoAlgorithmId.AES128HMAC:
                     break;
-                case CryptoAlgorithmID.AES128CBCNone:
+                case CryptoAlgorithmId.AES128CBCNone:
                     break;
-                case CryptoAlgorithmID.AES128ECB:
+                case CryptoAlgorithmId.AES128ECB:
                     break;
-                case CryptoAlgorithmID.AES256CBC:
+                case CryptoAlgorithmId.AES256CBC:
                     break;
-                case CryptoAlgorithmID.AES256GCM:
+                case CryptoAlgorithmId.AES256GCM:
                     break;
-                case CryptoAlgorithmID.AES256CTS:
+                case CryptoAlgorithmId.AES256CTS:
                     break;
-                case CryptoAlgorithmID.AES256HMAC:
+                case CryptoAlgorithmId.AES256HMAC:
                     break;
-                case CryptoAlgorithmID.AES256CBCNone:
+                case CryptoAlgorithmId.AES256CBCNone:
                     break;
-                case CryptoAlgorithmID.AES256ECB:
+                case CryptoAlgorithmId.AES256ECB:
                     break;
-                case CryptoAlgorithmID.HMAC_SHA_2_256:
+                case CryptoAlgorithmId.HMAC_SHA_2_256:
                     break;
-                case CryptoAlgorithmID.HMAC_SHA_2_512:
+                case CryptoAlgorithmId.HMAC_SHA_2_512:
                     break;
-                case CryptoAlgorithmID.HMAC_SHA_2_512T128:
+                case CryptoAlgorithmId.HMAC_SHA_2_512T128:
                     break;
-                case CryptoAlgorithmID.Level_High:
+                case CryptoAlgorithmId.Level_High:
                     break;
-                case CryptoAlgorithmID.RSASign_PSS:
+                case CryptoAlgorithmId.RSASign_PSS:
                     break;
-                case CryptoAlgorithmID.EdDSA:
+                case CryptoAlgorithmId.EdDSA:
                     break;
-                case CryptoAlgorithmID.Ed25519ctx:
+                case CryptoAlgorithmId.Ed25519ctx:
                     break;
-                case CryptoAlgorithmID.Ed25519ph:
+                case CryptoAlgorithmId.Ed25519ph:
                     break;
-                case CryptoAlgorithmID.Ed448:
+                case CryptoAlgorithmId.Ed448:
                     break;
-                case CryptoAlgorithmID.Ed448ph:
+                case CryptoAlgorithmId.Ed448ph:
                     break;
-                case CryptoAlgorithmID.RSASign_SHA_2_256:
+                case CryptoAlgorithmId.RSASign_SHA_2_256:
                     break;
-                case CryptoAlgorithmID.RSASign_SHA_2_512:
+                case CryptoAlgorithmId.RSASign_SHA_2_512:
                     break;
-                case CryptoAlgorithmID.RSASign_PSS_SHA_2_256:
+                case CryptoAlgorithmId.RSASign_PSS_SHA_2_256:
                     break;
-                case CryptoAlgorithmID.RSASign_PSS_SHA_2_512:
+                case CryptoAlgorithmId.RSASign_PSS_SHA_2_512:
                     break;
-                case CryptoAlgorithmID.RSAExch_P15:
+                case CryptoAlgorithmId.RSAExch_P15:
                     break;
-                case CryptoAlgorithmID.DH:
+                case CryptoAlgorithmId.DH:
                     break;
-                case CryptoAlgorithmID.ECDH:
+                case CryptoAlgorithmId.ECDH:
                     break;
-                case CryptoAlgorithmID.X25519:
+                case CryptoAlgorithmId.X25519:
                     break;
-                case CryptoAlgorithmID.X448:
+                case CryptoAlgorithmId.X448:
                     break;
-                case CryptoAlgorithmID.XEd25519:
+                case CryptoAlgorithmId.XEd25519:
                     break;
-                case CryptoAlgorithmID.XEd448:
+                case CryptoAlgorithmId.XEd448:
                     break;
-                case CryptoAlgorithmID.Direct:
+                case CryptoAlgorithmId.Direct:
                     break;
-                case CryptoAlgorithmID.KW3394_AES128:
+                case CryptoAlgorithmId.KW3394_AES128:
                     break;
-                case CryptoAlgorithmID.KW3394_AES256:
+                case CryptoAlgorithmId.KW3394_AES256:
                     break;
-                case CryptoAlgorithmID.AES128_GCM_KW:
+                case CryptoAlgorithmId.AES128_GCM_KW:
                     break;
-                case CryptoAlgorithmID.AES256_GCM_KW:
+                case CryptoAlgorithmId.AES256_GCM_KW:
                     break;
                 default:
                     break;
@@ -348,7 +364,7 @@ namespace Goedel.Cryptography {
                 byte[] digest,
                 string contentType,
                 int bits = 0,
-                CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+                CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
                 string key = null) {
             var buffer = UDFBuffer(digest, contentType);
             return key == null ? BufferDigestToUDF(buffer, bits, cryptoAlgorithmID) :
@@ -367,17 +383,17 @@ namespace Goedel.Cryptography {
         public static byte[] BufferDigestToUDF(
                     byte[] buffer,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
 
             var UDFData = buffer.GetDigest(cryptoAlgorithmID);
 
             UDFTypeIdentifier versionID;
             switch (cryptoAlgorithmID) {
-                case CryptoAlgorithmID.SHA_2_512: {
+                case CryptoAlgorithmId.SHA_2_512: {
                     versionID = UDFTypeIdentifier.DigestAlgSHA_2_512;
                     break;
                     }
-                case CryptoAlgorithmID.SHA_3_512: {
+                case CryptoAlgorithmId.SHA_3_512: {
                     versionID = UDFTypeIdentifier.DigestSHA_3_512;
                     break;
                     }
@@ -435,16 +451,16 @@ namespace Goedel.Cryptography {
                     byte[] buffer,
                     string key,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512
                     ) {
             byte[] UDFData;
 
             UDFTypeIdentifier versionID;
 
             switch (cryptoAlgorithmID) {
-                case CryptoAlgorithmID.SHA_2_512: {
+                case CryptoAlgorithmId.SHA_2_512: {
                     var macKey = KeyStringToKey(key, 512);
-                    UDFData = buffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
+                    UDFData = buffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
                     versionID = UDFTypeIdentifier.AuthenticatorHMAC_SHA_2_512;
                     return TypeBDSToBinary(versionID, UDFData, bits);
                     }
@@ -535,7 +551,7 @@ namespace Goedel.Cryptography {
         public static byte[] KeyStringToKey(
                     string textKey,
                     int length = 0,
-                    CryptoAlgorithmID algorithm = CryptoAlgorithmID.HMAC_SHA_2_512) {
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
             var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(), KeyDerive.KeyedUDFMaster, algorithm);
             return keyDerive.Derive(KeyDerive.KeyedUDFExpand, length);
             }
@@ -596,7 +612,7 @@ namespace Goedel.Cryptography {
                     byte[] data,
                     string contentType,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
                     string key = null) {
             var buffer = DataToUDFBinary(data, contentType, bits, cryptoAlgorithmID, key);
             return PresentationBase32(buffer, bits);
@@ -616,7 +632,7 @@ namespace Goedel.Cryptography {
                     byte[] data,
                     string contentType,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512,
                     string key = null) {
             var buffer = DigestToUDFBinary(data, contentType, bits, cryptoAlgorithmID, key);
             return PresentationBase32(buffer, bits);
@@ -634,7 +650,7 @@ namespace Goedel.Cryptography {
         public static string ContentDigestOfUDF(
                     string data,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
             bits = bits == 0 ? DefaultBits * 2 : bits;
 
             //// Calculate the output precision, this is twice the input precision to a
@@ -659,7 +675,7 @@ namespace Goedel.Cryptography {
         public static string LockName(
                     string data,
                     int bits = 0,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.SHA_2_512) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
             bits = bits == 0 ? DefaultBits * 2 : bits;
             var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFLock, bits, cryptoAlgorithmID, null);
             return PresentationBase32(buffer, bits);
@@ -966,15 +982,15 @@ namespace Goedel.Cryptography {
         /// of <paramref name="length"/> bits, 
         /// </summary>
         /// <param name="algorithmIdentifier">The algorithm identifier.</param>
+        /// <param name="data">The master key data.</param>
         /// <param name="length">The key size in bits. This is ignored if <paramref name="data"/> is
         /// not null.</param>
-        /// <param name="data">The master key data.</param>
         /// <returns>The generated UDF</returns>
         public static string DerivedKey(UdfAlgorithmIdentifier algorithmIdentifier,
-                    int length = 128, byte[] data = null) {
+                    byte[] data = null, int length = 0) {
 
             var keySpecifier = KeySpecifier(algorithmIdentifier);
-            data ??= CryptoCatalog.GetBits(length);
+            data ??= CryptoCatalog.GetBits(length <=128 ? 128 : length);
 
             var result = new byte[keySpecifier.Length + data.Length];
 
@@ -1028,33 +1044,6 @@ namespace Goedel.Cryptography {
                 case UdfAlgorithmIdentifier.X448: {
                     return new KeyPairX448(binaryData, salt, keySecurity, keyUses);
                     }
-
-                case UdfAlgorithmIdentifier.Any:
-                    break;
-                case UdfAlgorithmIdentifier.P256:
-                    break;
-                case UdfAlgorithmIdentifier.P384:
-                    break;
-                case UdfAlgorithmIdentifier.P521:
-                    break;
-                case UdfAlgorithmIdentifier.RSA2048:
-                    break;
-                case UdfAlgorithmIdentifier.RSA3072:
-                    break;
-                case UdfAlgorithmIdentifier.RSA4096:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileMaster:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileAccount:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationAccount:
-                    break;
-                default:
-                    break;
                 }
             throw new NYI();
             }
@@ -1068,47 +1057,55 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The allowed key uses.</param>
-        /// <param name="name">Friendly name for the key.</param>
+        /// <param name="saltSuffix">Optional salt suffix used to differentiate the key.</param>
         /// <returns>The derrived key pair.</returns>
         public static KeyPair DeriveKey(string udf,
                     KeyCollection keyCollection,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmIDin = CryptoAlgorithmID.Default,
-                    string name=null) {
+                    CryptoAlgorithmId cryptoAlgorithmIDin = CryptoAlgorithmId.Default,
+                    string saltSuffix=null) {
 
             var binaryData = Parse(udf, out var code);
             (code == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
 
             var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
-            var salt = KeySpecifier(algorithm);
+            var salt = saltSuffix == null ? KeySpecifier(algorithm) :
+                KeySpecifier(algorithm).Concatenate(saltSuffix.ToBytes());
+
+
 
             int keySize = 0;
-            CryptoAlgorithmID cryptoAlgorithmID;
+            CryptoAlgorithmId cryptoAlgorithmID;
             switch (algorithm) {
                 case UdfAlgorithmIdentifier.Ed25519: {
-                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    cryptoAlgorithmID = CryptoAlgorithmId.Ed25519;
                     break;
                     }
                 case UdfAlgorithmIdentifier.Ed448: {
-                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    cryptoAlgorithmID = CryptoAlgorithmId.Ed448;
                     break;
                     }
                 case UdfAlgorithmIdentifier.X25519: {
-                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    cryptoAlgorithmID = CryptoAlgorithmId.X25519;
                     break;
                     }
                 case UdfAlgorithmIdentifier.X448: {
-                    cryptoAlgorithmID = CryptoAlgorithmID.Ed25519;
+                    cryptoAlgorithmID = CryptoAlgorithmId.X448;
                     break;
                     }
 
-                case UdfAlgorithmIdentifier.MeshProfileMaster: {
-                    cryptoAlgorithmID = cryptoAlgorithmIDin;
-                    break;
-                    }
-                case UdfAlgorithmIdentifier.MeshProfileDevice: {
-                    cryptoAlgorithmID = cryptoAlgorithmIDin;
+                case UdfAlgorithmIdentifier.MeshProfileMaster:
+                case UdfAlgorithmIdentifier.MeshProfileDevice:
+                case UdfAlgorithmIdentifier.MeshActivationDevice:
+                case UdfAlgorithmIdentifier.MeshProfileAccount:
+                case UdfAlgorithmIdentifier.MeshActivationAccount:
+                case UdfAlgorithmIdentifier.MeshProfileGroup:
+                case UdfAlgorithmIdentifier.MeshActivationGroup:
+                case UdfAlgorithmIdentifier.MeshProfileService:
+                case UdfAlgorithmIdentifier.MeshActivationService: {
+                    cryptoAlgorithmID = cryptoAlgorithmIDin.DefaultMeta (keyUses, CryptoAlgorithmId.X448,
+                        CryptoAlgorithmId.Ed448, CryptoAlgorithmId.X448);
                     break;
                     }
                 default: {
@@ -1128,7 +1125,7 @@ namespace Goedel.Cryptography {
         /// <param name="cryptoAlgorithmID">The type of key to generate.</param>
         /// <param name="text">The seed text.</param>
         /// <returns>The computed UDF.</returns>
-        public static string TestKey(CryptoAlgorithmID cryptoAlgorithmID, string text) =>
+        public static string TestKey(CryptoAlgorithmId cryptoAlgorithmID, string text) =>
                 TestKey(cryptoAlgorithmID.ToUDFID(), text);
 
         /// <summary>

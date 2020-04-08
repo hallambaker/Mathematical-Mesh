@@ -580,7 +580,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-2-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, null);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("This fingerprint MAY be specified with higher or lower precision as appropriate.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
@@ -597,7 +597,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_3_512, null);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_3_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-2-512 Digest with Compression \n{0}", _Indent);
 				 var DataStringc2 = $"UDF Compressed Document {4187123}";
@@ -612,7 +612,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The UTF8 Content Digest is given as:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmID.SHA_2_512, null);
+				 instance.MakeUTFExtendedExample (DataStringc2, CryptoAlgorithmId.SHA_2_512, null);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("###Using SHA-3-512 Digest with Compression \n{0}", _Indent);
 				 var DataStringc3 = $"UDF Compressed Document {774665}";
@@ -626,7 +626,7 @@ namespace ExampleGenerator {
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The UTF8 SHA-3-512 Content Digest is\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmID.SHA_3_512));
+				_Output.Write ("{1}\n{0}", _Indent, UDF.ContentDigestOfDataString(Datac3, ContentType, 140, CryptoAlgorithmId.SHA_3_512));
 				_Output.Write ("\n{0}", _Indent);
 		
 			}
@@ -635,10 +635,10 @@ namespace ExampleGenerator {
 		//
 		// MakeUTFExtendedExample
 		//
-		public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmID cryptoAlgorithmID, string key) {
+		public void MakeUTFExtendedExample (string DataString, CryptoAlgorithmId CryptoAlgorithmId, string key) {
 			 var DataBytes = DataString.ToUTF8();
 			 var ContentType = "text/plain";
-			 var HashData = DataBytes.GetDigest(cryptoAlgorithmID);
+			 var HashData = DataBytes.GetDigest(CryptoAlgorithmId);
 			 var UDFDataBuffer = UDF.UDFBuffer(HashData, ContentType);
 			 byte[] UDFData ;
 			_Output.Write ("\n{0}", _Indent);
@@ -650,13 +650,13 @@ namespace ExampleGenerator {
 			_Output.Write ("{1}\n{0}", _Indent, UDFDataBuffer.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			if (  (key == null) ) {
-				 UDFData = UDFDataBuffer.GetDigest(cryptoAlgorithmID);
+				 UDFData = UDFDataBuffer.GetDigest(CryptoAlgorithmId);
 				_Output.Write ("H(&<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 				} else {
 				 var keyBytes = key.ToUTF8();
 				 var macKey = UDF.KeyStringToKey(key,512);
-				 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmID.HMAC_SHA_2_512);
-				 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmID.HMAC_SHA_2_512);
+				 UDFData = UDFDataBuffer.GetMAC(macKey, CryptoAlgorithmId.HMAC_SHA_2_512);
+				 var keyDerive = new KeyDeriveHKDF(keyBytes, KeyDerive.KeyedUDFMaster, CryptoAlgorithmId.HMAC_SHA_2_512);
 				_Output.Write ("PRK(Key) =  ", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, keyDerive.PRK.ToStringBase16FormatHex());
 				_Output.Write ("\n{0}", _Indent);
@@ -665,7 +665,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =  ", _Indent);
 				}
-			 var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, cryptoAlgorithmID, key);
+			 var binaryUDF = UDF.DigestToUDFBinary (HashData, ContentType, 140, CryptoAlgorithmId, key);
 			_Output.Write ("{1}\n{0}", _Indent, UDFData.ToStringBase16FormatHex());
 			_Output.Write ("\n{0}", _Indent);
 			_Output.Write ("The prefixed Binary Data Sequence is thus{1}\n{0}", _Indent, binaryUDF.ToStringBase16FormatHex());
@@ -703,7 +703,7 @@ namespace ExampleGenerator {
 				_Output.Write ("Processing is performed in the same manner as an unkeyed fingerprint except that\n{0}", _Indent);
 				_Output.Write ("compression is never used:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmID.SHA_2_512, key);
+				 instance.MakeUTFExtendedExample (DataString, CryptoAlgorithmId.SHA_2_512, key);
 		
 			}
 		

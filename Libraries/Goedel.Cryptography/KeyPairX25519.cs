@@ -6,7 +6,7 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
-    /// Ed25519 public / private keypair.
+    /// X25519 public / private keypair.
     /// </summary>
     public class KeyPairX25519 : KeyPairECDH {
 
@@ -48,7 +48,7 @@ namespace Goedel.Cryptography {
 
 
         /// <summary>
-        /// Construct a KeyPairEd25519 instance for the specified key data in interchange 
+        /// Construct a KeyPairX25519 instance for the specified key data in interchange 
         /// format. 
         /// </summary>
         /// <param name="key">The key data as specified in RFC8032.</param>
@@ -60,9 +60,9 @@ namespace Goedel.Cryptography {
                     byte[] key,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed25519);
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X25519);
             this.keyType = keyType;
             KeyUses = keyUses;
             if (keyType == KeySecurity.Public) {
@@ -97,12 +97,12 @@ namespace Goedel.Cryptography {
         public KeyPairX25519(byte[] ikm, byte[] salt,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
-                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmID.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) :
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 256, CryptoAlgorithmId.HMAC_SHA_2_512), keyType, keyUses, cryptoAlgorithmID) {
             }
 
         /// <summary>
-        /// Construct a KeyPairEd25519 instance for a secret scalar. This is used to create
+        /// Construct a KeyPairX25519 instance for a secret scalar. This is used to create
         /// private keys using cogeneration.
         /// </summary>
         /// <param name="privateKey">The secret scalar value.</param>
@@ -114,11 +114,11 @@ namespace Goedel.Cryptography {
                     CurveX25519Private privateKey = null,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.X25519);
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X25519);
             this.PrivateKey = privateKey;
-            //encodedPrivateKey = privateKey.Private.ToByteArrayLittleEndian(32);
-
+            PublicKey = privateKey.Public;
+            PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
             keyType = keySecurity;
             KeyUses = keyUses;
             }
@@ -133,7 +133,7 @@ namespace Goedel.Cryptography {
         public static KeyPairX25519 Generate(
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
             new KeyPairX25519(Platform.GetRandomBits(256), keyType, keyUses, cryptoAlgorithmID);
 
 
@@ -143,13 +143,15 @@ namespace Goedel.Cryptography {
         /// <param name="Public">The public key value</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         public KeyPairX25519(IKeyAdvancedPublic Public,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default,
+                    KeyUses keyUses = KeyUses.Any) {
 
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.X25519);
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.X25519);
             PublicKey = Public as CurveX25519Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyX25519(PublicKey.Encoding);
-
+            KeyUses = keyUses;
             }
 
         /// <summary>
@@ -168,9 +170,11 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="publicKey">The public key</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey) =>
-            new KeyPairX25519((CurveX25519Public)publicKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey,
+                    KeyUses keyUses = KeyUses.Any) =>
+            new KeyPairX25519((CurveX25519Public)publicKey, keyUses: keyUses);
 
 
         /// <summary>
@@ -186,7 +190,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection"></param>
         public override void Persist(KeyCollection keyCollection) {
             Assert.True(PersistPending);
-            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519() { Data = encodedPrivateKey };
+            var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX25519() { Data = encodedPrivateKey };
             keyCollection.Persist(UDF, pkix, keyType.IsExportable());
             }
 
@@ -234,7 +238,7 @@ namespace Goedel.Cryptography {
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(byte[] EncryptedKey,
             KeyPair Ephemeral = null,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             KeyAgreementResult Partial = null, byte[] Salt = null) {
 
             var keyPairX25519 = Ephemeral as KeyPairX25519;
@@ -255,7 +259,7 @@ namespace Goedel.Cryptography {
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
             byte[] Data,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
             byte[] Context = null) => throw new InvalidOperation();
 
         /// <summary>
@@ -270,7 +274,7 @@ namespace Goedel.Cryptography {
         public override bool VerifyHash(
             byte[] Data,
             byte[] Signature,
-            CryptoAlgorithmID AlgorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 byte[] Context = null) => throw new InvalidOperation();
         }
 

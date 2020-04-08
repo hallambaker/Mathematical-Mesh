@@ -35,3 +35,29 @@ Namespace Goedel.Mesh.Client
 			Console "Portal refused profile publication request"
 			Description
 				|Portal refused profile publication request
+
+
+	Exception Connection
+        Console "Connection did not complete"
+		Description
+			|The connection request did not complete
+
+		Exception ConnectionRefused
+			Console "The connection request was refused"
+			Description
+				|The connection request was refused
+
+		Exception ConnectionPending
+			Console "The connection request is still pending"
+			Description
+				|The connection request is still pending
+
+		Exception ConnectionExpired
+			Console "The connection request is still pending"
+			Description
+				|The connection request is still pending
+
+		Exception ConnectionAccountUnknown
+			Console "The connection request is still pending"
+			Description
+				|The connection request is still pending

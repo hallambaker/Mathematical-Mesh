@@ -186,11 +186,18 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Libraries\Goedel.Command\Goedel.Command.projitems*{10573a9c-5f44-4b7a-af12-5d7ec971f783}*SharedItemsImports = 13
+		Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{171f782c-4d04-40bd-8d12-ead48eefb79a}*SharedItemsImports = 5
 		Libraries\Goedel.Utilities\Goedel.Utilities.projitems*{415214fc-4792-4519-a93f-315f2ea97cff}*SharedItemsImports = 13
+		Libraries\Goedel.FSR\Goedel.FSR.projitems*{70abeecf-b15c-4d36-83d3-df9508bee1c5}*SharedItemsImports = 5
 		Libraries\Goedel.FSR\Goedel.FSR.projitems*{8774e85c-f054-4235-a02c-d180ba05e316}*SharedItemsImports = 13
+		Libraries\Goedel.ASN\Goedel.ASN.projitems*{8c3faaaa-4187-4368-8c10-4f3f7c31ab51}*SharedItemsImports = 5
+		Libraries\Goedel.Command\Goedel.Command.projitems*{92374241-b365-4366-8c08-6db92b0460b7}*SharedItemsImports = 5
 		Libraries\Goedel.Registry\Goedel.Registry.projitems*{9e9408ad-aa85-4365-a553-062f9dc98822}*SharedItemsImports = 13
 		Libraries\Goedel.IO\Goedel.IO.projitems*{9fa5a13a-56ec-4dec-a3ee-5963f76c44e5}*SharedItemsImports = 13
+		Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a}*SharedItemsImports = 5
+		Libraries\Goedel.Registry\Goedel.Registry.projitems*{c6ab7fed-46c8-43f1-ba55-790921adfdd5}*SharedItemsImports = 5
 		Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{e0560a9e-5a6c-464d-8114-10e9889882b3}*SharedItemsImports = 13
+		Libraries\Goedel.IO\Goedel.IO.projitems*{e9341173-6212-4a7a-8a59-21fd11c32360}*SharedItemsImports = 5
 		Libraries\Goedel.ASN\Goedel.ASN.projitems*{f1d1ee3e-82b7-4410-902a-c334d1d2ac47}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

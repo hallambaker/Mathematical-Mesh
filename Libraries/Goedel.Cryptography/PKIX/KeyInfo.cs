@@ -59,7 +59,7 @@ namespace Goedel.Cryptography.PKIX {
         /// Construct from OID identifier string.
         /// </summary>
         /// <param name="ID">The identifier as a CryptoAlgorithmID</param>
-        public AlgorithmIdentifier(CryptoAlgorithmID ID) {
+        public AlgorithmIdentifier(CryptoAlgorithmId ID) {
             var OID = ID.ToOID();
 
             this.Algorithm = Goedel.ASN.ASN.OIDToArray(OID);

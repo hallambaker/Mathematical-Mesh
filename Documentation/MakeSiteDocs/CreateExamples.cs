@@ -17,7 +17,7 @@ namespace ExampleGenerator {
                     byte[] Salt = null) {
 
             Salt ??= Goedel.Cryptography.Platform.GetRandomBits(128);
-            var CryptoStack = new CryptoStack(encryptID: CryptoAlgorithmID.AES256CBC) {
+            var CryptoStack = new CryptoStack(encryptID: CryptoAlgorithmId.AES256CBC) {
                 Salt = Salt ?? Goedel.Cryptography.Platform.GetRandomBits(128),
                 MasterSecret = MasterSecret
                 };

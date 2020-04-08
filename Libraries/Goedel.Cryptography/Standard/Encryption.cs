@@ -137,7 +137,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncoder(
                             CryptoProviderBulk Bulk = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null
                             ) => MakeEncryptor(Provider.Key, Provider.IV,
                 Algorithm, OutputStream);
@@ -153,7 +153,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataEncoder MakeEncryptor(
                             byte[] Key = null, byte[] IV = null,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null) {
             var Result = new CryptoDataEncoder(CryptoAlgorithmID, this) {
                 OutputStream = OutputStream ?? new MemoryStream(),
@@ -177,7 +177,7 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Instance describing the key agreement parameters.</returns>
         public override CryptoDataDecoder MakeDecryptor(
                             byte[] Key, byte[] IV,
-                            CryptoAlgorithmID Algorithm = CryptoAlgorithmID.Default,
+                            CryptoAlgorithmId Algorithm = CryptoAlgorithmId.Default,
                             Stream OutputStream = null) {
             var Result = new CryptoDataDecoder(CryptoAlgorithmID, this) {
                 OutputStream = OutputStream ?? new MemoryStream(),
@@ -297,8 +297,8 @@ namespace Goedel.Cryptography.Standard {
         /// <summary>
         /// The CryptoAlgorithmID Identifier.
         /// </summary>
-        public override CryptoAlgorithmID CryptoAlgorithmID => (Provider.KeySize == 128) ?
-                    CryptoAlgorithmID.AES128CBC : CryptoAlgorithmID.AES256CBC;
+        public override CryptoAlgorithmId CryptoAlgorithmID => (Provider.KeySize == 128) ?
+                    CryptoAlgorithmId.AES128CBC : CryptoAlgorithmId.AES256CBC;
 
 
         ///// <summary>
@@ -326,61 +326,61 @@ namespace Goedel.Cryptography.Standard {
         /// <returns>Description of the principal algorithm registration.</returns>
         public static CryptoAlgorithm Register(CryptoCatalog Catalog = null) {
             Catalog ??= CryptoCatalog.Default;
-            var Default = Catalog.Add(CryptoAlgorithmID.AES256CBC, 256, _AlgorithmClass, Factory);
+            var Default = Catalog.Add(CryptoAlgorithmId.AES256CBC, 256, _AlgorithmClass, Factory);
 
-            Catalog.Add(CryptoAlgorithmID.AES256, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES128CBC, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES128CTS, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES128CBCNone, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES128ECB, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES256CTS, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES256CBCNone, 256, _AlgorithmClass, Factory);
-            Catalog.Add(CryptoAlgorithmID.AES256ECB, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES256, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES128CBC, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES128CTS, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES128CBCNone, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES128ECB, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES256CTS, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES256CBCNone, 256, _AlgorithmClass, Factory);
+            Catalog.Add(CryptoAlgorithmId.AES256ECB, 256, _AlgorithmClass, Factory);
 
             return Default;
             }
 
         private static CryptoProvider Factory(int KeySize,
-                            CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default) {
+                            CryptoAlgorithmId Bulk = CryptoAlgorithmId.Default) {
             switch (Bulk) {
-                case CryptoAlgorithmID.Default: {
+                case CryptoAlgorithmId.Default: {
                     return new CryptoProviderEncryptAES(KeySize);
                     }
-                case CryptoAlgorithmID.AES128: {
+                case CryptoAlgorithmId.AES128: {
                     return new CryptoProviderEncryptAES(128);
                     }
-                case CryptoAlgorithmID.AES128CBC: {
+                case CryptoAlgorithmId.AES128CBC: {
                     return new CryptoProviderEncryptAES(128,
                             CipherMode.CBC, PaddingMode.PKCS7);
                     }
-                case CryptoAlgorithmID.AES128CTS: {
+                case CryptoAlgorithmId.AES128CTS: {
                     return new CryptoProviderEncryptAES(128,
                             CipherMode.CTS, PaddingMode.PKCS7);
                     }
-                case CryptoAlgorithmID.AES128CBCNone: {
+                case CryptoAlgorithmId.AES128CBCNone: {
                     return new CryptoProviderEncryptAES(128,
                             CipherMode.CBC, PaddingMode.None);
                     }
-                case CryptoAlgorithmID.AES128ECB: {
+                case CryptoAlgorithmId.AES128ECB: {
                     return new CryptoProviderEncryptAES(128,
                             CipherMode.ECB, PaddingMode.None);
                     }
-                case CryptoAlgorithmID.AES256: {
+                case CryptoAlgorithmId.AES256: {
                     return new CryptoProviderEncryptAES(256);
                     }
-                case CryptoAlgorithmID.AES256CBC: {
+                case CryptoAlgorithmId.AES256CBC: {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.CBC, PaddingMode.PKCS7);
                     }
-                case CryptoAlgorithmID.AES256CTS: {
+                case CryptoAlgorithmId.AES256CTS: {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.CTS, PaddingMode.PKCS7);
                     }
-                case CryptoAlgorithmID.AES256CBCNone: {
+                case CryptoAlgorithmId.AES256CBCNone: {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.CBC, PaddingMode.None);
                     }
-                case CryptoAlgorithmID.AES256ECB: {
+                case CryptoAlgorithmId.AES256ECB: {
                     return new CryptoProviderEncryptAES(256,
                             CipherMode.ECB, PaddingMode.None);
                     }

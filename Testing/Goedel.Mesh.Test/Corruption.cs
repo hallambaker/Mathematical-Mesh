@@ -12,7 +12,7 @@ namespace Goedel.Mesh.Test {
         public static void CorruptDareMessage(this string filename) {
 
             using var inputStream = filename.OpenFileReadWrite();
-            var jsonReader = new JSONBCDReader(inputStream);
+            var jsonReader = new JsonBcdReader(inputStream);
 
             Assert.True(jsonReader.StartArray());
             var Header = DareHeader.FromJSON(jsonReader, false);

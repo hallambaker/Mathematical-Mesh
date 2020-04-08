@@ -73,7 +73,7 @@ namespace Goedel.Mesh {
         /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The created key pair</returns>
         public virtual KeyPair CreateKeyPair(
-                    CryptoAlgorithmID algorithmID,
+                    CryptoAlgorithmId algorithmID,
                     KeySecurity keySecurity,
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any) => KeyPair.Factory(algorithmID, keySecurity,

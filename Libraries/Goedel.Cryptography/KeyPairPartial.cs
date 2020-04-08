@@ -107,8 +107,10 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="publicKey">The public key</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey) => throw new NotImplementedException();
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey,
+                    KeyUses keyUses = KeyUses.Any) => throw new NotImplementedException();
 
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.
@@ -133,7 +135,7 @@ namespace Goedel.Cryptography {
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
                     byte[] digest,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null) => throw new NotImplementedException();
 
         /// <summary>
@@ -150,7 +152,7 @@ namespace Goedel.Cryptography {
         public override bool VerifyHash(
                     byte[] digest,
                     byte[] signature,
-                    CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                     byte[] context = null) => throw new NotImplementedException();
 
         #endregion

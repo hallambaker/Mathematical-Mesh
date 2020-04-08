@@ -10,7 +10,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Static extensions class.
     /// </summary>
-    public static class Extensions {
+    public static partial class Extensions {
 
         //delegate void ToBuilderDelegate (StringBuilder builder, int indent);
 
@@ -32,21 +32,6 @@ namespace Goedel.Mesh {
                 }
             }
 
-
-        //public static ProfileMesh GetProfileMaster(this DareEnvelope dareMessage) {
-        //    var profile = ProfileMesh.FromJSON(dareMessage.GetBodyReader(), true);
-        //    // Task: here put code to verify the signature of the message against the master signature.
-
-        //    return profile;
-        //    }
-
-        //public static ProfileDevice GetProfileDevice(this DareEnvelope dareMessage) {
-        //    var profile = ProfileDevice.FromJSON(dareMessage.GetBodyReader(), true);
-        //    // Task: here put code to verify the signature of the message against the master signature.
-
-        //    return profile;
-        //    }
-
         /// <summary>
         /// Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
         /// <paramref name="keyCollection"/>
@@ -66,7 +51,6 @@ namespace Goedel.Mesh {
             return null;
 
             }
-
 
         /// <summary>
         /// Write a formatted version of the DareEnvelope <paramref name="envelope"/> to the

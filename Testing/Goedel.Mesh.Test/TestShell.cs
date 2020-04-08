@@ -112,14 +112,6 @@ namespace Goedel.Mesh.Test {
         public TestCLI(TestShell shell) : base() => Shell = shell;
         public string MachineName => Shell.MachineName;
 
-        //public ExampleResult Example(string command, bool fail = false) {
-        //    var Args = command.Split(' ');
-        //    Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
-        //    var result = Shell.ShellResult as Result;
-
-        //    (result.Success != fail).AssertTrue();
-        //    return new ExampleResult(command, result);
-        //    }
 
         public List<ExampleResult> Example(params string[] commands) {
             var result = new List<ExampleResult>();

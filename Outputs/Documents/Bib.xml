@@ -626,3 +626,13 @@
 </reference>
 
 
+
+<reference  anchor='Ellison' target='https://eprint.iacr.org/2007/399.pdf'>
+<front>
+<title>Ceremony Design and Analysis</title>
+<author initials='C.' surname='Ellison' fullname='Carl Ellison'>
+<organization>Microsoft Corporation</organization></author>
+
+<date year='2007'/>
+</front>
+</reference>

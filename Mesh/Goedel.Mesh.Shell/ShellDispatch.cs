@@ -64,23 +64,23 @@ namespace Goedel.Mesh.Shell {
         /// <param name="output">The output stream.</param>
         public Shell(TextWriter output = null) => this.output = output ?? Console.Out;
 
-        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.Ed448"/></summary>
-        public CryptoAlgorithmID AlgorithmSign = CryptoAlgorithmID.Ed448;
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmId.Ed448"/></summary>
+        public CryptoAlgorithmId AlgorithmSign = CryptoAlgorithmId.Ed448;
 
-        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.X448"/></summary>
-        public CryptoAlgorithmID AlgorithmAuthenticate = CryptoAlgorithmID.X448;
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmId.X448"/></summary>
+        public CryptoAlgorithmId AlgorithmAuthenticate = CryptoAlgorithmId.X448;
 
-        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmID.X448"/></summary>
-        public CryptoAlgorithmID AlgorithmExchange = CryptoAlgorithmID.X448;
+        ///<summary>The signature algorithm. Defaults to <see cref="CryptoAlgorithmId.X448"/></summary>
+        public CryptoAlgorithmId AlgorithmExchange = CryptoAlgorithmId.X448;
 
-        ///<summary>The digest algorithm. Defaults to <see cref="CryptoAlgorithmID.SHA_2_512"/></summary>
-        public CryptoAlgorithmID AlgorithmDigest = CryptoAlgorithmID.Default;
+        ///<summary>The digest algorithm. Defaults to <see cref="CryptoAlgorithmId.SHA_2_512"/></summary>
+        public CryptoAlgorithmId AlgorithmDigest = CryptoAlgorithmId.Default;
 
-        ///<summary>The MAC algorithm. Defaults to <see cref="CryptoAlgorithmID.HMAC_SHA_2_512"/></summary>
-        public CryptoAlgorithmID AlgorithmMAC = CryptoAlgorithmID.Default;
+        ///<summary>The MAC algorithm. Defaults to <see cref="CryptoAlgorithmId.HMAC_SHA_2_512"/></summary>
+        public CryptoAlgorithmId AlgorithmMAC = CryptoAlgorithmId.Default;
 
-        ///<summary>The encryption algorithm. Defaults to <see cref="CryptoAlgorithmID.AES256CBC"/></summary>
-        public CryptoAlgorithmID AlgorithmEncrypt = CryptoAlgorithmID.Default;
+        ///<summary>The encryption algorithm. Defaults to <see cref="CryptoAlgorithmId.AES256CBC"/></summary>
+        public CryptoAlgorithmId AlgorithmEncrypt = CryptoAlgorithmId.Default;
 
         /// <summary>
         /// Preprocess the common command options <paramref name="options"/>.
@@ -118,13 +118,13 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="CryptoOptions">The cryptographic options.</param>
         void SetAlgorithms(ICryptoOptions CryptoOptions) {
-            AlgorithmSign = CryptoAlgorithmID.Ed448;
-            AlgorithmAuthenticate = CryptoAlgorithmID.Ed448;
-            AlgorithmExchange = CryptoAlgorithmID.Ed448;
+            AlgorithmSign = CryptoAlgorithmId.Ed448;
+            AlgorithmAuthenticate = CryptoAlgorithmId.Ed448;
+            AlgorithmExchange = CryptoAlgorithmId.Ed448;
 
-            AlgorithmDigest = CryptoAlgorithmID.Default;
-            AlgorithmMAC = CryptoAlgorithmID.Default;
-            AlgorithmEncrypt = CryptoAlgorithmID.Default;
+            AlgorithmDigest = CryptoAlgorithmId.Default;
+            AlgorithmMAC = CryptoAlgorithmId.Default;
+            AlgorithmEncrypt = CryptoAlgorithmId.Default;
 
             if (CryptoOptions.Algorithms.Value != null) {
                 var algorithms = CryptoOptions.Algorithms.Value.Split(',');
@@ -272,7 +272,7 @@ namespace Goedel.Mesh.Shell {
             // Goal: do an encrypt self default option
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
-                    cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmID.AES256CBC);
+                    cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmId.AES256CBC);
                     cryptoParameters.EncryptionKeys = new List<KeyPair>
                         { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
                     }
@@ -282,14 +282,14 @@ namespace Goedel.Mesh.Shell {
 
             if (Options.Sign != null) {
                 if (Options.Sign.Value != null) {
-                    cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+                    cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
                     cryptoParameters.SignerKeys = new List<KeyPair>
                         { keyCollection.GetByAccountSign(Options.Sign.Value)};
                     }
                 }
 
             else if (Options.Hash.Value) {
-                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmID.SHA_2_512);
+                cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
                 }
 
             return cryptoParameters;

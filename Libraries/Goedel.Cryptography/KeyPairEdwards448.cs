@@ -59,9 +59,9 @@ namespace Goedel.Cryptography {
                     byte[] key,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
 
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed448);
             base.KeySecurity = keySecurity;
             KeyUses = keyUses;
             if (keySecurity == KeySecurity.Public) {
@@ -95,8 +95,8 @@ namespace Goedel.Cryptography {
         public KeyPairEd448(byte[] ikm, byte[] salt,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) :
-                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 448, CryptoAlgorithmID.HMAC_SHA_2_512), keySecurity, keyUses, cryptoAlgorithmID) {
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) :
+                    this(KeyDeriveHKDF.Derive(ikm, salt, null, 448, CryptoAlgorithmId.HMAC_SHA_2_512), keySecurity, keyUses, cryptoAlgorithmID) {
             }
 
 
@@ -113,8 +113,8 @@ namespace Goedel.Cryptography {
                     CurveEdwards448Private privateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-            CryptoAlgorithmID = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmID.Ed448);
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
+            CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed448);
             PrivateKey = privateKey;
             PublicKey = privateKey.Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyEd448(PublicKey.Encoding);
@@ -130,12 +130,15 @@ namespace Goedel.Cryptography {
         /// <param name="publicKey">The public key value</param>
         /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
         /// in signature operations.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         public KeyPairEd448(IKeyAdvancedPublic publicKey,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) {
-            CryptoAlgorithmID = cryptoAlgorithmID == CryptoAlgorithmID.Default ?
-                CryptoAlgorithmID.Ed448 : cryptoAlgorithmID;
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default,
+                    KeyUses keyUses = KeyUses.Any) {
+            CryptoAlgorithmId = cryptoAlgorithmID == CryptoAlgorithmId.Default ?
+                CryptoAlgorithmId.Ed448 : cryptoAlgorithmID;
             this.PublicKey = publicKey as CurveEdwards448Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyEd448(this.PublicKey.Encoding);
+            KeyUses = keyUses;
             }
 
         /// <summary>
@@ -148,7 +151,7 @@ namespace Goedel.Cryptography {
         public static KeyPairEd448 Generate(
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
-                    CryptoAlgorithmID cryptoAlgorithmID = CryptoAlgorithmID.Default) =>
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) =>
             new KeyPairEd448(Platform.GetRandomBits(448), keyType, keyUses, cryptoAlgorithmID);
 
 
@@ -169,9 +172,11 @@ namespace Goedel.Cryptography {
         /// Factory method to produce a key pair from implementation public key parameters
         /// </summary>
         /// <param name="publicKey">The public key</param>
+        /// <param name="keyUses">The permitted key uses.</param>
         /// <returns>The key pair created.</returns>
-        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey) =>
-            new KeyPairEd448((CurveEdwards448Public)publicKey);
+        public override KeyPairAdvanced KeyPair(IKeyAdvancedPublic publicKey,
+                    KeyUses keyUses = KeyUses.Any) =>
+            new KeyPairEd448((CurveEdwards448Public)publicKey, keyUses: keyUses);
 
         /// <summary>
         /// Returns a new KeyPair instance which only has the public values.
@@ -235,7 +240,7 @@ namespace Goedel.Cryptography {
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(byte[] encryptedKey,
             KeyPair ephemeral = null,
-            CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             KeyAgreementResult partial = null, byte[] salt = null) {
 
             var KeyPairEd448 = ephemeral as KeyPairEd448;
@@ -257,12 +262,12 @@ namespace Goedel.Cryptography {
         /// <returns>The signature data</returns>
         public override byte[] SignHash(
                 byte[] data,
-                CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
             Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-            algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
-            if (algorithmID == CryptoAlgorithmID.Ed448ph) {
+            algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
+            if (algorithmID == CryptoAlgorithmId.Ed448ph) {
                 using var shake256 = new SHAKE256(64 * 8);
                 data = shake256.ComputeHash(data);
                 }
@@ -281,7 +286,7 @@ namespace Goedel.Cryptography {
         /// <param name="context">Optional context value.</param>
         /// <returns>The signature context.</returns>
         public override ThresholdSignatureEdwards SignHashThreshold(byte[] data,
-        CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+        CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
             byte[] context = null) => new ThresholdSignatureEdwards448(PrivateKey);
 
 
@@ -297,12 +302,12 @@ namespace Goedel.Cryptography {
         public override bool VerifyHash(
             byte[] digest,
             byte[] signature,
-            CryptoAlgorithmID algorithmID = CryptoAlgorithmID.Default,
+            CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
             Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
-            algorithmID = algorithmID == CryptoAlgorithmID.Default ? CryptoAlgorithmID : algorithmID;
-            if (algorithmID == CryptoAlgorithmID.Ed448ph) {
+            algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
+            if (algorithmID == CryptoAlgorithmId.Ed448ph) {
                 using var shake256 = new SHAKE256(64 * 8);
                 digest = shake256.ComputeHash(digest);
                 }

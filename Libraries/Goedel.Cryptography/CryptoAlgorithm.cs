@@ -35,7 +35,7 @@ namespace Goedel.Cryptography {
     /// <returns>The cryptographic provider created.</returns>
     public delegate CryptoProvider CryptoProviderFactoryDelegate(
                 int KeySize = 0,
-                CryptoAlgorithmID Bulk = CryptoAlgorithmID.Default);
+                CryptoAlgorithmId Bulk = CryptoAlgorithmId.Default);
 
 
     ///// <summary>
@@ -58,7 +58,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The enumerated cryptographic algorithm identifier.
         /// </summary>
-        public CryptoAlgorithmID CryptoAlgorithmID { get; }
+        public CryptoAlgorithmId CryptoAlgorithmID { get; }
 
         /// <summary>
         /// .NET Framework name
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography {
         /// <param name="CryptoProviderFactory">Delegate returning the default crypto provider.</param>
         /// <param name="KeySize">Default algorithm key size.</param>
         public CryptoAlgorithm(
-                    CryptoAlgorithmID CryptoAlgorithmID,
+                    CryptoAlgorithmId CryptoAlgorithmID,
             CryptoAlgorithmClasses AlgorithmClass,
             CryptoProviderFactoryDelegate CryptoProviderFactory,
             int KeySize = 0) {
@@ -115,7 +115,7 @@ namespace Goedel.Cryptography {
 
             Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Encryption,
                     CryptographicException.Throw);
-            return CryptoProviderFactory(KeySize, CryptoAlgorithmID.NULL) as
+            return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
                 CryptoProviderEncryption;
             }
 
@@ -129,7 +129,7 @@ namespace Goedel.Cryptography {
             KeySize = KeySize == 0 ? this.KeySize : KeySize;
             Assert.True(AlgorithmClass == CryptoAlgorithmClasses.MAC,
                     CryptographicException.Throw);
-            return CryptoProviderFactory(KeySize, CryptoAlgorithmID.NULL) as
+            return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
                 CryptoProviderAuthentication;
             }
 
@@ -142,7 +142,7 @@ namespace Goedel.Cryptography {
             OutputSize = OutputSize == 0 ? this.KeySize : OutputSize;
             Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
-            return CryptoProviderFactory(0, CryptoAlgorithmID.NULL) as
+            return CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as
                 CryptoProviderDigest;
             }
 
@@ -156,7 +156,7 @@ namespace Goedel.Cryptography {
         public byte[] Process(byte[] Buffer, byte[] Key = null) {
             Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
-            var Provider = CryptoProviderFactory(0, CryptoAlgorithmID.NULL) as CryptoProviderDigest;
+            var Provider = CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as CryptoProviderDigest;
             Assert.NotNull(Provider, CryptographicException.Throw);
             var Result = Provider.Process(Buffer, Key);
             return Result.Integrity;

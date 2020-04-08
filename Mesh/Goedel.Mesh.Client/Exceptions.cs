@@ -358,4 +358,248 @@ namespace Goedel.Mesh.Client {
         }
 
 
+    /// <summary>
+    /// The connection request did not complete
+    /// </summary>
+    [Serializable]
+	public class Connection : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "Connection did not complete"
+        /// </summary>		
+		public Connection () : base ("Connection did not complete") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "Connection did not complete"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public Connection (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public Connection (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new Connection(Reason as string);
+				}
+			else {
+				return new Connection();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The connection request was refused
+    /// </summary>
+    [Serializable]
+	public class ConnectionRefused : Connection {
+
+		/// <summary>
+        /// Construct instance for exception "The connection request was refused"
+        /// </summary>		
+		public ConnectionRefused () : base ("The connection request was refused") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The connection request was refused"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ConnectionRefused (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionRefused (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ConnectionRefused(Reason as string);
+				}
+			else {
+				return new ConnectionRefused();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The connection request is still pending
+    /// </summary>
+    [Serializable]
+	public class ConnectionPending : Connection {
+
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+		public ConnectionPending () : base ("The connection request is still pending") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ConnectionPending (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionPending (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ConnectionPending(Reason as string);
+				}
+			else {
+				return new ConnectionPending();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The connection request is still pending
+    /// </summary>
+    [Serializable]
+	public class ConnectionExpired : Connection {
+
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+		public ConnectionExpired () : base ("The connection request is still pending") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ConnectionExpired (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionExpired (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ConnectionExpired(Reason as string);
+				}
+			else {
+				return new ConnectionExpired();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// The connection request is still pending
+    /// </summary>
+    [Serializable]
+	public class ConnectionAccountUnknown : Connection {
+
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+		public ConnectionAccountUnknown () : base ("The connection request is still pending") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The connection request is still pending"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public ConnectionAccountUnknown (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public ConnectionAccountUnknown (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new ConnectionAccountUnknown(Reason as string);
+				}
+			else {
+				return new ConnectionAccountUnknown();
+				}
+            }
+        }
+
+
 	}
