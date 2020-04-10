@@ -55,8 +55,6 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
             device1.Dispatch($"mesh create /service={accountA}");
-
-            // Fail: Because the Account is not being added to the CatalgedDevice as it should
             device1.Dispatch($"account sync");
 
 
@@ -71,7 +69,7 @@ namespace Goedel.XUnit {
             device1.Dispatch($"device accept {witness}");
             device2.Dispatch($"device complete");
 
-
+            // Fail: The saved context is still of type MeshPending, not a standard account.
             device2.Dispatch($"account sync");
 
             device3.Dispatch($"device request {accountA}  /new");

@@ -454,7 +454,7 @@
             <param name="dareMessage">The message.</param>
             <returns>Identifier of the message posted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostLocal(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostSelf(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post message to the local pickup spool.
             </summary>
@@ -463,12 +463,12 @@
             <param name="dareMessage">The message.</param>
             <returns>Identifier of the message posted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostRemote(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePostOther(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post message to a remote user.
             </summary>
             <param name="jpcSession">The session connection data.</param>
-            <param name="account">The verified sending account.</param>
+            <param name="senderAccount">The verified sending account.</param>
             <param name="accounts">The account to which the message is directed.</param>
             <param name="dareMessage">The message.</param>
             <returns>Identifier of the message posted.</returns>

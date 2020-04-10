@@ -4,7 +4,7 @@ using Goedel.Mesh.Client;
 using Goedel.Protocol;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-
+using Goedel.IO;
 using System;
 using System.Collections.Generic;
 
@@ -78,13 +78,44 @@ namespace Goedel.XUnit {
             response.Success().AssertTrue();
             }
 
+
+        void CheckHostCatalog(MeshMachineTest meshMachine, ref long length) {
+            var filename = meshMachine.FileNameHost;
+
+            using var stream = filename.OpenFileReadShared();
+
+            Console.WriteLine($"Stream {stream.Length}");
+
+            (stream.Length > length).AssertTrue();
+            length = stream.Length;
+
+            return;
+            }
+
+
+        // need to ensure that all updates to the host catalog are being properly written out to disk.
+
+
         [Fact]
         public void MeshServiceFull() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
+            long deviceLength1 = 0;
+            long deviceLength2 = 0;
+
+            machineAdmin.CheckHostCatalog(ref deviceLength1);
+
+
             var contextMeshAdmin = machineAdmin.MeshHost.CreateMesh("main");
+
+            machineAdmin.CheckHostCatalog(ref deviceLength1);
+
             var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
+            // Failure at this point because the profile is not written out after creating the account.
+
+            machineAdmin.CheckHostCatalog(ref deviceLength1);
+
 
             // Perform some offline operations on the account catalogs
             var contactCatalog = contextAccountAlice_1_a.GetCatalogContact();
@@ -92,6 +123,9 @@ namespace Goedel.XUnit {
 
             // Check we can read the data from a second context
             var contextAccountAlice_1_b = machineAdmin.GetContextAccount();
+
+
+            // fails because the contextAccountAlice_1_b is null because the profile didn't get written out.
             Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
             // Check that we can read back from the data stored on disk.
@@ -106,8 +140,12 @@ namespace Goedel.XUnit {
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+            machineAdmin.CheckHostCatalog(ref deviceLength2); // initial
+
             var PIN = contextAccountAlice_1_a.GetPIN();
             var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.PIN);
+            machineAdmin.CheckHostCatalog(ref deviceLength2); // Connect pending
+
 
             // Still have to process of course to get the data
             var sync = contextAccountAlice_1_a.Sync();
@@ -115,6 +153,8 @@ namespace Goedel.XUnit {
             contextAccountAlice_1_a.Process(connectRequest);
 
             contextAccountAlice_2.Complete();
+            machineAdmin.CheckHostCatalog(ref deviceLength2); // Complete
+
 
             // Do some catalog updates and check the results
             var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();

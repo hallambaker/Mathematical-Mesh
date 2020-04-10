@@ -218,14 +218,6 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        ///// <summary>
-        ///// Accept device connection request.
-        ///// </summary>
-        ///// <param name="request"></param>
-        //public void Accept(AcknowledgeConnection request) {
-        //    var device = CreateCataloguedDevice(request.MessageConnectionRequest.ProfileDevice);
-        //    }
-
         #endregion
 
 
@@ -248,6 +240,7 @@ namespace Goedel.Mesh.Client {
 
             var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
             UpdateDevice();
+            MeshHost.Register(CatalogedAdmin);
 
             var contextAccount = new ContextAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
 

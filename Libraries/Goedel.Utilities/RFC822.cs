@@ -74,25 +74,25 @@ namespace Goedel.Utilities {
             }
 
 
-        /// <summary>
-        /// Extract the Account and Portal components from the specified AccountID.
-        /// </summary>
-        /// <param name="AccountID">The AccountID to split.</param>
-        /// <param name="Service">The portal address.</param>
-        /// <param name="Account">The account name.</param>
-        public static void SplitAccountID(this string AccountID,
-            out string Service,
-            out string Account) {
-            Account = null;
-            Service = null;
-            int At = AccountID.LastIndexOf('@');
-            if (At < 0) {
-                return;
-                }
+        ///// <summary>
+        ///// Extract the Account and Portal components from the specified AccountID.
+        ///// </summary>
+        ///// <param name="AccountID">The AccountID to split.</param>
+        ///// <param name="Service">The portal address.</param>
+        ///// <param name="Account">The account name.</param>
+        //public static void SplitAccountID(this string AccountID,
+        //    out string Service,
+        //    out string Account) {
+        //    Account = null;
+        //    Service = null;
+        //    int At = AccountID.LastIndexOf('@');
+        //    if (At < 0) {
+        //        return;
+        //        }
 
-            Account = AccountID.Substring(0, At);
-            Service = AccountID.Substring(At + 1);
-            }
+        //    Account = AccountID.Substring(0, At);
+        //    Service = AccountID.Substring(At + 1);
+        //    }
 
         /// <summary>
         /// Parse a string that may contain an account identifier to extract the service and 
@@ -115,6 +115,24 @@ namespace Goedel.Utilities {
             Account = Identifier.Substring(0, At);
             Service = Identifier.Substring(At + 1);
             }
+
+
+        /// <summary>
+        /// Parse a string that may contain an account identifier to extract the service and 
+        /// account components.
+        /// </summary>
+        /// <param name="Identifier">The AccountID to split.</param>
+        public static string GetService(this string Identifier) {
+
+            int At = Identifier.LastIndexOf('@');
+            if (At < 0) {
+                return Identifier;
+                }
+
+
+            return Identifier.Substring(At + 1);
+            }
+
         }
 
     }

@@ -66,10 +66,10 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Callback to authenticate the account.
         /// </summary>
-        /// <param name="serviceID">The account name to be authenticated.</param>
+        /// <param name="accountAddress">The account name to be authenticated.</param>
         /// <returns>True if the account name is verified, otherwise false.</returns>
-        public virtual VerifiedAccount VerifyAccount(string serviceID) =>
-            new VerifiedAccount() { ServiceID = serviceID };
+        public virtual VerifiedAccount VerifyAccount(string accountAddress) =>
+            new VerifiedAccount() { AccountAddress = accountAddress };
 
         }
 
@@ -81,7 +81,11 @@ namespace Goedel.Protocol {
         /// <summary>
         /// The account identifier.
         /// </summary>
-        public string ServiceID;
+        public string AccountAddress;
+
+
+
+
 
         }
 

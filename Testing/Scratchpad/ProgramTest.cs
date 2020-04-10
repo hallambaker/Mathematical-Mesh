@@ -28,11 +28,19 @@ namespace Scratchpad {
 
 
             // This test is failing because the message from Bob isn't passed to Alice.
-            TestService.Test().MeshMessageContact();
+            //TestService.Test().MeshMessageContact();
             //TestService.Test().MeshMessageConfirm();
 
-            //TestService.Test().MeshServiceFull();
+            TestService.Test().MeshServiceFull();
 
+
+            // Shell connect tests
+            //ShellTests.Test().TestProfileConnect();
+            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestProfileConnectAuthAdmin();
+            //ShellTests.Test().TestProfileConnectAuthAll();
+            //ShellTests.Test().TestProfileConnectEARL();
+            //ShellTests.Test().TestProfileConnectPin();
 
 
 
@@ -47,13 +55,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestFileSignEncrypt();
 
 
-            // Shell connect tests
-            //ShellTests.Test().TestProfileConnect();
-            //ShellTests.Test().TestProfileConnectAuth();
-            //ShellTests.Test().TestProfileConnectAuthAdmin();
-            //ShellTests.Test().TestProfileConnectAuthAll();
-            //ShellTests.Test().TestProfileConnectEARL();
-            //ShellTests.Test().TestProfileConnectPin();
+
 
             // The whole Escrow thing
             //ShellTests.Test().TestProfileEscrow();

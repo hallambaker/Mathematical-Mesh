@@ -409,7 +409,15 @@ namespace Goedel.Mesh.Client {
 			if (SignatureKey != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("SignatureKey", 1);
-					SignatureKey.Serialize (_writer, false);
+					// expand this to a tagged structure
+					//SignatureKey.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(SignatureKey._Tag, 1);
+						bool firstinner = true;
+						SignatureKey.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
 				}
 			if (DeviceUDF != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -450,10 +458,7 @@ namespace Goedel.Mesh.Client {
 			
 			switch (tag) {
 				case "SignatureKey" : {
-					// An untagged structure
-					SignatureKey = new Key ();
-					SignatureKey.Deserialize (jsonReader);
- 
+					SignatureKey = Key.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "DeviceUDF" : {

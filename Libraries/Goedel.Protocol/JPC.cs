@@ -134,7 +134,7 @@ namespace Goedel.Protocol {
         /// VerifiedAccount instance describing the verified account details. 
         /// </summary>
         public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
-            new VerifiedAccount() { ServiceID = ServiceID };
+            new VerifiedAccount() { AccountAddress = ServiceID };
 
 
         /// <summary>

@@ -101,17 +101,17 @@ namespace Goedel.Mesh.Server {
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
                 messageConnectionRequestClient.ClientNonce);
 
-            var messageID = UDF.Nonce();
+            //var messageID = UDF.Nonce();
             //Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
 
             var messageConnectionRequest = new AcknowledgeConnection() {
                 EnvelopedRequestConnection = messageConnectionRequestClient.DareEnvelope,
                 ServerNonce = serviceNonce,
                 Witness = witness,
-                MessageID = messageID
+                MessageID = witness
                 };
 
-            Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageID}");
+            Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageConnectionRequest.MessageID}");
             Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseID()}");
 
 
@@ -272,7 +272,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The account to be deleted.</param> 
         public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
             lock (Container) {
-                return Container.Delete(account.ServiceID);
+                return Container.Delete(account.AccountAddress);
                 }
             }
 
@@ -287,8 +287,8 @@ namespace Goedel.Mesh.Server {
         public string MessagePost(
                     JpcSession jpcSession, 
                     VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => 
-            accounts == null ? MessagePostLocal(jpcSession, account, dareMessage) :
-                 MessagePostRemote(jpcSession, account, accounts, dareMessage);
+            accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
+                 MessagePostOther(jpcSession, account, accounts, dareMessage);
 
         /// <summary>
         /// Post message to the local pickup spool.
@@ -297,7 +297,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="account">The verified sending account.</param>
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
-        public string MessagePostLocal(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
+        public string MessagePostSelf(JpcSession jpcSession, VerifiedAccount account, DareEnvelope dareMessage) {
 
             var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
 
@@ -315,22 +315,46 @@ namespace Goedel.Mesh.Server {
         /// Post message to a remote user.
         /// </summary>
         /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The verified sending account.</param>
+        /// <param name="senderAccount">The verified sending account.</param>
         /// <param name="accounts">The account to which the message is directed.</param>
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
-        public string MessagePostRemote(
+        public string MessagePostOther(
                 JpcSession jpcSession,
-                VerifiedAccount account,
+                VerifiedAccount senderAccount,
                 List<string> accounts,
                 DareEnvelope dareMessage) {
+
+            var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
+            identifier.AssertNotNull(InvalidMessageID.Throw, "Messages must have an identifier");
+
+            var senderService = senderAccount.AccountAddress.GetService();
+
+            foreach (var recipient in accounts) {
+                var recipientService = recipient.GetService();
+                if (recipientService == senderService) {
+                    // Is the message for delivery to a local user?
+                    MessagePostLocal(recipient, dareMessage);
+                    }
+                else {
+                    // Post to the outbound spool
+                    MessagePostRemote(recipient, dareMessage);
+                    }
+                }
+            return identifier;
+            }
+
+        bool MessagePostLocal(string recipient, DareEnvelope dareMessage) {
+
+            var recipientAccount = GetAccountUnverified(recipient);
+            recipientAccount.Post(dareMessage);
+
+            return true;
+            }
+
+        bool MessagePostRemote(string recipient, DareEnvelope dareMessage) {
+
             throw new NYI();
-
-            // Is the message for delivery to a local user?
-
-
-            // Post to the outbound spool
-
             }
 
         /// <summary>
@@ -359,7 +383,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="verifiedAccount">The account for which the data is requested.</param>
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, JpcSession jpcSession) {
-            var accountEntry = GetAccountLocked(verifiedAccount.ServiceID);
+            var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
             Assert.NotNull(accountEntry);
 
             //using (var catalogDevice = new CatalogDevice(accountEntry.Directory, create:false)) {

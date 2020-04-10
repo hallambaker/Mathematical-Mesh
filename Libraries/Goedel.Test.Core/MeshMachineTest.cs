@@ -3,6 +3,7 @@ using Goedel.Cryptography.Core;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
+using Goedel.IO;
 
 using System;
 using System.Collections.Generic;
@@ -178,6 +179,22 @@ namespace Goedel.Test.Core {
             dictionaryKeyPairByUDF.TryGetValue(UDF, out var Result);
             return Result;
             }
+
+
+        public void CheckHostCatalog( ref long length) {
+            var filename = FileNameHost;
+
+            using var stream = filename.OpenFileReadShared();
+
+            Console.WriteLine($"Stream {stream.Length}");
+
+            (stream.Length > length).AssertTrue();
+            length = stream.Length;
+
+            return;
+            }
+
+
 
         }
 
