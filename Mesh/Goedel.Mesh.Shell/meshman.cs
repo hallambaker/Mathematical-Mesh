@@ -2994,6 +2994,7 @@ namespace Goedel.Mesh.Shell {
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
+			new Flag (),
 			new Flag ()			} ;
 
 
@@ -3045,6 +3046,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[4].Parameter (value);
 			}
+		/// <summary>Field accessor for option [auto]</summary>
+		public virtual Flag AutoApprove {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _AutoApprove {
+			set => _Data[5].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -3087,6 +3097,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 4,
 					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AutoApprove", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 5,
+					Key = "auto"
 					}
 				}
 			};

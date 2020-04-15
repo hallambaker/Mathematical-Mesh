@@ -286,15 +286,19 @@ namespace Goedel.Mesh.Test {
 
 
         public void Connect(TestCLI newDevice, string account) {
-            var result = Dispatch($"device pin") as ResultPIN;
+            var result = Dispatch($"account pin") as ResultPIN;
             var pin = result.MessagePIN.PIN;
             newDevice.Dispatch($"device request {account} /pin {pin}");
-            Dispatch($"profile sync");
-            newDevice.Dispatch($"profile sync");
+            Dispatch($"account sync /auto");
+
+            newDevice.Dispatch($"device complete");
+            newDevice.Dispatch($"account sync");
 
             }
 
 
+
+        public void CheckHostCatalogExtended() => Shell.MeshMachineTest.CheckHostCatalogExtended();
         }
 
 

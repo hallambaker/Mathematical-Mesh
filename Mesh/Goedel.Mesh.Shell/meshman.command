@@ -269,6 +269,8 @@
 			Brief "Synchronize local copies of Mesh profiles with the server"
 			Include AccountOptions
 			Include Reporting
+			Option AutoApprove "auto" Flag
+
 
 		Command AccountRegister "register"
 			Brief "Register existing profile at a new portal"

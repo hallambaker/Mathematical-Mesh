@@ -696,11 +696,54 @@ namespace Goedel.Mesh.Client {
                 count += UpdateStore(update);
                 }
 
+            // At this point we want to look at all the pending messages and see if there
+            // are any PIN authenticated auto-executing messages.
+
+
 
             // TBS: If we have synchronized the catalogs, upload cached offline updates here.
 
             return count;
             }
+
+
+        // Tuesday - work out mechanism to dump out the message spool and check it!
+
+        /// <summary>
+        /// Process automatic actions.
+        /// </summary>
+        public void ProcessAutomatics() {
+
+            var messages = new List<Message>();
+            var completed = new Dictionary<string, Message>();
+
+            foreach (var message in GetSpoolInbound().Select (0, true)) {
+                Console.WriteLine($"{message.Header.EnvelopeID}");
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    switch (meshMessage) {
+                        case MessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                }
+                            break;
+                            }
+                        default: {
+                            messages.Add(meshMessage);
+
+
+
+                            break;
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+
+
 
         /// <summary>
         /// Obtain the status of the remote store.

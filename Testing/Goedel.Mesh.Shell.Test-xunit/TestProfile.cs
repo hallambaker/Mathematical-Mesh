@@ -55,10 +55,15 @@ namespace Goedel.XUnit {
             var device3 = GetTestCLI("Device3");
 
             device1.Dispatch($"mesh create /service={accountA}");
+
+            device1.CheckHostCatalogExtended();
+
             device1.Dispatch($"account sync");
 
 
             device2.Dispatch($"device request {accountA}");
+            device2.CheckHostCatalogExtended();
+
             device2.Dispatch($"account sync", fail: true);
 
             device1.Dispatch($"account sync");
@@ -69,7 +74,8 @@ namespace Goedel.XUnit {
             device1.Dispatch($"device accept {witness}");
             device2.Dispatch($"device complete");
 
-            // Fail: The saved context is still of type MeshPending, not a standard account.
+            device2.CheckHostCatalogExtended();
+
             device2.Dispatch($"account sync");
 
             device3.Dispatch($"device request {accountA}  /new");
@@ -92,7 +98,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"profile create {accountA} ");
+            device1.Dispatch($"mesh create /service={accountA}");
 
             device1.Connect(device2, accountA);
             device1.Connect(device3, accountA);

@@ -604,6 +604,11 @@
             </summary>
             <returns>The number of items synchronized</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatics">
+            <summary>
+            Process automatic actions.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Status">
             <summary>
             Obtain the status of the remote store.
@@ -958,9 +963,8 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMesh.UpdateDevice">
             <summary>
-            Update <paramref name="catalogedDevice"/> in the Mesh context.
+            Update the persisted <see cref="F:Goedel.Mesh.Client.ContextMesh.CatalogedMachine"/>.
             </summary>
-            <param name="catalogedDevice">The device to update.</param>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextMeshPending">
             <summary>
@@ -1522,7 +1526,7 @@
             <param name="key">The UDF or name to resolve.</param>
             <returns>The context, if a matching context is found. Otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Register(Goedel.Mesh.Client.HostCatalogItem,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.Register(Goedel.Mesh.Client.HostCatalogItem,Goedel.Mesh.Client.ContextMesh,System.Boolean)">
             <summary>
             Register <paramref name="catalogItem"/> in the host catalog.
             </summary>

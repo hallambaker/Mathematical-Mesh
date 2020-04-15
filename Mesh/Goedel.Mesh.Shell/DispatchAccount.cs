@@ -69,6 +69,11 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var result = contextAccount.Sync();
 
+            if (Options.AutoApprove.Value) {
+                contextAccount.ProcessAutomatics();
+                }
+
+
             return new ResultSync() {
                 Success = true,
                 Fetched = result

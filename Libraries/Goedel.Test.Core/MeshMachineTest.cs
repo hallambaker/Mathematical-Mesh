@@ -180,16 +180,16 @@ namespace Goedel.Test.Core {
             return Result;
             }
 
-
-        public void CheckHostCatalog( ref long length) {
+        long checkLength = 0;
+        public void CheckHostCatalogExtended() {
             var filename = FileNameHost;
 
             using var stream = filename.OpenFileReadShared();
 
             Console.WriteLine($"Stream {stream.Length}");
 
-            (stream.Length > length).AssertTrue();
-            length = stream.Length;
+            (stream.Length > checkLength).AssertTrue();
+            checkLength = stream.Length;
 
             return;
             }

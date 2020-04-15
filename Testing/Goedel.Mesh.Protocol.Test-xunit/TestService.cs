@@ -101,20 +101,18 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
 
-            long deviceLength1 = 0;
-            long deviceLength2 = 0;
 
-            machineAdmin.CheckHostCatalog(ref deviceLength1);
+            machineAdmin.CheckHostCatalogExtended();
 
 
             var contextMeshAdmin = machineAdmin.MeshHost.CreateMesh("main");
 
-            machineAdmin.CheckHostCatalog(ref deviceLength1);
+            machineAdmin.CheckHostCatalogExtended();
 
             var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
             // Failure at this point because the profile is not written out after creating the account.
 
-            machineAdmin.CheckHostCatalog(ref deviceLength1);
+            machineAdmin.CheckHostCatalogExtended();
 
 
             // Perform some offline operations on the account catalogs
@@ -140,20 +138,21 @@ namespace Goedel.XUnit {
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            machineAdmin.CheckHostCatalog(ref deviceLength2); // initial
+            machineAlice2.CheckHostCatalogExtended(); // initial
 
             var PIN = contextAccountAlice_1_a.GetPIN();
             var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.PIN);
-            machineAdmin.CheckHostCatalog(ref deviceLength2); // Connect pending
-
+            machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
             // Still have to process of course to get the data
             var sync = contextAccountAlice_1_a.Sync();
+            
+
             var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
             contextAccountAlice_1_a.Process(connectRequest);
 
             contextAccountAlice_2.Complete();
-            machineAdmin.CheckHostCatalog(ref deviceLength2); // Complete
+            machineAlice2.CheckHostCatalogExtended(); // Complete
 
 
             // Do some catalog updates and check the results

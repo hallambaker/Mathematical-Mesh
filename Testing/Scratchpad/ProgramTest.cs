@@ -31,7 +31,7 @@ namespace Scratchpad {
             //TestService.Test().MeshMessageContact();
             //TestService.Test().MeshMessageConfirm();
 
-            TestService.Test().MeshServiceFull();
+            //TestService.Test().MeshServiceFull();
 
 
             // Shell connect tests
@@ -40,7 +40,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectAuthAdmin();
             //ShellTests.Test().TestProfileConnectAuthAll();
             //ShellTests.Test().TestProfileConnectEARL();
-            //ShellTests.Test().TestProfileConnectPin();
+            ShellTests.Test().TestProfileConnectPin();
 
 
 

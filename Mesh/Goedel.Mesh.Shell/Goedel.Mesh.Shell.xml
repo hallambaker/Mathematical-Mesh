@@ -1216,6 +1216,9 @@
         <member name="P:Goedel.Mesh.Shell._AccountSync.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountSync.AutoApprove">
+            <summary>Field accessor for option [auto]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._AccountRegister.NewAccountID">
             <summary>Field accessor for parameter []</summary>
         </member>

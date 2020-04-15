@@ -96,21 +96,20 @@ namespace Goedel.Mesh.Client {
 
             // Add this device to the profile as an administrator device by adding the necessary activation.
             var activationDevice = new ActivationDevice(profileDevice, meshHost.KeyCollection);
-            var adminEntry = AddAdministrator(meshHost, profileMaster, profileDevice, activationDevice, algorithmSign);
+            var catalogedAdmin = AddAdministrator(meshHost, profileMaster, profileDevice, activationDevice, algorithmSign);
 
             // Create an administration context
-            var result = new ContextMeshAdmin(meshHost, adminEntry);
+            var contextMeshAdmin = new ContextMeshAdmin(meshHost, catalogedAdmin);
 
 
             // Use the administration context to create a connection for this device and add to the record
-            var catalogedDevice = result.CreateCataloguedDevice(profileMaster, profileDevice, activationDevice);
-            adminEntry.CatalogedDevice = catalogedDevice;
+            var catalogedDevice = contextMeshAdmin.CreateCataloguedDevice(profileMaster, profileDevice, activationDevice);
+            catalogedAdmin.CatalogedDevice = catalogedDevice;
 
-            result.UpdateDevice();
 
             // Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
-            meshHost.Register(adminEntry);
-            return result;
+            meshHost.Register(catalogedAdmin, contextMeshAdmin);
+            return contextMeshAdmin;
             }
 
 
@@ -239,13 +238,13 @@ namespace Goedel.Mesh.Client {
                 algorithmEncrypt, algorithmSign);
 
             var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
-            UpdateDevice();
-            MeshHost.Register(CatalogedAdmin);
 
             var contextAccount = new ContextAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.AddDevice(CatalogedDevice);
+
+            MeshHost.Register(CatalogedAdmin, this);
 
             return contextAccount;
             }

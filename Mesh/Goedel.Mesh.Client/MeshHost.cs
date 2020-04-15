@@ -101,9 +101,10 @@ namespace Goedel.Mesh.Client {
         ///<summary>Dictionary mapping mesh local name to Context.</summary>
         protected Dictionary<string, ContextMesh> DictionaryLocalContextMesh = new Dictionary<string, ContextMesh>();
 
-        public void Register(ContextMesh contextMesh) {
+        void Register(ContextMesh contextMesh) {
             var machine = contextMesh.CatalogedMachine;
-            DictionaryUDFContextMesh.AddSafe(machine.ID, contextMesh);
+            DictionaryUDFContextMesh.Remove(machine.ID);
+            DictionaryUDFContextMesh.Add(machine.ID, contextMesh);
             if (machine.Local != null) {
                 DictionaryLocalContextMesh.AddSafe(machine.Local, contextMesh);
                 }
@@ -133,11 +134,17 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogItem">The item to be created.</param>
         /// <param name="create">If true, a new item will be created if it does not
         /// already exist.</param>
-        public virtual void Register(HostCatalogItem catalogItem, bool create = true) {
+        public void Register(HostCatalogItem catalogItem, ContextMesh context, bool create = true) {
+            
+            // persist the permanent record.
             var machine = ContainerHost.Update(catalogItem, create);
             if (machine.JsonObject is CatalogedMachine catalogedMachine) {
                 Register(catalogedMachine);
                 }
+
+            // register the dynamic context
+            Register(context);
+
             }
 
 

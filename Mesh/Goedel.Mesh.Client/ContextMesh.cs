@@ -128,13 +128,10 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Update <paramref name="catalogedDevice"/> in the Mesh context.
+        /// Update the persisted <see cref="CatalogedMachine"/>.
         /// </summary>
-        /// <param name="catalogedDevice">The device to update.</param>
         public void UpdateDevice() {
-
-            //CatalogedMachine.CatalogedDevice = catalogedDevice;
-            MeshHost.Register(this);
+            MeshHost.Register(CatalogedMachine, this);
             }
 
         }
@@ -254,7 +251,7 @@ namespace Goedel.Mesh.Client {
 
             // create the pending connection here
 
-            var connection = new CatalogedPending() {
+            var catalogedPending = new CatalogedPending() {
                 ID = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
@@ -263,10 +260,12 @@ namespace Goedel.Mesh.Client {
                 EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };
 
-            meshHost.Register(connection);
+            var context= new ContextMeshPending(meshHost, catalogedPending);
 
-            return new ContextMeshPending(meshHost, connection);
+            // persist 
+            meshHost.Register(catalogedPending, context);
 
+            return context;
             }
 
         /// <summary>
@@ -320,18 +319,16 @@ namespace Goedel.Mesh.Client {
                 CatalogedDevice = catalogedEntry,
                 EnvelopedProfileMaster = profileMaster.DareEnvelope
                 };
-            MeshHost.Register(catalogedStandard);
 
             // create the context mesh
             var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
 
+            MeshHost.Register(catalogedStandard, contextMesh);
+
             // now create the account context for the account we asked to connect to and initialize
-            var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID);
-
+            var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID); 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
-
             contextAccount.Sync();
-                      
             return contextAccount;
             }
 
