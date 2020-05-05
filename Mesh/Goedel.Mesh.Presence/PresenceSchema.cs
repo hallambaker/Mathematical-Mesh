@@ -58,7 +58,9 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
 		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
 				new Dictionary<string, JSONFactoryDelegate> () {
-			};
+
+			{"AnnounceDeviceRequest", AnnounceDeviceRequest._Factory},
+			{"AnnounceDeviceResponse", AnnounceDeviceResponse._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -109,6 +111,16 @@ namespace Goedel.Mesh.Presence {
 		protected virtual MeshPresence JPCInterface {get; set;}
 
 
+        /// <summary>
+		/// Base method for implementing the transaction  AnnounceDevice.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object from the service</returns>
+        public virtual AnnounceDeviceResponse AnnounceDevice (
+                AnnounceDeviceRequest request, JpcSession session=null) => 
+						JPCInterface.AnnounceDevice (request, session ?? JpcSession);
+
         }
 
     /// <summary>
@@ -134,6 +146,21 @@ namespace Goedel.Mesh.Presence {
 			JPCRemoteSession = jpcRemoteSession;
 
 
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object</returns>
+        public override AnnounceDeviceResponse AnnounceDevice (
+                AnnounceDeviceRequest request, JpcSession session=null) {
+
+            var responseData = JPCRemoteSession.Post("AnnounceDevice", request);
+            var response = AnnounceDeviceResponse.FromJSON(responseData.JSONReader(), true);
+
+            return response;
+            }
 
 		}
 
@@ -163,6 +190,12 @@ namespace Goedel.Mesh.Presence {
 			JSONObject Response = null;
 
 			switch (token) {
+				case "AnnounceDevice" : {
+					var Request = new AnnounceDeviceRequest();
+					Request.Deserialize (jsonReader);
+					Response = Service.AnnounceDevice (Request, session);
+					break;
+					}
 				default : {
 					throw new Goedel.Protocol.UnknownOperation ();
 					}
@@ -178,5 +211,191 @@ namespace Goedel.Mesh.Presence {
 
 
 		// Transaction Classes
+	/// <summary>
+	///
+	/// Announce the device to the presence service
+	/// </summary>
+	public partial class AnnounceDeviceRequest : MeshRequest {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AnnounceDeviceRequest";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new AnnounceDeviceRequest();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_writer, false, ref _first);
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AnnounceDeviceRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as AnnounceDeviceRequest;
+				}
+		    var Result = new AnnounceDeviceRequest ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Reports the result of the presence request
+	/// </summary>
+	public partial class AnnounceDeviceResponse : MeshResponse {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "AnnounceDeviceResponse";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new AnnounceDeviceResponse();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_writer, false, ref _first);
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new AnnounceDeviceResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as AnnounceDeviceResponse;
+				}
+		    var Result = new AnnounceDeviceResponse ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
 	}
 

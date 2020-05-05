@@ -287,12 +287,6 @@
             <param name="host">The service provider.</param>
             <param name="session">The authentication context.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.AuthenticateToAccount(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="Account"></param>
-        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Hello(Goedel.Protocol.HelloRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Respond with the 'hello' version and encoding info. This request does not 

@@ -134,6 +134,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogItem">The item to be created.</param>
         /// <param name="create">If true, a new item will be created if it does not
         /// already exist.</param>
+        /// <param name="context">The dynamic context that interfaces to the catalog item.</param>
         public void Register(HostCatalogItem catalogItem, ContextMesh context, bool create = true) {
             
             // persist the permanent record.
@@ -172,6 +173,8 @@ namespace Goedel.Mesh.Client {
                 byte[] masterSecret = null,
                 bool? persist = null) {
 
+            localName.Future();
+
             var context = ContextMeshAdmin.CreateMesh(
                     this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
                     masterSecret, persist: persist);
@@ -191,6 +194,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="admin">Enable administration privileges (if available).</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextMesh GetContextMesh(string localName = null, bool admin = true) {
+
+            admin.Future();
+
             var key = localName ?? ContainerHost.DefaultEntry.ID;
             return LocateMesh(key);
             }
@@ -220,8 +226,14 @@ namespace Goedel.Mesh.Client {
                 string PIN = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) =>
-            ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
+
+            algorithmSign.Future();
+            algorithmEncrypt.Future();
+            algorithmAuthenticate.Future();
+
+            return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+            }
 
 
 
@@ -237,6 +249,12 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
                 ) {
             var secret = new SharedSecret(shares);
+            secret.Future();
+            localName.Future();
+            algorithmSign.Future();
+            algorithmEncrypt.Future();
+            algorithmAuthenticate.Future();
+
             throw new NYI();
 
             //return ContextMeshAdmin.RecoverMesh(
@@ -252,6 +270,12 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
+
+            algorithmSign.Future();
+            algorithmEncrypt.Future();
+            algorithmAuthenticate.Future();
+
+
             var contextMeshAdmin = CreateMesh(localName);
             return contextMeshAdmin.CreateAccount(localName);
 

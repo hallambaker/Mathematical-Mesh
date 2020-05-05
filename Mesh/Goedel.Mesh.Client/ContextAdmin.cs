@@ -85,6 +85,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
         /// <param name="profileDevice">The device profile.</param>
         /// <param name="profileMaster">The mesh profile.</param>
+        /// <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
         /// <returns>An administration context instance for the created profile.</returns>
         public static ContextMeshAdmin CreateMesh(
             MeshHost meshHost,
@@ -119,16 +120,17 @@ namespace Goedel.Mesh.Client {
         #region // Add devices
         /// <summary>
         /// Create an administrator catalog entry for the device <paramref name="profileDevice"/> to
-        /// the master profile in the context <paramref name="meshMachine"/>.
+        /// the master profile in the context <paramref name="meshHost"/>.
         /// <para>This is presented as a static method because creation of an administration context
         /// requires a signed AdminEntry to be established before a ContextAdmin can be created for 
         /// the device.</para>
         /// </summary>
-        /// <param name="meshMachine">The cryptographic machine context (persistence stores, etc).</param>
+        /// <param name="meshHost">The cryptographic machine context (persistence stores, etc).</param>
         /// <param name="profileMaster">The master profile to add the device to as an administration device.</param>
         /// <param name="profileDevice">The device profile of the administration device to be added
         /// as the initial administrator.</param>
         /// <param name="activationDevice">The device activation.</param>
+        /// <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
         /// <returns>The catalog entry/</returns>
         static CatalogedAdmin AddAdministrator(
                     MeshHost meshHost,
@@ -229,17 +231,19 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <returns>The created account context.</returns>
         public ContextAccount CreateAccount(
+                string localName,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
-                    string localName,
-            CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
+            localName.Future();
+
 
             var profileAccount = new ProfileAccount(ProfileMesh, KeyCollection,
                 algorithmEncrypt, algorithmSign);
 
             var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
 
-            var contextAccount = new ContextAccount(this, accountEntry, CatalogedDevice.ProfileDevice);
+            var contextAccount = new ContextAccount(this, accountEntry);
 
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.AddDevice(CatalogedDevice);
@@ -300,6 +304,9 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
                 ) {
+
+            profileDevice.Future(); // Hack - is the profile device even needed?
+
 
             // trim the shared secret value to remove leading zeros,
             // the key type, etc.

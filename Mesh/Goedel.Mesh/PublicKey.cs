@@ -39,7 +39,7 @@ namespace Goedel.Mesh {
         /// The cryptolib representation of the Key Pair. This is the point of access
         /// for all cryptolib operations. 
         /// </summary>
-        protected KeyPair keyPair { get; set; }
+        KeyPair keyPair;
 
         /// <summary>
         /// The cryptolib representation of the Key Pair. This is the point of access
@@ -59,7 +59,7 @@ namespace Goedel.Mesh {
                 }
             }
 
-        private Certificate _Certificate;
+        private Certificate certificate;
 
 
         // Hack: Fix this mess PKIX cert key handling
@@ -70,14 +70,14 @@ namespace Goedel.Mesh {
         /// </summary>
         public Certificate Certificate {
             get {
-                if (_Certificate == null) {
-                    _Certificate = null; // NYI Parse X509Certificate to get Certificate 
+                if (certificate == null) {
+                    certificate = null; // NYI Parse X509Certificate to get Certificate 
                     }
-                return _Certificate;
+                return certificate;
                 }
             set {
-                _Certificate = value;
-                X509Certificate = _Certificate.Data;
+                certificate = value;
+                X509Certificate = certificate.Data;
                 }
             }
 
@@ -104,6 +104,10 @@ namespace Goedel.Mesh {
             }
 
 
+        /// <summary>
+        /// Return a <see cref="KeyPair"/> instance for the key parameters.
+        /// </summary>
+        /// <returns>The created key pair.</returns>
         public KeyPair GetKeyPair() {
             if (PrivateParameters != null) {
                 return PrivateParameters.GetKeyPair(KeySecurity.Bound);
@@ -111,7 +115,7 @@ namespace Goedel.Mesh {
             if (PublicParameters != null) {
                 return PublicParameters.GetKeyPair(KeySecurity.Bound);
                 }
-            Assert.Fail(NYI.Throw, "Need to construct from the private parameters.");
+            Assert.Fail(NYI.Throw, "No key parameters specified");
 
             return null;
             }

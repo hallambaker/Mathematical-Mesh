@@ -18,59 +18,6 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Combine the public key value <paramref name="baseKey"/> with a key derrived from
-        /// <paramref name="secret"/> using the UDF salt value specified by <see
-        /// cref="UDFKeyDerrivation"/> and <paramref name="saltSuffix"/>.
-        /// </summary>
-        /// <param name="keyCollection">The key collection to register the 
-        /// generated public key to.</param>
-        /// <param name="baseKey">The base key parameters.</param>
-        /// <param name="keyUses">The key uses the key will be used for.</param>
-        /// <param name="secret">The UDF used to derrive the key.</param>
-        /// <param name="saltSuffix">The salt suffix specifying the particular key
-        /// type.</param>
-        /// <returns>The aggregate public key parameters.</returns>
-        public KeyPairAdvanced Combine(
-                KeyCollection keyCollection,
-                PublicKey baseKey,
-                string secret,
-                KeyUses keyUses,
-                string saltSuffix) {
-
-            // This fails because the basePrivate isn't registered properly.
-            // we need to be able to derive the stuff from the underlying secret.
-            // One thing to check is that the secret seed is even catalogued at all!
-
-            var basePrivate = baseKey.KeyPair as KeyPairAdvanced;
-            
-            var contribution = Cryptography.UDF.DeriveKey(secret, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, basePrivate.CryptoAlgorithmId, saltSuffix) as KeyPairAdvanced;
-
-            var combinedPublic = basePrivate.CombinePublic(contribution);
-
-            return combinedPublic;
-            }
-
-        /// <summary>
-        /// Derrive a key pair contribution to an aggregate key pair.
-        /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist 
-        /// the generated keys. This should be null for an activation key.</param>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="saltSuffix">The salt suffix specifying the particular key
-        /// type.</param>
-        /// <returns>The derrived key pair.</returns>
-        public KeyPair Derive(
-                KeyCollection keyCollection,
-                string secretSeed,
-                string saltSuffix) {
-
-            throw new NYI();
-
-            //return Cryptography.UDF.DeriveKey(secretSeed, keyCollection,
-            //    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
-            }
 
         /// <summary>
         /// Derrive a key pair contribution to an aggregate key pair.
@@ -143,10 +90,16 @@ namespace Goedel.Mesh {
         /// to be verified.</param>
         /// <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         public bool Verify(DareEnvelope envelopedAssertion) {
+            envelopedAssertion.Future();
             "Need to implement pathmath".TaskValidate();
             return false;
             }
 
+        /// <summary>
+        /// Return a UDF private key seed. This may be used to derrive multiple private key pairs.
+        /// </summary>
+        /// <param name="meshMachine">The mesh cryptographic storage.</param>
+        /// <returns>The private key data if found, otherwise null.</returns>
         public PrivateKeyUDF GetPrivateKeyUDF(IMeshMachine meshMachine) =>
             meshMachine.KeyCollection.LocatePrivateKey(UDF) as PrivateKeyUDF;
 
@@ -173,22 +126,22 @@ namespace Goedel.Mesh {
         public Activation() {
             }
 
+        /// <summary>
+        /// The Mech Key Type.
+        /// </summary>
         protected MeshKeyType MeshKeyType;
 
         /// <summary>
         /// Constructor creating a new <see cref="Activation"/> for a profile of type
         /// <paramref name="profile"/>. The property <see cref="ActivationKey"/> is
-        /// calculated from the values <paramref name="udfAlgorithmIdentifier"/> and 
-        /// <paramref name="salt"/>. If the value <paramref name="masterSecret"/> is
+        /// calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
+        /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
         /// The <see cref="KeySignature"/> public key value is calculated for the specified 
-        /// parameters and registered in the KeyCollection <paramref name="keyCollection"/>.
-        /// Other key pair properties should be populated by the caller.
+        /// parameters. Other key pair properties should be populated by the caller.
         /// </summary>
         /// <param name="profile">The base profile that the activation activates.</param>
-        /// <param name="keyCollection">The key collection to register the 
-        /// <see cref="KeySignature"/> public key to.</param>
         /// <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
         /// a seed value of <paramref name="bits"/> length is generated.</param>

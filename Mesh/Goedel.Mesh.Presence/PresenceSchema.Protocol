@@ -1,8 +1,6 @@
 ﻿Protocol Goedel.Mesh.Presence PresenceProtocol PresenceProtocol
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
-	Extern MeshRequest
-	Extern MeshResponse
 
 	Description
 		|The Mesh Presence Protocol
@@ -15,5 +13,19 @@
 		Description
 			|
 
+	Transaction Device AnnounceDevice AnnounceDeviceRequest AnnounceDeviceResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Announce the existence of the device. 
+
+	Message AnnounceDeviceRequest
+		External MeshRequest
+		Description
+			|Announce the device to the presence service
 
 
+	Message AnnounceDeviceResponse
+		External MeshResponse
+		Description
+			|Reports the result of the presence request

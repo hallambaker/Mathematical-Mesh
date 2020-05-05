@@ -12,20 +12,20 @@ namespace Goedel.FSR {
     /// String builder stripping leading and trailing whitespace.
     /// </summary>
     public class Accumulate {
-        StringBuilder Current = new StringBuilder();
-        StringBuilder WhiteSpace = new StringBuilder();
+        StringBuilder current = new StringBuilder();
+        StringBuilder whiteSpace = new StringBuilder();
 
 
-        bool HaveCharacter = false;
-        bool StartQuote = false;
+        bool haveCharacter = false;
+        bool startQuote = false;
 
         /// <summary>
         /// Reset all buffers.
         /// </summary>
         public void Clear() {
-            Current.Clear();
-            WhiteSpace.Clear();
-            HaveCharacter = false;
+            current.Clear();
+            whiteSpace.Clear();
+            haveCharacter = false;
             }
 
         /// <summary>
@@ -35,20 +35,20 @@ namespace Goedel.FSR {
         public void AddCurrent(int c) {
             var Character = c.ToASCII();
             if (Character == ' ' | Character == '\t') {
-                if (HaveCharacter) {
-                    WhiteSpace.Append(Character);
+                if (haveCharacter) {
+                    whiteSpace.Append(Character);
                     }
                 }
             else {
-                if (!HaveCharacter & Character == '\"') {
-                    StartQuote = true;
+                if (!haveCharacter & Character == '\"') {
+                    startQuote = true;
                     }
-                else if (!(StartQuote & Character == '\"')) {
-                    Current.Append(WhiteSpace.ToString());
-                    WhiteSpace.Clear();
-                    Current.Append(Character);
+                else if (!(startQuote & Character == '\"')) {
+                    current.Append(whiteSpace.ToString());
+                    whiteSpace.Clear();
+                    current.Append(Character);
                     }
-                HaveCharacter = true;
+                haveCharacter = true;
                 }
             }
 
@@ -58,7 +58,7 @@ namespace Goedel.FSR {
         /// <returns>The current item as a string.</returns>
         public string CurrentItem() {
 
-            var Value = Current.ToString();
+            var Value = current.ToString();
             Clear();
             return Value;
 

@@ -79,18 +79,18 @@ namespace Goedel.XUnit {
             }
 
 
-        void CheckHostCatalog(MeshMachineTest meshMachine, ref long length) {
-            var filename = meshMachine.FileNameHost;
+        //void CheckHostCatalog(MeshMachineTest meshMachine, ref long length) {
+        //    var filename = meshMachine.FileNameHost;
 
-            using var stream = filename.OpenFileReadShared();
+        //    using var stream = filename.OpenFileReadShared();
 
-            Console.WriteLine($"Stream {stream.Length}");
+        //    Console.WriteLine($"Stream {stream.Length}");
 
-            (stream.Length > length).AssertTrue();
-            length = stream.Length;
+        //    (stream.Length > length).AssertTrue();
+        //    length = stream.Length;
 
-            return;
-            }
+        //    return;
+        //    }
 
 
         // need to ensure that all updates to the host catalog are being properly written out to disk.

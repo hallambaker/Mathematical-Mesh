@@ -91,11 +91,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
         /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
-        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
         /// </summary>
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="machine">Mesh machine providing cryptographic context.</param>
+        /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Profile Device");
@@ -148,8 +148,7 @@ namespace Goedel.Mesh {
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
-        /// The public key value is calculated for  <see cref="KeyEncryption"/> ,
-        ///  <see cref="Activation.KeySignature"/>  and  <see cref="KeyAuthentication"/>,
+        /// The public key value is calculated for Encryption, Signature and Authentication
         /// and registered in the KeyCollection <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
@@ -248,11 +247,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
         /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
-        /// the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+        /// the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
         /// </summary>
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="machine">Mesh machine providing cryptographic context.</param>
+        /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Connection Device");

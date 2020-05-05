@@ -64,6 +64,8 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         public void AccountAdd(JpcSession jpcSession,
                         AccountEntry accountEntry) {
+
+            jpcSession.Future();
             StoreEntry containerEntry;
 
             var directory = Path.Combine(DirectoryRoot, accountEntry.Directory);
@@ -91,6 +93,7 @@ namespace Goedel.Mesh.Server {
         /// <returns>The connection response.</returns>
         public ConnectResponse Connect(JpcSession jpcSession,
                         RequestConnection messageConnectionRequestClient) {
+            jpcSession.Future();
 
             using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID);
             var serviceNonce = CryptoCatalog.GetBits(128);
@@ -161,11 +164,11 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
         public StatusResponse AccountStatus(JpcSession jpcSession, VerifiedAccount account) {
-            AccountHandleVerified accountHandle = null;
 
-            using (accountHandle = GetAccountVerified(account, jpcSession)) {
 
-                var containerStatus = new List<ContainerStatus> {
+            using var accountHandle = GetAccountVerified(account, jpcSession);
+
+            var containerStatus = new List<ContainerStatus> {
                     accountHandle.GetStatusSpool (Spool.SpoolInbound),
                     accountHandle.GetStatusSpool (Spool.SpoolOutbound),
                     accountHandle.GetStatusSpool (Spool.SpoolLocal),
@@ -177,18 +180,17 @@ namespace Goedel.Mesh.Server {
                     accountHandle.GetStatusCatalog (CatalogCalendar.Label)
                     };
 
-                var statusResponse = new StatusResponse() {
-                    ContainerStatus = containerStatus,
-                    EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                    EnvelopedCatalogEntryDevice = null
-                    };
+            var statusResponse = new StatusResponse() {
+                ContainerStatus = containerStatus,
+                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                EnvelopedCatalogEntryDevice = null
+                };
 
-                // summarize the status here.
+            // summarize the status here.
 
-                statusResponse.ToConsole();
+            statusResponse.ToConsole();
 
-                return statusResponse;
-                }
+            return statusResponse;
 
             }
 
@@ -271,6 +273,9 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account to be deleted.</param> 
         public bool AccountDelete(JpcSession jpcSession, VerifiedAccount account) {
+            jpcSession.Future();
+
+
             lock (Container) {
                 return Container.Delete(account.AccountAddress);
                 }
@@ -325,6 +330,8 @@ namespace Goedel.Mesh.Server {
                 List<string> accounts,
                 DareEnvelope dareMessage) {
 
+            jpcSession.Future();
+
             var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
             identifier.AssertNotNull(InvalidMessageID.Throw, "Messages must have an identifier");
 
@@ -353,6 +360,9 @@ namespace Goedel.Mesh.Server {
             }
 
         bool MessagePostRemote(string recipient, DareEnvelope dareMessage) {
+            recipient.Future();
+            dareMessage.Future();
+
 
             throw new NYI();
             }

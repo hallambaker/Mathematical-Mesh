@@ -99,7 +99,7 @@ namespace Goedel.Mesh.Test {
         public TestShell Shell;
 
         public List<Result> Results = new List<Result>();
-        public Result Last => Results[Results.Count - 1];
+        public Result Last => Results[^1];
 
 
         public int ErrorCount = 0;
@@ -211,7 +211,7 @@ namespace Goedel.Mesh.Test {
         public Result CreateAccount(string account) => Dispatch($"mesh create /service={account}");
 
 
-        public bool AssertAccount(int count = -1, string account = null, bool exists = true) => throw new NYI();
+        //public bool AssertAccount(int count = -1, string account = null, bool exists = true) => throw new NYI();
 
         public bool FailPasswordResult(string site) {
             var result = Dispatch($"password get {site}", fail: true) as ResultEntry;
@@ -235,6 +235,9 @@ namespace Goedel.Mesh.Test {
             }
 
         public bool CheckContactResult(string key, string email) {
+
+            email.Future();
+
             var result = Dispatch($"contact get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedContact;
 
@@ -263,6 +266,9 @@ namespace Goedel.Mesh.Test {
             }
 
         public bool CheckTaskResult(string key, string title) {
+
+            title.Future();
+
             var result = Dispatch($"calendar get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedTask;
 
@@ -291,6 +297,9 @@ namespace Goedel.Mesh.Test {
             newDevice.Dispatch($"device request {account} /pin {pin}");
             Dispatch($"account sync /auto");
 
+
+
+            // failing because we are not correctly matching PIN allocation to requests
             newDevice.Dispatch($"device complete");
             newDevice.Dispatch($"account sync");
 

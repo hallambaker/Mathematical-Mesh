@@ -418,13 +418,12 @@
             Disposal method.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,Goedel.Mesh.ProfileDevice,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
             <summary>
             Constructor.
             </summary>
             <param name="contextMesh">The Mesh context to which this account belongs.</param>
             <param name="accountEntry">The account entry within the device catalog entry.</param>
-            <param name="profileDevice">The device profile to which this account entry is bound.</param>
             <param name="serviceID">The account service identifier.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(System.String)">
@@ -805,21 +804,23 @@
             <param name="meshHost">The machine context that the mesh is going to be created on.</param>
             <param name="profileDevice">The device profile.</param>
             <param name="profileMaster">The mesh profile.</param>
+            <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
             <returns>An administration context instance for the created profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshAdmin.AddAdministrator(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileMesh,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Create an administrator catalog entry for the device <paramref name="profileDevice"/> to
-            the master profile in the context <paramref name="meshMachine"/>.
+            the master profile in the context <paramref name="meshHost"/>.
             <para>This is presented as a static method because creation of an administration context
             requires a signed AdminEntry to be established before a ContextAdmin can be created for 
             the device.</para>
             </summary>
-            <param name="meshMachine">The cryptographic machine context (persistence stores, etc).</param>
+            <param name="meshHost">The cryptographic machine context (persistence stores, etc).</param>
             <param name="profileMaster">The master profile to add the device to as an administration device.</param>
             <param name="profileDevice">The device profile of the administration device to be added
             as the initial administrator.</param>
             <param name="activationDevice">The device activation.</param>
+            <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
             <returns>The catalog entry/</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshAdmin.CreateCataloguedDevice(Goedel.Mesh.ProfileDevice)">
@@ -952,6 +953,16 @@
             </summary>
             <param name="meshHost">The Mesh Host</param>
             <param name="catalogedMachine">The cataloged Mesh record.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMesh.ActivateKey(System.String,Goedel.Mesh.MeshKeyType)">
+            <summary>
+            Derive a <see cref="T:Goedel.Cryptography.KeyPair"/> instance of type <paramref name="meshKeyType"/>
+            using the activation secret <paramref name="activationKey"/>.
+            </summary>
+            <param name="activationKey">The activation secret seed used to derrive the 
+            activation key.</param>
+            <param name="meshKeyType">The type of key to derive</param>
+            <returns>The derrived key.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextMesh.GetContextAccount(System.String,System.String)">
             <summary>
@@ -1533,6 +1544,7 @@
             <param name="catalogItem">The item to be created.</param>
             <param name="create">If true, a new item will be created if it does not
             already exist.</param>
+            <param name="context">The dynamic context that interfaces to the catalog item.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Delete(Goedel.Mesh.Client.HostCatalogItem)">
             <summary>

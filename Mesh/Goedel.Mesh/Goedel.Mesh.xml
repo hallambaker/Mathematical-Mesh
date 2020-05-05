@@ -1405,11 +1405,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -3189,32 +3189,6 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Combine(Goedel.Cryptography.KeyCollection,Goedel.Mesh.PublicKey,System.String,Goedel.Cryptography.KeyUses,System.String)">
-            <summary>
-            Combine the public key value <paramref name="baseKey"/> with a key derrived from
-            <paramref name="secret"/> using the UDF salt value specified by <see
-            cref="P:Goedel.Mesh.Assertion.UDFKeyDerrivation"/> and <paramref name="saltSuffix"/>.
-            </summary>
-            <param name="keyCollection">The key collection to register the 
-            generated public key to.</param>
-            <param name="baseKey">The base key parameters.</param>
-            <param name="keyUses">The key uses the key will be used for.</param>
-            <param name="secret">The UDF used to derrive the key.</param>
-            <param name="saltSuffix">The salt suffix specifying the particular key
-            type.</param>
-            <returns>The aggregate public key parameters.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.KeyCollection,System.String,System.String)">
-            <summary>
-            Derrive a key pair contribution to an aggregate key pair.
-            </summary>
-            <param name="keyCollection">The keyCollection to manage and persist 
-            the generated keys. This should be null for an activation key.</param>
-            <param name="secretSeed">The secret seed value.</param>
-            <param name="saltSuffix">The salt suffix specifying the particular key
-            type.</param>
-            <returns>The derrived key pair.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.String)">
             <summary>
             Derrive a key pair contribution to an aggregate key pair.
@@ -3345,6 +3319,13 @@
             to be verified.</param>
             <returns>True if there is a valid signature under this profile, otherwise false.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Profile.GetPrivateKeyUDF(Goedel.Mesh.IMeshMachine)">
+            <summary>
+            Return a UDF private key seed. This may be used to derrive multiple private key pairs.
+            </summary>
+            <param name="meshMachine">The mesh cryptographic storage.</param>
+            <returns>The private key data if found, otherwise null.</returns>
+        </member>
         <member name="P:Goedel.Mesh.Profile.KeyOfflineSignature">
              <summary>
             The permanent signature key used to sign the profile itself. The UDF of
@@ -3434,21 +3415,23 @@
             Base constructor.
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Activation.MeshKeyType">
+            <summary>
+            The Mech Key Type.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Activation.#ctor(Goedel.Mesh.Profile,Goedel.Cryptography.UdfAlgorithmIdentifier,System.Byte[],System.Int32)">
             <summary>
             Constructor creating a new <see cref="T:Goedel.Mesh.Activation"/> for a profile of type
             <paramref name="profile"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
-            calculated from the values <paramref name="udfAlgorithmIdentifier"/> and 
-            <paramref name="salt"/>. If the value <paramref name="masterSecret"/> is
+            calculated from the values <paramref name="udfAlgorithmIdentifier"/>. 
+            If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
             The <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key value is calculated for the specified 
-            parameters and registered in the KeyCollection <paramref name="keyCollection"/>.
-            Other key pair properties should be populated by the caller.
+            parameters. Other key pair properties should be populated by the caller.
             </summary>
             <param name="profile">The base profile that the activation activates.</param>
-            <param name="keyCollection">The key collection to register the 
-            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="udfAlgorithmIdentifier">The UDF key derivation specifier.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
@@ -3579,12 +3562,12 @@
         <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-            a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            a leading indent of <paramref name="indent"/> units.The cryptographic context from
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -3795,11 +3778,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="M:Goedel.Mesh.ConnectionAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -3934,11 +3917,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="P:Goedel.Mesh.ProfileDevice.Description">
              <summary>
@@ -4035,8 +4018,7 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for  <see cref="!:KeyEncryption"/> ,
-             <see cref="P:Goedel.Mesh.Activation.KeySignature"/>  and  <see cref="!:KeyAuthentication"/>,
+            The public key value is calculated for Encryption, Signature and Authentication
             and registered in the KeyCollection <paramref name="keyCollection"/>.
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
@@ -4143,11 +4125,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="P:Goedel.Mesh.ConnectionDevice.Permissions">
              <summary>
@@ -4534,11 +4516,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="P:Goedel.Mesh.ProfileMesh.KeysMasterEscrow">
              <summary>
@@ -6812,7 +6794,7 @@
              trust assertions associated with a public key.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.PublicKey.keyPair">
+        <member name="F:Goedel.Mesh.PublicKey.keyPair">
             <summary>
             The cryptolib representation of the Key Pair. This is the point of access
             for all cryptolib operations. 
@@ -6842,6 +6824,12 @@
             </summary>
             <param name="TestUDF">The fingerprint value.</param>
             <returns>true if the verification succeeds, false otherwise.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.PublicKey.GetKeyPair">
+            <summary>
+            Return a <see cref="P:Goedel.Mesh.PublicKey.KeyPair"/> instance for the key parameters.
+            </summary>
+            <returns>The created key pair.</returns>
         </member>
         <member name="M:Goedel.Mesh.PublicKey.#ctor">
             <summary>
@@ -7026,11 +7014,11 @@
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
-            the mesh machine <paramref name="machine"/> is used to decrypt any encrypted data.
+            thekey collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
             </summary>
             <param name="builder">The string builder to write to.</param>
             <param name="indent">The number of units to indent the presentation.</param>
-            <param name="machine">Mesh machine providing cryptographic context.</param>
+            <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
         <member name="T:Goedel.Mesh.EscrowedKeySet">
              <summary>

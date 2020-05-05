@@ -103,7 +103,14 @@ namespace Goedel.Mesh.Client {
                 }
             }
 
-
+        /// <summary>
+        /// Derive a <see cref="KeyPair"/> instance of type <paramref name="meshKeyType"/>
+        /// using the activation secret <paramref name="activationKey"/>.
+        /// </summary>
+        /// <param name="activationKey">The activation secret seed used to derrive the 
+        /// activation key.</param>
+        /// <param name="meshKeyType">The type of key to derive</param>
+        /// <returns>The derrived key.</returns>
         public KeyPair ActivateKey(string activationKey, MeshKeyType meshKeyType) {
 
             DeviceKeySeed ??= ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
@@ -124,15 +131,13 @@ namespace Goedel.Mesh.Client {
                 string localName = null,
                 string accountName = null) {
             var account = CatalogedDevice.GetAccount(localName, accountName);
-            return account == null ? null : new ContextAccount(this, account, CatalogedDevice.ProfileDevice);
+            return account == null ? null : new ContextAccount(this, account);
             }
 
         /// <summary>
         /// Update the persisted <see cref="CatalogedMachine"/>.
         /// </summary>
-        public void UpdateDevice() {
-            MeshHost.Register(CatalogedMachine, this);
-            }
+        public void UpdateDevice() => MeshHost.Register(CatalogedMachine, this);
 
         }
 
@@ -153,7 +158,7 @@ namespace Goedel.Mesh.Client {
 
         KeyPair keyAuthentication;
         KeyPair keyEncryption;
-        KeyPair keySignature;
+        //KeyPair keySignature;
 
         ///<summary>Convenience accessor for the Account Service ID</summary>
         public string ServiceID => MessageRequestConnection?.ServiceID;
@@ -172,7 +177,7 @@ namespace Goedel.Mesh.Client {
             
             keyAuthentication = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceAuthenticate);
             keyEncryption= DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
-            keySignature = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceSign);
+            //keySignature = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceSign);
 
             KeyCollection.Add(keyEncryption);
             }
@@ -226,6 +231,8 @@ namespace Goedel.Mesh.Client {
                 string localName = null,
                 string pin = null) {
 
+            localName.Future();
+            
             // generate MessageConnectionRequestClient
             var messageConnectionRequestClient = new RequestConnection() {
                 ServiceID = serviceID,
@@ -308,8 +315,8 @@ namespace Goedel.Mesh.Client {
 
 
             var catalogedEntry = respondConnection.CatalogedDevice;
-            var activationDevice = catalogedEntry.GetActivationDevice(KeyCollection);
-            var connectionDevice = catalogedEntry.ConnectionDevice;
+            //var activationDevice = catalogedEntry.GetActivationDevice(KeyCollection);
+            //var connectionDevice = catalogedEntry.ConnectionDevice;
             var profileMaster = catalogedEntry.ProfileMesh;
 
 

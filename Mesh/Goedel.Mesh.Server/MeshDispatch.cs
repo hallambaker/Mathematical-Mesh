@@ -49,6 +49,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="serviceDirectory">The mesh persistence store filename.</param>
         public PublicMeshServiceProvider(string domain, string serviceDirectory) {
 
+            domain.Future();
+
             meshMachine = new MeshMachineCoreServer(serviceDirectory);
 
             Mesh = new MeshPersist(this, serviceDirectory);
@@ -90,14 +92,6 @@ namespace Goedel.Mesh.Server {
             this.JpcSession = session;
             }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Account"></param>
-        public void AuthenticateToAccount(string Account) {
-            // Goal: Put the authentication code in place here to reject requests without authentication.
-            }
-
 
         /// <summary>
         /// Respond with the 'hello' version and encoding info. This request does not 
@@ -109,7 +103,7 @@ namespace Goedel.Mesh.Server {
 		/// <returns>The response object from the service</returns>
         public override MeshHelloResponse Hello(
                 HelloRequest request, JpcSession jpcSession = null) {
-            jpcSession ??= JpcSession;
+            //jpcSession ??= JpcSession;
 
             var HelloResponse = new MeshHelloResponse() {
                 Version = new Goedel.Protocol.Version() {
@@ -264,8 +258,14 @@ namespace Goedel.Mesh.Server {
                 PostRequest request, JpcSession jpcSession) {
             jpcSession ??= JpcSession;
             try {
-                Assert.True(request.Message.Count == 1, NYI.Throw);
-                Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, request.Accounts, request.Message[0]);
+                if (request.Message!= null) {
+                    Assert.True(request.Message.Count == 1, NYI.Throw); // Hack: Support multiple messages in one post
+                    Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, request.Accounts, request.Message[0]);
+                    }
+                if (request.Self != null) {
+                    Assert.True(request.Self.Count == 1, NYI.Throw); // Hack: Support multiple messages in one post
+                    Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, null, request.Self[0]);
+                    }
                 return new PostResponse();
                 }
             catch (System.Exception exception) {

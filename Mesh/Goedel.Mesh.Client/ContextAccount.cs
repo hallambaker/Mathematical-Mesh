@@ -71,14 +71,14 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the signature key fingerprint.</summary>
         public string KeySignatureUDF => keySignature.UDF;
         ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
-        public string KeyAuthenticationUDF => keyAuthentication.UDF;
+        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
 
 
         ///<summary>The user's own contact information</summary>
         public DareEnvelope ContactSelf;
 
 
-        KeyPair keyAuthentication { get; set; }
+        KeyPair KeyAuthentication { get; set; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
         public MeshService MeshClient => meshClient ?? GetMeshClient(ServiceID).CacheValue(out meshClient);
@@ -110,12 +110,10 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="contextMesh">The Mesh context to which this account belongs.</param>
         /// <param name="accountEntry">The account entry within the device catalog entry.</param>
-        /// <param name="profileDevice">The device profile to which this account entry is bound.</param>
         /// <param name="serviceID">The account service identifier.</param>
         public ContextAccount(
                     ContextMesh contextMesh,
                     AccountEntry accountEntry,
-                    ProfileDevice profileDevice,
                     string serviceID = null
                     ) {
             // Set up the basic context
@@ -126,11 +124,11 @@ namespace Goedel.Mesh.Client {
             var activationKey = ActivationAccount.ActivationKey;
             keySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
             keyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
-            keyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
+            KeyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
             keySignature.UDF.AssertEqual(ConnectionAccount.KeySignature.UDF);
             keyEncryption.UDF.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
-            keyAuthentication.UDF.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
+            KeyAuthentication.UDF.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
 
             KeyCollection.Add(keyEncryption);
 
@@ -144,7 +142,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="serviceID">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
         protected MeshService GetMeshClient(string serviceID) =>
-                    MeshMachine.GetMeshClient(serviceID, keyAuthentication,
+                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
         /// <summary>
@@ -621,7 +619,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var uploadResponse = MeshClient.Upload(uploadRequest);
-
+            uploadResponse.Success().AssertTrue();
 
             catalog.Commit(envelopes);
 
@@ -713,10 +711,31 @@ namespace Goedel.Mesh.Client {
         /// Process automatic actions.
         /// </summary>
         public void ProcessAutomatics() {
-
+            var selfs = new List<Message>();
             var messages = new List<Message>();
             var completed = new Dictionary<string, Message>();
+            foreach (var message in GetSpoolLocal().Select(0, true)) {
+                Console.WriteLine($"{message.Header.EnvelopeID}");
+                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                if (!completed.ContainsKey(meshMessage.MessageID)) {
+                    switch (meshMessage) {
+                        case MessageComplete meshMessageComplete: {
+                            foreach (var reference in meshMessageComplete.References) {
+                                completed.Add(reference.MessageID, meshMessageComplete);
+                                }
+                            break;
+                            }
+                        default: {
+                            selfs.Add(meshMessage);
 
+
+
+                            break;
+                            }
+                        }
+
+                    }
+                }
             foreach (var message in GetSpoolInbound().Select (0, true)) {
                 Console.WriteLine($"{message.Header.EnvelopeID}");
                 var meshMessage = Message.FromJSON(message.GetBodyReader());
@@ -810,11 +829,14 @@ namespace Goedel.Mesh.Client {
         /// <returns></returns>
         public IProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true) {
 
+            reciprocate.Future();
+
             switch (meshMessage) {
                 case AcknowledgeConnection connection: {
                     return Process(connection, accept) ;
                     }
                 case ReplyContact replyContact: {
+                    replyContact.Future();
                     break;
                     }
                 case RequestContact requestContact: {
@@ -829,12 +851,15 @@ namespace Goedel.Mesh.Client {
                     break;
                     }
                 case ResponseConfirmation responseConfirmation: {
+                    responseConfirmation.Future();
                     break;
                     }
                 case RequestTask requestTask: {
+                    requestTask.Future();
                     break;
                     }
                 case OfferGroup offerGroup: {
+                    offerGroup.Future();
                     break;
                     }
 
@@ -1024,7 +1049,7 @@ namespace Goedel.Mesh.Client {
         public ContextGroup CreateGroup(string groupName,
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
-
+            groupName.Future();
             // create the group keys
 
             // 
@@ -1043,7 +1068,12 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="groupName">The group to return the management context for.</param>
         /// <returns>The created management context.</returns>
-        public ContextGroup GetContextGroup(string groupName) => throw new NYI();
+        public ContextGroup GetContextGroup(string groupName) {
+            groupName.Future();
+            throw new NYI();
+
+
+            }
         }
 
     }

@@ -1,8 +1,6 @@
 ﻿Protocol Goedel.Mesh.Services ServiceProtocol ServiceProtocol
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
-	Extern MeshRequest
-	Extern MeshResponse
 
 	Description
 		|The Mesh Presence Protocol
@@ -16,4 +14,40 @@
 			|
 
 
+	Transaction Device ThresholdSign ThresholdSignRequest ThresholdSignResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Announce the existence of the device. 
+
+	Message ThresholdSignRequest
+		External MeshRequest
+		Description
+			|Announce the device to the presence service
+
+
+	Message ThresholdSignResponse
+		External MeshResponse
+		Description
+			|Reports the result of the presence request
+
+
+
+
+	Transaction Device ThresholdAgreement ThresholdAgreementRequest ThresholdAgreementResponse
+		Description
+			|Request creation of a new service account.
+		Description
+			|Announce the existence of the device. 
+
+	Message ThresholdAgreementRequest
+		External MeshRequest
+		Description
+			|Announce the device to the presence service
+
+
+	Message ThresholdAgreementResponse
+		External MeshResponse
+		Description
+			|Reports the result of the presence request
 
