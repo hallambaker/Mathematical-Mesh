@@ -168,8 +168,8 @@ namespace Goedel.Mesh.Client {
                 string serviceID,
                 bool sync = true) {
             // Add to assertion
-            ProfileAccount.ServiceIDs = ProfileAccount.ServiceIDs ?? new List<string>();
-            ProfileAccount.ServiceIDs.Add(serviceID);
+            ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
+            ProfileAccount.AccountAddresses.Add(serviceID);
             ContextMeshAdmin.Sign(ProfileAccount);
             ServiceID = serviceID;
 
@@ -328,10 +328,10 @@ namespace Goedel.Mesh.Client {
         /// List of the known store types.
         /// </summary>
         public List<string> Stores = new List<string> {
-            Spool.SpoolOutbound,
-            Spool.SpoolInbound,
-            Spool.SpoolLocal,
-            Spool.SpoolArchive,
+            SpoolOutbound.Label,
+            SpoolInbound.Label,
+            SpoolLocal.Label,
+            SpoolArchive.Label,
             CatalogApplication.Label,
             CatalogDevice.Label,
             CatalogContact.Label,
@@ -363,16 +363,16 @@ namespace Goedel.Mesh.Client {
         public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
 
         ///<summary>Returns the inbound spool for the account</summary>
-        public Spool GetSpoolInbound() => spoolInbound ?? (GetStore(Spool.SpoolInbound) as Spool).CacheValue(out spoolInbound);
-        Spool spoolInbound;
+        public SpoolInbound GetSpoolInbound() => spoolInbound ?? (GetStore(SpoolInbound.Label) as SpoolInbound).CacheValue(out spoolInbound);
+        SpoolInbound spoolInbound;
 
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
-        public Spool GetSpoolOutbound() => GetStore(Spool.SpoolOutbound) as Spool;
+        public Spool GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as Spool;
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
-        public Spool GetSpoolLocal() => spoolLocal ?? (GetStore(Spool.SpoolLocal) as Spool).CacheValue(out spoolLocal);
-        Spool spoolLocal;
+        public SpoolLocal GetSpoolLocal() => spoolLocal ?? (GetStore(SpoolLocal.Label) as SpoolLocal).CacheValue(out spoolLocal);
+        SpoolLocal spoolLocal;
 
         /// <summary>
         /// Return the latest unprocessed MessageConnectionRequest that was received.
@@ -578,10 +578,10 @@ namespace Goedel.Mesh.Client {
 
         Store MakeStore(string name) => name switch
             {
-                Spool.SpoolInbound => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                Spool.SpoolOutbound => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                Spool.SpoolLocal => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                Spool.SpoolArchive => new Spool(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                SpoolInbound.Label => new SpoolInbound(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                SpoolOutbound.Label => new SpoolOutbound(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                SpoolLocal.Label => new SpoolLocal(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
+                SpoolArchive.Label => new SpoolArchive(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
                 CatalogCredential.Label => new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
                 CatalogContact.Label => new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
                 CatalogCalendar.Label => new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
@@ -639,6 +639,7 @@ namespace Goedel.Mesh.Client {
         public MessagePIN GetPIN(int length = 80, int validity = 24 * 60) {
             var pin = UDF.Nonce(length);
             var expires = DateTime.Now.AddMinutes(validity);
+
             var messageConnectionPIN = new MessagePIN() {
                 Account = ActivationAccount.AccountUDF,
                 Expires = expires,
@@ -711,57 +712,93 @@ namespace Goedel.Mesh.Client {
         /// Process automatic actions.
         /// </summary>
         public void ProcessAutomatics() {
-            var selfs = new List<Message>();
-            var messages = new List<Message>();
-            var completed = new Dictionary<string, Message>();
-            foreach (var message in GetSpoolLocal().Select(0, true)) {
-                Console.WriteLine($"{message.Header.EnvelopeID}");
-                var meshMessage = Message.FromJSON(message.GetBodyReader());
-                if (!completed.ContainsKey(meshMessage.MessageID)) {
-                    switch (meshMessage) {
-                        case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
-                                }
-                            break;
+
+            var spoolInbound = GetSpoolInbound();
+            foreach (var envelope in spoolInbound.GetMessages(MessageStatus.Open)) {
+                var meshMessage = envelope.Message;
+                switch (meshMessage) {
+                    case AcknowledgeConnection acknowledgeConnection: {
+                        if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
+                            ProcessAutomatic(acknowledgeConnection);
                             }
-                        default: {
-                            selfs.Add(meshMessage);
 
-
-
-                            break;
-                            }
-                        }
-
-                    }
-                }
-            foreach (var message in GetSpoolInbound().Select (0, true)) {
-                Console.WriteLine($"{message.Header.EnvelopeID}");
-                var meshMessage = Message.FromJSON(message.GetBodyReader());
-                if (!completed.ContainsKey(meshMessage.MessageID)) {
-                    switch (meshMessage) {
-                        case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
-                                }
-                            break;
-                            }
-                        default: {
-                            messages.Add(meshMessage);
-
-
-
-                            break;
-                            }
+                        break;
                         }
                     }
-
                 }
+
+
+
+            //var selfs = new List<Message>();
+
+            //var completed = new Dictionary<string, Message>();
+            //foreach (var message in GetSpoolLocal().Select(0, true)) {
+            //    Console.WriteLine($"{message.Header.EnvelopeID}");
+            //    var meshMessage = Message.FromJSON(message.GetBodyReader());
+            //    if (!completed.ContainsKey(meshMessage.MessageID)) {
+            //        switch (meshMessage) {
+            //            case MessageComplete meshMessageComplete: {
+            //                foreach (var reference in meshMessageComplete.References) {
+            //                    completed.Add(reference.MessageID, meshMessageComplete);
+            //                    }
+            //                break;
+            //                }
+            //            default: {
+            //                selfs.Add(meshMessage);
+
+
+
+            //                break;
+            //                }
+            //            }
+
+            //        }
+            //    }
+            //foreach (var message in GetSpoolInbound().Select (0, true)) {
+            //    Console.WriteLine($"{message.Header.EnvelopeID}");
+            //    var meshMessage = Message.FromJSON(message.GetBodyReader());
+            //    if (!completed.ContainsKey(meshMessage.MessageID)) {
+            //        switch (meshMessage) {
+            //            case MessageComplete meshMessageComplete: {
+            //                foreach (var reference in meshMessageComplete.References) {
+            //                    completed.Add(reference.MessageID, meshMessageComplete);
+            //                    }
+            //                break;
+            //                }
+            //            default: {
+            //                messages.Add(meshMessage);
+
+
+
+            //                break;
+            //                }
+            //            }
+            //        }
+
+            //    }
 
 
             }
 
+
+        public void ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
+            var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
+
+            var pinCreate = GetSpoolLocal().CheckPIN(messageConnectionRequest.PinUDF);
+
+            // check PIN
+
+
+
+            // already used?
+
+
+
+            // 
+
+
+
+            }
 
 
         /// <summary>
@@ -963,51 +1000,47 @@ namespace Goedel.Mesh.Client {
                 return;
                 }
 
-            ProfileAccount.ServiceIDs.AssertNotNull();
-            (ProfileAccount.ServiceIDs.Count > 0).AssertTrue();
+            ProfileAccount.AccountAddresses.AssertNotNull();
+            (ProfileAccount.AccountAddresses.Count > 0).AssertTrue();
 
-            ServiceID = ProfileAccount.ServiceIDs[0];
+            ServiceID = ProfileAccount.AccountAddresses[0];
 
             meshClient = GetMeshClient(ServiceID);
             }
 
         /// <summary>
-        /// Send <paramref name="MeshMessage"/> to <paramref name="recipient"/>.
+        /// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
         /// </summary>
-        /// <param name="MeshMessage">The message to send.</param>
+        /// <param name="meshMessage">The message to send.</param>
         /// <param name="recipient">The recipient service ID.</param>
-        public void SendMessage(Message MeshMessage, string recipient) =>
-            SendMessage(MeshMessage, new List<string> { recipient });
+        public void SendMessage(Message meshMessage, string recipient) =>
+            SendMessage(meshMessage, new List<string> { recipient });
 
 
         /// <summary>
-        /// Post the message <paramref name="MeshMessage"/> to the service. If <paramref name="recipients"/>
+        /// Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
         /// is not null, the message is to be posted to the outbound spool to be forwarded to the
         /// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
         /// collection.
         /// </summary>
-        /// <param name="MeshMessage">The message to post</param>
+        /// <param name="meshMessage">The message to post</param>
         /// <param name="recipients">The recipients the message is to be sent to. If null, the
         /// message is for local pickup.</param>
         /// <param name="uniqueID">The unique message ID.</param>
         public void SendMessage(
-                    Message MeshMessage, 
+                    Message meshMessage, 
                     List<string> recipients=null,
                     string uniqueID=null) {
             Connect();
 
-            MeshMessage.Sender = ServiceID;
+            meshMessage.Sender = ServiceID;
             uniqueID ??= UDF.Nonce();
 
-            var message = DareEnvelope.Encode(MeshMessage.GetBytes());
-            message.Header.ContentMeta = new ContentMeta() {
-                UniqueID = uniqueID,
-                MessageType = MeshMessage._Tag
+            var envelope = meshMessage.Encode();
 
-                };
             var postRequest = new PostRequest() {
                 Accounts = recipients,
-                Message = new List<DareEnvelope>() { message }
+                Message = new List<DareEnvelope>() { envelope }
                 };
 
 
@@ -1017,18 +1050,11 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Send a message signed using the mesh administration key.
         /// </summary>
-        /// <param name="MeshMessage"></param>
-        public void SendMessageAdmin(Message MeshMessage) {
+        /// <param name="meshMessage"></param>
+        public void SendMessageAdmin(Message meshMessage) {
             Connect();
 
-            var message = DareEnvelope.Encode(MeshMessage.GetBytes());
-            message.Header.ContentMeta = new ContentMeta() {
-                UniqueID = UDF.Nonce(),
-                MessageType = MeshMessage._Tag
-
-                };
-
-
+            var message = meshMessage.Encode(keySignature);
 
             var postRequest = new PostRequest() {
                 Self = new List<DareEnvelope>() { message }

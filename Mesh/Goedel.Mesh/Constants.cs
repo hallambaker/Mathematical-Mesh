@@ -1,6 +1,10 @@
 ﻿using Goedel.Cryptography;
+using System;
 
 namespace Goedel.Mesh {
+
+   
+
 
     ///<summary>Enumeration for Key types</summary>
     public enum MeshKeyType {
@@ -113,11 +117,70 @@ namespace Goedel.Mesh {
 
         }
 
+    /// <summary>
+    /// Status values for Mesh Messages
+    /// </summary>
+    public enum MessageStatus {
+
+
+
+        ///<summary>Message is unread.</summary>
+        Unread = 0b1,
+
+        ///<summary>Message has been read.</summary>
+        Read = 0b10,
+
+        ///<summary>Message has expired</summary>
+        Unexpired = 0b100,
+
+        ///<summary>Message has expired</summary>
+        Expired = 0b1000,
+
+        ///<summary>Message is open.</summary>
+        Open = 0b1_0000,
+
+        ///<summary>Message is closed.</summary>
+        Closed = 0b10_0000,
+
+
+        ///<summary>Initial Message Status</summary>
+        Initial = Unread | Open,
+
+        ///<summary>Initial Message Status</summary>
+        Active = Unexpired | Open,
+
+
+        ///<summary>All messages.</summary>
+        All = 0b11_1111,
+
+        ///<summary>No messages.</summary>
+        None = 0b00_0000
+        }
 
     /// <summary>
     /// Collected constants used in the Mathematical Mesh
     /// </summary>
     public static class Constants {
+
+        public const string MeshMessageType = "application/mmm_message";
+
+
+        // Constants for calculating timeout values.
+
+        ///<summary>Number of ticks in a millisecond</summary>
+        public const long MillisecondInTicks =   10_000 ;
+        ///<summary>Number of ticks in a second</summary>
+        public const long SecondInTicks =       1000 * MillisecondInTicks;
+        ///<summary>Number of ticks in a minute</summary>
+        public const long MinuteInTicks =       60 * SecondInTicks;
+        ///<summary>Number of ticks in a hour</summary>
+        public const long HourInTicks =         60 * MinuteInTicks;
+        ///<summary>Number of ticks in a day</summary>
+        public const long DayInTicks =          24 * HourInTicks;
+        ///<summary>Number of ticks in a week</summary>
+        public const long WeekInTicks =         7 * DayInTicks;
+        ///<summary>Number of ticks in a year</summary>
+        public const long YearInTicks =         365 * DayInTicks;
 
         // Constants used in conjunction with UDF derived keys.
 

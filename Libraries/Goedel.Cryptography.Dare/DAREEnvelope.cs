@@ -24,6 +24,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public int DataSequences => Header.EDSS.Count;
 
+        ///<summary>The inner enveloped content.</summary>
+        public JSONObject JSONObject { get; set; }
+
+
+        public long Index => Header.Index;
+
+        public string EnvelopeID => Header.EnvelopeID;
+
+
         #endregion
         #region IDisposable boilerplate code.
         /// <summary>
@@ -292,6 +301,17 @@ namespace Goedel.Cryptography.Dare {
             return outputStream.ToArray();
             }
 
+
+        //public JSONReader GetJSONReader(IKeyLocate keyCollection) {
+
+        //    var inputStream = new MemoryStream(Body);
+        //    var Decoder = Header.GetDecoder(
+        //        inputStream, out var Reader,
+        //        keyCollection: keyCollection);
+
+        //    return new JsonBcdReader(Reader);
+        //    }
+
         /// <summary>
         /// Deserialize 
         /// </summary>
@@ -374,7 +394,7 @@ namespace Goedel.Cryptography.Dare {
             using var output = outputFile.OpenFileNew();
             using var input = inputFile.OpenFileRead();
             Encode(cryptoParameters, input, output, input.Length,
-contentMeta, cloaked, dataSequences, chunk);
+                    contentMeta, cloaked, dataSequences, chunk);
             return input.Length;
 
             }

@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         protected CryptoParameters CryptoParameters { get; set; }
 
         ///<summary>The key collection used for decryption</summary>
-        protected KeyCollection KeyCollection { get; set; }
+        public KeyCollection KeyCollection { get; set; }
 
         ///<summary>The container identifier. Must be unique within a given account.</summary>
         public string ContainerName { get; set; }

@@ -109,8 +109,8 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The start of the last frame.</summary>
         public virtual long PositionFinalFrameStart { get; private set; }
 
-
-
+        ///<summary>The last frame in the container</summary>
+        public virtual int FrameIndexLast => DareHeaderFinal.Index;
 
 
 
@@ -778,24 +778,23 @@ namespace Goedel.Cryptography.Dare {
         /// Append a new data frame payload to the end of the file.
         /// </summary>
         /// <param name="data">Ciphertext data to append.</param>
-        /// <param name="contentInfo">Content metadata.</param>
+        /// <param name="contentMeta">Content metadata.</param>
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         /// <param name="contentType">The payload content type.</param>
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented </param>
         /// <returns>The number of bytes written.</returns>
-        public void Append(byte[] data,
-            CryptoParameters cryptoParameters = null,
-            ContentMeta contentInfo = null,
-
-                        string contentType = null,
-                        byte[] cloaked = null,
-                        List<byte[]> dataSequences = null) {
+        public long Append(byte[] data,
+                    CryptoParameters cryptoParameters = null,
+                    ContentMeta contentMeta = null,
+                    string contentType = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null) {
 
             using var InputStream = new MemoryStream(data);
             var ContentLength = InputStream.Length;
-            AppendFromStream(InputStream, ContentLength, contentInfo, cryptoParameters,
+            return AppendFromStream(InputStream, ContentLength, contentMeta, cryptoParameters,
                     contentType, cloaked, dataSequences);
             }
 
@@ -812,7 +811,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         /// <returns>The number of bytes written.</returns>
-        public void AppendFile(string fileName,
+        public long AppendFile(string fileName,
                 ContentMeta contentInfo = null,
                 CryptoParameters cryptoParameters = null,
                 string contentType = null,
@@ -821,7 +820,7 @@ namespace Goedel.Cryptography.Dare {
 
             using var FileStream = fileName.OpenFileRead();
             var ContentLength = FileStream.Length;
-            AppendFromStream(FileStream, ContentLength, contentInfo, cryptoParameters,
+            return AppendFromStream(FileStream, ContentLength, contentInfo, cryptoParameters,
                     contentType, cloaked, dataSequences);
             }
 
@@ -841,17 +840,19 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The number of bytes written.</returns>
         /// <remarks>At present, the file stream MUST support the seek operation
         /// which is an issue that has to be removed.</remarks>
-        public void AppendFromStream(Stream input,
+        public long AppendFromStream(Stream input,
                 long contentLength,
                 ContentMeta contentInfo = null,
                 CryptoParameters cryptoParameters = null,
                 string contentType = null,
                 byte[] cloaked = null,
                 List<byte[]> dataSequences = null) {
-            AppendBegin(contentLength, out var CryptoStack, cryptoParameters, contentInfo,
+            var index = AppendBegin(contentLength, out var CryptoStack, cryptoParameters, contentInfo,
                     contentType, cloaked, dataSequences);
             input.ProcessRead(AppendProcess);
             AppendEnd();
+
+            return index;
             }
 
         #endregion
@@ -881,7 +882,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
-        public void AppendBegin(
+        public long AppendBegin(
                         long contentLength,
                         out CryptoStack cryptoStack,
                         CryptoParameters cryptoParametersFrame = null,
@@ -889,6 +890,9 @@ namespace Goedel.Cryptography.Dare {
                         string contentType = null,
                         byte[] cloaked = null,
                         List<byte[]> dataSequences = null) {
+
+            var index = (int)FrameCount++;
+
             cryptoStack = cryptoParametersFrame == null ? new CryptoStack(this.CryptoStackContainer) :
                             GetCryptoStack(cryptoParametersFrame);
             contentInfo ??= new ContentMeta() {
@@ -896,7 +900,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             var containerInfo = new ContainerInfo() {
-                Index = (int)FrameCount++
+                Index = index
                 };
 
             var appendContainerHeader = new DareHeader() {
@@ -915,6 +919,8 @@ namespace Goedel.Cryptography.Dare {
             var dataPayload = appendContainerHeader.GetBytes(false);
             JBCDStream.WriteWrappedFrameBegin(dataPayload, payloadLength, lengthTrailer);
             bodyWrite = appendContainerHeader.BodyWriter(JBCDStream.StreamWrite);
+
+            return index;
             }
 
         /// <summary>

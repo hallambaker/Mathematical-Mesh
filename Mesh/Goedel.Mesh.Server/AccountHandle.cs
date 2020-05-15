@@ -79,7 +79,7 @@ namespace Goedel.Mesh.Server {
 
             // here we should perform an authorization operation against the store.
 
-            using var container = new Spool(AccountEntry.Directory, Spool.SpoolInbound);
+            using var container = new Spool(AccountEntry.Directory, SpoolInbound.Label);
             container.Add(dareMessage);
 
             }
@@ -160,7 +160,7 @@ namespace Goedel.Mesh.Server {
 
             // here we should perform an authorization operation against the store.
 
-            using var container = new Spool(AccountEntry.Directory, Spool.SpoolLocal);
+            using var container = new Spool(AccountEntry.Directory, SpoolLocal.Label);
             container.Add(dareMessage);
 
             }
@@ -171,7 +171,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="id">Message to return.</param>
         /// <returns>The message (if found).</returns>
         public DareEnvelope GetLocal(string id) {
-            using var spoolLocal = GetStore(Spool.SpoolLocal);
+            using var spoolLocal = GetStore(SpoolLocal.Label);
 
             foreach (var message in spoolLocal.Select(0, reverse:true)) {
                 if (message?.Header?.ContentMeta?.UniqueID == id) {

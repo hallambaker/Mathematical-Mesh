@@ -27,9 +27,24 @@ namespace Goedel.Mesh {
         /// </summary>
         public virtual DareEnvelope DareEnvelope { get; protected set; }
 
+
+        ///<summary>The key collection that was used to decode this object instance.</summary>
+        public KeyCollection KeyCollection;
+
+
         ///<summary>Initialization property, used to force initialization of the 
         ///Json parser dictionaries.</summary>
         public static object Initialize => null;
+
+        ///<summary>Reports the status of the item. </summary>
+        public bool? Status = null;
+
+        ///<summary>Reports true if the item status is open </summary>
+        public bool Open => Status == true;
+
+
+        ///<summary>Reports true if the item status is closed </summary>
+        public bool Closed => Status == true;
 
         static MeshItem() => AddDictionary(ref _TagDictionary);
 
@@ -51,16 +66,40 @@ namespace Goedel.Mesh {
             throw new CannotCreateAbstract();
             }
 
+        ///// <summary>
+        ///// Decode the specified <paramref name="dareEnvelope"/>>
+        ///// </summary>
+        ///// <param name="dareEnvelope">The envelope to decode.</param>
+        ///// <returns>The decoded <see cref="MeshItem"/></returns>
+        //public static MeshItem Decode(DareEnvelope dareEnvelope) {
+        //    var result = FromJSON(dareEnvelope.GetBodyReader(), true);
+        //    result.DareEnvelope = dareEnvelope;
+        //    return result;
+        //    }
+
         /// <summary>
-        /// Decode the specified <paramref name="dareEnvelope"/>>
+        /// Decode and parse the data 
         /// </summary>
-        /// <param name="dareEnvelope">The envelope to decode.</param>
-        /// <returns>The decoded <see cref="MeshItem"/></returns>
-        public static MeshItem Decode(DareEnvelope dareEnvelope) {
-            var result = FromJSON(dareEnvelope.GetBodyReader(), true);
-            result.DareEnvelope = dareEnvelope;
+        /// <param name="envelope">The enveloped data.</param>
+        /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
+        /// <returns>The decoded data item</returns>
+        public static MeshItem Decode(DareEnvelope envelope, KeyCollection keyCollection=null) {
+
+            if (envelope == null) {
+                return null;
+                }
+
+            var plaintext = envelope.GetPlaintext(keyCollection);
+
+            //Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), true);
+            result.DareEnvelope = envelope;
+            result.KeyCollection = keyCollection;
             return result;
+
             }
+
+
 
 
         /// <summary>
@@ -91,15 +130,14 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode the specified <paramref name="dareEnvelope"/>>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="Assertion"/>
         /// </summary>
-        /// <param name="dareEnvelope">The envelope to decode.</param>
-        /// <returns>The decoded <see cref="Assertion"/></returns>
-        public static new Assertion Decode(DareEnvelope dareEnvelope) {
-            var result = FromJSON(dareEnvelope.GetBodyReader(), true);
-            result.DareEnvelope = dareEnvelope;
-            return result;
-            }
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new Assertion Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as Assertion;
 
         }
 

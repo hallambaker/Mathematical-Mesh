@@ -143,6 +143,9 @@
 				|An index of records in the current container up to but not including
 				|this one.
 
+		DateTime Received
+			Description
+				|Date on which the envelope was received.
 
 
 	Structure ContentMeta
@@ -180,6 +183,9 @@
 		DateTime Modified
 			Description
 				|Date of last modification.
+		DateTime Expire
+			Description
+				|Date at which the associated transaction will expire
 		Integer First
 			Description
 				|Frame number of the first object instance value.

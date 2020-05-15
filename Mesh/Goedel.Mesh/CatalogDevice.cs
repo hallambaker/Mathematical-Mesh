@@ -85,8 +85,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => DeviceUDF;
 
-        KeyCollection keyCollection;
-
 
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
@@ -175,25 +173,16 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode the envelope <paramref name="envelope"/> using keys from 
-        /// <paramref name="keyCollection"/> and return the resulting <see cref="CatalogedDevice"/>.
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="CatalogedDevice"/>
+        /// using keys from <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Keys to be used to decode <paramref name="envelope"/>.</param>
-        /// <returns>The decoded <see cref="CatalogedDevice"/> (if successful).</returns>
-        public static CatalogedDevice Decode(DareEnvelope envelope, KeyCollection keyCollection) {
-            if (envelope == null) {
-                return null;
-                }
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new CatalogedDevice Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as CatalogedDevice;
 
-            var plaintext = envelope.GetPlaintext(keyCollection);
-
-            Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), true);
-            result.DareEnvelope = envelope;
-            result.keyCollection = keyCollection;
-            return result;
-            }
 
 
         /// <summary>
@@ -204,6 +193,7 @@ namespace Goedel.Mesh {
         /// <returns>The account if found, otherwise null.</returns>
         public AccountEntry GetAccount(string localName = null,
                 string accountName = null) {
+            localName.Future();
 
             if (Accounts == null || Accounts.Count == 0) {
                 return null;

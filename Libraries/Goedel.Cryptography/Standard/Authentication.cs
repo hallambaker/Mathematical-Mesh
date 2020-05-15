@@ -42,6 +42,13 @@ namespace Goedel.Cryptography.Standard {
 
 
         /// <summary>
+        /// Truncation length. If this value is greater than 0, the output size is 
+        /// truncated to the nearest integer multiple of 8 bits.
+        /// </summary>
+        protected int Truncate { get; set; } = 0;
+
+
+        /// <summary>
         /// Authentication key.
         /// </summary>
         public byte[] Key {
@@ -135,6 +142,19 @@ namespace Goedel.Cryptography.Standard {
                 }
             return KeyedHashAlgorithm.ComputeHash(Data, Offset, Count);
             }
+
+        /// <summary>
+        /// Complete processing at the end of an encoding or decoding operation
+        /// </summary>
+        /// <param name="CryptoData">Structure to write result to</param>
+        public override void Complete(CryptoData CryptoData) {
+            var CryptoStream = CryptoData.InputStream as CryptoStream;
+            CryptoStream.FlushFinalBlock();
+            CryptoData.Integrity = KeyedHashAlgorithm.Hash.OrTruncated(Truncate);
+            CryptoStream.Dispose();
+            return;
+            }
+
 
         }
 

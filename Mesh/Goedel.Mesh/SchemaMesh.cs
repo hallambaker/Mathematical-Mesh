@@ -2508,7 +2508,7 @@ namespace Goedel.Mesh {
         ///Service address(es).
         /// </summary>
 
-		public virtual List<string>				ServiceIDs  {get; set;}
+		public virtual List<string>				AccountAddresses  {get; set;}
         /// <summary>
         ///Master profile of the account being registered.
         /// </summary>
@@ -2568,12 +2568,12 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_writer, false, ref _first);
-			if (ServiceIDs != null) {
+			if (AccountAddresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceIDs", 1);
+				_writer.WriteToken ("AccountAddresses", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in ServiceIDs) {
+				foreach (var _index in AccountAddresses) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
@@ -2628,13 +2628,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceIDs" : {
+				case "AccountAddresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					ServiceIDs = new List <string> ();
+					AccountAddresses = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						ServiceIDs.Add (_Item);
+						AccountAddresses.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -2780,7 +2780,7 @@ namespace Goedel.Mesh {
         ///The list of service identifiers.
         /// </summary>
 
-		public virtual List<string>				ServiceID  {get; set;}
+		public virtual List<string>				AccountAddresses  {get; set;}
         /// <summary>
         ///List of the permissions that the device has been granted.
         /// </summary>
@@ -2845,12 +2845,12 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Connection)this).SerializeX(_writer, false, ref _first);
-			if (ServiceID != null) {
+			if (AccountAddresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
+				_writer.WriteToken ("AccountAddresses", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in ServiceID) {
+				foreach (var _index in AccountAddresses) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
@@ -2922,13 +2922,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceID" : {
+				case "AccountAddresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					ServiceID = new List <string> ();
+					AccountAddresses = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						ServiceID.Add (_Item);
+						AccountAddresses.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -3237,7 +3237,7 @@ namespace Goedel.Mesh {
         ///Service address(es).
         /// </summary>
 
-		public virtual List<string>				ServiceIDs  {get; set;}
+		public virtual List<string>				AccountAddresses  {get; set;}
         /// <summary>
         ///Key currently used to encrypt data under this profile
         /// </summary>
@@ -3287,12 +3287,12 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Profile)this).SerializeX(_writer, false, ref _first);
-			if (ServiceIDs != null) {
+			if (AccountAddresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceIDs", 1);
+				_writer.WriteToken ("AccountAddresses", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in ServiceIDs) {
+				foreach (var _index in AccountAddresses) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
@@ -3337,13 +3337,13 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceIDs" : {
+				case "AccountAddresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					ServiceIDs = new List <string> ();
+					AccountAddresses = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						ServiceIDs.Add (_Item);
+						AccountAddresses.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -3991,7 +3991,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual List<string>				ServiceID  {get; set;}
+		public virtual List<string>				AccountAddresses  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4040,12 +4040,12 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("UDF", 1);
 					_writer.WriteString (UDF);
 				}
-			if (ServiceID != null) {
+			if (AccountAddresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
+				_writer.WriteToken ("AccountAddresses", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in ServiceID) {
+				foreach (var _index in AccountAddresses) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
@@ -4089,13 +4089,13 @@ namespace Goedel.Mesh {
 					UDF = jsonReader.ReadString ();
 					break;
 					}
-				case "ServiceID" : {
+				case "AccountAddresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					ServiceID = new List <string> ();
+					AccountAddresses = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						ServiceID.Add (_Item);
+						AccountAddresses.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -6824,6 +6824,9 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class Message : MeshItem {
         /// <summary>
+        ///Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
+        ///the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+        ///value. 
         /// </summary>
 
 		public virtual string						MessageID  {get; set;}
@@ -7213,7 +7216,7 @@ namespace Goedel.Mesh {
         ///
         /// </summary>
 
-		public virtual string						ServiceID  {get; set;}
+		public virtual string						AccountAddress  {get; set;}
         /// <summary>
         ///Device profile of the device making the request.
         /// </summary>
@@ -7229,6 +7232,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						PinUDF  {get; set;}
+        /// <summary>
+        ///Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+        /// </summary>
+
+		public virtual byte[]						PinWitness  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7273,10 +7281,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Message)this).SerializeX(_writer, false, ref _first);
-			if (ServiceID != null) {
+			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
-					_writer.WriteString (ServiceID);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
 				}
 			if (EnvelopedProfileDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -7292,6 +7300,11 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("PinUDF", 1);
 					_writer.WriteString (PinUDF);
+				}
+			if (PinWitness != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PinWitness", 1);
+					_writer.WriteBinary (PinWitness);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -7326,8 +7339,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceID" : {
-					ServiceID = jsonReader.ReadString ();
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
 				case "EnvelopedProfileDevice" : {
@@ -7343,6 +7356,10 @@ namespace Goedel.Mesh {
 					}
 				case "PinUDF" : {
 					PinUDF = jsonReader.ReadString ();
+					break;
+					}
+				case "PinWitness" : {
+					PinWitness = jsonReader.ReadBinary ();
 					break;
 					}
 				default : {

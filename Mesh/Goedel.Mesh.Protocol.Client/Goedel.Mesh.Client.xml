@@ -659,19 +659,19 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.String)">
             <summary>
-            Send <paramref name="MeshMessage"/> to <paramref name="recipient"/>.
+            Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
             </summary>
-            <param name="MeshMessage">The message to send.</param>
+            <param name="meshMessage">The message to send.</param>
             <param name="recipient">The recipient service ID.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String},System.String)">
             <summary>
-            Post the message <paramref name="MeshMessage"/> to the service. If <paramref name="recipients"/>
+            Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
             is not null, the message is to be posted to the outbound spool to be forwarded to the
             appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
             collection.
             </summary>
-            <param name="MeshMessage">The message to post</param>
+            <param name="meshMessage">The message to post</param>
             <param name="recipients">The recipients the message is to be sent to. If null, the
             message is for local pickup.</param>
             <param name="uniqueID">The unique message ID.</param>
@@ -680,7 +680,7 @@
             <summary>
             Send a message signed using the mesh administration key.
             </summary>
-            <param name="MeshMessage"></param>
+            <param name="meshMessage"></param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateGroup(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -1024,7 +1024,7 @@
             Initiate a connection request.
             </summary>
             <param name="meshHost">The Mesh Host</param>
-            <param name="serviceID">The Service Identifier for the account to connect to.</param>
+            <param name="accountAddress">The account address to connect to.</param>
             <param name="localName">Local friendly name for the account.</param>
             <param name="pin">Pin code value (if supplied).</param>
             <param name="profileDevice">The device profile.</param>

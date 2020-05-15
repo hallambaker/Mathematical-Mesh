@@ -497,6 +497,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual ContainerIndex						ContainerIndex  {get; set;}
+        /// <summary>
+        ///Date on which the envelope was received.
+        /// </summary>
+
+		public virtual DateTime?						Received  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -632,6 +637,11 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteToken ("ContainerIndex", 1);
 					ContainerIndex.Serialize (_writer, false);
 				}
+			if (Received != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Received", 1);
+					_writer.WriteDateTime (Received);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -746,6 +756,10 @@ namespace Goedel.Cryptography.Dare {
  
 					break;
 					}
+				case "Received" : {
+					Received = jsonReader.ReadDateTime ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -810,6 +824,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual DateTime?						Modified  {get; set;}
+        /// <summary>
+        ///Date at which the associated transaction will expire
+        /// </summary>
+
+		public virtual DateTime?						Expire  {get; set;}
 		bool								__First = false;
 		private int						_First;
         /// <summary>
@@ -949,6 +968,11 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteToken ("Modified", 1);
 					_writer.WriteDateTime (Modified);
 				}
+			if (Expire != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Expire", 1);
+					_writer.WriteDateTime (Expire);
+				}
 			if (__First){
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("First", 1);
@@ -1054,6 +1078,10 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "Modified" : {
 					Modified = jsonReader.ReadDateTime ();
+					break;
+					}
+				case "Expire" : {
+					Expire = jsonReader.ReadDateTime ();
 					break;
 					}
 				case "First" : {

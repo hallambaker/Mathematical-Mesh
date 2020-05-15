@@ -274,7 +274,7 @@
 		Description 
 			|Account assertion. This is signed by the service hosting the account.
 
-		String ServiceIDs
+		String AccountAddresses
 			Multiple
 			Description
 				|Service address(es).
@@ -296,7 +296,7 @@
 
 	Structure ConnectionAccount
 		Inherits Connection
-		String ServiceID
+		String AccountAddresses
 			Multiple
 			Description
 				|The list of service identifiers.
@@ -344,7 +344,7 @@
 			|Describes a group. Note that while a group is created by one person who
 			|becomes its first administrator, control of the group may pass to other
 			|administrators over time.
-		String ServiceIDs
+		String AccountAddresses
 			Multiple
 			Description
 				|Service address(es).
@@ -409,7 +409,7 @@
 
 	Structure ContactMesh
 		String UDF
-		String ServiceID
+		String AccountAddresses
 			Multiple
 
 	Structure Contact
@@ -586,6 +586,10 @@
 
 	Structure Message
 		String MessageID
+			Description
+				|Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
+				|the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+				|value. 
 		String Sender
 		String Recipient
 		Struct Reference References
@@ -605,7 +609,7 @@
 		Description
 			|Connection request message. This message contains the information
 		Inherits Message
-		String ServiceID
+		String AccountAddress
 			Description
 				|
 		Struct DareEnvelope EnvelopedProfileDevice
@@ -617,6 +621,9 @@
 		String PinUDF
 			Description
 				|Fingerprint of the PIN value used to authenticate the request.
+		Binary PinWitness
+			Description
+				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
 
 
 	Structure AcknowledgeConnection

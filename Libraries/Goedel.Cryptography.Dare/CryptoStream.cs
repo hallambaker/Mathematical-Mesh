@@ -1,5 +1,5 @@
 ﻿using Goedel.Protocol;
-
+using Goedel.Utilities;
 using System;
 using System.IO;
 using System.Security.Cryptography;
@@ -508,5 +508,21 @@ namespace Goedel.Cryptography.Dare {
         }
     #endregion
 
+    #region JsonDecryptingReader
 
+    //public class JsonDecryptingReader : JsonBcdReader {
+
+
+    //    public JsonDecryptingReader(CryptoStackStreamReader input) : base(input) {
+    //        }
+
+
+    //    public bool Close() {
+
+    //        throw new NYI();
+    //        }
+
+    //    }
+
+    #endregion
     }

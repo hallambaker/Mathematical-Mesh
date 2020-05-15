@@ -5,6 +5,11 @@ using System.IO;
 
 namespace Goedel.Protocol {
 
+
+
+
+
+
     /// <summary>
     /// JSON reader supporting JSON-B, JSON-C and JSON-D extended encodings.
     /// </summary>
@@ -17,7 +22,14 @@ namespace Goedel.Protocol {
         static JSONReader ReaderFactoryMethod(byte[] Data) => new JsonBcdReader(Data);
 
 
+        //IDisposable disposable1;
+        //IDisposable disposable2;
+        //protected override void Disposing() {
+        //    disposable1?.Dispose();
+        //    disposable2?.Dispose();
 
+        //    base.Disposing();
+        //    }
 
         IBinaryStream ByteInput => CharacterInput as IBinaryStream;
 
@@ -253,47 +265,6 @@ namespace Goedel.Protocol {
                     binaryBuffer = -1;
                     return Terminal;
                     }
-
-                case Token.Invalid:
-                    break;
-                case Token.StartObject:
-                    break;
-                case Token.EndObject:
-                    break;
-                case Token.StartArray:
-                    break;
-                case Token.EndArray:
-                    break;
-                case Token.Colon:
-                    break;
-                case Token.Comma:
-                    break;
-                case Token.Tag:
-                    break;
-                case Token.Number:
-                    break;
-                case Token.Integer:
-                    break;
-                case Token.Real32:
-                    break;
-                case Token.Real64:
-                    break;
-                case Token.Litteral:
-                    break;
-                case Token.True:
-                    break;
-                case Token.False:
-                    break;
-                case Token.Null:
-                    break;
-                case Token.EndRecord:
-                    break;
-                case Token.JSONBCD:
-                    break;
-                case Token.Empty:
-                    break;
-                default:
-                    break;
                 }
 
             return Terminal;
@@ -382,47 +353,6 @@ namespace Goedel.Protocol {
                     GetToken();
                     return false; // end of object reached
                     }
-
-                case Token.Invalid:
-                    break;
-                case Token.StartObject:
-                    break;
-                case Token.StartArray:
-                    break;
-                case Token.EndArray:
-                    break;
-                case Token.Colon:
-                    break;
-                case Token.String:
-                    break;
-                case Token.Tag:
-                    break;
-                case Token.Number:
-                    break;
-                case Token.Integer:
-                    break;
-                case Token.Real32:
-                    break;
-                case Token.Real64:
-                    break;
-                case Token.Litteral:
-                    break;
-                case Token.True:
-                    break;
-                case Token.False:
-                    break;
-                case Token.Null:
-                    break;
-                case Token.EndRecord:
-                    break;
-                case Token.Binary:
-                    break;
-                case Token.JSONBCD:
-                    break;
-                case Token.Empty:
-                    break;
-                default:
-                    break;
                 }
             return true;
             }
@@ -444,46 +374,6 @@ namespace Goedel.Protocol {
                     return false; // end of object reached
                     }
 
-                case Token.Invalid:
-                    break;
-                case Token.StartObject:
-                    break;
-                case Token.EndObject:
-                    break;
-                case Token.StartArray:
-                    break;
-                case Token.Colon:
-                    break;
-                case Token.String:
-                    break;
-                case Token.Tag:
-                    break;
-                case Token.Number:
-                    break;
-                case Token.Integer:
-                    break;
-                case Token.Real32:
-                    break;
-                case Token.Real64:
-                    break;
-                case Token.Litteral:
-                    break;
-                case Token.True:
-                    break;
-                case Token.False:
-                    break;
-                case Token.Null:
-                    break;
-                case Token.EndRecord:
-                    break;
-                case Token.Binary:
-                    break;
-                case Token.JSONBCD:
-                    break;
-                case Token.Empty:
-                    break;
-                default:
-                    break;
                 }
             return true;
             }

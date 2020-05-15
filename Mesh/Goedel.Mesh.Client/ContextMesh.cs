@@ -161,7 +161,7 @@ namespace Goedel.Mesh.Client {
         //KeyPair keySignature;
 
         ///<summary>Convenience accessor for the Account Service ID</summary>
-        public string ServiceID => MessageRequestConnection?.ServiceID;
+        public string ServiceID => MessageRequestConnection?.AccountAddress;
 
         ///<summary>The Mesh Client.</summary>
         public MeshService MeshClient;
@@ -218,7 +218,7 @@ namespace Goedel.Mesh.Client {
         /// Initiate a connection request.
         /// </summary>
         /// <param name="meshHost">The Mesh Host</param>
-        /// <param name="serviceID">The Service Identifier for the account to connect to.</param>
+        /// <param name="accountAddress">The account address to connect to.</param>
         /// <param name="localName">Local friendly name for the account.</param>
         /// <param name="pin">Pin code value (if supplied).</param>
         /// <param name="profileDevice">The device profile.</param>
@@ -227,28 +227,25 @@ namespace Goedel.Mesh.Client {
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
                 ProfileDevice profileDevice,
-                string serviceID,
+                string accountAddress,
                 string localName = null,
                 string pin = null) {
 
             localName.Future();
-            
+
             // generate MessageConnectionRequestClient
-            var messageConnectionRequestClient = new RequestConnection() {
-                ServiceID = serviceID,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                ClientNonce = CryptoCatalog.GetBits(128),
-                PinUDF = UDF.PIN2PinID(pin)
-                };
+            var messageConnectionRequestClient = new RequestConnection(accountAddress,
+                        profileDevice, pin);
 
 
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(
                         profileDevice.KeyAuthentication.UDF);
 
-            var messageConnectionRequestClientEncoded = messageConnectionRequestClient.Encode(keyAuthentication);
+            var messageConnectionRequestClientEncoded = 
+                messageConnectionRequestClient.Encode(keyAuthentication);
 
             // Acquire ephemeral client. This will only be used for the Connect and Complete methods.
-            var meshClient = meshHost.MeshMachine.GetMeshClient(serviceID, keyAuthentication, null);
+            var meshClient = meshHost.MeshMachine.GetMeshClient(accountAddress, keyAuthentication, null);
 
             var connectRequest = new ConnectRequest() {
                 MessageConnectionRequestClient = messageConnectionRequestClientEncoded

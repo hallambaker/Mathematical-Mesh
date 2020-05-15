@@ -74,19 +74,16 @@ namespace Goedel.Mesh {
             Sign(keySign);
             }
 
+
         /// <summary>
-        /// Decode an enveloped profile device.
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="RespondConnection"/>
         /// </summary>
-        /// <param name="envelope">The enveloped profile.</param>
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ProfileDevice Decode(DareEnvelope envelope) {
-            if (envelope == null) {
-                return null;
-                }
-            var result = FromJSON(envelope.GetBodyReader(), true);
-            result.DareEnvelope = envelope;
-            return result;
-            }
+        public static new ProfileDevice Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ProfileDevice;
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -148,19 +145,17 @@ namespace Goedel.Mesh {
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
-        /// The public key value is calculated for Encryption, Signature and Authentication
-        /// and registered in the KeyCollection <paramref name="keyCollection"/>.
+        /// The public key values are calculated for Encryption, Signature and Authentication
+        /// and used to construct the corresponding <see cref="ConnectionDevice"/>
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
-        /// <param name="keyCollection">The key collection to register the 
-        /// <see cref="Activation.KeySignature"/> public key to.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
         /// a seed value of <paramref name="bits"/> length is generated.</param>
         /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
         /// is null.</param>
+        /// 
         public ActivationDevice(
                     ProfileDevice profileDevice,
-                    KeyCollection keyCollection,
                     byte[] masterSecret = null,
                     int bits = 256) : base (
                         profileDevice, UdfAlgorithmIdentifier.MeshActivationDevice, masterSecret, bits) {
@@ -178,29 +173,19 @@ namespace Goedel.Mesh {
                 KeyAuthentication = new PublicKey(keyAuthentication.KeyPairPublic())
                 };
             }
-        
 
 
         /// <summary>
-        /// Decode the contents of <paramref name="envelope"/> using keys from
-        /// <paramref name="keyCollection"/>.
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationDevice"/>
+        /// using keys from <paramref name="keyCollection"/>.
         /// </summary>
-        /// <param name="envelope">The envelope containing a JSON encoded ActivationDevice instance</param>
-        /// <param name="keyCollection">Key collection to collect keys from.</param>
-        /// <returns>New instance of the serialized data.</returns>
-        public static ActivationDevice Decode(DareEnvelope envelope, KeyCollection keyCollection) {
-            if (envelope == null) {
-                return null;
-                }
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ActivationDevice Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ActivationDevice;
 
-            var plaintext = envelope.GetPlaintext(keyCollection);
-
-            Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), true);
-            result.DareEnvelope = envelope;
-
-            return result;
-            }
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -228,21 +213,15 @@ namespace Goedel.Mesh {
         public ConnectionDevice() {
             }
 
-
         /// <summary>
-        /// Decode the DareEnvelope <paramref name="envelope"/> and return the corresponding
-        /// <see cref="ConnectionDevice"/> instance.
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="RespondConnection"/>
         /// </summary>
-        /// <param name="envelope">The DareEnvelope to decode</param>
-        /// <returns>The decoded <see cref="ConnectionDevice"/> instance.</returns>
-        public static new ConnectionDevice Decode(DareEnvelope envelope) {
-            if (envelope == null) {
-                return null;
-                }
-            var result = FromJSON(envelope.GetBodyReader(), true);
-            result.DareEnvelope = envelope;
-            return result;
-            }
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ConnectionDevice Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ConnectionDevice;
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

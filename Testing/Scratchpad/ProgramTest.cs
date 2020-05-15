@@ -41,6 +41,10 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectAuthAll();
             //ShellTests.Test().TestProfileConnectEARL();
 
+            //StoreTests.Test().TestSpoolSingle();
+
+
+
             ShellTests.Test().TestProfileConnectPin();
 
 

@@ -897,8 +897,8 @@ namespace Goedel.Cryptography {
 
             var s1 = MakeWitness(fingerprint1, nonce1);
             var s2 = MakeWitness(fingerprint2, nonce2);
-
             return MakeWitness(s1, s2);
+
             }
 
         /// <summary>
@@ -953,9 +953,51 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Convert a PIN to a Pin Identifier
         /// </summary>
-        /// <param name="PIN">The PIN value</param>
+        /// <param name="pin">The PIN value</param>
+        /// <param name="p1">First data item</param>
+        /// <param name="p2">Secomd data item</param>
+        /// <param name="p3">Third data item</param>
         /// <returns>The corresponding PIN identifier</returns>
-        public static string PIN2PinID(string PIN) => PIN;
+        public static byte[] PinWitness(
+                    string pin, 
+                    byte[] p1,
+                    byte[] p2=null,
+                    byte[] p3 = null) {
+
+            var provider = Platform.HMAC_SHA2_512.CryptoProviderAuthentication();
+
+            var encoder = provider.MakeAuthenticator(pin.ToUTF8());
+
+            encoder.InputStream.Write(p1, 0, p1.Length);
+            if (p2 != null) {
+                encoder.InputStream.Write(p2, 0, p2.Length);
+                }
+            if (p3 != null) {
+                encoder.InputStream.Write(p3, 0, p3.Length);
+                }
+            encoder.Complete();
+
+            return encoder.Integrity;
+            }
+
+        /// <summary>
+        /// Convert a PIN to a Pin Identifier
+        /// </summary>
+        /// <param name="pin">The PIN value</param>
+        /// <param name="p1">First data item</param>
+        /// <param name="p2">Secomd data item</param>
+        /// <param name="p3">Third data item</param>
+        /// <param name="bits">The output precision in bits.</param>
+        /// <returns>The fingerprint value</returns>
+        public static string PinWitnessString(
+                    string pin,
+                    byte[] p1,
+                    byte[] p2 = null,
+                    byte[] p3 = null,
+                    int bits = 0) =>
+            PresentationBase32(PinWitness(pin, p1, p2, p3), bits);
+
+
         #endregion
 
 

@@ -50,15 +50,11 @@ namespace Goedel.Mesh {
         /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileHost"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ProfileHost Decode(DareEnvelope envelope) {
-            if (envelope == null) {
-                return null;
-                }
-            var result = FromJSON(envelope.GetBodyReader(), true);
-            result.DareEnvelope = envelope;
-            return result;
-            }
+        public static new ProfileHost Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ProfileHost;
 
         }
     }

@@ -989,12 +989,13 @@
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode an enveloped <see cref="T:Goedel.Mesh.Contact"/> from the DareEnvelope <paramref name="envelope"/>.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Contact"/>
             </summary>
-            <param name="envelope">The envelope containing the contact</param>
-            <returns>The created contact.</returns>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.Contact.MeshAccounts">
              <summary>
@@ -1413,12 +1414,12 @@
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the envelope <paramref name="envelope"/> using keys from 
-            <paramref name="keyCollection"/> and return the resulting <see cref="T:Goedel.Mesh.CatalogedDevice"/>.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.CatalogedDevice"/>
+            using keys from <paramref name="keyCollection"/>.
             </summary>
             <param name="envelope">The envelope to decode.</param>
-            <param name="keyCollection">Keys to be used to decode <paramref name="envelope"/>.</param>
-            <returns>The decoded <see cref="T:Goedel.Mesh.CatalogedDevice"/> (if successful).</returns>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogedDevice.GetAccount(System.String,System.String)">
             <summary>
@@ -2057,10 +2058,66 @@
         <member name="F:Goedel.Mesh.MeshKeyType.ServiceAuthenticate">
             <summary>Master profile authentication</summary>
         </member>
+        <member name="T:Goedel.Mesh.MessageStatus">
+            <summary>
+            Status values for Mesh Messages
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Unread">
+            <summary>Message is unread.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Read">
+            <summary>Message has been read.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Unexpired">
+            <summary>Message has expired</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Expired">
+            <summary>Message has expired</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Open">
+            <summary>Message is open.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Closed">
+            <summary>Message is closed.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Initial">
+            <summary>Initial Message Status</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.Active">
+            <summary>Initial Message Status</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.All">
+            <summary>All messages.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageStatus.None">
+            <summary>No messages.</summary>
+        </member>
         <member name="T:Goedel.Mesh.Constants">
             <summary>
             Collected constants used in the Mathematical Mesh
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.MillisecondInTicks">
+            <summary>Number of ticks in a millisecond</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.SecondInTicks">
+            <summary>Number of ticks in a second</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.MinuteInTicks">
+            <summary>Number of ticks in a minute</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.HourInTicks">
+            <summary>Number of ticks in a hour</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.DayInTicks">
+            <summary>Number of ticks in a day</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.WeekInTicks">
+            <summary>Number of ticks in a week</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.YearInTicks">
+            <summary>Number of ticks in a year</summary>
         </member>
         <member name="F:Goedel.Mesh.Constants.DefaultMasterKeyBits">
             <summary>Default master seed size in bits.</summary>
@@ -2584,20 +2641,116 @@
             <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
             <returns>The created key pair</returns>
         </member>
+        <member name="T:Goedel.Mesh.Reference">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Reference.EnvelopeID">
+            <summary>Returns the envelope ID corresponding to the MessageID</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Reference.MessageID">
+             <summary>
+            The received message to which this is a response
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Reference.ResponseID">
+             <summary>
+            Message that was generated in response to the original (optional).
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Reference.Relationship">
+             <summary>
+            The relationship type. This can be Read, Unread, Accept, Reject.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Reference._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Reference.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Reference._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Reference.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Reference.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Reference.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Reference.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.Message">
             <summary>
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.KeyPair)">
+        <member name="F:Goedel.Mesh.Message.MessageStatus">
+            <summary>The message status.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
             <summary>
             Encode the message using the signature key <paramref name="signingKey"/>.
             </summary>
             <param name="signingKey">The signature key.</param>
+            <param name="encryptionKey">The encryption key.</param>
             <returns>The enveloped, signed message.</returns>
         </member>
-        <member name="P:Goedel.Mesh.Message.MessageID">
+        <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Message"/>
             </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Message.GetEnvelopeID(System.String)">
+            <summary>
+            Compute the EnvelopeID for <paramref name="messageID"/>.
+            </summary>
+            <param name="messageID">The message identifier to calculate the envelope 
+            identifer of</param>
+            <returns>The envelope identifier.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.Message.MessageID">
+             <summary>
+            Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
+            the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+            value. 
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.Message.Sender">
             <summary>
@@ -2707,6 +2860,14 @@
             <param name="relationship">Relationship to the message.</param>
             <param name="responseID">The response code.</param>
         </member>
+        <member name="M:Goedel.Mesh.MessageComplete.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.MessageComplete"/>
+            </summary>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
+        </member>
         <member name="P:Goedel.Mesh.MessageComplete._Tag">
             <summary>
             Tag identifying this class
@@ -2758,6 +2919,73 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.MessagePIN">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN.Account">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN.Expires">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN.PIN">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessagePIN.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.AcknowledgeConnection">
              <summary>
             
@@ -2766,13 +2994,14 @@
              </summary>
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection.MessageConnectionRequest">
-            <summary>Convenience accessor for the inner <see cref="T:Goedel.Mesh.RequestConnection"/></summary>
+            <summary>Convenience accessor for the inner <see cref="T:Goedel.Mesh.AcknowledgeConnection"/></summary>
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.AcknowledgeConnection"/>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.AcknowledgeConnection.EnvelopedRequestConnection">
@@ -2847,14 +3076,41 @@
              Connection request message. This message contains the information
              </summary>
         </member>
+        <member name="M:Goedel.Mesh.RequestConnection.GetPinUDF(System.String,System.String)">
+            <summary>
+            PIN code identifier 
+            </summary>
+            <param name="pin"></param>
+            <param name="accountAddress"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.GetPinWitness(System.String,System.String,System.Byte[],System.String)">
+            <summary>
+            Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
+            </summary>
+            <param name="pin"></param>
+            <param name="accountAddress"></param>
+            <param name="clientNonce"></param>
+            <param name="deviceUDF"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.Verify(System.String)">
+            <summary>
+            Verify that the witness value is correct for the specified <paramref name="pin"/> and
+            values of Device UDF and Account Address.
+            </summary>
+            <param name="pin"></param>
+            <returns></returns>
+        </member>
         <member name="P:Goedel.Mesh.RequestConnection.ProfileDevice">
             <summary>Convenience accessor for the inner <see cref="P:Goedel.Mesh.RequestConnection.ProfileDevice"/></summary>
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.RequestConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RequestConnection"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.Verify(Goedel.Cryptography.Dare.DareEnvelope)">
@@ -2864,7 +3120,7 @@
             <param name="envelope">The envelope to decode.</param>
             <returns>The decoded profile (if signature verification succeeds).</returns>
         </member>
-        <member name="P:Goedel.Mesh.RequestConnection.ServiceID">
+        <member name="P:Goedel.Mesh.RequestConnection.AccountAddress">
              <summary>
             
              </summary>
@@ -2882,6 +3138,11 @@
         <member name="P:Goedel.Mesh.RequestConnection.PinUDF">
              <summary>
             Fingerprint of the PIN value used to authenticate the request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.RequestConnection.PinWitness">
+             <summary>
+            Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
              </summary>
         </member>
         <member name="P:Goedel.Mesh.RequestConnection._Tag">
@@ -3282,12 +3543,13 @@
             <param name="SignatureKey">The key to sign the assertion under.</param>
             <returns>The signed assertion.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the specified <paramref name="dareEnvelope"/>>
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Assertion"/>
             </summary>
-            <param name="dareEnvelope">The envelope to decode.</param>
-            <returns>The decoded <see cref="T:Goedel.Mesh.Assertion"/></returns>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="T:Goedel.Mesh.Profile">
              <summary>
@@ -3569,12 +3831,13 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode from DareEnvelope
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileAccount"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
-            <returns>The decoded ProfileAccount.</returns>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.MatchService(System.String)">
             <summary>
@@ -3583,7 +3846,7 @@
             <param name="service"></param>
             <returns></returns>
         </member>
-        <member name="P:Goedel.Mesh.ProfileAccount.ServiceIDs">
+        <member name="P:Goedel.Mesh.ProfileAccount.AccountAddresses">
              <summary>
             Service address(es).
              </summary>
@@ -3693,11 +3956,11 @@
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode from DareEnvelope
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationAccount"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
-            <param name="keyCollection">Key collection to collect keys from.</param>
-            <returns>The decoded ProfileAccount.</returns>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -3784,15 +4047,15 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the DareEnvelope <paramref name="envelope"/> and return the corresponding
-            <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ConnectionAccount"/>
             </summary>
-            <param name="envelope">The DareEnvelope to decode</param>
-            <returns>The decoded <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.</returns>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
-        <member name="P:Goedel.Mesh.ConnectionAccount.ServiceID">
+        <member name="P:Goedel.Mesh.ConnectionAccount.AccountAddresses">
              <summary>
             The list of service identifiers.
              </summary>
@@ -3906,11 +4169,12 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ProfileDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode an enveloped profile device.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
-            <param name="envelope">The enveloped profile.</param>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
@@ -4010,7 +4274,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.#ctor(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyCollection,System.Byte[],System.Int32)">
+        <member name="M:Goedel.Mesh.ActivationDevice.#ctor(Goedel.Mesh.ProfileDevice,System.Byte[],System.Int32)">
             <summary>
             Construct a new <see cref="T:Goedel.Mesh.ActivationDevice"/> instance for the profile
             <paramref name="profileDevice"/>. The property <see cref="P:Goedel.Mesh.Activation.ActivationKey"/> is
@@ -4018,25 +4282,24 @@
             If the value <paramref name="masterSecret"/> is
             specified, it is used as the seed value. Otherwise, a seed value of
             length <paramref name="bits"/> is generated.
-            The public key value is calculated for Encryption, Signature and Authentication
-            and registered in the KeyCollection <paramref name="keyCollection"/>.
+            The public key values are calculated for Encryption, Signature and Authentication
+            and used to construct the corresponding <see cref="P:Goedel.Mesh.ActivationDevice.ConnectionDevice"/>
             </summary>
             <param name="profileDevice">The base profile that the activation activates.</param>
-            <param name="keyCollection">The key collection to register the 
-            <see cref="P:Goedel.Mesh.Activation.KeySignature"/> public key to.</param>
             <param name="masterSecret">If not null, specifies the seed value. Otherwise,
             a seed value of <paramref name="bits"/> length is generated.</param>
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
+            
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the contents of <paramref name="envelope"/> using keys from
-            <paramref name="keyCollection"/>.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationDevice"/>
+            using keys from <paramref name="keyCollection"/>.
             </summary>
-            <param name="envelope">The envelope containing a JSON encoded ActivationDevice instance</param>
-            <param name="keyCollection">Key collection to collect keys from.</param>
-            <returns>New instance of the serialized data.</returns>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -4113,13 +4376,13 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the DareEnvelope <paramref name="envelope"/> and return the corresponding
-            <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
-            <param name="envelope">The DareEnvelope to decode</param>
-            <returns>The decoded <see cref="T:Goedel.Mesh.ConnectionDevice"/> instance.</returns>
+            <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -4250,7 +4513,7 @@
             <param name="user">The user to add.</param>
             <returns>The group activation record for the user.</returns>
         </member>
-        <member name="P:Goedel.Mesh.ProfileGroup.ServiceIDs">
+        <member name="P:Goedel.Mesh.ProfileGroup.AccountAddresses">
              <summary>
             Service address(es).
              </summary>
@@ -4421,11 +4684,12 @@
             <param name="algorithmAuth">The authentication algorithm.</param>
             <returns>The created ProfileHost.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ProfileHost.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileHost"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
         <member name="P:Goedel.Mesh.ProfileHost.KeyAuthentication">
@@ -4505,11 +4769,12 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ProfileMesh.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileMesh"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
@@ -4620,12 +4885,13 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <returns>The service profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode from DareEnvelope
+            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileService"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
-            <returns>The decoded ProfileService.</returns>
+            <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+            <returns>The decoded profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.CreateHost(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -6991,9 +7257,21 @@
             The DareEnvelope encapsulation of this object instance.
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.MeshItem.KeyCollection">
+            <summary>The key collection that was used to decode this object instance.</summary>
+        </member>
         <member name="P:Goedel.Mesh.MeshItem.Initialize">
             <summary>Initialization property, used to force initialization of the 
             Json parser dictionaries.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.MeshItem.Status">
+            <summary>Reports the status of the item. </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshItem.Open">
+            <summary>Reports true if the item status is open </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MeshItem.Closed">
+            <summary>Reports true if the item status is closed </summary>
         </member>
         <member name="M:Goedel.Mesh.MeshItem.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
             <summary>
@@ -7003,12 +7281,13 @@
             <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.MeshItem.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
             <summary>
-            Decode the specified <paramref name="dareEnvelope"/>>
+            Decode and parse the data 
             </summary>
-            <param name="dareEnvelope">The envelope to decode.</param>
-            <returns>The decoded <see cref="T:Goedel.Mesh.MeshItem"/></returns>
+            <param name="envelope">The enveloped data.</param>
+            <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
+            <returns>The decoded data item</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -7577,7 +7856,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ContactMesh.ServiceID">
+        <member name="P:Goedel.Mesh.ContactMesh.AccountAddresses">
             <summary>
             </summary>
         </member>
@@ -7839,76 +8118,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Location.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Reference">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Reference.MessageID">
-             <summary>
-            The received message to which this is a response
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Reference.ResponseID">
-             <summary>
-            Message that was generated in response to the original (optional).
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Reference.Relationship">
-             <summary>
-            The relationship type. This can be Read, Unread, Accept, Reject.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Reference._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Reference.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Reference._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Reference.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Reference.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Reference.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Reference.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8237,73 +8446,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.MessagePIN">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MessagePIN.Account">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MessagePIN.Expires">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MessagePIN.PIN">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.MessagePIN._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.MessagePIN.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8740,22 +8882,45 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:Goedel.Mesh.SpoolEntry">
+            <summary>Message entry in spool catalog</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Spool">
+            <summary>The spool the message is enrolled in.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.EnvelopeID">
+            <summary>The unique envelope identifier.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.DareEnvelope">
+            <summary>The envelope from the spool.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Next">
+            <summary>The next entry in the spool.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Previous">
+            <summary>The previous entry in the spool.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Message">
+            <summary>Returns the message</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEntry.AddEnvelope(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Add an envelope to an existing entry created because a status value was reported.
+            </summary>
+            <param name="envelope">The envelope to add.</param>
+            <param name="next">The next entry in the spool.</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.SpoolEntry.Decode" -->
         <member name="T:Goedel.Mesh.Spool">
             <summary>
             Base class for stores of type Spool.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Spool.SpoolOutbound">
-            <summary>Canonical name for outbound spool</summary>
+        <member name="P:Goedel.Mesh.Spool.SpoolEntryLast">
+            <summary>The last spool entry.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Spool.SpoolLocal">
-            <summary>Canonical name for local spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Spool.SpoolInbound">
-            <summary>Canonical name for inbound spool</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Spool.SpoolArchive">
-            <summary>Canonical name for archive spool</summary>
+        <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
+            <summary>Dictionary of entries by identifier.</summary>
         </member>
         <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
             <summary>
@@ -8781,6 +8946,197 @@
             purposes of the container.
             </summary>
             <param name="dareMessage"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.CheckTime(System.Nullable{System.DateTime},System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Check that the time value <paramref name="dateTime"/> is within the boundaries
+            defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
+            <paramref name="notOnOrAfter"/>.
+            </summary>
+            <param name="dateTime">The time to test.</param>
+            <param name="maxTicks">If greater or equal to zero, return <code>false</code> if 
+            <paramref name="dateTime"/> is more than
+            this number of ticks earlier than the current time.</param>
+            <param name="notBefore">If not null, return <code>false</code> if <paramref name="dateTime"/>
+            is earlier than this time.</param>
+            <param name="notOnOrAfter">If not null, return <code>false</code> if <paramref name="dateTime"/>
+            is later than or the same as this time.</param>
+            <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
+            <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
+            met in which case return <code>false</code>.
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetByMessageId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
+            <summary>
+            Retrieve a message by message ID. 
+            </summary>
+            <param name="messageID"></param>
+            <param name="select"></param>
+            <param name="maxTicks"></param>
+            <param name="notBefore"></param>
+            <param name="notOnOrAfter"></param>
+            <param name="maxSearch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetByEnvelopeId(System.String,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},System.Int64)">
+            <summary>
+            Retrieve a message by message ID. 
+            </summary>
+            <param name="envelopeId"></param>
+            <param name="select"></param>
+            <param name="notBefore"></param>
+            <param name="notOnOrAfter"></param>
+            <param name="maxSearch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64)">
+            <summary>
+            Returns an enumerator over the messages in the spool that match the
+            constraints specified by <paramref name="include"/>, <paramref name="exclude"/>,
+            <paramref name="maxTicks"/>, <paramref name="notBefore"/>, <paramref name="notOnOrAfter"/>
+            and <paramref name="maxResults"/>.
+            <para>A message meets the criteria specified by the message inclusion and exclusion masks
+            if and only if (<code>MessageStatus</code> &amp; <paramref name="include"/> != MessageStatus.None)
+            &amp; (<code>MessageStatus</code> &amp; <paramref name="exclude"/> == MessageStatus.None) </para>. That
+            is, there must be at least one match to the inclusion mask and no matches to the exclusion
+            mask.
+            </summary>
+            <param name="select">Message status selection mask.</param>
+            <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
+            <param name="notBefore">Exclude messages sent before this time.</param>
+            <param name="notOnOrAfter">Exclude messages sent after this time.</param>
+            <param name="maxSearch">Starting point for the search, i.e. the highest frame number</param> 
+            <param name="minSearch">Ending point for the search, i.e. the lowest frame number</param> 
+            <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.Intern(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Intern <paramref name="envelope"/> with the following envelope 
+            <paramref name="next"/>.
+            </summary>
+            <param name="envelope"></param>
+            <param name="next">The next frame number</param>
+            <returns>The interned envelope instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetPrevious(Goedel.Mesh.SpoolEntry)">
+            <summary>
+            
+            </summary>
+            <param name="current"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.GetLast">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolEnumeratorRaw">
+            <summary>
+            Enumerator that returns the raw, unencrypted container data.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEnumeratorRaw.Current">
+            <summary>The current enumerated value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.GetEnumerator">
+            <summary>
+            When called on an instance of this class, returns the instance. Thus allowing
+            selectors to be used in sub classes.
+            </summary>
+            <returns>This instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64)">
+            <summary>
+            Constructor for an enumerator on the store <paramref name="spool"/> with search constraints.
+            
+            
+            </summary>
+            <remarks>This enumerator is NOT currently thread safe though it should be.</remarks>
+            <param name="spool"></param>
+            <param name="select"></param>
+            <param name="notBefore"></param>
+            <param name="notOnOrAfter"></param>
+            <param name="last"></param>
+            <param name="maxResults"></param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolLocal">
+            <summary>
+            Class for the local spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolLocal.Label">
+            <summary>Canonical name for local spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolLocal.CheckPIN(System.String,System.Int64,System.Int64)">
+            <summary>
+            Check the spool for a matching unexpired PIN identifier and return the plaintext of the
+            first unexpired message.
+            </summary>
+            <param name="pinID">The identifier of the corresponding PIN value.</param>
+            <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
+            <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
+            <returns>The plaintext message.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolInbound">
+            <summary>
+            Class for the inbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolInbound.Label">
+            <summary>Canonical name for inbound spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolOutbound">
+            <summary>
+            Class for the outbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolOutbound.Label">
+            <summary>Canonical name for outbound spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
+        </member>
+        <member name="T:Goedel.Mesh.SpoolArchive">
+            <summary>
+            Class for the outbound spool
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolArchive.Label">
+            <summary>Canonical name for outbound spool</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <param name="cryptoParameters">The cryptographic parameters.</param>
+            <param name="keyCollection">The key collection to fetch keys from.</param>
         </member>
         <member name="T:Goedel.Mesh.Store">
             <summary>

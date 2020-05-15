@@ -80,7 +80,7 @@ namespace Goedel.Mesh.Server {
             lock (containerEntry) {
                 Directory.CreateDirectory(directory);
                 // Create the pro-forma containers.
-                new Spool(directory, Spool.SpoolInbound).Dispose();
+                new Spool(directory, SpoolInbound.Label).Dispose();
 
                 }
             }
@@ -95,7 +95,7 @@ namespace Goedel.Mesh.Server {
                         RequestConnection messageConnectionRequestClient) {
             jpcSession.Future();
 
-            using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.ServiceID);
+            using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
             var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.KeyPair.UDFBytes;
@@ -120,12 +120,12 @@ namespace Goedel.Mesh.Server {
 
             // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
-            var message = Envelope(messageConnectionRequest);
-            accountHandle.Post(message);
+            var envelope = messageConnectionRequest.Encode();
+            accountHandle.Post(envelope);
 
 
             var connectResponse = new ConnectResponse() {
-                EnvelopedConnectionResponse = message,
+                EnvelopedConnectionResponse = envelope,
                 EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
                 EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope
                 };
@@ -169,9 +169,9 @@ namespace Goedel.Mesh.Server {
             using var accountHandle = GetAccountVerified(account, jpcSession);
 
             var containerStatus = new List<ContainerStatus> {
-                    accountHandle.GetStatusSpool (Spool.SpoolInbound),
-                    accountHandle.GetStatusSpool (Spool.SpoolOutbound),
-                    accountHandle.GetStatusSpool (Spool.SpoolLocal),
+                    accountHandle.GetStatusSpool (SpoolInbound.Label),
+                    accountHandle.GetStatusSpool (SpoolOutbound.Label),
+                    accountHandle.GetStatusSpool (SpoolLocal.Label),
                     accountHandle.GetStatusCatalog (CatalogCredential.Label),
                     accountHandle.GetStatusCatalog (CatalogDevice.Label),
                     accountHandle.GetStatusCatalog (CatalogContact.Label),
@@ -365,24 +365,6 @@ namespace Goedel.Mesh.Server {
 
 
             throw new NYI();
-            }
-
-        /// <summary>
-        /// Create a message envelope for a message originated by the service. The message is
-        /// always signed under the service key and encrypted under the keys of at least
-        /// one recipient.
-        /// </summary>
-        /// <param name="message">The message to be wrapped by the envelope</param>
-        /// <returns>The signed message.</returns>
-        DareEnvelope Envelope(Message message) {
-
-            var result = DareEnvelope.Encode(message.GetBytes());
-            result.Header.ContentMeta = result.Header.ContentMeta ??
-                    new ContentMeta();
-            result.Header.ContentMeta.UniqueID = UDF.Nonce();
-            result.Header.ContentMeta.MessageType = message._Tag;
-
-            return result;
             }
 
 

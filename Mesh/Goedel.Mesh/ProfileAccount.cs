@@ -13,7 +13,7 @@ namespace Goedel.Mesh {
 
 
         ///<summary>The identifier of the default service.</summary>
-        public string ServiceDefault => ServiceIDs?[0];
+        public string ServiceDefault => AccountAddresses?[0];
 
 
         //KeyPair keySignOffline;
@@ -155,8 +155,8 @@ namespace Goedel.Mesh {
                     builder.AppendIndent(indent, $"KeysOnlineSignature: {online.UDF} ");
                     }
                 }
-            if (ServiceIDs != null) {
-                foreach (var serviceID in ServiceIDs) {
+            if (AccountAddresses != null) {
+                foreach (var serviceID in AccountAddresses) {
                     builder.AppendIndent(indent, $"ServiceID : {serviceID} ");
                     }
                 }
@@ -168,18 +168,15 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode from DareEnvelope
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileAccount"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
-        /// <returns>The decoded ProfileAccount.</returns>
-        public static new ProfileAccount Decode(DareEnvelope envelope) {
-            if (envelope == null) {
-                return null;
-                }
-            var result = FromJSON(envelope.GetBodyReader(), true);
-            result.DareEnvelope = envelope;
-            return result;
-            }
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ProfileAccount Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ProfileAccount;
+
 
 
         /// <summary>
@@ -190,7 +187,7 @@ namespace Goedel.Mesh {
         public int MatchService(string service) {
             int id = 0;
 
-            foreach (var serviceID in ServiceIDs) {
+            foreach (var serviceID in AccountAddresses) {
 
                 if (service == serviceID) {
                     return id;
@@ -271,27 +268,16 @@ namespace Goedel.Mesh {
 
 
 
-
-
-
         /// <summary>
-        /// Decode from DareEnvelope
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationAccount"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to collect keys from.</param>
-        /// <returns>The decoded ProfileAccount.</returns>
-        public static ActivationAccount Decode(DareEnvelope envelope, KeyCollection keyCollection) {
-            if (envelope == null) {
-                return null;
-                }
-            var plaintext = envelope.GetPlaintext(keyCollection);
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ActivationAccount Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ActivationAccount;
 
-            Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), true);
-            result.DareEnvelope = envelope;
-
-            return result;
-            }
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -350,19 +336,16 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode the DareEnvelope <paramref name="envelope"/> and return the corresponding
-        /// <see cref="ConnectionDevice"/> instance.
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ConnectionAccount"/>
         /// </summary>
-        /// <param name="envelope">The DareEnvelope to decode</param>
-        /// <returns>The decoded <see cref="ConnectionDevice"/> instance.</returns>
-        public static new ConnectionAccount Decode(DareEnvelope envelope) {
-            if (envelope == null) {
-                return null;
-                }
-            var result = FromJSON(envelope.GetBodyReader(), true);
-            result.DareEnvelope = envelope;
-            return result;
-            }
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
+        /// <returns>The decoded profile.</returns>
+        public static new ConnectionAccount Decode(DareEnvelope envelope,
+                    KeyCollection keyCollection = null) =>
+                        MeshItem.Decode(envelope, keyCollection) as ConnectionAccount;
+
+
         }
 
     }

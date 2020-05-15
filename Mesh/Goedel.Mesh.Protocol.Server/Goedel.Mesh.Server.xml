@@ -467,15 +467,6 @@
             <param name="dareMessage">The message.</param>
             <returns>Identifier of the message posted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.Envelope(Goedel.Mesh.Message)">
-            <summary>
-            Create a message envelope for a message originated by the service. The message is
-            always signed under the service key and encrypted under the keys of at least
-            one recipient.
-            </summary>
-            <param name="message">The message to be wrapped by the envelope</param>
-            <returns>The signed message.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.GetAccountVerified(Goedel.Protocol.VerifiedAccount,Goedel.Protocol.JpcSession)">
             <summary>
             Get access to an account record for an authenticated request.

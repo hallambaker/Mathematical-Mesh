@@ -41,7 +41,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>This instance</returns>
         public ContainerEnumeratorRaw GetEnumerator() => this;
 
-        object IEnumerator.Current => throw new NotImplementedException();
+        object IEnumerator.Current => Current;
 
         /// <summary>
         /// Dispose method.

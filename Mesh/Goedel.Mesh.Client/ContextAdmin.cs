@@ -96,7 +96,7 @@ namespace Goedel.Mesh.Client {
             Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
 
             // Add this device to the profile as an administrator device by adding the necessary activation.
-            var activationDevice = new ActivationDevice(profileDevice, meshHost.KeyCollection);
+            var activationDevice = new ActivationDevice(profileDevice);
             var catalogedAdmin = AddAdministrator(meshHost, profileMaster, profileDevice, activationDevice, algorithmSign);
 
             // Create an administration context
@@ -168,7 +168,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileDevice">Profile of the device to be added.</param>
         /// <returns>The CatalogedDevice entry.</returns>
         public CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice) {
-            var activationDevice = new ActivationDevice(profileDevice, KeyCollection);
+            var activationDevice = new ActivationDevice(profileDevice);
             var result = CreateCataloguedDevice(ProfileMesh, profileDevice, activationDevice);
 
             return result;
