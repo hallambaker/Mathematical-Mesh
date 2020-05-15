@@ -413,11 +413,6 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.DirectoryAccount">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
             <summary>
             Constructor.

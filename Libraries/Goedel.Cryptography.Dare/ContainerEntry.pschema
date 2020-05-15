@@ -22,23 +22,27 @@
 	//			|The container data.
 
 	Structure ContainerInfo
-		String DataEncoding
-			Description
-				|Specifies the data encoding for the header section of for the following frames.
-				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+
 				
 		Description
 			|Information that describes container information
 
+		String DataEncoding
+			Description
+				|Specifies the data encoding for the header section of for the following frames.
+				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+
+		String ContainerType
+			Description
+				|Specifies the container type for the following records.
+				|This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
 
 		Integer Index
 			Description
 				|The record index within the file. This MUST be unique and 
 				|satisfy any additional requirements determined by the ContainerType.
 
-		String ContainerType
-			Description
-				|Specifies the container type for the following records.
+
 
 		Boolean IsMeta
 			Description

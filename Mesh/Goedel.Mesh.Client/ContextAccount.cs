@@ -98,7 +98,7 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Disposal method.
         /// </summary>
-        protected override void Disposing() => spoolInbound?.Dispose();
+        //protected override void Disposing() => spoolInbound?.Dispose();
 
         //KeyPair compositeSign;
         //KeyPair compositeEncrypt;
@@ -363,16 +363,13 @@ namespace Goedel.Mesh.Client {
         public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
 
         ///<summary>Returns the inbound spool for the account</summary>
-        public SpoolInbound GetSpoolInbound() => spoolInbound ?? (GetStore(SpoolInbound.Label) as SpoolInbound).CacheValue(out spoolInbound);
-        SpoolInbound spoolInbound;
-
+        public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
-        public Spool GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as Spool;
+        public SpoolOutbound GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as SpoolOutbound;
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
-        public SpoolLocal GetSpoolLocal() => spoolLocal ?? (GetStore(SpoolLocal.Label) as SpoolLocal).CacheValue(out spoolLocal);
-        SpoolLocal spoolLocal;
+        public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
 
         /// <summary>
         /// Return the latest unprocessed MessageConnectionRequest that was received.

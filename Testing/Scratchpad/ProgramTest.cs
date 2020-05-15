@@ -45,6 +45,8 @@ namespace Scratchpad {
 
 
 
+            // This is failing because the containerInfo field is not being correctly updated
+
             ShellTests.Test().TestProfileConnectPin();
 
 

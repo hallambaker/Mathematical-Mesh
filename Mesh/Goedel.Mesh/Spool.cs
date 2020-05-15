@@ -153,13 +153,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="dareMessage"></param>
         public SpoolEntry Add(DareEnvelope dareMessage) {
-            // Have to bite the bullet now and write the correct scheme.
-
-            throw new NYI();
-
-            // NYI: If the message is signed or encrypted, these enhancements should be carried over
-            Container.Append(dareMessage.Body, null, dareMessage.Header.ContentMeta);
-
+            Container.Append(dareMessage);
             return Intern(dareMessage, null);
             }
 

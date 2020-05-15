@@ -92,6 +92,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
 
 		public virtual string						DataEncoding  {get; set;}
+        /// <summary>
+        ///Specifies the container type for the following records.
+        ///This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
+        /// </summary>
+
+		public virtual string						ContainerType  {get; set;}
 		bool								__Index = false;
 		private int						_Index;
         /// <summary>
@@ -103,11 +109,6 @@ namespace Goedel.Cryptography.Dare {
 			get => _Index;
 			set {_Index = value; __Index = true; }
 			}
-        /// <summary>
-        ///Specifies the container type for the following records.
-        /// </summary>
-
-		public virtual string						ContainerType  {get; set;}
 		bool								__IsMeta = false;
 		private bool						_IsMeta;
         /// <summary>
@@ -212,15 +213,15 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteToken ("DataEncoding", 1);
 					_writer.WriteString (DataEncoding);
 				}
-			if (__Index){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Index", 1);
-					_writer.WriteInteger32 (Index);
-				}
 			if (ContainerType != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("ContainerType", 1);
 					_writer.WriteString (ContainerType);
+				}
+			if (__Index){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Index", 1);
+					_writer.WriteInteger32 (Index);
 				}
 			if (__IsMeta){
 				_writer.WriteObjectSeparator (ref _first);
@@ -284,12 +285,12 @@ namespace Goedel.Cryptography.Dare {
 					DataEncoding = jsonReader.ReadString ();
 					break;
 					}
-				case "Index" : {
-					Index = jsonReader.ReadInteger32 ();
-					break;
-					}
 				case "ContainerType" : {
 					ContainerType = jsonReader.ReadString ();
+					break;
+					}
+				case "Index" : {
+					Index = jsonReader.ReadInteger32 ();
 					break;
 					}
 				case "IsMeta" : {

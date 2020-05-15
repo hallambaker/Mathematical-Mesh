@@ -723,27 +723,61 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
+        public virtual ContainerInfo MakeContainerInfo() => new ContainerInfo() {
+            Index = (int)FrameCount++
+            };
+
+
 
         /// <summary>
         /// Write a previously prepared or validated Dare Envelope to the container directly.
         /// </summary>
         /// <param name="envelope"></param>
         public virtual void Append(DareEnvelope envelope) {
-            var header = envelope.Header as DareHeader; // fails ! need to copy over !!
+            //var header = envelope.Header as DareHeader; // fails ! need to copy over !!
+            var headerIn = envelope.Header;
+            var trailerIn = envelope.Trailer;
+
+            var header = new DareHeader() {
+                ContainerInfo = MakeContainerInfo(),
+
+                EnvelopeID = headerIn.EnvelopeID,
+                EncryptionAlgorithm = headerIn.EncryptionAlgorithm,
+                Salt = headerIn.Salt,
+                Cloaked = headerIn.Cloaked,
+                EDSS = headerIn.EDSS,
+                Signers = headerIn.Signers,
+                Recipients = headerIn.Recipients,
+                ContentMetaData = headerIn.ContentMetaData,
+                Received = headerIn.Received ?? DateTime.Now,
+                
+                Signatures = trailerIn?.Signatures ?? headerIn.Signatures,
+                SignedData = trailerIn?.SignedData ?? headerIn.SignedData,
+                PayloadDigest = trailerIn?.PayloadDigest ?? headerIn.PayloadDigest,
+
+                DigestAlgorithm = headerIn.DigestAlgorithm
+                };
+
+            // we need to recompute the PayloadDigest under the container DigestAlgorithm
+
+
+            var trailer = new DareTrailer() {
+                };
+
+
+            // Hack: should check that the digest algorithm is the same as the container
+            // Hack: should verify the digest value and signature.
+
 
             PrepareFrame(header.ContainerInfo);
-
             var contextWrite = new ContainerWriterFile(this, header, JBCDStream);
-
-
-
-            contextWrite.CommitFrame(envelope.Trailer);
+            contextWrite.CommitFrame(trailer);
 
             //Console.WriteLine($"   {header.ContainerInfo.TreePosition} ");
 
             //Apply(header, envelope.Body, envelope.Trailer);
-            var dataHeader = envelope.Header.GetBytes(false);
-            var dataTrailer = envelope.Trailer?.GetBytes(false);
+            var dataHeader = header.GetBytes(false);
+            var dataTrailer = trailer.GetBytes(false);
             AppendFrame(dataHeader, envelope.Body, dataTrailer);
 
 

@@ -120,7 +120,7 @@
 				|If present, the Annotations field contains a sequence of Encrypted Data 
 				|Segments encrypted under the message Master Key. The interpretation of these fields 
 				|is application specific.
-		Struct DareSigner Signers
+		Struct DareSignature Signers
 			Multiple
 			Tag "signatures"
 			Description
@@ -202,7 +202,7 @@
 			|structure. In particular, DARE messages MAY have multiple recipients
 			|and multiple signers.
 
-	Structure DareSigner
+	Structure DareSignature
 		Description
 			|The signature value
 		String Dig
@@ -226,22 +226,6 @@
 			Tag "path"
 			Description
 				|PKIX certificates that establish a trust path for the signer.
-
-	Structure X509Certificate
-		String X5u
-			Tag "x5u"
-			Description
-				|URL identifying an X.509 public key certificate
-		Binary X5
-			Tag "x5c"
-			Description
-				|An X.509 public key certificate
-
-	Structure DareSignature
-		Inherits DareSigner
-		Description
-			|The signature value
-
 		Binary Manifest
 			Description
 				|The data description that was signed.
@@ -255,6 +239,17 @@
 				|The signature witness value used on an encrypted message to demonstrate that 
 				|the signature was authorized by a party with actual knowledge of the encryption 
 				|key used to encrypt the message.
+
+	Structure X509Certificate
+		String X5u
+			Tag "x5u"
+			Description
+				|URL identifying an X.509 public key certificate
+		Binary X5
+			Tag "x5c"
+			Description
+				|An X.509 public key certificate
+
 
 
 	Structure DareRecipient
