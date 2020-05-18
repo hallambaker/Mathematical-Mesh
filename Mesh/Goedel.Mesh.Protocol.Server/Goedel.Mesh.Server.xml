@@ -100,9 +100,9 @@
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetLocal(System.String)">
             <summary>
-            Return the message with identifier <paramref name="id"/> from the local spool.
+            Return the message with identifier <paramref name="messageId"/> from the local spool.
             </summary>
-            <param name="id">Message to return.</param>
+            <param name="messageId">Message to return.</param>
             <returns>The message (if found).</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">

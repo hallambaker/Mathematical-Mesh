@@ -69,6 +69,8 @@ namespace Goedel.Mesh {
             ContainerName = containerName ?? ContainerDefault;
             var fileName = FileName(directory, ContainerName);
 
+
+
             Container = Container.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,

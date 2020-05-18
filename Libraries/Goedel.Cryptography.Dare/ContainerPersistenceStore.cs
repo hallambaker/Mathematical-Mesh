@@ -191,6 +191,7 @@ namespace Goedel.Cryptography.Dare {
 
                 var item = frameIndex.Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
 
+                // This is failing because ContentMetaData is not being written to envelopes...
                 CommitTransaction(frameIndex, item);
 
 

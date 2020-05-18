@@ -166,20 +166,29 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-        /// Return the message with identifier <paramref name="id"/> from the local spool.
+        /// Return the message with identifier <paramref name="messageId"/> from the local spool.
         /// </summary>
-        /// <param name="id">Message to return.</param>
+        /// <param name="messageId">Message to return.</param>
         /// <returns>The message (if found).</returns>
-        public DareEnvelope GetLocal(string id) {
+        public DareEnvelope GetLocal(string messageId) {
+
+            // Hack: should be get spool here.
+            // and look for the envelope values
+
+            var envelopeId = Message.GetEnvelopeID(messageId);
+
             using var spoolLocal = GetStore(SpoolLocal.Label);
 
+
+            
             foreach (var message in spoolLocal.Select(0, reverse:true)) {
-                if (message?.Header?.ContentMeta?.UniqueID == id) {
+                if (message?.EnvelopeID == envelopeId) {
                     return message;
                     }
 
                 }
-
+            // this is currently failing because on connect, the connecting device is looking
+            // for a different message ID to the one specified by the admin device in the response.
 
             throw new NYI();
             }

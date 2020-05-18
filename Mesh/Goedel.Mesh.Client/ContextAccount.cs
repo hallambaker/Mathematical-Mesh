@@ -531,6 +531,10 @@ namespace Goedel.Mesh.Client {
             if (dictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
                 var store = syncStore.Store;
                 foreach (var entry in containerUpdate.Envelopes) {
+                    if (entry.Index == 0) {
+                        throw new NYI();
+                        }
+
                     count++;
                     store.AppendDirect(entry);
                     }
@@ -723,63 +727,15 @@ namespace Goedel.Mesh.Client {
                         }
                     }
                 }
-
-
-
-            //var selfs = new List<Message>();
-
-            //var completed = new Dictionary<string, Message>();
-            //foreach (var message in GetSpoolLocal().Select(0, true)) {
-            //    Console.WriteLine($"{message.Header.EnvelopeID}");
-            //    var meshMessage = Message.FromJSON(message.GetBodyReader());
-            //    if (!completed.ContainsKey(meshMessage.MessageID)) {
-            //        switch (meshMessage) {
-            //            case MessageComplete meshMessageComplete: {
-            //                foreach (var reference in meshMessageComplete.References) {
-            //                    completed.Add(reference.MessageID, meshMessageComplete);
-            //                    }
-            //                break;
-            //                }
-            //            default: {
-            //                selfs.Add(meshMessage);
-
-
-
-            //                break;
-            //                }
-            //            }
-
-            //        }
-            //    }
-            //foreach (var message in GetSpoolInbound().Select (0, true)) {
-            //    Console.WriteLine($"{message.Header.EnvelopeID}");
-            //    var meshMessage = Message.FromJSON(message.GetBodyReader());
-            //    if (!completed.ContainsKey(meshMessage.MessageID)) {
-            //        switch (meshMessage) {
-            //            case MessageComplete meshMessageComplete: {
-            //                foreach (var reference in meshMessageComplete.References) {
-            //                    completed.Add(reference.MessageID, meshMessageComplete);
-            //                    }
-            //                break;
-            //                }
-            //            default: {
-            //                messages.Add(meshMessage);
-
-
-
-            //                break;
-            //                }
-            //            }
-            //        }
-
-            //    }
-
-
             }
 
 
         public void ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
+
+
+
+
 
             var pinCreate = GetSpoolLocal().CheckPIN(messageConnectionRequest.PinUDF);
 

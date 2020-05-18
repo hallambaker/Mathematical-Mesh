@@ -487,7 +487,7 @@ namespace Goedel.Mesh {
             checkMaxResults = maxResults >= 0;
 
             Reset();
-            MoveNext();
+            //MoveNext();
 
             }
 

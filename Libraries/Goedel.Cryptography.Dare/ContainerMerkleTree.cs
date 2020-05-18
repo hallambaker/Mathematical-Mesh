@@ -47,6 +47,21 @@ namespace Goedel.Cryptography.Dare {
             return container;
             }
 
+        /// <summary>
+        /// Prepare the ContainerInfo data for the frame.
+        /// </summary>
+        /// <param name="containerInfo">The frame to prepare.</param>
+        protected override void PrepareFrame(ContainerInfo containerInfo) {
+            if (containerInfo.Index == 0) {
+                containerInfo.ContainerType = Label;
+                }
+            else {
+                containerInfo.TreePosition =
+                    (int)PreviousFramePosition(containerInfo.Index);
+                }
+            }
+
+
 
         /// <summary>
         /// Create a set of master keys and other cryptographic parameters from the

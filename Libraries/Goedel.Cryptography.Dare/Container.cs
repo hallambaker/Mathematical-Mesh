@@ -517,7 +517,7 @@ namespace Goedel.Cryptography.Dare {
             var trailerBytes = Trailer?.GetBytes(dataEncoding, false);
 
             container.AppendFrame(headerBytes, payload, trailerBytes);
-
+            container.FrameCount++;
 
             container.KeyCollection = cryptoParameters.KeyCollection;
 
@@ -599,44 +599,16 @@ namespace Goedel.Cryptography.Dare {
             var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
 
 
-            var container = MakeNewContainer(jbcdStream, envelopes[0].Header);
+            var container = new ContainerMerkleTree() {
+                JBCDStream = jbcdStream,
+                ContainerHeaderFirst = envelopes[0].Header
+                };
+
             container.DisposeJBCDStream = jbcdStream;
             container.Append(envelopes);
 
             return container;
             }
-
-        /// <summary>
-        /// Create a new container matching the features specified in <paramref name="header"/>.
-        /// </summary>
-        /// <param name="jbcdStream">The stream to be written to.</param>
-        /// <param name="header">The header to use to specity the parameters.</param>
-        /// <returns>The created container</returns>
-        public static Container MakeNewContainer(
-                        JBCDStream jbcdStream,
-                        DareHeader header) {
-
-            switch (header.ContainerInfo.ContainerType) {
-                //case ContainerList.Label: {
-                //    return ContainerList.MakeNewContainer(envelope);
-                //    }
-
-                case ContainerMerkleTree.Label: {
-                    return new ContainerMerkleTree() {
-                        JBCDStream = jbcdStream,
-                        ContainerHeaderFirst = header
-                        };
-                    }
-
-                default: {
-                    throw new InvalidContainerTypeException();
-                    }
-                }
-
-            }
-
-
-
 
         #endregion
         #region // Navigation and enumeration methods
@@ -702,7 +674,7 @@ namespace Goedel.Cryptography.Dare {
         long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
             // Write the frame ensuring the results get written out.
             var length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
-            FrameCount++;
+            //FrameCount++;
             return length;
             }
 
@@ -748,6 +720,7 @@ namespace Goedel.Cryptography.Dare {
                 EDSS = headerIn.EDSS,
                 Signers = headerIn.Signers,
                 Recipients = headerIn.Recipients,
+                ContentMeta = headerIn.ContentMeta,
                 ContentMetaData = headerIn.ContentMetaData,
                 Received = headerIn.Received ?? DateTime.Now,
                 

@@ -68,10 +68,16 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="containerInfo">The frame to prepare.</param>
         protected override void PrepareFrame(ContainerInfo containerInfo) {
-            if (containerInfo.Index > 0) {
+            if (containerInfo.Index == 0) {
+                containerInfo.ContainerType = Label;
+                }
+            else {
                 containerInfo.TreePosition =
                     (int)PreviousFramePosition(containerInfo.Index);
                 }
+
+
+
             //Console.WriteLine($"Prepare #{containerInfo.Index} @{JBCDStream.PositionWrite} Tree={containerInfo.TreePosition}");
 
 
@@ -116,8 +122,11 @@ namespace Goedel.Cryptography.Dare {
                 containerInfo = JBCDStream.ReadFrameHeader().ContainerInfo;
 
                 if (Index != containerInfo.Index) {
+
                     }
 
+
+                // This is failing because the container index is set to 2 when it should be 1.
                 Assert.True(Index == containerInfo.Index);
                 TreePosition = containerInfo.TreePosition;
                 }
