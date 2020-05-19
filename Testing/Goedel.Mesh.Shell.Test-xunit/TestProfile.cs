@@ -104,6 +104,19 @@ namespace Goedel.XUnit {
             device1.Connect(device3, accountA);
             }
 
+
+
+
+        [Fact]
+        public void TestProfileConnectPinExpired() => throw new NYI();
+
+        [Fact]
+        public void TestProfileConnectPinInvalid() => throw new NYI();
+
+        [Fact]
+        public void TestProfileConnectPinReused() => throw new NYI();
+
+
         [Fact]
         public void TestProfileConnectEARL() {
             var accountA = "alice@example.com";

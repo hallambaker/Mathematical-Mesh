@@ -34,28 +34,4 @@ namespace Goedel.Cryptography.Dare {
             }
         }
 
-
-    public partial class DareSigner {
-
-        /// <summary>
-        /// Default constructor for use in deserialization.
-        /// </summary>
-        public DareSigner() {
-            }
-
-
-        /// <summary>
-        /// Create a DARESigner instance for the specified public key information.
-        /// </summary>
-        /// <param name="SignerKey">The verification key parameters.</param>
-        /// <param name="DigestId">The digest identifier used to create the 
-        /// signature value.</param>
-        public DareSigner(KeyPair SignerKey, CryptoAlgorithmId DigestId) {
-
-            var Alg = SignerKey.SignatureAlgorithmID(DigestId);
-
-            }
-        }
-
-
     }

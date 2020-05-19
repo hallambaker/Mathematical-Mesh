@@ -162,6 +162,7 @@ namespace Goedel.Mesh {
     /// </summary>
     public static class Constants {
 
+        ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
         public const string MeshMessageType = "application/mmm_message";
 
 

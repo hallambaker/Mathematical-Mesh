@@ -2098,6 +2098,9 @@
             Collected constants used in the Mathematical Mesh
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Constants.MeshMessageType">
+            <summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        </member>
         <member name="F:Goedel.Mesh.Constants.MillisecondInTicks">
             <summary>Number of ticks in a millisecond</summary>
         </member>
@@ -2648,6 +2651,10 @@
         <member name="P:Goedel.Mesh.Reference.EnvelopeID">
             <summary>Returns the envelope ID corresponding to the MessageID</summary>
         </member>
+        <member name="P:Goedel.Mesh.Reference.MessageStatus">
+            <summary>Accessor for the <see cref="P:Goedel.Mesh.Reference.Relationship"/> property
+            as a <see cref="P:Goedel.Mesh.Reference.MessageStatus"/> property.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Reference.MessageID">
              <summary>
             The received message to which this is a response
@@ -2923,6 +2930,21 @@
             <summary>
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.MessagePIN.#ctor">
+            <summary>
+            Default constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.#ctor(System.String,System.DateTime,System.String)">
+            <summary>
+            Construct a <see cref="T:Goedel.Mesh.MessagePIN"/> instance for the PIN value
+            <paramref name="pin"/> and account address <paramref name="accountAddress"/>
+            with optional expiry value <paramref name="expires"/>.
+            </summary>
+            <param name="pin">The PIN value.</param>
+            <param name="expires">The expiry time.</param>
+            <param name="accountAddress">The account address the PIN is issued for.</param>
+        </member>
         <member name="P:Goedel.Mesh.MessagePIN.Account">
             <summary>
             </summary>
@@ -3075,6 +3097,24 @@
             
              Connection request message. This message contains the information
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.#ctor">
+            <summary>
+            Default constructor used for deserialization.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.RequestConnection.#ctor(Goedel.Mesh.ProfileDevice,System.String,System.String,System.Byte[])">
+            <summary>
+            Constructor for a <see cref="T:Goedel.Mesh.RequestConnection"/> instance for connecting the
+            device <paramref name="profileDevice"/> to the account
+            <paramref name="accountAddress"/>.
+            </summary>
+            <param name="profileDevice">Profile of the device requesting connection.</param>
+            <param name="accountAddress">The account through which the device is requesting 
+            a connection.</param>
+            <param name="pin">Optional PIN value</param>
+            <param name="clientNonce">Optional client nonce (if null, a nonce will be
+            generated.</param>
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.GetPinUDF(System.String,System.String)">
             <summary>
@@ -8900,8 +8940,40 @@
         <member name="P:Goedel.Mesh.SpoolEntry.Previous">
             <summary>The previous entry in the spool.</summary>
         </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Closed">
+            <summary>Returns true iff message status is Closed.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Open">
+            <summary>Returns true iff message status is Open.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolEntry.References">
+            <summary>The list of references to the message, most recently added first.</summary>
+        </member>
         <member name="P:Goedel.Mesh.SpoolEntry.Message">
             <summary>Returns the message</summary>
+        </member>
+        <member name="P:Goedel.Mesh.SpoolEntry.Index">
+            <summary>Convenience accessor for the envelope index number.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.SpoolEntry.MessageStatus">
+            <summary>The message status value.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEntry.#ctor(Goedel.Mesh.Spool,Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Construct a Spool entry for the previously unregistered envelope
+            <paramref name="envelope"/>.
+            </summary>
+            <param name="spool">The spool the entry is created for.</param>
+            <param name="envelope">The envelope value.</param>
+            <param name="next">The next entry in the spool.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEntry.#ctor(Goedel.Mesh.Spool,Goedel.Mesh.Reference)">
+            <summary>
+            Construct a Spool entry for an envelope that has not yet been registered
+            that has been referenced by <paramref name="reference"/>.
+            </summary>
+            <param name="spool">The spool the entry is created for.</param>
+            <param name="reference">The reference.</param>
         </member>
         <member name="M:Goedel.Mesh.SpoolEntry.AddEnvelope(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Mesh.SpoolEntry)">
             <summary>
@@ -8910,7 +8982,29 @@
             <param name="envelope">The envelope to add.</param>
             <param name="next">The next entry in the spool.</param>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.SpoolEntry.Decode" -->
+        <member name="M:Goedel.Mesh.SpoolEntry.Link(Goedel.Mesh.SpoolEntry)">
+            <summary>
+            Link the spool entry <paramref name="next"/> to this entry as the next
+            entry in the chain.
+            </summary>
+            <param name="next">The next entry to link.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEntry.AddReference(Goedel.Mesh.Reference,System.Boolean)">
+            <summary>
+            Add a reference to this entry. The reference will cause the message status to be 
+            updated if either this is the first reference to be added or the 
+            <paramref name="force"/> parameter is true.
+            </summary>
+            <param name="reference">The reference to add.</param>
+            <param name="force">Force updating of the status.</param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEntry.Decode">
+            <summary>
+            Decode the envelope as a DARE Message using the current
+            KeyCollection and return the result.
+            </summary>
+            <returns>The decoded message</returns>
+        </member>
         <member name="T:Goedel.Mesh.Spool">
             <summary>
             Base class for stores of type Spool.
@@ -8971,7 +9065,6 @@
             </summary>
             <param name="messageID"></param>
             <param name="select"></param>
-            <param name="maxTicks"></param>
             <param name="notBefore"></param>
             <param name="notOnOrAfter"></param>
             <param name="maxSearch"></param>
@@ -8991,21 +9084,13 @@
         <member name="M:Goedel.Mesh.Spool.GetMessages(Goedel.Mesh.MessageStatus,System.Nullable{System.DateTime},System.Nullable{System.DateTime},Goedel.Mesh.SpoolEntry,System.Int64)">
             <summary>
             Returns an enumerator over the messages in the spool that match the
-            constraints specified by <paramref name="include"/>, <paramref name="exclude"/>,
-            <paramref name="maxTicks"/>, <paramref name="notBefore"/>, <paramref name="notOnOrAfter"/>
-            and <paramref name="maxResults"/>.
-            <para>A message meets the criteria specified by the message inclusion and exclusion masks
-            if and only if (<code>MessageStatus</code> &amp; <paramref name="include"/> != MessageStatus.None)
-            &amp; (<code>MessageStatus</code> &amp; <paramref name="exclude"/> == MessageStatus.None) </para>. That
-            is, there must be at least one match to the inclusion mask and no matches to the exclusion
-            mask.
+            constraints specified by <paramref name="select"/>, <paramref name="notBefore"/>, 
+            <paramref name="notOnOrAfter"/> and <paramref name="maxResults"/>.
             </summary>
             <param name="select">Message status selection mask.</param>
-            <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
             <param name="notBefore">Exclude messages sent before this time.</param>
             <param name="notOnOrAfter">Exclude messages sent after this time.</param>
-            <param name="maxSearch">Starting point for the search, i.e. the highest frame number</param> 
-            <param name="minSearch">Ending point for the search, i.e. the lowest frame number</param> 
+            <param name="last">The point from which to begin the enumeration (exclusive).</param>
             <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
             <returns>The enumerator.</returns>
         </member>
@@ -9020,16 +9105,16 @@
         </member>
         <member name="M:Goedel.Mesh.Spool.GetPrevious(Goedel.Mesh.SpoolEntry)">
             <summary>
-            
+            Return the spool entry previous to <paramref name="current"/>.
             </summary>
-            <param name="current"></param>
-            <returns></returns>
+            <param name="current">The entry to return the prior entry for.</param>
+            <returns>The spool entry if found, otherwise, null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Spool.GetLast">
             <summary>
-            
+            Return the last message in the spool.
             </summary>
-            <returns></returns>
+            <returns>The spool entry if found, otherwise, null.</returns>
         </member>
         <member name="T:Goedel.Mesh.SpoolEnumeratorRaw">
             <summary>
@@ -9059,6 +9144,22 @@
             <param name="notOnOrAfter"></param>
             <param name="last"></param>
             <param name="maxResults"></param>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.MoveNext">
+            <summary>
+            Move to the next value in the enumeration.
+            </summary>
+            <returns>True if successful, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.SpoolEnumeratorRaw.Reset">
+            <summary>
+            Reset the enumeration to the origin of the search.
+            </summary>
         </member>
         <member name="T:Goedel.Mesh.SpoolLocal">
             <summary>

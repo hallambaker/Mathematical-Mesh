@@ -14,7 +14,8 @@ namespace Goedel.Mesh {
         ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
         public string EnvelopeID => Message.GetEnvelopeID(MessageID);
 
-
+        ///<summary>Accessor for the <see cref="Relationship"/> property
+        ///as a <see cref="MessageStatus"/> property.</summary>
         public MessageStatus MessageStatus {
             get => Relationship switch
                     {
@@ -145,20 +146,28 @@ namespace Goedel.Mesh {
 
     public partial class MessagePIN {
 
-
+        /// <summary>
+        /// Default constructor used for deserialization.
+        /// </summary>
         public MessagePIN() {
             }
 
-        public MessagePIN(string pin, DateTime expires, string accountUDF) {
-            Account = accountUDF;
+        /// <summary>
+        /// Construct a <see cref="MessagePIN"/> instance for the PIN value
+        /// <paramref name="pin"/> and account address <paramref name="accountAddress"/>
+        /// with optional expiry value <paramref name="expires"/>.
+        /// </summary>
+        /// <param name="pin">The PIN value.</param>
+        /// <param name="expires">The expiry time.</param>
+        /// <param name="accountAddress">The account address the PIN is issued for.</param>
+        public MessagePIN(string pin, DateTime expires, string accountAddress) {
+            Account = accountAddress;
             Expires = expires;
             PIN = pin;
-            MessageID = RequestConnection.GetPinUDF(pin, accountUDF);
+            MessageID = RequestConnection.GetPinUDF(pin, accountAddress);
 
             Console.WriteLine($"Created Pin: {Account} / {PIN} => {MessageID}");
             }
-
-
 
         }
 
@@ -188,15 +197,28 @@ namespace Goedel.Mesh {
     public partial class RequestConnection {
 
 
-
+        /// <summary>
+        /// Default constructor used for deserialization.
+        /// </summary>
         public RequestConnection() {
             }
 
+        /// <summary>
+        /// Constructor for a <see cref="RequestConnection"/> instance for connecting the
+        /// device <paramref name="profileDevice"/> to the account
+        /// <paramref name="accountAddress"/>.
+        /// </summary>
+        /// <param name="profileDevice">Profile of the device requesting connection.</param>
+        /// <param name="accountAddress">The account through which the device is requesting 
+        /// a connection.</param>
+        /// <param name="pin">Optional PIN value</param>
+        /// <param name="clientNonce">Optional client nonce (if null, a nonce will be
+        /// generated.</param>
         public RequestConnection(
-                    string accountAddress,
-            ProfileDevice profileDevice,
-            string pin,
-            byte[] clientNonce=null) {
+                ProfileDevice profileDevice,
+            string accountAddress,
+            string pin=null,
+            byte[] clientNonce = null) {
             AccountAddress = accountAddress;
             EnvelopedProfileDevice = profileDevice.DareEnvelope;
             ClientNonce = clientNonce ?? CryptoCatalog.GetBits(128);
@@ -266,7 +288,7 @@ namespace Goedel.Mesh {
 
 
 
-        public void Authenticate (string pin) => throw new NYI();
+        //public void Authenticate (string pin) => throw new NYI();
 
 
         /// <summary>

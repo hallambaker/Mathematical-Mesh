@@ -27,9 +27,10 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The inner enveloped content.</summary>
         public JSONObject JSONObject { get; set; }
 
-
+        ///<summary>Convenience accessor for the frame index.</summary>
         public long Index => Header.Index;
 
+        ///<summary>Convenience accessor for the envelope id.</summary>
         public string EnvelopeID => Header.EnvelopeID;
 
 
@@ -261,12 +262,7 @@ namespace Goedel.Cryptography.Dare {
             }
         #endregion
         #region // Payload decoding routines 
-        JsonBcdReader JsonReader { get; }
 
-        DareEnvelope(JsonBcdReader jsonReader, DareHeader header) {
-            JsonReader = jsonReader;
-            Header = header;
-            }
 
         /// <summary>
         /// Deserialize 
@@ -278,8 +274,8 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(byte[] data, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
-            var JSONBCDReader = new JsonBcdReader(data);
-            return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
+            var jsonBcdReader = new JsonBcdReader(data);
+            return FromJSON(jsonBcdReader, tagged, decrypt, keyCollection);
             }
 
         /// <summary>
@@ -293,11 +289,11 @@ namespace Goedel.Cryptography.Dare {
             using var inputStream = new MemoryStream(Body);
             using var outputStream = new MemoryStream();
 
-            var Decoder = Header.GetDecoder(
-                inputStream, out var Reader,
+            var decoder = Header.GetDecoder(
+                inputStream, out var reader,
                 keyCollection: keyCollection);
-            Reader.CopyTo(outputStream);
-            Decoder.Close();
+            reader.CopyTo(outputStream);
+            decoder.Close();
             return outputStream.ToArray();
             }
 
@@ -322,8 +318,8 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created object.</returns>	
         public static DareEnvelope FromJSON(Stream stream, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
-            var JSONBCDReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
-            return FromJSON(JSONBCDReader, tagged, decrypt, keyCollection);
+            var jsonBcdReader = new JsonBcdReader(stream); // Hack: should merge this with GetPlaintext
+            return FromJSON(jsonBcdReader, tagged, decrypt, keyCollection);
             }
 
         /// <summary>
@@ -342,17 +338,17 @@ namespace Goedel.Cryptography.Dare {
             // DecodeHeader checks for start of array
             //bool _Going = JSONReader.StartArray();
 
-            var Message = DecodeHeader(jsonReader);
+            var message = DecodeHeader(jsonReader);
 
-            using (var Buffer = new MemoryStream()) {
-                var Decoder = Message.Header.GetDecoder(
-                            jsonReader, out var Reader,
+            using (var buffer = new MemoryStream()) {
+                var decoder = message.Header.GetDecoder(
+                            jsonReader, out var reader,
                             keyCollection: keyCollection);
-                Reader.CopyTo(Buffer);
-                Decoder.Close();
-                Message.Body = Buffer.ToArray();
+                reader.CopyTo(buffer);
+                decoder.Close();
+                message.Body = buffer.ToArray();
                 }
-            return Message;
+            return message;
             }
 
         /// <summary>
@@ -363,10 +359,12 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The DareEnvelope instance.</returns>
         public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
             Assert.True(jsonReader.StartArray());
-            var Header = DareHeader.FromJSON(jsonReader, false);
-            Assert.NotNull(Header);
+            var header = DareHeader.FromJSON(jsonReader, false);
+            Assert.NotNull(header);
             Assert.True(jsonReader.NextArray());
-            return new DareEnvelope(jsonReader, Header);
+            return new DareEnvelope() {
+                Header = header
+                };
             }
 
         /// <summary>
@@ -460,9 +458,9 @@ contentMeta, cloaked, dataSequences, chunk);
                 int chunk = -1) {
 
 
-            using var DAREEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
+            using var dareEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
                 outputStream, contentMeta, contentLength, cloaked, dataSequences);
-            inputStream.CopyTo(DAREEnvelopeWriter);
+            inputStream.CopyTo(dareEnvelopeWriter);
 
             }
 
@@ -497,10 +495,10 @@ contentMeta, cloaked, dataSequences, chunk);
             long length = -1;
             keyCollection ??= KeyCollection.Default;
 
-            var JSONBCDReader = new JsonBcdReader(inputStream);
-            using var message = DecodeHeader(JSONBCDReader);
+            var jsonBcdReader = new JsonBcdReader(inputStream);
+            using var message = DecodeHeader(jsonBcdReader);
             var decoder = message.Header.GetDecoder(
-                        JSONBCDReader, out var Reader,
+                        jsonBcdReader, out var Reader,
                         keyCollection: keyCollection);
 
             if (outputStream != null) {
@@ -541,9 +539,9 @@ contentMeta, cloaked, dataSequences, chunk);
                 Stream inputStream,
                 IKeyLocate keyCollection = null) {
 
-            keyCollection ??= KeyCollection.Default;
+            //keyCollection ??= KeyCollection.Default;
 
-            using (var JSONBCDReader = new JsonBcdReader(inputStream)) {
+            using (var jsonBcdReader = new JsonBcdReader(inputStream)) {
                 //var Message = DecodeHeader(JSONBCDReader);
 
                 //var Decoder = Message.Header.GetDecoder(

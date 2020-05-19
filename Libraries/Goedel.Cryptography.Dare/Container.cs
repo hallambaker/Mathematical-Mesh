@@ -694,7 +694,11 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
-
+        /// <summary>
+        /// Initialize a <see cref="ContainerInfo"/> instance for the current container
+        /// position.
+        /// </summary>
+        /// <returns>The initialized instance.</returns>
         public virtual ContainerInfo MakeContainerInfo() => new ContainerInfo() {
             Index = (int)FrameCount++
             };

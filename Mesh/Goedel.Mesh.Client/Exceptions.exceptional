@@ -57,7 +57,16 @@ Namespace Goedel.Mesh.Client
 			Description
 				|The connection request is still pending
 
+
+
 		Exception ConnectionAccountUnknown
 			Console "The connection request is still pending"
 			Description
 				|The connection request is still pending
+
+
+		Exception RefusedPINInvalid
+			Console "The request was refused because the pin was invalid"
+			Description
+				|The request was refused because the pin was invalid
+

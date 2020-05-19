@@ -234,8 +234,8 @@ namespace Goedel.Mesh.Client {
             localName.Future();
 
             // generate MessageConnectionRequestClient
-            var messageConnectionRequestClient = new RequestConnection(accountAddress,
-                        profileDevice, pin);
+            var messageConnectionRequestClient = new RequestConnection(profileDevice,
+                accountAddress, pin);
 
 
             var keyAuthentication = meshHost.KeyCollection.LocatePrivateKeyPair(

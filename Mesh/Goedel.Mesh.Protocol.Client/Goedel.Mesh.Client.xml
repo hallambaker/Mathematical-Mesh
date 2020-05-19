@@ -602,6 +602,14 @@
             <summary>
             Process automatic actions.
             </summary>
+            <returns>The results of the automatic processing attempted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
+            <summary>
+            Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
+            </summary>
+            <param name="acknowledgeConnection">Connection request to be processed.</param>
+            <returns>The result of requesting the connection.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Status">
             <summary>
@@ -659,7 +667,7 @@
             <param name="meshMessage">The message to send.</param>
             <param name="recipient">The recipient service ID.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String},System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String})">
             <summary>
             Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
             is not null, the message is to be posted to the outbound spool to be forwarded to the
@@ -669,7 +677,6 @@
             <param name="meshMessage">The message to post</param>
             <param name="recipients">The recipients the message is to be sent to. If null, the
             message is for local pickup.</param>
-            <param name="uniqueID">The unique message ID.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessageAdmin(Goedel.Mesh.Message)">
             <summary>
@@ -1390,6 +1397,34 @@
             <param name="Inner">Inner Exception</param>	
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.RefusedPINInvalid">
+            <summary>
+            The request was refused because the pin was invalid
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor">
+            <summary>
+            Construct instance for exception "The request was refused because the pin was invalid"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "The request was refused because the pin was invalid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
             <summary>
             The public fatory delegate
             </summary>

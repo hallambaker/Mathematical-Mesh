@@ -95,15 +95,6 @@ namespace Goedel.Mesh.Client {
 
         Dictionary<string, SyncStatus> dictionaryStores = new Dictionary<string, SyncStatus>();
 
-        /// <summary>
-        /// Disposal method.
-        /// </summary>
-        //protected override void Disposing() => spoolInbound?.Dispose();
-
-        //KeyPair compositeSign;
-        //KeyPair compositeEncrypt;
-        //KeyPair compositeAuthenticate;
-
 
         /// <summary>
         /// Constructor.
@@ -708,7 +699,10 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Process automatic actions.
         /// </summary>
-        public void ProcessAutomatics() {
+        /// <returns>The results of the automatic processing attempted.</returns>
+        public List<IProcessResult> ProcessAutomatics() {
+
+            var results = new List<IProcessResult>();
 
             var spoolInbound = GetSpoolInbound();
             foreach (var envelope in spoolInbound.GetMessages(MessageStatus.Open)) {
@@ -716,16 +710,23 @@ namespace Goedel.Mesh.Client {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
                         if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
-                            ProcessAutomatic(acknowledgeConnection);
+                            results.Add (ProcessAutomatic(acknowledgeConnection));
                             }
 
                         break;
                         }
                     }
                 }
+
+
+            return results;
             }
 
-
+        /// <summary>
+        /// Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
+        /// </summary>
+        /// <param name="acknowledgeConnection">Connection request to be processed.</param>
+        /// <returns>The result of requesting the connection.</returns>
         public IProcessResult ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
@@ -739,7 +740,7 @@ namespace Goedel.Mesh.Client {
             if (pinCreate == null || pinCreate.Closed) {
                 "Should collect up errors for optional reporting".TaskValidate();
                 "Should check on expiry".TaskValidate();
-                return null;
+                return InvalidPIN();
                 }
 
             var messagePIN = pinCreate.Message as MessagePIN;
@@ -749,7 +750,7 @@ namespace Goedel.Mesh.Client {
 
             if (!pinWitness.IsEqualTo(messageConnectionRequest.PinWitness)) {
                 "Should collect up errors for optional reporting".TaskValidate();
-                return null;
+                return InvalidPIN();
                 }
 
             return Process(acknowledgeConnection, true);
@@ -760,6 +761,9 @@ namespace Goedel.Mesh.Client {
 
 
             }
+
+
+        IProcessResult InvalidPIN() => throw new NYI();
 
 
         /// <summary>
@@ -810,7 +814,7 @@ namespace Goedel.Mesh.Client {
 
             Console.WriteLine($"Accept connection ID is {messageID}");
 
-            SendMessage(respondConnection, uniqueID: messageID);
+            SendMessage(respondConnection);
 
             return respondConnection;
             }
@@ -987,15 +991,13 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshMessage">The message to post</param>
         /// <param name="recipients">The recipients the message is to be sent to. If null, the
         /// message is for local pickup.</param>
-        /// <param name="uniqueID">The unique message ID.</param>
         public void SendMessage(
                     Message meshMessage, 
-                    List<string> recipients=null,
-                    string uniqueID=null) {
+                    List<string> recipients=null) {
             Connect();
 
             meshMessage.Sender = AccountAddress;
-            uniqueID ??= UDF.Nonce();
+
 
             var envelope = meshMessage.Encode();
 

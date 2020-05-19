@@ -130,14 +130,13 @@ namespace Goedel.XUnit {
             }
 
 
-        SpoolEntry CheckEntry(Spool spool, string id) {
-            throw new NYI();
-            }
+        //SpoolEntry CheckEntry(Spool spool, string id) {
+        //    throw new NYI();
+        //    }
 
 
-        public void TestCatalog() {
-            throw new NYI();
-            }
+        [Fact]
+        public void TestCatalog() => throw new NYI();
 
 
         }

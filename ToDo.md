@@ -1,12 +1,5 @@
 # Current focus
 
-* make the PIN connection scheme work
-
-The code currently fails when the connecting device attempts to 
-complete the connection.
-
-
-* Connect PIN
 * Admin QR code
 * Device QR code
 
@@ -22,3 +15,11 @@ complete the connection.
 * Threshold decrypt
 * Time bound decryption service
 * Threshold sign
+
+
+
+Nits
+
+* What is wrong with the witness value? Not a proper UDF.
+
+Need to sync up with the specs.

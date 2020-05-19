@@ -25,11 +25,13 @@ namespace Goedel.Mesh {
         ///<summary>The previous entry in the spool.</summary>
         public SpoolEntry Previous { get; private set; }
 
-
+        ///<summary>Returns true iff message status is Closed.</summary>
         public bool Closed => (MessageStatus & MessageStatus.Closed) == MessageStatus.Closed;
+
+        ///<summary>Returns true iff message status is Open.</summary>
         public bool Open => (MessageStatus & MessageStatus.Open) == MessageStatus.Open;
 
-
+        ///<summary>The list of references to the message, most recently added first.</summary>
         public List<Reference> References;
 
         ///<summary>Returns the message</summary>
@@ -37,14 +39,20 @@ namespace Goedel.Mesh {
         Message message;
 
 
-
+        ///<summary>Convenience accessor for the envelope index number.</summary>
         public long Index => DareEnvelope.Index;
 
+        ///<summary>The message status value.</summary>
         public MessageStatus MessageStatus;
 
 
-        public Exception Exception { get; private set; }
-
+        /// <summary>
+        /// Construct a Spool entry for the previously unregistered envelope
+        /// <paramref name="envelope"/>.
+        /// </summary>
+        /// <param name="spool">The spool the entry is created for.</param>
+        /// <param name="envelope">The envelope value.</param>
+        /// <param name="next">The next entry in the spool.</param>
         public SpoolEntry(Spool spool, DareEnvelope envelope, SpoolEntry next) {
             Spool = spool;
             MessageStatus = MessageStatus.Open;
@@ -52,7 +60,15 @@ namespace Goedel.Mesh {
             AddEnvelope(envelope, next);
             }
 
+
+        /// <summary>
+        /// Construct a Spool entry for an envelope that has not yet been registered
+        /// that has been referenced by <paramref name="reference"/>.
+        /// </summary>
+        /// <param name="spool">The spool the entry is created for.</param>
+        /// <param name="reference">The reference.</param>
         public SpoolEntry(Spool spool, Reference reference) {
+            Spool = spool;
             EnvelopeID = reference.MessageID;
             }
 
@@ -67,6 +83,11 @@ namespace Goedel.Mesh {
             Link(next);
             }
 
+        /// <summary>
+        /// Link the spool entry <paramref name="next"/> to this entry as the next
+        /// entry in the chain.
+        /// </summary>
+        /// <param name="next">The next entry to link.</param>
         public void Link(SpoolEntry next) {
             if (next == null) {
                 return;
@@ -77,7 +98,13 @@ namespace Goedel.Mesh {
 
 
 
-
+        /// <summary>
+        /// Add a reference to this entry. The reference will cause the message status to be 
+        /// updated if either this is the first reference to be added or the 
+        /// <paramref name="force"/> parameter is true.
+        /// </summary>
+        /// <param name="reference">The reference to add.</param>
+        /// <param name="force">Force updating of the status.</param>
         public void AddReference(Reference reference, bool force) {
             if ((References == null) | force) {
                 References ??= new List<Reference>();
@@ -93,6 +120,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Decode the envelope as a DARE Message using the current
         /// KeyCollection and return the result.
+        /// </summary>
         /// <returns>The decoded message</returns>
         Message Decode() {
             if (DareEnvelope.JSONObject != null) {
@@ -252,7 +280,6 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="messageID"></param>
         /// <param name="select"></param>
-        /// <param name="maxTicks"></param>
         /// <param name="notBefore"></param>
         /// <param name="notOnOrAfter"></param>
         /// <param name="maxSearch"></param>
@@ -263,7 +290,7 @@ namespace Goedel.Mesh {
                     DateTime? notBefore = null,
                     DateTime? notOnOrAfter = null,
                     long maxSearch = -1) => GetByEnvelopeId(Message.GetEnvelopeID(messageID),
-                        select, notBefore, notOnOrAfter);
+                        select, notBefore, notOnOrAfter, maxSearch);
 
 
         /// <summary>
@@ -300,21 +327,13 @@ namespace Goedel.Mesh {
 
         /// <summary>
         /// Returns an enumerator over the messages in the spool that match the
-        /// constraints specified by <paramref name="include"/>, <paramref name="exclude"/>,
-        /// <paramref name="maxTicks"/>, <paramref name="notBefore"/>, <paramref name="notOnOrAfter"/>
-        /// and <paramref name="maxResults"/>.
-        /// <para>A message meets the criteria specified by the message inclusion and exclusion masks
-        /// if and only if (<code>MessageStatus</code> &amp; <paramref name="include"/> != MessageStatus.None)
-        /// &amp; (<code>MessageStatus</code> &amp; <paramref name="exclude"/> == MessageStatus.None) </para>. That
-        /// is, there must be at least one match to the inclusion mask and no matches to the exclusion
-        /// mask.
+        /// constraints specified by <paramref name="select"/>, <paramref name="notBefore"/>, 
+        /// <paramref name="notOnOrAfter"/> and <paramref name="maxResults"/>.
         /// </summary>
         /// <param name="select">Message status selection mask.</param>
-        /// <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
         /// <param name="notBefore">Exclude messages sent before this time.</param>
         /// <param name="notOnOrAfter">Exclude messages sent after this time.</param>
-        /// <param name="maxSearch">Starting point for the search, i.e. the highest frame number</param> 
-        /// <param name="minSearch">Ending point for the search, i.e. the lowest frame number</param> 
+        /// <param name="last">The point from which to begin the enumeration (exclusive).</param>
         /// <param name="maxResults">Maximum number of records to check (-1 = check all).</param>
         /// <returns>The enumerator.</returns>
         public SpoolEnumeratorRaw GetMessages(
@@ -381,10 +400,10 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// 
+        /// Return the spool entry previous to <paramref name="current"/>.
         /// </summary>
-        /// <param name="current"></param>
-        /// <returns></returns>
+        /// <param name="current">The entry to return the prior entry for.</param>
+        /// <returns>The spool entry if found, otherwise, null.</returns>
         public SpoolEntry GetPrevious(SpoolEntry current) {
             if (current == null) {
                 return GetLast();
@@ -405,9 +424,9 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// 
+        /// Return the last message in the spool.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The spool entry if found, otherwise, null.</returns>
         public SpoolEntry GetLast() {
 
             if (SpoolEntryLast != null) {
@@ -435,7 +454,6 @@ namespace Goedel.Mesh {
         // Parameters passed in from search criteria.
         private readonly Spool spool;
         private readonly MessageStatus select;
-        private readonly long maxTicks;
 
         private readonly long maxResults;
         private readonly SpoolEntry last;
@@ -491,11 +509,16 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Disposal method.
+        /// </summary>
         public void Dispose() {
             }
 
-
-
+        /// <summary>
+        /// Move to the next value in the enumeration.
+        /// </summary>
+        /// <returns>True if successful, otherwise false.</returns>
         public bool MoveNext() {
             while (true) {
 
@@ -519,11 +542,11 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Reset the enumeration to the origin of the search.
+        /// </summary>
         public void Reset() {
             results = 0;
-            
-
-
             Current = last;
             }
 

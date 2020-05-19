@@ -532,13 +532,13 @@ namespace Goedel.Cryptography {
             var contentTypeTag = contentType.ToUTF8();
 
             var length = digest.Length + contentTypeTag.Length + 1;
-            var Input = new byte[length];
+            var input = new byte[length];
 
-            var index = Input.AppendChecked(0, contentTypeTag);
-            Input[index] = (byte)':';
-            index = Input.AppendChecked(index + 1, digest);
+            var index = input.AppendChecked(0, contentTypeTag);
+            input[index] = (byte)':';
+            input.AppendChecked(index + 1, digest);
 
-            return Input;
+            return input;
             }
 
         /// <summary>
