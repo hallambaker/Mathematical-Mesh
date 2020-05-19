@@ -81,11 +81,11 @@ namespace Goedel.Mesh.Client {
         KeyPair KeyAuthentication { get; set; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
-        public MeshService MeshClient => meshClient ?? GetMeshClient(ServiceID).CacheValue(out meshClient);
+        public MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
         MeshService meshClient;
 
-        ///<summary>The service identifier.</summary>
-        public string ServiceID { get; private set; }
+        ///<summary>The Account Address</summary>
+        public string AccountAddress { get; private set; }
 
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
@@ -119,7 +119,7 @@ namespace Goedel.Mesh.Client {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
-            ServiceID = serviceID ?? AccountEntry.ProfileAccount?.ServiceDefault;
+            AccountAddress = serviceID ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
             var activationKey = ActivationAccount.ActivationKey;
             keySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
@@ -171,7 +171,7 @@ namespace Goedel.Mesh.Client {
             ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
             ProfileAccount.AccountAddresses.Add(serviceID);
             ContextMeshAdmin.Sign(ProfileAccount);
-            ServiceID = serviceID;
+            AccountAddress = serviceID;
 
             var createRequest = new CreateRequest() {
                 ServiceID = serviceID,
@@ -602,7 +602,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>True if the transaction committed, otherwise false.</returns>
         public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
 
-            if (ServiceID == null) {
+            if (AccountAddress == null) {
                 return catalog.Transact(catalog, updates);
                 }
             var envelopes = catalog.Prepare(updates);
@@ -641,12 +641,8 @@ namespace Goedel.Mesh.Client {
             var pin = UDF.Nonce(length);
             var expires = DateTime.Now.AddMinutes(validity);
 
-            var messageConnectionPIN = new MessagePIN() {
-                Account = ActivationAccount.AccountUDF,
-                Expires = expires,
-                PIN = pin,
-                MessageID = UDF.Nonce()
-                };
+            var messageConnectionPIN = new MessagePIN(
+                        pin, expires, AccountAddress);
 
             SendMessageAdmin(messageConnectionPIN);
 
@@ -730,24 +726,36 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public void ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
+        public IProcessResult ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
 
 
 
-
+            // get the pin value here
             var pinCreate = GetSpoolLocal().CheckPIN(messageConnectionRequest.PinUDF);
 
             // check PIN
+            if (pinCreate == null || pinCreate.Closed) {
+                "Should collect up errors for optional reporting".TaskValidate();
+                "Should check on expiry".TaskValidate();
+                return null;
+                }
+
+            var messagePIN = pinCreate.Message as MessagePIN;
+
+            var pinWitness = RequestConnection.GetPinWitness(messagePIN.PIN, AccountAddress,
+                        messageConnectionRequest.ClientNonce, messageConnectionRequest.ProfileDevice.UDF);
+
+            if (!pinWitness.IsEqualTo(messageConnectionRequest.PinWitness)) {
+                "Should collect up errors for optional reporting".TaskValidate();
+                return null;
+                }
+
+            return Process(acknowledgeConnection, true);
 
 
-
-            // already used?
-
-
-
-            // 
+            // Add the device to the mesh
 
 
 
@@ -956,9 +964,9 @@ namespace Goedel.Mesh.Client {
             ProfileAccount.AccountAddresses.AssertNotNull();
             (ProfileAccount.AccountAddresses.Count > 0).AssertTrue();
 
-            ServiceID = ProfileAccount.AccountAddresses[0];
+            AccountAddress = ProfileAccount.AccountAddresses[0];
 
-            meshClient = GetMeshClient(ServiceID);
+            meshClient = GetMeshClient(AccountAddress);
             }
 
         /// <summary>
@@ -986,7 +994,7 @@ namespace Goedel.Mesh.Client {
                     string uniqueID=null) {
             Connect();
 
-            meshMessage.Sender = ServiceID;
+            meshMessage.Sender = AccountAddress;
             uniqueID ??= UDF.Nonce();
 
             var envelope = meshMessage.Encode();

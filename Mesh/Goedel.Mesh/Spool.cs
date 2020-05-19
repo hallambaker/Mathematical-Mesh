@@ -559,22 +559,22 @@ namespace Goedel.Mesh {
         /// Check the spool for a matching unexpired PIN identifier and return the plaintext of the
         /// first unexpired message.
         /// </summary>
-        /// <param name="pinID">The identifier of the corresponding PIN value.</param>
+        /// <param name="pinId">The identifier of the corresponding PIN value.</param>
         /// <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
         /// <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
         /// <returns>The plaintext message.</returns>
-        public Message CheckPIN(string pinID, 
+        public SpoolEntry CheckPIN(string pinId, 
                     long maxTicks = -1,
                     long maxSearch = -1) {
 
-            throw new NYI();
+            // The pinId is the same as the MessageID of the MessagePIN.
+            // MessageID = RequestConnection.GetPinUDF(pin, accountUDF);
+            "Should split the Local and Admin spools".TaskFunctionality();
+            "Check for pin age etc, limit search".TaskFunctionality();
 
-            //// Get all the unexpired messages that match the PIN identifier
-            //var envelope = GetByMessageID(pinID, MessageStatus.Unexpired,
-            //            maxTicks:maxTicks, maxSearch:maxSearch);
 
-            //// Return the decrypted message
-            //return Message.Decode(envelope, KeyCollection);
+            return GetByMessageId(pinId);
+
             }
 
         }

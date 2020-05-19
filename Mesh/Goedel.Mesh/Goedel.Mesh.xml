@@ -9082,7 +9082,7 @@
             Check the spool for a matching unexpired PIN identifier and return the plaintext of the
             first unexpired message.
             </summary>
-            <param name="pinID">The identifier of the corresponding PIN value.</param>
+            <param name="pinId">The identifier of the corresponding PIN value.</param>
             <param name="maxTicks">Maximum message age in ticks (-1 = check all).</param>
             <param name="maxSearch">Maximum number of records to check (-1 = check all).</param>
             <returns>The plaintext message.</returns>

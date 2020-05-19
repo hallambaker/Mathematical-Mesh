@@ -155,7 +155,7 @@ namespace Goedel.Mesh {
             PIN = pin;
             MessageID = RequestConnection.GetPinUDF(pin, accountUDF);
 
-
+            Console.WriteLine($"Created Pin: {Account} / {PIN} => {MessageID}");
             }
 
 
@@ -181,20 +181,6 @@ namespace Goedel.Mesh {
         public static new AcknowledgeConnection Decode(DareEnvelope envelope,
                     KeyCollection keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as AcknowledgeConnection;
-
-
-
-        
-
-
-
-
-
-
-
-
-
-
 
         }
 

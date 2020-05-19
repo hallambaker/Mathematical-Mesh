@@ -407,8 +407,8 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
             <summary>Returns the MeshClient and caches the result for future use.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.ServiceID">
-            <summary>The service identifier.</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
+            <summary>The Account Address</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DirectoryAccount">
             <summary>The directory containing the catalogs related to the account.</summary>
