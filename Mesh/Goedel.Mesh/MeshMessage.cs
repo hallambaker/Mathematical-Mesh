@@ -202,7 +202,7 @@ namespace Goedel.Mesh {
             ClientNonce = clientNonce ?? CryptoCatalog.GetBits(128);
             if (pin != null) {
                 PinUDF = GetPinUDF(pin, accountAddress);
-                PinWitness = GetPinWitness(pin, accountAddress, clientNonce, profileDevice.UDF);
+                PinWitness = GetPinWitness(pin, accountAddress, ClientNonce, profileDevice.UDF);
                 }
             }
 
@@ -230,8 +230,15 @@ namespace Goedel.Mesh {
                     string pin,
                     string accountAddress,
                     byte[] clientNonce,
-                    string deviceUDF) => UDF.PinWitness(pin, accountAddress.ToUTF8(),
+                    string deviceUDF) {
+
+            //Console.WriteLine($"  {pin} {accountAddress}" +
+            //    $"\n{deviceUDF}\n{clientNonce.ToStringBase16FormatHex()}");
+
+
+            return UDF.PinWitness(pin, accountAddress.ToUTF8(),
                         clientNonce, deviceUDF.ToUTF8());
+            }
 
         /// <summary>
         /// Verify that the witness value is correct for the specified <paramref name="pin"/> and
