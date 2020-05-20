@@ -7,7 +7,10 @@ using Xunit;
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
     public partial class ShellTests {
-
+        const string AccountA = "alice@example.com";
+        const string DeviceAdminName = "DeviceAdmin";
+        const string DeviceConnect1Name = "DeviceConnect1";
+        const string ServiceDevice = "example.com";
         [Fact]
         public void TestHello() {
 
@@ -49,6 +52,8 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestProfileConnect() {
             var accountA = "alice@example.com";
+
+
 
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
@@ -115,6 +120,57 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectPinReused() => throw new NYI();
+
+
+        /// <summary>
+        /// Test connection by means of a dynamic QR code displayed on an
+        /// admin device and scanned by the device requesting connection.
+        /// </summary>
+        [Fact]
+        public void TestProfileConnectDynamicQR() {
+
+            var deviceAdmin     = GetTestCLI(DeviceAdminName);
+            var deviceConnect1   = GetTestCLI(DeviceConnect1Name);
+
+            deviceAdmin.Dispatch($"profile create {AccountA} ");
+
+            // create the connection QR code
+            var invite = deviceAdmin.Dispatch($"account invite") as ResultInvite;
+
+
+            var result1 = deviceConnect1.Dispatch($"device rsvp {invite.Uri}");
+            deviceAdmin.Dispatch($"account sync");
+
+
+            var result2 = deviceConnect1.Dispatch($"device complete");
+            }
+
+        /// <summary>
+        /// Test connection by means of a static QR code which specifies
+        /// the fingerprint of the device profile and a secret key to be used
+        /// both to authenticate the connection and to specify a 'hailing 
+        /// identifier' that may be used to establish a wireless connection to 
+        /// the device.
+        /// </summary>
+        [Fact]
+        public void TestProfileConnectStaticQR() {
+
+            var deviceAdmin = GetTestCLI(DeviceAdminName);
+            var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
+
+
+            var deviceInit = deviceConnect1.Dispatch($"device init {ServiceDevice}") as ResultDeviceInit;
+
+
+            deviceAdmin.Dispatch($"profile create {AccountA} ");
+
+            deviceAdmin.Dispatch($"account connect {deviceInit.Uri} ");
+
+
+            var result2 = deviceConnect1.Dispatch($"device complete");
+
+            }
+
 
 
         [Fact]

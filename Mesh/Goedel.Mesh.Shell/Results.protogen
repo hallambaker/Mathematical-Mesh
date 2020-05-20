@@ -42,6 +42,13 @@
 		TStruct Assertion Profiles
 			Multiple
 
+	Structure ResultInvite
+		Inherits							Result
+		String								Uri
+
+	Structure ResultDeviceInit
+		Inherits							ResultCreateDevice
+		String								Uri
 
 	Structure ResultCreateDevice
 		Inherits							Result

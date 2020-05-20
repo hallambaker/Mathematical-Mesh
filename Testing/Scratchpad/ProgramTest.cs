@@ -20,6 +20,12 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+
+            ShellTests.Test().TestProfileConnectDynamicQR();
+            ShellTests.Test().TestProfileConnectStaticQR();
+
+
+
             // Service Tests
             //TestService.Test().MeshDeviceConnectApprove();
             //TestService.Test().MeshDeviceConnectPIN();
@@ -36,10 +42,10 @@ namespace Scratchpad {
 
             // Shell connect tests
             //ShellTests.Test().TestProfileConnect();
-            //ShellTests.Test().TestProfileConnectAuth();
+
             //ShellTests.Test().TestProfileConnectAuthAdmin();
             //ShellTests.Test().TestProfileConnectAuthAll();
-            //ShellTests.Test().TestProfileConnectEARL();
+
 
             //StoreTests.Test().TestSpoolSingle();
 
@@ -47,7 +53,14 @@ namespace Scratchpad {
 
             // This is failing because the containerInfo field is not being correctly updated
 
-            ShellTests.Test().TestProfileConnectPin();
+            //ShellTests.Test().TestProfileConnectPin();
+
+
+            //ShellTests.Test().TestProfileConnectAuth();
+
+
+
+
 
 
 
