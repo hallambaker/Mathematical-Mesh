@@ -1,4 +1,5 @@
 ﻿using Goedel.Protocol;
+using Goedel.Utilities;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -114,5 +115,73 @@ namespace Goedel.Mesh.Shell {
 
             return result;
             }
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult AccountInvite(AccountInvite Options) {
+            using var contextAccount = GetContextAccount(Options);
+
+
+            var messagePIN = contextAccount.GetPIN(length: 128);
+            var uri = messagePIN.GetURI();
+
+            var result = new ResultPIN() {
+                MessagePIN = messagePIN,
+                Uri = uri
+                };
+
+            return result;
+            }
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult AccountPublish(AccountPublish Options) {
+            using var contextAccount = GetContextAccount(Options);
+
+            contextAccount.Publish(
+                    out var secretSeed, 
+                    out var profileDevice,
+                    out var connectKey,
+                    out var connectUri);
+
+            var filename = connectKey + ".medk";
+            secretSeed.ToFile(filename);
+
+            var result = new ResultPublish() {
+                Uri = connectUri,
+                ProfileDevice = profileDevice,
+                FileName = filename,
+                };
+            "".TaskFunctionality();
+            return result;
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult AccountConnect(AccountConnect Options) {
+            using var contextAccount = GetContextAccount(Options);
+
+            var contextMeshPending = contextAccount.Connect(Options.Uri.Value);
+
+
+            var result = new ResultConnect() {
+                CatalogedMachine = contextMeshPending.CatalogedMachine
+                };
+            "".TaskFunctionality();
+            return result;
+            }
+
+
         }
     }

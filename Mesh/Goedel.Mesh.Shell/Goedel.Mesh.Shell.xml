@@ -52,6 +52,27 @@
             <param name="Options">The dispatch options.</param>
             <returns>The result of the operation.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountInvite(Goedel.Mesh.Shell.AccountInvite)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountPublish(Goedel.Mesh.Shell.AccountPublish)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountConnect(Goedel.Mesh.Shell.AccountConnect)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.BookmarkAdd(Goedel.Mesh.Shell.BookmarkAdd)">
             <summary>
             Dispatch method
@@ -235,6 +256,20 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceRequestConnect(Goedel.Mesh.Shell.DeviceRequestConnect)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceJoin(Goedel.Mesh.Shell.DeviceJoin)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DeviceInstall(Goedel.Mesh.Shell.DeviceInstall)">
             <summary>
             Dispatch method
             </summary>
@@ -1273,6 +1308,54 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.ServiceID">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.ServiceID">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.Uri">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.ServiceID">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.ServiceID">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -1525,131 +1608,41 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Portal">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.Uri">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Key">
-            <summary>Field accessor for option [key]</summary>
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.ServiceID">
+            <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Export">
-            <summary>Field accessor for option [export]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.EnumReporting">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Verbose">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.Verbose">
             <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Report">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.Report">
             <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Json">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.ContentType">
-            <summary>Field accessor for option [cty]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Encrypt">
-            <summary>Field accessor for option [encrypt]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Sign">
-            <summary>Field accessor for option [sign]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Hash">
-            <summary>Field accessor for option [hash]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.DeviceNew">
-            <summary>Field accessor for option [new]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.DeviceUDF">
-            <summary>Field accessor for option [dudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.DeviceID">
-            <summary>Field accessor for option [did]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.DeviceDescription">
-            <summary>Field accessor for option [dd]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.Auth">
-            <summary>Field accessor for option [auth]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthAdmin">
-            <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthAll">
-            <summary>Field accessor for option [all]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthBookmark">
-            <summary>Field accessor for option [bookmark]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthCalendar">
-            <summary>Field accessor for option [calendar]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthContacts">
-            <summary>Field accessor for option [contact]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthConfirm">
-            <summary>Field accessor for option [confirm]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthMail">
-            <summary>Field accessor for option [mail]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthNetwork">
-            <summary>Field accessor for option [network]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthPassword">
-            <summary>Field accessor for option [password]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePreConnect.AuthSSH">
-            <summary>Field accessor for option [ssh]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceInit.Earl">
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.Profile">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceInit.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.ServiceID">
             <summary>Field accessor for option [account]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Earl">
-            <summary>Field accessor for parameter []</summary>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.DeviceID">
-            <summary>Field accessor for parameter []</summary>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.Auth">
-            <summary>Field accessor for option [auth]</summary>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.Report">
+            <summary>Field accessor for option [report]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthAdmin">
-            <summary>Field accessor for option [admin]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthAll">
-            <summary>Field accessor for option [all]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthBookmark">
-            <summary>Field accessor for option [bookmark]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthCalendar">
-            <summary>Field accessor for option [calendar]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthContacts">
-            <summary>Field accessor for option [contact]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthConfirm">
-            <summary>Field accessor for option [confirm]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthMail">
-            <summary>Field accessor for option [mail]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthNetwork">
-            <summary>Field accessor for option [network]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthPassword">
-            <summary>Field accessor for option [password]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.AuthSSH">
-            <summary>Field accessor for option [ssh]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceEarl.ServiceID">
-            <summary>Field accessor for option [account]</summary>
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.Json">
+            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.Recipient">
             <summary>Field accessor for parameter []</summary>
@@ -3707,31 +3700,39 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Shell.ResultInvite">
+        <member name="T:Goedel.Mesh.Shell.ResultPublish">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultInvite.Uri">
+        <member name="P:Goedel.Mesh.Shell.ResultPublish.Uri">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultInvite._Tag">
+        <member name="P:Goedel.Mesh.Shell.ResultPublish.FileName">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublish.ProfileDevice">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPublish._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ResultInvite.__Tag">
+        <member name="F:Goedel.Mesh.Shell.ResultPublish.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultInvite._Factory">
+        <member name="M:Goedel.Mesh.Shell.ResultPublish._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultInvite.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Shell.ResultPublish.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -3740,7 +3741,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultInvite.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Shell.ResultPublish.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -3751,7 +3752,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultInvite.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Shell.ResultPublish.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3759,66 +3760,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Shell.ResultInvite.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.Shell.ResultDeviceInit">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultDeviceInit.Uri">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell.ResultDeviceInit._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultDeviceInit.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeviceInit._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeviceInit.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeviceInit.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeviceInit.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.Shell.ResultDeviceInit.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Shell.ResultPublish.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4425,6 +4367,10 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Shell.ResultPIN.MessagePIN">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultPIN.Uri">
             <summary>
             </summary>
         </member>

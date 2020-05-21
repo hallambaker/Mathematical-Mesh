@@ -163,7 +163,14 @@ namespace Goedel.Mesh {
     public static class Constants {
 
         ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
-        public const string MeshMessageType = "application/mmm_message";
+        public const string IanaTypeMeshMessage = "application/mmm/message";
+
+        ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        public const string IanaTypeMeshNonce = "application/mmm/nonce";
+
+
+        ///<summary>The proposed IANA URI scheme.</summary>
+        public const string MeshConnectURI = "mcu";
 
 
         // Constants for calculating timeout values.

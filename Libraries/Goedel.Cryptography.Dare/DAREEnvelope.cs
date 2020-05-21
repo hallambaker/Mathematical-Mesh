@@ -163,6 +163,13 @@ namespace Goedel.Cryptography.Dare {
             return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
 
             }
+
+
+        public static DareEnvelope Encrypt(byte[] plaintext, string pin) {
+            throw new NYI();
+            }
+
+
         #endregion
         #region // Convenience accessors
 

@@ -35,6 +35,41 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
+        public override ShellResult DeviceJoin(DeviceJoin Options) {
+            var uri = Options.Uri.Value;
+
+            var contextMeshPending = MeshHost.Join(uri);
+            var result = new ResultConnect() {
+                CatalogedMachine = contextMeshPending.CatalogedMachine
+                };
+            "".TaskFunctionality();
+            return result;
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DeviceInstall(DeviceInstall Options) {
+            var filename = Options.Profile.Value;
+
+            var contextMeshPending = MeshHost.Install(filename);
+
+            var result = new ResultConnect() {
+                CatalogedMachine = contextMeshPending.CatalogedMachine
+                };
+            "".TaskFunctionality();
+            return result;
+            }
+
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceComplete(DeviceComplete Options) {
             var serviceID = Options.ServiceID.Value;
 
@@ -177,6 +212,9 @@ namespace Goedel.Mesh.Shell {
             "".TaskFunctionality();
             return result;
             }
+
+
+
 
         }
     }

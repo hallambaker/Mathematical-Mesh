@@ -581,7 +581,7 @@
             <param name="updates">The updates to apply.</param>
             <returns>True if the transaction committed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.Int32,System.Int32)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.Int32,System.Int64)">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -1289,6 +1289,34 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.InvalidUri">
+            <summary>
+            The specified connection URI was invalid
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor">
+            <summary>
+            Construct instance for exception "The specified connection URI was invalid"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "The specified connection URI was invalid"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidUri.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.ConnectionRefused">
             <summary>
             The connection request was refused
@@ -1607,6 +1635,18 @@
         <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Begin connection to a service.
+            </summary>
+            <returns>Context for administering the Mesh account via the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.Join(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Begin connection to a service.
+            </summary>
+            <returns>Context for administering the Mesh account via the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshHost.Install(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Install a manufacturer device profile.
             </summary>
             <returns>Context for administering the Mesh account via the service</returns>
         </member>

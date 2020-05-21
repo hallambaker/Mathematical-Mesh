@@ -2098,8 +2098,14 @@
             Collected constants used in the Mathematical Mesh
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Constants.MeshMessageType">
+        <member name="F:Goedel.Mesh.Constants.IanaTypeMeshMessage">
             <summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.IanaTypeMeshNonce">
+            <summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.MeshConnectURI">
+            <summary>The proposed IANA URI scheme.</summary>
         </member>
         <member name="F:Goedel.Mesh.Constants.MillisecondInTicks">
             <summary>Number of ticks in a millisecond</summary>
@@ -2945,6 +2951,12 @@
             <param name="expires">The expiry time.</param>
             <param name="accountAddress">The account address the PIN is issued for.</param>
         </member>
+        <member name="M:Goedel.Mesh.MessagePIN.GetURI">
+            <summary>
+            Get the 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Goedel.Mesh.MessagePIN.Account">
             <summary>
             </summary>
@@ -3450,6 +3462,14 @@
         <member name="M:Goedel.Mesh.MeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Upload.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshService.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Base method for implementing the transaction  Publish.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The authentication binding.</param>
@@ -4199,13 +4219,13 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyCollection,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
@@ -5094,6 +5114,14 @@
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Implement the transaction
+            </summary>		
+            <param name="request">The request object.</param>
+            <param name="session">The authentication binding.</param>
+            <returns>The response object</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshServiceClient.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Implement the transaction
             </summary>		
@@ -6818,6 +6846,126 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.PublishRequest">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishRequest.Publications">
+             <summary>
+            The entries to be published. These may contain the full data
+            or just the identifier, length and fingerprint.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishRequest._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishRequest.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishRequest._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.PublishRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.PublishRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.PublishRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.PublishRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.PublishResponse">
+             <summary>
+            
+             
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PublishResponse._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.PublishResponse.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.PublishResponse._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.PublishResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.PublishResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.PublishResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.PublishResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.PostRequest">
              <summary>
             
@@ -7595,6 +7743,83 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedPublication">
+             <summary>
+            
+             A publication.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication.ID">
+             <summary>
+            Unique identifier code
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication.Authenticator">
+             <summary>
+            The witness key value to use to request access to the record.	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication.KeyAuthentication">
+             <summary>
+            The authentication key for use of the device under the profile		
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication.EncryptedProfileDevice">
+             <summary>
+            The device profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedPublication.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

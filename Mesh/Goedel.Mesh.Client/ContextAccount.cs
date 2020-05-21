@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
+using Goedel.Cryptography.Jose;
 
 using System;
 using System.Collections.Generic;
@@ -628,16 +629,75 @@ namespace Goedel.Mesh.Client {
         /// <param name="validity">The validity interval in minutes from the current 
         /// date and time.</param>
         /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
-        public MessagePIN GetPIN(int length = 80, int validity = 24 * 60) {
+        public MessagePIN GetPIN(int length = 80, long validity = Constants.DayInTicks) {
             var pin = UDF.Nonce(length);
-            var expires = DateTime.Now.AddMinutes(validity);
+            var expires = DateTime.Now.AddTicks(validity);
 
-            var messageConnectionPIN = new MessagePIN(
-                        pin, expires, AccountAddress);
+            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress);
 
             SendMessageAdmin(messageConnectionPIN);
 
             return messageConnectionPIN;
+            }
+
+
+
+
+        public PublishResponse Publish(
+                    out PrivateKeyUDF secretSeed, 
+                    out ProfileDevice profileDevice,
+                    out string pin,
+                    out string connectURI,
+
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                    byte[] secret = null,
+                    int bits = 256
+
+
+                    ) {
+
+            // an invitation consists of a uri of the form:
+            // mmm://q@example.org/NQED-5C35-WSBQ-OBHW-ENBI-XOZF
+
+
+            secretSeed = new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileDevice, 
+                algorithmEncrypt, 
+                algorithmSign,
+                algorithmAuthenticate);
+
+
+            pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
+            connectURI = MeshUri.ConnectUri(AccountAddress, pin);
+
+            // Create a device profile and encrypt under pin
+            profileDevice = new ProfileDevice(secretSeed);
+            var plaintext = profileDevice.DareEnvelope.GetBytes();
+            var encryptedProfileDevice = DareEnvelope.Encrypt(plaintext, pin);
+
+            // Create an identifier
+
+            var id = UDF.ContentDigestOfDataString(pin.ToUTF8(), Constants.IanaTypeMeshNonce);
+            var catalogedPublication = new CatalogedPublication() {
+                EncryptedProfileDevice = encryptedProfileDevice,
+                ID = id,
+                };
+
+            var publishRequest = new PublishRequest() {
+                Publications = new List<CatalogedPublication>() { catalogedPublication }
+                };
+
+            var publishResponse = MeshClient.Publish(publishRequest);
+
+
+            return publishResponse;
+            }
+
+
+        public ContextMeshPending Connect(string uri) {
+            throw new NYI();
             }
 
 

@@ -60,7 +60,7 @@ namespace Goedel.Mesh {
             var contentMeta = new ContentMeta() {
                 UniqueID = MessageID,
                 Created = DateTime.Now,
-                ContentType = Constants.MeshMessageType,
+                ContentType = Constants.IanaTypeMeshMessage,
                 MessageType = _Tag
                 };
 
@@ -168,6 +168,14 @@ namespace Goedel.Mesh {
 
             Console.WriteLine($"Created Pin: {Account} / {PIN} => {MessageID}");
             }
+
+        /// <summary>
+        /// Get the 
+        /// </summary>
+        /// <returns></returns>
+        public string GetURI() => MeshUri.ConnectUri(Account, PIN);
+
+
 
         }
 

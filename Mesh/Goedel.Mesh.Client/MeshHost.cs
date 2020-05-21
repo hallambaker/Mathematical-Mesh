@@ -235,6 +235,64 @@ namespace Goedel.Mesh.Client {
             return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
             }
 
+        /// <summary>
+        /// Begin connection to a service.
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        public ContextMeshPending Join(
+                string uriAddress,
+                string localName = null,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
+
+            algorithmSign.Future();
+            algorithmEncrypt.Future();
+            algorithmAuthenticate.Future();
+
+            // uri = "mcu:/alice@example.com/NACE-ZMVM-L6FV-NCHE-LY"
+
+            // parse the uri
+
+            Uri uri;
+            try {
+                uri = new Uri(uriAddress);
+                (uri.Scheme == Constants.MeshConnectURI).AssertTrue();
+                }
+            catch (Exception e) {
+                throw new InvalidUri();
+                }
+
+            var pin = uri.LocalPath.Substring(1);
+            var accountAddress = $"{uri.UserInfo}@{uri.Authority}";
+
+            // connect to alice@example.com using pin NACE-ZMVM-L6FV-NCHE-LY
+            return ContextMeshPending.ConnectService(this, accountAddress, localName, pin);
+
+
+            //return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+            }
+
+        /// <summary>
+        /// Install a manufacturer device profile.
+        /// </summary>
+        /// <returns>Context for administering the Mesh account via the service</returns>
+        public ContextMeshPending Install(
+                string filename,
+                string localName = null,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
+
+            filename.Future();
+            algorithmSign.Future();
+            algorithmEncrypt.Future();
+            algorithmAuthenticate.Future();
+
+            throw new NYI();
+
+            //return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+            }
 
 
         /// <summary>

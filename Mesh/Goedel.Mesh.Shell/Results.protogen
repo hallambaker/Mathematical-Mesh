@@ -42,19 +42,18 @@
 		TStruct Assertion Profiles
 			Multiple
 
-	Structure ResultInvite
-		Inherits							Result
-		String								Uri
 
-	Structure ResultDeviceInit
+	Structure ResultPublish
 		Inherits							ResultCreateDevice
 		String								Uri
+		String								FileName
+		Struct ProfileDevice				ProfileDevice
 
 	Structure ResultCreateDevice
 		Inherits							Result
 		Boolean								Default
 		String								DeviceUDF
-		Struct CatalogedDevice			CatalogedDevice
+		Struct CatalogedDevice				CatalogedDevice
 
 	Structure ResultCreatePersonal
 		Inherits							ResultCreateAccount
@@ -99,8 +98,9 @@
 
 	// Account
 	Structure ResultPIN
-		Inherits		Result
+		Inherits					Result
 		Struct MessagePIN			MessagePIN
+		String						Uri
 
 	Structure ResultHello
 		Inherits		Result

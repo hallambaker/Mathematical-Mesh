@@ -82,6 +82,8 @@ namespace Goedel.Mesh {
 			{"UploadRequest", UploadRequest._Factory},
 			{"UploadResponse", UploadResponse._Factory},
 			{"EntryResponse", EntryResponse._Factory},
+			{"PublishRequest", PublishRequest._Factory},
+			{"PublishResponse", PublishResponse._Factory},
 			{"PostRequest", PostRequest._Factory},
 			{"PostResponse", PostResponse._Factory},
 			{"ConnectRequest", ConnectRequest._Factory},
@@ -205,6 +207,16 @@ namespace Goedel.Mesh {
         public virtual UploadResponse Upload (
                 UploadRequest request, JpcSession session=null) => 
 						JPCInterface.Upload (request, session ?? JpcSession);
+
+        /// <summary>
+		/// Base method for implementing the transaction  Publish.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object from the service</returns>
+        public virtual PublishResponse Publish (
+                PublishRequest request, JpcSession session=null) => 
+						JPCInterface.Publish (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Post.
@@ -363,6 +375,21 @@ namespace Goedel.Mesh {
         /// <param name="request">The request object.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
+        public override PublishResponse Publish (
+                PublishRequest request, JpcSession session=null) {
+
+            var responseData = JPCRemoteSession.Post("Publish", request);
+            var response = PublishResponse.FromJSON(responseData.JSONReader(), true);
+
+            return response;
+            }
+
+        /// <summary>
+		/// Implement the transaction
+        /// </summary>		
+        /// <param name="request">The request object.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object</returns>
         public override PostResponse Post (
                 PostRequest request, JpcSession session=null) {
 
@@ -455,6 +482,12 @@ namespace Goedel.Mesh {
 					var Request = new UploadRequest();
 					Request.Deserialize (jsonReader);
 					Response = Service.Upload (Request, session);
+					break;
+					}
+				case "Publish" : {
+					var Request = new PublishRequest();
+					Request.Deserialize (jsonReader);
+					Response = Service.Publish (Request, session);
 					break;
 					}
 				case "Post" : {
@@ -3660,6 +3693,229 @@ namespace Goedel.Mesh {
 					break;
 					}
 				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+	public partial class PublishRequest : MeshRequest {
+        /// <summary>
+        ///The entries to be published. These may contain the full data
+        ///or just the identifier, length and fingerprint.
+        /// </summary>
+
+		public virtual List<CatalogedPublication>				Publications  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PublishRequest";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new PublishRequest();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((MeshRequest)this).SerializeX(_writer, false, ref _first);
+			if (Publications != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Publications", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Publications) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new PublishRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as PublishRequest;
+				}
+		    var Result = new PublishRequest ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Publications" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Publications = new List <CatalogedPublication> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  CatalogedPublication ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new CatalogedPublication (jsonReader);
+						Publications.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// 
+	/// </summary>
+	public partial class PublishResponse : MeshResponse {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PublishResponse";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new PublishResponse();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((MeshResponse)this).SerializeX(_writer, false, ref _first);
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new PublishResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as PublishResponse;
+				}
+		    var Result = new PublishResponse ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

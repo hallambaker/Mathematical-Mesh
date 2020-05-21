@@ -8,9 +8,11 @@ using Xunit;
 namespace Goedel.XUnit {
     public partial class ShellTests {
         const string AccountA = "alice@example.com";
+        const string AccountQ = "quartermaster@example.com";
+        const string DeviceQName = "DeviceQ";
         const string DeviceAdminName = "DeviceAdmin";
         const string DeviceConnect1Name = "DeviceConnect1";
-        const string ServiceDevice = "example.com";
+
         [Fact]
         public void TestHello() {
 
@@ -132,16 +134,17 @@ namespace Goedel.XUnit {
             var deviceAdmin     = GetTestCLI(DeviceAdminName);
             var deviceConnect1   = GetTestCLI(DeviceConnect1Name);
 
-            deviceAdmin.Dispatch($"profile create {AccountA} ");
+            deviceAdmin.Dispatch($"mesh create /service={AccountA}");
 
             // create the connection QR code
-            var invite = deviceAdmin.Dispatch($"account invite") as ResultInvite;
+            var invite = deviceAdmin.Dispatch($"account invite") as ResultPIN;
 
 
-            var result1 = deviceConnect1.Dispatch($"device rsvp {invite.Uri}");
-            deviceAdmin.Dispatch($"account sync");
+            var result1 = deviceConnect1.Dispatch($"device join {invite.Uri}");
+            deviceAdmin.Dispatch($"account sync  /auto");
 
-
+            // This is currently failing because the completion
+            // message is not being found.
             var result2 = deviceConnect1.Dispatch($"device complete");
             }
 
@@ -155,14 +158,18 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestProfileConnectStaticQR() {
 
+            var deviceQ = GetTestCLI(DeviceQName);
             var deviceAdmin = GetTestCLI(DeviceAdminName);
             var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 
+            deviceQ.Dispatch($"mesh create /service={AccountQ}");
+            var deviceInit = deviceQ.Dispatch($"account publish") as ResultPublish;
 
-            var deviceInit = deviceConnect1.Dispatch($"device init {ServiceDevice}") as ResultDeviceInit;
 
+            deviceConnect1.Dispatch($"device install {deviceInit.FileName}");
 
-            deviceAdmin.Dispatch($"profile create {AccountA} ");
+            deviceAdmin.Dispatch($"mesh create /service={AccountA}");
+
 
             deviceAdmin.Dispatch($"account connect {deviceInit.Uri} ");
 
@@ -173,31 +180,7 @@ namespace Goedel.XUnit {
 
 
 
-        [Fact]
-        public void TestProfileConnectEARL() {
-            var accountA = "alice@example.com";
-            var EARLService = "example.com";
-            var PollAccount = "devices@example.com";
 
-            var device1 = GetTestCLI("Device1");
-            var device2 = GetTestCLI("Device2");
-
-            device1.Dispatch($"profile create {accountA} ");
-            device2.Dispatch($"device create /id=\"IoTDevice\"");
-
-            var result1 = device1.Dispatch("key earl");
-            var resultEarl = (result1 as ResultKey);
-
-
-            var DeviceCreateUDF = $"udf://{EARLService}/{resultEarl.Key}";
-
-            device1.Dispatch($"device request {accountA} ");
-
-            device2.Dispatch($"device request {PollAccount} /earl={DeviceCreateUDF}");
-            device2.Dispatch($"profile sync", fail: true);
-            device1.Dispatch($"device earl {DeviceCreateUDF}");
-            device2.Dispatch($"profile sync");
-            }
 
 
 

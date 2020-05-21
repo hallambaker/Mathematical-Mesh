@@ -81,6 +81,9 @@ namespace Goedel.Mesh.Shell {
             }
         }
 
+
+
+
     public partial class ResultDigest {
 
         /// <summary>
@@ -280,7 +283,11 @@ namespace Goedel.Mesh.Shell {
         public override string ToString() {
             var Builder = new StringBuilder();
 
-            if (MessagePIN != null) {
+            if (Uri != null) {
+                Builder.Append($"URI={Uri}");
+                }
+
+            else if (MessagePIN != null) {
                 Builder.Append($"PIN={MessagePIN.PIN}");
 
                 if (MessagePIN.Expires != null) {

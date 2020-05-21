@@ -42,6 +42,11 @@ Namespace Goedel.Mesh.Client
 		Description
 			|The connection request did not complete
 
+		Exception InvalidUri
+			Console "The specified connection URI was invalid"
+			Description
+				|The specified connection URI was invalid
+
 		Exception ConnectionRefused
 			Console "The connection request was refused"
 			Description

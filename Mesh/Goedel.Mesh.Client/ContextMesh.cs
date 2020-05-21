@@ -208,7 +208,7 @@ namespace Goedel.Mesh.Client {
                     UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
                     algorithmAuthenticate);
 
-            var profileDevice = new ProfileDevice (meshHost.KeyCollection, secretSeed, true);
+            var profileDevice = new ProfileDevice(secretSeed, meshHost.KeyCollection, true);
 
             return ConnectService(meshHost, profileDevice, serviceID, localName, pin);
             }

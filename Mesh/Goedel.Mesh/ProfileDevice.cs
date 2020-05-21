@@ -39,24 +39,24 @@ namespace Goedel.Mesh {
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                 byte[] secret = null,
-                bool? persist = null) : this (keyCollection,
-                    new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileDevice, 
-                        algorithmEncrypt, algorithmSign, algorithmAuthenticate, secret),
-                    persist: (persist != null ? persist==true : secret == null)) {}
+                bool? persist = null) : this(new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileDevice,
+                    algorithmEncrypt, algorithmSign, algorithmAuthenticate, secret),
+                    keyCollection,
+                    persist: (persist != null ? persist == true : secret == null)) { }
 
 
         /// <summary>
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
         /// seed.
         /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
         /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
         public ProfileDevice(
-                    KeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
-                    bool persist=false) {
+                    KeyCollection keyCollection=null,
+                    bool persist = false) {
 
             var meshKeyType = MeshKeyType.DeviceProfile;
             var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);

@@ -291,6 +291,26 @@
 			Include AccountOptions
 			Include Reporting
 
+		Command AccountInvite "invite"
+			Brief "Create an invitation Uri"
+
+			Include AccountOptions
+			Include Reporting
+
+		Command AccountPublish "publish"
+			Brief "Create a new device profile and register the corresponding URI."
+
+			Include AccountOptions
+			Include Reporting
+
+		Command AccountConnect "connect"
+			Brief "Connect by means of a connection uri"
+			Parameter Uri "uri" String
+				Brief "The device location URI"			
+			
+			Include AccountOptions
+			Include Reporting
+
 
 	CommandSet Connect "device"
 		Brief "Device management commands."
@@ -354,35 +374,21 @@
 			Include AccountOptions
 			Include Reporting
 
-
-
-		Command DevicePreConnect "pre"
-			Brief "Create a preconnection request"
-			Parameter Portal "account" String
-				Brief "New portal account"
-			Option Key "key" String
-				Brief "Encryption key for use in generating an EARL connector."
-			Option Export "export" String
-				Brief "Export the device configuration information to the specified file"
+		Command DeviceJoin "join"
+			Brief "Connect by means of a connection URI from an administration device."
+			Parameter Uri "uri" String
+				Brief "The device location URI"			
+			
+			Include AccountOptions
 			Include Reporting
-			Include EncodeOptions
-			Include DeviceProfileInfo
-			Include DeviceAuthOptions
 
-		Command DeviceInit "init"
-			Brief "Create an initialization "
-			Parameter Earl "earl" String
-				Brief "The EARL locator"
+		Command DeviceInstall "install"
+			Brief "Connect by means of a connection URI from an administration device."
+			Parameter Profile "in" String
+				Brief "The device profile"			
+			
 			Include AccountOptions
-
-		Command DeviceEarl "earl"
-			Brief "Connect a new device by means of an EARL"
-			Parameter Earl "earl" String
-				Brief "The EARL locator"
-			Parameter DeviceID "id" String
-				Brief "Device identifier"
-			Include DeviceAuthOptions
-			Include AccountOptions
+			Include Reporting
 
 
 	CommandSet Message "message"
