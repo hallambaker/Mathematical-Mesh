@@ -28,7 +28,7 @@ namespace Goedel.Test.Core {
         /// </summary>
         /// <param name="MasterKey"></param>
         /// <param name="EncryptionKey"></param>
-        public override void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) =>
+        public override void MakeRecipient(byte[] MasterKey, CryptoKey EncryptionKey) =>
                 Recipients.Add(new DareRecipientDebug(MasterSecret, EncryptionKey));
         }
 
@@ -47,7 +47,7 @@ namespace Goedel.Test.Core {
         /// <param name="MasterKey">The master key</param>
         /// <param name="PublicKey">The recipient public key.</param>
         /// <returns>The recipient informatin object.</returns>
-        public DareRecipientDebug(byte[] MasterKey, KeyPair PublicKey) {
+        public DareRecipientDebug(byte[] MasterKey, CryptoKey PublicKey) {
 
             var Secret = Platform.GetRandomBytes(32);
             var PrivateKey = new CurveEdwards25519Private();
@@ -63,14 +63,14 @@ namespace Goedel.Test.Core {
                 AgreementEd25519 = PrivateKey.Agreement(PublicKeyEd.IKeyAdvancedPublic as CurveEdwards25519Public)
                 };
 
-            EncryptionKey = result.KeyDerive.Derive(KDFSalt, Length: 256);
+            EncryptionKey = result.KeyDerive.Derive(KDFInfo, Length: 256);
             KeyAgreement = result.IKM;
 
             var exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, MasterKey);
 
             var JoseKey = Key.GetPublic(result.EphemeralKeyPair);
 
-            KeyIdentifier = PublicKey.UDF;
+            KeyIdentifier = PublicKey.KeyIdentifier;
             Epk = JoseKey;
             WrappedMasterKey = exchange;
             }
@@ -90,7 +90,7 @@ namespace Goedel.Test.Core {
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
         public void AddEncrypt(string accountId, bool register = true) {
-            EncryptionKeys ??= new List<KeyPair>();
+            EncryptionKeys ??= new List<CryptoKey>();
 
             var keypair = new KeyPairEd25519() {
                 Locator = accountId
@@ -110,7 +110,7 @@ namespace Goedel.Test.Core {
 
         protected override void AddSign(string AccountId) => AddSign(AccountId, true);
         public void AddSign(string AccountId, bool Register) {
-            SignerKeys ??= new List<KeyPair>();
+            SignerKeys ??= new List<CryptoKey>();
 
             var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
             var PublicKeyKeypair = Keypair.KeyPairPublic();

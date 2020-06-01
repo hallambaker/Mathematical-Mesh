@@ -5,9 +5,8 @@ using System.Collections.Generic;
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
-
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method to create a new group.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
@@ -24,7 +23,7 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method to add a member to the group.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
@@ -33,9 +32,6 @@ namespace Goedel.Mesh.Shell {
             var memberID = Options.MemberID.Value;
             using var contextAccount = GetContextAccount(Options);
             using var contextGroup = contextAccount.GetContextGroup(groupID);
-
-            //Contact contact = null;
-            "Implement pulling contact from contacts catalog".TaskFunctionality(false);
 
             var entryMember = contextGroup.Add(memberID);
 
@@ -46,7 +42,7 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method to fetch a group member's record.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
@@ -65,7 +61,7 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method to remove a member from the group.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
@@ -86,7 +82,7 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method to list the members of a group.
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
@@ -96,8 +92,6 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             using var catalog = contextAccount.GetContextGroup(groupID);
             var catalogedEntries = new List<CatalogedEntry>();
-
-            "Fill in the member entries".TaskFunctionality();
 
             var result = new ResultDump() {
                 Success = true,

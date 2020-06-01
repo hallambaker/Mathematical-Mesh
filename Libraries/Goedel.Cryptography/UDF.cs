@@ -26,6 +26,8 @@ using System.Text;
 
 namespace Goedel.Cryptography {
 
+    #region // Constants and enumerations
+
     /// <summary>
     /// UDF type identifier codes
     /// </summary>
@@ -55,14 +57,16 @@ namespace Goedel.Cryptography {
         ShamirSecret = 144,
 
         ///<summary>Type code for derived key</summary>
-        DerivedKey = 200
+        DerivedKey = 200,
+
+        ///<summary>Undefined value</summary>
+        Unknown = -1
         }
 
     ///<summary>Algorithm identifier codes for Derived keys</summary>
     public enum UdfAlgorithmIdentifier {
 
-        ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
-        Any = 0,
+
 
         ///<summary>X25519 keypair as described in RFC7748</summary>
         X25519 = 1,
@@ -114,7 +118,12 @@ namespace Goedel.Cryptography {
         MeshProfileService = 264,
 
         ///<summary>Mesh device profile</summary>
-        MeshActivationService = 265
+        MeshActivationService = 265,
+
+
+
+        ///<summary>Seed MAY be used to generate keypairs for any algorithm</summary>
+        Any = 0
         }
 
 
@@ -157,6 +166,8 @@ namespace Goedel.Cryptography {
 
         }
 
+    #endregion
+
     /// <summary>
     /// Class implementing the Uniform Data Fingerprint spec.
     /// </summary>
@@ -174,6 +185,27 @@ namespace Goedel.Cryptography {
         /// Maximum precision (usually 440);
         /// </summary>
         public static int MaximumBits { get; set; } = 440;
+
+        public static CryptoAlgorithmId GetCryptoAlgorithmId(UDFTypeIdentifier typeIdentifier) =>
+            typeIdentifier switch
+                {
+                    UDFTypeIdentifier.AuthenticatorHMAC_SHA_2_512 => CryptoAlgorithmId.HMAC_SHA_2_512,
+                    UDFTypeIdentifier.AuthenticatorHMAC_SHA_3_512 => CryptoAlgorithmId.HMAC_SHA_3_512,
+                    UDFTypeIdentifier.DigestAlgSHA_2_512 => CryptoAlgorithmId.SHA_2_512,
+                    UDFTypeIdentifier.DigestSHA_3_512 => CryptoAlgorithmId.SHA_3_512,
+                    _ => CryptoAlgorithmId.Unknown
+                    };
+
+        public static UDFTypeIdentifier GetUDFTypeIdentifier(CryptoAlgorithmId typeIdentifier) =>
+    typeIdentifier switch
+        {
+            CryptoAlgorithmId.HMAC_SHA_2_512=>UDFTypeIdentifier.AuthenticatorHMAC_SHA_2_512 ,
+            CryptoAlgorithmId.HMAC_SHA_3_512=> UDFTypeIdentifier.AuthenticatorHMAC_SHA_3_512 ,
+            CryptoAlgorithmId.SHA_2_512=>UDFTypeIdentifier.DigestAlgSHA_2_512 ,
+            CryptoAlgorithmId.SHA_3_512=>UDFTypeIdentifier.DigestSHA_3_512 ,
+            _ => UDFTypeIdentifier.Unknown
+            };
+
 
         #region // Conversions to binary UDF value
         /// <summary>
@@ -202,148 +234,6 @@ namespace Goedel.Cryptography {
                         contentType, bits, cryptoAlgorithmID, key);
                     }
 
-                case CryptoAlgorithmId.Unknown:
-                    break;
-                case CryptoAlgorithmId.NULL:
-                    break;
-                case CryptoAlgorithmId.Default:
-                    break;
-                case CryptoAlgorithmId.Bulk:
-                    break;
-                case CryptoAlgorithmId.BulkMask:
-                    break;
-                case CryptoAlgorithmId.BulkTagMask:
-                    break;
-                case CryptoAlgorithmId.Digest:
-                    break;
-                case CryptoAlgorithmId.MAC:
-                    break;
-                case CryptoAlgorithmId.Encryption:
-                    break;
-                case CryptoAlgorithmId.MaxDigest:
-                    break;
-                case CryptoAlgorithmId.MaxMAC:
-                    break;
-                case CryptoAlgorithmId.MaxEncryption:
-                    break;
-                case CryptoAlgorithmId.BaseMask:
-                    break;
-                case CryptoAlgorithmId.Meta:
-                    break;
-                case CryptoAlgorithmId.MetaMask:
-                    break;
-                case CryptoAlgorithmId.MetaTagMask:
-                    break;
-                case CryptoAlgorithmId.Signature:
-                    break;
-                case CryptoAlgorithmId.Exchange:
-                    break;
-                case CryptoAlgorithmId.Wrap:
-                    break;
-                case CryptoAlgorithmId.MaxSignature:
-                    break;
-                case CryptoAlgorithmId.MaxExchange:
-                    break;
-                case CryptoAlgorithmId.MaxWrap:
-                    break;
-                case CryptoAlgorithmId.SHA_2_256:
-                    break;
-                case CryptoAlgorithmId.SHA_2_512T128:
-                    break;
-                case CryptoAlgorithmId.SHA_3_256:
-                    break;
-                case CryptoAlgorithmId.SHAKE_128:
-                    break;
-                case CryptoAlgorithmId.SHAKE_256:
-                    break;
-                case CryptoAlgorithmId.ModeCTS:
-                    break;
-                case CryptoAlgorithmId.ModeGCM:
-                    break;
-                case CryptoAlgorithmId.ModeHMAC:
-                    break;
-                case CryptoAlgorithmId.ModeCBCNone:
-                    break;
-                case CryptoAlgorithmId.ModeECB:
-                    break;
-                case CryptoAlgorithmId.AES256:
-                    break;
-                case CryptoAlgorithmId.AES128CBC:
-                    break;
-                case CryptoAlgorithmId.AES128GCM:
-                    break;
-                case CryptoAlgorithmId.AES128CTS:
-                    break;
-                case CryptoAlgorithmId.AES128HMAC:
-                    break;
-                case CryptoAlgorithmId.AES128CBCNone:
-                    break;
-                case CryptoAlgorithmId.AES128ECB:
-                    break;
-                case CryptoAlgorithmId.AES256CBC:
-                    break;
-                case CryptoAlgorithmId.AES256GCM:
-                    break;
-                case CryptoAlgorithmId.AES256CTS:
-                    break;
-                case CryptoAlgorithmId.AES256HMAC:
-                    break;
-                case CryptoAlgorithmId.AES256CBCNone:
-                    break;
-                case CryptoAlgorithmId.AES256ECB:
-                    break;
-                case CryptoAlgorithmId.HMAC_SHA_2_256:
-                    break;
-                case CryptoAlgorithmId.HMAC_SHA_2_512:
-                    break;
-                case CryptoAlgorithmId.HMAC_SHA_2_512T128:
-                    break;
-                case CryptoAlgorithmId.Level_High:
-                    break;
-                case CryptoAlgorithmId.RSASign_PSS:
-                    break;
-                case CryptoAlgorithmId.EdDSA:
-                    break;
-                case CryptoAlgorithmId.Ed25519ctx:
-                    break;
-                case CryptoAlgorithmId.Ed25519ph:
-                    break;
-                case CryptoAlgorithmId.Ed448:
-                    break;
-                case CryptoAlgorithmId.Ed448ph:
-                    break;
-                case CryptoAlgorithmId.RSASign_SHA_2_256:
-                    break;
-                case CryptoAlgorithmId.RSASign_SHA_2_512:
-                    break;
-                case CryptoAlgorithmId.RSASign_PSS_SHA_2_256:
-                    break;
-                case CryptoAlgorithmId.RSASign_PSS_SHA_2_512:
-                    break;
-                case CryptoAlgorithmId.RSAExch_P15:
-                    break;
-                case CryptoAlgorithmId.DH:
-                    break;
-                case CryptoAlgorithmId.ECDH:
-                    break;
-                case CryptoAlgorithmId.X25519:
-                    break;
-                case CryptoAlgorithmId.X448:
-                    break;
-                case CryptoAlgorithmId.XEd25519:
-                    break;
-                case CryptoAlgorithmId.XEd448:
-                    break;
-                case CryptoAlgorithmId.Direct:
-                    break;
-                case CryptoAlgorithmId.KW3394_AES128:
-                    break;
-                case CryptoAlgorithmId.KW3394_AES256:
-                    break;
-                case CryptoAlgorithmId.AES128_GCM_KW:
-                    break;
-                case CryptoAlgorithmId.AES256_GCM_KW:
-                    break;
                 default:
                     break;
                 }
@@ -552,18 +442,15 @@ namespace Goedel.Cryptography {
                     string textKey,
                     int length = 0,
                     CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
-            var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(), KeyDerive.KeyedUDFMaster, algorithm);
+            var keyDerive = new KeyDeriveHKDF(textKey.ToUTF8(), 
+                            KeyDerive.KeyedUDFMaster, algorithm);
             return keyDerive.Derive(KeyDerive.KeyedUDFExpand, length);
             }
 
 
 
 
-
         #endregion
-
-
-
         #region // Comparison functions
 
         /// <summary>
@@ -577,24 +464,67 @@ namespace Goedel.Cryptography {
         /// <returns>true if the string <paramref name="value"/> matches the 
         /// pattern <paramref name="test"/> with at least <paramref name="minBits"/>
         /// significant bits. Otherwise false.</returns>
-        public static bool Matches(string value, byte[] test, int minBits = 100) {
-            var match = test.ToStringBase32();
+        public static bool Matches(
+                string value, 
+                UDFTypeIdentifier typeIdentifier, 
+                byte[] test, 
+                int minBits = 100) {
 
-            var j = 0;
-            for (var i = 0; i < value.Length; i++) {
-                var v = (int)value[i];
-                v = v > 96 ? v - 32 : v;
 
-                if (v != 45) {
-                    var m = (int)match[j++];
-                    if (v != m) {
-                        return false;
-                        }
+            var parsed = Parse(value, out var code);
+            if (code != (byte)typeIdentifier) {
+                return false;
+                }
+
+            if (parsed.Length * 8 < minBits) {
+                return false;
+                }
+
+            var testBytes = minBits / 8;
+            var remainder = minBits - (testBytes * 8);
+
+            for (var i = 0; i < testBytes; i++) {
+                if (parsed[i] != test[i]) {
+                    return false;
                     }
                 }
-            return j * 5 >= minBits;
+
+
+            // check the last n bits
+            if (remainder == 0) {
+                return true;
+                }
+
+            var mask = (0xff << (8 - remainder)) & 0xff; // check the upper bits
+
+            var t1 = parsed[testBytes] & mask;
+            var t2 = test[testBytes] & mask;
+
+            return t1 == t2;
             }
         #endregion
+
+
+
+        #region // Conversions to string UDF value
+
+        /// <summary>
+        /// convert a UDF fingerprint from binary to string form.
+        /// </summary>
+        /// <param name="buffer">Fingerprint to format.</param>
+        /// <param name="bits">Precision.</param>
+        /// <returns>The binary UDF fingerprint.</returns>
+        public static string PresentationBase32(
+                    byte[] buffer,
+                    int bits = 0) {
+            if (buffer == null) {
+                return null;
+                }
+
+            bits = bits == 0 ? DefaultBits : bits;
+            var Length = (bits + 4) / 5;
+            return buffer.ToStringBase32(format: ConversionFormat.Dash4, outputMax: Length);
+            }
 
 
 
@@ -643,8 +573,9 @@ namespace Goedel.Cryptography {
         /// Calculate the UDF fingerprint identifier of a fingerprint identifier.
         /// </summary>
         /// <param name="data"></param>
-        /// <param name="cryptoAlgorithmID"></param>
         /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
         /// <returns>The Base32 presentation of the UDF value truncated to 
         /// <paramref name="bits"/> precision.</returns>
         public static string ContentDigestOfUDF(
@@ -663,6 +594,128 @@ namespace Goedel.Cryptography {
             }
 
 
+        #endregion
+        #region // Operations on Symmetric Keys
+
+
+        /// <summary>
+        /// Return the UDF fingerprint of the encryption key <paramref name="key"/> to
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="key">The key to calculate the fingerprint of.</param>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <returns>The fingerprint value</returns>
+        public static byte[] SymetricKeyIdBytes(
+                    byte[] key,
+                    int bits = 0,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) =>
+            DigestToUDFBinary(key, UDFConstants.UDFEncryption, bits, cryptoAlgorithmID, null);
+
+
+        /// <summary>
+        /// Return the UDF fingerprint of the encryption key <paramref name="key"/> to
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="key">The key to calculate the fingerprint of.</param>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <returns>The fingerprint value</returns>
+        public static string SymetricKeyId(
+                    byte[] key,
+                    int bits = 0,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) =>
+            PresentationBase32(SymetricKeyIdBytes(key, bits, cryptoAlgorithmID) , bits);
+
+        /// <summary>
+        /// Return the UDF fingerprint of the encryption key data specified by <paramref name="udf"/> to
+        /// the precision <paramref name="bits"/> using the algorithm <paramref name="cryptoAlgorithmID"/>.
+        /// </summary>
+        /// <param name="udf">The key to calculate the fingerprint of.</param>
+        /// <param name="bits">Precision, must be a multiple of 20 bits.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic digest to use to compute
+        /// the hash value.</param>
+        /// <returns>The fingerprint value</returns>
+        public static string SymetricKeyId(
+                    string udf,
+                    int bits = 0,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) => 
+                SymetricKeyId(SymmetricKeyData(udf), bits, cryptoAlgorithmID);
+
+
+        /// <summary>
+        /// Return the key data encoded in <paramref name="udf"/>.
+        /// </summary>
+        /// <param name="udf">The udf to parse</param>
+        /// <returns>The binary key data.</returns>
+        public static byte[] SymmetricKeyData(string udf) {
+
+            var result = Parse(udf, out var code);
+            (code == (byte)UDFTypeIdentifier.Encryption).AssertTrue();
+
+            return result;
+            }
+
+
+        public static string SymmetricKeyHkdf(
+                    string udf,
+                    string info) => SymmetricKeyHkdf(udf, info.ToUTF8());
+
+        public static string SymmetricKeyHkdf(
+                    string udf,
+                    byte[] info) => SymmetricKeyHkdf(SymmetricKeyData(udf), info);
+
+        public static string SymmetricKeyHkdf(
+                    byte[] ikm,
+                    byte[] info,
+                    int length = 0,
+                    byte[] salt = null,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
+
+            var keyDerive = new KeyDeriveHKDF(ikm, salt, algorithm);
+            var bytes = keyDerive.Derive(info, length);
+
+            return SymmetricKey(bytes);
+            }
+
+        public static string SymmetricKeyMac(
+                    byte[] data,
+                    string udf,
+                    int length = 0,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
+
+            Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
+
+            var key = SymmetricKeyData(udf);
+            var buffer = data.GetMAC(key, algorithm);
+            var udfID = GetUDFTypeIdentifier(algorithm);
+            return TypeBDSToString(udfID, buffer, length);
+            }
+
+
+        public static bool SymmetricKeyVerifyMac(
+                    byte[] data,
+                    string udf,
+                    string value,
+                    int minBits = 100,
+                    CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
+
+            Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
+
+            var key = SymmetricKeyData(udf);
+            var buffer = data.GetMAC(key, algorithm);
+            var udfID = GetUDFTypeIdentifier(algorithm);
+
+            return Matches(value, udfID, buffer, minBits);
+
+            }
+
+
+        #endregion
+
+
 
         /// <summary>
         /// Calculate the UDF lock identifier for a local file.
@@ -679,19 +732,6 @@ namespace Goedel.Cryptography {
             bits = bits == 0 ? DefaultBits * 2 : bits;
             var buffer = DigestToUDFBinary(data.ToUTF8(), UDFConstants.UDFLock, bits, cryptoAlgorithmID, null);
             return PresentationBase32(buffer, bits);
-            }
-        /// <summary>
-        /// Calculate a UDF fingerprint from an OpenPGP key with specified precision.
-        /// </summary>
-        /// <param name="buffer">Fingerprint to format.</param>
-        /// <param name="bits">Precision.</param>
-        /// <returns>The binary UDF fingerprint.</returns>
-        public static string PresentationBase32(
-                    byte[] buffer,
-                    int bits = 0) {
-            bits = bits == 0 ? DefaultBits : bits;
-            var Length = (bits + 4) / 5;
-            return buffer.ToStringBase32(format: ConversionFormat.Dash4, outputMax: Length);
             }
 
 

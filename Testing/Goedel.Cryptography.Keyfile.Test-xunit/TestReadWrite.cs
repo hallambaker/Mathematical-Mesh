@@ -20,8 +20,8 @@ namespace Goedel.XUnit {
             var SSH_AuthHosts = KeyFileDecode.DecodeAuthHost(Directories.TestKey_OpenSSH);
             var SSH_Private = KeyFileDecode.DecodePEM(Directories.TestKey_OpenSSH_Private, KeySecurity.Exportable, null);
 
-            Utilities.Assert.True(SSH_Public.UDF == SSH_Private.UDF);
-            Utilities.Assert.True(SSH_AuthHosts[0].SSHData.KeyPair.UDF == SSH_Private.UDF);
+            Utilities.Assert.True(SSH_Public.KeyIdentifier == SSH_Private.KeyIdentifier);
+            Utilities.Assert.True(SSH_AuthHosts[0].SSHData.KeyPair.KeyIdentifier == SSH_Private.KeyIdentifier);
 
             }
         [Fact]

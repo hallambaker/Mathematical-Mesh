@@ -16,7 +16,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The strong internet name for the key.
         /// </summary>
-        public string StrongInternetName => Locator + ".mm--" + UDF;
+        public string StrongInternetName => Locator + ".mm--" + KeyIdentifier;
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public abstract KeyUses KeyUses { get; }
@@ -44,43 +44,34 @@ namespace Goedel.Cryptography {
         public bool PersistPending => (KeySecurity.IsPersisted() & !IsPersisted);
 
 
-        /////<summary>The Key Security level.</summary>
-        //public KeyStorage KeySecurity { get; private set; } = KeyStorage.Public;
+        #region // Implement IKeyLocate
 
         /// <summary>
-        /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
+        /// Resolve a public key by identifier. This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
-        /// <param name="baseID">The base identifier.</param>
-        /// <returns>The computed CryptoAlgorithmID</returns>
-        public virtual CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId baseID) => baseID;
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public override KeyPair GetByAccountEncrypt(string keyID) => this;
 
         /// <summary>
-        /// Encrypt a bulk key.
+        /// Resolve a private key by identifier.  This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
-        /// <returns>The encoder</returns>
-        /// <param name="key">The key to encrypt.</param>
-        /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
-        /// <param name="exchange">The private key to use for the exchange.</param>
-        /// <param name="salt">Optional salt value for use in key derivation.</param>
-        public abstract void Encrypt(byte[] key,
-            out byte[] exchange, out KeyPair ephemeral, byte[] salt = null);
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public override KeyPair GetByAccountSign(string keyID) => this;
 
         /// <summary>
-        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// Locate a private key  This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
-        /// <param name="encryptedKey">The encrypted session</param>
-        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
-        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
-        /// <param name="salt">Optional salt value for use in key derivation. If specified
-        /// must match the salt used to encrypt.</param>        
-        /// <returns>The decoded data instance</returns>
-        public abstract byte[] Decrypt(
-                    byte[] encryptedKey,
-                    KeyPair ephemeral = null,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                    KeyAgreementResult partial = null,
-                    byte[] salt = null);
+        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <returns>A KeyPair instance bound to the private key.</returns>
+        public override KeyPair LocatePrivateKeyPair(string UDF) => this;
+
+        #endregion
+
 
         /// <summary>
         /// Sign a precomputed digest
@@ -98,17 +89,6 @@ namespace Goedel.Cryptography {
             return SignHash(hash, algorithmID, context);
             }
 
-        /// <summary>
-        /// Sign a precomputed digest
-        /// </summary>
-        /// <param name="data">The data to sign.</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <returns>The signature data</returns>
-        public abstract byte[] SignHash(byte[] data,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                byte[] context = null);
 
         /// <summary>
         /// Verify a signature over the purported data.
@@ -304,7 +284,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns></returns>
         public override string ToString() =>
-                CryptoAlgorithmId.ToString() + (PublicOnly ? ":Public:" : ":Private:") + UDF;
+                CryptoAlgorithmId.ToString() + (PublicOnly ? ":Public:" : ":Private:") + KeyIdentifier;
 
         #region // Abstract Methods
 
@@ -341,7 +321,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a string.
         /// </summary>
-        public override string UDF => udf ?? Cryptography.UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
+        public override string KeyIdentifier => udf ?? Cryptography.UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
         string udf = null;
 
         ///<summary>The UDF fingerprint of this key pair.</summary>

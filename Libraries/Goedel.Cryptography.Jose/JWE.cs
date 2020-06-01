@@ -517,7 +517,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="DecryptionKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Recipient MatchRecipient(KeyPair DecryptionKey) => MatchRecipient(DecryptionKey.UDF);
+        public Recipient MatchRecipient(KeyPair DecryptionKey) => MatchRecipient(DecryptionKey.KeyIdentifier);
 
         /// <summary>
         /// Match a recipient header by key identifier.
@@ -598,7 +598,7 @@ namespace Goedel.Cryptography.Jose {
         public Recipient(byte[] ExchangeData, KeyPair RecipientKey, KeyPair Ephemeral, string KID = null) {
             Header = new Header() {
                 Alg = RecipientKey?.CryptoAlgorithmId.Meta().ToJoseID(),
-                Kid = KID ?? RecipientKey?.UDF
+                Kid = KID ?? RecipientKey?.KeyIdentifier
                 };
             if (Ephemeral != null) {
                 Header.Epk = Key.GetPublic(Ephemeral);

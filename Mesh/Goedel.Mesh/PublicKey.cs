@@ -55,7 +55,7 @@ namespace Goedel.Mesh {
                 }
             set {
                 keyPair = value;
-                UDF = KeyPair.UDF;
+                UDF = KeyPair.KeyIdentifier;
                 }
             }
 
@@ -95,7 +95,7 @@ namespace Goedel.Mesh {
         /// <returns>true if the verification succeeds, false otherwise.</returns>
         public bool Verify(string TestUDF) {
             var KeyPair = GetKeyPair();
-            if (KeyPair.UDF == TestUDF) {
+            if (KeyPair.KeyIdentifier == TestUDF) {
                 keyPair = KeyPair;
                 return true;
                 }

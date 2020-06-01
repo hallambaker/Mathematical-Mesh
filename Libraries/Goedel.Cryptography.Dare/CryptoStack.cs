@@ -45,7 +45,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The Keys to be used to sign the message. 
         /// </summary>
-        public List<KeyPair> SignerKeys;
+        public List<CryptoKey> SignerKeys;
 
         /// <summary>
         /// The base salt value.
@@ -58,6 +58,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public byte[] MasterSecret;
 
+        ///<summary>Returns a UDF key identifier for the master secret</summary>
+        public string GetKeyIdentifier() => MasterSecret == null ? null : UDF.SymetricKeyId(MasterSecret);
 
         /// <summary>
         /// When used to create encryption parameters for a container, specifies the frame
@@ -143,6 +145,25 @@ namespace Goedel.Cryptography.Dare {
                 }
             }
 
+
+        /// <summary>
+        /// Create a CryptoParameters instance to encode data for the specified recipients and
+        /// signers using the specified KeyCollection to resolve the identifiers.
+        /// </summary>
+        /// <param name="pin"></param>
+        public CryptoStack(string pin) {
+            Salt = Platform.GetRandomBits(128);
+            EncryptionAlgorithm = EncryptID.ToJoseID();
+
+            Salt = Platform.GetRandomBits(128);
+
+            MasterSecret = UDF.Parse(pin, out var code);
+
+            Recipients ??= new List<DareRecipient>();
+            Recipients.Add(new DareRecipient(MasterSecret));
+
+            }
+
         /// <summary>
         /// Return a new CryptoStack instance as a child of <paramref name="parent"/>.
         /// The child will incorporate the key exchange data specified in the parent.
@@ -181,7 +202,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="MasterKey"></param>
         /// <param name="EncryptionKey"></param>
-        public virtual void MakeRecipient(byte[] MasterKey, KeyPair EncryptionKey) =>
+        public virtual void MakeRecipient(byte[] MasterKey, CryptoKey EncryptionKey) =>
                 Recipients.Add(new DareRecipient(MasterSecret, EncryptionKey));
 
 

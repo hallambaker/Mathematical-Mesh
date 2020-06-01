@@ -250,4 +250,52 @@ namespace Goedel.Mesh {
         }
 
 
+    /// <summary>
+    /// The specified connection URI was invalid
+    /// </summary>
+    [Serializable]
+	public class InvalidUri : Internal {
+
+		/// <summary>
+        /// Construct instance for exception "The specified connection URI was invalid"
+        /// </summary>		
+		public InvalidUri () : base ("The specified connection URI was invalid") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "The specified connection URI was invalid"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public InvalidUri (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public InvalidUri (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new InvalidUri(Reason as string);
+				}
+			else {
+				return new InvalidUri();
+				}
+            }
+        }
+
+
 	}

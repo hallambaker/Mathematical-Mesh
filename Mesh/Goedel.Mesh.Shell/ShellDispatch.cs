@@ -273,7 +273,7 @@ namespace Goedel.Mesh.Shell {
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
                     cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmId.AES256CBC);
-                    cryptoParameters.EncryptionKeys = new List<KeyPair>
+                    cryptoParameters.EncryptionKeys = new List<CryptoKey>
                         { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
                     }
 
@@ -283,7 +283,7 @@ namespace Goedel.Mesh.Shell {
             if (Options.Sign != null) {
                 if (Options.Sign.Value != null) {
                     cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
-                    cryptoParameters.SignerKeys = new List<KeyPair>
+                    cryptoParameters.SignerKeys = new List<CryptoKey>
                         { keyCollection.GetByAccountSign(Options.Sign.Value)};
                     }
                 }

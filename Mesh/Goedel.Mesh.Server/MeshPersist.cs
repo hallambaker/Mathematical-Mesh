@@ -139,8 +139,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested..</param>
         /// <param name="completeRequest">The completion request.</param>
-        public CompleteResponse AccountComplete(JpcSession jpcSession, 
-                    VerifiedAccount account, 
+        public CompleteResponse AccountComplete(JpcSession jpcSession,
+                    VerifiedAccount account,
                     CompleteRequest completeRequest) {
 
             using var accountHandle = GetAccountVerified(account, jpcSession);
@@ -283,6 +283,125 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
+        public void Publish(
+                    JpcSession jpcSession,
+                    VerifiedAccount account,
+                    List<CatalogedPublication> publications) {
+
+            using var accountEntry = GetAccountVerified(account, jpcSession);
+            using var store = accountEntry.GetCatalogPublication();
+
+            foreach (var publication in publications) {
+                store.New(publication);
+
+                }
+
+            }
+
+        public ClaimResponse Claim(
+                    JpcSession jpcSession,
+                    MessageClaim MessageClaim) {
+            using var accountEntry = GetAccountUnverified(MessageClaim.Recipient);
+            using var store = accountEntry.GetCatalogPublication();
+
+
+            // Fetch the record by request.ID
+            var id = MessageClaim.PublicationId;
+            var publicationEntry = store.GetEntry(id);
+
+            if (!(publicationEntry.JsonObject is CatalogedPublication publication)) {
+                return null;
+                }
+
+            // verify the claim.
+            if (!publication.VerifyService(MessageClaim.Sender,
+                        MessageClaim.ServiceAuthenticate)) {
+                return null;
+                }
+
+            //accountEntry.Post 
+
+            // Add to Catalog
+
+            var response = new ClaimResponse() {
+                CatalogedPublication = publication
+                };
+
+
+            return response;
+
+            }
+
+
+        public PollClaimResponse PollClaim(
+                    JpcSession jpcSession,
+                    string targetAccount,
+                    string id) {
+
+            using var accountEntry = GetAccountUnverified(targetAccount);
+            
+            //var message = accountEntry.Pickup (id) 
+
+
+
+
+
+            var response = new PollClaimResponse() {
+                //MessageClaim = message
+                };
+
+
+            return response;
+
+
+            }
+
+
+        public CreateGroupResponse CreateGroup(
+                    JpcSession jpcSession,
+                    string subjectAccount,
+                    string id,
+                    string groupAddress) {
+
+            // create account entry
+
+            // initialize member store
+
+            // create admin entry
+
+
+
+            var response = new CreateGroupResponse() {
+                };
+
+
+            return response;
+            }
+
+        public DecryptResponse Decrypt(
+                    JpcSession jpcSession,
+                    string groupAccount,
+                    KeyPair ephemeral,
+                    string partialId) {
+
+            // Fetch the account 
+
+            // Different stores depending on user or group account
+
+
+            // is the request authorized?
+
+
+            // partial decrypt
+
+            var response = new DecryptResponse() {
+                };
+
+
+            return response;
+            }
+
+
         /// <summary>
         /// Process an inbound message to an account.
         /// </summary>
@@ -368,6 +487,7 @@ namespace Goedel.Mesh.Server {
 
             throw new NYI();
             }
+
 
 
         /// <summary>

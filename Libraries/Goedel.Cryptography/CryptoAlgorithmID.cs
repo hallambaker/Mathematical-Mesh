@@ -212,6 +212,10 @@ namespace Goedel.Cryptography {
         /// <summary>HMAC SHA 2 with 512 bit key.</summary>
         HMAC_SHA_2_512T128 = 14,
 
+        /// <summary>HMAC SHA 2 with 512 bit key.</summary>
+        HMAC_SHA_3_512 = 15,
+
+
 
         /// <summary>Flag for CBC mode</summary>
         Level_Any = 0,

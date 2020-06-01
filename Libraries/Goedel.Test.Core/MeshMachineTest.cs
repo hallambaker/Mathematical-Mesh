@@ -170,8 +170,8 @@ namespace Goedel.Test.Core {
 
 
         public void Persist(KeyPair keyPair) {
-            dictionaryKeyPairByUDF.Remove(keyPair.UDF);
-            dictionaryKeyPairByUDF.Add(keyPair.UDF, keyPair);
+            dictionaryKeyPairByUDF.Remove(keyPair.KeyIdentifier);
+            dictionaryKeyPairByUDF.Add(keyPair.KeyIdentifier, keyPair);
             }
 
 

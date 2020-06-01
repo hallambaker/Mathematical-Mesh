@@ -4,7 +4,7 @@ using System;
 
 namespace Goedel.Cryptography {
     /// <summary>
-    /// Wrapper around a partial key pair.
+    /// Wrapper around a partial key pair. This is probably unnecessary at this point
     /// </summary>
     public abstract class KeyPairPartial : KeyPairAdvanced {
 

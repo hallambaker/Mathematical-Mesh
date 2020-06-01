@@ -338,7 +338,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileDevice">The profile device.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        public void Validate(ProfileDevice profileDevice, KeyCollection keyCollection) {
+        public void Validate(ProfileDevice profileDevice, IKeyLocate keyCollection) {
             profileDevice.Future();
             keyCollection ??= this.KeyCollection;
             keyCollection.Future();

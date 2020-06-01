@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public override KeyPair TryMatchRecipient(string keyID) =>
+        public override CryptoKey TryMatchRecipient(string keyID) =>
             keyCollectionBase.TryMatchRecipient(keyID) ?? TryMatchRecipientKeyPair(keyID);
 
         /// <summary>

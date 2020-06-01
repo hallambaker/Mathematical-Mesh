@@ -28,3 +28,7 @@ Namespace Goedel.Mesh
 				|Mesh Messages MUST specify a valid message ID.
 
 
+		Exception InvalidUri
+			Console "The specified connection URI was invalid"
+			Description
+				|The specified connection URI was invalid

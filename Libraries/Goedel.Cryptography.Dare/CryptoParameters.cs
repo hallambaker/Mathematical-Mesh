@@ -11,25 +11,25 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>The key collection to use to resolve names to keys</summary>
         public KeyCollection KeyCollection;
         /// <summary>The set of keys to encrypt to.</summary>
-        public List<KeyPair> EncryptionKeys {
+        public List<CryptoKey> EncryptionKeys {
             get => encryptionKeys;
             set {
                 encryptionKeys = value;
                 SetEncrypt();
                 }
             }
-        List<KeyPair> encryptionKeys;
+        List<CryptoKey> encryptionKeys;
 
 
         /// <summary>The set of keys to use to sign</summary>
-        public List<KeyPair> SignerKeys {
+        public List<CryptoKey> SignerKeys {
             get => signerKeys;
             set {
                 signerKeys = value;
                 SetDigest();
                 }
             }
-        List<KeyPair> signerKeys;
+        List<CryptoKey> signerKeys;
 
         /// <summary>The authentication algorithm to use</summary>
         public CryptoAlgorithmId DigestID;
@@ -82,8 +82,8 @@ namespace Goedel.Cryptography.Dare {
                         KeyCollection keyCollection = null,
                         List<string> recipients = null,
                         List<string> signers = null,
-                        KeyPair recipient = null,
-                        KeyPair signer = null,
+                        CryptoKey recipient = null,
+                        CryptoKey signer = null,
                         CryptoAlgorithmId encryptID = CryptoAlgorithmId.NULL,
                         CryptoAlgorithmId digestID = CryptoAlgorithmId.NULL) {
             this.DigestID = digestID;
@@ -92,51 +92,27 @@ namespace Goedel.Cryptography.Dare {
             this.KeyCollection = keyCollection;
 
             if (recipients != null) {
-                EncryptionKeys = new List<KeyPair>();
+                EncryptionKeys = new List<CryptoKey>();
                 foreach (var Entry in recipients) {
                     AddEncrypt(Entry);
                     }
                 }
             else if (recipient != null) {
-                EncryptionKeys = new List<KeyPair>() { recipient };
+                EncryptionKeys = new List<CryptoKey>() { recipient };
                 }
             if (signers != null) {
-                SignerKeys = new List<KeyPair>();
+                SignerKeys = new List<CryptoKey>();
                 foreach (var Entry in signers) {
                     AddSign(Entry);
                     }
                 }
             else if (signer != null) {
-                SignerKeys = new List<KeyPair>() { signer };
+                SignerKeys = new List<CryptoKey>() { signer };
                 }
             }
 
 
-        ///// <summary>
-        ///// Create a CryptoParameters instance to encode data for the specified recipients and
-        ///// signers using the specified KeyCollection to resolve the identifiers.
-        ///// </summary>
-        ///// <param name="keyCollection">The Key collection to be used to resolve names.</param>
-        ///// <param name="recipient">The public keys to be used to encrypt.</param>
-        ///// <param name="signer">The private keys to be used in signing.</param>
-        ///// <param name="encryptID">The cryptographic enhancement to be applied to the
-        ///// content.</param>
-        ///// <param name="digestID">The digest algorithm to be applied to the message
-        ///// encoding.</param>
-        //public CryptoParameters(
-        //    KeyCollection keyCollection=null,
 
-        //    CryptoAlgorithmID encryptID = CryptoAlgorithmID.NULL,
-        //    CryptoAlgorithmID digestID = CryptoAlgorithmID.NULL) {
-
-        //    KeyCollection = keyCollection;
-
-        //    this.DigestID = digestID;
-        //    this.EncryptID = encryptID;
-
-
-
-        //    }
 
 
 
@@ -148,7 +124,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
-            EncryptionKeys ??= new List<KeyPair>();
+            EncryptionKeys ??= new List<CryptoKey>();
             EncryptionKeys.Add(KeyCollection.GetByAccountEncrypt(AccountId));
             }
 
@@ -157,7 +133,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddSign(string AccountId) {
-            SignerKeys ??= new List<KeyPair>();
+            SignerKeys ??= new List<CryptoKey>();
             SignerKeys.Add(KeyCollection.GetByAccountSign(AccountId));
             }
 

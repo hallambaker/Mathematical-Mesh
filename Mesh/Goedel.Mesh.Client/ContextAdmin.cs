@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Client {
                 CatalogedAdmin catalogedAdmin) : base(meshHost, catalogedAdmin) {
             CatalogedMachine = catalogedAdmin;
             keyAdministratorSignature =
-                meshHost.MeshMachine.KeyCollection.LocatePrivateKeyPair(catalogedAdmin.SignatureKey.KeyPair.UDF);
+                meshHost.MeshMachine.KeyCollection.LocatePrivateKeyPair(catalogedAdmin.SignatureKey.KeyPair.KeyIdentifier);
 
             // load the cataloged device here?
             }

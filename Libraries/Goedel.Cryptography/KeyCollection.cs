@@ -15,7 +15,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        KeyPair TryMatchRecipient(string keyID);
+        CryptoKey TryMatchRecipient(string keyID);
 
 
 
@@ -44,6 +44,21 @@ namespace Goedel.Cryptography {
         KeyPair GetByAccountSign(string keyID);
 
         }
+
+
+    //public class KeyLocateSymmetric : IKeyLocate {
+
+    //    public KeyLocateSymmetric
+
+    //    public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+    //    public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+    //    public KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
+    //    public KeyPair TryMatchRecipient(string keyID) {
+
+
+
+    //        }
+    //    }
 
 
     /// <summary>
@@ -99,7 +114,7 @@ namespace Goedel.Cryptography {
                 }
 
             lock (ExclusiveAccess) {
-                DictionaryKeyPairByUDF.AddSafe(keyPair.UDF, keyPair);
+                DictionaryKeyPairByUDF.AddSafe(keyPair.KeyIdentifier, keyPair);
                 if (keyPair.Locator != null) {
                     if (keyPair.KeyUses.HasFlag(KeyUses.Encrypt)) {
                         DictionaryKeyPairBySINEncrypt.AddSafe(keyPair.StrongInternetName, keyPair);
@@ -125,7 +140,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual KeyPair TryMatchRecipient(string keyID) => TryMatchRecipientKeyPair(keyID);
+        public virtual CryptoKey TryMatchRecipient(string keyID) => TryMatchRecipientKeyPair(keyID);
 
 
         /// <summary>

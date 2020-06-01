@@ -133,7 +133,7 @@ namespace Goedel.Cryptography.PKIX {
         public Certificate(KeyPair SubjectKey, Application Application,
                     Certificate SigningCertificate) :
                 this(SubjectKey, Application) {
-            UDF = SubjectKey.UDF;
+            UDF = SubjectKey.KeyIdentifier;
             TBSCertificate.SetValidity(20);
 
             Sign(SigningCertificate);

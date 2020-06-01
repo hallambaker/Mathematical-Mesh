@@ -345,6 +345,92 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.Client.CatalogedPreconfigured">
+             <summary>
+            
+             Describes a preconfigured Device Profile bound to a remote 
+             manufacturer profile.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ProfileDevice">
+            <summary>The decoded device profile (from <see cref="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice"/>)</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.EnvelopedProfileDevice">
+             <summary>
+            The device profile presented to the service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.AccountAddress">
+             <summary>
+            The account to which claims will be posted
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.PublicationID">
+             <summary>
+            The publication identifier
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.ServiceAuthenticator">
+             <summary>
+            Authenticator key used to authenticate claim to the service.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.DeviceAuthenticator">
+             <summary>
+            Authenticator key used to authenticate claim to the device.	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.CatalogedPreconfigured.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.Client.SyncStatus">
             <summary>Track the synchronization status of an upload or download operation.</summary>
         </member>
@@ -548,6 +634,22 @@
             <param name="read">If true, the message has already been read.</param>
             <returns>The message value (if unread).</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateGroup(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a threshold encryption group.
+            </summary>
+            <param name="groupName">Name of the group to create.</param>
+            <param name="algorithmEncrypt">The encryption algorithm</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetContextGroup(System.String)">
+            <summary>
+            Get a managment context for the group <paramref name="groupAddress"/>.
+            </summary>
+            <param name="groupAddress">The group to return the management context for.</param>
+            <returns>The created management context.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoreStatus(Goedel.Mesh.ContainerStatus)">
             <summary>
             Return a <see cref="T:Goedel.Mesh.ConstraintsSelect"/> instance that requests synchronization to the
@@ -683,22 +785,6 @@
             Send a message signed using the mesh administration key.
             </summary>
             <param name="meshMessage"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateGroup(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Create a threshold encryption group.
-            </summary>
-            <param name="groupName">Name of the group to create.</param>
-            <param name="algorithmEncrypt">The encryption algorithm</param>
-            <param name="algorithmSign">The signature algorithm.</param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetContextGroup(System.String)">
-            <summary>
-            Get a managment context for the group <paramref name="groupName"/>.
-            </summary>
-            <param name="groupName">The group to return the management context for.</param>
-            <returns>The created management context.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextAccountEntry">
             <summary>
@@ -985,7 +1071,7 @@
             if accepted.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPending.PendingConnection">
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.CatalogedPending">
             <summary>Convenience accessor for the pending context.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.MessageAcknowledgeConnection">
@@ -1038,6 +1124,28 @@
             Complete the pending connection request.
             </summary>
             <returns>If successfull returns an ContextAccountService instance to allow access
+            to the connected account. Otherwise, a null value is returned.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Client.ContextMeshPreconfigured">
+            <summary>
+            Base context for interacting with a preconfigured device
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.CatalogedPreconfigured">
+            <summary>Convenience accessor for the pending context.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="meshHost">The Mesh host</param>
+            <param name="catalogedMachine">The pending connection description.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Poll">
+            <summary>
+            Attempt to connect to a personal Mesh by polling various services. 
+            </summary>
+            <returns>If successfull returns an ContextAccount instance to allow access
             to the connected account. Otherwise, a null value is returned.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.Internal">
@@ -1285,34 +1393,6 @@
             </summary>	
         </member>
         <member name="F:Goedel.Mesh.Client.Connection.Throw">
-            <summary>
-            The public fatory delegate
-            </summary>
-        </member>
-        <member name="T:Goedel.Mesh.Client.InvalidUri">
-            <summary>
-            The specified connection URI was invalid
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor">
-            <summary>
-            Construct instance for exception "The specified connection URI was invalid"
-            </summary>		
-        </member>
-        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor(System.String)">
-            <summary>
-            Construct instance for exception "The specified connection URI was invalid"
-            </summary>		
-            <param name="Description">Description of the error</param>	
-        </member>
-        <member name="M:Goedel.Mesh.Client.InvalidUri.#ctor(System.String,System.Exception)">
-            <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.InvalidUri.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1646,7 +1726,8 @@
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Install(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
-            Install a manufacturer device profile.
+            Install a pre-configured device profile. This is typically performed during 
+            manufacture.
             </summary>
             <returns>Context for administering the Mesh account via the service</returns>
         </member>

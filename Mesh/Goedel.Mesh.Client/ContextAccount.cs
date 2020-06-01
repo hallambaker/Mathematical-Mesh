@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
+using Goedel.Mesh;
 
 using System;
 using System.Collections.Generic;
@@ -68,11 +69,11 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>Convenience accessor for the encryption key fingerprint.</summary>
-        public string KeyEncryptionUDF => keyEncryption.UDF;
+        public string KeyEncryptionUDF => keyEncryption.KeyIdentifier;
         ///<summary>Convenience accessor for the signature key fingerprint.</summary>
-        public string KeySignatureUDF => keySignature.UDF;
+        public string KeySignatureUDF => keySignature.KeyIdentifier;
         ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
-        public string KeyAuthenticationUDF => KeyAuthentication.UDF;
+        public string KeyAuthenticationUDF => KeyAuthentication.KeyIdentifier;
 
 
         ///<summary>The user's own contact information</summary>
@@ -118,9 +119,9 @@ namespace Goedel.Mesh.Client {
             keyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
             KeyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
-            keySignature.UDF.AssertEqual(ConnectionAccount.KeySignature.UDF);
-            keyEncryption.UDF.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
-            KeyAuthentication.UDF.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
+            keySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF);
+            keyEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
+            KeyAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
 
             KeyCollection.Add(keyEncryption);
 
@@ -476,11 +477,48 @@ namespace Goedel.Mesh.Client {
 
 
         #endregion
+        #region // Group operations
 
-        //public void InitializeStores(StatusResponse statusResponse) {
-        //    Directory.CreateDirectory(DirectoryAccount);
-        //    Sync();
-        //    }
+        /// <summary>
+        /// Create a threshold encryption group.
+        /// </summary>
+        /// <param name="groupName">Name of the group to create.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm</param>
+        /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <returns></returns>
+
+        public ContextGroup CreateGroup(string groupName,
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
+
+
+
+            groupName.Future();
+
+            var profileGroup = ProfileGroup.Generate(MeshMachine, algorithmSign, algorithmEncrypt);
+
+            var catalogedGroup = new CatalogedGroup(profileGroup);
+
+            return new ContextGroup(catalogedGroup);
+            }
+
+        /// <summary>
+        /// Get a managment context for the group <paramref name="groupAddress"/>.
+        /// </summary>
+        /// <param name="groupAddress">The group to return the management context for.</param>
+        /// <returns>The created management context.</returns>
+        public ContextGroup GetContextGroup(string groupAddress) {
+            groupAddress.Future();
+            throw new NYI();
+
+
+            }
+
+
+
+        #endregion
+
+
 
         /// <summary>
         /// Return a <see cref="ConstraintsSelect"/> instance that requests synchronization to the
@@ -643,7 +681,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public PublishResponse Publish(
+        public PublishResponse CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed, 
                     out ProfileDevice profileDevice,
                     out string pin,
@@ -670,19 +708,24 @@ namespace Goedel.Mesh.Client {
 
 
             pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
+
+            var key = new CryptoKeySymmetric(pin);
+
+
             connectURI = MeshUri.ConnectUri(AccountAddress, pin);
 
             // Create a device profile and encrypt under pin
             profileDevice = new ProfileDevice(secretSeed);
             var plaintext = profileDevice.DareEnvelope.GetBytes();
-            var encryptedProfileDevice = DareEnvelope.Encrypt(plaintext, pin);
 
-            // Create an identifier
 
-            var id = UDF.ContentDigestOfDataString(pin.ToUTF8(), Constants.IanaTypeMeshNonce);
-            var catalogedPublication = new CatalogedPublication() {
-                EncryptedProfileDevice = encryptedProfileDevice,
-                ID = id,
+
+
+            var encryptedProfileDevice = DareEnvelope.Encode(plaintext, encryptionKey: key);
+
+
+            var catalogedPublication = new CatalogedPublication(pin) {
+                DareEnvelope = encryptedProfileDevice,
                 };
 
             var publishRequest = new PublishRequest() {
@@ -696,8 +739,44 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public ContextMeshPending Connect(string uri) {
-            throw new NYI();
+        public ProfileDevice Connect(string uri) {
+
+            // parse uri
+            (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
+
+            var key = new CryptoKeySymmetric(pin);
+
+            //var key = UDF.SymetricKeyData(pin);
+
+            var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
+
+
+            // make claim request to service managing the device
+            var claimRequest = new ClaimRequest {
+                MessageClaim = messageClaim
+                };
+
+
+            var claimResponse=MeshClient.Claim(claimRequest);
+
+            // Decode the Profile Device
+            var encryptedEnvelope =  claimResponse.CatalogedPublication.DareEnvelope;
+            var envelopedProfileDevice = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
+            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
+
+            // The Dare envelope contains a DareEnvelope<ProfileDevice>
+
+            // Approve the request
+
+
+
+
+            AddDevice(profileDevice);
+
+
+            // ContextMeshPending
+
+            return profileDevice;
             }
 
 
@@ -851,18 +930,20 @@ namespace Goedel.Mesh.Client {
 
             if (accept) {
                 // Connect the device to the Mesh
-                var device = ContextMeshAdmin.CreateCataloguedDevice(
-                                request.MessageConnectionRequest.ProfileDevice);
+                var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
+                    
+                //    ContextMeshAdmin.CreateCataloguedDevice(
+                //                request.MessageConnectionRequest.ProfileDevice);
 
-                // Connect the device to the Account
-                ProfileAccount.ConnectDevice(KeyCollection, device, null);
+                //// Connect the device to the Account
+                //ProfileAccount.ConnectDevice(KeyCollection, device, null);
                 
                 
-                Console.WriteLine(device.ToString());
+                //Console.WriteLine(device.ToString());
 
 
-                // Update the local and remote catalog.
-                AddDevice(device);
+                //// Update the local and remote catalog.
+                //AddDevice(device);
 
 
                 respondConnection.CatalogedDevice = device;
@@ -878,6 +959,24 @@ namespace Goedel.Mesh.Client {
 
             return respondConnection;
             }
+
+
+        public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
+            var device = ContextMeshAdmin.CreateCataloguedDevice(profileDevice);
+
+            // Connect the device to the Account
+            ProfileAccount.ConnectDevice(KeyCollection, device, null);
+
+
+            Console.WriteLine(device.ToString());
+
+
+            // Update the local and remote catalog.
+            AddDevice(device);
+
+            return device;
+            }
+
 
         //-------------------------------
 
@@ -1087,42 +1186,9 @@ namespace Goedel.Mesh.Client {
             MeshClient.Post(postRequest);
             }
 
-        /// <summary>
-        /// Create a threshold encryption group.
-        /// </summary>
-        /// <param name="groupName">Name of the group to create.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <returns></returns>
-
-        public ContextGroup CreateGroup(string groupName,
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
-            groupName.Future();
-            // create the group keys
-
-            // 
-
-            var profileGroup = ProfileGroup.Generate(MeshMachine, algorithmSign, algorithmEncrypt);
-
-            var catalogedGroup = new CatalogedGroup(profileGroup);
 
 
-            return new ContextGroup(catalogedGroup);
 
-            }
-
-        /// <summary>
-        /// Get a managment context for the group <paramref name="groupName"/>.
-        /// </summary>
-        /// <param name="groupName">The group to return the management context for.</param>
-        /// <returns>The created management context.</returns>
-        public ContextGroup GetContextGroup(string groupName) {
-            groupName.Future();
-            throw new NYI();
-
-
-            }
         }
 
     }

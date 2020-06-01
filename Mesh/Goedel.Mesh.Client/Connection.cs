@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Client {
     public partial class CatalogedPending {
 
         ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
-        public override ProfileDevice ProfileDevice => 
+        public override ProfileDevice ProfileDevice =>
                     ProfileDevice.Decode(EnvelopedProfileDevice);
 
 
@@ -63,5 +63,12 @@ namespace Goedel.Mesh.Client {
 
 
         }
+    public partial class CatalogedPreconfigured {
+        ///<summary>The decoded device profile (from <see cref="EnvelopedProfileDevice"/>)</summary>
+        public override ProfileDevice ProfileDevice =>
+                    ProfileDevice.Decode(EnvelopedProfileDevice);
 
+
+        //            (var account, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
+        }
     }

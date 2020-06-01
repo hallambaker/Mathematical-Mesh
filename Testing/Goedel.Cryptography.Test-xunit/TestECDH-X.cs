@@ -44,7 +44,7 @@ namespace Goedel.XUnit {
 
             var decoding = encoding.KeyPair;
 
-            keypair.UDF.Equals(decoding.UDF);
+            keypair.KeyIdentifier.Equals(decoding.KeyIdentifier);
 
             return true;
             }
@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
 
             var decoding = encoding.KeyPair as KeyPairX448;
 
-            keypair.UDF.Equals(decoding.UDF);
+            keypair.KeyIdentifier.Equals(decoding.KeyIdentifier);
 
             keypair.PublicKey.Public.AssertEqual(decoding.PublicKey.Public);
             keypair.PublicKey.Public.U.AssertEqual(decoding.PublicKey.Public.U);

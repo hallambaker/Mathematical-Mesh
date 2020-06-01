@@ -138,31 +138,7 @@ namespace Goedel.Mesh.Shell {
             }
 
 
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountPublish(AccountPublish Options) {
-            using var contextAccount = GetContextAccount(Options);
 
-            contextAccount.Publish(
-                    out var secretSeed, 
-                    out var profileDevice,
-                    out var connectKey,
-                    out var connectUri);
-
-            var filename = connectKey + ".medk";
-            secretSeed.ToFile(filename);
-
-            var result = new ResultPublish() {
-                Uri = connectUri,
-                ProfileDevice = profileDevice,
-                FileName = filename,
-                };
-            "".TaskFunctionality();
-            return result;
-            }
 
         /// <summary>
         /// Dispatch method
@@ -172,13 +148,13 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult AccountConnect(AccountConnect Options) {
             using var contextAccount = GetContextAccount(Options);
 
-            var contextMeshPending = contextAccount.Connect(Options.Uri.Value);
+            var profileDevice = contextAccount.Connect(Options.Uri.Value);
 
 
-            var result = new ResultConnect() {
-                CatalogedMachine = contextMeshPending.CatalogedMachine
+            var result = new ResultAccountConnect() {
+                ProfileDevice = profileDevice
                 };
-            "".TaskFunctionality();
+
             return result;
             }
 

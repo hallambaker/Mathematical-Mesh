@@ -294,7 +294,7 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The key agreement value is used as the input to a HKDF key\n{0}", _Indent);
 				_Output.Write ("derivation function with the info parameter \n{0}", _Indent);
-				_Output.Write ("{1} to create the key used to wrap the master key:\n{0}", _Indent, DareRecipient.KDFSalt.ToUTF8());
+				_Output.Write ("{1} to create the key used to wrap the master key:\n{0}", _Indent, DareRecipient.KDFInfo.ToUTF8());
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("{1}\n{0}", _Indent, Recipient.EncryptionKey.ToStringBase16FormatHex());

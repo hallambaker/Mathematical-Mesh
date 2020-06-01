@@ -22,7 +22,7 @@ namespace Goedel.Test {
         protected override void AddEncrypt(string AccountId) => AddEncrypt(AccountId, true);
 
         public void AddEncrypt(string AccountId, bool Register = true) {
-            EncryptionKeys ??= new List<KeyPair>();
+            EncryptionKeys ??= new List<CryptoKey>();
 
             var Keypair = new KeyPairDH();
             var Pub = Keypair.KeyPairPublic();
@@ -41,7 +41,7 @@ namespace Goedel.Test {
 
         protected override void AddSign(string accountId) => AddSign(accountId, true);
         public void AddSign(string accountId, bool register) {
-            SignerKeys ??= new List<KeyPair>();
+            SignerKeys ??= new List<CryptoKey>();
 
             var Keypair = KeyPair.KeyPairFactoryRSA(keyType: KeySecurity.Ephemeral);
             var PublicKeyKeypair = Keypair.KeyPairPublic();

@@ -59,13 +59,6 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountPublish(Goedel.Mesh.Shell.AccountPublish)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.AccountConnect(Goedel.Mesh.Shell.AccountConnect)">
             <summary>
             Dispatch method
@@ -325,37 +318,44 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GroupCreate(Goedel.Mesh.Shell.GroupCreate)">
+        <member name="M:Goedel.Mesh.Shell.Shell.EarlDevice(Goedel.Mesh.Shell.EarlDevice)">
             <summary>
             Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.GroupCreate(Goedel.Mesh.Shell.GroupCreate)">
+            <summary>
+            Dispatch method to create a new group.
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GroupAdd(Goedel.Mesh.Shell.GroupAdd)">
             <summary>
-            Dispatch method
+            Dispatch method to add a member to the group.
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GroupGet(Goedel.Mesh.Shell.GroupGet)">
             <summary>
-            Dispatch method
+            Dispatch method to fetch a group member's record.
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GroupDelete(Goedel.Mesh.Shell.GroupDelete)">
             <summary>
-            Dispatch method
+            Dispatch method to remove a member from the group.
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GroupList(Goedel.Mesh.Shell.GroupList)">
             <summary>
-            Dispatch method
+            Dispatch method to list the members of a group.
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
@@ -2838,6 +2838,36 @@
         <member name="P:Goedel.Mesh.Shell._HashMac.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._EarlDevice.ServiceID">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlDevice.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlDevice.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlDevice.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlDevice.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlContact.ServiceID">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlContact.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlContact.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlContact.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._EarlContact.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -3694,6 +3724,65 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultList.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultAccountConnect">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAccountConnect.ProfileDevice">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultAccountConnect._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultAccountConnect.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultAccountConnect.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

@@ -111,6 +111,7 @@ namespace Goedel.Cryptography.Dare {
             Recipients = cryptoStack.Recipients;
             EncryptionAlgorithm = cryptoStack.EncryptionAlgorithm;
             DigestAlgorithm = cryptoStack.DigestAlgorithm;
+            KeyIdentifier = cryptoStack.GetKeyIdentifier();
 
             if (cloaked != null) {
                 this.Cloaked = cryptoStack.Encode(cloaked, MakeSalt());
@@ -311,8 +312,9 @@ namespace Goedel.Cryptography.Dare {
                 // Recipient.Header.Epk.KeyPair  -- The ephemeral public key
 
                 if (decryptionKey != null) {
-                    return decryptionKey.Decrypt(recipient.WrappedMasterKey, recipient.Epk.KeyPair,
-                        algorithmID: algorithmID, salt: DareRecipient.KDFSalt);
+                    return decryptionKey.Decrypt(
+                            recipient.WrappedMasterKey, recipient.Epk?.KeyPair,
+                            algorithmID: algorithmID, null);
                     }
                 }
 

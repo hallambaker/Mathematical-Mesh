@@ -42,6 +42,8 @@
 		TStruct Assertion Profiles
 			Multiple
 
+	Structure ResultAccountConnect
+		Struct ProfileDevice				ProfileDevice
 
 	Structure ResultPublish
 		Inherits							ResultCreateDevice

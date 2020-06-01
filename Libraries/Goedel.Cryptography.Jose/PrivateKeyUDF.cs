@@ -22,7 +22,7 @@
             }
 
         /// <summary>
-        /// Constructor generating a new instance with a private key derrived from the
+        /// Constructor generating a new instance with a private key derived from the
         /// seed <paramref name="secret"/> if not null or a randomly generated key
         /// of <paramref name="bits"/> bits otherwise.
         /// </summary>

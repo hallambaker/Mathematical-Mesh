@@ -10,7 +10,7 @@ namespace Goedel.Mesh {
     public partial class KeyComposite {
 
         ///<summary>Convenience accessor for the composite UDF.</summary>
-        public string UDF => KeyPair.UDF;
+        public string UDF => KeyPair.KeyIdentifier;
 
         ///<summary>The composite key pair.</summary>
         public KeyPairAdvanced KeyPair => keyPair ?? (Public.KeyPair as KeyPairAdvanced).CacheValue(out keyPair);

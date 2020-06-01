@@ -14,10 +14,28 @@ namespace Goedel.Cryptography.Dare {
     public partial class DareEnvelope : DareEnvelopeSequence, IDisposable {
 
         #region // Properties and fields
+
+        /// <summary>
+        /// Dictionary mapping tags to factory methods
+        /// </summary>
+        public static Dictionary<string, JSONFactoryDelegate> ThisTagDictionary =
+                new Dictionary<string, JSONFactoryDelegate>() {
+            {"DareEnvelope", Factory}           };
+
+
+        static DareEnvelope() => AddDictionary(ref ThisTagDictionary);
+
         /// <summary>
         /// Tag identifying this class
         /// </summary>
         public override string _Tag { get; } = "DareEnvelope";
+
+
+        /// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+        public static new JSONObject Factory() => new DareEnvelope();
 
         /// <summary>
         /// Return the number of data sequences.
@@ -98,14 +116,9 @@ namespace Goedel.Cryptography.Dare {
                     ContentMeta contentMeta = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null
-                    ) {
+                    ) : this(cryptoParameters.GetCryptoStack(), plaintext, contentMeta,
+                        cloaked, dataSequences) { }
 
-            var cryptoStack = cryptoParameters.GetCryptoStack();
-
-            Header = new DareHeader(cryptoStack, contentMeta, cloaked, dataSequences);
-            Body = Header.EnhanceBody(plaintext, out var trailer);
-            Trailer = trailer;
-            }
 
         /// <summary>
         /// Create a DARE Message instance.
@@ -155,8 +168,8 @@ namespace Goedel.Cryptography.Dare {
         public static DareEnvelope Encode(
                     byte[] plaintext,
                     ContentMeta contentMeta = null,
-                    KeyPair signingKey = null,
-                    KeyPair encryptionKey = null,
+                    CryptoKey signingKey = null,
+                    CryptoKey encryptionKey = null,
                     byte[] cloaked = null,
                     List<byte[]> dataSequences = null) {
             var cryptoParameters = new CryptoParameters(signer: signingKey, recipient: encryptionKey);
@@ -165,8 +178,13 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        public static DareEnvelope Encrypt(byte[] plaintext, string pin) {
-            throw new NYI();
+        public static DareEnvelope Encrypt(byte[] plaintext, string pin,
+                    ContentMeta contentMeta = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null) {
+
+            var cryptoStack = new CryptoStack(pin);
+            return new DareEnvelope(cryptoStack, plaintext, contentMeta, cloaked, dataSequences);
             }
 
 
@@ -305,15 +323,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        //public JSONReader GetJSONReader(IKeyLocate keyCollection) {
 
-        //    var inputStream = new MemoryStream(Body);
-        //    var Decoder = Header.GetDecoder(
-        //        inputStream, out var Reader,
-        //        keyCollection: keyCollection);
-
-        //    return new JsonBcdReader(Reader);
-        //    }
 
         /// <summary>
         /// Deserialize 
@@ -468,6 +478,37 @@ contentMeta, cloaked, dataSequences, chunk);
             using var dareEnvelopeWriter = new DareEnvelopeWriter(cryptoParameters,
                 outputStream, contentMeta, contentLength, cloaked, dataSequences);
             inputStream.CopyTo(dareEnvelopeWriter);
+
+            }
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new DareEnvelope FromJSON(JSONReader jsonReader, bool tagged = true) {
+            if (jsonReader == null) {
+                return null;
+                }
+            if (tagged) {
+                var Out = jsonReader.ReadTaggedObject(TagDictionary);
+                return Out as DareEnvelope;
+                }
+            var result = new DareEnvelope();
+            result.Deserialize(jsonReader);
+            result.PostDecode();
+            return result;
+            }
+
+
+        public JSONObject DecodeJsonObject(IKeyLocate keyCollection = null, bool tagged = true) {
+
+            var plaintext = GetPlaintext(keyCollection);
+
+            Console.WriteLine(plaintext.ToUTF8());
+            var result = FromJSON(plaintext.JSONReader(), tagged);
+            return result;
 
             }
 

@@ -85,20 +85,15 @@ namespace Goedel.Mesh.Server {
             }
 
 
-        //public DareEnvelope GetCatalogEntryDevice(string deviceUDF) {
-        //    // NYI: pull up the device catalog for the account
-        //    // Identify the relevant device record
-        //    // return it.
-
-        //    Container.ToConsole(Store.FileName(AccountEntry.Directory, CatalogDevice.Label));
-
-        //    using (var container = new CatalogBlind(AccountEntry.Directory, CatalogDevice.Label)) {
-        //        return container.Get(deviceUDF);
-        //        }
+        /// <summary>
+        /// Return the publication catalog. This is a catalog that the service MUST have
+        /// read access to. Not clear that the clients need access though.
+        /// </summary>
+        /// <returns></returns>
+        public CatalogPublication GetCatalogPublication() =>
+            new CatalogPublication(AccountEntry.Directory);
 
 
-        //    throw new NYI();
-        //    }
         }
 
     /// <summary>
@@ -148,6 +143,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="envelopes">The envelopes to append.</param>
         public void StoreAppend(string label, List<DareEnvelope> envelopes) =>
             Store.Append(AccountEntry.Directory, envelopes, label);
+
 
 
 

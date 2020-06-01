@@ -169,9 +169,18 @@ namespace Goedel.Mesh {
         public const string IanaTypeMeshNonce = "application/mmm/nonce";
 
 
+        ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        public const string IanaTypeMeshAuthenticator = "application/mmm/authenticator";
+
+
         ///<summary>The proposed IANA URI scheme.</summary>
         public const string MeshConnectURI = "mcu";
 
+        ///<summary>HKDF info tag for deriving Service Authenticator from IKM</summary>
+        public const string ServiceAuthenticatorInfo = "mmm/key/authenticate/service";
+
+        ///<summary>HKDF info tag for deriving Device Authenticator from IKM</summary>
+        public const string DeviceAuthenticatorInfo = "mmm/key/authenticate/device";
 
         // Constants for calculating timeout values.
 

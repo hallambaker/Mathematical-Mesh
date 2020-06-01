@@ -65,3 +65,29 @@
 		Struct DareEnvelope EnvelopedAccountAssertion
 			Description
 				|The current account assertion
+
+	Structure CatalogedPreconfigured
+		Inherits CatalogedMachine
+		Description
+			|Describes a preconfigured Device Profile bound to a remote 
+			|manufacturer profile.
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|The device profile presented to the service.
+		String AccountAddress
+			Description
+				|The account to which claims will be posted
+		String PublicationID
+			Description
+				|The publication identifier
+		String ServiceAuthenticator
+			Description
+				|Authenticator key used to authenticate claim to the service.
+		String DeviceAuthenticator
+			Description
+				|Authenticator key used to authenticate claim to the device.	
+
+
+		//Struct DevicePreconfiguration DevicePreconfiguration
+		//	Description
+		//		|The Device Preconfiguration entry

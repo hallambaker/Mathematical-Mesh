@@ -301,6 +301,34 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
+        public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
+
+            Mesh.Publish(session, session.VerifiedAccount, request.Publications);
+
+            var response = new PublishResponse() {
+                };
+
+
+            return response;
+            }
+
+
+
+
+        public override ClaimResponse Claim(ClaimRequest request, JpcSession session = null) {
+
+            return Mesh.Claim(session, request.MessageClaim);
+
+            }
+
+        public override PollClaimResponse PollClaim(
+                PollClaimRequest request,
+                JpcSession session = null) =>
+                    Mesh.PollClaim(session, request.TargetAccountAddress, request.Id);
+
+
+
+
 
         }
     }

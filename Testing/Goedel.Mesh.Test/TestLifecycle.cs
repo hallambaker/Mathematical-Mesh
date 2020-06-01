@@ -48,7 +48,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Master, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
+            CheckPersisted(Encrypter.KeyIdentifier, keyCollection, true, Exportable);
             }
 
         public static void Test_LifecycleAdmin(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
@@ -56,7 +56,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Admin, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
+            CheckPersisted(Encrypter.KeyIdentifier, keyCollection, true, Exportable);
             }
 
 
@@ -66,7 +66,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Device, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
+            CheckPersisted(Encrypter.KeyIdentifier, keyCollection, true, Exportable);
             }
 
 
@@ -78,7 +78,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Ephemeral, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, false, Exportable);
+            CheckPersisted(Encrypter.KeyIdentifier, keyCollection, false, Exportable);
             }
 
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal
@@ -89,7 +89,7 @@ namespace Goedel.Mesh.Test {
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.ExportableStored, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
             TestExport(Encrypter, Exportable);
-            CheckPersisted(Encrypter.UDF, keyCollection, true, Exportable);
+            CheckPersisted(Encrypter.KeyIdentifier, keyCollection, true, Exportable);
             }
 
 

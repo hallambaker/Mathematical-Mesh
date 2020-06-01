@@ -250,34 +250,19 @@ namespace Goedel.Mesh.Client {
             algorithmEncrypt.Future();
             algorithmAuthenticate.Future();
 
-            // uri = "mcu:/alice@example.com/NACE-ZMVM-L6FV-NCHE-LY"
-
-            // parse the uri
-
-            Uri uri;
-            try {
-                uri = new Uri(uriAddress);
-                (uri.Scheme == Constants.MeshConnectURI).AssertTrue();
-                }
-            catch (Exception e) {
-                throw new InvalidUri();
-                }
-
-            var pin = uri.LocalPath.Substring(1);
-            var accountAddress = $"{uri.UserInfo}@{uri.Authority}";
+            (var accountAddress, var pin) = MeshUri.ParseConnectUri(uriAddress);
 
             // connect to alice@example.com using pin NACE-ZMVM-L6FV-NCHE-LY
             return ContextMeshPending.ConnectService(this, accountAddress, localName, pin);
 
-
-            //return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
             }
 
         /// <summary>
-        /// Install a manufacturer device profile.
+        /// Install a pre-configured device profile. This is typically performed during 
+        /// manufacture.
         /// </summary>
         /// <returns>Context for administering the Mesh account via the service</returns>
-        public ContextMeshPending Install(
+        public ContextMeshPreconfigured Install(
                 string filename,
                 string localName = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
@@ -289,9 +274,13 @@ namespace Goedel.Mesh.Client {
             algorithmEncrypt.Future();
             algorithmAuthenticate.Future();
 
-            throw new NYI();
+            // read the device file
+            var devicePreconfiguration = DevicePreconfiguration.FromFile(filename);
 
-            //return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+            // create a ContextMeshPending for it.
+            var context = ContextMeshPreconfigured.Install(this, devicePreconfiguration);
+            return context;
+
             }
 
 

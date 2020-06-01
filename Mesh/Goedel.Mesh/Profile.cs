@@ -115,7 +115,7 @@ namespace Goedel.Mesh {
         protected KeyPairAdvanced KeySignature { get; set; }
 
         ///<summary>The UDF identifier</summary>
-        public string UDF => KeySignature.UDF;
+        public string UDF => KeySignature.KeyIdentifier;
 
         ///<summary>The connection value.</summary>
         public virtual Connection Connection => throw new NYI();

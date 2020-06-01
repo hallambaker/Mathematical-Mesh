@@ -215,7 +215,7 @@ namespace Goedel.Cryptography {
                 Private = PrivateKey.Private.ToByteArray(),
                 Public = PrivateKey.Public.ToByteArray(),
                 };
-            keyCollection.Persist(UDF, pkix, KeySecurity.IsExportable());
+            keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
             }
 
 

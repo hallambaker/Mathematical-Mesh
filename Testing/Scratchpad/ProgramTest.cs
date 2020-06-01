@@ -21,7 +21,7 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
-            ShellTests.Test().TestProfileConnectDynamicQR();
+            //ShellTests.Test().TestProfileConnectDynamicQR();
             ShellTests.Test().TestProfileConnectStaticQR();
 
 

@@ -20,6 +20,9 @@
 //  
 //  
 using Goedel.Cryptography.PKIX;
+using Goedel.Utilities;
+
+using System;
 
 namespace Goedel.Cryptography {
 
@@ -27,7 +30,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Base class for all cryptographic keys.
     /// </summary>
-    public abstract class CryptoKey {
+    public abstract class CryptoKey: IKeyLocate {
 
         /// <summary>
         /// Cryptographic Algorithm Identifier
@@ -40,7 +43,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// UDF fingerprint of the key
         /// </summary>
-        public virtual string UDF => null;
+        public virtual string KeyIdentifier => null;
 
 
         /// <summary>
@@ -52,6 +55,96 @@ namespace Goedel.Cryptography {
         /// The key name.
         /// </summary>
         public virtual string Name { get; set; } = null;
+
+
+
+        #region // Implement IKeyLocate
+        /// <summary>
+        /// Attempt to find a private key for the specified recipient entry.
+        /// </summary>
+        /// <param name="keyID">The key identifier to match</param>
+        /// <returns>True if a match is found, otherwise false.</returns>
+        public virtual CryptoKey TryMatchRecipient(string keyID) =>
+            keyID == KeyIdentifier ? this : null;
+
+        /// <summary>
+        /// Resolve a public key by identifier. This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public virtual KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Resolve a private key by identifier.  This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
+        /// </summary>
+        /// <param name="keyID">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public virtual KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Locate a private key  This always returns null because the collection
+        /// cannot contain a <see cref="KeyPair"/>
+        /// </summary>
+        /// <param name="UDF">fingerprint of key to locate.</param>
+        /// <returns>A KeyPair instance bound to the private key.</returns>
+        public virtual KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
+
+
+
+        #endregion
+
+
+
+        /// <summary>
+        /// Encrypt a bulk key.
+        /// </summary>
+        /// <returns>The encoder</returns>
+        /// <param name="key">The key to encrypt.</param>
+        /// <param name="ephemeral">The ephemeral key to use for the exchange (if used)</param>
+        /// <param name="exchange">The private key to use for the exchange.</param>
+        /// <param name="salt">Optional salt value for use in key derivation.</param>
+        public abstract void Encrypt(byte[] key,
+            out byte[] exchange, out KeyPair ephemeral, byte[] salt = null);
+
+        /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="encryptedKey">The encrypted session</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>        
+        /// <returns>The decoded data instance</returns>
+        public abstract byte[] Decrypt(
+                    byte[] encryptedKey,
+                    KeyPair ephemeral = null,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                    KeyAgreementResult partial = null,
+                    byte[] salt = null);
+
+
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="data">The data to sign.</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <returns>The signature data</returns>
+        public abstract byte[] SignHash(byte[] data,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                byte[] context = null);
+
+        /// <summary>
+        /// Return the CryptoAlgorithmID that would be used with the specified base parameters.
+        /// </summary>
+        /// <param name="baseID">The base identifier.</param>
+        /// <returns>The computed CryptoAlgorithmID</returns>
+        public virtual CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId baseID) => baseID;
+
         }
 
 

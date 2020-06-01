@@ -438,6 +438,11 @@ namespace Goedel.Cryptography.Dare {
 
 		public virtual string						DigestAlgorithm  {get; set;}
         /// <summary>
+        ///Master key identifier.
+        /// </summary>
+
+		public virtual string						KeyIdentifier  {get; set;}
+        /// <summary>
         ///Salt value used to derrive cryptographic parameters for the content data.
         /// </summary>
 
@@ -559,6 +564,11 @@ namespace Goedel.Cryptography.Dare {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("dig", 1);
 					_writer.WriteString (DigestAlgorithm);
+				}
+			if (KeyIdentifier != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("kid", 1);
+					_writer.WriteString (KeyIdentifier);
 				}
 			if (Salt != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -684,6 +694,10 @@ namespace Goedel.Cryptography.Dare {
 					}
 				case "dig" : {
 					DigestAlgorithm = jsonReader.ReadString ();
+					break;
+					}
+				case "kid" : {
+					KeyIdentifier = jsonReader.ReadString ();
 					break;
 					}
 				case "Salt" : {

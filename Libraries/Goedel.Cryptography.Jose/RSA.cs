@@ -17,7 +17,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyRSA(KeyPairBaseRSA KeyPair) {
-            Kid = KeyPair.UDF;
+            Kid = KeyPair.KeyIdentifier;
             var RSAPublicKey = KeyPair.PKIXPublicKeyRSA;
 
             N = RSAPublicKey.Modulus;
@@ -73,7 +73,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyRSA(KeyPairBaseRSA KeyPair) {
-            Kid = KeyPair.UDF;
+            Kid = KeyPair.KeyIdentifier;
             var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
             Assert.AssertNotNull(RSAPrivateKey, NotExportable.Throw);
 

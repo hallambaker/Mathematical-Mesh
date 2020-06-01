@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public KeyPair TryMatchRecipient(string keyID) => throw new NotImplementedException();
+        public CryptoKey TryMatchRecipient(string keyID) => throw new NotImplementedException();
         #endregion
 
 

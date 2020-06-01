@@ -91,6 +91,12 @@
 			Description
 				|Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
 				|construct a signature over the message payload.
+
+		String KeyIdentifier
+			Tag "kid"
+			Description
+				|Master key identifier.
+
 		Binary Salt
 			Description
 				|Salt value used to derrive cryptographic parameters for the content data.

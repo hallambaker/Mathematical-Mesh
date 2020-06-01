@@ -468,5 +468,64 @@
 
 
 
+	Transaction Public Claim ClaimRequest ClaimResponse
+		Description
+			|Claim a publication
+
+	Message ClaimRequest
+		Inherits MeshRequest
+		Struct MessageClaim MessageClaim
+			Description
+				|The claim message
+
+	Message ClaimResponse
+		Inherits MeshResponse
+		Struct CatalogedPublication CatalogedPublication
+			Description
+				|The encrypted device profile
 
 
+	Transaction Public PollClaim PollClaimRequest PollClaimResponse
+		Description
+			|Check party making claim
+
+	Message PollClaimRequest
+		Inherits MeshRequest
+		String Id
+			Description
+				|Unique publication identifier code
+		String TargetAccountAddress
+			Description
+				|Account to which the claim is directed
+
+	Message PollClaimResponse
+		Inherits MeshResponse
+		Struct MessageClaim MessageClaim
+			Description
+				|The claim message
+
+
+	// Group management
+
+	Transaction User CreateGroup CreateGroupRequest CreateGroupResponse
+		Description
+			|Check party making claim
+
+	Message CreateGroupRequest
+		Inherits MeshRequest
+
+	Message CreateGroupResponse
+		Inherits MeshResponse
+
+
+
+
+	Transaction Public Decrypt DecryptRequest DecryptResponse
+		Description
+			|Check party making claim
+
+	Message DecryptRequest
+		Inherits MeshRequest
+
+	Message DecryptResponse
+		Inherits MeshResponse

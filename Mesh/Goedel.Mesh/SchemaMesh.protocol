@@ -278,9 +278,9 @@
 		Struct PublicKey KeyAuthentication
 			Description
 				|The authentication key for use of the device under the profile		
-		Struct DareEnvelope EncryptedProfileDevice
+		Struct DareEnvelope DareEnvelope
 			Description
-				|The device profile
+				|Dare Envelope containing the entry data
 
 
 	Section 3 "Mesh Account Classes"
@@ -600,6 +600,24 @@
 		Inherits CatalogedApplication
 		// The recryption key
 
+
+	Section 2 "Static Assertions"
+
+	Structure DevicePreconfiguration
+		Description
+			|A data structure that is passed 
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|The device profile
+		TStruct Key PrivateKey
+			Description
+				|The device private key
+		String ConnectUri
+			Description
+				|The connection URI. This would normally be printed on the device as a 
+				|QR code.
+
+
 	Section 2 "Messages"
 
 	Structure Message
@@ -706,3 +724,10 @@
 		Inherits Message
 
 
+	Structure MessageClaim
+		Inherits Message
+		String PublicationId
+		String ServiceAuthenticate
+		String DeviceAuthenticate
+
+		DateTime Expires

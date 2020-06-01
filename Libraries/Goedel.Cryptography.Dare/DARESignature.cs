@@ -11,23 +11,24 @@ namespace Goedel.Cryptography.Dare {
 
         /// <summary>
         /// Sign the digest value <paramref name="DigestValue"/> with 
-        /// <paramref name="SignerKey"/> and create a DARESignature
+        /// <paramref name="signerKey"/> and create a DARESignature
         /// instance with the resulting values.
         /// </summary>
-        /// <param name="SignerKey">The signature key.</param>
+        /// <param name="signerKey">The signature key.</param>
         /// <param name="DigestValue">The digest value.</param>
-        /// <param name="DigestId">The digest algorithm used to calculate 
+        /// <param name="digestId">The digest algorithm used to calculate 
         /// <paramref name="DigestValue"/>.</param>
-        /// <param name="KeyDerive">Key derivation function used to calculate a signature witness 
+        /// <param name="keyDerive">Key derivation function used to calculate a signature witness 
         /// value (if required).</param>
-        public DareSignature(KeyPair SignerKey, byte[] DigestValue,
-                    CryptoAlgorithmId DigestId, KeyDerive KeyDerive = null) {
-            SignatureValue = SignerKey.SignHash(DigestValue, DigestId);
-            KeyIdentifier = SignerKey.UDF;
-            Alg = SignerKey.SignatureAlgorithmID(DigestId).ToJoseID();
+        public DareSignature(CryptoKey signerKey, byte[] DigestValue,
+                    CryptoAlgorithmId digestId, KeyDerive keyDerive = null) {
 
-            if (KeyDerive != null) {
-                WitnessValue = KeyDerive.Derive(SignatureValue);
+            SignatureValue = signerKey.SignHash(DigestValue, digestId);
+            KeyIdentifier = signerKey.KeyIdentifier;
+            Alg = signerKey.SignatureAlgorithmID(digestId).ToJoseID();
+
+            if (keyDerive != null) {
+                WitnessValue = keyDerive.Derive(SignatureValue);
                 }
 
 

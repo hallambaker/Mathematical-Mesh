@@ -111,7 +111,7 @@ namespace ExampleGenerator {
 				_Output.Write ("key unambiguously but does not provide the value:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);
-				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.UDF);
+				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.KeyIdentifier);
 				_Output.Write ("~~~~\n{0}", _Indent);
 		
 			}

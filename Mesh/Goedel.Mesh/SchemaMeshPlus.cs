@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
 
 
         ///<summary>The key collection that was used to decode this object instance.</summary>
-        public KeyCollection KeyCollection;
+        public IKeyLocate KeyCollection;
 
 
         ///<summary>Initialization property, used to force initialization of the 
@@ -83,7 +83,7 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The enveloped data.</param>
         /// <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
         /// <returns>The decoded data item</returns>
-        public static MeshItem Decode(DareEnvelope envelope, KeyCollection keyCollection=null) {
+        public static MeshItem Decode(DareEnvelope envelope, IKeyLocate keyCollection =null) {
 
             if (envelope == null) {
                 return null;

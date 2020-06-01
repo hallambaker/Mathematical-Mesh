@@ -1,4 +1,4 @@
-﻿
+﻿using Goedel.Utilities;
 using System;
 
 namespace Goedel.Mesh.Client {
@@ -17,7 +17,11 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="catalogedGroup">Description of the group to return the
         /// context for.</param>
-        public ContextGroup(CatalogedGroup catalogedGroup) => CatalogedGroup = catalogedGroup;
+        public ContextGroup(CatalogedGroup catalogedGroup) {
+            CatalogedGroup = catalogedGroup;
+
+            throw new NYI();
+            }
 
 
 

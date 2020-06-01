@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
 
             //basePublic.UDF.AssertEqual(basePrivate.UDF);
 
-            if (basePublic.UDF != basePrivate.UDF) {
+            if (basePublic.KeyIdentifier != basePrivate.KeyIdentifier) {
                 var baseKeyX = (baseKey as KeyPairX448).PublicKey.Public;
                 var basePublicX = (basePublic as KeyPairX448).PublicKey.Public;
                 var basePrivateX = (basePrivate as KeyPairX448).PublicKey.Public;
@@ -70,7 +70,7 @@ namespace Goedel.XUnit {
                 }
 
 
-            return basePublic.UDF == basePrivate.UDF;
+            return basePublic.KeyIdentifier == basePrivate.KeyIdentifier;
 
             }
 
@@ -173,10 +173,10 @@ namespace Goedel.XUnit {
 
 
             var keypair = UDF.DeriveKey(udf, KeySecurity.Ephemeral, KeyUses);
-            Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} -> {keypair.UDF}");
+            Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} -> {keypair.KeyIdentifier}");
 
 
-            (keypair.UDF == ResultUDF).AssertTrue();
+            (keypair.KeyIdentifier == ResultUDF).AssertTrue();
             }
 
 
@@ -278,13 +278,13 @@ namespace Goedel.XUnit {
             Test(KeyUses.Encrypt, privateAuthenticate, publicAuthenticate);
 
             Console.WriteLine($"{UdfAlgorithmIdentifier}:");
-            Console.WriteLine($" ResultSign = \"{publicSign.UDF}\",");
-            Console.WriteLine($" ResultEncrypt = \"{publicEncrypt.UDF}\",");
-            Console.WriteLine($" ResultAuthenticate = \"{publicAuthenticate.UDF}\"");
+            Console.WriteLine($" ResultSign = \"{publicSign.KeyIdentifier}\",");
+            Console.WriteLine($" ResultEncrypt = \"{publicEncrypt.KeyIdentifier}\",");
+            Console.WriteLine($" ResultAuthenticate = \"{publicAuthenticate.KeyIdentifier}\"");
 
-            (privateSign.UDF == ResultSign).AssertTrue();
-            (publicEncrypt.UDF == ResultEncrypt).AssertTrue();
-            (publicAuthenticate.UDF == ResultAuthenticate).AssertTrue();
+            (privateSign.KeyIdentifier == ResultSign).AssertTrue();
+            (publicEncrypt.KeyIdentifier == ResultEncrypt).AssertTrue();
+            (publicAuthenticate.KeyIdentifier == ResultAuthenticate).AssertTrue();
 
             }
 

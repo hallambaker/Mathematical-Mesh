@@ -63,7 +63,7 @@ namespace Goedel.Cryptography.PKIX {
         /// </summary>
         /// <param name="KeyPair">Key from which to create the fingerprint.</param>
         public Name(KeyPair KeyPair) :
-            this(KeyPair.UDF) {
+            this(KeyPair.KeyIdentifier) {
             }
 
         /// <summary>

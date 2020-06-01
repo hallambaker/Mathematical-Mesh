@@ -10,9 +10,9 @@ namespace Goedel.Cryptography.Dare {
     public partial class DareRecipient {
 
         /// <summary>
-        /// Salt value used in the key derrivation function.
+        /// Salt value used in the key derivation function.
         /// </summary>
-        public static readonly byte[] KDFSalt = "master".ToUTF8();
+        public static readonly byte[] KDFInfo = "master".ToUTF8();
 
         /// <summary>
         /// Default constructor. Used for serializatrion.
@@ -24,25 +24,31 @@ namespace Goedel.Cryptography.Dare {
         /// Create a DARERecipient using the specified cryptographic parameters.
         /// </summary>
         /// <param name="masterKey">The master key</param>
-        /// <param name="publicKey">The recipient public key.</param>
+        /// <param name="encryptionKey">The recipient encryption key.</param>
         /// <returns>The recipient informatin object.</returns>
-        public DareRecipient(byte[] masterKey, KeyPair publicKey) {
+        public DareRecipient(byte[] masterKey, CryptoKey encryptionKey) {
             //var ExchangeProvider = PublicKey.ExchangeProvider();
             //ExchangeProvider.Encrypt(MasterKey, out var Exchange, out var Ephemeral, Salt: KDFSalt);
 
 
-            publicKey.Encrypt(masterKey, out var Exchange, out var Ephemeral, salt: KDFSalt);
+            encryptionKey.Encrypt(masterKey, out var exchange, out var ephemeral);
 
-
-            var JoseKey = Key.GetPublic(Ephemeral);
-
-            KeyIdentifier = publicKey.UDF;
-            Epk = JoseKey;
-            WrappedMasterKey = Exchange;
+            if (ephemeral != null) {
+                Epk = Key.GetPublic(ephemeral);
+                }
+            KeyIdentifier = encryptionKey.KeyIdentifier;
+            WrappedMasterKey = exchange;
 
             }
 
 
+
+        /// <summary>
+        /// Create a DARERecipient using the specified cryptographic parameters.
+        /// </summary>
+        /// <param name="masterKey">The master key</param>
+        /// <returns>The recipient informatin object.</returns>
+        public DareRecipient(byte[] masterKey) => KeyIdentifier = UDF.SymetricKeyId(masterKey);
         }
 
     }

@@ -85,7 +85,7 @@ The corresponding UDF content digest value is more compact and allows us to iden
 key unambiguously but does not provide the value:
 
 ~~~~
-#{Example.PublicKeyed25519.UDF}
+#{Example.PublicKeyed25519.KeyIdentifier}
 ~~~~
 #end file
 

@@ -145,7 +145,7 @@ namespace Goedel.Cryptography.Jose {
             var SignatureValue = SignerKey.Sign(Protected, ProviderAlgorithm);
 
             var Header = new Header() {
-                Kid = SignerKey.UDF
+                Kid = SignerKey.KeyIdentifier
                 };
 
             var Signature = new Signature() {
@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Public">The public signature verification key.</param>
         /// <returns>True if verification succeeds, otherwise false.</returns>
         public bool Verify(string UDF, KeyPair Public) {
-            Assert.True(UDF == Public.UDF, FingerprintMatchFailed.Throw);
+            Assert.True(UDF == Public.KeyIdentifier, FingerprintMatchFailed.Throw);
             return Verify(Public);
             }
 
@@ -221,7 +221,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="SigningKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Signature MatchSigner(KeyPair SigningKey) => MatchSigner(SigningKey.UDF);
+        public Signature MatchSigner(KeyPair SigningKey) => MatchSigner(SigningKey.KeyIdentifier);
 
         /// <summary>
         /// Match a recipient header by key identifier.

@@ -51,6 +51,13 @@
             </summary>
             <param name="dareMessage">The message to post.</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetCatalogPublication">
+            <summary>
+            Return the publication catalog. This is a catalog that the service MUST have
+            read access to. Not clear that the clients need access though.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.AccountHandleVerified">
             <summary>
             Verified account accessor, has access to spools and to catalogues

@@ -1,8 +1,9 @@
 ﻿using Goedel.Cryptography.PKIX;
 using Goedel.Cryptography.Algorithms;
-
+using Goedel.Utilities;
 using System.Collections.Generic;
 using System.Numerics;
+using System;
 
 namespace Goedel.Cryptography {
 
@@ -189,23 +190,23 @@ namespace Goedel.Cryptography {
         public virtual int[] OID => null;
 
 
-        byte[] _Salt;
+        byte[] salt;
         KeyDerive _KeyDerive = null;
 
         /// <summary>Salt to use in HKDF key derivation. If set will set the 
         /// Key derivation function to HKDF with the specified salt.</summary>
         public virtual byte[] Salt {
-            get => _Salt;
+            get => salt;
             set {
-                _Salt = value;
-                _KeyDerive = new KeyDeriveHKDF(IKM, _Salt);
+                salt = value;
+                _KeyDerive = new KeyDeriveHKDF(IKM, salt);
                 }
             }
 
         /// <summary>Key derivation function. May be overridden, defaults to KDF.</summary>
         public virtual KeyDerive KeyDerive {
             get {
-                _KeyDerive ??= new KeyDeriveHKDF(IKM, _Salt);
+                _KeyDerive ??= new KeyDeriveHKDF(IKM, salt);
                 return _KeyDerive;
                 }
             set => _KeyDerive = value;
@@ -232,7 +233,7 @@ namespace Goedel.Cryptography {
             // Console.Write($"PRK Encrypt is {IKM.ToStringBase16()}");
 
             var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
-            // Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
+            //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
 
             exchange = Platform.KeyWrapRFC3394.Wrap(EncryptionKey, key);
             ephemeral = EphemeralKeyPair;
@@ -255,7 +256,11 @@ namespace Goedel.Cryptography {
 
 
             var EncryptionKey = KeyDerive.Derive(salt, Length: 256);
-            var KeySize = (encryptedKey.Length * 8) - 64;
+
+            //Console.Write($"EncryptionKey Encrypt is {EncryptionKey.ToStringBase16()}");
+
+
+            //var KeySize = (encryptedKey.Length * 8) - 64;
 
             return Platform.KeyWrapRFC3394.Unwrap(EncryptionKey, encryptedKey);
 

@@ -891,6 +891,20 @@
 			Parameter Input "in" ExistingFile
 				Brief "File to create commitment of"
 
+
+	CommandSet Earl "earl"
+		Brief "Publish encrypted content as an EARL"
+		Command EarlDevice "device"
+			Brief "Generate new device profile and publish as an EARL"
+			Include AccountOptions
+			Include Reporting
+
+		Command EarlContact "conract"
+			Brief "Publish contact information as an EARL"
+			Include AccountOptions
+			Include Reporting
+
+
 	CommandSet Dare "dare"
 		Brief "DARE Message encryption and decryption commands"
 		Command DareEncode "encode"

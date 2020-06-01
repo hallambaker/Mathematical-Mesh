@@ -243,7 +243,7 @@ The key agreement value is calculated:
 
 The key agreement value is used as the input to a HKDF key
 derivation function with the info parameter 
-#{DareRecipient.KDFSalt.ToUTF8()} to create the key used to wrap the master key:
+#{DareRecipient.KDFInfo.ToUTF8()} to create the key used to wrap the master key:
 
 ~~~~
 #{Recipient.EncryptionKey.ToStringBase16FormatHex()}
