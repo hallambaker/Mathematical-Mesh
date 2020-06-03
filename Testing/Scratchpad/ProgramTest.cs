@@ -19,7 +19,7 @@ namespace Scratchpad {
             _ = Goedel.Mesh.MeshItem.Initialize;
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
-
+            //TestService.Test().MeshDeviceConnectPIN();
 
             //ShellTests.Test().TestProfileConnectDynamicQR();
             ShellTests.Test().TestProfileConnectStaticQR();

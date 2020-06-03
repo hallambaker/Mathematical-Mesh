@@ -289,7 +289,7 @@ namespace Goedel.Mesh {
                     MessageStatus select = MessageStatus.All,
                     DateTime? notBefore = null,
                     DateTime? notOnOrAfter = null,
-                    long maxSearch = -1) => GetByEnvelopeId(Message.GetEnvelopeID(messageID),
+                    long maxSearch = -1) => GetByEnvelopeId(Message.GetEnvelopeId(messageID),
                         select, notBefore, notOnOrAfter, maxSearch);
 
 

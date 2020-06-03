@@ -55,12 +55,17 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Cached convenience accessor returning the decoded <see cref="MessageConnectionResponse"/>.
         /// </summary>
-        public AcknowledgeConnection MessageConnectionResponse => messageConnectionResponse ??
-            AcknowledgeConnection.Decode(EnvelopedMessageConnectionResponse).
+        public Message MessageConnectionResponse => messageConnectionResponse ??
+            Message.Decode(EnvelopedMessageConnectionResponse).
                 CacheValue(out messageConnectionResponse);
-        AcknowledgeConnection messageConnectionResponse;
+        Message messageConnectionResponse;
 
-
+        ///<summary>Return the corresponding response identifier.</summary>
+        public string GetResponseID() => MessageConnectionResponse switch {
+            AcknowledgeConnection acknowledgeConnection => acknowledgeConnection.GetResponseID(),
+            MessageClaim messageClaim => messageClaim.GetResponseID(),
+            _ => throw new NYI()
+            };
 
         }
     public partial class CatalogedPreconfigured {

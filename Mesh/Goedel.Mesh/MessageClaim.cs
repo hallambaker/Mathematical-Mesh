@@ -35,5 +35,24 @@ namespace Goedel.Mesh {
             DeviceAuthenticate = CatalogedPublication.AuthenticateDevice(claimaintAccount, pin);
             }
 
+        /// <summary>
+        /// Verify the claim against a service and device authenticator.
+        /// </summary>
+        /// <param name="serviceAuthenticator">The service authentication key.</param>
+        /// <param name="deviceAuthenticator">The device authentication key.</param>
+        /// <param name="length">minimum match length.</param>
+        /// <returns>True if the match succeeded, otherwise false.</returns>
+        public bool Verify(
+                string serviceAuthenticator,
+                string deviceAuthenticator,
+                int length = 100) {
+            return CatalogedPublication.Verify(Sender, deviceAuthenticator, DeviceAuthenticate, length) &&
+                CatalogedPublication.Verify(Sender, serviceAuthenticator, ServiceAuthenticate, length);
+            // Hack: should this raise an exception?
+
+
+            }
+
+
         }
     }

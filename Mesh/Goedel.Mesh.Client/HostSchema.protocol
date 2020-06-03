@@ -65,6 +65,10 @@
 		Struct DareEnvelope EnvelopedAccountAssertion
 			Description
 				|The current account assertion
+		String AccountAddress
+			Description
+				|The account at which the request is pending.
+
 
 	Structure CatalogedPreconfigured
 		Inherits CatalogedMachine
@@ -77,7 +81,7 @@
 		String AccountAddress
 			Description
 				|The account to which claims will be posted
-		String PublicationID
+		String PublicationId
 			Description
 				|The publication identifier
 		String ServiceAuthenticator

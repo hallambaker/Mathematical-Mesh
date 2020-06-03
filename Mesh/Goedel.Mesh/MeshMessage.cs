@@ -12,7 +12,7 @@ namespace Goedel.Mesh {
     public partial class Reference {
 
         ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
-        public string EnvelopeID => Message.GetEnvelopeID(MessageID);
+        public string EnvelopeID => Message.GetEnvelopeId(MessageID);
 
         ///<summary>Accessor for the <see cref="Relationship"/> property
         ///as a <see cref="MessageStatus"/> property.</summary>
@@ -67,7 +67,7 @@ namespace Goedel.Mesh {
             DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta, 
                 signingKey: signingKey, encryptionKey: encryptionKey);
 
-            DareEnvelope.Header.EnvelopeID = GetEnvelopeID(MessageID);
+            DareEnvelope.Header.EnvelopeID = GetEnvelopeId(MessageID);
 
             return DareEnvelope;
             }
@@ -89,7 +89,7 @@ namespace Goedel.Mesh {
         /// <param name="messageID">The message identifier to calculate the envelope 
         /// identifer of</param>
         /// <returns>The envelope identifier.</returns>
-        public static string GetEnvelopeID (string messageID) =>
+        public static string GetEnvelopeId (string messageID) =>
                     UDF.ContentDigestOfUDF(messageID);
         }
 

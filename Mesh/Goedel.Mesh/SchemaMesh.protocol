@@ -278,7 +278,7 @@
 		Struct PublicKey KeyAuthentication
 			Description
 				|The authentication key for use of the device under the profile		
-		Struct DareEnvelope DareEnvelope
+		Struct DareEnvelope EnvelopedData
 			Description
 				|Dare Envelope containing the entry data
 

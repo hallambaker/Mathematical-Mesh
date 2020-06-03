@@ -4604,7 +4604,7 @@ namespace Goedel.Mesh {
         ///The claim message
         /// </summary>
 
-		public virtual MessageClaim						MessageClaim  {get; set;}
+		public virtual DareEnvelope						EnvelopedMessageClaim  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4649,10 +4649,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_writer, false, ref _first);
-			if (MessageClaim != null) {
+			if (EnvelopedMessageClaim != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MessageClaim", 1);
-					MessageClaim.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedMessageClaim", 1);
+					EnvelopedMessageClaim.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -4687,10 +4687,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "MessageClaim" : {
+				case "EnvelopedMessageClaim" : {
 					// An untagged structure
-					MessageClaim = new MessageClaim ();
-					MessageClaim.Deserialize (jsonReader);
+					EnvelopedMessageClaim = new DareEnvelope ();
+					EnvelopedMessageClaim.Deserialize (jsonReader);
  
 					break;
 					}
@@ -4817,10 +4817,10 @@ namespace Goedel.Mesh {
 	/// </summary>
 	public partial class PollClaimRequest : MeshRequest {
         /// <summary>
-        ///Unique publication identifier code
+        ///The envelope identifier formed from the PublicationId.
         /// </summary>
 
-		public virtual string						Id  {get; set;}
+		public virtual string						PublicationId  {get; set;}
         /// <summary>
         ///Account to which the claim is directed
         /// </summary>
@@ -4870,10 +4870,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_writer, false, ref _first);
-			if (Id != null) {
+			if (PublicationId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Id", 1);
-					_writer.WriteString (Id);
+				_writer.WriteToken ("PublicationId", 1);
+					_writer.WriteString (PublicationId);
 				}
 			if (TargetAccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -4913,8 +4913,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Id" : {
-					Id = jsonReader.ReadString ();
+				case "PublicationId" : {
+					PublicationId = jsonReader.ReadString ();
 					break;
 					}
 				case "TargetAccountAddress" : {
@@ -4939,7 +4939,7 @@ namespace Goedel.Mesh {
         ///The claim message
         /// </summary>
 
-		public virtual MessageClaim						MessageClaim  {get; set;}
+		public virtual DareEnvelope						EnvelopedMessageClaim  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4984,10 +4984,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_writer, false, ref _first);
-			if (MessageClaim != null) {
+			if (EnvelopedMessageClaim != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MessageClaim", 1);
-					MessageClaim.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedMessageClaim", 1);
+					EnvelopedMessageClaim.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -5022,10 +5022,10 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "MessageClaim" : {
+				case "EnvelopedMessageClaim" : {
 					// An untagged structure
-					MessageClaim = new MessageClaim ();
-					MessageClaim.Deserialize (jsonReader);
+					EnvelopedMessageClaim = new DareEnvelope ();
+					EnvelopedMessageClaim.Deserialize (jsonReader);
  
 					break;
 					}

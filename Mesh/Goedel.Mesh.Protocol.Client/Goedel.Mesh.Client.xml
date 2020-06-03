@@ -274,6 +274,9 @@
             Cached convenience accessor returning the decoded <see cref="P:Goedel.Mesh.Client.CatalogedPending.MessageConnectionResponse"/>.
             </summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.CatalogedPending.GetResponseID">
+            <summary>Return the corresponding response identifier.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending.DeviceUDF">
              <summary>
             UDF of the connected device
@@ -292,6 +295,11 @@
         <member name="P:Goedel.Mesh.Client.CatalogedPending.EnvelopedAccountAssertion">
              <summary>
             The current account assertion
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.CatalogedPending.AccountAddress">
+             <summary>
+            The account at which the request is pending.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.CatalogedPending._Tag">
@@ -365,7 +373,7 @@
             The account to which claims will be posted
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.PublicationID">
+        <member name="P:Goedel.Mesh.Client.CatalogedPreconfigured.PublicationId">
              <summary>
             The publication identifier
              </summary>
@@ -693,6 +701,31 @@
             date and time.</param>
             <returns>A <see cref="T:Goedel.Mesh.MessagePIN"/> instance describing the created parameters.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
+            <summary>
+            Create an EARL for a device, publish the result to the Mesh service and return 
+            the device profile <paramref name="profileDevice"/>, secret seed value 
+            <paramref name="secretSeed"/>, connection URI 
+            <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
+            </summary>
+            <param name="secretSeed">The computed secret seed value.</param>
+            <param name="profileDevice">The computed device profile</param>
+            <param name="pin">The computed PIN code.</param>
+            <param name="connectURI">The connection URI to be used for pickup.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="secret">The master secret.</param>
+            <param name="bits">The size of key to generate in bits/</param>
+            <returns>Response from the server.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Connect(System.String)">
+            <summary>
+            Attempt device connection by means of the static URI <paramref name="uri"/>.
+            </summary>
+            <param name="uri">The connection URI</param>
+            <returns>The </returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
             <summary>
             Synchronize this device to the catalogs at the service. Since the authoritative copy of
@@ -725,6 +758,13 @@
             </summary>
             <param name="request">The request to accept or reject.</param>
             <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.AddDevice(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Add a device to the account and the underlying Mesh.
+            </summary>
+            <param name="profileDevice">Profile of the device to add.</param>
+            <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean)">
             <summary>
@@ -1074,13 +1114,7 @@
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.CatalogedPending">
             <summary>Convenience accessor for the pending context.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPending.MessageAcknowledgeConnection">
-            <summary>Convenience accessor for the connection request acknowledgement.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPending.MessageRequestConnection">
-            <summary>Convenience accessor for the original connection request.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextMeshPending.ServiceID">
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.AccountAddress">
             <summary>Convenience accessor for the Account Service ID</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextMeshPending.MeshClient">
@@ -1098,7 +1132,7 @@
             Initiate a connection request.
             </summary>
             <param name="meshHost">The Mesh Host</param>
-            <param name="serviceID">The Service Identifier for the account to connect to.</param>
+            <param name="accountAddress">The Service Identifier for the account to connect to.</param>
             <param name="localName">Local friendly name for the account.</param>
             <param name="pin">Pin code value (if supplied).</param>
             <param name="algorithmEncrypt">The encryption algorithm to use.</param>
@@ -1147,6 +1181,22 @@
             </summary>
             <returns>If successfull returns an ContextAccount instance to allow access
             to the connected account. Otherwise, a null value is returned.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Complete">
+            <summary>
+            Attempt to connect to a personal Mesh by polling various services. 
+            </summary>
+            <returns>If successfull returns an ContextAccountService instance to allow access
+            to the connected account. Otherwise, a null value is returned.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.Install(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.DevicePreconfiguration)">
+            <summary>
+            Write the device configuration <paramref name="devicePreconfiguration"/> to
+            the Mesh host <paramref name="meshHost"/>.
+            </summary>
+            <param name="meshHost">The Mesh host to be written to.</param>
+            <param name="devicePreconfiguration">The preconfiguration data.</param>
+            <returns>Context for the preconfigured device.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.Internal">
             <summary>
@@ -1710,7 +1760,7 @@
             and return a context for the newly acquired connection. Otherwise return null.
             </summary>
             <param name="localName"></param>
-            <returns></returns>
+            <returns>Context for the newly bound account.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -1755,10 +1805,7 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.PersistHost.DefaultEntry">
-            <summary></summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.PersistHost.DefaultPendingEntry">
-            <summary></summary>
+            <summary>The default entry</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PersistHost.#cctor">
             <summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
@@ -1782,6 +1829,30 @@
             <param name="fileStatus">The file status in which to open the container.</param>
             <param name="keyCollection">The key collection to use to resolve private keys.</param>
             <param name="readContainer">If true read the container to initialize the persistence store.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.PersistHost.GetByName(System.String)">
+            <summary>
+            Get Mesh machine with the localname <paramref name="localName"/>
+            </summary>
+            <param name="localName">Name of the machine to fetch.</param>
+            <returns>The machine if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.PersistHost.GetMachine(System.String)">
+            <summary>
+            Get Mesh machine that matches <paramref name="localName"/> if specified, otherwise
+            the default machine.
+            </summary>
+            <param name="localName">The machine to fetch.</param>
+            <returns>The machine if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.PersistHost.GetForCompletion(System.String)">
+            <summary>
+            Gets the machine waiting for completion that mactches <paramref name="localName"/> if
+            specified, or the default pending machine otherwise or the default preconfigured
+            machine if not found.
+            </summary>
+            <param name="localName">The machine to fetch.</param>
+            <returns>The machine if found, otherwise null.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.PersistHost.MemoryCommitNew(Goedel.Cryptography.Dare.StoreEntry)">
             <summary>

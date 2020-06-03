@@ -18,18 +18,12 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the pending context.</summary>
         public CatalogedPending CatalogedPending => CatalogedMachine as CatalogedPending;
 
-        ///<summary>Convenience accessor for the connection request acknowledgement.</summary>
-        public AcknowledgeConnection MessageAcknowledgeConnection => CatalogedPending?.MessageConnectionResponse;
-
-        ///<summary>Convenience accessor for the original connection request.</summary>
-        public RequestConnection MessageRequestConnection => MessageAcknowledgeConnection?.MessageConnectionRequest;
-
         KeyPair keyAuthentication;
         KeyPair keyEncryption;
         //KeyPair keySignature;
 
         ///<summary>Convenience accessor for the Account Service ID</summary>
-        public string ServiceID => MessageRequestConnection?.AccountAddress;
+        public string AccountAddress => CatalogedPending?.AccountAddress;
 
         ///<summary>The Mesh Client.</summary>
         public MeshService MeshClient;
@@ -55,7 +49,7 @@ namespace Goedel.Mesh.Client {
         /// Initiate a connection request.
         /// </summary>
         /// <param name="meshHost">The Mesh Host</param>
-        /// <param name="serviceID">The Service Identifier for the account to connect to.</param>
+        /// <param name="accountAddress">The Service Identifier for the account to connect to.</param>
         /// <param name="localName">Local friendly name for the account.</param>
         /// <param name="pin">Pin code value (if supplied).</param>
         /// <param name="algorithmEncrypt">The encryption algorithm to use.</param>
@@ -65,7 +59,7 @@ namespace Goedel.Mesh.Client {
         /// pending connection.</returns>
         public static ContextMeshPending ConnectService(
                 MeshHost meshHost,
-                string serviceID,
+                string accountAddress,
                 string localName = null,
                 string pin = null,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
@@ -78,7 +72,7 @@ namespace Goedel.Mesh.Client {
 
             var profileDevice = new ProfileDevice(secretSeed, meshHost.KeyCollection, true);
 
-            return ConnectService(meshHost, profileDevice, serviceID, localName, pin);
+            return ConnectService(meshHost, profileDevice, accountAddress, localName, pin);
             }
 
 
@@ -126,6 +120,7 @@ namespace Goedel.Mesh.Client {
             var catalogedPending = new CatalogedPending() {
                 ID = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
+                AccountAddress = accountAddress,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
                 EnvelopedProfileMaster = response.EnvelopedProfileMaster,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
@@ -150,11 +145,11 @@ namespace Goedel.Mesh.Client {
             "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
 
 
-            MeshClient ??= MeshMachine.GetMeshClient(ServiceID, keyAuthentication, null);
+            MeshClient ??= MeshMachine.GetMeshClient(AccountAddress, keyAuthentication, null);
 
             var completeRequest = new CompleteRequest() {
-                ResponseID = MessageAcknowledgeConnection.GetResponseID(),
-                ServiceID = ServiceID
+                ResponseID = CatalogedPending.GetResponseID(),
+                ServiceID = AccountAddress
                 };
 
             var completeResponse = MeshClient.Complete(completeRequest);
@@ -173,17 +168,12 @@ namespace Goedel.Mesh.Client {
                 }
 
 
-
             // Check the return result here!
 
             respondConnection.Result.AssertEqual(Constants.TransactionResultAccept);
 
-
             var catalogedEntry = respondConnection.CatalogedDevice;
-            //var activationDevice = catalogedEntry.GetActivationDevice(KeyCollection);
-            //var connectionDevice = catalogedEntry.ConnectionDevice;
             var profileMaster = catalogedEntry.ProfileMesh;
-
 
             // now create the host catalog entry
             var catalogedStandard = new CatalogedStandard() {
@@ -198,7 +188,7 @@ namespace Goedel.Mesh.Client {
             MeshHost.Register(catalogedStandard, contextMesh);
 
             // now create the account context for the account we asked to connect to and initialize
-            var contextAccount = contextMesh.GetContextAccount(accountName: ServiceID);
+            var contextAccount = contextMesh.GetContextAccount(accountName: AccountAddress);
             Directory.CreateDirectory(contextAccount.DirectoryAccount);
             contextAccount.Sync();
             return contextAccount;

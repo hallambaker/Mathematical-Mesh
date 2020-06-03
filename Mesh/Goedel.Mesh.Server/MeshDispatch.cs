@@ -70,7 +70,9 @@ namespace Goedel.Mesh.Server {
 
 
     /// <summary>
-    /// The session class implements the Mesh session.
+    /// The session class implements the Mesh session. The implementations in this class are mostly 
+    /// stubbs that martial and validate the parameters presented in the request and pass the
+    /// work on to the <see cref="MeshPersist"/> instance <see cref="Mesh"/>
     /// </summary>
     public class PublicMeshService : MeshService {
         PublicMeshServiceProvider provider;
@@ -125,7 +127,7 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-		/// Base method for implementing the transaction CreateAccount.
+		/// Server method implementing the transaction CreateAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -148,7 +150,7 @@ namespace Goedel.Mesh.Server {
 
 
         /// <summary>
-        /// Base method for implementing the transaction Download.
+        /// Server method implementing the transaction Download.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -167,7 +169,7 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-        /// Base method for implementing the transaction Download.
+        /// Server method implementing the transaction Download.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -187,7 +189,7 @@ namespace Goedel.Mesh.Server {
 
 
         /// <summary>
-        /// Base method for implementing the transaction  DeleteAccount.
+        /// Server method implementing the transaction  DeleteAccount.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -209,7 +211,7 @@ namespace Goedel.Mesh.Server {
 
 
         /// <summary>
-		/// Base method for implementing the transaction  Download.
+		/// Server method implementing the transaction  Download.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -228,7 +230,7 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-		/// Base method for implementing the transaction  Upload.
+		/// Server method implementing the transaction  Upload.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -249,7 +251,7 @@ namespace Goedel.Mesh.Server {
 
             }
         /// <summary>
-		/// Base method for implementing the transaction  Post.
+		/// Server method implementing the transaction  Post.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -276,7 +278,7 @@ namespace Goedel.Mesh.Server {
             }
 
         /// <summary>
-		/// Base method for implementing the transaction  Connect.
+		/// Server method implementing the transaction  Connect.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
         /// <param name="jpcSession">The connection authentication context.</param>
@@ -301,6 +303,12 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
+        /// <summary>
+		/// Server method implementing the transaction  Publish.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object from the service</returns>
         public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
 
             Mesh.Publish(session, session.VerifiedAccount, request.Publications);
@@ -314,17 +322,28 @@ namespace Goedel.Mesh.Server {
 
 
 
-
+        /// <summary>
+		/// Server method implementing the transaction  Claim.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+		/// <param name="session">The authentication binding.</param>
+		/// <returns>The response object from the service</returns>
         public override ClaimResponse Claim(ClaimRequest request, JpcSession session = null) {
 
-            return Mesh.Claim(session, request.MessageClaim);
+            return Mesh.Claim(session, request.EnvelopedMessageClaim);
 
             }
 
+        /// <summary>
+        /// Server method implementing the transaction  PollClaim.
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+        /// <param name="session">The authentication binding.</param>
+        /// <returns>The response object from the service</returns>
         public override PollClaimResponse PollClaim(
                 PollClaimRequest request,
                 JpcSession session = null) =>
-                    Mesh.PollClaim(session, request.TargetAccountAddress, request.Id);
+                    Mesh.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
 
 
 

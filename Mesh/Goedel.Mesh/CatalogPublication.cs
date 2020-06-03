@@ -76,9 +76,11 @@ namespace Goedel.Mesh {
         ///<summary>Base constructor for deserialization.</summary>
         public CatalogedPublication() { }
 
-
+        /// <summary>
+        /// Construct an instance with PIN <paramref name="pin"/>.
+        /// </summary>
+        /// <param name="pin">The pin value as a UDF.</param>
         public CatalogedPublication(string pin) {
-
             ID = UDF.SymetricKeyId(pin);
             Authenticator = GetServiceAuthenticator(pin);
             }
@@ -126,7 +128,8 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Verify a service authenticator value <paramref name="value"/> against the
         /// value generated using an HMAC function on the data
-        /// <paramref name="account"/> using the key <paramref name="key"/>.
+        /// <paramref name="account"/> using the class Authenticator property
+        /// as the key.
         /// </summary>
         /// <param name="value">The test value.</param>
         /// <param name="account">The account to authenticate</param>
@@ -137,29 +140,23 @@ namespace Goedel.Mesh {
             string value,
             int length=125) => Verify(account, Authenticator, value, length);
 
-        /// <summary>
-        /// Verify a device authenticator value <paramref name="value"/> against the
-        /// value generated using an HMAC function on the data
-        /// <paramref name="account"/> using the key <paramref name="key"/>.
-        /// </summary>
-        /// <param name="value">The test value.</param>
-        /// <param name="account">The account to authenticate</param>
-        /// <param name="key">A UDF symmetric key value</param>
-        /// <param name="length">The minimum match length (default is 128 bits)</param>
-        /// <returns>The authenticator value</returns>
-        public static bool VerifyDevice(
-                string account,
-                string key,
-                string value,
-                int length) => Verify(account, GetDeviceAuthenticator(key), value, length);
-
 
         static string Authenticate(string account, string key) =>
             UDF.SymmetricKeyMac(account.ToUTF8(), key,
                 algorithm: CryptoAlgorithmId.HMAC_SHA_2_512);
 
-        static bool Verify(string account, string key, string value, int length) =>
-            UDF.SymmetricKeyVerifyMac(account.ToUTF8(), key, value,
+        /// <summary>
+        /// Verify a MAC value <paramref name="value"/> against the
+        /// value generated using an HMAC function on the data
+        /// <paramref name="account"/> using the key <paramref name="key"/>.
+        /// </summary>
+        /// <param name="value">The test value.</param>
+        /// <param name="key">The authentication key</param>
+        /// <param name="account">The account to authenticate</param>
+        /// <param name="length">The minimum match length (default is 125 bits)</param>
+        /// <returns>The authenticator value</returns>
+        public static bool Verify(string account, string key, string value, int length) =>
+            UDF.SymmetricKeyVerifyMac(account.ToUTF8(), key, value, length,
                 algorithm: CryptoAlgorithmId.HMAC_SHA_2_512);
 
 

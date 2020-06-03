@@ -43,6 +43,7 @@
 			Multiple
 
 	Structure ResultAccountConnect
+		Inherits		Result
 		Struct ProfileDevice				ProfileDevice
 
 	Structure ResultPublish

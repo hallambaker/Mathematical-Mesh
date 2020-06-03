@@ -58,6 +58,26 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post a message to the spool associated with the account. This is the only operation
+            that is supported for a device that is not connected to the account profile.
+            </summary>
+            <param name="dareMessage">The message to post.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetLocal(System.String)">
+            <summary>
+            Return the message with identifier <paramref name="messageId"/> from the local spool.
+            </summary>
+            <param name="messageId">Message to return.</param>
+            <returns>The message (if found).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetStoreLocal">
+            <summary>
+            Open the store SpoolLocal and return an accessor.
+            </summary>
+            <returns>The store handle</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.AccountHandleVerified">
             <summary>
             Verified account accessor, has access to spools and to catalogues
@@ -97,20 +117,6 @@
             </summary>
             <param name="label">The store to add the envelopes to.</param>
             <param name="envelopes">The envelopes to append.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Post a message to the spool associated with the account. This is the only operation
-            that is supported for a device that is not connected to the account profile.
-            </summary>
-            <param name="dareMessage">The message to post.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetLocal(System.String)">
-            <summary>
-            Return the message with identifier <paramref name="messageId"/> from the local spool.
-            </summary>
-            <param name="messageId">Message to return.</param>
-            <returns>The message (if found).</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
@@ -279,7 +285,9 @@
         </member>
         <member name="T:Goedel.Mesh.Server.PublicMeshService">
             <summary>
-            The session class implements the Mesh session.
+            The session class implements the Mesh session. The implementations in this class are mostly 
+            stubbs that martial and validate the parameters presented in the request and pass the
+            work on to the <see cref="T:Goedel.Mesh.Server.MeshPersist"/> instance <see cref="P:Goedel.Mesh.Server.PublicMeshService.Mesh"/>
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Server.PublicMeshService.Mesh">
@@ -306,7 +314,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.CreateAccount(Goedel.Mesh.CreateRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction CreateAccount.
+            Server method implementing the transaction CreateAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -314,7 +322,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Complete(Goedel.Mesh.CompleteRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction Download.
+            Server method implementing the transaction Download.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -322,7 +330,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Status(Goedel.Mesh.StatusRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction Download.
+            Server method implementing the transaction Download.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -330,7 +338,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.DeleteAccount(Goedel.Mesh.DeleteRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  DeleteAccount.
+            Server method implementing the transaction  DeleteAccount.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -338,7 +346,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Download(Goedel.Mesh.DownloadRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Download.
+            Server method implementing the transaction  Download.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -346,7 +354,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Upload.
+            Server method implementing the transaction  Upload.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -354,7 +362,7 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Post.
+            Server method implementing the transaction  Post.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
@@ -362,10 +370,34 @@
         </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Connect(Goedel.Mesh.ConnectRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Connect.
+            Server method implementing the transaction  Connect.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="jpcSession">The connection authentication context.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Server method implementing the transaction  Publish.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Claim(Goedel.Mesh.ClaimRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Server method implementing the transaction  Claim.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.PollClaim(Goedel.Mesh.PollClaimRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Server method implementing the transaction  PollClaim.
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshPersist">
@@ -444,6 +476,56 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account to be deleted.</param> 
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Publish(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.CatalogedPublication})">
+            <summary>
+            Service a publication request. Note that at present the mechanism does not
+            support handling of external publication data.
+            </summary>
+            <param name="jpcSession">The session connection data.</param>
+            <param name="account">The account to publish to.</param> 
+            <param name="publications">The publications to be published.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.JpcSession,Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Verify a claim to a publication and return the value if accepted.
+            </summary>
+            <param name="jpcSession">The Mesh session.</param>
+            <param name="dareEnvelope">Envelope containing the MessageClaim</param>
+            <returns>The claim response.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.PollClaim(Goedel.Protocol.JpcSession,System.String,System.String)">
+            <summary>
+            Poll service to see if a claim has been made for a given publication and
+            if so return the latest claim made.
+            </summary>
+            <param name="jpcSession">The Mesh session.</param>
+            <param name="targetAccount"></param>
+            <param name="id"></param>
+            <returns>The result of the transaction.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.CreateGroup(Goedel.Protocol.JpcSession,System.String,Goedel.Mesh.ProfileGroup)">
+            <summary>
+            Create a recryption group.
+            </summary>
+            <param name="jpcSession">The Mesh client session.</param>
+            <param name="subjectAccount">The owner of the group.</param>
+            <param name="profileGroup">The group profile.</param>
+            <returns>The result of the transaction.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Decrypt(Goedel.Protocol.JpcSession,System.String,Goedel.Cryptography.KeyPair,System.String)">
+            <summary>
+            Respond to a decryption request.
+            <para>This involves the steps of resolving the group, resolving the membership
+            record of the group member, authenticating and authorizing the request, and
+            if authorized, performing the relevant recovery request and logging the 
+            relevant records.</para>
+            </summary>
+            <param name="jpcSession">The Mesh client session.</param>
+            <param name="groupAccount">The address of the group.</param>
+            <param name="ephemeral">The ephemeral key.</param>
+            <param name="partialId">The partial key identifier.</param>
+            <returns>Result of the decryption request.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePost(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>

@@ -1,4 +1,4 @@
-﻿//   Copyright © 2018 Phillip Hallam-Baker
+﻿//   Copyright © 2020 Phillip Hallam-Baker
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -17,8 +17,7 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-//  
-//  
+
 
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
@@ -94,6 +93,52 @@ namespace Goedel.Mesh.Server {
             new CatalogPublication(AccountEntry.Directory);
 
 
+        /// <summary>
+        /// Post a message to the spool associated with the account. This is the only operation
+        /// that is supported for a device that is not connected to the account profile.
+        /// </summary>
+        /// <param name="dareMessage">The message to post.</param>
+        public void PostLocal(DareEnvelope dareMessage) {
+
+            // here we should perform an authorization operation against the store.
+
+            using var container = new Spool(AccountEntry.Directory, SpoolLocal.Label);
+            container.Add(dareMessage);
+
+            }
+
+        /// <summary>
+        /// Return the message with identifier <paramref name="messageId"/> from the local spool.
+        /// </summary>
+        /// <param name="messageId">Message to return.</param>
+        /// <returns>The message (if found).</returns>
+        public DareEnvelope GetLocal(string messageId) {
+
+            // Hack: should be get spool here.
+            // and look for the envelope values
+
+            var envelopeId = Message.GetEnvelopeId(messageId);
+
+            using var spoolLocal = GetStoreLocal();
+
+            foreach (var message in spoolLocal.Select(0, reverse: true)) {
+                if (message?.EnvelopeID == envelopeId) {
+                    return message;
+                    }
+
+                }
+            // this is currently failing because on connect, the connecting device is looking
+            // for a different message ID to the one specified by the admin device in the response.
+
+            return null;
+            }
+
+        /// <summary>
+        /// Open the store SpoolLocal and return an accessor.
+        /// </summary>
+        /// <returns>The store handle</returns>
+        public Store GetStoreLocal() =>
+            new Store(AccountEntry.Directory, SpoolLocal.Label);
         }
 
     /// <summary>
@@ -144,49 +189,5 @@ namespace Goedel.Mesh.Server {
         public void StoreAppend(string label, List<DareEnvelope> envelopes) =>
             Store.Append(AccountEntry.Directory, envelopes, label);
 
-
-
-
-        /// <summary>
-        /// Post a message to the spool associated with the account. This is the only operation
-        /// that is supported for a device that is not connected to the account profile.
-        /// </summary>
-        /// <param name="dareMessage">The message to post.</param>
-        public void PostLocal(DareEnvelope dareMessage) {
-
-            // here we should perform an authorization operation against the store.
-
-            using var container = new Spool(AccountEntry.Directory, SpoolLocal.Label);
-            container.Add(dareMessage);
-
-            }
-
-        /// <summary>
-        /// Return the message with identifier <paramref name="messageId"/> from the local spool.
-        /// </summary>
-        /// <param name="messageId">Message to return.</param>
-        /// <returns>The message (if found).</returns>
-        public DareEnvelope GetLocal(string messageId) {
-
-            // Hack: should be get spool here.
-            // and look for the envelope values
-
-            var envelopeId = Message.GetEnvelopeID(messageId);
-
-            using var spoolLocal = GetStore(SpoolLocal.Label);
-
-
-            
-            foreach (var message in spoolLocal.Select(0, reverse:true)) {
-                if (message?.EnvelopeID == envelopeId) {
-                    return message;
-                    }
-
-                }
-            // this is currently failing because on connect, the connecting device is looking
-            // for a different message ID to the one specified by the admin device in the response.
-
-            throw new NYI();
-            }
         }
     }

@@ -38,34 +38,82 @@ namespace Goedel.Mesh.Client {
 
             // attempt to connect to service specified in DevicePreconfiguration
 
+            var meshClient = MeshMachine.GetMeshClient(
+                    CatalogedPreconfigured.AccountAddress, null, null);
 
-            // no request waiting? return
+            //var envelopeID = Message.GetEnvelopeId(CatalogedPreconfigured.PublicationId);
+            var claimRequest = new PollClaimRequest() {
+                TargetAccountAddress = CatalogedPreconfigured.AccountAddress,
+                PublicationId = CatalogedPreconfigured.PublicationId
+                };
+
+            var claimResponse = meshClient.PollClaim(claimRequest);
+
+            if (claimResponse == null) {
+                return null;
+                }
+
+            var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessageClaim, KeyCollection) as MessageClaim;
+            messageClaim.AssertNotNull(); // should never be null
 
 
             // Verify request.ServiceAuthenticate & request.AccountAddress
             // Verify request.DeviceAuthenticate & request.AccountAddress
+            messageClaim.Verify(CatalogedPreconfigured.ServiceAuthenticator,
+                    CatalogedPreconfigured.DeviceAuthenticator).AssertTrue();
+
+            Console.WriteLine($"Have been claimed by {messageClaim.Sender}");
+
+            // Create a pending connection entry.
+            var profileDevice = CatalogedPreconfigured.ProfileDevice;
+            var catalogedPending = new CatalogedPending() {
+                ID = profileDevice.UDF,
+                DeviceUDF = profileDevice.UDF,
+                AccountAddress = messageClaim.Sender,
+                EnvelopedProfileDevice = profileDevice.DareEnvelope,
+                EnvelopedMessageConnectionResponse = claimResponse.EnvelopedMessageClaim
+                //EnvelopedProfileMaster = response.EnvelopedProfileMaster,
+                //EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
+                };
+
+            var context = new ContextMeshPending(MeshHost, catalogedPending);
+
+            // persist - might balk on reuse of ID
+            MeshHost.Register(catalogedPending, context);
+
+            return context;
 
 
-            // Generate the PIN code value from secret and request.AccountAddress
-
-            // Post connection request
 
 
-            // Make request to the user service
-
-
-            // Success? create a pending connection entry.
-
-
-
-            throw new NYI();
+            //throw new NYI();
             }
 
 
+        /// <summary>
+        /// Attempt to connect to a personal Mesh by polling various services. 
+        /// </summary>
+        /// <returns>If successfull returns an ContextAccountService instance to allow access
+        /// to the connected account. Otherwise, a null value is returned.</returns>
+        public ContextAccount Complete() {
+            var Pending = Poll();
+            if (Pending != null) {
+                return Pending.Complete ();
+                }
+            return null;
+            }
 
-        public static ContextMeshPreconfigured Install (
-                        MeshHost meshHost,
-                        DevicePreconfiguration devicePreconfiguration) {
+
+        /// <summary>
+        /// Write the device configuration <paramref name="devicePreconfiguration"/> to
+        /// the Mesh host <paramref name="meshHost"/>.
+        /// </summary>
+        /// <param name="meshHost">The Mesh host to be written to.</param>
+        /// <param name="devicePreconfiguration">The preconfiguration data.</param>
+        /// <returns>Context for the preconfigured device.</returns>
+        public static ContextMeshPreconfigured Install(
+                    MeshHost meshHost,
+                    DevicePreconfiguration devicePreconfiguration) {
 
             var privateKeyUDF = devicePreconfiguration.PrivateKey as PrivateKeyUDF;
             (var accountAddress, var key) = MeshUri.ParseConnectUri(devicePreconfiguration.ConnectUri);
@@ -79,13 +127,13 @@ namespace Goedel.Mesh.Client {
             var profileDevice = new ProfileDevice(privateKeyUDF, meshHost.KeyCollection, true);
 
             // create a Mesh Host entry.
-            
+
             var catalogedPreconfig = new CatalogedPreconfigured() {
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 ID = profileDevice.UDF,
                 ServiceAuthenticator = serviceAuthenticator,
                 DeviceAuthenticator = deviceAuthenticator,
-                PublicationID = publicationID,
+                PublicationId = publicationID,
                 AccountAddress = accountAddress
                 };
 

@@ -206,14 +206,30 @@ namespace Goedel.Mesh.Client {
         /// and return a context for the newly acquired connection. Otherwise return null.
         /// </summary>
         /// <param name="localName"></param>
-        /// <returns></returns>
+        /// <returns>Context for the newly bound account.</returns>
         public ContextAccount Complete(
                 string localName = null) {
 
-            var key = localName ?? ContainerHost.DefaultPendingEntry.ID;
-            var contextPending = LocateMesh(key) as ContextMeshPending;
-            return contextPending.Complete();
+            var machine = ContainerHost.GetForCompletion(localName);
+
+            switch (machine) {
+                case CatalogedPending catalogedPending: {
+                    var contextPending = LocateMesh(catalogedPending.ID) as ContextMeshPending;
+                    return contextPending.Complete();
+                    }
+                case CatalogedPreconfigured catalogedPreconfigured: {
+                    var contextPreconfigured = new ContextMeshPreconfigured (this, catalogedPreconfigured);
+                    return contextPreconfigured.Complete();
+                    }
+                }
+            return null;
             }
+
+        //ContextAccount Complete(CatalogedPending catalogedPending) {
+        //    var contextPending = LocateMesh(key) as ContextMeshPending;
+        //    return contextPending.Complete();
+        //    }
+
 
 
         /// <summary>

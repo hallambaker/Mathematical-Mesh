@@ -931,7 +931,7 @@ namespace Goedel.Mesh.Shell {
 
 	/// <summary>
 	/// </summary>
-	public partial class ResultAccountConnect : ShellResult {
+	public partial class ResultAccountConnect : Result {
         /// <summary>
         /// </summary>
 
@@ -979,6 +979,7 @@ namespace Goedel.Mesh.Shell {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
+			((Result)this).SerializeX(_writer, false, ref _first);
 			if (ProfileDevice != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("ProfileDevice", 1);
@@ -1025,6 +1026,7 @@ namespace Goedel.Mesh.Shell {
 					break;
 					}
 				default : {
+					base.DeserializeToken(jsonReader, tag);
 					break;
 					}
 				}

@@ -503,6 +503,11 @@ namespace Goedel.Mesh.Client {
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedAccountAssertion  {get; set;}
+        /// <summary>
+        ///The account at which the request is pending.
+        /// </summary>
+
+		public virtual string						AccountAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -567,6 +572,11 @@ namespace Goedel.Mesh.Client {
 				_writer.WriteToken ("EnvelopedAccountAssertion", 1);
 					EnvelopedAccountAssertion.Serialize (_writer, false);
 				}
+			if (AccountAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -625,6 +635,10 @@ namespace Goedel.Mesh.Client {
  
 					break;
 					}
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -656,7 +670,7 @@ namespace Goedel.Mesh.Client {
         ///The publication identifier
         /// </summary>
 
-		public virtual string						PublicationID  {get; set;}
+		public virtual string						PublicationId  {get; set;}
         /// <summary>
         ///Authenticator key used to authenticate claim to the service.
         /// </summary>
@@ -721,10 +735,10 @@ namespace Goedel.Mesh.Client {
 				_writer.WriteToken ("AccountAddress", 1);
 					_writer.WriteString (AccountAddress);
 				}
-			if (PublicationID != null) {
+			if (PublicationId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("PublicationID", 1);
-					_writer.WriteString (PublicationID);
+				_writer.WriteToken ("PublicationId", 1);
+					_writer.WriteString (PublicationId);
 				}
 			if (ServiceAuthenticator != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -780,8 +794,8 @@ namespace Goedel.Mesh.Client {
 					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
-				case "PublicationID" : {
-					PublicationID = jsonReader.ReadString ();
+				case "PublicationId" : {
+					PublicationId = jsonReader.ReadString ();
 					break;
 					}
 				case "ServiceAuthenticator" : {

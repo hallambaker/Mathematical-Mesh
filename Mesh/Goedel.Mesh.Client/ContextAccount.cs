@@ -680,7 +680,22 @@ namespace Goedel.Mesh.Client {
 
 
 
-
+        /// <summary>
+        /// Create an EARL for a device, publish the result to the Mesh service and return 
+        /// the device profile <paramref name="profileDevice"/>, secret seed value 
+        /// <paramref name="secretSeed"/>, connection URI 
+        /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
+        /// </summary>
+        /// <param name="secretSeed">The computed secret seed value.</param>
+        /// <param name="profileDevice">The computed device profile</param>
+        /// <param name="pin">The computed PIN code.</param>
+        /// <param name="connectURI">The connection URI to be used for pickup.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <param name="algorithmSign">The signature algorithm</param>
+        /// <param name="algorithmAuthenticate">The signature algorithm</param>
+        /// <param name="secret">The master secret.</param>
+        /// <param name="bits">The size of key to generate in bits/</param>
+        /// <returns>Response from the server.</returns>
         public PublishResponse CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed, 
                     out ProfileDevice profileDevice,
@@ -692,8 +707,6 @@ namespace Goedel.Mesh.Client {
                     CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                     byte[] secret = null,
                     int bits = 256
-
-
                     ) {
 
             // an invitation consists of a uri of the form:
@@ -704,7 +717,9 @@ namespace Goedel.Mesh.Client {
                 UdfAlgorithmIdentifier.MeshProfileDevice, 
                 algorithmEncrypt, 
                 algorithmSign,
-                algorithmAuthenticate);
+                algorithmAuthenticate,
+                secret,
+                bits);
 
 
             pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
@@ -725,7 +740,7 @@ namespace Goedel.Mesh.Client {
 
 
             var catalogedPublication = new CatalogedPublication(pin) {
-                DareEnvelope = encryptedProfileDevice,
+                EnvelopedData = encryptedProfileDevice,
                 };
 
             var publishRequest = new PublishRequest() {
@@ -739,44 +754,51 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public ProfileDevice Connect(string uri) {
-
+        /// <summary>
+        /// Attempt device connection by means of the static URI <paramref name="uri"/>.
+        /// </summary>
+        /// <param name="uri">The connection URI</param>
+        /// <returns>The </returns>
+        public CatalogedDevice Connect(string uri) {
             // parse uri
             (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
 
             var key = new CryptoKeySymmetric(pin);
-
-            //var key = UDF.SymetricKeyData(pin);
-
             var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
+            var envelopedMessageClaim = messageClaim.Encode(keySignature);
 
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
-                MessageClaim = messageClaim
+                EnvelopedMessageClaim = envelopedMessageClaim
                 };
 
-
-            var claimResponse=MeshClient.Claim(claimRequest);
-
-            // Decode the Profile Device
-            var encryptedEnvelope =  claimResponse.CatalogedPublication.DareEnvelope;
-            var envelopedProfileDevice = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
-            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
+            var claimResponse = MeshClient.Claim(claimRequest);
 
             // The Dare envelope contains a DareEnvelope<ProfileDevice>
+            var encryptedEnvelope = claimResponse.CatalogedPublication.EnvelopedData;
+            var envelopedProfileDevice = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
+            // Decode the Profile Device
+            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
 
             // Approve the request
+            // Have to add in the Mesh profile here and Account Assertion
+            var cataloguedDevice = AddDevice(profileDevice);
 
+            var messageID = messageClaim.GetResponseID();
+            Console.WriteLine($"Accept connection ID is {messageID}");
 
-
-
-            AddDevice(profileDevice);
+            var respondConnection = new RespondConnection() {
+                MessageID = messageID,
+                CatalogedDevice = cataloguedDevice,
+                Result = Constants.TransactionResultAccept
+                };
+            
+            SendMessage(respondConnection);
 
 
             // ContextMeshPending
-
-            return profileDevice;
+            return cataloguedDevice;
             }
 
 
@@ -824,9 +846,6 @@ namespace Goedel.Mesh.Client {
 
             // At this point we want to look at all the pending messages and see if there
             // are any PIN authenticated auto-executing messages.
-
-
-
             // TBS: If we have synchronized the catalogs, upload cached offline updates here.
 
             return count;
@@ -869,9 +888,6 @@ namespace Goedel.Mesh.Client {
         public IProcessResult ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
-
-
-
             // get the pin value here
             var pinCreate = GetSpoolLocal().CheckPIN(messageConnectionRequest.PinUDF);
 
@@ -893,12 +909,6 @@ namespace Goedel.Mesh.Client {
                 }
 
             return Process(acknowledgeConnection, true);
-
-
-            // Add the device to the mesh
-
-
-
             }
 
 
@@ -931,21 +941,6 @@ namespace Goedel.Mesh.Client {
             if (accept) {
                 // Connect the device to the Mesh
                 var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
-                    
-                //    ContextMeshAdmin.CreateCataloguedDevice(
-                //                request.MessageConnectionRequest.ProfileDevice);
-
-                //// Connect the device to the Account
-                //ProfileAccount.ConnectDevice(KeyCollection, device, null);
-                
-                
-                //Console.WriteLine(device.ToString());
-
-
-                //// Update the local and remote catalog.
-                //AddDevice(device);
-
-
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;
                 }
@@ -961,6 +956,11 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        /// <summary>
+        /// Add a device to the account and the underlying Mesh.
+        /// </summary>
+        /// <param name="profileDevice">Profile of the device to add.</param>
+        /// <returns>The catalog entry.</returns>
         public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
             var device = ContextMeshAdmin.CreateCataloguedDevice(profileDevice);
 

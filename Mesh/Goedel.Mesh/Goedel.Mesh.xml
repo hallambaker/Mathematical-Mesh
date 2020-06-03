@@ -2001,6 +2001,12 @@
         <member name="M:Goedel.Mesh.CatalogedPublication.#ctor">
             <summary>Base constructor for deserialization.</summary>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedPublication.#ctor(System.String)">
+            <summary>
+            Construct an instance with PIN <paramref name="pin"/>.
+            </summary>
+            <param name="pin">The pin value as a UDF.</param>
+        </member>
         <member name="M:Goedel.Mesh.CatalogedPublication.GetServiceAuthenticator(System.String)">
             <summary>
             Get the service authenticator key using a HKDF function on <paramref name="key"/>.
@@ -2037,23 +2043,24 @@
             <summary>
             Verify a service authenticator value <paramref name="value"/> against the
             value generated using an HMAC function on the data
-            <paramref name="account"/> using the key <paramref name="key"/>.
+            <paramref name="account"/> using the class Authenticator property
+            as the key.
             </summary>
             <param name="value">The test value.</param>
             <param name="account">The account to authenticate</param>
             <param name="length">The minimum match length (default is 125 bits)</param>
             <returns>The authenticator value</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedPublication.VerifyDevice(System.String,System.String,System.String,System.Int32)">
+        <member name="M:Goedel.Mesh.CatalogedPublication.Verify(System.String,System.String,System.String,System.Int32)">
             <summary>
-            Verify a device authenticator value <paramref name="value"/> against the
+            Verify a MAC value <paramref name="value"/> against the
             value generated using an HMAC function on the data
             <paramref name="account"/> using the key <paramref name="key"/>.
             </summary>
             <param name="value">The test value.</param>
+            <param name="key">The authentication key</param>
             <param name="account">The account to authenticate</param>
-            <param name="key">A UDF symmetric key value</param>
-            <param name="length">The minimum match length (default is 128 bits)</param>
+            <param name="length">The minimum match length (default is 125 bits)</param>
             <returns>The authenticator value</returns>
         </member>
         <member name="P:Goedel.Mesh.CatalogedPublication.ID">
@@ -2071,7 +2078,7 @@
             The authentication key for use of the device under the profile		
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedPublication.DareEnvelope">
+        <member name="P:Goedel.Mesh.CatalogedPublication.EnvelopedData">
              <summary>
             Dare Envelope containing the entry data
              </summary>
@@ -3003,7 +3010,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Message.GetEnvelopeID(System.String)">
+        <member name="M:Goedel.Mesh.Message.GetEnvelopeId(System.String)">
             <summary>
             Compute the EnvelopeID for <paramref name="messageID"/>.
             </summary>
@@ -3792,6 +3799,15 @@
             <param name="targetAccount">The account to which the claim is directed.</param>
             <param name="claimaintAccount">The account making the claim.</param>
             <param name="pin">Authentication code.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessageClaim.Verify(System.String,System.String,System.Int32)">
+            <summary>
+            Verify the claim against a service and device authenticator.
+            </summary>
+            <param name="serviceAuthenticator">The service authentication key.</param>
+            <param name="deviceAuthenticator">The device authentication key.</param>
+            <param name="length">minimum match length.</param>
+            <returns>True if the match succeeded, otherwise false.</returns>
         </member>
         <member name="P:Goedel.Mesh.MessageClaim.PublicationId">
             <summary>
@@ -7646,7 +7662,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ClaimRequest.MessageClaim">
+        <member name="P:Goedel.Mesh.ClaimRequest.EnvelopedMessageClaim">
              <summary>
             The claim message
              </summary>
@@ -7766,9 +7782,9 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.PollClaimRequest.Id">
+        <member name="P:Goedel.Mesh.PollClaimRequest.PublicationId">
              <summary>
-            Unique publication identifier code
+            The envelope identifier formed from the PublicationId.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.PollClaimRequest.TargetAccountAddress">
@@ -7831,7 +7847,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.PollClaimResponse.MessageClaim">
+        <member name="P:Goedel.Mesh.PollClaimResponse.EnvelopedMessageClaim">
              <summary>
             The claim message
              </summary>
@@ -10411,6 +10427,37 @@
             work backwards. Otherwise begin at <paramref name="minIndex"/> and move
             forwards.</param>
             <returns></returns>
+        </member>
+        <member name="T:Goedel.Mesh.MeshUri">
+            <summary>Static class for manipulating Mesh Uris</summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshUri.ConnectUri(System.String,System.String)">
+            <summary>
+            Generate a connection URI for <paramref name="account"/> with secret 
+            <paramref name="pin"/>.
+            </summary>
+            <param name="account">The account to connect to.</param>
+            <param name="pin">The secret value.</param>
+            <returns>The connection URI</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshUri.GetConnectPin(Goedel.Cryptography.Jose.PrivateKeyUDF,System.String,System.Int32,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Generate a connection PIN from the private key value <paramref name="privateKeyUDF"/>
+            for account <paramref name="accountAddress"/> with <paramref name="length"/> bits
+            using algorithm <paramref name="algorithm"/>.
+            </summary>
+            <param name="privateKeyUDF">The private key value</param>
+            <param name="accountAddress">The account address to connect to.</param>
+            <param name="length">Length of the secret value in bits.</param>
+            <param name="algorithm">Key derrivation algorithm.</param>
+            <returns>The connection PN code.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MeshUri.ParseConnectUri(System.String)">
+            <summary>
+            Parse a connection URI to recover the account and secret code.
+            </summary>
+            <param name="uriAddress">The URI to parse.</param>
+            <returns>The account address and PIN values.</returns>
         </member>
     </members>
 </doc>

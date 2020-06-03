@@ -1,4 +1,22 @@
-﻿
+﻿//   Copyright © 2020 Phillip Hallam-Baker
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
@@ -283,6 +301,13 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
+        /// <summary>
+        /// Service a publication request. Note that at present the mechanism does not
+        /// support handling of external publication data.
+        /// </summary>
+        /// <param name="jpcSession">The session connection data.</param>
+        /// <param name="account">The account to publish to.</param> 
+        /// <param name="publications">The publications to be published.</param>
         public void Publish(
                     JpcSession jpcSession,
                     VerifiedAccount account,
@@ -298,15 +323,23 @@ namespace Goedel.Mesh.Server {
 
             }
 
+        /// <summary>
+        /// Verify a claim to a publication and return the value if accepted.
+        /// </summary>
+        /// <param name="jpcSession">The Mesh session.</param>
+        /// <param name="dareEnvelope">Envelope containing the MessageClaim</param>
+        /// <returns>The claim response.</returns>
         public ClaimResponse Claim(
                     JpcSession jpcSession,
-                    MessageClaim MessageClaim) {
-            using var accountEntry = GetAccountUnverified(MessageClaim.Recipient);
+                    DareEnvelope dareEnvelope) {
+
+            var messageClaim = MeshItem.Decode(dareEnvelope) as MessageClaim;
+            using var accountEntry = GetAccountUnverified(messageClaim.Recipient);
             using var store = accountEntry.GetCatalogPublication();
 
 
             // Fetch the record by request.ID
-            var id = MessageClaim.PublicationId;
+            var id = messageClaim.PublicationId;
             var publicationEntry = store.GetEntry(id);
 
             if (!(publicationEntry.JsonObject is CatalogedPublication publication)) {
@@ -314,40 +347,46 @@ namespace Goedel.Mesh.Server {
                 }
 
             // verify the claim.
-            if (!publication.VerifyService(MessageClaim.Sender,
-                        MessageClaim.ServiceAuthenticate)) {
+            if (!publication.VerifyService(messageClaim.Sender,
+                        messageClaim.ServiceAuthenticate)) {
                 return null;
                 }
 
-            //accountEntry.Post 
+            // Post the claim to the local spool. The unique identifier is the
+            // publication identifier.
+            dareEnvelope.Header.EnvelopeID = Message.GetEnvelopeId(id);
+            accountEntry.PostLocal(dareEnvelope);
 
-            // Add to Catalog
+            // Hack: Allow for the possibility of multiple claims on the same item.
+            // Test: Multiple claims on the same item functions correctly.
 
             var response = new ClaimResponse() {
                 CatalogedPublication = publication
                 };
 
-
             return response;
 
             }
 
-
+        /// <summary>
+        /// Poll service to see if a claim has been made for a given publication and
+        /// if so return the latest claim made.
+        /// </summary>
+        /// <param name="jpcSession">The Mesh session.</param>
+        /// <param name="targetAccount"></param>
+        /// <param name="id"></param>
+        /// <returns>The result of the transaction.</returns>
         public PollClaimResponse PollClaim(
                     JpcSession jpcSession,
                     string targetAccount,
                     string id) {
 
             using var accountEntry = GetAccountUnverified(targetAccount);
-            
-            //var message = accountEntry.Pickup (id) 
+            var message = accountEntry.GetLocal(id);
 
-
-
-
-
+            // return the message if found (otherwise null)
             var response = new PollClaimResponse() {
-                //MessageClaim = message
+                EnvelopedMessageClaim = message
                 };
 
 
@@ -356,12 +395,17 @@ namespace Goedel.Mesh.Server {
 
             }
 
-
+        /// <summary>
+        /// Create a recryption group.
+        /// </summary>
+        /// <param name="jpcSession">The Mesh client session.</param>
+        /// <param name="subjectAccount">The owner of the group.</param>
+        /// <param name="profileGroup">The group profile.</param>
+        /// <returns>The result of the transaction.</returns>
         public CreateGroupResponse CreateGroup(
                     JpcSession jpcSession,
                     string subjectAccount,
-                    string id,
-                    string groupAddress) {
+                    ProfileGroup profileGroup) {
 
             // create account entry
 
@@ -378,6 +422,18 @@ namespace Goedel.Mesh.Server {
             return response;
             }
 
+        /// <summary>
+        /// Respond to a decryption request.
+        /// <para>This involves the steps of resolving the group, resolving the membership
+        /// record of the group member, authenticating and authorizing the request, and
+        /// if authorized, performing the relevant recovery request and logging the 
+        /// relevant records.</para>
+        /// </summary>
+        /// <param name="jpcSession">The Mesh client session.</param>
+        /// <param name="groupAccount">The address of the group.</param>
+        /// <param name="ephemeral">The ephemeral key.</param>
+        /// <param name="partialId">The partial key identifier.</param>
+        /// <returns>Result of the decryption request.</returns>
         public DecryptResponse Decrypt(
                     JpcSession jpcSession,
                     string groupAccount,

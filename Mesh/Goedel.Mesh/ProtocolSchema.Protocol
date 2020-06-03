@@ -474,7 +474,7 @@
 
 	Message ClaimRequest
 		Inherits MeshRequest
-		Struct MessageClaim MessageClaim
+		Struct DareEnvelope EnvelopedMessageClaim
 			Description
 				|The claim message
 
@@ -491,16 +491,16 @@
 
 	Message PollClaimRequest
 		Inherits MeshRequest
-		String Id
+		String PublicationId
 			Description
-				|Unique publication identifier code
+				|The envelope identifier formed from the PublicationId.
 		String TargetAccountAddress
 			Description
 				|Account to which the claim is directed
 
 	Message PollClaimResponse
 		Inherits MeshResponse
-		Struct MessageClaim MessageClaim
+		Struct DareEnvelope EnvelopedMessageClaim
 			Description
 				|The claim message
 

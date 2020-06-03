@@ -2526,7 +2526,7 @@ namespace Goedel.Mesh {
         ///Dare Envelope containing the entry data
         /// </summary>
 
-		public virtual DareEnvelope						DareEnvelope  {get; set;}
+		public virtual DareEnvelope						EnvelopedData  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2586,10 +2586,10 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("KeyAuthentication", 1);
 					KeyAuthentication.Serialize (_writer, false);
 				}
-			if (DareEnvelope != null) {
+			if (EnvelopedData != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("DareEnvelope", 1);
-					DareEnvelope.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedData", 1);
+					EnvelopedData.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2639,10 +2639,10 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "DareEnvelope" : {
+				case "EnvelopedData" : {
 					// An untagged structure
-					DareEnvelope = new DareEnvelope ();
-					DareEnvelope.Deserialize (jsonReader);
+					EnvelopedData = new DareEnvelope ();
+					EnvelopedData.Deserialize (jsonReader);
  
 					break;
 					}

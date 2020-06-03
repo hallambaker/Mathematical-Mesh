@@ -35,7 +35,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject Factory() => new DareEnvelope();
+        public static JSONObject Factory() => new DareEnvelope();
 
         /// <summary>
         /// Return the number of data sequences.
@@ -177,15 +177,23 @@ namespace Goedel.Cryptography.Dare {
 
             }
 
+        ///// <summary>
+        ///// Encrypt the 
+        ///// </summary>
+        ///// <param name="plaintext"></param>
+        ///// <param name="pin"></param>
+        ///// <param name="contentMeta"></param>
+        ///// <param name="cloaked"></param>
+        ///// <param name="dataSequences"></param>
+        ///// <returns></returns>
+        //public static DareEnvelope Encrypt(byte[] plaintext, string pin,
+        //            ContentMeta contentMeta = null,
+        //            byte[] cloaked = null,
+        //            List<byte[]> dataSequences = null) {
 
-        public static DareEnvelope Encrypt(byte[] plaintext, string pin,
-                    ContentMeta contentMeta = null,
-                    byte[] cloaked = null,
-                    List<byte[]> dataSequences = null) {
-
-            var cryptoStack = new CryptoStack(pin);
-            return new DareEnvelope(cryptoStack, plaintext, contentMeta, cloaked, dataSequences);
-            }
+        //    var cryptoStack = new CryptoStack(pin);
+        //    return new DareEnvelope(cryptoStack, plaintext, contentMeta, cloaked, dataSequences);
+        //    }
 
 
         #endregion
@@ -501,13 +509,18 @@ contentMeta, cloaked, dataSequences, chunk);
             return result;
             }
 
-
-        public JSONObject DecodeJsonObject(IKeyLocate keyCollection = null, bool tagged = true) {
+        /// <summary>
+        /// Decode a tagged JSONObject using keys from <paramref name="keyCollection"/> to decrypt
+        /// if necessary.
+        /// </summary>
+        /// <param name="keyCollection">Key collection to be used for decryption.</param>
+        /// <returns>The decoded object.</returns>
+        public JSONObject DecodeJsonObject(IKeyLocate keyCollection = null) {
 
             var plaintext = GetPlaintext(keyCollection);
 
             Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), tagged);
+            var result = FromJSON(plaintext.JSONReader(), true);
             return result;
 
             }

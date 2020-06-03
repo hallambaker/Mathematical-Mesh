@@ -147,13 +147,13 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// Constructor for a session with service <paramref name="serviceID"/>.
+        /// Constructor for a session with service <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="serviceID">The name of the service (e.g. example.com) or an account 
+        /// <param name="accountAddress">The name of the service (e.g. example.com) or an account 
         /// at the service (e.g. alice@example.com).</param>
-        public JpcSession(string serviceID) {
-            ServiceID = serviceID;
-            serviceID.SplitAccountIDService(out Domain, out Account);
+        public JpcSession(string accountAddress) {
+            ServiceID = accountAddress;
+            accountAddress.SplitAccountIDService(out Domain, out Account);
             }
 
         }

@@ -148,11 +148,11 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult AccountConnect(AccountConnect Options) {
             using var contextAccount = GetContextAccount(Options);
 
-            var profileDevice = contextAccount.Connect(Options.Uri.Value);
+            var catalogedDevice = contextAccount.Connect(Options.Uri.Value);
 
 
             var result = new ResultAccountConnect() {
-                ProfileDevice = profileDevice
+                ProfileDevice = catalogedDevice.ProfileDevice
                 };
 
             return result;
