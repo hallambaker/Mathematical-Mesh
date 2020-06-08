@@ -19,54 +19,30 @@ namespace Scratchpad {
             _ = Goedel.Mesh.MeshItem.Initialize;
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
-            //TestService.Test().MeshDeviceConnectPIN();
-
-            //ShellTests.Test().TestProfileConnectDynamicQR();
-            ShellTests.Test().TestProfileConnectStaticQR();
-
-
-
-            // Service Tests
-            //TestService.Test().MeshDeviceConnectApprove();
-            //TestService.Test().MeshDeviceConnectPIN();
-            //TestService.Test().MeshCatalogMultipleDevice();
-            //TestService.Test().MeshCatalogAccount();
 
 
             // This test is failing because the message from Bob isn't passed to Alice.
-            //TestService.Test().MeshMessageContact();
-            //TestService.Test().MeshMessageConfirm();
+            //TestService.Test().MeshMessageContact(); // Works but shouldn't
+            //TestService.Test().MeshMessageConfirm(); // Works but shouldn't
 
-            //TestService.Test().MeshServiceFull();
+            ShellTests.Test().TestMessageContactRemote();
 
-
-            // Shell connect tests
-            //ShellTests.Test().TestProfileConnect();
-
-            //ShellTests.Test().TestProfileConnectAuthAdmin();
-            //ShellTests.Test().TestProfileConnectAuthAll();
-
-
-            //StoreTests.Test().TestSpoolSingle();
+            //ShellTests.Test().TestMessageContactBusinessCard();
+            //ShellTests.Test().TestMessageContactInPerson();
 
 
 
-            // This is failing because the containerInfo field is not being correctly updated
-
-            //ShellTests.Test().TestProfileConnectPin();
-
-
-            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestMessageConfirmation();
 
 
 
 
+            // All the tests related to Groups.
 
+            //StoreTests.Test().TestCatalog(); // Better get the basics right.
+            //TestService.Test().MeshCatalogGroup();
+            //ShellTests.Test().TestMessageGroup();
 
-
-            // From the command line:
-
-            // Archive related shell commands
             //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();
             //ShellTests.Test().TestContainerCatalogEncrypt();
@@ -75,21 +51,20 @@ namespace Scratchpad {
             //ShellTests.Test().TestFileSignEncrypt();
 
 
-
-
-            // The whole Escrow thing
-            //ShellTests.Test().TestProfileEscrow();
+            // Shell connect tests
+            //ShellTests.Test().TestProfileConnectAuth();
+            //ShellTests.Test().TestProfileConnectAuthAdmin();
+            //ShellTests.Test().TestProfileConnectAuthAll();
 
             // Application related shell commands
             //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
 
+            // The whole Escrow thing
+            //ShellTests.Test().TestProfileEscrow();
 
 
-            // All the tests related to Groups.
-            //TestService.Test().MeshCatalogGroup();
-            //ShellTests.Test().TestMessageGroup();
             }
 
 

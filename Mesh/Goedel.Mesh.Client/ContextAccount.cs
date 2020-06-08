@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The account activation</summary>
-        public ActivationAccount ActivationAccount => 
+        public ActivationAccount ActivationAccount =>
                 AccountEntry.GetActivationAccount(KeyCollection);
 
         ///<summary>Convenience accessor for the account profile</summary>
@@ -222,6 +222,28 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
+        /// Get the default (i.e. minimum contact info). This has a single network 
+        /// address entry for this mesh and mesh account. 
+        /// </summary>
+        /// <returns>The default contact.</returns>
+        public Contact CreateDefaultContact() {
+
+            var address = new NetworkAddress() {
+                Address = AccountAddress,
+                EnvelopedConnectionAccount = AccountEntry.EnvelopedConnectionAccount
+                };
+
+
+            var contact = new ContactPerson() {
+                UDF = new List<string>() { ProfileAccount.UDF, ContextMesh.ProfileMesh.UDF } ,
+                NetworkAddresses = new List<NetworkAddress>() { address }
+                };
+
+
+            return contact;
+            }
+
+        /// <summary>
         /// Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
         /// </summary>
         /// <param name="contact">The contact parameters.</param>
@@ -233,7 +255,7 @@ namespace Goedel.Mesh.Client {
 
         #region // Convenience accessors for catalogs and stores
 
-        
+
         //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
 
         /// <summary>
@@ -428,7 +450,7 @@ namespace Goedel.Mesh.Client {
                             }
 
                         default:
-                            break;
+                        break;
                         }
                     }
                 }
@@ -442,14 +464,14 @@ namespace Goedel.Mesh.Client {
         /// <param name="messageID">The message to locate.</param>
         /// <param name="read">If true, the message has already been read.</param>
         /// <returns>The message value (if unread).</returns>
-        public Message GetPendingMessageByID (string messageID, out bool read) {
+        public Message GetPendingMessageByID(string messageID, out bool read) {
             foreach (var message in GetSpoolInbound().Select(1, true)) {
                 var contentMeta = message.Header.ContentMeta;
 
 
                 var meshMessage = Message.FromJSON(message.GetBodyReader());
                 Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-                
+
                 if (meshMessage.MessageID == messageID) {
                     read = true;
                     return meshMessage;
@@ -466,7 +488,7 @@ namespace Goedel.Mesh.Client {
                         }
 
                     default:
-                        break;
+                    break;
                     }
 
                 }
@@ -697,7 +719,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="bits">The size of key to generate in bits/</param>
         /// <returns>Response from the server.</returns>
         public PublishResponse CreateDeviceEarl(
-                    out PrivateKeyUDF secretSeed, 
+                    out PrivateKeyUDF secretSeed,
                     out ProfileDevice profileDevice,
                     out string pin,
                     out string connectURI,
@@ -714,8 +736,8 @@ namespace Goedel.Mesh.Client {
 
 
             secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice, 
-                algorithmEncrypt, 
+                UdfAlgorithmIdentifier.MeshProfileDevice,
+                algorithmEncrypt,
                 algorithmSign,
                 algorithmAuthenticate,
                 secret,
@@ -793,7 +815,7 @@ namespace Goedel.Mesh.Client {
                 CatalogedDevice = cataloguedDevice,
                 Result = Constants.TransactionResultAccept
                 };
-            
+
             SendMessage(respondConnection);
 
 
@@ -868,7 +890,7 @@ namespace Goedel.Mesh.Client {
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
                         if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
-                            results.Add (ProcessAutomatic(acknowledgeConnection));
+                            results.Add(ProcessAutomatic(acknowledgeConnection));
                             }
 
                         break;
@@ -988,6 +1010,26 @@ namespace Goedel.Mesh.Client {
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
         /// <returns></returns>
+        public IProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
+
+
+            // Hack: should be able to accept, reject specific requests, not just
+            // the last one.
+            var message = GetPendingMessageByID(messageId, out var found);
+            found.AssertTrue(String: "No message of that ID");
+
+            return Process(message, accept, reciprocate);
+
+            }
+
+        /// <summary>
+        /// Generalized processing loop for messages
+        /// </summary>
+        /// <param name="meshMessage">The message to process.</param>
+        /// <param name="accept">If true, accept the request, otherwise reject it.</param>
+        /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
+        /// contact information in response to an initial contact request.</param>
+        /// <returns></returns>
         public IProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true) {
 
             reciprocate.Future();
@@ -1001,15 +1043,13 @@ namespace Goedel.Mesh.Client {
                     break;
                     }
                 case RequestContact requestContact: {
-                    ContactReply(requestContact.Sender);
-                    break;
+                    return ContactReply(requestContact);
+
                     }
 
                 case RequestConfirmation requestConfirmation: {
-                    ConfirmationResponse(requestConfirmation, true);
+                    return ConfirmationResponse(requestConfirmation, true);
 
-
-                    break;
                     }
                 case ResponseConfirmation responseConfirmation: {
                     responseConfirmation.Future();
@@ -1031,25 +1071,57 @@ namespace Goedel.Mesh.Client {
             return null;
             }
 
+
+        public DareEnvelope GetContactInfo(string localName) {
+
+            var catalog = GetCatalogContact();
+            catalog.GetSelf(localName);
+
+
+            //localName.Future();
+
+            //var contact = new Contact() {
+            //    //Email = email,
+            //    Addresses = new List<Address>() {
+            //            new Address () {
+
+            //                URI = "mailto:{email}"
+            //                }
+            //            }
+            //    };
+
+
+
+            //var envelope = DareEnvelope.Encode(contact.GetBytes(), signingKey: keySignature);
+
+            throw new NYI();
+            }
+
+
+
         /// <summary>
         /// Make a contact reply.
         /// </summary>
-        /// <param name="serviceID">The contact to reply to.</param>
-        public void ContactReply(string serviceID) {
-            // prepare the contact request
+        /// <param name="requestContact">The contact request.</param>
+        public IProcessResult ContactReply(RequestContact requestContact) {
+            
+            // Add the contact to the catalog
+            
+            
+            
+            // prepare the reply
 
             var message = new ReplyContact() {
-                Recipient = serviceID,
-                Subject = serviceID
+                Recipient = requestContact.Sender,
+                Subject = requestContact.Sender,
+                Self = ContactSelf
                 };
 
-            SendMessage(message, serviceID);
-
             // send it to the service
+            SendMessage(message, requestContact.Sender);
 
 
-
-
+            return null;
             }
 
         /// <summary>
@@ -1101,7 +1173,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="requestConfirmation">The request received.</param>
         /// <param name="response">If true, accept the confirmation request, otherwise reject.</param>
-        public void ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
+        public IProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
             // prepare the contact request
 
             var recipient = requestConfirmation.Sender;
@@ -1115,7 +1187,7 @@ namespace Goedel.Mesh.Client {
             SendMessage(message, recipient);
 
             // send it to the service
-
+            return null;
             }
 
 

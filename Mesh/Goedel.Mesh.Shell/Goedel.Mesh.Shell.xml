@@ -1717,7 +1717,7 @@
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.RequestID">
-            <summary>Field accessor for option [requestid]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.ServiceID">
             <summary>Field accessor for option [account]</summary>
@@ -1735,7 +1735,7 @@
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.RequestID">
-            <summary>Field accessor for option [requestid]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.ServiceID">
             <summary>Field accessor for option [account]</summary>
@@ -1753,7 +1753,7 @@
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.RequestID">
-            <summary>Field accessor for option [requestid]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.ServiceID">
             <summary>Field accessor for option [account]</summary>
@@ -2292,9 +2292,6 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactSelf.Email">
-            <summary>Field accessor for option [email]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._ContactSelf.File">
             <summary>Field accessor for option [file]</summary>
         </member>
@@ -2312,9 +2309,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactSelf.Json">
             <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.Email">
-            <summary>Field accessor for option [email]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.File">
             <summary>Field accessor for option [file]</summary>

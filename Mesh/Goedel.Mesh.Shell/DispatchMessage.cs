@@ -134,21 +134,11 @@ namespace Goedel.Mesh.Shell {
 
         ShellResult Process(IAccountOptions options, string requestid, bool accept) {
             using var contextAccount = GetContextAccount(options);
-            var recipient = "alice@example.com";
-            // Hack: Need to pull the message off the spool here and see what type it is,
-            // then respond.
+            var processResult = contextAccount.Process(requestid, accept);
 
-
-            var message = new ResponseConfirmation() {
-                Recipient = recipient,
-                Accept = accept
-                };
-
-            contextAccount.SendMessage(message, recipient);
 
             var result = new ResultSent() {
-                Success = true,
-                Message = message
+                Success = true
                 };
             return result;
             }

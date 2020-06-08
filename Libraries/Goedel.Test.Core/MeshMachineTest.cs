@@ -48,27 +48,12 @@ namespace Goedel.Test.Core {
             testEnvironmentCommon.MeshLocalPortal.GetService(serviceID);
 
 
-        public readonly static Contact ContactAlice = new Contact() {
-            FullName = "Alice Aardvark",
-            First = "Alice",
-            Last = "Aardvark",
-            Addresses = new List<Address>() {
-                    new Address () {
-                        URI = "mailto:alice@example.com"
-                        }
-                    }
-            };
+        public static Contact ContactAlice = new ContactPerson(
+            "Alice", "Aardvark", email: "alice@example.com");
 
-        public readonly static Contact ContactBob = new Contact() {
-            FullName = "Bob Baker",
-            First = "Bob",
-            Last = "Baker",
-            Addresses = new List<Address>() {
-                    new Address () {
-                        URI = "mailto:bob@example.com"
-                        }
-                    }
-            };
+        public static Contact ContactBob = new ContactPerson(
+            "Bob", "Baker", email: "bob@example.com");
+
 
 
         // Convenience routines 

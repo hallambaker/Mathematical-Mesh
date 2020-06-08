@@ -10,22 +10,10 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactSelf(ContactSelf Options) {
             using var contextAccount = GetContextAccount(Options);
-            var email = Options.Email.Value;
+            var file = Options.File.Value;
 
-            var contact = new Contact() {
-                Email = email,
-                Addresses = new List<Address>() {
-                        new Address () {
-
-                            URI = "mailto:{email}"
-                            }
-                        }
-                };
-
-            CatalogedContact entry;
-            using (var catalog = contextAccount.GetCatalogContact()) {
-                entry = catalog.Add(contact, self: true);
-                }
+            using var catalog = contextAccount.GetCatalogContact();
+            var entry = catalog.AddFromFile(file, self: true);
 
             return new ResultEntry() {
                 Success = true,
@@ -42,20 +30,10 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult ContactAdd(ContactAdd Options) {
             using var contextAccount = GetContextAccount(Options);
-            var email = Options.Email.Value;
+            var file = Options.File.Value;
 
-            var contact = new Contact() {
-                Addresses = new List<Address>() {
-                        new Address () {
-                            URI = "mailto:{email}"
-                            }
-                        }
-                };
-
-            CatalogedContact entry;
-            using (var catalog = contextAccount.GetCatalogContact()) {
-                entry = catalog.Add(contact, self: false);
-                }
+            using var catalog = contextAccount.GetCatalogContact();
+            var entry = catalog.AddFromFile(file, self: false);
 
             return new ResultEntry() {
                 Success = true,

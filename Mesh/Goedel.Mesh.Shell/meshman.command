@@ -88,12 +88,6 @@
 			Brief "Authorize use of SSH"
 			Default "false"
 
-
-
-
-
-
-
 	OptionSet MailOptions
 		Option OpenPGP "openpgp" Flag
 			Brief "Create encryption and signature keys for OpenPGP"
@@ -424,21 +418,21 @@
 
 		Command MessageAccept "accept"
 			Brief "Accept a pending request"
-			Option RequestID "requestid" String
+			Parameter RequestID "requestid" String
 				Brief "Specifies the request to accept"
 			Include AccountOptions
 			Include Reporting
 
 		Command MessageReject "reject"
 			Brief "Reject a pending request"
-			Option RequestID "requestid" String
+			Parameter RequestID "requestid" String
 				Brief "Specifies the request to reject"
 			Include AccountOptions
 			Include Reporting
 
 		Command MessageBlock "block"
 			Brief "Reject a pending request and block requests from that source"
-			Option RequestID "requestid" String
+			Parameter RequestID "requestid" String
 				Brief "Specifies the request to reject and block"
 			Include AccountOptions
 			Include Reporting
@@ -660,14 +654,12 @@
 
 		Command ContactSelf "self"
 			Brief "Add contact entry for self"
-			Option Email "email" String
 			Option File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
 
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
-			Option Email "email" String
 			Option File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting

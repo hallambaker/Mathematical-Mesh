@@ -169,35 +169,18 @@ namespace Goedel.Mesh.Test {
             var machineAliceAdmin = new MeshMachineTest(testEnvironmentCommon, name: "Alice");
             var deviceAdmin = machineAliceAdmin.MeshHost.CreateMeshWithAccount("main");
 
-
             var catalog = deviceAdmin.GetCatalogContact();
 
-            var Contact1 = new Contact() {
-                FullName = "Alice Example",
-                First = "Alice",
-                Last = "Example"
-                };
+            var Contact1 = new ContactPerson("Alice", "Example");
             var Entry1 = new CatalogedContact(Contact1);
 
-            var Contact2 = new Contact() {
-                FullName = "Bob Example",
-                First = "Bob",
-                Last = "Example"
-                };
+            var Contact2 = new ContactPerson("Bob", "Example");
             var Entry2 = new CatalogedContact(Contact2);
 
-            var Contact3 = new Contact() {
-                FullName = "Carol Example",
-                First = "Carol",
-                Last = "Example"
-                };
+            var Contact3 = new ContactPerson("Carol", "Example");
             var Entry3 = new CatalogedContact(Contact3);
 
-            var Contact4 = new Contact() {
-                FullName = "Mallet Example",
-                First = "Mallet",
-                Last = "Example"
-                };
+            var Contact4 = new ContactPerson("Mallet", "Example");
             var Entry4 = new CatalogedContact(Contact4);
 
             catalog.New(Entry1);

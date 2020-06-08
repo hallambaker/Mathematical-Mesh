@@ -7,11 +7,16 @@ using Xunit;
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        const string AccountA = "alice@example.com";
-        const string AccountQ = "quartermaster@example.com";
-        const string DeviceQName = "DeviceQ";
-        const string DeviceAdminName = "DeviceAdmin";
-        const string DeviceConnect1Name = "DeviceConnect1";
+        string AccountA => "alice@example.com";
+        string AccountB => "bob@example.com";
+        string AccountQ => "quartermaster@example.com";
+        string DeviceQName => "DeviceQ";
+        string DeviceAdminName => "DeviceAdmin";
+        string DeviceConnect1Name => "DeviceConnect1";
+
+
+        string DeviceAliceName => "MachineAlice";
+        string DeviceBobName => "MachineBob";
 
         [Fact]
         public void TestHello() {
@@ -48,6 +53,8 @@ namespace Goedel.XUnit {
             "Implement ability to store escrow records to service".TaskFunctionality();
             "Implement encryption key escrow".TaskFunctionality();
             "Implement encryption key recovery".TaskFunctionality();
+
+            throw new NYI();
             }
 
 

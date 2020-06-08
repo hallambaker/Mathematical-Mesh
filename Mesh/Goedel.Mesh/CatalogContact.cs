@@ -5,6 +5,7 @@ using Goedel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Goedel.Mesh {
 
@@ -23,7 +24,7 @@ namespace Goedel.Mesh {
         //public CatalogedContact Self { get; set; }
 
         ///<summary>Dictionary mapping email addresses to contacts.</summary>
-        public Dictionary<string, CatalogedContact> DictionaryByEmail { get; set; } =
+        public Dictionary<string, CatalogedContact> DictionaryByNetworkAddress { get; set; } =
                     new Dictionary<string, CatalogedContact>();
 
 
@@ -64,10 +65,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogedEntry">The entry to update.</param>
         protected override void UpdateEntry(CatalogedEntry catalogedEntry) {
-            var CatalogedContact = catalogedEntry as CatalogedContact;
-            var Contact = CatalogedContact.Contact;
+            var catalogedContact = catalogedEntry as CatalogedContact;
+            var contact = catalogedContact.Contact;
 
-            DictionaryByEmail.AddSafe(Contact.Email, CatalogedContact);
+            foreach (var networkAddress in contact.NetworkAddresses) {
+                DictionaryByNetworkAddress.AddSafe(networkAddress.Address, catalogedContact);
+                }
             }
 
 
@@ -98,6 +101,14 @@ namespace Goedel.Mesh {
             Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
 
+        public CatalogedContact AddFromFile(string fileName, bool self = false) {
+            throw new NYI();
+
+            }
+
+        public CatalogedContact GetSelf(string localName) {
+            throw new NYI();
+            }
 
         }
 
@@ -108,8 +119,8 @@ namespace Goedel.Mesh {
 
         public override string _PrimaryKey => Key;
 
-        ///<summary>Returns the inner contact value.</summary>
-        public Contact Contact => Contact.Decode(EnvelopedContact);
+        // ///<summary>Returns the inner contact value.</summary>
+        //public Contact Contact => Contact.Decode(EnvelopedContact);
 
         /// <summary>
         /// Default constructor for deserializers.
@@ -122,15 +133,23 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
 
-        public CatalogedContact(DareEnvelope contact) : this() => EnvelopedContact = contact;
+        public CatalogedContact(DareEnvelope contact) {
+            throw new NYI();
+
+            }
+        //=> EnvelopedContact = contact;
 
 
         /// <summary>
         /// Create a cataloged contact from <paramref name="contact"/>.
         /// </summary>
         /// <param name="contact">The contact to create a catalog wrapper for.</param>
-        public CatalogedContact(Contact contact) : this() => EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
-                    contentType: "application/mmm");
+        public CatalogedContact(Contact contact) {
+            throw new NYI();
+            }
+
+        //=> EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
+        //            contentType: "application/mmm");
 
         }
 
@@ -149,6 +168,92 @@ namespace Goedel.Mesh {
 
 
         }
+
+
+
+    public partial class ContactPerson {
+        ///<summary>Base constructor</summary>
+        public ContactPerson() {
+            }
+
+        /// <summary>
+        /// Convenience constructor filling in basic fields
+        /// </summary>
+        /// <param name="first">The first name</param>
+        /// <param name="last">The last name</param>
+        /// <param name="prefix">Optional prefix</param>
+        /// <param name="suffix">Optional suffix</param>
+        /// <param name="email">Optional SMTP email address</param>
+        public ContactPerson(
+                        string first,
+                        string last,
+                        string prefix=null,
+                        string suffix=null,
+                        string email=null) {
+
+            var personName = new PersonName() {
+                First = first,
+                Last = last,
+                Prefix = prefix,
+                Suffix = suffix
+                };
+            personName.SetFullName();
+            var networkAddress = new NetworkAddress {
+                Address = email,
+                Protocols = new List<string> { "SMTP" }
+                };
+            CommonNames = new List<PersonName> { personName };
+            NetworkAddresses = new List<NetworkAddress> { networkAddress };
+            }
+        }
+
+
+
+    public partial class PersonName{
+
+        ///<summary>Set the full name.</summary>
+        public void SetFullName() {
+
+            var builder = new StringBuilder();
+
+            SpaceAfter(builder, Prefix);
+            SpaceAfter(builder, First);
+            foreach (var middle in Middle) {
+                SpaceAfter(builder, middle);
+                }
+            Unspaced(builder, Last);
+            SpaceBefore(builder, Suffix);
+            SpaceBefore(builder, PostNominal);
+
+            FullName = builder.ToString();
+            }
+
+        void Unspaced(StringBuilder builder, string value) {
+            if (value != null) {
+                builder.Append(value);
+                }
+
+            }
+
+
+        void SpaceAfter(StringBuilder builder, string value) {
+            if (value != null) {
+                builder.Append(value);
+                builder.Append(' ');
+                }
+
+            }
+
+        void SpaceBefore(StringBuilder builder, string value) {
+            if (value != null) {
+                builder.Append(' ');
+                builder.Append(value);
+                
+                }
+
+            }
+        }
+
 
     #endregion
 

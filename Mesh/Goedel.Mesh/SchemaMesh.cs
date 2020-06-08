@@ -69,7 +69,6 @@ namespace Goedel.Mesh {
 			{"Connection", Connection._Factory},
 			{"Activation", Activation._Factory},
 			{"Permission", Permission._Factory},
-			{"CatalogedEntry", CatalogedEntry._Factory},
 			{"ProfileMesh", ProfileMesh._Factory},
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ActivationDevice", ActivationDevice._Factory},
@@ -88,13 +87,18 @@ namespace Goedel.Mesh {
 			{"ConnectionService", ConnectionService._Factory},
 			{"ProfileHost", ProfileHost._Factory},
 			{"ConnectionHost", ConnectionHost._Factory},
-			{"ContactMesh", ContactMesh._Factory},
 			{"Contact", Contact._Factory},
+			{"ContactPerson", ContactPerson._Factory},
+			{"ContactOrganization", ContactOrganization._Factory},
+			{"OrganizationName", OrganizationName._Factory},
+			{"PersonName", PersonName._Factory},
+			{"NetworkAddress", NetworkAddress._Factory},
 			{"Role", Role._Factory},
 			{"Address", Address._Factory},
 			{"Location", Location._Factory},
 			{"Reference", Reference._Factory},
 			{"Task", Task._Factory},
+			{"CatalogedEntry", CatalogedEntry._Factory},
 			{"CatalogedCredential", CatalogedCredential._Factory},
 			{"CatalogedNetwork", CatalogedNetwork._Factory},
 			{"CatalogedContact", CatalogedContact._Factory},
@@ -567,7 +571,15 @@ namespace Goedel.Mesh {
 			if (Contact != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Contact", 1);
-					Contact.Serialize (_writer, false);
+					// expand this to a tagged structure
+					//Contact.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(Contact._Tag, 1);
+						bool firstinner = true;
+						Contact.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
 				}
 			if (RecryptionKey != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -617,10 +629,7 @@ namespace Goedel.Mesh {
 					break;
 					}
 				case "Contact" : {
-					// An untagged structure
-					Contact = new Contact ();
-					Contact.Deserialize (jsonReader);
- 
+					Contact = Contact.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "RecryptionKey" : {
@@ -1585,97 +1594,6 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	///
-	/// Base class for cataloged Mesh data.
-	/// </summary>
-	public partial class CatalogedEntry : MeshItem {
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "CatalogedEntry";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CatalogedEntry();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new CatalogedEntry FromJSON (JSONReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CatalogedEntry;
-				}
-		    var Result = new CatalogedEntry ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
-			
-			switch (tag) {
 				default : {
 					break;
 					}
@@ -4141,190 +4059,29 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class ContactMesh : MeshItem {
+	abstract public partial class Contact : Assertion {
         /// <summary>
+        ///The globally unique contact identifier.
         /// </summary>
 
-		public virtual string						UDF  {get; set;}
+		public virtual string						Id  {get; set;}
         /// <summary>
+        ///Mesh fingerprints associated with the contact.
         /// </summary>
 
-		public virtual List<string>				AccountAddresses  {get; set;}
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "ContactMesh";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContactMesh();
-
-
+		public virtual List<string>				UDF  {get; set;}
         /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			if (UDF != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("UDF", 1);
-					_writer.WriteString (UDF);
-				}
-			if (AccountAddresses != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AccountAddresses", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in AccountAddresses) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					_writer.WriteString (_index);
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new ContactMesh FromJSON (JSONReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ContactMesh;
-				}
-		    var Result = new ContactMesh ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
-			
-			switch (tag) {
-				case "UDF" : {
-					UDF = jsonReader.ReadString ();
-					break;
-					}
-				case "AccountAddresses" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					AccountAddresses = new List <string> ();
-					while (_Going) {
-						string _Item = jsonReader.ReadString ();
-						AccountAddresses.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				default : {
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
-	public partial class Contact : Assertion {
-        /// <summary>
-        ///The Mesh Account Connection - the main event really
+        ///Network address entries
         /// </summary>
 
-		public virtual List<DareEnvelope>				MeshAccounts  {get; set;}
+		public virtual List<NetworkAddress>				NetworkAddresses  {get; set;}
         /// <summary>
-        /// </summary>
-
-		public virtual string						Email  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Identifier  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						FullName  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Title  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						First  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Middle  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Last  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual string						Suffix  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual List<string>				Labels  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual List<ProfileAccount>				AssertionAccounts  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual List<Address>				Addresses  {get; set;}
-        /// <summary>
+        ///The physical locations the contact is associated with.
         /// </summary>
 
 		public virtual List<Location>				Locations  {get; set;}
         /// <summary>
+        ///The roles of the contact
         /// </summary>
 
 		public virtual List<Role>				Roles  {get; set;}
@@ -4340,10 +4097,10 @@ namespace Goedel.Mesh {
 		public new const string __Tag = "Contact";
 
 		/// <summary>
-        /// Factory method
+        /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Contact();
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -4372,98 +4129,29 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Assertion)this).SerializeX(_writer, false, ref _first);
-			if (MeshAccounts != null) {
+			if (Id != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("MeshAccounts", 1);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
+				}
+			if (UDF != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("UDF", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in MeshAccounts) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Email != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Email", 1);
-					_writer.WriteString (Email);
-				}
-			if (Identifier != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Identifier", 1);
-					_writer.WriteString (Identifier);
-				}
-			if (FullName != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("FullName", 1);
-					_writer.WriteString (FullName);
-				}
-			if (Title != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Title", 1);
-					_writer.WriteString (Title);
-				}
-			if (First != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("First", 1);
-					_writer.WriteString (First);
-				}
-			if (Middle != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Middle", 1);
-					_writer.WriteString (Middle);
-				}
-			if (Last != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Last", 1);
-					_writer.WriteString (Last);
-				}
-			if (Suffix != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Suffix", 1);
-					_writer.WriteString (Suffix);
-				}
-			if (Labels != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Labels", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Labels) {
+				foreach (var _index in UDF) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					_writer.WriteString (_index);
 					}
 				_writer.WriteArrayEnd ();
 				}
 
-			if (AssertionAccounts != null) {
+			if (NetworkAddresses != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("AssertionAccounts", 1);
+				_writer.WriteToken ("NetworkAddresses", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in AssertionAccounts) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Addresses != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Addresses", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Addresses) {
+				foreach (var _index in NetworkAddresses) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_writer.WriteObjectStart();
@@ -4528,10 +4216,7 @@ namespace Goedel.Mesh {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as Contact;
 				}
-		    var Result = new Contact ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+			throw new CannotCreateAbstract();
 			}
 
         /// <summary>
@@ -4542,87 +4227,31 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "MeshAccounts" : {
+				case "Id" : {
+					Id = jsonReader.ReadString ();
+					break;
+					}
+				case "UDF" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					MeshAccounts = new List <DareEnvelope> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareEnvelope ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
-						MeshAccounts.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Email" : {
-					Email = jsonReader.ReadString ();
-					break;
-					}
-				case "Identifier" : {
-					Identifier = jsonReader.ReadString ();
-					break;
-					}
-				case "FullName" : {
-					FullName = jsonReader.ReadString ();
-					break;
-					}
-				case "Title" : {
-					Title = jsonReader.ReadString ();
-					break;
-					}
-				case "First" : {
-					First = jsonReader.ReadString ();
-					break;
-					}
-				case "Middle" : {
-					Middle = jsonReader.ReadString ();
-					break;
-					}
-				case "Last" : {
-					Last = jsonReader.ReadString ();
-					break;
-					}
-				case "Suffix" : {
-					Suffix = jsonReader.ReadString ();
-					break;
-					}
-				case "Labels" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Labels = new List <string> ();
+					UDF = new List <string> ();
 					while (_Going) {
 						string _Item = jsonReader.ReadString ();
-						Labels.Add (_Item);
+						UDF.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
-				case "AssertionAccounts" : {
+				case "NetworkAddresses" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					AssertionAccounts = new List <ProfileAccount> ();
+					NetworkAddresses = new List <NetworkAddress> ();
 					while (_Going) {
 						// an untagged structure.
-						var _Item = new  ProfileAccount ();
+						var _Item = new  NetworkAddress ();
 						_Item.Deserialize (jsonReader);
-						// var _Item = new ProfileAccount (jsonReader);
-						AssertionAccounts.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Addresses" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Addresses = new List <Address> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Address ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new Address (jsonReader);
-						Addresses.Add (_Item);
+						// var _Item = new NetworkAddress (jsonReader);
+						NetworkAddresses.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -4657,6 +4286,809 @@ namespace Goedel.Mesh {
 					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ContactPerson : Contact {
+        /// <summary>
+        ///List of person names in order of preference
+        /// </summary>
+
+		public virtual List<PersonName>				CommonNames  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ContactPerson";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ContactPerson();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Contact)this).SerializeX(_writer, false, ref _first);
+			if (CommonNames != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CommonNames", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in CommonNames) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContactPerson FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContactPerson;
+				}
+		    var Result = new ContactPerson ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "CommonNames" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					CommonNames = new List <PersonName> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  PersonName ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new PersonName (jsonReader);
+						CommonNames.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ContactOrganization : Contact {
+        /// <summary>
+        ///List of person names in order of preference
+        /// </summary>
+
+		public virtual List<OrganizationName>				CommonNames  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ContactOrganization";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ContactOrganization();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Contact)this).SerializeX(_writer, false, ref _first);
+			if (CommonNames != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CommonNames", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in CommonNames) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ContactOrganization FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ContactOrganization;
+				}
+		    var Result = new ContactOrganization ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "CommonNames" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					CommonNames = new List <OrganizationName> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  OrganizationName ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new OrganizationName (jsonReader);
+						CommonNames.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// The name of an organization
+	/// </summary>
+	public partial class OrganizationName : MeshItem {
+		bool								__Inactive = false;
+		private bool						_Inactive;
+        /// <summary>
+        ///If true, the name is not in current use.
+        /// </summary>
+
+		public virtual bool						Inactive {
+			get => _Inactive;
+			set {_Inactive = value; __Inactive = true; }
+			}
+        /// <summary>
+        ///The registered name.
+        /// </summary>
+
+		public virtual string						RegisteredName  {get; set;}
+        /// <summary>
+        ///Names that the organization uses including trading names
+        ///and doing business as names.
+        /// </summary>
+
+		public virtual string						DBA  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "OrganizationName";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new OrganizationName();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (__Inactive){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Inactive", 1);
+					_writer.WriteBoolean (Inactive);
+				}
+			if (RegisteredName != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("RegisteredName", 1);
+					_writer.WriteString (RegisteredName);
+				}
+			if (DBA != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("DBA", 1);
+					_writer.WriteString (DBA);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new OrganizationName FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as OrganizationName;
+				}
+		    var Result = new OrganizationName ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Inactive" : {
+					Inactive = jsonReader.ReadBoolean ();
+					break;
+					}
+				case "RegisteredName" : {
+					RegisteredName = jsonReader.ReadString ();
+					break;
+					}
+				case "DBA" : {
+					DBA = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// The name of a natural person
+	/// </summary>
+	public partial class PersonName : MeshItem {
+		bool								__Inactive = false;
+		private bool						_Inactive;
+        /// <summary>
+        ///If true, the name is not in current use.
+        /// </summary>
+
+		public virtual bool						Inactive {
+			get => _Inactive;
+			set {_Inactive = value; __Inactive = true; }
+			}
+        /// <summary>
+        ///The preferred presentation of the full name.
+        /// </summary>
+
+		public virtual string						FullName  {get; set;}
+        /// <summary>
+        ///Honorific or title, E.g. Sir, Lord, Dr., Mr.
+        /// </summary>
+
+		public virtual string						Prefix  {get; set;}
+        /// <summary>
+        ///First name.
+        /// </summary>
+
+		public virtual string						First  {get; set;}
+        /// <summary>
+        ///Middle names or initials.
+        /// </summary>
+
+		public virtual List<string>				Middle  {get; set;}
+        /// <summary>
+        ///Last name.
+        /// </summary>
+
+		public virtual string						Last  {get; set;}
+        /// <summary>
+        ///Nominal suffix, e.g. Jr., III, etc.
+        /// </summary>
+
+		public virtual string						Suffix  {get; set;}
+        /// <summary>
+        ///Post nominal letters (if used).
+        /// </summary>
+
+		public virtual string						PostNominal  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "PersonName";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new PersonName();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (__Inactive){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Inactive", 1);
+					_writer.WriteBoolean (Inactive);
+				}
+			if (FullName != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("FullName", 1);
+					_writer.WriteString (FullName);
+				}
+			if (Prefix != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Prefix", 1);
+					_writer.WriteString (Prefix);
+				}
+			if (First != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("First", 1);
+					_writer.WriteString (First);
+				}
+			if (Middle != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Middle", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Middle) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Last != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Last", 1);
+					_writer.WriteString (Last);
+				}
+			if (Suffix != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Suffix", 1);
+					_writer.WriteString (Suffix);
+				}
+			if (PostNominal != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PostNominal", 1);
+					_writer.WriteString (PostNominal);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new PersonName FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as PersonName;
+				}
+		    var Result = new PersonName ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Inactive" : {
+					Inactive = jsonReader.ReadBoolean ();
+					break;
+					}
+				case "FullName" : {
+					FullName = jsonReader.ReadString ();
+					break;
+					}
+				case "Prefix" : {
+					Prefix = jsonReader.ReadString ();
+					break;
+					}
+				case "First" : {
+					First = jsonReader.ReadString ();
+					break;
+					}
+				case "Middle" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Middle = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Middle.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Last" : {
+					Last = jsonReader.ReadString ();
+					break;
+					}
+				case "Suffix" : {
+					Suffix = jsonReader.ReadString ();
+					break;
+					}
+				case "PostNominal" : {
+					PostNominal = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Provides all means of contacting the individual according to a
+	/// particular network address
+	/// </summary>
+	public partial class NetworkAddress : MeshItem {
+		bool								__Inactive = false;
+		private bool						_Inactive;
+        /// <summary>
+        ///If true, the name is not in current use.
+        /// </summary>
+
+		public virtual bool						Inactive {
+			get => _Inactive;
+			set {_Inactive = value; __Inactive = true; }
+			}
+        /// <summary>
+        ///The network address, e.g. alice@example.com
+        /// </summary>
+
+		public virtual string						Address  {get; set;}
+        /// <summary>
+        ///The IANA protocol|identifier of the network protocols by which 
+        ///the contact may be reached using the specified Address. 
+        /// </summary>
+
+		public virtual List<string>				Protocols  {get; set;}
+        /// <summary>
+        ///Optional enveloped ConnectionAccount for the Address
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedConnectionAccount  {get; set;}
+        /// <summary>
+        ///Public keys associated with the network address
+        /// </summary>
+
+		public virtual PublicKey						PublicKeys  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "NetworkAddress";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new NetworkAddress();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (__Inactive){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Inactive", 1);
+					_writer.WriteBoolean (Inactive);
+				}
+			if (Address != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Address", 1);
+					_writer.WriteString (Address);
+				}
+			if (Protocols != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Protocols", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Protocols) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (EnvelopedConnectionAccount != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedConnectionAccount", 1);
+					EnvelopedConnectionAccount.Serialize (_writer, false);
+				}
+			if (PublicKeys != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PublicKeys", 1);
+					PublicKeys.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new NetworkAddress FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as NetworkAddress;
+				}
+		    var Result = new NetworkAddress ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Inactive" : {
+					Inactive = jsonReader.ReadBoolean ();
+					break;
+					}
+				case "Address" : {
+					Address = jsonReader.ReadString ();
+					break;
+					}
+				case "Protocols" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Protocols = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Protocols.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "EnvelopedConnectionAccount" : {
+					// An untagged structure
+					EnvelopedConnectionAccount = new DareEnvelope ();
+					EnvelopedConnectionAccount.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "PublicKeys" : {
+					// An untagged structure
+					PublicKeys = new PublicKey ();
+					PublicKeys.Deserialize (jsonReader);
+ 
+					break;
+					}
+				default : {
 					break;
 					}
 				}
@@ -5571,6 +6003,125 @@ namespace Goedel.Mesh {
 		}
 
 	/// <summary>
+	///
+	/// Base class for cataloged Mesh data.
+	/// </summary>
+	public partial class CatalogedEntry : MeshItem {
+        /// <summary>
+        ///The set of labels describing the entry
+        /// </summary>
+
+		public virtual List<string>				Labels  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CatalogedEntry";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CatalogedEntry();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Labels != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Labels", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Labels) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CatalogedEntry FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CatalogedEntry;
+				}
+		    var Result = new CatalogedEntry ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Labels" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Labels = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Labels.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
 	/// </summary>
 	public partial class CatalogedCredential : CatalogedEntry {
         /// <summary>
@@ -5859,12 +6410,15 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class CatalogedContact : CatalogedEntry {
+        /// <summary>
+        ///Unique key. 
+        /// </summary>
+
+		public virtual string						Key  {get; set;}
 		bool								__Self = false;
 		private bool						_Self;
         /// <summary>
-        ///If true, this catalog entry is for the user who created the catalog. To be
-        ///valid, such an entry MUST be signed by an administration key for the Mesh
-        ///profile containing the account to which the catalog belongs.
+        ///If true, this catalog entry is for the user who created the catalog.
         /// </summary>
 
 		public virtual bool						Self {
@@ -5872,20 +6426,20 @@ namespace Goedel.Mesh {
 			set {_Self = value; __Self = true; }
 			}
         /// <summary>
-        ///Unique key. 
-        /// </summary>
-
-		public virtual string						Key  {get; set;}
-        /// <summary>
         ///List of the permissions that the contact has been granted.
         /// </summary>
 
 		public virtual List<Permission>				Permissions  {get; set;}
         /// <summary>
-        ///The (signed) contact data.
+        ///The contact information as edited by the catalog owner.
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedContact  {get; set;}
+		public virtual Contact						Contact  {get; set;}
+        /// <summary>
+        ///The contact data as provided by the source(s).
+        /// </summary>
+
+		public virtual List<DareEnvelope>				EnvelopedContact  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5930,15 +6484,15 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
-			if (__Self){
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Self", 1);
-					_writer.WriteBoolean (Self);
-				}
 			if (Key != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Key", 1);
 					_writer.WriteString (Key);
+				}
+			if (__Self){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Self", 1);
+					_writer.WriteBoolean (Self);
 				}
 			if (Permissions != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -5957,11 +6511,36 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
+			if (Contact != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Contact", 1);
+					// expand this to a tagged structure
+					//Contact.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(Contact._Tag, 1);
+						bool firstinner = true;
+						Contact.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
+				}
 			if (EnvelopedContact != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedContact", 1);
-					EnvelopedContact.Serialize (_writer, false);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EnvelopedContact) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
 				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -5995,12 +6574,12 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "Self" : {
-					Self = jsonReader.ReadBoolean ();
-					break;
-					}
 				case "Key" : {
 					Key = jsonReader.ReadString ();
+					break;
+					}
+				case "Self" : {
+					Self = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "Permissions" : {
@@ -6017,11 +6596,22 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
+				case "Contact" : {
+					Contact = Contact.FromJSON (jsonReader, true) ;  // A tagged structure
+					break;
+					}
 				case "EnvelopedContact" : {
-					// An untagged structure
-					EnvelopedContact = new DareEnvelope ();
-					EnvelopedContact.Deserialize (jsonReader);
- 
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					EnvelopedContact = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
+						EnvelopedContact.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {

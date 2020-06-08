@@ -56,7 +56,7 @@
 		String UDF
 			Description
 				|The fingerprint of the encryption key
-		Struct Contact Contact
+		TStruct Contact Contact
 			Description
 				|The User's Mesh contact information
 		Struct PublicKey RecryptionKey
@@ -167,9 +167,7 @@
 			Description
 				|Keys or key contributions enabling the operation to be performed
 
-	Structure CatalogedEntry
-		Description
-			|Base class for cataloged Mesh data.
+
 
 	Section 3 "Mesh Profile Classes"
 		Description
@@ -425,37 +423,115 @@
 			|Classes describing data used in cataloged data.
 
 
-	Structure ContactMesh
-		String UDF
-		String AccountAddresses
-			Multiple
-
 	Structure Contact
+		Abstract
 		Inherits Assertion
-
-		Struct DareEnvelope MeshAccounts
+		String Id
+			Description
+				|The globally unique contact identifier.
+		String UDF	
 			Multiple
 			Description
-				|The Mesh Account Connection - the main event really
-
-		String Email
-		String Identifier
-		String FullName
-		String Title
-		String First
-		String Middle
-		String Last
-		String Suffix
-		String Labels
+				|Mesh fingerprints associated with the contact.
+		Struct NetworkAddress NetworkAddresses
 			Multiple
-		Struct ProfileAccount AssertionAccounts
-			Multiple
-		Struct Address Addresses
-			Multiple
+			Description
+				|Network address entries
 		Struct Location Locations
 			Multiple
+			Description
+				|The physical locations the contact is associated with.
 		Struct Role Roles
 			Multiple
+			Description
+				|The roles of the contact
+		Structure Bookmark Bookmark 
+			Multiple
+			Description
+				|The Web sites and other online presences of the contact
+
+	Structure ContactPerson
+		Inherits Contact
+		Struct PersonName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure ContactOrganization
+		Inherits Contact
+		Struct OrganizationName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure OrganizationName
+		Description
+			|The name of an organization
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String RegisteredName
+			Description
+				|The registered name.
+		String DBA
+			Description
+				|Names that the organization uses including trading names
+				|and doing business as names.
+
+
+	Structure PersonName
+		Description
+			|The name of a natural person
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String FullName
+			Description
+				|The preferred presentation of the full name.
+		String Prefix
+			Description
+				|Honorific or title, E.g. Sir, Lord, Dr., Mr.
+		String First
+			Description
+				|First name.
+		String Middle
+			Multiple
+			Description
+				|Middle names or initials.
+		String Last
+			Description
+				|Last name.
+		String Suffix
+			Description
+				|Nominal suffix, e.g. Jr., III, etc.
+		String PostNominal
+			Description
+				|Post nominal letters (if used).
+
+	Structure NetworkAddress
+		Description
+			|Provides all means of contacting the individual according to a
+			|particular network address
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String Address	
+			Description
+				|The network address, e.g. alice@example.com
+		String Protocols
+			Multiple
+			Description
+				|The IANA protocol|identifier of the network protocols by which 
+				|the contact may be reached using the specified Address. 
+		Struct DareEnvelope EnvelopedConnectionAccount
+			Description
+				|Optional enveloped ConnectionAccount for the Address
+		Struct PublicKey PublicKeys
+			Description
+				|Public keys associated with the network address
+
+
+
 
 	Structure Role
 		String CompanyName
@@ -464,10 +540,6 @@
 		Struct Location Locations
 			Multiple
 
-	Structure Address
-		String URI
-		String Labels
-			Multiple
 
 	Structure Location
 		String Appartment
@@ -477,6 +549,12 @@
 		String County
 		String Postcode
 		String Country
+
+	Structure Bookmark
+		String Uri
+		String Title
+		String Role
+			Multiple
 
 	Structure Reference
 		String MessageID
@@ -488,6 +566,8 @@
 		String Relationship
 			Description
 				|The relationship type. This can be Read, Unread, Accept, Reject.
+
+
 
 	Structure Task
 		String Key
@@ -510,6 +590,13 @@
 	
 	Section 2 "Catalog Entries"
 
+	Structure CatalogedEntry
+		Description
+			|Base class for cataloged Mesh data.
+		String Labels
+			Multiple
+			Description
+				|The set of labels describing the entry
 
 	Structure CatalogedCredential
 		Inherits CatalogedEntry
@@ -527,22 +614,23 @@
 
 	Structure CatalogedContact
 		Inherits CatalogedEntry
-		Boolean Self
-			Description
-				|If true, this catalog entry is for the user who created the catalog. To be
-				|valid, such an entry MUST be signed by an administration key for the Mesh
-				|profile containing the account to which the catalog belongs.
-
 		String Key
 			Description
 				|Unique key. 
+		Boolean Self
+			Description
+				|If true, this catalog entry is for the user who created the catalog.
 		Struct Permission Permissions
 			Multiple
 			Description
 				|List of the permissions that the contact has been granted.
-		Struct DareEnvelope EnvelopedContact
+		TStruct Contact Contact
 			Description
-				|The (signed) contact data.
+				|The contact information as edited by the catalog owner.
+		Struct DareEnvelope EnvelopedContact
+			Multiple
+			Description
+				|The contact data as provided by the source(s).
 
 	Structure CatalogedContactRecryption
 		Inherits CatalogedContact

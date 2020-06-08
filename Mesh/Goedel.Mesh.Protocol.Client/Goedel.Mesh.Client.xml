@@ -545,6 +545,13 @@
             </summary>
             <param name="account">The modified account profile.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDefaultContact">
+            <summary>
+            Get the default (i.e. minimum contact info). This has a single network 
+            address entry for this mesh and mesh account. 
+            </summary>
+            <returns>The default contact.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SetContactSelf(Goedel.Mesh.Contact)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
@@ -766,6 +773,16 @@
             <param name="profileDevice">Profile of the device to add.</param>
             <returns>The catalog entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Process(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Generalized processing loop for messages
+            </summary>
+            <param name="meshMessage">The message to process.</param>
+            <param name="accept">If true, accept the request, otherwise reject it.</param>
+            <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
+            contact information in response to an initial contact request.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean)">
             <summary>
             Generalized processing loop for messages
@@ -776,11 +793,11 @@
             contact information in response to an initial contact request.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactReply(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactReply(Goedel.Mesh.RequestContact)">
             <summary>
             Make a contact reply.
             </summary>
-            <param name="serviceID">The contact to reply to.</param>
+            <param name="requestContact">The contact request.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ContactRequest(System.String)">
             <summary>
