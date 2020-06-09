@@ -426,10 +426,12 @@
 	Structure Contact
 		Abstract
 		Inherits Assertion
+		Description
+			|Base class for contact entries.
 		String Id
 			Description
 				|The globally unique contact identifier.
-		String UDF	
+		Struct Anchor Anchors
 			Multiple
 			Description
 				|Mesh fingerprints associated with the contact.
@@ -445,13 +447,55 @@
 			Multiple
 			Description
 				|The roles of the contact
-		Structure Bookmark Bookmark 
+		Struct Bookmark Bookmark 
 			Multiple
 			Description
 				|The Web sites and other online presences of the contact
+		Struct TaggedSource Sources
+			Multiple
+			Description
+				|Source(s) from which this contact was constructed.
+
+	Structure Anchor
+		Description
+			|Trust anchor
+		String UDF
+			Description
+				|The trust anchor.
+		String Validation
+			Description
+				|The means of validation.
+
+	Structure TaggedSource
+		Description
+			|Source from which contact information was obtained.
+		String LocalName
+			Description
+				|Short name for the contact information.
+		String Validation
+			Description
+				|The means of validation.		
+		Binary BinarySource
+			Description
+				|The contact data in binary form.
+		Struct DareEnvelope EnvelopedSource
+			Description
+				|The contact data in enveloped form. If present, the BinarySource property
+				|is ignored.
+
+
+
+	Structure ContactGroup
+		Inherits Contact
+		Description
+			|Contact for a group, including encryption groups.
+
+
 
 	Structure ContactPerson
 		Inherits Contact
+		Description
+			|
 		Struct PersonName CommonNames
 			Multiple
 			Description
@@ -459,6 +503,8 @@
 
 	Structure ContactOrganization
 		Inherits Contact
+		Description
+			|		
 		Struct OrganizationName CommonNames
 			Multiple
 			Description
@@ -534,12 +580,17 @@
 
 
 	Structure Role
-		String CompanyName
-		Struct Address Addresses
+		String OrganizationName
+			Description
+				|The organization at which the role is held
+		String Titles
 			Multiple
+			Description
+				|The titles held with respect to that organization.
 		Struct Location Locations
 			Multiple
-
+			Description
+				|Postal or physical addresses associated with the role.
 
 	Structure Location
 		String Appartment
@@ -549,6 +600,8 @@
 		String County
 		String Postcode
 		String Country
+		Float Latitude
+		Float Longitude
 
 	Structure Bookmark
 		String Uri
@@ -627,10 +680,6 @@
 		TStruct Contact Contact
 			Description
 				|The contact information as edited by the catalog owner.
-		Struct DareEnvelope EnvelopedContact
-			Multiple
-			Description
-				|The contact data as provided by the source(s).
 
 	Structure CatalogedContactRecryption
 		Inherits CatalogedContact
@@ -638,6 +687,58 @@
 
 		// Recryption group user has accepted membership of
 		// Describe document stores, chat groups, etc accessible
+
+
+	Structure CatalogedCapability
+		Inherits CatalogedEntry
+		Description
+			|
+		String SubjectUdf
+			Description
+				|Fingerprint of a cryptographic key that is presented to claim 
+				|the specified capability.
+		String Permissions
+			Multiple
+			Description
+				|
+		TStruct CryptographicCapability Keys
+			Multiple
+			Description
+				|Cryptographic keys representing capabilities.
+
+	Structure CryptographicCapability
+		Abstract
+		String Id
+			Description
+				|Key identifier in URI form (mmm://service/udf
+		TStruct Key Part
+			Description
+				|The cryptographic key whose use controls the exchange.
+		DateTime NotBefore
+			Description
+				|If present specifies a time instant that the specified 
+				|capability MUST NOT be supported before.
+		DateTime NotOnOrAfter
+			Description
+				|If present specifies a time instant that the specified 
+				|capability MUST NOT be supported at or after.
+		
+	Structure CapabilityThresholdDecrypt
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a threshold decryption key.
+
+	Structure CapabilityThresholdSign
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a threshold signature key.
+
+	Structure CapabilityThresholdMicali
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a decryption key to be used in accordance 
+			|with the Fair Electronic Exchange with Invisible Trusted Parties
+			|protocol.
 
 
 	Structure CatalogedBookmark

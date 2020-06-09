@@ -78,27 +78,30 @@ namespace Goedel.Mesh {
         /// Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
         /// is the user's own contact.
         /// </summary>
-        /// <param name="contact">The enveloped contact to add.</param>
-        /// <param name="self">If true, mark as the user's own contact.</param>
-        /// <returns>The CatalogedContact entry.</returns>
-        public CatalogedContact Add(DareEnvelope contact, bool self = false) {
-            var entry = new CatalogedContact(contact) {
-                Self = self
-                };
-            New(entry);
-
-            return entry;
-            }
-
-        /// <summary>
-        /// Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
-        /// is the user's own contact.
-        /// </summary>
         /// <param name="contact">The contact to add.</param>
         /// <param name="self">If true, mark as the user's own contact.</param>
         /// <returns>The CatalogedContact entry.</returns>
-        public CatalogedContact Add(Contact contact, bool self = false) =>
-            Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
+        public CatalogedContact Add(Contact contact, bool self = false) {
+            var cataloged = new CatalogedContact(contact, self);
+            New(cataloged);
+            return cataloged;
+            }
+
+        /// <summary>
+        /// Add the contact contained inside <paramref name="envelope"/> to the catalog.
+        /// </summary>
+        /// <param name="envelope">The contact to add.</param>
+
+        /// <returns>The CatalogedContact entry.</returns>
+        public CatalogedContact Add(DareEnvelope envelope) {
+            var contact = Contact.Decode(envelope); // hack: should check the contact info.
+            return Add(contact);
+            }
+
+
+
+        //=>
+        //    Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
 
         public CatalogedContact AddFromFile(string fileName, bool self = false) {
@@ -106,9 +109,7 @@ namespace Goedel.Mesh {
 
             }
 
-        public CatalogedContact GetSelf(string localName) {
-            throw new NYI();
-            }
+
 
         }
 
@@ -131,25 +132,15 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Create a cataloged contact from <paramref name="contact"/>.
         /// </summary>
+        /// <param name="self">If true, mark as the user's own contact.</param>
         /// <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
 
-        public CatalogedContact(DareEnvelope contact) {
-            throw new NYI();
-
-            }
-        //=> EnvelopedContact = contact;
-
-
-        /// <summary>
-        /// Create a cataloged contact from <paramref name="contact"/>.
-        /// </summary>
-        /// <param name="contact">The contact to create a catalog wrapper for.</param>
-        public CatalogedContact(Contact contact) {
-            throw new NYI();
+        public CatalogedContact(Contact contact, bool self = false) {
+            Contact = contact;
+            Self = self;
+            Key = contact.Id ?? UDF.Nonce();
             }
 
-        //=> EnvelopedContact = DareEnvelope.Encode(contact.GetBytes(tag: true),
-        //            contentType: "application/mmm");
 
         }
 

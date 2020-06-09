@@ -44,11 +44,11 @@ namespace Goedel.XUnit {
 
             deviceA.Dispatch($"mesh create /service={AccountA}");
             var resulta = deviceA.Dispatch("contact list") as ResultDump;
-            ValidContact(resulta.CatalogedEntries[0], AccountA);
+            ValidContact(resulta.CatalogedEntries, AccountA);
 
             deviceB.Dispatch($"mesh create /service={AccountB}");
             var resultb = deviceB.Dispatch("contact list") as ResultDump;
-            ValidContact(resultb.CatalogedEntries[0], AccountB);
+            ValidContact(resultb.CatalogedEntries, AccountB);
 
             var result1 = deviceA.Dispatch("message pending") as ResultPending;
             // check there are no pending messages.
@@ -59,15 +59,16 @@ namespace Goedel.XUnit {
 
             var result3 = deviceA.Dispatch("message pending") as ResultPending;
             // check there is exactly one pending message.
-            (result1.Messages.Count == 0).AssertTrue();
+            (result3.Messages.Count == 1).AssertTrue();
 
             // extract message id
             var messageId = result3.Messages[0].MessageID;
 
+                //This is failing because Bob's contact isn't being added to Alice's catalog
             var result4 = deviceA.Dispatch($"message accept {messageId}");
             var result5 = deviceA.Dispatch("contact list") as ResultDump;
             (result5.CatalogedEntries.Count == 2).AssertTrue();
-            ValidContact(result5.CatalogedEntries[0], AccountA,AccountB);
+            ValidContact(result5.CatalogedEntries, AccountA,AccountB);
 
 
             // check the contact is listed
@@ -75,22 +76,20 @@ namespace Goedel.XUnit {
             var result6 = deviceB.Dispatch($"account sync /auto");
             var result7 = deviceB.Dispatch("contact list") as ResultDump;
             (result7.CatalogedEntries.Count == 2).AssertTrue();
-            ValidContact(result5.CatalogedEntries[0], AccountB, AccountA);
-
-
-            throw new NYI();
+            ValidContact(result5.CatalogedEntries, AccountB, AccountA);
             }
 
 
-        bool ValidContact(CatalogedEntry catalogedEntry , params string[] accountAddress) {
-            var contactEntry = catalogedEntry as CatalogedContact;
-            var contact = contactEntry.Contact;
-
-
+        bool ValidContact(List<CatalogedEntry> catalogedEntries , params string[] accountAddress) {
             var dictionary = new Dictionary<string, NetworkAddress>();
-            foreach (var address in contact.NetworkAddresses) {
-                dictionary.Add(address.Address, address);
-                // don't need to add safe because we want an error if there is a double entry.
+            foreach (var catalogedEntry in catalogedEntries) {
+                var contactEntry = catalogedEntry as CatalogedContact;
+                var contact = contactEntry.Contact;
+
+                foreach (var address in contact.NetworkAddresses) {
+                    dictionary.Add(address.Address, address);
+                    // don't need to add safe because we want an error if there is a double entry.
+                    }
                 }
 
             (dictionary.Count == accountAddress.Length).AssertTrue();

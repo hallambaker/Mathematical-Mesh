@@ -495,9 +495,6 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAuthenticationUDF">
             <summary>Convenience accessor for the authentication key fingerprint.</summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.ContactSelf">
-            <summary>The user's own contact information</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
             <summary>Returns the MeshClient and caches the result for future use.</summary>
         </member>
@@ -545,18 +542,19 @@
             </summary>
             <param name="account">The modified account profile.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDefaultContact">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDefaultContact(System.Boolean)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
             </summary>
             <returns>The default contact.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SetContactSelf(Goedel.Mesh.Contact)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
             Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
             </summary>
             <param name="contact">The contact parameters.</param>
+            <param name="localname">Short name to apply to the signed contact info</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
             <summary>
@@ -746,6 +744,13 @@
             </summary>
             <returns>The results of the automatic processing attempted.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact)">
+            <summary>
+            Perform automatic processing of the message <paramref name="replyContact"/>.
+            </summary>
+            <param name="replyContact">Reply to contact request to be processed.</param>
+            <returns>The result of requesting the connection.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
             <summary>
             Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
@@ -793,13 +798,21 @@
             contact information in response to an initial contact request.</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactReply(Goedel.Mesh.RequestContact)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactReply(Goedel.Mesh.RequestContact,System.String)">
             <summary>
             Make a contact reply.
             </summary>
             <param name="requestContact">The contact request.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactRequest(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSelf(System.String)">
+            <summary>
+            Get the user's own contact. There is only ever one contact entry but there MAY
+            be multiple envelopes 
+            </summary>
+            <param name="localName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactRequest(System.String,System.String)">
             <summary>
             Construct a contact request.
             </summary>

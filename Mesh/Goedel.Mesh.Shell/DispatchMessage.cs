@@ -14,13 +14,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var recipient = Options.Recipient.Value;
 
-            var message = new RequestContact() {
-                Recipient = recipient,
-                Reply = true
-                };
-
-            contextAccount.SendMessage(message, recipient);
-
+            var message = contextAccount.ContactRequest(recipient);
 
             var result = new ResultSent() {
                 Success = true,
@@ -38,13 +32,7 @@ namespace Goedel.Mesh.Shell {
             var recipient = Options.Recipient.Value;
             var text = Options.Text.Value;
 
-            var message = new RequestConfirmation() {
-                Recipient = recipient,
-                Text = text
-                };
-
-            contextAccount.SendMessage(message, recipient);
-
+            var message = contextAccount.ConfirmationRequest(recipient, text);
 
             var result = new ResultSent() {
                 Success = true,

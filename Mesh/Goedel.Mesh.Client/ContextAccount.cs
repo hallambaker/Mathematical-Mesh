@@ -76,10 +76,6 @@ namespace Goedel.Mesh.Client {
         public string KeyAuthenticationUDF => KeyAuthentication.KeyIdentifier;
 
 
-        ///<summary>The user's own contact information</summary>
-        public DareEnvelope ContactSelf;
-
-
         KeyPair KeyAuthentication { get; set; }
 
         ///<summary>Returns the MeshClient and caches the result for future use.</summary>
@@ -175,6 +171,11 @@ namespace Goedel.Mesh.Client {
             // Attempt to register with service in question
             MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
 
+            // Generate a contact and self-sign
+            var contact = CreateDefaultContact();
+            SetContactSelf(contact);
+
+
             // Update all the devices connected to this profile.
             UpdateDevices(ProfileAccount);
 
@@ -226,18 +227,30 @@ namespace Goedel.Mesh.Client {
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public Contact CreateDefaultContact() {
+        public Contact CreateDefaultContact(bool meshUDF = false) {
 
             var address = new NetworkAddress() {
                 Address = AccountAddress,
                 EnvelopedConnectionAccount = AccountEntry.EnvelopedConnectionAccount
                 };
-
+            var anchorAccount = new Anchor() {
+                UDF = ProfileAccount.UDF,
+                Validation = "Self"
+                };
+            // ContextMesh.ProfileMesh.UDF 
 
             var contact = new ContactPerson() {
-                UDF = new List<string>() { ProfileAccount.UDF, ContextMesh.ProfileMesh.UDF } ,
+                Anchors = new List<Anchor>() { anchorAccount },
                 NetworkAddresses = new List<NetworkAddress>() { address }
                 };
+
+            if (meshUDF) {
+                var anchorMesh = new Anchor() {
+                    UDF = ContextMesh.ProfileMesh.UDF,
+                    Validation = "Self"
+                    };
+                contact.Anchors.Add(anchorMesh);
+                }
 
 
             return contact;
@@ -247,8 +260,21 @@ namespace Goedel.Mesh.Client {
         /// Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
         /// </summary>
         /// <param name="contact">The contact parameters.</param>
-        public void SetContactSelf(Contact contact) {
+        /// <param name="localname">Short name to apply to the signed contact info</param>
+        public void SetContactSelf(Contact contact, string localname = null) {
             ContextMeshAdmin.Sign(contact);
+
+            contact.Sources ??= new List<TaggedSource>() { };
+            var tagged = new TaggedSource() {
+                LocalName = localname,
+                Validation = "Self",
+                EnvelopedSource = contact.DareEnvelope
+                };
+            contact.Sources.Add(tagged);
+
+            contact.Id = ProfileAccount.UDF;
+
+
             GetCatalogContact().Add(contact, true);
             }
 
@@ -895,6 +921,10 @@ namespace Goedel.Mesh.Client {
 
                         break;
                         }
+                    case ReplyContact replyContact: {
+                        results.Add(ProcessAutomatic(replyContact));
+                        break;
+                        }
                     }
                 }
 
@@ -902,6 +932,17 @@ namespace Goedel.Mesh.Client {
             return results;
             }
 
+
+        /// <summary>
+        /// Perform automatic processing of the message <paramref name="replyContact"/>.
+        /// </summary>
+        /// <param name="replyContact">Reply to contact request to be processed.</param>
+        /// <returns>The result of requesting the connection.</returns>
+        public IProcessResult ProcessAutomatic(ReplyContact replyContact) {
+            GetCatalogContact().Add(replyContact.Self);
+
+            return null;
+            }
         /// <summary>
         /// Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
         /// </summary>
@@ -1072,30 +1113,30 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        public DareEnvelope GetContactInfo(string localName) {
+        //public DareEnvelope GetContactInfo(string localName) {
 
-            var catalog = GetCatalogContact();
-            catalog.GetSelf(localName);
-
-
-            //localName.Future();
-
-            //var contact = new Contact() {
-            //    //Email = email,
-            //    Addresses = new List<Address>() {
-            //            new Address () {
-
-            //                URI = "mailto:{email}"
-            //                }
-            //            }
-            //    };
+        //    var catalog = GetCatalogContact();
+        //    GetSelf(localName);
 
 
+        //    //localName.Future();
 
-            //var envelope = DareEnvelope.Encode(contact.GetBytes(), signingKey: keySignature);
+        //    //var contact = new Contact() {
+        //    //    //Email = email,
+        //    //    Addresses = new List<Address>() {
+        //    //            new Address () {
 
-            throw new NYI();
-            }
+        //    //                URI = "mailto:{email}"
+        //    //                }
+        //    //            }
+        //    //    };
+
+
+
+        //    //var envelope = DareEnvelope.Encode(contact.GetBytes(), signingKey: keySignature);
+
+        //    throw new NYI();
+        //    }
 
 
 
@@ -1103,18 +1144,22 @@ namespace Goedel.Mesh.Client {
         /// Make a contact reply.
         /// </summary>
         /// <param name="requestContact">The contact request.</param>
-        public IProcessResult ContactReply(RequestContact requestContact) {
-            
-            // Add the contact to the catalog
-            
-            
-            
-            // prepare the reply
+        public IProcessResult ContactReply(RequestContact requestContact, string localname = null) {
 
+            // Add the requestContact.Self contact to the catalog
+
+
+            if (requestContact.Self != null) {
+                var catalog = GetCatalogContact();
+                catalog.Add(requestContact.Self);
+                }
+
+            // prepare the reply
+            var contactSelf = GetSelf(localname);
             var message = new ReplyContact() {
                 Recipient = requestContact.Sender,
                 Subject = requestContact.Sender,
-                Self = ContactSelf
+                Self = contactSelf
                 };
 
             // send it to the service
@@ -1124,24 +1169,55 @@ namespace Goedel.Mesh.Client {
             return null;
             }
 
+
+        /// <summary>
+        /// Get the user's own contact. There is only ever one contact entry but there MAY
+        /// be multiple envelopes 
+        /// </summary>
+        /// <param name="localName"></param>
+        /// <returns></returns>
+        public DareEnvelope GetSelf(string localName) {
+            var catalog = GetCatalogContact();
+            var entry = catalog.PersistenceStore.Get(ProfileAccount.UDF) ;
+
+            var self = entry.JsonObject as CatalogedContact;
+
+            foreach (var tagged in self.Contact.Sources) {
+                if (tagged.EnvelopedSource == null) {
+                    // skip entries that don't have an enveloped source.
+                    }
+                else if (localName == null || tagged.LocalName == localName) {
+                    return tagged.EnvelopedSource;
+                    }
+
+                }
+
+
+            throw new NYI();
+            }
+
+
         /// <summary>
         /// Construct a contact request.
         /// </summary>
         /// <param name="serviceID">The contact to request.</param>
-        public void ContactRequest(string serviceID) {
+        public RequestContact ContactRequest(string serviceID, string localname=null) {
             // prepare the contact request
+
+            var contactSelf = GetSelf(localname);
 
             var message = new RequestContact() {
                 Recipient = serviceID,
                 Subject = serviceID,
-                Self = ContactSelf
+                Self = contactSelf
                 };
+
 
             SendMessage(message, serviceID);
 
             // send it to the service
 
-
+            return message;
 
 
             }
@@ -1153,7 +1229,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="serviceID">The contact to request.</param>
         /// <param name="messageText">The message text to send.</param>
-        public void ConfirmationRequest(string serviceID, string messageText) {
+        public RequestConfirmation ConfirmationRequest(string serviceID, string messageText) {
             // prepare the contact request
 
             var message = new RequestConfirmation() {
@@ -1164,7 +1240,7 @@ namespace Goedel.Mesh.Client {
             SendMessage(message, serviceID);
 
             // send it to the service
-
+            return message;
             }
 
 
