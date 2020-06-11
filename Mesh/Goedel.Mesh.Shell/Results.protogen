@@ -49,6 +49,11 @@
 	Structure ResultPublish
 		Inherits							ResultCreateDevice
 		String								Uri
+
+
+	Structure ResultPublishDevice
+		Inherits							ResultCreateDevice
+		String								Uri
 		String								FileName
 		Struct ProfileDevice				ProfileDevice
 
@@ -155,6 +160,11 @@
 		Inherits		Result
 		String			Identifier
 
+
+	Structure ResultConfirm
+		Inherits		Result
+		String			Id
+		Struct Message Message
 
 
 	Structure ResultComplete

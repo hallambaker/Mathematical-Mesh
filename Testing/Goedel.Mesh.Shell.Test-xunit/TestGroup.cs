@@ -13,29 +13,21 @@ namespace Goedel.XUnit {
         ///after he is removed.</summary>
         [Fact]
         public void TestMessageGroup() {
-            var accountA = "alice@example.com";
-            var accountB = "bob@example.com";
             var accountGroup = "groupw@example.com";
-
-            var deviceA = GetTestCLI();
-            var deviceB = GetTestCLI();
-
             var filename = "Hello world".ToFileUnique();
 
-
-            deviceA.CreateAccount(accountA);
-            deviceB.CreateAccount(accountB);
+            CreateAliceBob(out var deviceA, out var deviceB);
 
             deviceA.Dispatch($"group create {accountGroup}");
             var result1 = Dispatch($"dare encode {filename} /encrypt {accountGroup}") as ResultFile;
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
 
-            deviceA.Dispatch($"group add {accountGroup} {accountB}");
+            deviceA.Dispatch($"group add {accountGroup} {AccountB}");
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}");
 
-            deviceA.Dispatch($"group delete {accountGroup} {accountB}");
+            deviceA.Dispatch($"group delete {accountGroup} {AccountB}");
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
             }

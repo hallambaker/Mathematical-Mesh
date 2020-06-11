@@ -27,7 +27,7 @@ namespace Scratchpad {
 
             //ShellTests.Test().TestMessageContactRemote();
 
-            ShellTests.Test().TestMessageContactBusinessCard();
+            ShellTests.Test().TestMessageContactBusinessCardFetch();
             //ShellTests.Test().TestMessageContactInPerson();
 
 

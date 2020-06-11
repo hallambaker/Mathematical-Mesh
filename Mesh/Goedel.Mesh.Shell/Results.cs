@@ -67,6 +67,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultList", ResultList._Factory},
 			{"ResultAccountConnect", ResultAccountConnect._Factory},
 			{"ResultPublish", ResultPublish._Factory},
+			{"ResultPublishDevice", ResultPublishDevice._Factory},
 			{"ResultCreateDevice", ResultCreateDevice._Factory},
 			{"ResultCreatePersonal", ResultCreatePersonal._Factory},
 			{"ResultCreateAccount", ResultCreateAccount._Factory},
@@ -88,6 +89,7 @@ namespace Goedel.Mesh.Shell {
 			{"ResultProcess", ResultProcess._Factory},
 			{"ResultConnect", ResultConnect._Factory},
 			{"ResultTransactionRequest", ResultTransactionRequest._Factory},
+			{"ResultConfirm", ResultConfirm._Factory},
 			{"ResultComplete", ResultComplete._Factory}			};
 
 		/// <summary>
@@ -1043,6 +1045,110 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
 
 		public virtual string						Uri  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResultPublish";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ResultPublish();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((ResultCreateDevice)this).SerializeX(_writer, false, ref _first);
+			if (Uri != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Uri", 1);
+					_writer.WriteString (Uri);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ResultPublish FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ResultPublish;
+				}
+		    var Result = new ResultPublish ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Uri" : {
+					Uri = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ResultPublishDevice : ResultCreateDevice {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Uri  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -1060,13 +1166,13 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "ResultPublish";
+		public new const string __Tag = "ResultPublishDevice";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultPublish();
+		public static new JSONObject _Factory () => new ResultPublishDevice();
 
 
         /// <summary>
@@ -1121,15 +1227,15 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultPublish FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultPublishDevice FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as ResultPublish;
+				return Out as ResultPublishDevice;
 				}
-		    var Result = new ResultPublish ();
+		    var Result = new ResultPublishDevice ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -3502,6 +3608,126 @@ namespace Goedel.Mesh.Shell {
 			switch (tag) {
 				case "Identifier" : {
 					Identifier = jsonReader.ReadString ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class ResultConfirm : Result {
+        /// <summary>
+        /// </summary>
+
+		public virtual string						Id  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual Message						Message  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "ResultConfirm";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new ResultConfirm();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((Result)this).SerializeX(_writer, false, ref _first);
+			if (Id != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
+				}
+			if (Message != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Message", 1);
+					Message.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new ResultConfirm FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as ResultConfirm;
+				}
+		    var Result = new ResultConfirm ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Id" : {
+					Id = jsonReader.ReadString ();
+					break;
+					}
+				case "Message" : {
+					// An untagged structure
+					Message = new Message ();
+					Message.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {

@@ -27,7 +27,7 @@ namespace Goedel.Mesh.Shell {
 
             devicePreconfiguration.ToFile(filename, tagged: true);
 
-            var result = new ResultPublish() {
+            var result = new ResultPublishDevice() {
                 Uri = connectUri,
                 ProfileDevice = profileDevice,
                 FileName = filename,
