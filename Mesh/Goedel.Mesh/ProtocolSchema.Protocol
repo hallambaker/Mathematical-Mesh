@@ -209,7 +209,7 @@
 		Description
 			|Request binding of an account to a service address.
 		Inherits MeshRequest
-		String ServiceID
+		String AccountAddress
 			Description
 				|The service account to bind to.
 		Struct DareEnvelope SignedProfileMesh
@@ -258,7 +258,7 @@
 
 	Message CompleteRequest
 		Inherits StatusRequest
-		String ServiceID
+		String AccountAddress
 		String ResponseID
 
 	Message CompleteResponse

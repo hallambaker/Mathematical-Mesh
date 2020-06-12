@@ -12,7 +12,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult EarlDevice(EarlDevice Options) {
+        public override ShellResult DevicePreconfigure(DevicePreconfigure Options) {
             using var contextAccount = GetContextAccount(Options);
 
             contextAccount.CreateDeviceEarl(

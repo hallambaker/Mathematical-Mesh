@@ -149,7 +149,7 @@ namespace Goedel.Mesh.Client {
 
             var completeRequest = new CompleteRequest() {
                 ResponseID = CatalogedPending.GetResponseID(),
-                ServiceID = AccountAddress
+                AccountAddress = AccountAddress
                 };
 
             var completeResponse = MeshClient.Complete(completeRequest);

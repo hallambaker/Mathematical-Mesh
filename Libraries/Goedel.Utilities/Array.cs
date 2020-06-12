@@ -109,7 +109,7 @@ namespace Goedel.Utilities {
                 dictionary.Add(key, value);
                 return true;
                 }
-            catch {
+            catch (System.ArgumentException) {
                 return false;
                 }
 

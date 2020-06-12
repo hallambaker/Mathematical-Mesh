@@ -28,7 +28,11 @@ namespace Goedel.Cryptography {
         /// <paramref name="secretValue"/>
         /// </summary>
         /// <param name="secretValue">The secret value.</param>
-        public CryptoKeySymmetric(byte[] secretValue) {
+        /// <param name="udfTypeIdentifier">The UDF type identifier to create. This
+        /// is either <see cref="UdfTypeIdentifier.Encryption"/> or
+        /// <see cref="UdfTypeIdentifier.EncryptionAuthentication"/></param>
+        public CryptoKeySymmetric(byte[] secretValue, 
+                    UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption) {
             SecretValue = secretValue;
             UDFBytes = UDF.SymetricKeyIdBytes(SecretValue); ;
             KeyIdentifier = UDF.SymetricKeyId(SecretValue);
@@ -67,8 +71,9 @@ namespace Goedel.Cryptography {
         /// <param name="encryptedKey">The encrypted session key</param>
         /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
         /// <param name="partial">Partial key agreement value (for recryption)</param>
-        /// <param name="salt">Optional salt value for use in key derivation. If specified
-        /// must match the salt used to encrypt.</param>
+        /// <param name="info">Optional info value for use in key derivation. If specified
+        /// must match the info value used to encrypt.</param>
+        /// <param name="algorithmID">The algorithm to use (redundant?)</param>
         /// <returns>The decoded data instance</returns>
         public override byte[] Decrypt(
                     byte[] encryptedKey,

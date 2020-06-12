@@ -561,7 +561,7 @@ namespace Goedel.Cryptography {
         /// <param name="text">The secret value in text form.</param>
         public KeyShareSymmetric(string text) {
             var buffer = UDF.Parse(text, out var code);
-            Assert.True(code == (byte)UDFTypeIdentifier.ShamirSecret);
+            Assert.True(code == (byte)UdfTypeIdentifier.ShamirSecret);
             Key = buffer;
             }
 

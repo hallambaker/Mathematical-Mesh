@@ -180,7 +180,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new CatalogedDevice Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as CatalogedDevice;
 
 
@@ -206,7 +206,7 @@ namespace Goedel.Mesh {
                 }
 
             foreach (var account in Accounts) {
-                if (account.ProfileAccount.MatchService(accountName) >= 0) {
+                if (account.ProfileAccount.MatchAccountAddress(accountName) >= 0) {
                     return account;
                     }
                 }
@@ -214,32 +214,6 @@ namespace Goedel.Mesh {
             return null;
             }
 
-
-
-        //public virtual void Activate(List<Permission> permission, Activation activation) {
-        //    }
-
-
-        //public virtual void ActivateAdmin(Assertion assertion) {
-
-        //    }
-
-
-        //public virtual void ActivateAccount(ProfileAccount assertionAccount, List<Permission> permission) {
-
-        //    }
-
-        //public virtual void ActivateSSH(Assertion assertion) {
-
-        //    }
-
-        //public virtual void ActivateMail(Assertion assertion) {
-
-        //    }
-
-        //public virtual void ActivateGroup(Assertion assertion) {
-
-        //    }
 
 
         /// <summary>

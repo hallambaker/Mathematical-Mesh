@@ -126,17 +126,16 @@ namespace Goedel.Test.Core {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="Account">The account to get.</param>
-        /// <param name="Service">The service to get the service from.</param> 
+        /// <param name="accountAddress">The account to get.</param>
         /// <returns>The service instance</returns>
-        public override MeshService GetService(string serviceID) {
-            if (serviceID == null) {
+        public override MeshService GetService(string accountAddress) {
+            if (accountAddress == null) {
                 return null;
                 }
 
-            serviceID.SplitAccountIDService(out var Service, out var Account);
+            //accountAddress.SplitAccountIDService(out var Service, out var Account);
 
-            var Session = new TestSession(this, MeshServiceHost, serviceID);
+            var Session = new TestSession(this, MeshServiceHost, accountAddress);
             MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }
@@ -151,11 +150,11 @@ namespace Goedel.Test.Core {
         /// Create a remote session with authentication under the
         /// specified credential.
         /// </summary>
-        /// <param name="Host">The host implementation</param>
+        /// <param name="host">The host implementation</param>
         /// <param name="Domain">Portal address</param>
         /// <param name="Account">User account</param>
         /// <param name="UDF">Authentication key identifier.</param>
-        public TestSession(MeshPortalTest meshPortalTest, JPCProvider Host, string serviceID) : base(Host, serviceID) {
+        public TestSession(MeshPortalTest meshPortalTest, JPCProvider host, string accountAddress) : base(host, accountAddress) {
 
 
             MeshPortalTest = meshPortalTest;
@@ -165,11 +164,11 @@ namespace Goedel.Test.Core {
         /// <summary>
         /// Post a request and retrieve the response.
         /// </summary>
-        /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream Data) {
+        public override Stream Post(MemoryStream data) {
             MeshPortalTest.MeshProtocolMessages ??=                 new List<Trace>();
-            var requestBytes = Data.ToArray();
+            var requestBytes = data.ToArray();
 
             var JSONReader = new JSONReader(requestBytes);
             var result = Host.Dispatch(this, JSONReader);

@@ -100,7 +100,7 @@ namespace ExampleGenerator {
 				_Output.Write ("{1}\n{0}", _Indent, Example.PublicKeyed25519.KeyInfoData.DER().ToStringBase16FormatHex());
 				_Output.Write ("~~~~\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("To encode this key as a UDF OID sequence we prepend the value {1}\n{0}", _Indent, UDFTypeIdentifier.OID);
+				_Output.Write ("To encode this key as a UDF OID sequence we prepend the value {1}\n{0}", _Indent, UdfTypeIdentifier.OID);
 				_Output.Write ("and convert to Base32:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("~~~~\n{0}", _Indent);

@@ -111,13 +111,13 @@ namespace Goedel.Protocol {
     public abstract class JpcSession {
 
         ///<summary>The service identifier (Account@Domain)</summary>
-        public string ServiceID;
+        public string AccountAddress;
 
 
-        ///<summary>The account portion of ServiceID</summary>
+        ///<summary>The account portion of <see cref="AccountAddress"/></summary>
         public string Account;
 
-        ///<summary>The domain portion of ServiceID</summary>
+        ///<summary>The domain portion of <see cref="AccountAddress"/></summary>
         public string Domain;
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Goedel.Protocol {
         /// VerifiedAccount instance describing the verified account details. 
         /// </summary>
         public virtual VerifiedAccount VerifiedAccount => !Authenticated ? null :
-            new VerifiedAccount() { AccountAddress = ServiceID };
+            new VerifiedAccount() { AccountAddress = AccountAddress };
 
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Goedel.Protocol {
         /// <param name="accountAddress">The name of the service (e.g. example.com) or an account 
         /// at the service (e.g. alice@example.com).</param>
         public JpcSession(string accountAddress) {
-            ServiceID = accountAddress;
+            AccountAddress = accountAddress;
             accountAddress.SplitAccountIDService(out Domain, out Account);
             }
 
@@ -170,8 +170,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="serviceID">The account name</param>
-        public DirectSession(string serviceID) : base(serviceID) => Authenticated = true;
+        /// <param name="accountAddress">The account name</param>
+        public DirectSession(string accountAddress) : base(accountAddress) => Authenticated = true;
 
 
         /// <summary>
@@ -198,8 +198,8 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Create a direct session for the specified account.
         /// </summary>
-        /// <param name="serviceID">The account name</param>
-        public JPCRemoteSession(string serviceID) : base(serviceID) {
+        /// <param name="accountAddress">The account name</param>
+        public JPCRemoteSession(string accountAddress) : base(accountAddress) {
             }
 
         /// <summary>
@@ -262,8 +262,8 @@ namespace Goedel.Protocol {
         /// specified credential.
         /// </summary>
         /// <param name="Host">The host implementation</param>
-        /// <param name="serviceID">The service account.</param>
-        public LocalRemoteSession(JPCProvider Host, string serviceID) : base(serviceID) =>
+        /// <param name="accountAddress">The service account.</param>
+        public LocalRemoteSession(JPCProvider Host, string accountAddress) : base(accountAddress) =>
                 this.Host = Host;
 
         /// <summary>

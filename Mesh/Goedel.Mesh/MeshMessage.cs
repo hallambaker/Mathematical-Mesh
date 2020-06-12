@@ -79,7 +79,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new Message Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as Message;
 
 
@@ -137,7 +137,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new MessageComplete Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as MessageComplete;
 
 
@@ -196,7 +196,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new AcknowledgeConnection Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as AcknowledgeConnection;
 
         }
@@ -291,7 +291,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new RequestConnection Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as RequestConnection;
 
 
@@ -329,7 +329,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new RespondConnection Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as RespondConnection;
 
         /// <summary>

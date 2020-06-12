@@ -237,7 +237,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>Context for administering the Mesh account via the service</returns>
         public ContextMeshPending Connect(
-                string serviceID,
+                string accountAddress,
                 string localName = null,
                 string PIN = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
@@ -248,7 +248,7 @@ namespace Goedel.Mesh.Client {
             algorithmEncrypt.Future();
             algorithmAuthenticate.Future();
 
-            return ContextMeshPending.ConnectService(this, serviceID, localName, PIN);
+            return ContextMeshPending.ConnectService(this, accountAddress, localName, PIN);
             }
 
         /// <summary>

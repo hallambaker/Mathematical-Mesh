@@ -103,8 +103,19 @@ namespace Goedel.Mesh {
         //=>
         //    Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
-
-        public CatalogedContact AddFromFile(string fileName, bool self = false) {
+        /// <summary>
+        /// Add the contact data specified in the file <paramref name="fileName"/>. If 
+        /// <paramref name="self"/> is true, register this as the self contact. If
+        /// <paramref name="merge"/> is true, merge this contact information.
+        /// </summary>
+        /// <param name="fileName">The file to fetch the contact data from.</param>
+        /// <param name="self">If true, contact data corresponds to this user.</param>
+        /// <param name="localName">Short name for the contact to distinguish it from
+        /// others.</param>
+        /// <param name="merge">Add this data to the existing contact.</param>
+        /// <returns></returns>
+        public CatalogedContact AddFromFile(
+                    string fileName, bool self = false, bool merge=true, string localName=null) {
             throw new NYI();
 
             }
@@ -154,7 +165,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new Contact Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as Contact;
 
 

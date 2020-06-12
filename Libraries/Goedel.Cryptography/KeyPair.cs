@@ -313,7 +313,8 @@ namespace Goedel.Cryptography {
 
 
         ///<summary>The raw UDF fingerprint.</summary>
-        public override byte[] UDFBytes => udfBytes ?? PKIXPublicKey.UDFBytes(512).CacheValue(out udfBytes);
+        public override byte[] UDFBytes => udfBytes ?? 
+                PKIXPublicKey.UDFBytes(512).CacheValue(out udfBytes);
         byte[] udfBytes = null;
 
 

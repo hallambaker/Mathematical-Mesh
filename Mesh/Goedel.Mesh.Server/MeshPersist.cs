@@ -624,7 +624,7 @@ namespace Goedel.Mesh.Server {
     public partial class AccountEntry {
 
         ///<summary>The primary key</summary>
-        public override string _PrimaryKey => ServiceID;
+        public override string _PrimaryKey => AccountAddress;
 
         ///<summary>Cached convenience accessor for <see cref="ProfileMesh"/></summary>
         public ProfileMesh ProfileMesh => profileMesh ??
@@ -647,11 +647,11 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="request">The account creation request.</param>
         public AccountEntry(CreateRequest request) {
-            ServiceID = request.ServiceID;
+            AccountAddress = request.AccountAddress;
             SignedProfileMesh = request.SignedProfileMesh;
             SignedAssertionAccount = request.SignedAssertionAccount;
             Verify();
-            Directory = ServiceID;
+            Directory = AccountAddress;
             }
 
         /// <summary>

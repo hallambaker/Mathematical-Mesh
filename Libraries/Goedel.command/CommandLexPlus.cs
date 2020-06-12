@@ -1,24 +1,6 @@
-﻿
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System;
-After:
-using Goedel.FSR;
-using Goedel.Utilities;
-
-using System;
-*/
-using Goedel.FSR;
-
+﻿using Goedel.FSR;
 using System.Text;
-/* Unmerged change from project 'Goedel.Command'
-Before:
-using System.Threading.Tasks;
-using Goedel.Utilities;
-using Goedel.FSR;
-After:
-using System.Threading.Tasks;
-*/
+
 
 
 namespace Goedel.Command {

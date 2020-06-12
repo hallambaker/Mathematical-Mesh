@@ -35,7 +35,7 @@
 			Brief "Report output in JSON format"
 
 	OptionSet AccountOptions
-		Option ServiceID "account" String
+		Option AccountAddress "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
 
 	OptionSet DeviceProfileInfo
@@ -311,7 +311,7 @@
 
 		Command DeviceRequestConnect "request"
 			Brief "Connect to an existing profile registered at a portal"
-			Parameter ServiceID "account" String
+			Parameter AccountAddress "account" String
 				Brief "The Mesh Service Account"
 			Option PIN "pin" String
 				Brief "One time use authenticator"
@@ -381,6 +381,11 @@
 			Parameter Profile "in" String
 				Brief "The device profile"			
 			
+			Include AccountOptions
+			Include Reporting
+
+		Command DevicePreconfigure "preconfig"
+			Brief "Generate new device profile and publish as an EARL"
 			Include AccountOptions
 			Include Reporting
 
@@ -653,10 +658,33 @@
 		Brief "Manage contact catalogs connected to an account"
 
 		Command ContactSelf "self"
-			Brief "Add contact entry for self"
+			Brief "Update contact entry for self"
 			Option File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
+
+		Command ContactStatic "static"
+			Brief "Create static contact retrieval URI"
+			Include AccountOptions
+			Include Reporting
+
+		Command ContactDynamic "dynamic"
+			Brief "Create dynamic contact retrieval URI"
+			Include AccountOptions
+			Include Reporting
+
+		Command ContactFetch "fetch"
+			Brief "Request contact from URI without presenting own contact"
+			Parameter Uri "uri" String			
+			Include AccountOptions
+			Include Reporting
+
+		Command ContactExchange "exchange"
+			Brief "Request contact from URI presenting own contact"
+			Parameter Uri "uri" String			
+			Include AccountOptions
+			Include Reporting
+
 
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
@@ -882,19 +910,6 @@
 				Brief "Expected value"		
 			Parameter Input "in" ExistingFile
 				Brief "File to create commitment of"
-
-
-	CommandSet Earl "earl"
-		Brief "Publish encrypted content as an EARL"
-		Command EarlDevice "device"
-			Brief "Generate new device profile and publish as an EARL"
-			Include AccountOptions
-			Include Reporting
-
-		Command EarlContact "conract"
-			Brief "Publish contact information as an EARL"
-			Include AccountOptions
-			Include Reporting
 
 
 	CommandSet Dare "dare"

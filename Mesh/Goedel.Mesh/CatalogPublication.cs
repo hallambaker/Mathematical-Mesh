@@ -156,7 +156,7 @@ namespace Goedel.Mesh {
         /// <param name="length">The minimum match length (default is 125 bits)</param>
         /// <returns>The authenticator value</returns>
         public static bool Verify(string account, string key, string value, int length) =>
-            UDF.SymmetricKeyVerifyMac(account.ToUTF8(), key, value, length,
+            UDF.SymmetricKeyVerifyMac(value, account.ToUTF8(), key, length,
                 algorithm: CryptoAlgorithmId.HMAC_SHA_2_512);
 
 

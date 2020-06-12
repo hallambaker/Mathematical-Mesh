@@ -16,7 +16,7 @@
 		String Directory
 			Description
 				|Subdirectory containing the catalogs and spools for the account.
-		String ServiceID
+		String AccountAddress
 			Description
 				|The service account to bind to.
 		Struct DareEnvelope SignedProfileMesh

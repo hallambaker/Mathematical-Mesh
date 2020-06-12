@@ -161,7 +161,7 @@
             Subdirectory containing the catalogs and spools for the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountEntry.ServiceID">
+        <member name="P:Goedel.Mesh.Server.AccountEntry.AccountAddress">
              <summary>
             The service account to bind to.
              </summary>
@@ -615,7 +615,7 @@
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="serviceID">The account to get.</param>
+            <param name="accountAddress">The account to get.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.MeshPortalLocal">
             <summary>
@@ -634,7 +634,7 @@
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="serviceID">The account to get.</param>
+            <param name="accountAddress">The account to get.</param>
         </member>
         <member name="T:Goedel.Mesh.Server.NamespaceDoc">
             <summary>

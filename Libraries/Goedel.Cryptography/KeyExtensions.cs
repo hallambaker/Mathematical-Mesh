@@ -14,11 +14,13 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="key">The key to calculate the fingerprint of</param>
         /// <param name="bits">Precision, must be a multiple of 25 bits.</param>
+        /// <param name="cryptoAlgorithmID">The digest algorithm to use.</param>
         /// <returns>The binary fingerprint value</returns>
-        public static byte[] UDFBytes(this IPKIXPublicKey key, int bits = 0) {
+        public static byte[] UDFBytes(this IPKIXPublicKey key, int bits = 0,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.SHA_2_512) {
             var data = key.SubjectPublicKeyInfo().DER();
 
-            return Cryptography.UDF.FromKeyInfo(data, bits);
+            return Cryptography.UDF.FromKeyInfo(data, bits, cryptoAlgorithmID);
             }
 
 

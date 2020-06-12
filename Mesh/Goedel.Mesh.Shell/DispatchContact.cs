@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Goedel.Utilities;
+using System.Collections.Generic;
+using System;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -12,6 +14,8 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var file = Options.File.Value;
 
+            false.AssertTrue(String: "Need to merge in the self contact info and label with a name.");
+
             using var catalog = contextAccount.GetCatalogContact();
             var entry = catalog.AddFromFile(file, self: true);
 
@@ -21,7 +25,76 @@ namespace Goedel.Mesh.Shell {
                 };
             }
 
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactStatic(ContactStatic Options) {
+            using var contextAccount = GetContextAccount(Options);
 
+
+            var uri = contextAccount.ContactUriStatic(null);
+
+            var result = new ResultPublish() {
+                Success = true,
+                Uri = uri
+                };
+            return result;
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactDynamic(ContactDynamic Options) {
+            using var contextAccount = GetContextAccount(Options);
+            var expiry = DateTime.Now.AddTicks(Constants.DayInTicks);
+
+            var uri = contextAccount.ContactUriStatic(expiry);
+
+            var result = new ResultPublish() {
+                Success = true,
+                Uri = uri
+                };
+            return result;
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactExchange(ContactExchange Options) {
+            using var contextAccount = GetContextAccount(Options);
+            var recipient = Options.Uri.Value;
+
+            var entry = contextAccount.ContactExchange(recipient, true);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
+            }
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactFetch(ContactFetch Options) {
+            using var contextAccount = GetContextAccount(Options);
+            var recipient = Options.Uri.Value;
+
+            var entry = contextAccount.ContactExchange(recipient, false);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
+
+            }
 
         /// <summary>
         /// Dispatch method

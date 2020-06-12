@@ -9,11 +9,11 @@ namespace Goedel.Mesh.Client {
         MeshHost MeshHost { get; }
 
         /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="serviceID"/>
+        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>
         /// using the authentication key <paramref name="keyAuthentication"/> and credential
         /// <paramref name="assertionAccountConnection"/>. 
         /// </summary>
-        /// <param name="serviceID">The service identifier to connect to.</param>
+        /// <param name="accountAddress">The service identifier to connect to.</param>
         /// <param name="keyAuthentication">The private key to be used for authentication
         /// (encryption).</param>
         /// <param name="assertionAccountConnection">The credential binding the device
@@ -23,9 +23,9 @@ namespace Goedel.Mesh.Client {
         /// otherwise.</param>
         /// <returns></returns>
         MeshService GetMeshClient(
-                string serviceID,
-            KeyPair keyAuthentication,
-            ConnectionAccount assertionAccountConnection,
-            Profile profile = null);
+                string accountAddress,
+                KeyPair keyAuthentication,
+                ConnectionAccount assertionAccountConnection,
+                Profile profile = null);
         }
     }

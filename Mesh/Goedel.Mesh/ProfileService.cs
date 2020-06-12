@@ -72,7 +72,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new ProfileService Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as ProfileService;
 
 

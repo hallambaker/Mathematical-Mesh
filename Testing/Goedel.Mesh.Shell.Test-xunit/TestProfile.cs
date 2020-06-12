@@ -170,7 +170,7 @@ namespace Goedel.XUnit {
             var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 
             deviceQ.Dispatch($"mesh create /service={AccountQ}");
-            var deviceInit = deviceQ.Dispatch($"earl device") as ResultPublishDevice;
+            var deviceInit = deviceQ.Dispatch($"device preconfig") as ResultPublishDevice;
 
 
             deviceConnect1.Dispatch($"device install {deviceInit.FileName}");

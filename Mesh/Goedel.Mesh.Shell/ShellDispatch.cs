@@ -94,7 +94,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             if (options is IAccountOptions AccountOptions) {
-                MeshID = AccountOptions.ServiceID.Value;
+                MeshID = AccountOptions.AccountAddress .Value;
                 }
 
             if (options is ICryptoOptions CryptoOptions) {
@@ -193,9 +193,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">Options specifying the Mesh account id to bind to.</param>
         /// <returns>The Mesh Client.</returns>
         public virtual MeshService GetMeshClient(IAccountOptions options) {
-            var serviceID = options.ServiceID.Value;
+            var accountAddress = options.AccountAddress .Value;
 
-            return MeshMachine.GetMeshClient(serviceID, null, null);
+            return MeshMachine.GetMeshClient(accountAddress, null, null);
 
             }
 

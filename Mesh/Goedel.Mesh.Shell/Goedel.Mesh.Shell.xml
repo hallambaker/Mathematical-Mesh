@@ -136,6 +136,34 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactStatic(Goedel.Mesh.Shell.ContactStatic)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactDynamic(Goedel.Mesh.Shell.ContactDynamic)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactExchange(Goedel.Mesh.Shell.ContactExchange)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactFetch(Goedel.Mesh.Shell.ContactFetch)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactAdd(Goedel.Mesh.Shell.ContactAdd)">
             <summary>
             Dispatch method
@@ -318,7 +346,7 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.EarlDevice(Goedel.Mesh.Shell.EarlDevice)">
+        <member name="M:Goedel.Mesh.Shell.Shell.DevicePreconfigure(Goedel.Mesh.Shell.DevicePreconfigure)">
             <summary>
             Dispatch method
             </summary>
@@ -1197,7 +1225,7 @@
         <member name="P:Goedel.Mesh.Shell._MeshImport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountHello.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountHello.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.NewAccountID">
@@ -1221,7 +1249,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountStatus.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountStatus.EnumReporting">
@@ -1236,7 +1264,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountStatus.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountSync.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountSync.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountSync.EnumReporting">
@@ -1269,7 +1297,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountRegister.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountRegister.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountRegister.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRegister.MasterUDF">
@@ -1293,7 +1321,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Expire">
             <summary>Field accessor for option [expire]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountGetPIN.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.EnumReporting">
@@ -1308,7 +1336,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountGetPIN.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountInvite.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountInvite.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountInvite.EnumReporting">
@@ -1323,7 +1351,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountInvite.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountPublish.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountPublish.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountPublish.EnumReporting">
@@ -1341,7 +1369,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Uri">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountConnect.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._AccountConnect.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.EnumReporting">
@@ -1356,7 +1384,7 @@
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AccountAddress">
             <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.PIN">
@@ -1419,7 +1447,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DevicePending.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DevicePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DevicePending.EnumReporting">
@@ -1434,7 +1462,7 @@
         <member name="P:Goedel.Mesh.Shell._DevicePending.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceComplete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceComplete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceComplete.EnumReporting">
@@ -1488,7 +1516,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAccept.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceAccept.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAccept.EnumReporting">
@@ -1506,7 +1534,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceReject.CompletionCode">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceReject.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceReject.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceReject.EnumReporting">
@@ -1524,7 +1552,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.DeviceID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.EnumReporting">
@@ -1539,7 +1567,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceList.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceList.EnumReporting">
@@ -1593,7 +1621,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AuthSSH">
             <summary>Field accessor for option [ssh]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceAuthorize.EnumReporting">
@@ -1611,7 +1639,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.Uri">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceJoin.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceJoin.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceJoin.EnumReporting">
@@ -1629,7 +1657,7 @@
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.Profile">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DeviceInstall.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DeviceInstall.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.EnumReporting">
@@ -1644,10 +1672,25 @@
         <member name="P:Goedel.Mesh.Shell._DeviceInstall.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DevicePreconfigure.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.Recipient">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageContact.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageContact.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageContact.EnumReporting">
@@ -1668,7 +1711,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.Text">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageConfirm.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageConfirm.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.EnumReporting">
@@ -1683,7 +1726,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageConfirm.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessagePending.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessagePending.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessagePending.EnumReporting">
@@ -1701,7 +1744,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageStatus.RequestID">
             <summary>Field accessor for option [requestid]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageStatus.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageStatus.EnumReporting">
@@ -1719,7 +1762,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageAccept.RequestID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageAccept.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageAccept.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageAccept.EnumReporting">
@@ -1737,7 +1780,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageReject.RequestID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageReject.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageReject.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageReject.EnumReporting">
@@ -1755,7 +1798,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageBlock.RequestID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MessageBlock.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MessageBlock.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MessageBlock.EnumReporting">
@@ -1770,7 +1813,7 @@
         <member name="P:Goedel.Mesh.Shell._MessageBlock.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupCreate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._GroupCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupCreate.EnumReporting">
@@ -1791,7 +1834,7 @@
         <member name="P:Goedel.Mesh.Shell._GroupCreate.GroupID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._GroupAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupAdd.EnumReporting">
@@ -1812,7 +1855,7 @@
         <member name="P:Goedel.Mesh.Shell._GroupAdd.MemberID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._GroupGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupGet.EnumReporting">
@@ -1833,7 +1876,7 @@
         <member name="P:Goedel.Mesh.Shell._GroupGet.MemberID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._GroupDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupDelete.EnumReporting">
@@ -1854,7 +1897,7 @@
         <member name="P:Goedel.Mesh.Shell._GroupDelete.MemberID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._GroupList.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._GroupList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._GroupList.EnumReporting">
@@ -1875,7 +1918,7 @@
         <member name="P:Goedel.Mesh.Shell._MailAdd.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MailAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailAdd.EnumReporting">
@@ -1914,7 +1957,7 @@
         <member name="P:Goedel.Mesh.Shell._MailUpdate.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailUpdate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MailUpdate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailUpdate.EnumReporting">
@@ -1929,7 +1972,7 @@
         <member name="P:Goedel.Mesh.Shell._MailUpdate.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.EnumReporting">
@@ -1956,7 +1999,7 @@
         <member name="P:Goedel.Mesh.Shell._SMIMEPrivate.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SMIMEPublic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SMIMEPublic.EnumReporting">
@@ -1980,7 +2023,7 @@
         <member name="P:Goedel.Mesh.Shell._SMIMEPublic.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPrivate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PGPPrivate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PGPPrivate.EnumReporting">
@@ -2007,7 +2050,7 @@
         <member name="P:Goedel.Mesh.Shell._PGPPrivate.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PGPPublic.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PGPPublic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PGPPublic.EnumReporting">
@@ -2031,7 +2074,7 @@
         <member name="P:Goedel.Mesh.Shell._PGPPublic.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MailList.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._MailList.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MailList.EnumReporting">
@@ -2049,7 +2092,7 @@
         <member name="P:Goedel.Mesh.Shell._MailList.Address">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHCreate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHCreate.EnumReporting">
@@ -2073,7 +2116,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHCreate.ID">
             <summary>Field accessor for option [id]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPrivate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHPrivate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.EnumReporting">
@@ -2097,7 +2140,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHPrivate.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHPublic.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHPublic.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHPublic.EnumReporting">
@@ -2118,7 +2161,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHPublic.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.EnumReporting">
@@ -2139,7 +2182,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHMergeKnown.File">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddHost.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHAddHost.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.EnumReporting">
@@ -2157,7 +2200,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHAddHost.Application">
             <summary>Field accessor for option [application]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAddClient.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHAddClient.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.EnumReporting">
@@ -2178,7 +2221,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHAddClient.File">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHKnown.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHKnown.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHKnown.EnumReporting">
@@ -2196,7 +2239,7 @@
         <member name="P:Goedel.Mesh.Shell._SSHKnown.Application">
             <summary>Field accessor for option [application]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._SSHAuth.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._SSHAuth.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._SSHAuth.EnumReporting">
@@ -2223,7 +2266,7 @@
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.Password">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PasswordAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordAdd.EnumReporting">
@@ -2241,7 +2284,7 @@
         <member name="P:Goedel.Mesh.Shell._PasswordGet.Site">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PasswordGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordGet.EnumReporting">
@@ -2259,7 +2302,7 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.Site">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PasswordDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDelete.EnumReporting">
@@ -2277,7 +2320,7 @@
         <member name="P:Goedel.Mesh.Shell._PasswordDump.Site">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._PasswordDump.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._PasswordDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._PasswordDump.EnumReporting">
@@ -2295,7 +2338,7 @@
         <member name="P:Goedel.Mesh.Shell._ContactSelf.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactSelf.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContactSelf.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactSelf.EnumReporting">
@@ -2310,10 +2353,76 @@
         <member name="P:Goedel.Mesh.Shell._ContactSelf.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactStatic.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactDynamic.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.Uri">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactFetch.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.Uri">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExchange.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.File">
             <summary>Field accessor for option [file]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContactAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.EnumReporting">
@@ -2331,7 +2440,7 @@
         <member name="P:Goedel.Mesh.Shell._ContactDelete.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContactDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDelete.EnumReporting">
@@ -2349,7 +2458,7 @@
         <member name="P:Goedel.Mesh.Shell._ContactGet.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContactGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactGet.EnumReporting">
@@ -2367,7 +2476,7 @@
         <member name="P:Goedel.Mesh.Shell._ContactGet.Encrypt">
             <summary>Field accessor for option [encrypt]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContactDump.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContactDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactDump.EnumReporting">
@@ -2391,7 +2500,7 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.Title">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._BookmarkAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkAdd.EnumReporting">
@@ -2412,7 +2521,7 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.Path">
             <summary>Field accessor for option [path]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._BookmarkDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDelete.EnumReporting">
@@ -2430,7 +2539,7 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._BookmarkGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.EnumReporting">
@@ -2445,7 +2554,7 @@
         <member name="P:Goedel.Mesh.Shell._BookmarkGet.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._BookmarkDump.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._BookmarkDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._BookmarkDump.EnumReporting">
@@ -2466,7 +2575,7 @@
         <member name="P:Goedel.Mesh.Shell._CalendarImport.Identifier">
             <summary>Field accessor for option [id]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarImport.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._CalendarImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarImport.EnumReporting">
@@ -2487,7 +2596,7 @@
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.Identifier">
             <summary>Field accessor for option [id]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._CalendarAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarAdd.EnumReporting">
@@ -2505,7 +2614,7 @@
         <member name="P:Goedel.Mesh.Shell._CalendarGet.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._CalendarGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarGet.EnumReporting">
@@ -2523,7 +2632,7 @@
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._CalendarDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.EnumReporting">
@@ -2538,7 +2647,7 @@
         <member name="P:Goedel.Mesh.Shell._CalendarDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._CalendarDump.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._CalendarDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._CalendarDump.EnumReporting">
@@ -2559,7 +2668,7 @@
         <member name="P:Goedel.Mesh.Shell._NetworkImport.Identifier">
             <summary>Field accessor for option [id]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkImport.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._NetworkImport.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkImport.EnumReporting">
@@ -2580,7 +2689,7 @@
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.Password">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkAdd.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._NetworkAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkAdd.EnumReporting">
@@ -2598,7 +2707,7 @@
         <member name="P:Goedel.Mesh.Shell._NetworkGet.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkGet.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._NetworkGet.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkGet.EnumReporting">
@@ -2616,7 +2725,7 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.Identifier">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDelete.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._NetworkDelete.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.EnumReporting">
@@ -2631,7 +2740,7 @@
         <member name="P:Goedel.Mesh.Shell._NetworkDelete.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._NetworkDump.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._NetworkDump.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._NetworkDump.EnumReporting">
@@ -2832,36 +2941,6 @@
         <member name="P:Goedel.Mesh.Shell._HashMac.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._EarlDevice.ServiceID">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlDevice.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlDevice.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlDevice.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlDevice.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlContact.ServiceID">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlContact.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlContact.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlContact.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._EarlContact.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
@@ -2880,7 +2959,7 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEncode.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DareEncode.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareEncode.EnumReporting">
@@ -2904,7 +2983,7 @@
         <member name="P:Goedel.Mesh.Shell._DareEncode.SymmetrictKey">
             <summary>Field accessor for option [key]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareDecode.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DareDecode.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareDecode.EnumReporting">
@@ -2928,7 +3007,7 @@
         <member name="P:Goedel.Mesh.Shell._DareDecode.SymmetrictKey">
             <summary>Field accessor for option [key]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareVerify.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DareVerify.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareVerify.EnumReporting">
@@ -2967,7 +3046,7 @@
         <member name="P:Goedel.Mesh.Shell._DareEARL.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._DareEARL.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.EnumReporting">
@@ -3006,7 +3085,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerCreate.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerCreate.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerCreate.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerCreate.EnumReporting">
@@ -3039,7 +3118,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerArchive.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerArchive.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerArchive.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerArchive.EnumReporting">
@@ -3084,7 +3163,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerAppend.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerAppend.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerAppend.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerAppend.EnumReporting">
@@ -3132,7 +3211,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerIndex.Algorithms">
             <summary>Field accessor for option [alg]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerIndex.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerIndex.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerIndex.EnumReporting">
@@ -3165,7 +3244,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerExtract.Key">
             <summary>Field accessor for option [key]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerExtract.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerExtract.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerExtract.EnumReporting">
@@ -3210,7 +3289,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerCopy.EnumUse">
             <summary>Field accessor for parameter [use]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerCopy.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerCopy.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerCopy.EnumReporting">
@@ -3234,7 +3313,7 @@
         <member name="P:Goedel.Mesh.Shell._ContainerCopy.Purge">
             <summary>Field accessor for option [purge]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._ContainerVerify.ServiceID">
+        <member name="P:Goedel.Mesh.Shell._ContainerVerify.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContainerVerify.EnumReporting">
@@ -4136,7 +4215,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultRegisterService.ServiceID">
+        <member name="P:Goedel.Mesh.Shell.ResultRegisterService.AccountAddress">
             <summary>
             </summary>
         </member>

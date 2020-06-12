@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Shell {
 
             return new ResultRegisterService() {
                 Success = true,
-                ServiceID = contextAccount.AccountAddress,
+                AccountAddress = contextAccount.AccountAddress,
                 ActivationAccount = contextAccount.ActivationAccount,
                 ProfileAccount = contextAccount.ProfileAccount
                 };

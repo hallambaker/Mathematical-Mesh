@@ -76,9 +76,9 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="serviceID">The account to get.</param>
-        public override MeshService GetService(string serviceID) {
-            var Session = new DirectSession(serviceID);
+        /// <param name="accountAddress">The account to get.</param>
+        public override MeshService GetService(string accountAddress) {
+            var Session = new DirectSession(accountAddress);
             MeshServiceClient = new PublicMeshService(MeshServiceHost, Session);
             return MeshServiceClient;
             }
@@ -110,9 +110,9 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="serviceID">The account to get.</param>
-        public override MeshService GetService(string serviceID) {
-            var Session = new LocalRemoteSession(MeshServiceHost, serviceID);
+        /// <param name="accountAddress">The account to get.</param>
+        public override MeshService GetService(string accountAddress) {
+            var Session = new LocalRemoteSession(MeshServiceHost, accountAddress);
             MeshServiceClient = new MeshServiceClient(Session);
             return MeshServiceClient;
             }

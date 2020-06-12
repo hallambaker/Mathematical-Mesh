@@ -92,7 +92,7 @@ namespace Goedel.Mesh.Server {
         ///The service account to bind to.
         /// </summary>
 
-		public virtual string						ServiceID  {get; set;}
+		public virtual string						AccountAddress  {get; set;}
         /// <summary>
         ///The persistent profile that will be used to validate changes to the
         ///account assertion.
@@ -157,10 +157,10 @@ namespace Goedel.Mesh.Server {
 				_writer.WriteToken ("Directory", 1);
 					_writer.WriteString (Directory);
 				}
-			if (ServiceID != null) {
+			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
-					_writer.WriteString (ServiceID);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
 				}
 			if (SignedProfileMesh != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -214,8 +214,8 @@ namespace Goedel.Mesh.Server {
 					Directory = jsonReader.ReadString ();
 					break;
 					}
-				case "ServiceID" : {
-					ServiceID = jsonReader.ReadString ();
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
 				case "SignedProfileMesh" : {

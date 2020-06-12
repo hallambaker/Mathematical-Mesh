@@ -156,12 +156,12 @@ namespace Goedel.Mesh {
                     }
                 }
             if (AccountAddresses != null) {
-                foreach (var serviceID in AccountAddresses) {
-                    builder.AppendIndent(indent, $"ServiceID : {serviceID} ");
+                foreach (var accountAddress in AccountAddresses) {
+                    builder.AppendIndent(indent, $"AccountAddress : {accountAddress} ");
                     }
                 }
             else {
-                builder.AppendIndent(indent, $"ServiceID : [None]");
+                builder.AppendIndent(indent, $"AccountAddress : [None]");
                 }
             builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
 
@@ -174,7 +174,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new ProfileAccount Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as ProfileAccount;
 
 
@@ -184,12 +184,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="service"></param>
         /// <returns></returns>
-        public int MatchService(string service) {
+        public int MatchAccountAddress(string service) {
             int id = 0;
 
-            foreach (var serviceID in AccountAddresses) {
+            foreach (var accountAddress in AccountAddresses) {
 
-                if (service == serviceID) {
+                if (service == accountAddress) {
                     return id;
                     }
                 id++;
@@ -275,7 +275,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new ActivationAccount Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as ActivationAccount;
 
 
@@ -342,7 +342,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new ConnectionAccount Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as ConnectionAccount;
 
 

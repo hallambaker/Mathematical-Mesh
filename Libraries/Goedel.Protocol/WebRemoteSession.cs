@@ -43,20 +43,20 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="domain">Domain</param>
         /// <param name="service">The IANA Well Known service identifier</param>
-        /// <param name="serviceID">Account name</param>
+        /// <param name="accountAddress">Account name</param>
         /// <param name="UDF">Fingerprint of authentication key.</param>
-        public WebRemoteSession(string domain, string service, string serviceID = null, string UDF = null) : base(serviceID) {
-            this.ServiceID = serviceID;
+        public WebRemoteSession(string domain, string service, string accountAddress = null, string UDF = null) : base(accountAddress) {
+            AccountAddress = accountAddress;
 
             if (domain == null) {
                 URI = "http://127.0.0.1:80/.well-known/"; // + Service + "/";
-                this.Domain = null;
+                Domain = null;
                 }
             else {
                 ServiceDescription = DNSClient.ResolveService(domain, Service: service);
                 var Host = ServiceDescription.Next();
                 URI = Host.HTTPEndpoint;
-                this.Domain = Host.Address;
+                Domain = Host.Address;
                 }
             }
 

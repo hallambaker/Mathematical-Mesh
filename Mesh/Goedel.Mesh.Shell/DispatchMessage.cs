@@ -22,6 +22,7 @@ namespace Goedel.Mesh.Shell {
                 };
             return result;
             }
+
         /// <summary>
         /// Dispatch method
         /// </summary>

@@ -2074,7 +2074,7 @@ namespace Goedel.Mesh {
         ///The service account to bind to.
         /// </summary>
 
-		public virtual string						ServiceID  {get; set;}
+		public virtual string						AccountAddress  {get; set;}
         /// <summary>
         ///The persistent profile that will be used to validate changes to the
         ///account assertion.
@@ -2130,10 +2130,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_writer, false, ref _first);
-			if (ServiceID != null) {
+			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
-					_writer.WriteString (ServiceID);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
 				}
 			if (SignedProfileMesh != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -2178,8 +2178,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceID" : {
-					ServiceID = jsonReader.ReadString ();
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
 				case "SignedProfileMesh" : {
@@ -2523,7 +2523,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual string						ServiceID  {get; set;}
+		public virtual string						AccountAddress  {get; set;}
         /// <summary>
         /// </summary>
 
@@ -2572,10 +2572,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((StatusRequest)this).SerializeX(_writer, false, ref _first);
-			if (ServiceID != null) {
+			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
-					_writer.WriteString (ServiceID);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
 				}
 			if (ResponseID != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -2615,8 +2615,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceID" : {
-					ServiceID = jsonReader.ReadString ();
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
 				case "ResponseID" : {

@@ -99,16 +99,16 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="contextMesh">The Mesh context to which this account belongs.</param>
         /// <param name="accountEntry">The account entry within the device catalog entry.</param>
-        /// <param name="serviceID">The account service identifier.</param>
+        /// <param name="accountAddress">The account service identifier.</param>
         public ContextAccount(
                     ContextMesh contextMesh,
                     AccountEntry accountEntry,
-                    string serviceID = null
+                    string accountAddress = null
                     ) {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
-            AccountAddress = serviceID ?? AccountEntry.ProfileAccount?.ServiceDefault;
+            this.AccountAddress = accountAddress ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
             var activationKey = ActivationAccount.ActivationKey;
             keySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
@@ -126,12 +126,12 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Returns a Mesh service client for <paramref name="serviceID"/>.
+        /// Returns a Mesh service client for <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="serviceID">The account service identifier.</param>
+        /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
-        protected MeshService GetMeshClient(string serviceID) =>
-                    MeshMachine.GetMeshClient(serviceID, KeyAuthentication,
+        protected MeshService GetMeshClient(string accountAddress) =>
+                    MeshMachine.GetMeshClient(accountAddress, KeyAuthentication,
                 ConnectionAccount, ContextMesh.ProfileMesh);
 
         /// <summary>
@@ -147,23 +147,23 @@ namespace Goedel.Mesh.Client {
 
         /// <summary>
         /// Add service to the account. A request is issued to the service name corresponding to
-        /// <paramref name="serviceID"/>. If this is successful, the account context is updated to
+        /// <paramref name="accountAddress"/>. If this is successful, the account context is updated to
         /// include the newly created account. If the <paramref name="sync"/> parameter is true,
         /// the client also attempts to synchronize to the service.
         /// </summary>
-        /// <param name="serviceID">The account service identifier.</param>
+        /// <param name="accountAddress">The account service identifier.</param>
         /// <param name="sync">If true, the client attempts to synchronize the device to the service.</param>
         public void AddService(
-                string serviceID,
+                string accountAddress,
                 bool sync = true) {
             // Add to assertion
             ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
-            ProfileAccount.AccountAddresses.Add(serviceID);
+            ProfileAccount.AccountAddresses.Add(accountAddress);
             ContextMeshAdmin.Sign(ProfileAccount);
-            AccountAddress = serviceID;
+            this.AccountAddress = accountAddress;
 
             var createRequest = new CreateRequest() {
-                ServiceID = serviceID,
+                AccountAddress = accountAddress,
                 SignedAssertionAccount = ProfileAccount.DareEnvelope,
                 SignedProfileMesh = ContextMesh.ProfileMesh.DareEnvelope
                 };
@@ -1046,7 +1046,7 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Generalized processing loop for messages
         /// </summary>
-        /// <param name="meshMessage">The message to process.</param>
+        /// <param name="messageId">Identifier of the message to process.</param>
         /// <param name="accept">If true, accept the request, otherwise reject it.</param>
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
@@ -1077,7 +1077,7 @@ namespace Goedel.Mesh.Client {
 
             switch (meshMessage) {
                 case AcknowledgeConnection connection: {
-                    return Process(connection, accept) ;
+                    return Process(connection, accept);
                     }
                 case ReplyContact replyContact: {
                     replyContact.Future();
@@ -1144,6 +1144,8 @@ namespace Goedel.Mesh.Client {
         /// Make a contact reply.
         /// </summary>
         /// <param name="requestContact">The contact request.</param>
+        /// <param name="localname">Local name to be used to identify the contact recorded in
+        /// the catalog.</param>
         public IProcessResult ContactReply(RequestContact requestContact, string localname = null) {
 
             // Add the requestContact.Self contact to the catalog
@@ -1174,11 +1176,11 @@ namespace Goedel.Mesh.Client {
         /// Get the user's own contact. There is only ever one contact entry but there MAY
         /// be multiple envelopes 
         /// </summary>
-        /// <param name="localName"></param>
+        /// <param name="localName">Local name for the contact</param>
         /// <returns></returns>
         public DareEnvelope GetSelf(string localName) {
             var catalog = GetCatalogContact();
-            var entry = catalog.PersistenceStore.Get(ProfileAccount.UDF) ;
+            var entry = catalog.PersistenceStore.Get(ProfileAccount.UDF);
 
             var self = entry.JsonObject as CatalogedContact;
 
@@ -1197,23 +1199,64 @@ namespace Goedel.Mesh.Client {
             }
 
 
+
+        /// <summary>
+        /// Construct a contact fetch URI.
+        /// </summary>
+        /// <param name="localName">Local name for the contact</param>
+        /// <param name="expire">Expiry time for the corresponding PIN</param>
+        public string ContactUriStatic(DateTime? expire, string localName = null) {
+            var envelope = GetSelf(localName);
+
+            // Generate a new UDF signing key and locator.
+            (var encryptionKey, var signatureKey) = UDF.DeriveKey();
+            var pin = encryptionKey.KeyIdentifier;
+
+            // Add a signature under the signature key.
+            var encryptedContact = DareEnvelope.Encode(envelope.GetBytes(),
+                    signingKey: signatureKey, encryptionKey: encryptionKey);
+
+            // publish the enveloped contact to the service.
+            var catalogedPublication = new CatalogedPublication(pin) {
+                EnvelopedData = encryptedContact,
+                NotOnOrAfter = expire
+                };
+
+            var publishRequest = new PublishRequest() {
+                Publications = new List<CatalogedPublication>() { catalogedPublication },
+
+                };
+
+            var publishResponse = MeshClient.Publish(publishRequest);
+            publishResponse.Success().AssertTrue();
+
+            // Register the pin
+            false.AssertTrue();
+
+            // return the contact address
+            return MeshUri.ConnectUri(AccountAddress, pin);
+            }
+
+
+
         /// <summary>
         /// Construct a contact request.
         /// </summary>
-        /// <param name="serviceID">The contact to request.</param>
-        public RequestContact ContactRequest(string serviceID, string localname=null) {
+        /// <param name="recipientAddress">The contact to request.</param>
+        /// <param name="localName">Local name for the contact</param>
+        public RequestContact ContactRequest(string recipientAddress, string localName = null) {
             // prepare the contact request
 
-            var contactSelf = GetSelf(localname);
+            var contactSelf = GetSelf(localName);
 
             var message = new RequestContact() {
-                Recipient = serviceID,
-                Subject = serviceID,
+                Recipient = recipientAddress,
+                Subject = recipientAddress,
                 Self = contactSelf
                 };
 
 
-            SendMessage(message, serviceID);
+            SendMessage(message, recipientAddress);
 
             // send it to the service
 
@@ -1223,21 +1266,57 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        /// <summary>
+        /// Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
+        /// is true, send own contact data.
+        /// </summary>
+        /// <param name="uri">The URI to resolve.</param>
+        /// <param name="reciprocate">If true send own contact data.</param>
+        /// <param name="localname">Local name for the contact.</param>
+        /// <returns>The cataloged contact information.</returns>
+        public CatalogedContact ContactExchange(string uri, bool reciprocate, string localname = null) {
+
+            (var accountAddress, var pin) = MeshUri.ParseConnectUri(uri);
+
+            // Generate the fetch request
+
+
+            if (reciprocate) {
+                var contactSelf = GetSelf(localname);
+                // add to request
+                }
+
+            // post request
+
+
+            // Decrypt and verify response
+
+
+            // Decode contact
+
+
+            // Add to the catalog
+
+
+            throw new NYI();
+            }
+
+
 
         /// <summary>
         /// Construct a confirmation request.
         /// </summary>
-        /// <param name="serviceID">The contact to request.</param>
+        /// <param name="accountAddress">The contact to request.</param>
         /// <param name="messageText">The message text to send.</param>
-        public RequestConfirmation ConfirmationRequest(string serviceID, string messageText) {
+        public RequestConfirmation ConfirmationRequest(string accountAddress, string messageText) {
             // prepare the contact request
 
             var message = new RequestConfirmation() {
-                Recipient = serviceID,
+                Recipient = accountAddress,
                 Text = messageText
                 };
 
-            SendMessage(message, serviceID);
+            SendMessage(message, accountAddress);
 
             // send it to the service
             return message;

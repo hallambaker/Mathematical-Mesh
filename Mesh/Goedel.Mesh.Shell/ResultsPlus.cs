@@ -346,7 +346,7 @@ namespace Goedel.Mesh.Shell {
         public override string ToString() {
             var Builder = StringBuilder();
             Builder.AppendNotNull(Account, $"Account={Account}");
-            Builder.AppendNotNull(ServiceID, $"ServiceID={ServiceID}");
+            Builder.AppendNotNull(AccountAddress, $"AccountAddress={AccountAddress}");
             return Builder.ToString();
             }
         }

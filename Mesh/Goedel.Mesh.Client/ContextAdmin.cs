@@ -314,7 +314,7 @@ namespace Goedel.Mesh.Client {
             int start;
             for (start = 0; (start < secretBytes.Length) && secretBytes[start] == 0; start++) {
                 }
-            (secretBytes[start++] == (byte)UDFTypeIdentifier.DerivedKey).AssertTrue();
+            (secretBytes[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue();
             var algorithm = secretBytes[start++]* 0x100 + secretBytes[start++];
             (algorithm == (int)UdfAlgorithmIdentifier.MeshProfileMaster).AssertTrue();
 

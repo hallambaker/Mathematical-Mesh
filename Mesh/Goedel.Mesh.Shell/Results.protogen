@@ -75,7 +75,7 @@
 	
 	Structure ResultRegisterService
 		Inherits							ResultCreateAccount
-		String								ServiceID
+		String								AccountAddress
 
 	Structure ResultRecover
 		Inherits		ResultCreatePersonal

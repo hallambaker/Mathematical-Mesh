@@ -273,12 +273,14 @@
 		String Authenticator
 			Description
 				|The witness key value to use to request access to the record.	
-		Struct PublicKey KeyAuthentication
-			Description
-				|The authentication key for use of the device under the profile		
+
 		Struct DareEnvelope EnvelopedData
 			Description
 				|Dare Envelope containing the entry data
+
+		DateTime NotOnOrAfter
+			Description
+				|Epiration time (inclusive)
 
 
 	Section 3 "Mesh Account Classes"

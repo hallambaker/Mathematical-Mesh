@@ -21,7 +21,7 @@ namespace Goedel.XUnit {
             var resultb = MakeAccount(deviceB, AccountB);
 
             // Create a contact with 
-            var resultcuri = deviceA.Dispatch($"contact udf") as ResultPublish;
+            var resultcuri = deviceA.Dispatch($"contact static") as ResultPublish;
 
             var uri = resultcuri.Uri;
 
@@ -51,6 +51,7 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
 
             // accept the contact request.
+
             var result6 = ProcessMessage(deviceA, true, 1, 0);
             ValidContact(deviceA, AccountA, AccountB);
             }
@@ -127,8 +128,8 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
             }
 
-        Result MakeAccount(Mesh.Test.TestCLI device, string account) {
-            var result = device.Dispatch($"mesh create /service={AccountA}");
+        Result MakeAccount(TestCLI device, string account) {
+            var result = device.Dispatch($"mesh create /service={account}");
 
             // check there is the correct contact entry for this account.
             ValidContact(device, account);
@@ -141,7 +142,7 @@ namespace Goedel.XUnit {
             }
 
 
-        Result ProcessMessage(Mesh.Test.TestCLI device, bool accept, int length, int index) {
+        Result ProcessMessage(TestCLI device, bool accept, int length, int index) {
             var resultPending = device.Dispatch("message pending") as ResultPending;
             // check there is exactly one pending message.
             (resultPending.Messages.Count == length).AssertTrue();
@@ -155,12 +156,11 @@ namespace Goedel.XUnit {
 
         bool ValidContact(Mesh.Test.TestCLI device, params string[] accountAddress) {
             var resultDump = device.Dispatch("contact list") as ResultDump;
-            (resultDump.CatalogedEntries.Count == 2).AssertTrue();
             return ValidContact(resultDump.CatalogedEntries, accountAddress);
             }
 
 
-        bool CreateAliceBob(out Mesh.Test.TestCLI deviceA, out Mesh.Test.TestCLI deviceB) {
+        bool CreateAliceBob(out TestCLI deviceA, out Mesh.Test.TestCLI deviceB) {
 
             deviceA = GetTestCLI("MachineAlice");
             deviceB = GetTestCLI("DeviceBobName");
@@ -184,7 +184,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        Result GetMessage(Mesh.Test.TestCLI deviceA, string id) {
+        Result GetMessage(TestCLI deviceA, string id) {
             throw new NYI();
             }
 

@@ -87,14 +87,14 @@ namespace Goedel.Cryptography.Dare {
         private IEnumerator GetEnumerator1() => this.GetEnumerator();
 
         private class EnumeratorContainerStoreEntry : IEnumerator<StoreEntry> {
-            Dictionary<string, StoreEntry>.Enumerator BaseEnumerator;
-            public StoreEntry Current => BaseEnumerator.Current.Value;
-            object IEnumerator.Current => BaseEnumerator.Current.Value;
-            public void Dispose() => BaseEnumerator.Dispose();
-            public bool MoveNext() => BaseEnumerator.MoveNext();
+            Dictionary<string, StoreEntry>.Enumerator baseEnumerator;
+            public StoreEntry Current => baseEnumerator.Current.Value;
+            object IEnumerator.Current => baseEnumerator.Current.Value;
+            public void Dispose() => baseEnumerator.Dispose();
+            public bool MoveNext() => baseEnumerator.MoveNext();
             public void Reset() => throw new NotImplementedException();
             public EnumeratorContainerStoreEntry(Dictionary<string, StoreEntry> baseEnumerator) =>
-                BaseEnumerator = baseEnumerator.GetEnumerator();
+                this.baseEnumerator = baseEnumerator.GetEnumerator();
             }
 
         #endregion

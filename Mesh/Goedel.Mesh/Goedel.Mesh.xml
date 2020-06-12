@@ -1047,6 +1047,19 @@
             <param name="envelope">The contact to add.</param>
             <returns>The CatalogedContact entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogContact.AddFromFile(System.String,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            Add the contact data specified in the file <paramref name="fileName"/>. If 
+            <paramref name="self"/> is true, register this as the self contact. If
+            <paramref name="merge"/> is true, merge this contact information.
+            </summary>
+            <param name="fileName">The file to fetch the contact data from.</param>
+            <param name="self">If true, contact data corresponds to this user.</param>
+            <param name="localName">Short name for the contact to distinguish it from
+            others.</param>
+            <param name="merge">Add this data to the existing contact.</param>
+            <returns></returns>
+        </member>
         <member name="T:Goedel.Mesh.CatalogedContact">
             <summary>
             </summary>
@@ -1145,7 +1158,7 @@
              Base class for contact entries.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Contact.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Contact"/>
             </summary>
@@ -1721,7 +1734,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.CatalogedDevice"/>
             using keys from <paramref name="keyCollection"/>.
@@ -2382,14 +2395,14 @@
             The witness key value to use to request access to the record.	
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedPublication.KeyAuthentication">
-             <summary>
-            The authentication key for use of the device under the profile		
-             </summary>
-        </member>
         <member name="P:Goedel.Mesh.CatalogedPublication.EnvelopedData">
              <summary>
             Dare Envelope containing the entry data
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedPublication.NotOnOrAfter">
+             <summary>
+            Epiration time (inclusive)
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedPublication._Tag">
@@ -3311,7 +3324,7 @@
             <param name="encryptionKey">The encryption key.</param>
             <returns>The enveloped, signed message.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Message.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Message"/>
             </summary>
@@ -3442,7 +3455,7 @@
             <param name="relationship">Relationship to the message.</param>
             <param name="responseID">The response code.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessageComplete.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.MessageComplete.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.MessageComplete"/>
             </summary>
@@ -3599,7 +3612,7 @@
         <member name="P:Goedel.Mesh.AcknowledgeConnection.MessageConnectionRequest">
             <summary>Convenience accessor for the inner <see cref="T:Goedel.Mesh.AcknowledgeConnection"/></summary>
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
@@ -3726,7 +3739,7 @@
         <member name="P:Goedel.Mesh.RequestConnection.ProfileDevice">
             <summary>Convenience accessor for the inner <see cref="P:Goedel.Mesh.RequestConnection.ProfileDevice"/></summary>
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.RequestConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RequestConnection"/>
             </summary>
@@ -3824,7 +3837,7 @@
              request.
              </summary>
         </member>
-        <member name="M:Goedel.Mesh.RespondConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.RespondConnection.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
@@ -3921,7 +3934,7 @@
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="serviceID">Address of the portal service.</param>
+            <param name="accountAddress">Address of the portal service.</param>
             <returns>Mesh service object for API access to the service.</returns>
         </member>
         <member name="P:Goedel.Mesh.MeshPortal.MeshServiceClient">
@@ -3941,7 +3954,7 @@
             <summary>
             Return a MeshService object for the named portal service.
             </summary>
-            <param name="serviceID">Address of the portal service.</param>
+            <param name="accountAddress">Address of the portal service.</param>
             <returns>Mesh service object for API access to the service.</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshService.GetService(System.String,System.String)">
@@ -4297,7 +4310,7 @@
             <param name="SignatureKey">The key to sign the assertion under.</param>
             <returns>The signed assertion.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Assertion.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.Assertion"/>
             </summary>
@@ -4585,7 +4598,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileAccount"/>
             </summary>
@@ -4593,7 +4606,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.MatchService(System.String)">
+        <member name="M:Goedel.Mesh.ProfileAccount.MatchAccountAddress(System.String)">
             <summary>
             Convenience routine reporting if the profile is serviced by the specified provider.
             </summary>
@@ -4708,7 +4721,7 @@
             <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
             is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationAccount"/>
             </summary>
@@ -4801,7 +4814,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ConnectionAccount"/>
             </summary>
@@ -5046,7 +5059,7 @@
             is null.</param>
             
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ActivationDevice"/>
             using keys from <paramref name="keyCollection"/>.
@@ -5130,7 +5143,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.RespondConnection"/>
             </summary>
@@ -5438,7 +5451,7 @@
             <param name="algorithmAuth">The authentication algorithm.</param>
             <returns>The created ProfileHost.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileHost.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileHost"/>
             </summary>
@@ -5523,7 +5536,7 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileMesh.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileMesh"/>
             </summary>
@@ -5639,7 +5652,7 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <returns>The service profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
             Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileService"/>
             </summary>
@@ -6659,7 +6672,7 @@
              Request binding of an account to a service address.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CreateRequest.ServiceID">
+        <member name="P:Goedel.Mesh.CreateRequest.AccountAddress">
              <summary>
             The service account to bind to.
              </summary>
@@ -6926,7 +6939,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CompleteRequest.ServiceID">
+        <member name="P:Goedel.Mesh.CompleteRequest.AccountAddress">
             <summary>
             </summary>
         </member>
@@ -10529,6 +10542,13 @@
             </summary>
             <param name="privateKey"></param>
             <param name="connectUri"></param>
+        </member>
+        <member name="M:Goedel.Mesh.DevicePreconfiguration.FromFile(System.String)">
+            <summary>
+            Read device preconfiguration data from a file.
+            </summary>
+            <param name="filename">The file to read.</param>
+            <returns>The DevicePreconfiguration instance created from the file data.</returns>
         </member>
         <member name="T:Goedel.Mesh.OfferGroup">
             <summary>

@@ -510,13 +510,13 @@
             </summary>
             <param name="contextMesh">The Mesh context to which this account belongs.</param>
             <param name="accountEntry">The account entry within the device catalog entry.</param>
-            <param name="serviceID">The account service identifier.</param>
+            <param name="accountAddress">The account service identifier.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(System.String)">
             <summary>
-            Returns a Mesh service client for <paramref name="serviceID"/>.
+            Returns a Mesh service client for <paramref name="accountAddress"/>.
             </summary>
-            <param name="serviceID">The account service identifier.</param>
+            <param name="accountAddress">The account service identifier.</param>
             <returns>The Mesh service client</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.AddDevice(Goedel.Mesh.CatalogedDevice)">
@@ -528,11 +528,11 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.AddService(System.String,System.Boolean)">
             <summary>
             Add service to the account. A request is issued to the service name corresponding to
-            <paramref name="serviceID"/>. If this is successful, the account context is updated to
+            <paramref name="accountAddress"/>. If this is successful, the account context is updated to
             include the newly created account. If the <paramref name="sync"/> parameter is true,
             the client also attempts to synchronize to the service.
             </summary>
-            <param name="serviceID">The account service identifier.</param>
+            <param name="accountAddress">The account service identifier.</param>
             <param name="sync">If true, the client attempts to synchronize the device to the service.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateDevices(Goedel.Mesh.ProfileAccount)">
@@ -782,7 +782,7 @@
             <summary>
             Generalized processing loop for messages
             </summary>
-            <param name="meshMessage">The message to process.</param>
+            <param name="messageId">Identifier of the message to process.</param>
             <param name="accept">If true, accept the request, otherwise reject it.</param>
             <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
             contact information in response to an initial contact request.</param>
@@ -803,26 +803,46 @@
             Make a contact reply.
             </summary>
             <param name="requestContact">The contact request.</param>
+            <param name="localname">Local name to be used to identify the contact recorded in
+            the catalog.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSelf(System.String)">
             <summary>
             Get the user's own contact. There is only ever one contact entry but there MAY
             be multiple envelopes 
             </summary>
-            <param name="localName"></param>
+            <param name="localName">Local name for the contact</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactUriStatic(System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Construct a contact fetch URI.
+            </summary>
+            <param name="localName">Local name for the contact</param>
+            <param name="expire">Expiry time for the corresponding PIN</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ContactRequest(System.String,System.String)">
             <summary>
             Construct a contact request.
             </summary>
-            <param name="serviceID">The contact to request.</param>
+            <param name="recipientAddress">The contact to request.</param>
+            <param name="localName">Local name for the contact</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactExchange(System.String,System.Boolean,System.String)">
+            <summary>
+            Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
+            is true, send own contact data.
+            </summary>
+            <param name="uri">The URI to resolve.</param>
+            <param name="reciprocate">If true send own contact data.</param>
+            <param name="localname">Local name for the contact.</param>
+            <returns>The cataloged contact information.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ConfirmationRequest(System.String,System.String)">
             <summary>
             Construct a confirmation request.
             </summary>
-            <param name="serviceID">The contact to request.</param>
+            <param name="accountAddress">The contact to request.</param>
             <param name="messageText">The message text to send.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ConfirmationResponse(Goedel.Mesh.RequestConfirmation,System.Boolean)">
@@ -1627,11 +1647,11 @@
         </member>
         <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String,Goedel.Cryptography.KeyPair,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
             <summary>
-            Return a MeshService client for the service ID <paramref name="serviceID"/>
+            Return a MeshService client for the service ID <paramref name="accountAddress"/>
             using the authentication key <paramref name="keyAuthentication"/> and credential
             <paramref name="assertionAccountConnection"/>. 
             </summary>
-            <param name="serviceID">The service identifier to connect to.</param>
+            <param name="accountAddress">The service identifier to connect to.</param>
             <param name="keyAuthentication">The private key to be used for authentication
             (encryption).</param>
             <param name="assertionAccountConnection">The credential binding the device

@@ -136,7 +136,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
         public static new Assertion Decode(DareEnvelope envelope,
-                    KeyCollection keyCollection = null) =>
+                    IKeyLocate keyCollection = null) =>
                         MeshItem.Decode(envelope, keyCollection) as Assertion;
 
         }
@@ -160,8 +160,8 @@ namespace Goedel.Mesh {
         public static string MakeResponseID(string udf) {
             var buffer = udf.FromBase32();
             var length = (buffer.Length).Minimum(128);
-            switch ((UDFTypeIdentifier)buffer[0]) {
-                case (UDFTypeIdentifier.DigestSHA_3_512): {
+            switch ((UdfTypeIdentifier)buffer[0]) {
+                case (UdfTypeIdentifier.DigestSHA_3_512): {
                     return UDF.ContentDigestOfUDF(udf, length, CryptoAlgorithmId.SHA_3_512);
                     }
 

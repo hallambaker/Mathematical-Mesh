@@ -27,11 +27,11 @@ namespace Goedel.Test.Core {
 
 
         /// <summary>
-        /// Return a MeshService client for the service ID <paramref name="serviceID"/>
+        /// Return a MeshService client for the service ID <paramref name="accountAddress"/>
         /// using the authentication key <paramref name="keyAuthentication"/> and credential
         /// <paramref name="assertionAccountConnection"/>. 
         /// </summary>
-        /// <param name="serviceID">The service identifier to connect to.</param>
+        /// <param name="accountAddress">The service identifier to connect to.</param>
         /// <param name="keyAuthentication">The private key to be used for authentication
         /// (encryption).</param>
         /// <param name="assertionAccountConnection">The credential binding the device
@@ -41,11 +41,11 @@ namespace Goedel.Test.Core {
         /// otherwise.</param>
         /// <returns></returns>
         public override MeshService GetMeshClient(
-                string serviceID,
+                string accountAddress,
                 KeyPair keyAuthentication,
                 ConnectionAccount assertionAccountConnection,
                 Profile profile = null) =>
-            testEnvironmentCommon.MeshLocalPortal.GetService(serviceID);
+            testEnvironmentCommon.MeshLocalPortal.GetService(accountAddress);
 
 
         public static Contact ContactAlice = new ContactPerson(

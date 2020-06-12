@@ -1662,7 +1662,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual string						ServiceID  {get; set;}
+		public virtual string						AccountAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1707,10 +1707,10 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteObjectStart ();
 				}
 			((ResultCreateAccount)this).SerializeX(_writer, false, ref _first);
-			if (ServiceID != null) {
+			if (AccountAddress != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ServiceID", 1);
-					_writer.WriteString (ServiceID);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1745,8 +1745,8 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ServiceID" : {
-					ServiceID = jsonReader.ReadString ();
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
 					break;
 					}
 				default : {

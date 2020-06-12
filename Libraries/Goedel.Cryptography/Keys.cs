@@ -113,7 +113,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="encryptedKey">The encrypted session</param>
         /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
-        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="algorithmID">The algorithm to use (redundant?)</param>
         /// <param name="partial">Partial key agreement carry in (for recryption)</param>
         /// <param name="salt">Optional salt value for use in key derivation. If specified
         /// must match the salt used to encrypt.</param>        
@@ -121,7 +121,7 @@ namespace Goedel.Cryptography {
         public abstract byte[] Decrypt(
                     byte[] encryptedKey,
                     KeyPair ephemeral = null,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
                     KeyAgreementResult partial = null,
                     byte[] salt = null);
 

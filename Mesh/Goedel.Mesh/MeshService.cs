@@ -52,9 +52,9 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="serviceID">Address of the portal service.</param>
+        /// <param name="accountAddress">Address of the portal service.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public abstract MeshService GetService(string serviceID);
+        public abstract MeshService GetService(string accountAddress);
 
 
         /// <summary>
@@ -76,10 +76,10 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Return a MeshService object for the named portal service.
         /// </summary>
-        /// <param name="serviceID">Address of the portal service.</param>
+        /// <param name="accountAddress">Address of the portal service.</param>
         /// <returns>Mesh service object for API access to the service.</returns>
-        public static MeshService GetService(string serviceID) {
-            serviceID.SplitAccountIDService(out var service, out var account);
+        public static MeshService GetService(string accountAddress) {
+            accountAddress.SplitAccountIDService(out var service, out var account);
             return GetService(service, account);
             }
 

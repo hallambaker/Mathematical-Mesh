@@ -74,7 +74,7 @@ The equivalent DER encoding is:
 #{Example.PublicKeyed25519.KeyInfoData.DER().ToStringBase16FormatHex()}
 ~~~~
 
-To encode this key as a UDF OID sequence we prepend the value #{UDFTypeIdentifier.OID}
+To encode this key as a UDF OID sequence we prepend the value #{UdfTypeIdentifier.OID}
 and convert to Base32:
 
 ~~~~

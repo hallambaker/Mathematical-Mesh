@@ -24,10 +24,10 @@ namespace Goedel.Protocol.Debug {
         /// is typically used when beginning an interaction that will
         /// lead to the authentication credential being established.
         /// </summary>
-        /// <param name="Host">The host implementation</param>
-        /// <param name="serviceID">User account</param>
-        public DebugLocalSession(JPCProvider Host, string serviceID)
-                : base(Host, serviceID) {
+        /// <param name="host">The host implementation</param>
+        /// <param name="accountAddress">User account</param>
+        public DebugLocalSession(JPCProvider host, string accountAddress)
+                : base(host, accountAddress) {
             }
 
 
@@ -35,11 +35,11 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Post a request and retrieve the response.
         /// </summary>
-        /// <param name="Data">StreamBuffer object containing JSON encoded request.</param>
+        /// <param name="data">StreamBuffer object containing JSON encoded request.</param>
         /// <returns>StreamBuffer object containing JSON encoded response.</returns>
-        public override Stream Post(MemoryStream Data) {
+        public override Stream Post(MemoryStream data) {
 
-            var DataText = Data.GetUTF8();
+            var DataText = data.GetUTF8();
             var JSONReader = new JSONReader(DataText);
 
             var ResultObject = Host.Dispatch(this, JSONReader);
@@ -50,18 +50,18 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// Post a request and retrieve the response.
         /// </summary>
-        /// <param name="Tag">Command</param>
-        /// <param name="Request">JSON encoded request.</param>
+        /// <param name="tag">Command</param>
+        /// <param name="request">JSON encoded request.</param>
         /// <returns>JSON encoded response.</returns>
-        public override string Post(string Tag, JSONObject Request) {
+        public override string Post(string tag, JSONObject request) {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
 
             // Wrap the request object with the transaction name.
             JSONWriter.WriteObjectStart();
-            JSONWriter.WriteToken(Tag, 0);
-            Request.Serialize(JSONWriter, false);
+            JSONWriter.WriteToken(tag, 0);
+            request.Serialize(JSONWriter, false);
             JSONWriter.WriteObjectEnd();
 
             // Now prepare a reader so that the data can be unpacked
@@ -72,7 +72,7 @@ namespace Goedel.Protocol.Debug {
             var ResultObject = Host.Dispatch(this, JSONReader);
 
             if (Traces != null) {
-                Traces.Request(Request);
+                Traces.Request(request);
                 Traces.Response("200 OK", ResultObject);
                 }
 

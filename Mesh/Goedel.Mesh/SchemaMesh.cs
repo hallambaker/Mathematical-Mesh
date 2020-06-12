@@ -2444,15 +2444,15 @@ namespace Goedel.Mesh {
 
 		public virtual string						Authenticator  {get; set;}
         /// <summary>
-        ///The authentication key for use of the device under the profile		
-        /// </summary>
-
-		public virtual PublicKey						KeyAuthentication  {get; set;}
-        /// <summary>
         ///Dare Envelope containing the entry data
         /// </summary>
 
 		public virtual DareEnvelope						EnvelopedData  {get; set;}
+        /// <summary>
+        ///Epiration time (inclusive)
+        /// </summary>
+
+		public virtual DateTime?						NotOnOrAfter  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2507,15 +2507,15 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Authenticator", 1);
 					_writer.WriteString (Authenticator);
 				}
-			if (KeyAuthentication != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyAuthentication", 1);
-					KeyAuthentication.Serialize (_writer, false);
-				}
 			if (EnvelopedData != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("EnvelopedData", 1);
 					EnvelopedData.Serialize (_writer, false);
+				}
+			if (NotOnOrAfter != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("NotOnOrAfter", 1);
+					_writer.WriteDateTime (NotOnOrAfter);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2558,18 +2558,15 @@ namespace Goedel.Mesh {
 					Authenticator = jsonReader.ReadString ();
 					break;
 					}
-				case "KeyAuthentication" : {
-					// An untagged structure
-					KeyAuthentication = new PublicKey ();
-					KeyAuthentication.Deserialize (jsonReader);
- 
-					break;
-					}
 				case "EnvelopedData" : {
 					// An untagged structure
 					EnvelopedData = new DareEnvelope ();
 					EnvelopedData.Deserialize (jsonReader);
  
+					break;
+					}
+				case "NotOnOrAfter" : {
+					NotOnOrAfter = jsonReader.ReadDateTime ();
 					break;
 					}
 				default : {
