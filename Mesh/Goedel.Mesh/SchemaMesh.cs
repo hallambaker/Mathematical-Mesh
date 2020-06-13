@@ -9009,9 +9009,15 @@ namespace Goedel.Mesh {
 
 		public virtual DateTime?						Expires  {get; set;}
         /// <summary>
+        ///PIN code bound to the specified action.
         /// </summary>
 
-		public virtual string						PIN  {get; set;}
+		public virtual string						SaltedPIN  {get; set;}
+        /// <summary>
+        ///The action to which this PIN code is bound.
+        /// </summary>
+
+		public virtual string						Action  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9066,10 +9072,15 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Expires", 1);
 					_writer.WriteDateTime (Expires);
 				}
-			if (PIN != null) {
+			if (SaltedPIN != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("PIN", 1);
-					_writer.WriteString (PIN);
+				_writer.WriteToken ("SaltedPIN", 1);
+					_writer.WriteString (SaltedPIN);
+				}
+			if (Action != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Action", 1);
+					_writer.WriteString (Action);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -9112,8 +9123,12 @@ namespace Goedel.Mesh {
 					Expires = jsonReader.ReadDateTime ();
 					break;
 					}
-				case "PIN" : {
-					PIN = jsonReader.ReadString ();
+				case "SaltedPIN" : {
+					SaltedPIN = jsonReader.ReadString ();
+					break;
+					}
+				case "Action" : {
+					Action = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -9666,6 +9681,15 @@ namespace Goedel.Mesh {
 
 		public virtual string						Subject  {get; set;}
         /// <summary>
+        /// </summary>
+
+		public virtual string						PinUDF  {get; set;}
+        /// <summary>
+        ///One time authentication code.
+        /// </summary>
+
+		public virtual string						PIN  {get; set;}
+        /// <summary>
         ///The contact data.
         /// </summary>
 
@@ -9724,6 +9748,16 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Subject", 1);
 					_writer.WriteString (Subject);
 				}
+			if (PinUDF != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PinUDF", 1);
+					_writer.WriteString (PinUDF);
+				}
+			if (PIN != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PIN", 1);
+					_writer.WriteString (PIN);
+				}
 			if (Self != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Self", 1);
@@ -9770,6 +9804,14 @@ namespace Goedel.Mesh {
 					Subject = jsonReader.ReadString ();
 					break;
 					}
+				case "PinUDF" : {
+					PinUDF = jsonReader.ReadString ();
+					break;
+					}
+				case "PIN" : {
+					PIN = jsonReader.ReadString ();
+					break;
+					}
 				case "Self" : {
 					// An untagged structure
 					Self = new DareEnvelope ();
@@ -9791,6 +9833,15 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class ReplyContact : RequestContact {
+        /// <summary>
+        /// </summary>
+
+		public virtual byte[]						Nonce  {get; set;}
+        /// <summary>
+        ///Witness value over contact that was presented.
+        /// </summary>
+
+		public virtual byte[]						Witness  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9835,6 +9886,16 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((RequestContact)this).SerializeX(_writer, false, ref _first);
+			if (Nonce != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Nonce", 1);
+					_writer.WriteBinary (Nonce);
+				}
+			if (Witness != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Witness", 1);
+					_writer.WriteBinary (Witness);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9868,6 +9929,14 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Nonce" : {
+					Nonce = jsonReader.ReadBinary ();
+					break;
+					}
+				case "Witness" : {
+					Witness = jsonReader.ReadBinary ();
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

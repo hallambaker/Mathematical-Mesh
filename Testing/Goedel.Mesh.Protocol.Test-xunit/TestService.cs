@@ -141,7 +141,7 @@ namespace Goedel.XUnit {
             machineAlice2.CheckHostCatalogExtended(); // initial
 
             var PIN = contextAccountAlice_1_a.GetPIN();
-            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.PIN);
+            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.SaltedPIN);
             machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
             // Still have to process of course to get the data
@@ -235,7 +235,7 @@ namespace Goedel.XUnit {
 
             // New Device
             var contextAccount2Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
-                AccountAlice, PIN: PIN.PIN);
+                AccountAlice, PIN: PIN.SaltedPIN);
 
             // Admin Device
             contextAccountAlice.Sync();

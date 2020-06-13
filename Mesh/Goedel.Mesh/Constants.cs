@@ -162,6 +162,12 @@ namespace Goedel.Mesh {
     /// </summary>
     public static class Constants {
 
+        ///<summary>Action info for device PIN</summary>
+        public const string MessagePINActionDevice = "Device";
+
+        ///<summary>Action info for contact PIN</summary>
+        public const string MessagePINActionContact = "Contact";
+
         ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
         public const string IanaTypeMeshMessage = "application/mmm/message";
 

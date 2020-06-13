@@ -827,11 +827,16 @@
 
 	Structure MessagePIN
 		String Account
+
 		Inherits Message
 		DateTime Expires
-		String PIN
-
-	
+		String SaltedPIN
+			Description
+				|PIN code bound to the specified action.
+		String Action
+			Description
+				|The action to which this PIN code is bound.
+				
 	Structure RequestConnection
 		Description
 			|Connection request message. This message contains the information
@@ -889,12 +894,20 @@
 		Inherits Message
 		Boolean Reply
 		String Subject
+		String PinUDF
+		String PIN
+			Description
+				|One time authentication code.
 		Struct DareEnvelope Self
 			Description
 				|The contact data.
 	
 	Structure ReplyContact
 		Inherits RequestContact
+		Binary Nonce
+		Binary Witness
+			Description
+				|Witness value over contact that was presented.
 
 	Structure GroupInvitation
 		Inherits Message

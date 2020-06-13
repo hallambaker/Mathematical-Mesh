@@ -146,6 +146,8 @@ namespace Goedel.Mesh {
 
     public partial class MessagePIN {
 
+        ///<summary>The unbound PIN code.</summary>
+        public string PIN { get; }
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
@@ -159,24 +161,87 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="pin">The PIN value.</param>
         /// <param name="expires">The expiry time.</param>
+        /// <param name="action">The purpose for which the pin is registered.</param>
         /// <param name="accountAddress">The account address the PIN is issued for.</param>
-        public MessagePIN(string pin, DateTime expires, string accountAddress) {
+        public MessagePIN(string pin, DateTime? expires, string accountAddress, string action) {
             Account = accountAddress;
             Expires = expires;
             PIN = pin;
-            MessageID = RequestConnection.GetPinUDF(pin, accountAddress);
+            SaltedPIN = SaltPIN(pin, action);
+            Action = action;
+            MessageID = GetPinUDF(SaltedPIN, accountAddress);
 
-            Console.WriteLine($"Created Pin: {Account} / {PIN} => {MessageID}");
+            Console.WriteLine($"Created Pin: {Account} / {SaltedPIN} => {MessageID}");
             }
+
+        /// <summary>
+        /// Salt the pin code <paramref name="pin"/> to bind it to the action 
+        /// <paramref name="action"/>.
+        /// </summary>
+        /// <param name="pin">The pin code presented to the user.</param>
+        /// <param name="action">The action to which the pin code is bound.</param>
+        /// <returns>UDF presentation of the salted PIN.</returns>
+        public static string SaltPIN (string pin, string action) =>
+            UDF.SymmetricKeyMac(action.ToUTF8(), pin);
+
 
         /// <summary>
         /// Get the 
         /// </summary>
         /// <returns></returns>
-        public string GetURI() => MeshUri.ConnectUri(Account, PIN);
+        public string GetURI() => MeshUri.ConnectUri(Account, SaltedPIN);
+
+        /// <summary>
+        /// PIN code identifier 
+        /// </summary>
+        /// <param name="pin">The salted one time code</param>
+        /// <param name="accountAddress">The account address of the issuer of the PIN</param>
+        /// <returns>The PIN Code identifier.</returns>
+        public static string GetPinUDF(
+                    string pin,
+                    string accountAddress) {
+            var result = UDF.PinWitnessString(pin, accountAddress.ToUTF8());
+
+            Console.WriteLine($"{pin} + {accountAddress}  -> PinUDF = {result}" );
+
+            return result;
+            }
 
 
 
+        /// <summary>
+        /// Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
+        /// </summary>
+        /// <param name="pin">The salted one time code</param>
+        /// <param name="accountAddress">The account address of the issuer of the PIN</param>
+        /// <param name="deviceUDF">The data being witnessed.</param>
+        /// <param name="clientNonce">Nonce value to bind to the exchange.</param>
+        /// <returns>The binary witness value.</returns>
+        public static byte[] GetPinWitness(
+                    string pin,
+                    string accountAddress,
+                    string deviceUDF,
+                    byte[] clientNonce) {
+            return UDF.PinWitness(pin, accountAddress.ToUTF8(),
+                        clientNonce, deviceUDF.ToUTF8());
+            }
+
+        /// <summary>
+        /// Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)
+        /// </summary>
+        /// <param name="pin">The salted one time code</param>
+        /// <param name="accountAddress">The account address of the issuer of the PIN</param>
+        /// <param name="envelope">The enveloped data to be witnessed.</param>
+        /// <param name="clientNonce">Nonce value to bind to the exchange.</param>
+        /// <returns>The binary witness value.</returns>
+        public static byte[] GetPinWitness(
+                    string pin,
+                    string accountAddress,
+                    DareEnvelope envelope,
+                    byte[] clientNonce) {
+            var digest = envelope.Trailer.PayloadDigest;
+            return UDF.PinWitness(pin, accountAddress.ToUTF8(), clientNonce, digest);
+            }
         }
 
     public partial class AcknowledgeConnection {
@@ -230,45 +295,16 @@ namespace Goedel.Mesh {
             AccountAddress = accountAddress;
             EnvelopedProfileDevice = profileDevice.DareEnvelope;
             ClientNonce = clientNonce ?? CryptoCatalog.GetBits(128);
+
             if (pin != null) {
-                PinUDF = GetPinUDF(pin, accountAddress);
-                PinWitness = GetPinWitness(pin, accountAddress, ClientNonce, profileDevice.UDF);
+                var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionDevice);
+
+                PinUDF = MessagePIN.GetPinUDF(saltedPin, accountAddress);
+                PinWitness = MessagePIN.GetPinWitness(saltedPin, accountAddress, profileDevice.UDF, ClientNonce);
                 }
             }
 
-        /// <summary>
-        /// PIN code identifier 
-        /// </summary>
-        /// <param name="pin"></param>
-        /// <param name="accountAddress"></param>
-        /// <returns></returns>
-        public static string GetPinUDF(
-                    string pin, 
-                    string accountAddress) => UDF.PinWitnessString(pin, accountAddress.ToUTF8());
 
-
-
-        /// <summary>
-        /// Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
-        /// </summary>
-        /// <param name="pin"></param>
-        /// <param name="accountAddress"></param>
-        /// <param name="clientNonce"></param>
-        /// <param name="deviceUDF"></param>
-        /// <returns></returns>
-        public static byte[] GetPinWitness(
-                    string pin,
-                    string accountAddress,
-                    byte[] clientNonce,
-                    string deviceUDF) {
-
-            //Console.WriteLine($"  {pin} {accountAddress}" +
-            //    $"\n{deviceUDF}\n{clientNonce.ToStringBase16FormatHex()}");
-
-
-            return UDF.PinWitness(pin, accountAddress.ToUTF8(),
-                        clientNonce, deviceUDF.ToUTF8());
-            }
 
         /// <summary>
         /// Verify that the witness value is correct for the specified <paramref name="pin"/> and

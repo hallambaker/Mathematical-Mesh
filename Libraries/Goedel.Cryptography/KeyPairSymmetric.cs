@@ -35,7 +35,7 @@ namespace Goedel.Cryptography {
                     UdfTypeIdentifier udfTypeIdentifier = UdfTypeIdentifier.Encryption) {
             SecretValue = secretValue;
             UDFBytes = UDF.SymetricKeyIdBytes(SecretValue); ;
-            KeyIdentifier = UDF.SymetricKeyId(SecretValue);
+            KeyIdentifier = UDF.SymetricKeyId(SecretValue, udfTypeIdentifier: udfTypeIdentifier);
             }
 
         /// <summary>

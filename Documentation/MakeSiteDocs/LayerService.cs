@@ -88,7 +88,7 @@ namespace ExampleGenerator {
             // Connect Device 3 using a PIN
             ConnectGetPin = testCLIAlice1.Example($"account pin");
             var resultPin = (ConnectGetPin[0].Result as ResultPIN);
-            var pin = resultPin.MessagePIN.PIN;
+            var pin = resultPin.MessagePIN.SaltedPIN;
             ConnectPin = testCLIAlice3.Example($"device request {AliceService1} /pin={pin}");
             ConnectPending3 = testCLIAlice1.Example($"device pending");
             ConnectSyncPIN = testCLIAlice3.Example($"account sync");

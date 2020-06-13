@@ -288,7 +288,7 @@ namespace Goedel.Mesh.Shell {
                 }
 
             else if (MessagePIN != null) {
-                Builder.Append($"PIN={MessagePIN.PIN}");
+                Builder.Append($"PIN={MessagePIN.SaltedPIN}");
 
                 if (MessagePIN.Expires != null) {
                     Builder.Append($" (Expires={MessagePIN.Expires.ToRFC3339()})");

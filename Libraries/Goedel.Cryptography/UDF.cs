@@ -1104,7 +1104,8 @@ namespace Goedel.Cryptography {
                     byte[] p2 = null,
                     byte[] p3 = null,
                     int bits = 0) =>
-            PresentationBase32(PinWitness(pin, p1, p2, p3), bits);
+             TypeBDSToString(UdfTypeIdentifier.AuthenticatorHMAC_SHA_2_512, PinWitness(pin, p1, p2, p3), bits);
+
 
 
         #endregion

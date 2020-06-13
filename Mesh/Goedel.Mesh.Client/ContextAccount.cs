@@ -716,16 +716,20 @@ namespace Goedel.Mesh.Client {
         /// date and time.</param>
         /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
         public MessagePIN GetPIN(int length = 80, long validity = Constants.DayInTicks) {
-            var pin = UDF.Nonce(length);
+            var pin = UDF.SymmetricKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
-            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress);
-
-            SendMessageAdmin(messageConnectionPIN);
-
-            return messageConnectionPIN;
+            return RegisterPIN(pin, expires, AccountAddress, "Device");
             }
 
+
+
+        MessagePIN RegisterPIN(string pin, DateTime? expires, string accountAddress, string action) {
+            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress, "Device");
+
+            SendMessageAdmin(messageConnectionPIN);
+            return messageConnectionPIN;
+            }
 
 
         /// <summary>
@@ -939,6 +943,18 @@ namespace Goedel.Mesh.Client {
         /// <param name="replyContact">Reply to contact request to be processed.</param>
         /// <returns>The result of requesting the connection.</returns>
         public IProcessResult ProcessAutomatic(ReplyContact replyContact) {
+
+            // check response pin here 
+            var messagePIN = GetMessagePIN(replyContact.PinUDF);
+            var pinWitness = MessagePIN.GetPinWitness(messagePIN.SaltedPIN, AccountAddress,
+                        replyContact.Self, replyContact.Nonce);
+
+            if (!pinWitness.IsEqualTo(replyContact.Witness)) {
+                "Should collect up errors for optional reporting".TaskValidate();
+                return InvalidPIN();
+                }
+
+
             GetCatalogContact().Add(replyContact.Self);
 
             return null;
@@ -952,19 +968,10 @@ namespace Goedel.Mesh.Client {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
             // get the pin value here
-            var pinCreate = GetSpoolLocal().CheckPIN(messageConnectionRequest.PinUDF);
+            var messagePIN = GetMessagePIN (messageConnectionRequest.PinUDF);
 
-            // check PIN
-            if (pinCreate == null || pinCreate.Closed) {
-                "Should collect up errors for optional reporting".TaskValidate();
-                "Should check on expiry".TaskValidate();
-                return InvalidPIN();
-                }
-
-            var messagePIN = pinCreate.Message as MessagePIN;
-
-            var pinWitness = RequestConnection.GetPinWitness(messagePIN.PIN, AccountAddress,
-                        messageConnectionRequest.ClientNonce, messageConnectionRequest.ProfileDevice.UDF);
+            var pinWitness = MessagePIN.GetPinWitness(messagePIN.SaltedPIN, AccountAddress,
+                messageConnectionRequest.ProfileDevice.UDF, messageConnectionRequest.ClientNonce);
 
             if (!pinWitness.IsEqualTo(messageConnectionRequest.PinWitness)) {
                 "Should collect up errors for optional reporting".TaskValidate();
@@ -973,6 +980,22 @@ namespace Goedel.Mesh.Client {
 
             return Process(acknowledgeConnection, true);
             }
+
+
+        MessagePIN GetMessagePIN(string PinUDF) {
+            var pinCreate = GetSpoolLocal().CheckPIN(PinUDF);
+
+            // check PIN
+            if (pinCreate == null || pinCreate.Closed) {
+                "Should collect up errors for optional reporting".TaskValidate();
+                "Should check on expiry".TaskValidate();
+                throw new NYI();
+                //return InvalidPIN();
+                }
+
+            return pinCreate.Message as MessagePIN;
+            }
+
 
 
         IProcessResult InvalidPIN() => throw new NYI();
@@ -1150,23 +1173,41 @@ namespace Goedel.Mesh.Client {
 
             // Add the requestContact.Self contact to the catalog
 
-
             if (requestContact.Self != null) {
                 var catalog = GetCatalogContact();
                 catalog.Add(requestContact.Self);
                 }
 
+            return SendReplyContact(requestContact.Sender, requestContact.PIN, AccountAddress, localname);
+
+            }
+
+
+
+        IProcessResult SendReplyContact(string recipient, string pin, string accountAddress, string localname) {
             // prepare the reply
             var contactSelf = GetSelf(localname);
+
+            // calculate the witness value over contactSelf and PIN
+
+            var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionDevice);
+
+            var nonce = CryptoCatalog.GetBits(128);
+            var witness = MessagePIN.GetPinWitness(saltedPin, recipient, contactSelf, nonce);
+            var pinUdf = MessagePIN.GetPinUDF(saltedPin, recipient);
+
+
             var message = new ReplyContact() {
-                Recipient = requestContact.Sender,
-                Subject = requestContact.Sender,
-                Self = contactSelf
+                Recipient = recipient,
+                Subject = recipient,
+                Self = contactSelf,
+                Nonce = nonce,
+                Witness = witness,
+                PinUDF =pinUdf
                 };
 
             // send it to the service
-            SendMessage(message, requestContact.Sender);
-
+            SendMessage(message, recipient);
 
             return null;
             }
@@ -1231,7 +1272,10 @@ namespace Goedel.Mesh.Client {
             publishResponse.Success().AssertTrue();
 
             // Register the pin
-            false.AssertTrue();
+            var messageConnectionPIN = new MessagePIN(pin, expire, AccountAddress, "Contact");
+            SendMessageAdmin(messageConnectionPIN);
+                // Spec - maybe should enforce type check here.
+
 
             // return the contact address
             return MeshUri.ConnectUri(AccountAddress, pin);
@@ -1248,13 +1292,16 @@ namespace Goedel.Mesh.Client {
             // prepare the contact request
 
             var contactSelf = GetSelf(localName);
+            var pin = UDF.SymmetricKey ();
 
             var message = new RequestContact() {
                 Recipient = recipientAddress,
                 Subject = recipientAddress,
-                Self = contactSelf
+                Self = contactSelf,
+                PIN = pin
                 };
 
+            RegisterPIN(pin, null, AccountAddress, "Contact");
 
             SendMessage(message, recipientAddress);
 

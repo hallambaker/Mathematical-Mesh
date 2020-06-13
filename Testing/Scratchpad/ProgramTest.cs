@@ -25,8 +25,9 @@ namespace Scratchpad {
             //TestService.Test().MeshMessageContact(); // Works but shouldn't
             //TestService.Test().MeshMessageConfirm(); // Works but shouldn't
 
-            //ShellTests.Test().TestMessageContactRemote();
+            //ShellTests.Test().TestProfileConnectPin();
 
+            //ShellTests.Test().TestMessageContactRemote();
             ShellTests.Test().TestMessageContactBusinessCardFetch();
             //ShellTests.Test().TestMessageContactBusinessCardExchange();
             //ShellTests.Test().TestMessageContactBusinessCardReject();

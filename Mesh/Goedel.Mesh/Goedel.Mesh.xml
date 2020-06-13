@@ -2643,6 +2643,12 @@
             Collected constants used in the Mathematical Mesh
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Constants.MessagePINActionDevice">
+            <summary>Action info for device PIN</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Constants.MessagePINActionContact">
+            <summary>Action info for contact PIN</summary>
+        </member>
         <member name="F:Goedel.Mesh.Constants.IanaTypeMeshMessage">
             <summary>The proposed IANA content identifier for the Mesh message type.</summary>
         </member>
@@ -3518,12 +3524,15 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.MessagePIN.PIN">
+            <summary>The unbound PIN code.</summary>
+        </member>
         <member name="M:Goedel.Mesh.MessagePIN.#ctor">
             <summary>
             Default constructor used for deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessagePIN.#ctor(System.String,System.DateTime,System.String)">
+        <member name="M:Goedel.Mesh.MessagePIN.#ctor(System.String,System.Nullable{System.DateTime},System.String,System.String)">
             <summary>
             Construct a <see cref="T:Goedel.Mesh.MessagePIN"/> instance for the PIN value
             <paramref name="pin"/> and account address <paramref name="accountAddress"/>
@@ -3531,13 +3540,51 @@
             </summary>
             <param name="pin">The PIN value.</param>
             <param name="expires">The expiry time.</param>
+            <param name="action">The purpose for which the pin is registered.</param>
             <param name="accountAddress">The account address the PIN is issued for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.SaltPIN(System.String,System.String)">
+            <summary>
+            Salt the pin code <paramref name="pin"/> to bind it to the action 
+            <paramref name="action"/>.
+            </summary>
+            <param name="pin">The pin code presented to the user.</param>
+            <param name="action">The action to which the pin code is bound.</param>
+            <returns>UDF presentation of the salted PIN.</returns>
         </member>
         <member name="M:Goedel.Mesh.MessagePIN.GetURI">
             <summary>
             Get the 
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.GetPinUDF(System.String,System.String)">
+            <summary>
+            PIN code identifier 
+            </summary>
+            <param name="pin">The salted one time code</param>
+            <param name="accountAddress">The account address of the issuer of the PIN</param>
+            <returns>The PIN Code identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.GetPinWitness(System.String,System.String,System.String,System.Byte[])">
+            <summary>
+            Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
+            </summary>
+            <param name="pin">The salted one time code</param>
+            <param name="accountAddress">The account address of the issuer of the PIN</param>
+            <param name="deviceUDF">The data being witnessed.</param>
+            <param name="clientNonce">Nonce value to bind to the exchange.</param>
+            <returns>The binary witness value.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePIN.GetPinWitness(System.String,System.String,Goedel.Cryptography.Dare.DareEnvelope,System.Byte[])">
+            <summary>
+            Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)
+            </summary>
+            <param name="pin">The salted one time code</param>
+            <param name="accountAddress">The account address of the issuer of the PIN</param>
+            <param name="envelope">The enveloped data to be witnessed.</param>
+            <param name="clientNonce">Nonce value to bind to the exchange.</param>
+            <returns>The binary witness value.</returns>
         </member>
         <member name="P:Goedel.Mesh.MessagePIN.Account">
             <summary>
@@ -3547,9 +3594,15 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.MessagePIN.PIN">
-            <summary>
-            </summary>
+        <member name="P:Goedel.Mesh.MessagePIN.SaltedPIN">
+             <summary>
+            PIN code bound to the specified action.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN.Action">
+             <summary>
+            The action to which this PIN code is bound.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.MessagePIN._Tag">
             <summary>
@@ -3709,24 +3762,6 @@
             <param name="pin">Optional PIN value</param>
             <param name="clientNonce">Optional client nonce (if null, a nonce will be
             generated.</param>
-        </member>
-        <member name="M:Goedel.Mesh.RequestConnection.GetPinUDF(System.String,System.String)">
-            <summary>
-            PIN code identifier 
-            </summary>
-            <param name="pin"></param>
-            <param name="accountAddress"></param>
-            <returns></returns>
-        </member>
-        <member name="M:Goedel.Mesh.RequestConnection.GetPinWitness(System.String,System.String,System.Byte[],System.String)">
-            <summary>
-            Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
-            </summary>
-            <param name="pin"></param>
-            <param name="accountAddress"></param>
-            <param name="clientNonce"></param>
-            <param name="deviceUDF"></param>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.RequestConnection.Verify(System.String)">
             <summary>
@@ -10617,6 +10652,15 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.RequestContact.PinUDF">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.RequestContact.PIN">
+             <summary>
+            One time authentication code.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.RequestContact.Self">
              <summary>
             The contact data.
@@ -10676,6 +10720,15 @@
         <member name="T:Goedel.Mesh.ReplyContact">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ReplyContact.Nonce">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ReplyContact.Witness">
+             <summary>
+            Witness value over contact that was presented.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.ReplyContact._Tag">
             <summary>
