@@ -835,7 +835,7 @@
             </summary>
             <param name="uri">The URI to resolve.</param>
             <param name="reciprocate">If true send own contact data.</param>
-            <param name="localname">Local name for the contact.</param>
+            <param name="localname">Local name for the contact to send in exchange</param>
             <returns>The cataloged contact information.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ConfirmationRequest(System.String,System.String)">

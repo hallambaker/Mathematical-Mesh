@@ -812,7 +812,33 @@ namespace Goedel.Mesh.Client {
         /// <param name="uri">The connection URI</param>
         /// <returns>The </returns>
         public CatalogedDevice Connect(string uri) {
-            // parse uri
+
+            var envelopedProfileDevice = ClaimPublication(uri , out var responseId);
+
+            // Decode the Profile Device
+            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
+
+            // Approve the request
+            // Have to add in the Mesh profile here and Account Assertion
+ 
+            var cataloguedDevice = AddDevice(profileDevice);
+
+            Console.WriteLine($"Accept connection ID is {responseId}");
+            var respondConnection = new RespondConnection() {
+                MessageID = responseId,
+                CatalogedDevice = cataloguedDevice,
+                Result = Constants.TransactionResultAccept
+                };
+
+            SendMessage(respondConnection);
+
+
+            // ContextMeshPending
+            return cataloguedDevice;
+            }
+
+
+        DareEnvelope ClaimPublication(string uri, out string responseId) {
             (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
 
             var key = new CryptoKeySymmetric(pin);
@@ -829,28 +855,15 @@ namespace Goedel.Mesh.Client {
 
             // The Dare envelope contains a DareEnvelope<ProfileDevice>
             var encryptedEnvelope = claimResponse.CatalogedPublication.EnvelopedData;
-            var envelopedProfileDevice = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
-            // Decode the Profile Device
-            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
 
-            // Approve the request
-            // Have to add in the Mesh profile here and Account Assertion
-            var cataloguedDevice = AddDevice(profileDevice);
+            // Verify: if the key is a encrypt/sign, need to verify here.
+            "If the key is a encrypt/sign, need to verify here.".TaskValidate();
 
-            var messageID = messageClaim.GetResponseID();
-            Console.WriteLine($"Accept connection ID is {messageID}");
+            var result = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
 
-            var respondConnection = new RespondConnection() {
-                MessageID = messageID,
-                CatalogedDevice = cataloguedDevice,
-                Result = Constants.TransactionResultAccept
-                };
+            responseId = messageClaim.GetResponseID();
 
-            SendMessage(respondConnection);
-
-
-            // ContextMeshPending
-            return cataloguedDevice;
+            return result;
             }
 
 
@@ -1178,13 +1191,13 @@ namespace Goedel.Mesh.Client {
                 catalog.Add(requestContact.Self);
                 }
 
-            return SendReplyContact(requestContact.Sender, requestContact.PIN, AccountAddress, localname);
+            return SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
 
             }
 
 
 
-        IProcessResult SendReplyContact(string recipient, string pin, string accountAddress, string localname) {
+        IProcessResult SendReplyContact(string recipient, string pin, string localname) {
             // prepare the reply
             var contactSelf = GetSelf(localname);
 
@@ -1319,30 +1332,21 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="uri">The URI to resolve.</param>
         /// <param name="reciprocate">If true send own contact data.</param>
-        /// <param name="localname">Local name for the contact.</param>
+        /// <param name="localname">Local name for the contact to send in exchange</param>
         /// <returns>The cataloged contact information.</returns>
         public CatalogedContact ContactExchange(string uri, bool reciprocate, string localname = null) {
+            // Fetch, verify and decrypt the corresponding data.
+            var envelope = ClaimPublication(uri, out var responseId);
 
-            (var accountAddress, var pin) = MeshUri.ParseConnectUri(uri);
+            // decode the contact here
 
-            // Generate the fetch request
+            // Add to the catalog
 
 
             if (reciprocate) {
-                var contactSelf = GetSelf(localname);
-                // add to request
+                (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
+                SendReplyContact(targetAccountAddress, pin, localname);
                 }
-
-            // post request
-
-
-            // Decrypt and verify response
-
-
-            // Decode contact
-
-
-            // Add to the catalog
 
 
             throw new NYI();
