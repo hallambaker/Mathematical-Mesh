@@ -24,7 +24,7 @@ namespace Goedel.Mesh.Client {
         /// <returns></returns>
         MeshService GetMeshClient(
                 string accountAddress,
-                KeyPair keyAuthentication,
+                CryptoKey keyAuthentication,
                 ConnectionAccount assertionAccountConnection,
                 Profile profile = null);
         }

@@ -744,7 +744,7 @@
             </summary>
             <returns>The results of the automatic processing attempted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact,System.Boolean)">
             <summary>
             Perform automatic processing of the message <paramref name="replyContact"/>.
             </summary>
@@ -1645,7 +1645,7 @@
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
             <summary>Direct access to the Catalog, should remove this</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String,Goedel.Cryptography.KeyPair,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
+        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
             <summary>
             Return a MeshService client for the service ID <paramref name="accountAddress"/>
             using the authentication key <paramref name="keyAuthentication"/> and credential

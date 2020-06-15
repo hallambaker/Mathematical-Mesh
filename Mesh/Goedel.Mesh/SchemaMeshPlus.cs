@@ -124,7 +124,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="SignatureKey">The key to sign the assertion under.</param>
         /// <returns>The signed assertion.</returns>
-        public DareEnvelope Sign(KeyPair SignatureKey) {
+        public DareEnvelope Sign(CryptoKey SignatureKey) {
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), signingKey: SignatureKey);
             return DareEnvelope;
             }

@@ -116,7 +116,7 @@ namespace Goedel.Cryptography.Core {
                 }
             }
 
-        public override KeyPair LocatePrivateKeyPair(string udf) {
+        public override CryptoKey LocatePrivateKeyPair(string udf) {
 
             var fileName = Path.Combine(DirectoryKeys, udf);
 

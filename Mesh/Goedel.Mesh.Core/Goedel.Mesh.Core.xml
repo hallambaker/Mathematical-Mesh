@@ -105,7 +105,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(System.String,Goedel.Cryptography.KeyPair,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
+        <member name="M:Goedel.Mesh.MeshMachineCore.GetMeshClient(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
             <summary>
             Return a MeshService client for the service ID <paramref name="accountAddress"/>
             using the authentication key <paramref name="keyAuthentication"/> and credential

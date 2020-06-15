@@ -52,7 +52,8 @@ namespace Goedel.XUnit {
 
             // accept the contact request.
 
-            var result6 = ProcessMessage(deviceA, true, 1, 0);
+            var result6 = deviceA.Dispatch($"account sync /auto");
+            //var result6 = ProcessMessage(deviceA, true, 1, 0);
             ValidContact(deviceA, AccountA, AccountB);
             }
 

@@ -17,7 +17,7 @@ namespace Goedel.Mesh {
 
 
         //KeyPair keySignOffline;
-        KeyPair keySignOnline;
+        CryptoKey keySignOnline;
 
 
         /// <summary>

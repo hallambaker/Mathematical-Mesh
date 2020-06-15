@@ -21,7 +21,7 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The master keys for administration.</summary>
-        KeyPair keyAdministratorSignature;
+        CryptoKey keyAdministratorSignature;
 
 
 

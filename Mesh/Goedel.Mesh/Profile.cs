@@ -165,7 +165,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>The actrivation profile encrypted under the encryption key of
         /// the corresponding <see cref="ProfileDevice"/>.</returns>
-        public DareEnvelope Package(KeyPair SignatureKey) {
+        public DareEnvelope Package(CryptoKey SignatureKey) {
 
             EnvelopedConnection = Connection.Sign(SignatureKey);
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), 

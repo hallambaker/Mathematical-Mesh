@@ -66,7 +66,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public override KeyPair LocatePrivateKeyPair(string keyID) => 
+        public override CryptoKey LocatePrivateKeyPair(string keyID) => 
             keyCollectionBase.LocatePrivateKeyPair(keyID);
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public override KeyPair GetByAccountEncrypt(string keyID) {
+        public override CryptoKey GetByAccountEncrypt(string keyID) {
             //// Check to see if we have an account by that name
             //if (CatalogHost.GetProfileMeshByAccount(keyID) is AssertionAccount profile) {
             //    return profile.AccountEncryptionKey.KeyPair;
@@ -97,7 +97,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public override KeyPair GetByAccountSign(string keyID) {
+        public override CryptoKey GetByAccountSign(string keyID) {
             // Check to see if we have an account by that name
 
             //var profile = CatalogHost.GetProfileDeviceByAccount(keyID);

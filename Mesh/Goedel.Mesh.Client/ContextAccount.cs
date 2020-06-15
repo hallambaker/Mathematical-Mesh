@@ -813,14 +813,14 @@ namespace Goedel.Mesh.Client {
         /// <returns>The </returns>
         public CatalogedDevice Connect(string uri) {
 
-            var envelopedProfileDevice = ClaimPublication(uri , out var responseId);
+            var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
 
             // Decode the Profile Device
             var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
 
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
- 
+
             var cataloguedDevice = AddDevice(profileDevice);
 
             Console.WriteLine($"Accept connection ID is {responseId}");
@@ -841,7 +841,7 @@ namespace Goedel.Mesh.Client {
         DareEnvelope ClaimPublication(string uri, out string responseId) {
             (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
 
-            var key = new CryptoKeySymmetric(pin);
+            var key = new CryptoKeySymmetricSigner(pin);
             var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
             var envelopedMessageClaim = messageClaim.Encode(keySignature);
@@ -955,7 +955,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="replyContact">Reply to contact request to be processed.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(ReplyContact replyContact) {
+        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept=true) {
 
             // check response pin here 
             var messagePIN = GetMessagePIN(replyContact.PinUDF);
@@ -981,7 +981,7 @@ namespace Goedel.Mesh.Client {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
             // get the pin value here
-            var messagePIN = GetMessagePIN (messageConnectionRequest.PinUDF);
+            var messagePIN = GetMessagePIN(messageConnectionRequest.PinUDF);
 
             var pinWitness = MessagePIN.GetPinWitness(messagePIN.SaltedPIN, AccountAddress,
                 messageConnectionRequest.ProfileDevice.UDF, messageConnectionRequest.ClientNonce);
@@ -1023,7 +1023,6 @@ namespace Goedel.Mesh.Client {
                 };
             return MeshClient.Status(statusRequest);
             }
-
 
 
         /// <summary>
@@ -1116,8 +1115,7 @@ namespace Goedel.Mesh.Client {
                     return Process(connection, accept);
                     }
                 case ReplyContact replyContact: {
-                    replyContact.Future();
-                    break;
+                    return ProcessAutomatic(replyContact, accept);
                     }
                 case RequestContact requestContact: {
                     return ContactReply(requestContact);
@@ -1147,34 +1145,6 @@ namespace Goedel.Mesh.Client {
 
             return null;
             }
-
-
-        //public DareEnvelope GetContactInfo(string localName) {
-
-        //    var catalog = GetCatalogContact();
-        //    GetSelf(localName);
-
-
-        //    //localName.Future();
-
-        //    //var contact = new Contact() {
-        //    //    //Email = email,
-        //    //    Addresses = new List<Address>() {
-        //    //            new Address () {
-
-        //    //                URI = "mailto:{email}"
-        //    //                }
-        //    //            }
-        //    //    };
-
-
-
-        //    //var envelope = DareEnvelope.Encode(contact.GetBytes(), signingKey: keySignature);
-
-        //    throw new NYI();
-        //    }
-
-
 
         /// <summary>
         /// Make a contact reply.
@@ -1262,13 +1232,15 @@ namespace Goedel.Mesh.Client {
         public string ContactUriStatic(DateTime? expire, string localName = null) {
             var envelope = GetSelf(localName);
 
-            // Generate a new UDF signing key and locator.
-            (var encryptionKey, var signatureKey) = UDF.DeriveKey();
-            var pin = encryptionKey.KeyIdentifier;
+
+
+            var combinedKey = new CryptoKeySymmetricSigner();
+
+            var pin = combinedKey.SecretKey;
 
             // Add a signature under the signature key.
             var encryptedContact = DareEnvelope.Encode(envelope.GetBytes(),
-                    signingKey: signatureKey, encryptionKey: encryptionKey);
+                    signingKey: combinedKey, encryptionKey: combinedKey);
 
             // publish the enveloped contact to the service.
             var catalogedPublication = new CatalogedPublication(pin) {
@@ -1338,18 +1310,16 @@ namespace Goedel.Mesh.Client {
             // Fetch, verify and decrypt the corresponding data.
             var envelope = ClaimPublication(uri, out var responseId);
 
-            // decode the contact here
-
             // Add to the catalog
-
+            var catalog = GetCatalogContact();
+            var result = catalog.Add(envelope);
 
             if (reciprocate) {
                 (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
                 SendReplyContact(targetAccountAddress, pin, localname);
                 }
 
-
-            throw new NYI();
+            return result;
             }
 
 

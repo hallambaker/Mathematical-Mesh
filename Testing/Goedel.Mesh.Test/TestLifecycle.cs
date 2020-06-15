@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Test {
                 Assert.Null(key);
                 return;
                 }
-            TestExport(key, exportable);
+            TestExport(key as KeyPair, exportable);
             }
 
 

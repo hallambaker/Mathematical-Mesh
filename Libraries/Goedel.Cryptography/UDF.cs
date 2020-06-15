@@ -42,7 +42,7 @@ namespace Goedel.Cryptography {
         Encryption = 32,
 
         ///<summary>Encryption/Signature key</summary>
-        EncryptionAuthentication = 33,
+        EncryptionSignature = 33,
 
         ///<summary>Content Digest using SHA-2-512</summary>
         DigestAlgSHA_2_512 = 96,
@@ -396,6 +396,7 @@ namespace Goedel.Cryptography {
             // Constrain the number of bits to an integer multiple of 20 bits between DefaultBits
             // and MaximumBits.
             bits = bits <= 0 ? DefaultBits : bits;
+            bits = bits.Minimum(source.Length * 8);
 
             // Calculate the number of bytes
             var bytes = (bits + 7) / 8;
@@ -674,7 +675,9 @@ namespace Goedel.Cryptography {
         public static byte[] SymmetricKeyData(string udf) {
 
             var result = Parse(udf, out var code);
-            (code == (byte)UdfTypeIdentifier.Encryption).AssertTrue();
+            (code == (byte)UdfTypeIdentifier.Encryption |
+                code == (byte)UdfTypeIdentifier.EncryptionSignature
+                ).AssertTrue();
 
             return result;
             }
@@ -1201,32 +1204,33 @@ namespace Goedel.Cryptography {
             }
 
 
-        /// <summary>
-        /// Generate a UDF for forming an Encrypted, Authenticated Resource Locator.
-        /// </summary>
-        /// <param name="bits">Number of bits precision, if less than the minimum number
-        /// of bits will be set equal to <see cref="MinimumBits"/></param>
-        /// <param name="algorithmSign">The signature algorithm to use.</param>
-        /// <param name="algorithmDigest">The digest algorithm to use.</param>
-        /// <returns>The encryption and signature keys.</returns>
-        public static (CryptoKey, KeyPair) DeriveKey(
-                    int bits = 0,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
-                    CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) {
+        ///// <summary>
+        ///// Generate a UDF for forming an Encrypted, Authenticated Resource Locator.
+        ///// </summary>
+        ///// <param name="bits">Number of bits precision, if less than the minimum number
+        ///// of bits will be set equal to <see cref="MinimumBits"/></param>
+        ///// <param name="algorithmSign">The signature algorithm to use.</param>
+        ///// <param name="algorithmDigest">The digest algorithm to use.</param>
+        ///// <returns>The encryption and signature keys.</returns>
+        //public static (CryptoKey, KeyPair) DeriveKey(
+        //            int bits = 0,
+        //            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
+        //            CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) {
 
-            bits = bits.Minimum (MinimumBits);
-            var signatureKey = KeyPair.Factory(algorithmSign, KeySecurity.Exportable);
-
-
-            var pkixKeyBytes = signatureKey.PKIXPublicKey.SubjectPublicKeyInfo().DER();
-            var secretValue = FromKeyInfo(pkixKeyBytes, bits, algorithmDigest);
+        //    bits = bits.Minimum (MinimumBits);
+        //    var signatureKey = KeyPair.Factory(algorithmSign, KeySecurity.Exportable);
 
 
-            var encryptionKey = new CryptoKeySymmetric(secretValue);
+        //    var pkixKeyBytes = signatureKey.PKIXPublicKey.SubjectPublicKeyInfo().DER();
+        //    var secretValue = FromKeyInfo(pkixKeyBytes, bits, algorithmDigest);
 
+        //    var encryptionKey = new CryptoKeySymmetric(secretValue, UdfTypeIdentifier.EncryptionSignature);
 
-            return (encryptionKey, signatureKey);
-            }
+        //    Console.WriteLine($"Secret Value = {secretValue.ToStringBase16FormatHex()}");
+        //    Console.WriteLine($" Encryption key = {encryptionKey}, signature = {signatureKey} ");
+
+        //    return (encryptionKey, signatureKey);
+        //    }
 
 
         /// <summary>

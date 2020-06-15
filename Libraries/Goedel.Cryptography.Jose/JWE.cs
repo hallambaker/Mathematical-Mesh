@@ -407,7 +407,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="RecipientOut">The recipient entry that matched</param>
         /// <returns>The matching keypair</returns>
         /// <param name="keyCollection">The key collection that keys are to be persisted to </param>
-        public static KeyPair MatchDecryptionKey(List<Recipient> Recipients, out Recipient RecipientOut,
+        public static CryptoKey MatchDecryptionKey(List<Recipient> Recipients, out Recipient RecipientOut,
             KeyCollection keyCollection = null) {
             foreach (var Recipient in Recipients) {
                 var KID = Recipient.Header.Kid;
@@ -433,7 +433,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="DecryptionKey">The decryption key.</param>
         /// <param name="Recipient">The recipient</param>
         /// <returns>The decrypted data</returns>
-        public byte[] Decrypt(KeyPair DecryptionKey = null, Recipient Recipient = null) {
+        public byte[] Decrypt(CryptoKey DecryptionKey = null, Recipient Recipient = null) {
 
             DecryptionKey ??= MatchDecryptionKey(Recipients, out Recipient);
 
@@ -517,7 +517,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="DecryptionKey">Key</param>
         /// <returns>The Recipient data for the specified key, if found.</returns>
-        public Recipient MatchRecipient(KeyPair DecryptionKey) => MatchRecipient(DecryptionKey.KeyIdentifier);
+        public Recipient MatchRecipient(CryptoKey DecryptionKey) => MatchRecipient(DecryptionKey.KeyIdentifier);
 
         /// <summary>
         /// Match a recipient header by key identifier.

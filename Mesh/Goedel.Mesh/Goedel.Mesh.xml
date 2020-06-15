@@ -3322,7 +3322,7 @@
         <member name="F:Goedel.Mesh.Message.MessageStatus">
             <summary>The message status.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.Message.Encode(Goedel.Cryptography.CryptoKey,Goedel.Cryptography.CryptoKey)">
             <summary>
             Encode the message using the signature key <paramref name="signingKey"/>.
             </summary>
@@ -4338,7 +4338,7 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Sign(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.Assertion.Sign(Goedel.Cryptography.CryptoKey)">
             <summary>
             Create an envelope with the signed assertion.
             </summary>
@@ -4502,7 +4502,7 @@
             <param name="bits">The size of the seed to be generated if 
             <paramref name="masterSecret"/> is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.Activation.Package(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.Activation.Package(Goedel.Cryptography.CryptoKey)">
             <summary>
             Encrypt this activation under the ProfileDevice encryption key.
             </summary>

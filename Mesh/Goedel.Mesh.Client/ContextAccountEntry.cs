@@ -28,7 +28,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+        public CryptoKey GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
 
         /// <summary>
         /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
@@ -36,14 +36,14 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+        public CryptoKey GetByAccountSign(string keyID) => throw new NotImplementedException();
 
         /// <summary>
         /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.
         /// </summary>
         /// <param name="keyID">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public KeyPair LocatePrivateKeyPair(string keyID) => throw new NotImplementedException();
+        public CryptoKey LocatePrivateKeyPair(string keyID) => throw new NotImplementedException();
 
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
@@ -81,8 +81,11 @@ namespace Goedel.Mesh.Client {
                     List<string> recipients = null,
                     bool sign = false) {
 
+
+            true.AssertFalse(); // This method has serious issues.
+
             KeyPair signingKey = sign ? keySignature : null;
-            List<KeyPair> encryptionKeys = null;
+            List<CryptoKey> encryptionKeys = null;
 
             if (recipients != null) {
                 foreach (var recipient in recipients) {

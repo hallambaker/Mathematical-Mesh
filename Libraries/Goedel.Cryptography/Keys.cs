@@ -67,13 +67,15 @@ namespace Goedel.Cryptography {
         public virtual CryptoKey TryMatchRecipient(string keyID) =>
             keyID == KeyIdentifier ? this : null;
 
+
+
         /// <summary>
         /// Resolve a public key by identifier. This always returns null because the collection
         /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+        public CryptoKey GetByAccountEncrypt(string keyID) => this;
 
         /// <summary>
         /// Resolve a private key by identifier.  This always returns null because the collection
@@ -81,7 +83,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
+        public  CryptoKey GetByAccountSign(string keyID) => this;
 
         /// <summary>
         /// Locate a private key  This always returns null because the collection
@@ -89,7 +91,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        public virtual KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
+        public  CryptoKey LocatePrivateKeyPair(string UDF) => this;
 
 
 
@@ -137,6 +139,20 @@ namespace Goedel.Cryptography {
         public abstract byte[] SignHash(byte[] data,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null);
+
+        /// <summary>
+        /// Verify a signature over the purported data digest.
+        /// </summary>
+        /// <param name="signature">The signature blob value.</param>
+        /// <param name="algorithmID">The signature and hash algorithm to use.</param>
+        /// <param name="context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <param name="digest">The digest value to be verified.</param>
+        /// <returns>True if the signature is valid, otherwise false.</returns>
+        public abstract bool VerifyHash(byte[] digest, byte[] signature,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null);
+
+
 
         /// <summary>
         /// Return the CryptoAlgorithmID that would be used with the specified base parameters.

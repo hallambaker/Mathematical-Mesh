@@ -28,8 +28,8 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectPin();
 
             //ShellTests.Test().TestMessageContactRemote();
-            ShellTests.Test().TestMessageContactBusinessCardFetch();
-            //ShellTests.Test().TestMessageContactBusinessCardExchange();
+            //ShellTests.Test().TestMessageContactBusinessCardFetch();
+            ShellTests.Test().TestMessageContactBusinessCardExchange();
             //ShellTests.Test().TestMessageContactBusinessCardReject();
 
             //ShellTests.Test().TestMessageContactInPerson();

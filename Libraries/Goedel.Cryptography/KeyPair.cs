@@ -44,33 +44,12 @@ namespace Goedel.Cryptography {
         public bool PersistPending => (KeySecurity.IsPersisted() & !IsPersisted);
 
 
-        #region // Implement IKeyLocate
+        ///<summary>If true, a signature generated using this key will always include the
+        ///full public key parameters.</summary>
+        public bool ForcePublicParameters { get; set; } = false;
 
-        /// <summary>
-        /// Resolve a public key by identifier. This always returns null because the collection
-        /// cannot contain a <see cref="KeyPair"/>
-        /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
-        /// <returns>The identifier.</returns>
-        public override KeyPair GetByAccountEncrypt(string keyID) => this;
 
-        /// <summary>
-        /// Resolve a private key by identifier.  This always returns null because the collection
-        /// cannot contain a <see cref="KeyPair"/>
-        /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
-        /// <returns>The identifier.</returns>
-        public override KeyPair GetByAccountSign(string keyID) => this;
 
-        /// <summary>
-        /// Locate a private key  This always returns null because the collection
-        /// cannot contain a <see cref="KeyPair"/>
-        /// </summary>
-        /// <param name="UDF">fingerprint of key to locate.</param>
-        /// <returns>A KeyPair instance bound to the private key.</returns>
-        public override KeyPair LocatePrivateKeyPair(string UDF) => this;
-
-        #endregion
 
 
         /// <summary>
@@ -105,17 +84,7 @@ namespace Goedel.Cryptography {
             return VerifyHash(hash, signature, algorithmID, context);
             }
 
-        /// <summary>
-        /// Verify a signature over the purported data digest.
-        /// </summary>
-        /// <param name="signature">The signature blob value.</param>
-        /// <param name="algorithmID">The signature and hash algorithm to use.</param>
-        /// <param name="context">Additional data added to the signature scope
-        /// for protocol isolation.</param>
-        /// <param name="digest">The digest value to be verified.</param>
-        /// <returns>True if the signature is valid, otherwise false.</returns>
-        public abstract bool VerifyHash(byte[] digest, byte[] signature,
-                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, byte[] context = null);
+
 
 
         /// <summary>
@@ -322,7 +291,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Returns the UDF fingerprint of the current key as a string.
         /// </summary>
-        public override string KeyIdentifier => udf ?? Cryptography.UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
+        public override string KeyIdentifier => udf ?? UDF.PresentationBase32(UDFBytes).CacheValue(out udf);
         string udf = null;
 
         ///<summary>The UDF fingerprint of this key pair.</summary>

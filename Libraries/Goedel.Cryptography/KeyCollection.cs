@@ -24,7 +24,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        KeyPair LocatePrivateKeyPair(string UDF);
+        CryptoKey LocatePrivateKeyPair(string UDF);
 
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        KeyPair GetByAccountEncrypt(string keyID);
+        CryptoKey GetByAccountEncrypt(string keyID);
 
         /// <summary>
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
@@ -41,24 +41,11 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        KeyPair GetByAccountSign(string keyID);
+        CryptoKey GetByAccountSign(string keyID);
 
         }
 
 
-    //public class KeyLocateSymmetric : IKeyLocate {
-
-    //    public KeyLocateSymmetric
-
-    //    public KeyPair GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
-    //    public KeyPair GetByAccountSign(string keyID) => throw new NotImplementedException();
-    //    public KeyPair LocatePrivateKeyPair(string UDF) => throw new NotImplementedException();
-    //    public KeyPair TryMatchRecipient(string keyID) {
-
-
-
-    //        }
-    //    }
 
 
     /// <summary>
@@ -177,7 +164,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
-        public virtual KeyPair LocatePrivateKeyPair(string UDF) {
+        public virtual CryptoKey LocatePrivateKeyPair(string UDF) {
 
 
             var keyPair = KeyPairRSA.Locate(UDF);
@@ -230,7 +217,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair GetByAccountEncrypt(string keyID) {
+        public virtual CryptoKey GetByAccountEncrypt(string keyID) {
             var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
             return Result;
             }
@@ -241,7 +228,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual KeyPair GetByAccountSign(string keyID) {
+        public virtual CryptoKey GetByAccountSign(string keyID) {
             var Found = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
             return Result;
             }

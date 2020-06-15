@@ -159,7 +159,7 @@ namespace Goedel.Mesh {
         /// <returns></returns>
         public virtual MeshService GetMeshClient(
                 string accountAddress,
-                KeyPair keyAuthentication,
+                CryptoKey keyAuthentication,
                 ConnectionAccount assertionAccountConnection,
                 Profile profile = null) =>
                     MeshService.GetService(accountAddress);
