@@ -250,17 +250,49 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <returns>The current string.</returns>
         public override string ToString() {
-            var Builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach (var message in Messages) {
 
-                Builder.AppendLine($"MessageID: {message.MessageID}");
+                builder.AppendLine($"MessageID: {message.MessageID}");
 
                 switch (message) {
                     case AcknowledgeConnection acknowledgeConnection: {
-                        Builder.AppendLine($"    Connection Request:");
-                        Builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UDF}");
-                        Builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
+                        ToBuilder(builder, message, $"    Connection Request:");
+                        builder.AppendLine($"        Device:  {acknowledgeConnection.MessageConnectionRequest.ProfileDevice.UDF}");
+                        builder.AppendLine($"        Witness: {acknowledgeConnection.Witness}");
+                        break;
+                        }
+                    case RequestConfirmation requestConfirmation: {
+                        ToBuilder(builder, message, $"    Confirmation Request:");
+                        builder.AppendLine($"        Text: {requestConfirmation.Text}");
+                        break;
+                        }
+                    case ResponseConfirmation responseConfirmation: {
+                        ToBuilder(builder, message, $"    Confirmation Reply:");
+                        builder.AppendLine($"        RequestID: {responseConfirmation.Request.MessageID}");
+                        builder.AppendLine($"        Accept: {responseConfirmation.Accept}");
+                        break;
+                        }
+                    case RequestTask requestTask: {
+                        ToBuilder(builder, message, $"    Task Request:");
+                        requestTask.Future();
+                        break;
+                        }
+                    case ReplyContact replyContact: {
+                        ToBuilder(builder, message, $"    Contact Reply:");
+                        builder.AppendLine($"        Witness: {replyContact.Witness}->{replyContact.PinUDF}");
+                        builder.AppendLine($"        Nonce: {replyContact.Nonce}");
+                        break;
+                        }
+                    case RequestContact requestContact: {
+                        ToBuilder(builder, message, $"    Contact Request:");
+                        builder.AppendLine($"        PIN: {requestContact.PIN}->{requestContact.PinUDF}");
+                        break;
+                        }
+                    case GroupInvitation groupInvitation: {
+                        ToBuilder(builder, message, $"    Group invitation:");
+                        groupInvitation.Future();
                         break;
                         }
 
@@ -269,8 +301,16 @@ namespace Goedel.Mesh.Shell {
                     }
                 }
 
-            return Builder.ToString();
+            return builder.ToString();
             }
+
+
+        void ToBuilder(StringBuilder builder, Message message, string tag) {
+            builder.AppendLine($"    {tag}:");
+            builder.AppendLine($"        MessageID: {message.MessageID}");
+            builder.AppendLine($"        To: {message.Recipient} From: {message.Sender}");
+            }
+
         }
 
 

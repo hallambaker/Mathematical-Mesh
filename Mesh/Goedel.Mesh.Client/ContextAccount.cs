@@ -1122,7 +1122,7 @@ namespace Goedel.Mesh.Client {
                     }
 
                 case RequestConfirmation requestConfirmation: {
-                    return ConfirmationResponse(requestConfirmation, true);
+                    return ConfirmationResponse(requestConfirmation, accept);
 
                     }
                 case ResponseConfirmation responseConfirmation: {
@@ -1355,6 +1355,7 @@ namespace Goedel.Mesh.Client {
             var recipient = requestConfirmation.Sender;
 
             var message = new ResponseConfirmation() {
+                MessageID = requestConfirmation.GetResponseID(),
                 Recipient = recipient,
                 Accept = response,
                 Request = requestConfirmation

@@ -830,6 +830,10 @@
 
 		Inherits Message
 		DateTime Expires
+		Boolean Automatic
+			Description
+				|If true, authentication against the PIN code is sufficient to complete
+				|the associated action without further authorization.
 		String SaltedPIN
 			Description
 				|PIN code bound to the specified action.
@@ -887,8 +891,6 @@
 				|The device information. MUST be present if the value of Result is
 				|"Accept". MUST be absent or null otherwise.
 
-	Structure OfferGroup
-		Inherits Message
 
 	Structure RequestContact
 		Inherits Message
@@ -912,7 +914,7 @@
 	Structure GroupInvitation
 		Inherits Message
 		String Text
-		Struct DareEnvelope EncryptedPartDecrypt
+		Struct DareEnvelope EncryptedGroupConnection
 
 	Structure RequestConfirmation
 		Inherits Message
@@ -921,7 +923,7 @@
 
 	Structure ResponseConfirmation
 		Inherits Message
-		Struct RequestConfirmation Request
+		Struct DareEnvelope Request
 		Boolean Accept
 
 	Structure RequestTask

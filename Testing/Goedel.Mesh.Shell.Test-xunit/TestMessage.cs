@@ -26,7 +26,7 @@ namespace Goedel.XUnit {
             var uri = resultcuri.Uri;
 
             // fetch the contact, do not reciprocate
-            var resultfetch = deviceB.Dispatch($"contact fetch {uri}") ;
+            var resultfetch = deviceB.Dispatch($"contact fetch {uri}");
             ValidContact(deviceB, AccountB, AccountA);
             ValidContact(deviceA, AccountA);
             }
@@ -121,11 +121,11 @@ namespace Goedel.XUnit {
             var result2 = deviceB.Dispatch($"message contact {AccountA}");
 
             var result3 = deviceA.Dispatch("message pending") as ResultPending;
-            
+
             // check there is exactly one pending message and accept it
             var result4 = ProcessMessage(deviceA, true, 1, 0);
 
-            ValidContact(deviceA, AccountA,AccountB);
+            ValidContact(deviceA, AccountA, AccountB);
 
 
             // check the contact is listed
@@ -155,9 +155,26 @@ namespace Goedel.XUnit {
             // extract message id
             var messageId = resultPending.Messages[0].MessageID;
 
-            var response = accept ? "accept": "reject";
+            var response = accept ? "accept" : "reject";
             return device.Dispatch($"message {response} {messageId}");
             }
+
+        /// <summary>
+        /// Check that <paramref name="device"/> has received the message <paramref name="messageId"/>
+        /// and accept or reject it according to the value of <paramref name="accept"/>.
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="accept"></param>
+        /// <param name="messageId"></param>
+        /// <returns>Result of processing</returns>
+        Result ProcessMessage(TestCLI device, bool accept, string messageId) {
+            var message = GetMessage(device, messageId);
+            message.AssertNotNull();
+
+            var response = accept ? "accept" : "reject";
+            return device.Dispatch($"message {response} {messageId}");
+            }
+
 
         bool ValidContact(Mesh.Test.TestCLI device, params string[] accountAddress) {
             var resultDump = device.Dispatch("contact list") as ResultDump;
@@ -189,8 +206,21 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        Result GetMessage(TestCLI deviceA, string id) {
-            throw new NYI();
+        Message GetResponse(TestCLI deviceA, string id) => GetMessage(deviceA, Message.MakeResponseID(id));
+
+
+        Message GetMessage(TestCLI deviceA, string id) {
+            var resultPending = deviceA.Dispatch($"message pending") as ResultPending;
+
+            if (resultPending.Messages == null) {
+                return null;
+                }
+            foreach (var message in resultPending.Messages) {
+                if (message.MessageID == id) {
+                    return message;
+                    }
+                }
+            return null;
             }
 
 
@@ -220,32 +250,29 @@ namespace Goedel.XUnit {
         public void TestMessageConfirmationAccept() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultConfirm;
-            var resultHandle = ProcessMessage(deviceA, true, 2, 1);
+            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
+            var messageId = resultRequest.Message.MessageID;
 
+            var resultHandle = ProcessMessage(deviceA, true, messageId); // Hack - lets start using MessageID eh?
 
-            var resultResponse = GetMessage(deviceB, resultRequest.Id) as ResultConfirm;
+            var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
 
-            "check that the response is Accept".TaskTest();
-
-            //deviceB.Dispatch("message status {accountA}");
-            throw new NYI();
+            resultResponse.Accept.AssertTrue();
             }
 
         [Fact]
         public void TestMessageConfirmationReject() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultConfirm;
-            var resultHandle = ProcessMessage(deviceA, false, 2, 1);
+            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultSent;
+            var messageId = resultRequest.Message.MessageID;
 
+            var resultHandle = ProcessMessage(deviceA, false, messageId);
+            var responseId = resultRequest.Message.GetResponseID();
+            var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
 
-            var resultResponse = GetMessage(deviceB, resultRequest.Id) as ResultConfirm;
+            resultResponse.Accept.AssertFalse();
 
-            "check that the response is REJECT".TaskTest();
-
-            //deviceB.Dispatch("message status {accountA}");
-            throw new NYI();
             }
 
 

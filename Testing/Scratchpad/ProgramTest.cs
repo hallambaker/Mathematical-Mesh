@@ -21,30 +21,39 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
-            // This test is failing because the message from Bob isn't passed to Alice.
-            //TestService.Test().MeshMessageContact(); // Works but shouldn't
-            //TestService.Test().MeshMessageConfirm(); // Works but shouldn't
+            // Redo the service level tests so that we can get to the shell tests for group.
+
+            TestService.Test().MeshCatalogAccount();
+            TestService.Test().MeshCatalogGroup();
+            TestService.Test().MeshCatalogStandalone();
+            TestService.Test().MeshMessageContact();
+            TestService.Test().MeshDeviceConnectPIN();
+            TestService.Test().MeshServiceFull();
+
+            TestService.Test().MeshCatalogGroup();
+            ShellTests.Test().TestMessageContactBusinessCardReject();
+
 
             //ShellTests.Test().TestProfileConnectPin();
 
             //ShellTests.Test().TestMessageContactRemote();
             //ShellTests.Test().TestMessageContactBusinessCardFetch();
             //ShellTests.Test().TestMessageContactBusinessCardExchange();
-            //ShellTests.Test().TestMessageContactBusinessCardReject();
+
 
             //ShellTests.Test().TestMessageContactInPerson();
 
 
 
-            ShellTests.Test().TestMessageConfirmationAccept();
+            //ShellTests.Test().TestMessageConfirmationAccept();
 
-            ShellTests.Test().TestMessageConfirmationReject();
+            //ShellTests.Test().TestMessageConfirmationReject();
 
 
             // All the tests related to Groups.
 
             //StoreTests.Test().TestCatalog(); // Better get the basics right.
-            //TestService.Test().MeshCatalogGroup();
+
             //ShellTests.Test().TestMessageGroup();
 
             //ShellTests.Test().TestContainerArchive();
