@@ -23,9 +23,9 @@ namespace Goedel.Mesh.Shell {
                 };
 
             var profileDevice = contextMeshPending.ProfileDevice;
-            Console.WriteLine($"KeyOfflineSignature {profileDevice.KeyOfflineSignature.UDF}");
-            Console.WriteLine($"KeyEncryption {profileDevice.KeyEncryption.UDF}");
-            Console.WriteLine($"KeyAuthentication {profileDevice.KeyAuthentication.UDF}");
+            //Console.WriteLine($"KeyOfflineSignature {profileDevice.KeyOfflineSignature.UDF}");
+            //Console.WriteLine($"KeyEncryption {profileDevice.KeyEncryption.UDF}");
+            //Console.WriteLine($"KeyAuthentication {profileDevice.KeyAuthentication.UDF}");
             return result;
             }
 

@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Client {
             DeviceKeySeed = ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
             deviceDecrypt = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
 
-            Console.WriteLine($"Device Encrypt {deviceDecrypt}");
+            //Console.WriteLine($"Device Encrypt {deviceDecrypt}");
             KeyCollection.Add(deviceDecrypt);
 
             // register the private decryption key here.

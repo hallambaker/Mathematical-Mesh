@@ -56,7 +56,7 @@ namespace Goedel.Cryptography.Dare {
             }
 
 
-        JBCDStream jbcdStream = null;
+        JbcdStream jbcdStream = null;
 
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Goedel.Cryptography.Dare {
                 FileStatus fileStatus = FileStatus.Overwrite,
                 ContainerType containerType = ContainerType.Unknown) {
 
-            jbcdStream = new JBCDStream(fileName, fileStatus);
+            jbcdStream = new JbcdStream(fileName, fileStatus);
             container = BindContainer(jbcdStream, cryptoParameters, archive, digest, containerType);
             }
 
@@ -101,7 +101,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="cryptoParameters">Specifies the cryptographic enhancements to
         /// be applied to this message.</param>
         public FileContainerWriter(
-                JBCDStream jbcdStream,
+                JbcdStream jbcdStream,
                 CryptoParameters cryptoParameters,
                 bool archive = false,
                 bool digest = true,
@@ -109,7 +109,7 @@ namespace Goedel.Cryptography.Dare {
                     jbcdStream, cryptoParameters, archive, digest, containerType);
 
         Container BindContainer(
-                    JBCDStream jbcdStream,
+                    JbcdStream jbcdStream,
                     CryptoParameters cryptoParameters,
                     bool archive = false,
                     bool digest = true,
@@ -173,7 +173,7 @@ namespace Goedel.Cryptography.Dare {
                 ) {
 
             var Stream = new MemoryStream();
-            var JBCDStream = new JBCDStream(null, Stream);
+            var JBCDStream = new JbcdStream(null, Stream);
 
             using (var Writer = new FileContainerWriter(JBCDStream, cryptoParameters, archive: false, digest: false,
                             containerType: ContainerType.List)) {
@@ -293,7 +293,7 @@ namespace Goedel.Cryptography.Dare {
                 KeyCollection KeyCollection = null,
                 FileStatus FileStatus = FileStatus.Read) {
 
-            var JBCDStream = new JBCDStream(FileName, FileStatus);
+            var JBCDStream = new JbcdStream(FileName, FileStatus);
             container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
             }
 
@@ -308,7 +308,7 @@ namespace Goedel.Cryptography.Dare {
                 KeyCollection KeyCollection = null) {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
-            var JBCDStream = new JBCDStream(Stream, null);
+            var JBCDStream = new JbcdStream(Stream, null);
             container = Goedel.Cryptography.Dare.Container.OpenExisting(JBCDStream, KeyCollection);
 
             }

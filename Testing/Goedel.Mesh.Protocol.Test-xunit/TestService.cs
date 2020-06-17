@@ -140,7 +140,7 @@ namespace Goedel.XUnit {
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
             machineAlice2.CheckHostCatalogExtended(); // initial
 
-            var PIN = contextAccountAlice_1_a.GetPIN();
+            var PIN = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
             var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.SaltedPIN);
             machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
@@ -227,7 +227,7 @@ namespace Goedel.XUnit {
             var catalogDevice = contextAccountAlice.GetCatalogDevice();
 
             // Admin Device
-            var PIN = contextAccountAlice.GetPIN();
+            var PIN = contextAccountAlice.GetPIN(Constants.MessagePINActionDevice);
 
             Console.WriteLine();
             Console.WriteLine("**** Added the service, 1 device");

@@ -48,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The container to be written</param>
         /// <param name="containerHeader">The container header???</param>
         /// <param name="JBCDStream">The stream???</param>
-        public ContainerWriterFile(Container container, DareHeader containerHeader, JBCDStream JBCDStream) {
+        public ContainerWriterFile(Container container, DareHeader containerHeader, JbcdStream JBCDStream) {
             Container = container;
             frameStart = JBCDStream.PositionWrite;
             ContainerHeader = containerHeader;

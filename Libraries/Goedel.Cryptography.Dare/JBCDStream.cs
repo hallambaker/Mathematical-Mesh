@@ -14,7 +14,7 @@ namespace Goedel.Cryptography.Dare {
     /// expected this will be replaced in the future by a version that performs direct 
     /// memory mapping of the files.
     /// </summary>
-    public partial class JBCDStream : Disposable {
+    public partial class JbcdStream : Disposable {
 
         /// <summary>
         /// The underlying stream for stream write operations
@@ -64,7 +64,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileName">The file to open.</param>
         /// <param name="fileStatus">The file access mode.</param>
         /// <param name="writeOnly">If true, the file is only opened in write mode.</param>
-        public JBCDStream(string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
+        public JbcdStream(string fileName, FileStatus fileStatus = FileStatus.Read, bool writeOnly = false) {
 
             if (fileStatus == FileStatus.ConcurrentLocked) {
                 LockGlobal = new LockGlobal(UDF.LockName(fileName));
@@ -87,7 +87,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="StreamRead">The underlying stream. This must support the seek operation.</param>
         /// <param name="StreamWrite">The underlying stream. This must support the seek operation.</param>
-        public JBCDStream(Stream StreamRead, Stream StreamWrite) {
+        public JbcdStream(Stream StreamRead, Stream StreamWrite) {
             this.StreamRead = StreamRead;
             this.StreamWrite = StreamWrite;
             StreamWrite?.Seek(0, SeekOrigin.End);

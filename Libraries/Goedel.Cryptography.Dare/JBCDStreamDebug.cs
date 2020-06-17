@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Debugging version of JBCDStream
     /// </summary>
-    public class JBCDStreamDebug : JBCDStream {
+    public class JBCDStreamDebug : JbcdStream {
         TextWriter Output;
 
         /// <summary>

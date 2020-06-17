@@ -396,8 +396,8 @@ namespace Goedel.Mesh.Shell {
         public override string ToString() {
             var builder = StringBuilder();
             foreach (var entry in CatalogedEntries) {
-                builder.Append(entry.ToString());
-                //builder.AppendLine();
+                entry.Describe(builder);
+                builder.AppendLine();
                 }
             return builder.ToString();
             }

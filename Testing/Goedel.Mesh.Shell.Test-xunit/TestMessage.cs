@@ -77,6 +77,9 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
 
             // reject the contact request.
+
+
+            // ToDo: At this point, this SHOULD fail because we haven't distinguished business card from in person connect.
             var result6 = ProcessMessage(deviceA, false, 1, 0);
             ValidContact(deviceA, AccountA);
             }
@@ -99,7 +102,7 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
 
             // Automatically accept the contact request.
-            var result6 = deviceB.Dispatch($"account sync /auto");
+            var result6 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AccountA, AccountB);
             }
 
@@ -123,6 +126,7 @@ namespace Goedel.XUnit {
             var result4 = ProcessMessage(deviceA, true, 1, 0);
 
             ValidContact(deviceA, AccountA,AccountB);
+
 
             // check the contact is listed
             var result6 = deviceB.Dispatch($"account sync /auto");
@@ -179,7 +183,7 @@ namespace Goedel.XUnit {
             ValidContact(deviceB, AccountB, AccountA);
 
             // Automatically accept the contact request.
-            var result6 = deviceB.Dispatch($"account sync /auto");
+            var result6 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AccountA, AccountB);
 
             return true;
@@ -216,7 +220,7 @@ namespace Goedel.XUnit {
         public void TestMessageConfirmationAccept() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch("message confirm {accountA} start") as ResultConfirm;
+            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultConfirm;
             var resultHandle = ProcessMessage(deviceA, true, 2, 1);
 
 
@@ -232,7 +236,7 @@ namespace Goedel.XUnit {
         public void TestMessageConfirmationReject() {
             CreateAliceBob(out var deviceA, out var deviceB);
 
-            var resultRequest = deviceB.Dispatch("message confirm {accountA} start") as ResultConfirm;
+            var resultRequest = deviceB.Dispatch($"message confirm {AccountA} start") as ResultConfirm;
             var resultHandle = ProcessMessage(deviceA, false, 2, 1);
 
 

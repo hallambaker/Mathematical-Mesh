@@ -95,7 +95,7 @@ namespace Goedel.Cryptography.Dare {
         public DareEnvelope FrameZero;
 
         /// <summary>The underlying file stream</summary>
-        public JBCDStream JBCDStream { get; set; }
+        public JbcdStream JBCDStream { get; set; }
 
         /// <summary>The byte offset from the start of the file for Record 1</summary>
         public virtual long StartOfData { get; protected set; }
@@ -169,7 +169,7 @@ namespace Goedel.Cryptography.Dare {
         /// The underlying stream reader/writer for the container. This will be disposed of when
         /// the container is released.
         /// </summary>
-        public JBCDStream DisposeJBCDStream;
+        public JbcdStream DisposeJBCDStream;
 
 
         #endregion
@@ -228,7 +228,7 @@ namespace Goedel.Cryptography.Dare {
             if (!create && !File.Exists(fileName)) {
                 return null;
                 }
-            var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
+            var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
             try {
 
@@ -267,7 +267,7 @@ namespace Goedel.Cryptography.Dare {
         /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
         /// <returns>The new container.</returns>
         public static Container Open(
-                        JBCDStream jbcdStream,
+                        JbcdStream jbcdStream,
                         KeyCollection keyCollection = null) {
 
 
@@ -295,7 +295,7 @@ namespace Goedel.Cryptography.Dare {
                 string fileName,
                 FileStatus fileStatus = FileStatus.Read,
                 KeyCollection keyCollection = null, bool decrypt = true) {
-            var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
+            var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
             return OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
             }
@@ -312,7 +312,7 @@ namespace Goedel.Cryptography.Dare {
         /// otherwise return payload contents as plaintext.</param>
         /// <returns></returns>
         public static Container OpenExisting(
-                        JBCDStream jbcdStream,
+                        JbcdStream jbcdStream,
                         KeyCollection keyCollection = null, bool decrypt = true) {
 
             // Initialize frame zero
@@ -450,7 +450,7 @@ namespace Goedel.Cryptography.Dare {
             Assert.True(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
                 InvalidFileModeException.Throw);
 
-            var jbcdStream = new JBCDStream(filename, fileStatus);
+            var jbcdStream = new JbcdStream(filename, fileStatus);
             var container = NewContainer(
                 jbcdStream, cryptoParameters, containerType, payload, contentType, dataEncoding,
                 cloaked, dataSequences);
@@ -480,7 +480,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
         ///     as an EDSS header entry.</param>
         public static Container NewContainer(
-                        JBCDStream jbcdStream,
+                        JbcdStream jbcdStream,
                         CryptoParameters cryptoParameters,
                         ContainerType containerType = ContainerType.Chain,
                         byte[] payload = null,
@@ -544,7 +544,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="digestAlgorithm">The digest algorithm to be used to calculate the PayloadDigest</param>
         /// <returns>The newly constructed container.</returns>
         public static Container MakeNewContainer(
-                        JBCDStream jbcdStream,
+                        JbcdStream jbcdStream,
                         CryptoParameters cryptoParameters,
                         ContainerType containerType = ContainerType.Chain,
                         CryptoAlgorithmId digestAlgorithm = CryptoAlgorithmId.Default) {
@@ -596,7 +596,7 @@ namespace Goedel.Cryptography.Dare {
                         List<DareEnvelope> envelopes,
                         FileStatus fileStatus = FileStatus.CreateNew) {
 
-            var jbcdStream = new JBCDStream(fileName, fileStatus: fileStatus);
+            var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
 
             var container = new ContainerMerkleTree() {
@@ -1182,7 +1182,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="builder">The stringbuilder to use.</param>
         /// <param name="indent">The indent level.</param>
         public static void ToBuilder(string fileName, StringBuilder builder, int indent) {
-            using var jbcdStream = new JBCDStream(fileName, fileStatus: FileStatus.Read);
+            using var jbcdStream = new JbcdStream(fileName, fileStatus: FileStatus.Read);
             var positionRead = jbcdStream.PositionRead;
             var envelope = jbcdStream.ReadDareEnvelope();
             while (envelope != null) {

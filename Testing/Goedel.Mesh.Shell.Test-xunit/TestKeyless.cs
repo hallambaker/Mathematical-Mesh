@@ -200,7 +200,7 @@ namespace Goedel.XUnit {
                 var buffer = UDF.DataToUDFBinary(
                     content, "text/plain", cryptoAlgorithmID: CryptoAlgorithmId.SHA_3_512);
                 if (buffer[0] > 144) {
-                    Console.WriteLine(UDF.PresentationBase32(buffer));
+                    //Console.WriteLine(UDF.PresentationBase32(buffer));
 
                     return i;
                     }

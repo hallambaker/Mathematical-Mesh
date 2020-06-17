@@ -93,7 +93,7 @@ namespace Goedel.Mesh.Client {
             ProfileDevice profileDevice,
             CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
-            Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
+            //Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
 
             // Add this device to the profile as an administrator device by adding the necessary activation.
             var activationDevice = new ActivationDevice(profileDevice);
@@ -277,7 +277,7 @@ namespace Goedel.Mesh.Client {
             var mastersecret = KeyCollection.LocatePrivateKey(ProfileMesh.KeyOfflineSignature.UDF);
             // convert to byte array;
             var mastersecretBytes = (mastersecret as PrivateKeyUDF).PrivateValue.FromBase32();
-            Console.WriteLine(mastersecretBytes.ToStringBase16FormatHex());
+            //Console.WriteLine(mastersecretBytes.ToStringBase16FormatHex());
             // split (n, t) ways
             var secret = new SharedSecret(mastersecretBytes);
             var keyShares = secret.Split(shares, threshold);
@@ -321,7 +321,7 @@ namespace Goedel.Mesh.Client {
             var length = secretBytes.Length - start;
             var masterSecret = new byte[length];
             Buffer.BlockCopy(secretBytes, start, masterSecret, 0, length);
-            Console.WriteLine(masterSecret.ToStringBase16FormatHex());
+            //Console.WriteLine(masterSecret.ToStringBase16FormatHex());
             return meshHost.CreateMesh("main", algorithmSign, algorithmEncrypt, algorithmAuthenticate,
                 masterSecret);
             }

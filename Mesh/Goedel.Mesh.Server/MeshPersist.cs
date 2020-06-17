@@ -132,8 +132,8 @@ namespace Goedel.Mesh.Server {
                 MessageID = witness
                 };
 
-            Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageConnectionRequest.MessageID}");
-            Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseID()}");
+            //Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageConnectionRequest.MessageID}");
+            //Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseID()}");
 
 
             // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.

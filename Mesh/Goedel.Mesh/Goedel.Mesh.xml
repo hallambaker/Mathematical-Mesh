@@ -268,6 +268,13 @@
              Base class for cataloged Mesh data.
              </summary>
         </member>
+        <member name="M:Goedel.Mesh.CatalogedEntry.Describe(System.Text.StringBuilder,System.Boolean)">
+            <summary>
+            Describe the entry, appending the output to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The output stream.</param>
+            <param name="detail">If true, provide a detailed description.</param>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedEntry.Labels">
              <summary>
             The set of labels describing the entry
@@ -1080,6 +1087,13 @@
             </summary>
             <param name="self">If true, mark as the user's own contact.</param>
             <param name="contact">Dare Envelope containing the contact to create a catalog wrapper for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedContact.Describe(System.Text.StringBuilder,System.Boolean)">
+            <summary>
+            Describe the entry, appending the output to <paramref name="builder"/>.
+            </summary>
+            <param name="builder">The output stream.</param>
+            <param name="detail">If true, provide a detailed description.</param>
         </member>
         <member name="P:Goedel.Mesh.CatalogedContact.Key">
              <summary>

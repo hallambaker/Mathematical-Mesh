@@ -58,7 +58,7 @@ namespace Goedel.Cryptography.Dare {
         public JSONObject JSONObject;
 
 
-        JBCDStream jbcdStream;
+        JbcdStream jbcdStream;
 
         /// <summary>
         /// Return the frame payload.
@@ -82,7 +82,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="keyCollection">The key collection to be used to obtain the decryption 
         /// key for the payload.</param>
         /// <param name="Position">The position in the file.</param>
-        public ContainerFrameIndex(JBCDStream jsonStream, KeyCollection keyCollection, long Position = -1) {
+        public ContainerFrameIndex(JbcdStream jsonStream, KeyCollection keyCollection, long Position = -1) {
 
             this.keyCollection = keyCollection;
             jbcdStream = jsonStream;

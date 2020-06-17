@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
 
 
     // This file has the methods that operate on the stream
-    public partial class JBCDStream {
+    public partial class JbcdStream {
 
         /// <summary>JSON-B Code for unidirectional frame</summary>
         public const byte UFrame = 0xF0;

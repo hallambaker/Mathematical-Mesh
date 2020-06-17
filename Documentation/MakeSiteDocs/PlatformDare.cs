@@ -79,7 +79,7 @@ namespace ExampleGenerator {
             }
 
 
-        byte[] ReadBinary(JBCDStream jBCDStream) {
+        byte[] ReadBinary(JbcdStream jBCDStream) {
             jBCDStream.ReadTag(out _, out var Length);
             var Result = new byte[Length];
             jBCDStream.Read(Result, 0, (int)Length);

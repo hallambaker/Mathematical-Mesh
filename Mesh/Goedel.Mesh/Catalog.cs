@@ -5,7 +5,7 @@ using Goedel.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Text;
 
 namespace Goedel.Mesh {
     /// <summary>
@@ -285,6 +285,14 @@ namespace Goedel.Mesh {
         }
 
     public partial class CatalogedEntry {
+
+        /// <summary>
+        /// Describe the entry, appending the output to <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">The output stream.</param>
+        /// <param name="detail">If true, provide a detailed description.</param>
+        public virtual void Describe(StringBuilder builder, bool detail = false) => builder.AppendLine(_Tag);
+
         }
 
     #endregion

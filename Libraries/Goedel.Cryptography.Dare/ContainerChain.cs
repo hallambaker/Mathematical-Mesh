@@ -27,7 +27,7 @@ namespace Goedel.Cryptography.Dare {
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
         public static new Container MakeNewContainer(
-                        JBCDStream JBCDStream) {
+                        JbcdStream JBCDStream) {
 
 
 

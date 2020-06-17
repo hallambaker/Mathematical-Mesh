@@ -259,7 +259,7 @@ namespace Goedel.Cryptography.Algorithms {
         public CurveX448Public Combine(CurveX448Public contribution) {
             var NewPublic = Public.Add(contribution.Public);
 
-            Console.WriteLine($"Combine  : {Public.Odd} + {contribution.Public.Odd} = {NewPublic.Odd}");
+            //Console.WriteLine($"Combine  : {Public.Odd} + {contribution.Public.Odd} = {NewPublic.Odd}");
 
 
             return new CurveX448Public((CurveX448)NewPublic);

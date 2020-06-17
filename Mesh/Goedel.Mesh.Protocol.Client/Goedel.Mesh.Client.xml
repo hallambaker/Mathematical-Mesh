@@ -696,7 +696,7 @@
             <param name="updates">The updates to apply.</param>
             <returns>True if the transaction committed, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.Int32,System.Int64)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Int32,System.Int64)">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.

@@ -34,7 +34,7 @@ namespace Goedel.XUnit {
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;
 
 
-            using (var JBCDStream = new JBCDStream(FileName, FileStatus.Overwrite)) {
+            using (var JBCDStream = new JbcdStream(FileName, FileStatus.Overwrite)) {
                 for (int i = 0; i < Records; i++) {
                     var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                     var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));
@@ -42,7 +42,7 @@ namespace Goedel.XUnit {
                     }
                 }
 
-            using (var JBCDStream = new JBCDStream(FileName, FileStatus.Read)) {
+            using (var JBCDStream = new JbcdStream(FileName, FileStatus.Read)) {
                 for (int i = 0; i < Records; i++) {
                     var Test1 = MakeConstant("Header ", ((i + 1) % MaxSize));
                     var Test2 = MakeConstant("Data ", ((i + 1) % MaxSize));

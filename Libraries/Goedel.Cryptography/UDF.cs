@@ -744,7 +744,7 @@ namespace Goedel.Cryptography {
                     int length = 0,
                     CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
 
-            Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
 
             var key = SymmetricKeyData(udf);
             var buffer = data.GetMAC(key, algorithm);
@@ -772,7 +772,7 @@ namespace Goedel.Cryptography {
             int minBits = 100,
             CryptoAlgorithmId algorithm = CryptoAlgorithmId.HMAC_SHA_2_512) {
 
-            Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Generate MAC: {udf} {data.ToStringBase16FormatHex()}");
 
             var key = SymmetricKeyData(udf);
             var buffer = data.GetMAC(key, algorithm);

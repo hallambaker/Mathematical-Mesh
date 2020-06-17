@@ -29,7 +29,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
-                        JBCDStream JBCDStream) {
+                        JbcdStream JBCDStream) {
 
 
             var containerInfo = new ContainerInfo() {

@@ -173,7 +173,7 @@ namespace Goedel.Protocol {
 
             ToBuilder(StringBuilder, indent);
 
-            Console.WriteLine(StringBuilder.ToString());
+            //Console.WriteLine(StringBuilder.ToString());
             }
 
 

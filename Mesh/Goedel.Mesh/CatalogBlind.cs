@@ -58,7 +58,7 @@ namespace Goedel.Mesh {
         /// <param name="updates">The updates to apply</param>
         /// <returns>True if the transactions were accepted, otherwise false.</returns>
         public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
-            Console.WriteLine("  Blind transaction!");
+            //Console.WriteLine("  Blind transaction!");
 
             return base.Transact(catalog, updates);
 

@@ -29,16 +29,16 @@ namespace Scratchpad {
 
             //ShellTests.Test().TestMessageContactRemote();
             //ShellTests.Test().TestMessageContactBusinessCardFetch();
-            ShellTests.Test().TestMessageContactBusinessCardExchange();
+            //ShellTests.Test().TestMessageContactBusinessCardExchange();
             //ShellTests.Test().TestMessageContactBusinessCardReject();
 
             //ShellTests.Test().TestMessageContactInPerson();
 
 
 
-            //ShellTests.Test().TestMessageConfirmation();
+            ShellTests.Test().TestMessageConfirmationAccept();
 
-
+            ShellTests.Test().TestMessageConfirmationReject();
 
 
             // All the tests related to Groups.

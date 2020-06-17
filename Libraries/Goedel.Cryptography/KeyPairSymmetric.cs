@@ -41,7 +41,7 @@ namespace Goedel.Cryptography {
             KeyIdentifier = UDF.SymetricKeyId(SecretKey);
 
 
-            Console.WriteLine($"SecretKey {SecretKey}/{KeyIdentifier} {secretValue.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"SecretKey {SecretKey}/{KeyIdentifier} {secretValue.ToStringBase16FormatHex()}");
 
             }
 
@@ -69,7 +69,7 @@ namespace Goedel.Cryptography {
             exchange = Platform.KeyWrapRFC3394.Wrap(encryptionKey, key);
 
 
-            Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Encryption Key = {encryptionKey.ToStringBase16FormatHex()}");
 
             ephemeral = null;
             }
@@ -97,7 +97,7 @@ namespace Goedel.Cryptography {
 
             var result = Platform.KeyWrapRFC3394.Unwrap(encryptionKey, encryptedKey);
 
-            Console.WriteLine($"Encryption Key = {result.ToStringBase16FormatHex()}");
+            //Console.WriteLine($"Encryption Key = {result.ToStringBase16FormatHex()}");
 
             return result;
             }

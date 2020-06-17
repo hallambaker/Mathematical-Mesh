@@ -85,23 +85,23 @@ namespace Goedel.Test.Core {
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
             var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
 
-            Console.WriteLine("Created new Mesh");
-            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+            //Console.WriteLine("Created new Mesh");
+            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
 
             contextAccount = contextAdmin.CreateAccount(localName);
 
-            Console.WriteLine("Device Catalog");
+            //Console.WriteLine("Device Catalog");
 
 
             var catalogDevice = contextAccount.GetCatalogDevice();
-            Console.WriteLine(catalogDevice.Report());
+            //Console.WriteLine(catalogDevice.Report());
 
             //Console.WriteLine("Added Account");
             //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
             contextAccount.AddService(accountId);
 
-            Console.WriteLine("Bound account to Service");
-            Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+            //Console.WriteLine("Bound account to Service");
+            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
 
             return result;
             }
@@ -126,7 +126,7 @@ namespace Goedel.Test.Core {
             ContextAccount contextAccountAdmin,
             string localName = null) {
 
-            var PIN = contextAccountAdmin.GetPIN();
+            var PIN = contextAccountAdmin.GetPIN(Constants.MessagePINActionDevice);
 
             var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
             //return machine.Connect(contextAccountAdmin.AccountId, PIN: PIN);

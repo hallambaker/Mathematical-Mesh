@@ -320,11 +320,11 @@ namespace ExampleGenerator {
             var recoveryShares = new KeyShareEdwards[] { keyShares[0], keyShares[2] };
             var testa0 = Shared.CombineNT(recoveryShares, Modulus, 2);
 
-            Console.WriteLine($" A0 =     {A0}");
-            Console.WriteLine($" TestA0 = {testa0}");
+            //Console.WriteLine($" A0 =     {A0}");
+            //Console.WriteLine($" TestA0 = {testa0}");
 
             var t3 = (A0 - testa0) % Modulus;
-            Console.WriteLine($" TestA0 = {t3}");
+            //Console.WriteLine($" TestA0 = {t3}");
 
 
             La = recoveryShares[0].Lagrange(recoveryShares, 0);
@@ -340,7 +340,7 @@ namespace ExampleGenerator {
             var l1test = (l1num * l1deninv).Mod(Modulus);
 
             var litestinv = (l1den * l1deninv).Mod(Modulus);
-            Console.WriteLine($" litestinv = {litestinv}");
+            //Console.WriteLine($" litestinv = {litestinv}");
 
             (l1test == La).AssertTrue();
 

@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Client {
             foreach (var entry in containerHost.ObjectIndex) {
                 var catalogedMachine = entry.Value.JsonObject as CatalogedMachine;
                 Register(catalogedMachine);
-                Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
+                //Console.WriteLine($"Container  {entry.Key}  of {entry.Value.GetType()}");
                 }
 
             }
@@ -180,7 +180,7 @@ namespace Goedel.Mesh.Client {
                     masterSecret, persist: persist);
 
             Register(context);
-            Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
+            //Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
 
             return context;
 

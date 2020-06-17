@@ -69,7 +69,7 @@ namespace Goedel.Cryptography {
             polynomial = new BigInteger[t];
             polynomial[0] = Value;
 
-            Console.WriteLine("Key = {0} ", polynomial[0]);
+            //Console.WriteLine("Key = {0} ", polynomial[0]);
 
             for (int i = 1; i < t; i++) {
                 polynomial[i] = BigNumber.Random(Prime);
@@ -144,15 +144,15 @@ namespace Goedel.Cryptography {
                 numerator = (numerator * -next).Mod(modulus);
                 denominator = (denominator * (start - next)).Mod(modulus);
 
-                Console.WriteLine($"Numerator {numerator}");
-                Console.WriteLine($"Denominator {denominator}");
+                //Console.WriteLine($"Numerator {numerator}");
+                //Console.WriteLine($"Denominator {denominator}");
                 }
 
             var invDenominator = ModInverse(denominator, modulus);
             var result = (numerator * invDenominator).Mod(modulus);
 
-            Console.WriteLine($"InvDenominator {invDenominator}");
-            Console.WriteLine($"result {result}");
+            //Console.WriteLine($"InvDenominator {invDenominator}");
+            //Console.WriteLine($"result {result}");
 
             return result;
             }
@@ -445,7 +445,7 @@ namespace Goedel.Cryptography {
             var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
 
             var accum = CombineNT(shares, modulus, threshold);
-            Console.WriteLine($"Reconstructed value = {accum}");
+            //Console.WriteLine($"Reconstructed value = {accum}");
             return accum.ToByteArrayBigEndian(shareChunks * 4);
             }
 

@@ -107,7 +107,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>The result of the operation.</returns>
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
             using var contextAccount = GetContextAccount(Options);
-            var messageConnectionPIN = contextAccount.GetPIN();
+            var messageConnectionPIN = contextAccount.GetPIN(Constants.MessagePINActionDevice);
 
             var result = new ResultPIN() {
                 MessagePIN = messageConnectionPIN
@@ -126,7 +126,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
 
 
-            var messagePIN = contextAccount.GetPIN(length: 128);
+            var messagePIN = contextAccount.GetPIN(Constants.MessagePINActionContact, length: 128);
             var uri = messagePIN.GetURI();
 
             var result = new ResultPIN() {

@@ -461,7 +461,7 @@ namespace Goedel.Mesh.Client {
 
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
                     var meshMessage = Message.FromJSON(message.GetBodyReader());
-                    Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
+                    //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
                     if (contentMeta.MessageType == tag) {
                         return meshMessage;
                         }
@@ -496,7 +496,7 @@ namespace Goedel.Mesh.Client {
 
 
                 var meshMessage = Message.FromJSON(message.GetBodyReader());
-                Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
+                //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
 
                 if (meshMessage.MessageID == messageID) {
                     read = true;
@@ -589,7 +589,7 @@ namespace Goedel.Mesh.Client {
             else {
                 using var storeLocal = new Store(DirectoryAccount, statusRemote.Container,
                             decrypt: false, create: false);
-                Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+                //Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
                 return storeLocal.FrameCount >= statusRemote.Index ? null :
                     new ConstraintsSelect() {
                         Container = statusRemote.Container,
@@ -715,17 +715,17 @@ namespace Goedel.Mesh.Client {
         /// <param name="validity">The validity interval in minutes from the current 
         /// date and time.</param>
         /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
-        public MessagePIN GetPIN(int length = 80, long validity = Constants.DayInTicks) {
+        public MessagePIN GetPIN(string action,int length = 80, long validity = Constants.DayInTicks) {
             var pin = UDF.SymmetricKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
-            return RegisterPIN(pin, expires, AccountAddress, "Device");
+            return RegisterPIN(pin, expires, AccountAddress, action);
             }
 
 
 
         MessagePIN RegisterPIN(string pin, DateTime? expires, string accountAddress, string action) {
-            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress, "Device");
+            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress, action);
 
             SendMessageAdmin(messageConnectionPIN);
             return messageConnectionPIN;
@@ -823,7 +823,7 @@ namespace Goedel.Mesh.Client {
 
             var cataloguedDevice = AddDevice(profileDevice);
 
-            Console.WriteLine($"Accept connection ID is {responseId}");
+            //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
                 MessageID = responseId,
                 CatalogedDevice = cataloguedDevice,
@@ -945,7 +945,6 @@ namespace Goedel.Mesh.Client {
                     }
                 }
 
-
             return results;
             }
 
@@ -1046,7 +1045,7 @@ namespace Goedel.Mesh.Client {
                 respondConnection.Result = Constants.TransactionResultReject;
                 }
 
-            Console.WriteLine($"Accept connection ID is {messageID}");
+            //Console.WriteLine($"Accept connection ID is {messageID}");
 
             SendMessage(respondConnection);
 
@@ -1066,7 +1065,7 @@ namespace Goedel.Mesh.Client {
             ProfileAccount.ConnectDevice(KeyCollection, device, null);
 
 
-            Console.WriteLine(device.ToString());
+            //Console.WriteLine(device.ToString());
 
 
             // Update the local and remote catalog.
@@ -1173,9 +1172,10 @@ namespace Goedel.Mesh.Client {
 
             // calculate the witness value over contactSelf and PIN
 
-            var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionDevice);
+            var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionContact);
 
             var nonce = CryptoCatalog.GetBits(128);
+
             var witness = MessagePIN.GetPinWitness(saltedPin, recipient, contactSelf, nonce);
             var pinUdf = MessagePIN.GetPinUDF(saltedPin, recipient);
 

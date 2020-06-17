@@ -152,6 +152,41 @@ namespace Goedel.Mesh {
             Key = contact.Id ?? UDF.Nonce();
             }
 
+        /// <summary>
+        /// Describe the entry, appending the output to <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">The output stream.</param>
+        /// <param name="detail">If true, provide a detailed description.</param>
+        public override void Describe(StringBuilder builder,bool detail = false) {
+            builder.AppendLine($"Entry<{_Tag}>: {Key}");
+            if (Contact == null) {
+                builder.AppendLine($"  EMPTY!");
+                return;
+                }
+
+            switch (Contact) {
+                case ContactPerson contactPerson: {
+                    builder.AppendLine($"  Person {contactPerson.Id}");
+
+                    break;
+                    }
+                case ContactOrganization contactPerson: {
+                    break;
+                    }
+                case ContactGroup contactPerson: {
+                    break;
+                    }
+                }
+            foreach (var anchor in Contact.Anchors) {
+                builder.AppendLine($"  Anchor {anchor.UDF}");
+                }
+            foreach (var address in Contact.NetworkAddresses) {
+                builder.AppendLine($"  Address {address.Address}");
+                }
+
+
+            }
+
 
         }
 
