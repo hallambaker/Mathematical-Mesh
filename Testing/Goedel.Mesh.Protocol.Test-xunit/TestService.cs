@@ -79,22 +79,6 @@ namespace Goedel.XUnit {
             }
 
 
-        //void CheckHostCatalog(MeshMachineTest meshMachine, ref long length) {
-        //    var filename = meshMachine.FileNameHost;
-
-        //    using var stream = filename.OpenFileReadShared();
-
-        //    Console.WriteLine($"Stream {stream.Length}");
-
-        //    (stream.Length > length).AssertTrue();
-        //    length = stream.Length;
-
-        //    return;
-        //    }
-
-
-        // need to ensure that all updates to the host catalog are being properly written out to disk.
-
 
         [Fact]
         public void MeshServiceFull() {
@@ -140,8 +124,8 @@ namespace Goedel.XUnit {
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
             machineAlice2.CheckHostCatalogExtended(); // initial
 
-            var PIN = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
-            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: PIN.SaltedPIN);
+            var boundPin = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
+            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: boundPin.PIN);
             machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
             // Still have to process of course to get the data
@@ -227,7 +211,7 @@ namespace Goedel.XUnit {
             var catalogDevice = contextAccountAlice.GetCatalogDevice();
 
             // Admin Device
-            var PIN = contextAccountAlice.GetPIN(Constants.MessagePINActionDevice);
+            var boundPin = contextAccountAlice.GetPIN(Constants.MessagePINActionDevice);
 
             Console.WriteLine();
             Console.WriteLine("**** Added the service, 1 device");
@@ -235,7 +219,7 @@ namespace Goedel.XUnit {
 
             // New Device
             var contextAccount2Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
-                AccountAlice, PIN: PIN.SaltedPIN);
+                AccountAlice, PIN: boundPin.PIN);
 
             // Admin Device
             contextAccountAlice.Sync();
@@ -299,9 +283,6 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
                 out var contextAccountAlice, AccountAlice);
-
-            //var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contextAccountAlice.SetContactSelf(ContactAlice);
             }
 
 
@@ -340,7 +321,7 @@ namespace Goedel.XUnit {
             var syncBob = contextAccountBob.Sync();
 
             var fromAlice = contextAccountBob.GetPendingMessageContactReply();
-            contextAccountAlice.Process(fromAlice);
+            contextAccountBob.Process(fromAlice);
             }
 
         [Fact]
@@ -367,6 +348,20 @@ namespace Goedel.XUnit {
             }
 
 
+        public bool Exchange(ContextAccount contextAccountAlice, ContextAccount contextAccountBob) {
+            contextAccountBob.ContactRequest(AccountAlice);
+            var sync = contextAccountAlice.Sync();
+
+            var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
+            contextAccountAlice.Process(fromBob);
+            var syncBob = contextAccountBob.Sync();
+
+            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
+            contextAccountBob.Process(fromAlice);
+
+            return true;
+            }
+
         [Fact]
         public void MeshCatalogGroup() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
@@ -376,6 +371,8 @@ namespace Goedel.XUnit {
                 out var contextAccountAlice, AccountAlice);
             MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
                 out var contextAccountBob, AccountBob);
+
+            Exchange(contextAccountAlice, contextAccountBob);
 
             // Generate a recryption group
             var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
@@ -425,7 +422,7 @@ namespace Goedel.XUnit {
 
             Verify(first.ActivationAccount, second.ActivationAccount);
             Verify(first.ProfileAccount, second.ProfileAccount);
-            (first.DirectoryAccount == second.DirectoryAccount).AssertTrue();
+            (first.StoresDirectory == second.StoresDirectory).AssertTrue();
             (first.KeySignatureUDF == second.KeySignatureUDF).AssertTrue();
             (first.KeyEncryptionUDF == second.KeyEncryptionUDF).AssertTrue();
             (first.KeyAuthenticationUDF == second.KeyAuthenticationUDF).AssertTrue();

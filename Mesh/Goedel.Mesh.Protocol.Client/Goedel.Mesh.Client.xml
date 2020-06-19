@@ -462,11 +462,8 @@
             Bound context for a Mesh Account. 
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.ContextMesh">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.ContextMesh">
             <summary>The enclosing mesh context.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.ContextMeshAdmin">
-            <summary>The enclosing mesh context as an administrative context (if rights granted.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountEntry">
             <summary>The account entry</summary>
@@ -479,12 +476,6 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.ConnectionAccount">
             <summary>Convenience accessor for the account connection</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.MeshMachine">
-            <summary>The Machine context.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.containerCryptoParameters">
-            <summary>The cryptographic parameters for reading/writing to account containers</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyEncryptionUDF">
             <summary>Convenience accessor for the encryption key fingerprint.</summary>
@@ -501,7 +492,7 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.DirectoryAccount">
+        <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
@@ -564,11 +555,6 @@
             </summary>
             <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
             <returns>If true, the synchronization has completed.</returns>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextAccount.Stores">
-            <summary>
-            List of the known store types.
-            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogApplication">
             <summary>Returns the application catalog for the account</summary>
@@ -663,40 +649,14 @@
             <param name="groupAddress">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStoreStatus(Goedel.Mesh.ContainerStatus)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStore(System.String)">
             <summary>
-            Return a <see cref="T:Goedel.Mesh.ConstraintsSelect"/> instance that requests synchronization to the
-            remote store whose status is described by <paramref name="statusRemote"/>.
+            Create a new instance bound to the specified core within this account context.
             </summary>
-            <param name="statusRemote">Status of the remote store.</param>
-            <returns>The selection constraints.</returns>
+            <param name="name">The name of the store to bind.</param>
+            <returns>The store instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.UpdateStore(Goedel.Mesh.ContainerUpdate)">
-            <summary>
-            Update the store according to the values <paramref name="containerUpdate"/>.
-            </summary>
-            <param name="containerUpdate">The update to apply.</param>
-            <returns>The number of envelopes successfully added.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetStore(System.String,System.Boolean)">
-            <summary>
-            Return a <see cref="T:Goedel.Mesh.Store"/> instance for the store named <paramref name="name"/>. If the
-            parameter <paramref name="blind"/> is true, only the sequence header values are read.
-            </summary>
-            <param name="name">The store to open.</param>
-            <param name="blind">If true, only the sequence header values are read</param>
-            <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Request a transactional update to <paramref name="catalog"/>. Either all the 
-            updates specified in <paramref name="updates"/> are committed or none are.
-            </summary>
-            <param name="catalog">The catalog to update.</param>
-            <param name="updates">The updates to apply.</param>
-            <returns>True if the transaction committed, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Int32,System.Int64)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64)">
             <summary>
             Create a PIN value of length <paramref name="length"/> bits valid for 
             <paramref name="validity"/> minutes.
@@ -704,6 +664,9 @@
             <param name="length">The size of the PIN value to create in bits.</param>
             <param name="validity">The validity interval in minutes from the current 
             date and time.</param>
+            <param name="action">The action to which this pin is bound.</param>
+            <param name="automatic">If true, presentation of the pin code is sufficient
+            to authenticate and authorize the action.</param>
             <returns>A <see cref="T:Goedel.Mesh.MessagePIN"/> instance describing the created parameters.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
@@ -744,11 +707,13 @@
             </summary>
             <returns>The results of the automatic processing attempted.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact,System.Boolean,System.Boolean)">
             <summary>
             Perform automatic processing of the message <paramref name="replyContact"/>.
             </summary>
             <param name="replyContact">Reply to contact request to be processed.</param>
+            <param name="accept">Accept the requested action.</param>
+            <param name="authorize">If true, the action is explicitly authorized.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
@@ -814,12 +779,14 @@
             <param name="localName">Local name for the contact</param>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactUriStatic(System.Nullable{System.DateTime},System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactUri(System.Boolean,System.Nullable{System.DateTime},System.String)">
             <summary>
             Construct a contact fetch URI.
             </summary>
             <param name="localName">Local name for the contact</param>
             <param name="expire">Expiry time for the corresponding PIN</param>
+            <param name="automatic">If true, presentation of the pin code is sufficient
+            to authenticate and authorize the action.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ContactRequest(System.String,System.String)">
             <summary>
@@ -828,7 +795,7 @@
             <param name="recipientAddress">The contact to request.</param>
             <param name="localName">Local name for the contact</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactExchange(System.String,System.Boolean,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ContactExchange(System.String,System.Boolean,Goedel.Mesh.Message@,System.String)">
             <summary>
             Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
             is true, send own contact data.
@@ -836,6 +803,7 @@
             <param name="uri">The URI to resolve.</param>
             <param name="reciprocate">If true send own contact data.</param>
             <param name="localname">Local name for the contact to send in exchange</param>
+            <param name="message">The reciprocation message (if sent), otherwise null.</param>
             <returns>The cataloged contact information.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ConfirmationRequest(System.String,System.String)">
@@ -882,11 +850,66 @@
             separate contexts but share functions and thus code.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.keySignature">
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.ContextMesh">
+            <summary>The enclosing mesh context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.ContextMeshAdmin">
+            <summary>The enclosing mesh context as an administrative context (if rights granted.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.MeshMachine">
+            <summary>The Machine context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyCollection">
+            <summary>The key collection for use with the context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeySignature">
             <summary>The member's device signature key</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.keyEncryption">
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyEncryption">
             <summary>The group encryption key </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.StoresDirectory">
+            <summary>The directory containing the catalogs related to the account.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextAccountEntry.DictionaryStores">
+            <summary>Dictionary locating the stores connected to the context.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextAccountEntry.ContainerCryptoParameters">
+            <summary>The cryptographic parameters for reading/writing to account containers</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetCatalogCapability">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetStoreStatus(Goedel.Mesh.ContainerStatus)">
+            <summary>
+            Return a <see cref="T:Goedel.Mesh.ConstraintsSelect"/> instance that requests synchronization to the
+            remote store whose status is described by <paramref name="statusRemote"/>.
+            </summary>
+            <param name="statusRemote">Status of the remote store.</param>
+            <returns>The selection constraints.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.UpdateStore(Goedel.Mesh.ContainerUpdate)">
+            <summary>
+            Update the store according to the values <paramref name="containerUpdate"/>.
+            </summary>
+            <param name="containerUpdate">The update to apply.</param>
+            <returns>The number of envelopes successfully added.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetStore(System.String,System.Boolean)">
+            <summary>
+            Return a <see cref="T:Goedel.Mesh.Store"/> instance for the store named <paramref name="name"/>. If the
+            parameter <paramref name="blind"/> is true, only the sequence header values are read.
+            </summary>
+            <param name="name">The store to open.</param>
+            <param name="blind">If true, only the sequence header values are read</param>
+            <returns>The <see cref="T:Goedel.Mesh.Store"/> instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.MakeStore(System.String)">
+            <summary>
+            Create a new instance bound to the specified core within this account context.
+            </summary>
+            <param name="name">The name of the store to bind.</param>
+            <returns>The store instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetByAccountEncrypt(System.String)">
             <summary>
@@ -1059,15 +1082,46 @@
             Context binding for a Group account
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.ContextMesh">
+            <summary>The enclosing mesh context.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextGroup.ContextAccount">
+            <summary>The enclosing mesh context.</summary>
+        </member>
         <member name="F:Goedel.Mesh.Client.ContextGroup.CatalogedGroup">
             <summary>The catalogued group description.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.CatalogedGroup)">
+        <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
+            <summary>The group profile.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
+            <summary>The directory containing the catalogs related to the account.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextAccount,Goedel.Mesh.CatalogedGroup)">
             <summary>
             Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
             </summary>
+            <param name="contextAccount">The enclosing account context.</param>
             <param name="catalogedGroup">Description of the group to return the
             context for.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateGroup(Goedel.Mesh.Client.ContextAccount,Goedel.Mesh.CatalogedGroup)">
+            <summary>
+            Create a new group.
+            </summary>
+            <param name="contextAccount">The enclosing account context.</param>
+            <param name="catalogedGroup">Description of the group to create.</param>
+            <returns>The group context.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.GetCatalogMember">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.MakeStore(System.String)">
+            <summary>
+            Create a new instance bound to the specified core within this account context.
+            </summary>
+            <param name="name">The name of the store to bind.</param>
+            <returns>The store instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String)">
             <summary>
@@ -1087,7 +1141,7 @@
             <summary>
             Delete a member from the group
             </summary>
-            <param name="id">The member to delete.</param>
+            <param name="member">The member to delete.</param>
             <returns>The member catalog entry.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextMesh">

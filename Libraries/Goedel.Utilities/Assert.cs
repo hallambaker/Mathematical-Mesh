@@ -84,7 +84,7 @@ namespace Goedel.Utilities {
                 String = String,
                 Int = Int
                 };
-            Throw ??= Utilities.NYI.Throw;
+            Throw ??= Utilities.AssertionFail.Throw;
             throw Throw(Reason);
             }
 

@@ -47,13 +47,19 @@ namespace Goedel.XUnit {
             var uri = resultcuri.Uri;
 
             // fetch the contact, request reciprocation
-            var resultfetch = deviceB.Dispatch($"contact exchange {uri}");
+            var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
             ValidContact(deviceB, AccountB, AccountA);
 
             // accept the contact request.
 
             var result6 = deviceA.Dispatch($"account sync /auto");
             //var result6 = ProcessMessage(deviceA, true, 1, 0);
+            ValidContact(deviceA, AccountA);
+
+            
+            var messageId = resultfetch.Message.MessageID;
+
+            var result7 = ProcessMessage(deviceA, true, messageId);
             ValidContact(deviceA, AccountA, AccountB);
             }
 
@@ -73,14 +79,21 @@ namespace Goedel.XUnit {
             var uri = resultcuri.Uri;
 
             // fetch the contact, request reciprocation
-            var resultfetch = deviceB.Dispatch($"contact exchange {uri}");
+            var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
             ValidContact(deviceB, AccountB, AccountA);
+
+
+            var messageId = resultfetch.Message.MessageID;
 
             // reject the contact request.
 
 
             // ToDo: At this point, this SHOULD fail because we haven't distinguished business card from in person connect.
-            var result6 = ProcessMessage(deviceA, false, 1, 0);
+            var result6 = ProcessMessage(deviceA, false, messageId);
+            ValidContact(deviceA, AccountA);
+
+            // Even explicit accept has no effect
+            var result7 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AccountA);
             }
 

@@ -219,4 +219,14 @@ namespace Goedel.Mesh {
         public CompleteResponse(Exception exception = null) : base(exception) {
             }
         }
+
+
+    public partial class CreateGroupResponse {
+        /// <summary>
+        /// Default constructor. 
+        /// </summary>
+        /// <param name="exception">Optional exception specifier.</param>
+        public CreateGroupResponse(Exception exception = null) : base(exception) {
+            }
+        }
     }

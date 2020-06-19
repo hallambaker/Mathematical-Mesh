@@ -245,7 +245,7 @@ namespace Goedel.Mesh.Client {
 
             var contextAccount = new ContextAccount(this, accountEntry);
 
-            Directory.CreateDirectory(contextAccount.DirectoryAccount);
+            Directory.CreateDirectory(contextAccount.StoresDirectory);
             contextAccount.AddDevice(CatalogedDevice);
 
             MeshHost.Register(CatalogedAdmin, this);

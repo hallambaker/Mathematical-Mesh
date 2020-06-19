@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
 
 
-            var uri = contextAccount.ContactUriStatic(null);
+            var uri = contextAccount.ContactUri(false, null);
 
             var result = new ResultPublish() {
                 Success = true,
@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var expiry = DateTime.Now.AddTicks(Constants.DayInTicks);
 
-            var uri = contextAccount.ContactUriStatic(expiry);
+            var uri = contextAccount.ContactUri(true, expiry);
 
             var result = new ResultPublish() {
                 Success = true,
@@ -70,11 +70,12 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var recipient = Options.Uri.Value;
 
-            var entry = contextAccount.ContactExchange(recipient, true);
+            var entry = contextAccount.ContactExchange(recipient, true, out var message);
 
-            return new ResultEntry() {
+            return new ResultEntrySent() {
                 Success = true,
-                CatalogEntry = entry
+                CatalogEntry = entry,
+                Message = message
                 };
             }
 
@@ -87,7 +88,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var recipient = Options.Uri.Value;
 
-            var entry = contextAccount.ContactExchange(recipient, false);
+            var entry = contextAccount.ContactExchange(recipient, false, out _);
 
             return new ResultEntry() {
                 Success = true,

@@ -163,8 +163,11 @@ namespace Goedel.Mesh {
         /// <param name="expires">The expiry time.</param>
         /// <param name="action">The purpose for which the pin is registered.</param>
         /// <param name="accountAddress">The account address the PIN is issued for.</param>
-        public MessagePIN(string pin, DateTime? expires, string accountAddress, string action) {
+        /// <param name="automatic">If true, the actions authenticated with the PIN should be
+        /// automatically authorized.</param>
+        public MessagePIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
             Account = accountAddress;
+            Automatic = automatic;
             Expires = expires;
             PIN = pin;
             SaltedPIN = SaltPIN(pin, action);

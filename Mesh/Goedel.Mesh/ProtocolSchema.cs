@@ -5043,6 +5043,17 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class CreateGroupRequest : MeshRequest {
+        /// <summary>
+        ///The service account to bind to.
+        /// </summary>
+
+		public virtual string						AccountAddress  {get; set;}
+        /// <summary>
+        ///The persistent profile that will be used to validate changes to the
+        ///account assertion.
+        /// </summary>
+
+		public virtual DareEnvelope						SignedProfileGroup  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5087,6 +5098,16 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_writer, false, ref _first);
+			if (AccountAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
+				}
+			if (SignedProfileGroup != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("SignedProfileGroup", 1);
+					SignedProfileGroup.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -5120,6 +5141,17 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
+					break;
+					}
+				case "SignedProfileGroup" : {
+					// An untagged structure
+					SignedProfileGroup = new DareEnvelope ();
+					SignedProfileGroup.Deserialize (jsonReader);
+ 
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -5133,7 +5165,7 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class CreateGroupResponse : MeshResponse {
+	public partial class CreateGroupResponse : CreateResponse {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5177,7 +5209,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((MeshResponse)this).SerializeX(_writer, false, ref _first);
+			((CreateResponse)this).SerializeX(_writer, false, ref _first);
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}

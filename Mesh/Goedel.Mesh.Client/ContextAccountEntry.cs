@@ -13,11 +13,143 @@ namespace Goedel.Mesh.Client {
     /// </summary>
     public abstract class ContextAccountEntry : Disposable, IKeyLocate {
 
+        ///<summary>The enclosing mesh context.</summary>
+        public abstract ContextMesh ContextMesh { get; }
+
+        ///<summary>The enclosing mesh context as an administrative context (if rights granted.</summary>
+        protected ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
+
+        ///<summary>The Machine context.</summary>
+        protected IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
+
+        ///<summary>The key collection for use with the context.</summary>
+        protected KeyCollection KeyCollection => ContextMesh.KeyCollection;
+
+
+
+
         ///<summary>The member's device signature key</summary>
-        protected KeyPair keySignature { get; set; }
+        protected KeyPair KeySignature { get; set; }
 
         ///<summary>The group encryption key </summary>
-        protected KeyPair keyEncryption { get; set; }
+        protected KeyPair KeyEncryption { get; set; }
+
+        ///<summary>The directory containing the catalogs related to the account.</summary>
+        public virtual string StoresDirectory { get; set; }
+
+        ///<summary>Dictionary locating the stores connected to the context.</summary>
+        protected Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
+
+        ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
+        protected CryptoParameters ContainerCryptoParameters;
+
+
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogCapability GetCatalogCapability() => GetStore(CatalogCapability.Label) as CatalogCapability;
+
+
+        #region // Store management
+
+        /// <summary>
+        /// Return a <see cref="ConstraintsSelect"/> instance that requests synchronization to the
+        /// remote store whose status is described by <paramref name="statusRemote"/>.
+        /// </summary>
+        /// <param name="statusRemote">Status of the remote store.</param>
+        /// <returns>The selection constraints.</returns>
+        public ConstraintsSelect GetStoreStatus(ContainerStatus statusRemote) {
+            if (DictionaryStores.TryGetValue(statusRemote.Container, out var syncStore)) {
+                var storeLocal = syncStore.Store;
+
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount
+                        };
+                }
+
+            else {
+                using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
+                            decrypt: false, create: false);
+                //Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount
+                        };
+                }
+            }
+
+        /// <summary>
+        /// Update the store according to the values <paramref name="containerUpdate"/>.
+        /// </summary>
+        /// <param name="containerUpdate">The update to apply.</param>
+        /// <returns>The number of envelopes successfully added.</returns>
+        public int UpdateStore(ContainerUpdate containerUpdate) {
+            int count = 0;
+            if (DictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
+                var store = syncStore.Store;
+                foreach (var entry in containerUpdate.Envelopes) {
+                    if (entry.Index == 0) {
+                        throw new NYI();
+                        }
+
+                    count++;
+                    store.AppendDirect(entry);
+                    }
+                return count;
+                }
+
+            else {
+                // we have zero envelopes being returned in this update.
+
+                Store.Append(StoresDirectory, containerUpdate.Envelopes, containerUpdate.Container);
+                return containerUpdate.Envelopes.Count;
+                }
+
+            }
+
+        /// <summary>
+        /// Return a <see cref="Store"/> instance for the store named <paramref name="name"/>. If the
+        /// parameter <paramref name="blind"/> is true, only the sequence header values are read.
+        /// </summary>
+        /// <param name="name">The store to open.</param>
+        /// <param name="blind">If true, only the sequence header values are read</param>
+        /// <returns>The <see cref="Store"/> instance.</returns>
+        public Store GetStore(string name, bool blind = false) {
+            if (DictionaryStores.TryGetValue(name, out var syncStore)) {
+                if (!blind & (syncStore.Store is CatalogBlind)) {
+                    // if we have a blind store from a sync operation but need a populated one,
+                    // remake it.
+                    syncStore.Store.Dispose();
+                    syncStore.Store = MakeStore(name);
+                    }
+                return syncStore.Store;
+                }
+
+            //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
+
+            var store = blind ? new CatalogBlind(StoresDirectory, name) : MakeStore(name);
+            syncStore = new SyncStatus(store);
+
+            DictionaryStores.Add(name, syncStore);
+            return syncStore.Store;
+            }
+
+        /// <summary>
+        /// Create a new instance bound to the specified core within this account context.
+        /// </summary>
+        /// <param name="name">The name of the store to bind.</param>
+        /// <returns>The store instance.</returns>
+        protected virtual Store MakeStore(string name) => name switch
+            {
+                CatalogCapability.Label => new CatalogCapability(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                _ => throw new NYI(),
+                };
+        #endregion
+
+
 
         #region Implement IKeyLocate
 
@@ -84,7 +216,7 @@ namespace Goedel.Mesh.Client {
 
             true.AssertFalse(); // This method has serious issues.
 
-            KeyPair signingKey = sign ? keySignature : null;
+            KeyPair signingKey = sign ? KeySignature : null;
             List<CryptoKey> encryptionKeys = null;
 
             if (recipients != null) {

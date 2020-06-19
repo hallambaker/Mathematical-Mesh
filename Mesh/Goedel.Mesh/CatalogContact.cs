@@ -73,6 +73,35 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Update the entry <paramref name="catalogedContact"/> in the catalog.
+        /// </summary>
+        /// <param name="catalogedContact">The new catalog values.</param>
+        public void Update(CatalogedContact catalogedContact) => UpdateEntry(catalogedContact);
+
+        /// <summary>
+        /// Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
+        /// is the user's own contact.
+        /// </summary>
+        /// <param name="contact">The contact to add.</param>
+        /// <param name="self">If true, mark as the user's own contact.</param>
+        /// <returns>The CatalogedContact entry.</returns>
+        public (CatalogedContact, bool) TryAdd(Contact contact, bool self = false) {
+            if (contact.Id != null) {
+                var existing = Locate(contact.Id);
+                if (existing != null) {
+                    return (existing as CatalogedContact, false);
+                    }
+
+                }
+
+
+            var cataloged = new CatalogedContact(contact, self);
+            New(cataloged);
+            return (cataloged, true);
+            }
+
+
 
         /// <summary>
         /// Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
@@ -255,8 +284,10 @@ namespace Goedel.Mesh {
 
             SpaceAfter(builder, Prefix);
             SpaceAfter(builder, First);
-            foreach (var middle in Middle) {
-                SpaceAfter(builder, middle);
+            if (Middle != null) {
+                foreach (var middle in Middle) {
+                    SpaceAfter(builder, middle);
+                    }
                 }
             Unspaced(builder, Last);
             SpaceBefore(builder, Suffix);

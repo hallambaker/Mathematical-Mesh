@@ -189,7 +189,7 @@ namespace Goedel.Mesh.Client {
 
             // now create the account context for the account we asked to connect to and initialize
             var contextAccount = contextMesh.GetContextAccount(accountName: AccountAddress);
-            Directory.CreateDirectory(contextAccount.DirectoryAccount);
+            Directory.CreateDirectory(contextAccount.StoresDirectory);
             contextAccount.Sync();
             return contextAccount;
             }

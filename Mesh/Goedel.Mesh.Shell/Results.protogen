@@ -120,7 +120,10 @@
 	Structure ResultEntry
 		Inherits		Result
 		Struct CatalogedEntry CatalogEntry
-
+	Structure ResultEntrySent
+		Inherits		Result
+		Struct CatalogedEntry CatalogEntry
+		Struct Message Message
 	Structure ResultMail
 		Inherits		ResultEntry
 	Structure ResultSSH

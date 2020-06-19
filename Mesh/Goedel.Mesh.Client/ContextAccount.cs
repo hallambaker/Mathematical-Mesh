@@ -40,10 +40,7 @@ namespace Goedel.Mesh.Client {
     public class ContextAccount : ContextAccountEntry {
 
         ///<summary>The enclosing mesh context.</summary>
-        public ContextMesh ContextMesh;
-
-        ///<summary>The enclosing mesh context as an administrative context (if rights granted.</summary>
-        ContextMeshAdmin ContextMeshAdmin => ContextMesh as ContextMeshAdmin;
+        public override ContextMesh ContextMesh { get; }
 
         ///<summary>The account entry</summary>
         public AccountEntry AccountEntry { get; private set; }
@@ -60,18 +57,10 @@ namespace Goedel.Mesh.Client {
         ConnectionAccount ConnectionAccount => AccountEntry.ConnectionAccount;
 
 
-        ///<summary>The Machine context.</summary>
-        IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
-        KeyCollection KeyCollection => ContextMesh.KeyCollection;
-
-        ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
-        CryptoParameters containerCryptoParameters;
-
-
         ///<summary>Convenience accessor for the encryption key fingerprint.</summary>
-        public string KeyEncryptionUDF => keyEncryption.KeyIdentifier;
+        public string KeyEncryptionUDF => KeyEncryption.KeyIdentifier;
         ///<summary>Convenience accessor for the signature key fingerprint.</summary>
-        public string KeySignatureUDF => keySignature.KeyIdentifier;
+        public string KeySignatureUDF => KeySignature.KeyIdentifier;
         ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
         public string KeyAuthenticationUDF => KeyAuthentication.KeyIdentifier;
 
@@ -87,11 +76,11 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
-        public string DirectoryAccount => directoryAccount ??
+        public override string StoresDirectory => directoryAccount ??
             Path.Combine(MeshMachine.DirectoryMesh, ActivationAccount.AccountUDF).CacheValue(out directoryAccount);
         string directoryAccount;
 
-        Dictionary<string, SyncStatus> dictionaryStores = new Dictionary<string, SyncStatus>();
+
 
 
         /// <summary>
@@ -104,25 +93,25 @@ namespace Goedel.Mesh.Client {
                     ContextMesh contextMesh,
                     AccountEntry accountEntry,
                     string accountAddress = null
-                    ) {
+                    )  {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
             this.AccountAddress = accountAddress ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
             var activationKey = ActivationAccount.ActivationKey;
-            keySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
-            keyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
+            KeySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
+            KeyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
             KeyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
-            keySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF);
-            keyEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
+            KeySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF);
+            KeyEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
             KeyAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
 
-            KeyCollection.Add(keyEncryption);
+            KeyCollection.Add(KeyEncryption);
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
-            containerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
+            ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
             }
 
         /// <summary>
@@ -261,7 +250,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="contact">The contact parameters.</param>
         /// <param name="localname">Short name to apply to the signed contact info</param>
-        public void SetContactSelf(Contact contact, string localname = null) {
+        public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
             ContextMeshAdmin.Sign(contact);
 
             contact.Sources ??= new List<TaggedSource>() { };
@@ -275,7 +264,15 @@ namespace Goedel.Mesh.Client {
             contact.Id = ProfileAccount.UDF;
 
 
-            GetCatalogContact().Add(contact, true);
+            var catalog = GetCatalogContact();
+                
+            var (cataloged, success) = catalog.TryAdd(contact, true);
+
+            if (!success) {
+                cataloged.Contact = contact;
+                catalog.Update(cataloged);
+                }
+            return cataloged;
             }
 
 
@@ -302,7 +299,7 @@ namespace Goedel.Mesh.Client {
 
             try {
                 // upload all the containers here
-                foreach (var store in dictionaryStores) {
+                foreach (var store in DictionaryStores) {
                     maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
                     }
                 }
@@ -364,23 +361,23 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
-        /// <summary>
-        /// List of the known store types.
-        /// </summary>
-        public List<string> Stores = new List<string> {
-            SpoolOutbound.Label,
-            SpoolInbound.Label,
-            SpoolLocal.Label,
-            SpoolArchive.Label,
-            CatalogApplication.Label,
-            CatalogDevice.Label,
-            CatalogContact.Label,
-            CatalogCredential.Label,
-            CatalogBookmark.Label,
-            CatalogCalendar.Label,
-            CatalogNetwork.Label
-            };
+        #region // Convenience accessors to fetch store contexts
+        ///// <summary>
+        ///// List of the known store types.
+        ///// </summary>
+        //public List<string> Stores = new List<string> {
+        //    SpoolOutbound.Label,
+        //    SpoolInbound.Label,
+        //    SpoolLocal.Label,
+        //    SpoolArchive.Label,
+        //    CatalogApplication.Label,
+        //    CatalogDevice.Label,
+        //    CatalogContact.Label,
+        //    CatalogCredential.Label,
+        //    CatalogBookmark.Label,
+        //    CatalogCalendar.Label,
+        //    CatalogNetwork.Label
+        //    };
 
         ///<summary>Returns the application catalog for the account</summary>
         public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
@@ -411,6 +408,9 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Returns the outbound spool catalog for the account</summary>
         public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
+
+        #endregion
+
 
         /// <summary>
         /// Return the latest unprocessed MessageConnectionRequest that was received.
@@ -540,14 +540,22 @@ namespace Goedel.Mesh.Client {
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
 
-
-            groupName.Future();
-
             var profileGroup = ProfileGroup.Generate(MeshMachine, algorithmSign, algorithmEncrypt);
+
+            // here we request creation of the group at the service.
+
+            var createRequest = new CreateGroupRequest() {
+                AccountAddress = groupName,
+                SignedProfileGroup = profileGroup.DareEnvelope
+                };
+
+
+            var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
+
 
             var catalogedGroup = new CatalogedGroup(profileGroup);
 
-            return new ContextGroup(catalogedGroup);
+            return ContextGroup.CreateGroup(this, catalogedGroup);
             }
 
         /// <summary>
@@ -566,145 +574,60 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
-
-
         /// <summary>
-        /// Return a <see cref="ConstraintsSelect"/> instance that requests synchronization to the
-        /// remote store whose status is described by <paramref name="statusRemote"/>.
+        /// Create a new instance bound to the specified core within this account context.
         /// </summary>
-        /// <param name="statusRemote">Status of the remote store.</param>
-        /// <returns>The selection constraints.</returns>
-        public ConstraintsSelect GetStoreStatus(ContainerStatus statusRemote) {
-            if (dictionaryStores.TryGetValue(statusRemote.Container, out var syncStore)) {
-                var storeLocal = syncStore.Store;
-
-                return storeLocal.FrameCount >= statusRemote.Index ? null :
-                    new ConstraintsSelect() {
-                        Container = statusRemote.Container,
-                        IndexMax = statusRemote.Index,
-                        IndexMin = (int)storeLocal.FrameCount
-                        };
-                }
-
-            else {
-                using var storeLocal = new Store(DirectoryAccount, statusRemote.Container,
-                            decrypt: false, create: false);
-                //Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
-                return storeLocal.FrameCount >= statusRemote.Index ? null :
-                    new ConstraintsSelect() {
-                        Container = statusRemote.Container,
-                        IndexMax = statusRemote.Index,
-                        IndexMin = (int)storeLocal.FrameCount
-                        };
-                }
-            }
-
-        /// <summary>
-        /// Update the store according to the values <paramref name="containerUpdate"/>.
-        /// </summary>
-        /// <param name="containerUpdate">The update to apply.</param>
-        /// <returns>The number of envelopes successfully added.</returns>
-        public int UpdateStore(ContainerUpdate containerUpdate) {
-            int count = 0;
-            if (dictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
-                var store = syncStore.Store;
-                foreach (var entry in containerUpdate.Envelopes) {
-                    if (entry.Index == 0) {
-                        throw new NYI();
-                        }
-
-                    count++;
-                    store.AppendDirect(entry);
-                    }
-                return count;
-                }
-
-            else {
-                // we have zero envelopes being returned in this update.
-
-                Store.Append(DirectoryAccount, containerUpdate.Envelopes, containerUpdate.Container);
-                return containerUpdate.Envelopes.Count;
-                }
-
-            }
-
-        /// <summary>
-        /// Return a <see cref="Store"/> instance for the store named <paramref name="name"/>. If the
-        /// parameter <paramref name="blind"/> is true, only the sequence header values are read.
-        /// </summary>
-        /// <param name="name">The store to open.</param>
-        /// <param name="blind">If true, only the sequence header values are read</param>
-        /// <returns>The <see cref="Store"/> instance.</returns>
-        public Store GetStore(string name, bool blind = false) {
-            if (dictionaryStores.TryGetValue(name, out var syncStore)) {
-                if (!blind & (syncStore.Store is CatalogBlind)) {
-                    // if we have a blind store from a sync operation but need a populated one,
-                    // remake it.
-                    syncStore.Store.Dispose();
-                    syncStore.Store = MakeStore(name);
-                    }
-                return syncStore.Store;
-                }
-
-            //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
-
-            var store = blind ? new CatalogBlind(DirectoryAccount, name) : MakeStore(name);
-            syncStore = new SyncStatus(store);
-
-            dictionaryStores.Add(name, syncStore);
-            return syncStore.Store;
-            }
-
-        Store MakeStore(string name) => name switch
+        /// <param name="name">The name of the store to bind.</param>
+        /// <returns>The store instance.</returns>
+        protected override Store MakeStore(string name) => name switch
             {
-                SpoolInbound.Label => new SpoolInbound(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                SpoolOutbound.Label => new SpoolOutbound(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                SpoolLocal.Label => new SpoolLocal(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                SpoolArchive.Label => new SpoolArchive(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogCredential.Label => new CatalogCredential(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogContact.Label => new CatalogContact(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogCalendar.Label => new CatalogCalendar(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogBookmark.Label => new CatalogBookmark(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogNetwork.Label => new CatalogNetwork(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogApplication.Label => new CatalogApplication(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                CatalogDevice.Label => new CatalogDevice(DirectoryAccount, name, containerCryptoParameters, KeyCollection),
-                _ => throw new NYI(),
+                SpoolInbound.Label => new SpoolInbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                SpoolOutbound.Label => new SpoolOutbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                SpoolLocal.Label => new SpoolLocal(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                SpoolArchive.Label => new SpoolArchive(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogCredential.Label => new CatalogCredential(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogContact.Label => new CatalogContact(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogCalendar.Label => new CatalogCalendar(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogBookmark.Label => new CatalogBookmark(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogNetwork.Label => new CatalogNetwork(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogCapability.Label => new CatalogCapability(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                _ => base.MakeStore (name),
                 };
 
-        /// <summary>
-        /// Request a transactional update to <paramref name="catalog"/>. Either all the 
-        /// updates specified in <paramref name="updates"/> are committed or none are.
-        /// </summary>
-        /// <param name="catalog">The catalog to update.</param>
-        /// <param name="updates">The updates to apply.</param>
-        /// <returns>True if the transaction committed, otherwise false.</returns>
-        public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
+        ///// <summary>
+        ///// Request a transactional update to <paramref name="catalog"/>. Either all the 
+        ///// updates specified in <paramref name="updates"/> are committed or none are.
+        ///// </summary>
+        ///// <param name="catalog">The catalog to update.</param>
+        ///// <param name="updates">The updates to apply.</param>
+        ///// <returns>True if the transaction committed, otherwise false.</returns>
+        //public bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
 
-            if (AccountAddress == null) {
-                return catalog.Transact(catalog, updates);
-                }
-            var envelopes = catalog.Prepare(updates);
+        //    if (AccountAddress == null) {
+        //        return catalog.Transact(catalog, updates);
+        //        }
+        //    var envelopes = catalog.Prepare(updates);
 
-            var containerUpdate = new ContainerUpdate() {
-                Container = catalog.ContainerName,
-                Index = (int)catalog.Container.FrameCount,
-                Envelopes = envelopes
-                };
+        //    var containerUpdate = new ContainerUpdate() {
+        //        Container = catalog.ContainerName,
+        //        Index = (int)catalog.Container.FrameCount,
+        //        Envelopes = envelopes
+        //        };
 
+        //    var uploadRequest = new UploadRequest() {
+        //        Updates = new List<ContainerUpdate> { containerUpdate }
+        //        };
 
+        //    var uploadResponse = MeshClient.Upload(uploadRequest);
+        //    uploadResponse.Success().AssertTrue();
 
-            var uploadRequest = new UploadRequest() {
-                Updates = new List<ContainerUpdate> { containerUpdate }
-                };
-
-            var uploadResponse = MeshClient.Upload(uploadRequest);
-            uploadResponse.Success().AssertTrue();
-
-            catalog.Commit(envelopes);
+        //    catalog.Commit(envelopes);
 
 
-            return true;
-            }
+        //    return true;
+        //    }
 
 
         /// <summary>
@@ -714,18 +637,21 @@ namespace Goedel.Mesh.Client {
         /// <param name="length">The size of the PIN value to create in bits.</param>
         /// <param name="validity">The validity interval in minutes from the current 
         /// date and time.</param>
+        /// <param name="action">The action to which this pin is bound.</param>
+        /// <param name="automatic">If true, presentation of the pin code is sufficient
+        /// to authenticate and authorize the action.</param>
         /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
-        public MessagePIN GetPIN(string action,int length = 80, long validity = Constants.DayInTicks) {
+        public MessagePIN GetPIN(string action, bool automatic=true, int length = 80, long validity = Constants.DayInTicks) {
             var pin = UDF.SymmetricKey(length);
             var expires = DateTime.Now.AddTicks(validity);
 
-            return RegisterPIN(pin, expires, AccountAddress, action);
+            return RegisterPIN(pin, automatic, expires, AccountAddress, action);
             }
 
 
 
-        MessagePIN RegisterPIN(string pin, DateTime? expires, string accountAddress, string action) {
-            var messageConnectionPIN = new MessagePIN(pin, expires, AccountAddress, action);
+        MessagePIN RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
+            var messageConnectionPIN = new MessagePIN(pin, automatic, expires, AccountAddress, action);
 
             SendMessageAdmin(messageConnectionPIN);
             return messageConnectionPIN;
@@ -844,7 +770,7 @@ namespace Goedel.Mesh.Client {
             var key = new CryptoKeySymmetricSigner(pin);
             var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
 
-            var envelopedMessageClaim = messageClaim.Encode(keySignature);
+            var envelopedMessageClaim = messageClaim.Encode(KeySignature);
 
             // make claim request to service managing the device
             var claimRequest = new ClaimRequest {
@@ -953,8 +879,11 @@ namespace Goedel.Mesh.Client {
         /// Perform automatic processing of the message <paramref name="replyContact"/>.
         /// </summary>
         /// <param name="replyContact">Reply to contact request to be processed.</param>
+        /// <param name="accept">Accept the requested action.</param>
+        /// <param name="authorize">If true, the action is explicitly authorized.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept=true) {
+        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept=true,
+                        bool authorize = false) {
 
             // check response pin here 
             var messagePIN = GetMessagePIN(replyContact.PinUDF);
@@ -965,7 +894,9 @@ namespace Goedel.Mesh.Client {
                 "Should collect up errors for optional reporting".TaskValidate();
                 return InvalidPIN();
                 }
-
+            if (!(messagePIN.Automatic| authorize)) {
+                return null;
+                }
 
             GetCatalogContact().Add(replyContact.Self);
 
@@ -1114,7 +1045,7 @@ namespace Goedel.Mesh.Client {
                     return Process(connection, accept);
                     }
                 case ReplyContact replyContact: {
-                    return ProcessAutomatic(replyContact, accept);
+                    return ProcessAutomatic(replyContact, accept, true);
                     }
                 case RequestContact requestContact: {
                     return ContactReply(requestContact);
@@ -1133,8 +1064,8 @@ namespace Goedel.Mesh.Client {
                     requestTask.Future();
                     break;
                     }
-                case OfferGroup offerGroup: {
-                    offerGroup.Future();
+                case GroupInvitation groupInvitation: {
+                    groupInvitation.Future();
                     break;
                     }
 
@@ -1166,7 +1097,7 @@ namespace Goedel.Mesh.Client {
 
 
 
-        IProcessResult SendReplyContact(string recipient, string pin, string localname) {
+        Message SendReplyContact(string recipient, string pin, string localname) {
             // prepare the reply
             var contactSelf = GetSelf(localname);
 
@@ -1192,7 +1123,7 @@ namespace Goedel.Mesh.Client {
             // send it to the service
             SendMessage(message, recipient);
 
-            return null;
+            return message;
             }
 
 
@@ -1229,7 +1160,9 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="localName">Local name for the contact</param>
         /// <param name="expire">Expiry time for the corresponding PIN</param>
-        public string ContactUriStatic(DateTime? expire, string localName = null) {
+        /// <param name="automatic">If true, presentation of the pin code is sufficient
+        /// to authenticate and authorize the action.</param>
+        public string ContactUri(bool automatic, DateTime? expire, string localName = null) {
             var envelope = GetSelf(localName);
 
 
@@ -1257,7 +1190,7 @@ namespace Goedel.Mesh.Client {
             publishResponse.Success().AssertTrue();
 
             // Register the pin
-            var messageConnectionPIN = new MessagePIN(pin, expire, AccountAddress, "Contact");
+            var messageConnectionPIN = new MessagePIN(pin, automatic, expire, AccountAddress, "Contact");
             SendMessageAdmin(messageConnectionPIN);
                 // Spec - maybe should enforce type check here.
 
@@ -1286,7 +1219,7 @@ namespace Goedel.Mesh.Client {
                 PIN = pin
                 };
 
-            RegisterPIN(pin, null, AccountAddress, "Contact");
+            RegisterPIN(pin, true, null, AccountAddress, "Contact");
 
             SendMessage(message, recipientAddress);
 
@@ -1305,9 +1238,11 @@ namespace Goedel.Mesh.Client {
         /// <param name="uri">The URI to resolve.</param>
         /// <param name="reciprocate">If true send own contact data.</param>
         /// <param name="localname">Local name for the contact to send in exchange</param>
+        /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
         /// <returns>The cataloged contact information.</returns>
-        public CatalogedContact ContactExchange(string uri, bool reciprocate, string localname = null) {
+        public CatalogedContact ContactExchange(string uri, bool reciprocate, out Message message, string localname = null) {
             // Fetch, verify and decrypt the corresponding data.
+
             var envelope = ClaimPublication(uri, out var responseId);
 
             // Add to the catalog
@@ -1316,7 +1251,10 @@ namespace Goedel.Mesh.Client {
 
             if (reciprocate) {
                 (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-                SendReplyContact(targetAccountAddress, pin, localname);
+                message = SendReplyContact(targetAccountAddress, pin, localname) as Message;
+                }
+            else {
+                message = null;
                 }
 
             return result;
@@ -1358,7 +1296,7 @@ namespace Goedel.Mesh.Client {
                 MessageID = requestConfirmation.GetResponseID(),
                 Recipient = recipient,
                 Accept = response,
-                Request = requestConfirmation
+                Request = requestConfirmation.DareEnvelope
                 };
 
             SendMessage(message, recipient);
@@ -1425,7 +1363,7 @@ namespace Goedel.Mesh.Client {
         public void SendMessageAdmin(Message meshMessage) {
             Connect();
 
-            var message = meshMessage.Encode(keySignature);
+            var message = meshMessage.Encode(KeySignature);
 
             var postRequest = new PostRequest() {
                 Self = new List<DareEnvelope>() { message }

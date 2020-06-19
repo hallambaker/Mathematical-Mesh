@@ -223,6 +223,12 @@
             </summary>
             <param name="dareMessage">The update to apply.</param>
         </member>
+        <member name="M:Goedel.Mesh.Catalog.TryNew(Goedel.Mesh.CatalogedEntry)">
+            <summary>
+            Add <paramref name="catalogEntry"/> to the catalog as a new entry.
+            </summary>
+            <param name="catalogEntry">The entry to add.</param>
+        </member>
         <member name="M:Goedel.Mesh.Catalog.New(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
@@ -671,21 +677,6 @@
             <param name="key">Unique identifier of entry to return.</param>
             <returns>The envelope.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBlind.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Apply the transactions specified in <paramref name="updates"/> to the catalog
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to apply the transactions to.</param>
-            <param name="updates">The updates to apply</param>
-            <returns>True if the transactions were accepted, otherwise false.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogBlind.Report">
-            <summary>
-            Return a string describing the catalog entries.
-            </summary>
-            <returns>The string describing the catalog entries.</returns>
-        </member>
         <member name="T:Goedel.Mesh.CatalogBookmark">
             <summary>
             Bookmark catalog. Describes the bookmarks in the user's Mesh account.
@@ -1037,6 +1028,21 @@
             by email dictionary.
             </summary>
             <param name="catalogedEntry">The entry to update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.Update(Goedel.Mesh.CatalogedContact)">
+            <summary>
+            Update the entry <paramref name="catalogedContact"/> in the catalog.
+            </summary>
+            <param name="catalogedContact">The new catalog values.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.TryAdd(Goedel.Mesh.Contact,System.Boolean)">
+            <summary>
+            Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
+            is the user's own contact.
+            </summary>
+            <param name="contact">The contact to add.</param>
+            <param name="self">If true, mark as the user's own contact.</param>
+            <returns>The CatalogedContact entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.Add(Goedel.Mesh.Contact,System.Boolean)">
             <summary>
@@ -3546,7 +3552,7 @@
             Default constructor used for deserialization.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MessagePIN.#ctor(System.String,System.Nullable{System.DateTime},System.String,System.String)">
+        <member name="M:Goedel.Mesh.MessagePIN.#ctor(System.String,System.Boolean,System.Nullable{System.DateTime},System.String,System.String)">
             <summary>
             Construct a <see cref="T:Goedel.Mesh.MessagePIN"/> instance for the PIN value
             <paramref name="pin"/> and account address <paramref name="accountAddress"/>
@@ -3556,6 +3562,8 @@
             <param name="expires">The expiry time.</param>
             <param name="action">The purpose for which the pin is registered.</param>
             <param name="accountAddress">The account address the PIN is issued for.</param>
+            <param name="automatic">If true, the actions authenticated with the PIN should be
+            automatically authorized.</param>
         </member>
         <member name="M:Goedel.Mesh.MessagePIN.SaltPIN(System.String,System.String)">
             <summary>
@@ -3607,6 +3615,12 @@
         <member name="P:Goedel.Mesh.MessagePIN.Expires">
             <summary>
             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePIN.Automatic">
+             <summary>
+            If true, authentication against the PIN code is sufficient to complete
+            the associated action without further authorization.
+             </summary>
         </member>
         <member name="P:Goedel.Mesh.MessagePIN.SaltedPIN">
              <summary>
@@ -8278,6 +8292,17 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CreateGroupRequest.AccountAddress">
+             <summary>
+            The service account to bind to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CreateGroupRequest.SignedProfileGroup">
+             <summary>
+            The persistent profile that will be used to validate changes to the
+            account assertion.
+             </summary>
+        </member>
         <member name="P:Goedel.Mesh.CreateGroupRequest._Tag">
             <summary>
             Tag identifying this class
@@ -8383,6 +8408,12 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
+        </member>
+        <member name="M:Goedel.Mesh.CreateGroupResponse.#ctor(System.Exception)">
+            <summary>
+            Default constructor. 
+            </summary>
+            <param name="exception">Optional exception specifier.</param>
         </member>
         <member name="T:Goedel.Mesh.DecryptRequest">
             <summary>
@@ -10599,61 +10630,6 @@
             <param name="filename">The file to read.</param>
             <returns>The DevicePreconfiguration instance created from the file data.</returns>
         </member>
-        <member name="T:Goedel.Mesh.OfferGroup">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.OfferGroup._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.OfferGroup.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.OfferGroup._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.OfferGroup.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.OfferGroup.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.OfferGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.OfferGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
         <member name="T:Goedel.Mesh.RequestContact">
             <summary>
             </summary>
@@ -10803,7 +10779,7 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.GroupInvitation.EncryptedPartDecrypt">
+        <member name="P:Goedel.Mesh.GroupInvitation.EncryptedGroupConnection">
             <summary>
             </summary>
         </member>

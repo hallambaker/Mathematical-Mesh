@@ -126,7 +126,6 @@ namespace Goedel.Mesh {
 			{"RequestConnection", RequestConnection._Factory},
 			{"AcknowledgeConnection", AcknowledgeConnection._Factory},
 			{"RespondConnection", RespondConnection._Factory},
-			{"OfferGroup", OfferGroup._Factory},
 			{"RequestContact", RequestContact._Factory},
 			{"ReplyContact", ReplyContact._Factory},
 			{"GroupInvitation", GroupInvitation._Factory},
@@ -9008,6 +9007,17 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual DateTime?						Expires  {get; set;}
+		bool								__Automatic = false;
+		private bool						_Automatic;
+        /// <summary>
+        ///If true, authentication against the PIN code is sufficient to complete
+        ///the associated action without further authorization.
+        /// </summary>
+
+		public virtual bool						Automatic {
+			get => _Automatic;
+			set {_Automatic = value; __Automatic = true; }
+			}
         /// <summary>
         ///PIN code bound to the specified action.
         /// </summary>
@@ -9072,6 +9082,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Expires", 1);
 					_writer.WriteDateTime (Expires);
 				}
+			if (__Automatic){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Automatic", 1);
+					_writer.WriteBoolean (Automatic);
+				}
 			if (SaltedPIN != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("SaltedPIN", 1);
@@ -9121,6 +9136,10 @@ namespace Goedel.Mesh {
 					}
 				case "Expires" : {
 					Expires = jsonReader.ReadDateTime ();
+					break;
+					}
+				case "Automatic" : {
+					Automatic = jsonReader.ReadBoolean ();
 					break;
 					}
 				case "SaltedPIN" : {
@@ -9575,97 +9594,6 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class OfferGroup : Message {
-		
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public override string _Tag => __Tag;
-
-		/// <summary>
-        /// Tag identifying this class
-        /// </summary>
-		public new const string __Tag = "OfferGroup";
-
-		/// <summary>
-        /// Factory method
-        /// </summary>
-        /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new OfferGroup();
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// </summary>
-        /// <param name="writer">Output stream</param>
-        /// <param name="wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="first">If true, item is the first entry in a list.</param>
-		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
-			SerializeX (writer, wrap, ref first);
-
-
-        /// <summary>
-        /// Serialize this object to the specified output stream.
-        /// Unlike the Serlialize() method, this method is not inherited from the
-        /// parent class allowing a specific version of the method to be called.
-        /// </summary>
-        /// <param name="_writer">Output stream</param>
-        /// <param name="_wrap">If true, output is wrapped with object
-        /// start and end sequences '{ ... }'.</param>
-        /// <param name="_first">If true, item is the first entry in a list.</param>
-		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
-			PreEncode();
-			if (_wrap) {
-				_writer.WriteObjectStart ();
-				}
-			((Message)this).SerializeX(_writer, false, ref _first);
-			if (_wrap) {
-				_writer.WriteObjectEnd ();
-				}
-			}
-
-        /// <summary>
-        /// Deserialize a tagged stream
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-        /// <returns>The created object.</returns>		
-        public static new OfferGroup FromJSON (JSONReader jsonReader, bool tagged=true) {
-			if (jsonReader == null) {
-				return null;
-				}
-			if (tagged) {
-				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as OfferGroup;
-				}
-		    var Result = new OfferGroup ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
-			}
-
-        /// <summary>
-        /// Having read a tag, process the corresponding value data.
-        /// </summary>
-        /// <param name="jsonReader">The input stream</param>
-        /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
-			
-			switch (tag) {
-				default : {
-					base.DeserializeToken(jsonReader, tag);
-					break;
-					}
-				}
-			// check up that all the required elements are present
-			}
-
-
-		}
-
-	/// <summary>
-	/// </summary>
 	public partial class RequestContact : Message {
 		bool								__Reply = false;
 		private bool						_Reply;
@@ -9958,7 +9886,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual DareEnvelope						EncryptedPartDecrypt  {get; set;}
+		public virtual DareEnvelope						EncryptedGroupConnection  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -10008,10 +9936,10 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Text", 1);
 					_writer.WriteString (Text);
 				}
-			if (EncryptedPartDecrypt != null) {
+			if (EncryptedGroupConnection != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EncryptedPartDecrypt", 1);
-					EncryptedPartDecrypt.Serialize (_writer, false);
+				_writer.WriteToken ("EncryptedGroupConnection", 1);
+					EncryptedGroupConnection.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -10050,10 +9978,10 @@ namespace Goedel.Mesh {
 					Text = jsonReader.ReadString ();
 					break;
 					}
-				case "EncryptedPartDecrypt" : {
+				case "EncryptedGroupConnection" : {
 					// An untagged structure
-					EncryptedPartDecrypt = new DareEnvelope ();
-					EncryptedPartDecrypt.Deserialize (jsonReader);
+					EncryptedGroupConnection = new DareEnvelope ();
+					EncryptedGroupConnection.Deserialize (jsonReader);
  
 					break;
 					}
@@ -10178,7 +10106,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual RequestConfirmation						Request  {get; set;}
+		public virtual DareEnvelope						Request  {get; set;}
 		bool								__Accept = false;
 		private bool						_Accept;
         /// <summary>
@@ -10277,7 +10205,7 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "Request" : {
 					// An untagged structure
-					Request = new RequestConfirmation ();
+					Request = new DareEnvelope ();
 					Request.Deserialize (jsonReader);
  
 					break;

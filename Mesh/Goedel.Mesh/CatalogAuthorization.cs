@@ -16,7 +16,7 @@ namespace Goedel.Mesh {
     public class CatalogCapability : Catalog {
 
         ///<summary>The canonical label for the catalog</summary>
-        public const string Label = "mmm_Member";
+        public const string Label = "mmm_Capability";
 
 
         //public CatalogedMember Self { get; set; }

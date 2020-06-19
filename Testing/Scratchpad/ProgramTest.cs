@@ -23,15 +23,25 @@ namespace Scratchpad {
 
             // Redo the service level tests so that we can get to the shell tests for group.
 
-            TestService.Test().MeshCatalogAccount();
             TestService.Test().MeshCatalogGroup();
-            TestService.Test().MeshCatalogStandalone();
-            TestService.Test().MeshMessageContact();
-            TestService.Test().MeshDeviceConnectPIN();
-            TestService.Test().MeshServiceFull();
 
-            TestService.Test().MeshCatalogGroup();
-            ShellTests.Test().TestMessageContactBusinessCardReject();
+
+            //TestService.Test().MeshCatalogAccount();
+            //TestService.Test().MeshMessageContact();
+            //TestService.Test().MeshDeviceConnectPIN();
+            //TestService.Test().MeshCatalogStandalone();
+            //TestService.Test().MeshMessageContact();
+            //TestService.Test().MeshServiceFull();
+
+
+
+            //TestService.Test().MeshCatalogGroup();
+
+            //ShellTests.Test().TestMessageGroup();
+
+
+
+            //ShellTests.Test().TestMessageContactBusinessCardReject();
 
 
             //ShellTests.Test().TestProfileConnectPin();
@@ -54,7 +64,7 @@ namespace Scratchpad {
 
             //StoreTests.Test().TestCatalog(); // Better get the basics right.
 
-            //ShellTests.Test().TestMessageGroup();
+
 
             //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();

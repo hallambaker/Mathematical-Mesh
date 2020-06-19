@@ -229,6 +229,24 @@ namespace Goedel.Mesh {
         /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
         /// </summary>
         /// <param name="catalogEntry">The entry to add.</param>
+        public bool TryNew(CatalogedEntry catalogEntry) {
+            var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
+
+            try {
+                Transact(this, new List<CatalogUpdate> { catalogUpdate });
+                return true;
+                }
+            catch {
+                return false;
+                }
+            }
+
+
+
+        /// <summary>
+        /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
+        /// </summary>
+        /// <param name="catalogEntry">The entry to add.</param>
         public void New(CatalogedEntry catalogEntry) {
             var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
             Transact(this, new List<CatalogUpdate> { catalogUpdate });
