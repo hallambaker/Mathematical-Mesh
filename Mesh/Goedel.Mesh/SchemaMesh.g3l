@@ -1,0 +1,913 @@
+﻿// This is a mock up of the V3 format for the syntax.
+// Main change is that types now precede the structure they introduce.
+
+MeshItem Protocol Goedel.Mesh MeshItem 
+	|An entry in the Mesh linked logchain.
+
+    Using Goedel.Cryptography.Jose
+    Using Goedel.Cryptography.Dare
+	Extern Key
+
+	Section 2 "Shared Classes"
+		|The following classes are used as common elements in
+		|Mesh profile specifications.
+
+	Section 3 "Classes describing keys"
+
+	PublicKey Structure		|The PublicKey class is used to describe public key pairs and 
+							|trust assertions associated with a public key.
+		UDF String				|UDF fingerprint of the public key parameters
+		X509Certificate Binary	|List of X.509 Certificates
+		X509Chain List<Binary>	|X.509 Certificate chain.
+		X509CSR Binary			|X.509 Certificate Signing Request.
+		PublicParameters Key	|The public key parameters as defined in the JOSE specification.
+		PrivateParameters Key	|The private key parameters as defined in the JOSE specification.
+		
+	CatalogedDevice Structure	|Public device entry, indexed under the device ID
+		Inherits CatalogedEntry
+
+		String UDF				|UDF of the signature key of the device in the Mesh
+		EnvelopedProfileMesh DareEnvelope<ProfileMesh> 
+								|The Mesh profile
+		String DeviceUDF		|UDF of the signature key of the device
+		EnvelopedProfileDevice DareEnvelope<ProfileDevice> 
+								|The device profile
+		DareEnvelope<ConnectionDevice> EnvelopedConnectionDevice
+								|The public assertion demonstrating connection of the Device to the Mesh
+		DareEnvelope<ActivationDevice> EnvelopedActivationDevice
+								|The activations of the device within the Mesh
+		List<AccountEntry> Accounts
+								|The accounts that this device is connected to
+
+
+	Structure KeyComposite
+		TStruct Key Public
+			Description
+				|The composite key
+		TStruct Key Part
+			Description
+				|The overlay key contribution.
+		String Service
+			Description
+				|Service holding the additional contribution
+
+	Structure DeviceRecryptionKey
+		String UDF
+			Description
+				|The fingerprint of the encryption key
+		TStruct Contact Contact
+			Description
+				|The User's Mesh contact information
+		Struct PublicKey RecryptionKey
+			Description
+				|The recryption key
+		Struct DareEnvelope EnvelopedRecryptionKeyDevice
+			Description
+				|The decryption key encrypted under the user's device key.	
+
+
+
+	Structure EscrowedKeySet
+		Description
+			|A set of escrowed keys. 
+		TStruct Key MasterSignatureKey
+			Description
+				|A Master Signature Key
+		TStruct Key MasterEncryptionKey
+			Description
+				|The Master Encryption Key
+		TStruct Key MasterEscrowKeys
+			Multiple
+			Description
+				|The escrowed master escrow keys.
+
+
+
+
+	Section 2 "Assertion classes"
+		Description
+			|Classes that are derived from an assertion.
+
+	Structure Assertion
+		Abstract
+		Description 
+			|Parent class from which all assertion classes are derived
+
+		String Names
+			Multiple
+			Description
+				|Fingerprints of index terms for profile retrieval. The use of the fingerprint
+				|of the name rather than the name itself is a precaution against enumeration
+				|attacks and other forms of abuse.
+		DateTime Updated
+			Description
+				|The time instant the profile was last modified.
+		String NotaryToken
+			Description
+				|A Uniform Notary Token providing evidence that a signature
+				|was performed after the notary token was created.
+		TStruct Condition Conditions
+			Description
+				|Conditional clause(s) that MAY be verified to evaluate the validity of the
+				|assertion. At present no condition classes are specified.
+
+	Structure Condition
+		Abstract
+		Description 
+			|Parent class from which all condition classes are derived.
+
+	Section 3 "Base Classes"
+		Description
+			|Abstract classes from which the Profile, Activation and Connection classes
+			|are derrived.
+
+	Structure Profile
+		Abstract
+		Inherits Assertion
+		Description 
+			|Parent class from which all profile classes are derived
+		Struct PublicKey KeyOfflineSignature
+			Description
+				|The permanent signature key used to sign the profile itself. The UDF of
+				|the key is used as the permanent object identifier of the profile. Thus,
+				|by definition, the KeySignature value of a Profile does not change under
+				|any circumstance. The only case in which a 
+		Struct PublicKey KeysOnlineSignature
+			Multiple
+			Description
+				|A Personal profile contains at least one OSK which is used to sign 
+				|device administration application profiles.
+
+	Structure Connection
+		Inherits Assertion
+		String SubjectUDF
+			Description
+				|UDF of the connection target.
+		String AuthorityUDF
+			Description
+				|UDF of the connection source.
+
+	Structure Activation
+		Inherits Assertion
+		Description 
+			|Contains the private activation information for a Mesh application running on
+			|a specific device
+		Struct DareEnvelope EnvelopedConnection
+			Description
+				|The signed AssertionDeviceConnection.
+		String ActivationKey
+			Description
+				|The master secret from which all the key contributions are derrived.
+
+	Structure Permission
+		String Name
+		String Role
+		Struct DareEnvelope Capabilities
+			Description
+				|Keys or key contributions enabling the operation to be performed
+
+
+
+	Section 3 "Mesh Profile Classes"
+		Description
+			|A Mesh profile does not have activation or connection classes associated with it.
+		Description
+			|It might be more consistent to represent administation devices as activations
+			|on the ProfileMesh class though.
+
+
+	Structure ProfileMesh
+		Inherits Profile
+		Description 
+			|Describes the long term parameters associated with a personal profile.
+		Struct PublicKey KeysMasterEscrow
+			Multiple
+			Description
+				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
+				|of private keys used for stored data. 
+
+		Struct PublicKey KeyEncryption
+			Description
+				|Key used to pass encrypted data to the device such as a
+				|DeviceUseEntry
+
+	Section 3 "Mesh Device Classes"
+		Description
+			|
+
+	Structure ProfileDevice
+		Inherits Profile
+		Description 
+			|Describes a mesh device.
+		String Description
+			Description
+				|Description of the device
+		Struct PublicKey KeyEncryption
+			Description
+				|Key used to pass encrypted data to the device such as a
+				|DeviceUseEntry
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate requests made by the device.
+
+	Structure ActivationDevice // To do list accounts as permissions 
+		Inherits Activation
+
+
+		TStruct Activation Activations
+			Multiple
+			Description
+				|List of application and account activation data. Keys, etc.
+
+	Structure ConnectionDevice
+		Inherits Connection
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
+		Struct PublicKey KeySignature
+			Description
+				|The signature key for use of the device under the profile
+		Struct PublicKey KeyEncryption
+			Description
+				|The encryption key for use of the device under the profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|The authentication key for use of the device under the profile
+
+
+
+	Structure CatalogedPublication
+		Inherits CatalogedEntry
+		Description
+			|A publication.
+		String ID
+			Description
+				|Unique identifier code
+		String Authenticator
+			Description
+				|The witness key value to use to request access to the record.	
+
+		Struct DareEnvelope EnvelopedData
+			Description
+				|Dare Envelope containing the entry data
+
+		DateTime NotOnOrAfter
+			Description
+				|Epiration time (inclusive)
+
+
+	Section 3 "Mesh Account Classes"
+		Description
+			|
+
+	Structure ProfileAccount
+		Inherits Profile
+		Description 
+			|Account assertion. This is signed by the service hosting the account.
+
+		String AccountAddresses
+			Multiple
+			Description
+				|Service address(es).
+		String MeshProfileUDF
+			Description
+				|Master profile of the account being registered.
+		Struct PublicKey KeyEncryption
+			Description
+				|Key used to encrypt data under this profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate requests made by the device.
+
+	Structure ActivationAccount
+		Inherits Activation
+		String AccountUDF
+			Description
+				|The UDF of the account
+
+	Structure ConnectionAccount
+		Inherits Connection
+		String AccountAddresses
+			Multiple
+			Description
+				|The list of service identifiers.
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the device has been granted.
+		Struct PublicKey KeySignature
+			Description
+				|The signature key for use of the device under the profile
+		Struct PublicKey KeyEncryption
+			Description
+				|The encryption key for use of the device under the profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|The authentication key for use of the device under the profile
+
+	Structure AccountEntry
+		Description
+			|Contains the Account information for an account with a CatalogedDevice.
+		String AccountUDF
+			Description
+				|UDF of the account profile
+		Struct DareEnvelope EnvelopedProfileAccount
+			Description
+				|The account profile
+		Struct DareEnvelope EnvelopedConnectionAccount	
+			Description
+				|The connection of this device to the account
+		Struct DareEnvelope EnvelopedActivationAccount	
+			Description
+				|The activation data for this device to the account	
+
+	Structure ConnectionApplication
+		Inherits Connection
+
+
+	Section 3 "Mesh Group Classes"
+		Description
+			|
+
+	Structure ProfileGroup
+		Inherits Profile
+		Description 
+			|Describes a group. Note that while a group is created by one person who
+			|becomes its first administrator, control of the group may pass to other
+			|administrators over time.
+		String AccountAddresses
+			Multiple
+			Description
+				|Service address(es).
+		Struct PublicKey KeyEncryption
+			Description
+				|Key currently used to encrypt data under this profile
+
+	Structure ActivationGroup
+		Inherits Activation
+		String GroupUDF
+			Description
+				|The UDF of the group
+
+	Structure ConnectionGroup
+		Description
+			|Describes the connection of a member to a group.
+		Inherits Connection
+		Struct KeyComposite KeyEncryption
+			Description
+				|The decryption key for the user within the group
+
+
+
+	Section 3 "Mesh Service Classes"
+		Description
+			|
+
+
+	Structure ProfileService
+		Inherits Profile
+		Description 
+			|Profile of a Mesh Service
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate service connections.
+
+	Structure ConnectionService
+		Inherits Connection
+
+	Section 3 "Mesh Host Classes"
+		Description
+			|
+
+
+	Structure ProfileHost
+		Inherits Profile
+		Struct PublicKey KeyAuthentication
+			Description
+				|Key used to authenticate service connections.
+
+	Structure ConnectionHost
+		Inherits Connection
+
+	
+
+	Section 2 "Cataloged items"
+
+	Section 3 "Data Structures"
+		Description
+			|Classes describing data used in cataloged data.
+
+
+	Structure Contact
+		Abstract
+		Inherits Assertion
+		Description
+			|Base class for contact entries.
+		String Id
+			Description
+				|The globally unique contact identifier.
+		Struct Anchor Anchors
+			Multiple
+			Description
+				|Mesh fingerprints associated with the contact.
+		Struct NetworkAddress NetworkAddresses
+			Multiple
+			Description
+				|Network address entries
+		Struct Location Locations
+			Multiple
+			Description
+				|The physical locations the contact is associated with.
+		Struct Role Roles
+			Multiple
+			Description
+				|The roles of the contact
+		Struct Bookmark Bookmark 
+			Multiple
+			Description
+				|The Web sites and other online presences of the contact
+		Struct TaggedSource Sources
+			Multiple
+			Description
+				|Source(s) from which this contact was constructed.
+
+	Structure Anchor
+		Description
+			|Trust anchor
+		String UDF
+			Description
+				|The trust anchor.
+		String Validation
+			Description
+				|The means of validation.
+
+	Structure TaggedSource
+		Description
+			|Source from which contact information was obtained.
+		String LocalName
+			Description
+				|Short name for the contact information.
+		String Validation
+			Description
+				|The means of validation.		
+		Binary BinarySource
+			Description
+				|The contact data in binary form.
+		Struct DareEnvelope EnvelopedSource
+			Description
+				|The contact data in enveloped form. If present, the BinarySource property
+				|is ignored.
+
+
+
+	Structure ContactGroup
+		Inherits Contact
+		Description
+			|Contact for a group, including encryption groups.
+
+
+
+	Structure ContactPerson
+		Inherits Contact
+		Description
+			|
+		Struct PersonName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure ContactOrganization
+		Inherits Contact
+		Description
+			|		
+		Struct OrganizationName CommonNames
+			Multiple
+			Description
+				|List of person names in order of preference
+
+	Structure OrganizationName
+		Description
+			|The name of an organization
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String RegisteredName
+			Description
+				|The registered name.
+		String DBA
+			Description
+				|Names that the organization uses including trading names
+				|and doing business as names.
+
+
+	Structure PersonName
+		Description
+			|The name of a natural person
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String FullName
+			Description
+				|The preferred presentation of the full name.
+		String Prefix
+			Description
+				|Honorific or title, E.g. Sir, Lord, Dr., Mr.
+		String First
+			Description
+				|First name.
+		String Middle
+			Multiple
+			Description
+				|Middle names or initials.
+		String Last
+			Description
+				|Last name.
+		String Suffix
+			Description
+				|Nominal suffix, e.g. Jr., III, etc.
+		String PostNominal
+			Description
+				|Post nominal letters (if used).
+
+	Structure NetworkAddress
+		Description
+			|Provides all means of contacting the individual according to a
+			|particular network address
+		Boolean Inactive
+			Description
+				|If true, the name is not in current use.
+		String Address	
+			Description
+				|The network address, e.g. alice@example.com
+		String Protocols
+			Multiple
+			Description
+				|The IANA protocol|identifier of the network protocols by which 
+				|the contact may be reached using the specified Address. 
+		Struct DareEnvelope EnvelopedConnectionAccount
+			Description
+				|Optional enveloped ConnectionAccount for the Address
+		Struct PublicKey PublicKeys
+			Description
+				|Public keys associated with the network address
+
+
+
+
+	Structure Role
+		String OrganizationName
+			Description
+				|The organization at which the role is held
+		String Titles
+			Multiple
+			Description
+				|The titles held with respect to that organization.
+		Struct Location Locations
+			Multiple
+			Description
+				|Postal or physical addresses associated with the role.
+
+	Structure Location
+		String Appartment
+		String Street
+		String District
+		String Locality
+		String County
+		String Postcode
+		String Country
+		Float Latitude
+		Float Longitude
+
+	Structure Bookmark
+		String Uri
+		String Title
+		String Role
+			Multiple
+
+	Structure Reference
+		String MessageID
+			Description
+				|The received message to which this is a response
+		String ResponseID
+			Description
+				|Message that was generated in response to the original (optional).
+		String Relationship
+			Description
+				|The relationship type. This can be Read, Unread, Accept, Reject.
+
+
+
+	Structure Task
+		String Key
+			Description
+				|Unique key.
+		DateTime Start
+		DateTime Finish
+		String StartTravel
+		String FinishTravel
+		String TimeZone
+		String Title
+		String Description
+		String Location
+		String Trigger
+			Multiple
+		String Conference
+			Multiple
+		String Repeat
+		Boolean Busy
+	
+	Section 2 "Catalog Entries"
+
+	Structure CatalogedEntry
+		Description
+			|Base class for cataloged Mesh data.
+		String Labels
+			Multiple
+			Description
+				|The set of labels describing the entry
+
+	Structure CatalogedCredential
+		Inherits CatalogedEntry
+		String Protocol
+		String Service
+		String Username
+		String Password
+	
+	Structure CatalogedNetwork
+		Inherits CatalogedEntry
+		String Protocol
+		String Service
+		String Username
+		String Password
+
+	Structure CatalogedContact
+		Inherits CatalogedEntry
+		String Key
+			Description
+				|Unique key. 
+		Boolean Self
+			Description
+				|If true, this catalog entry is for the user who created the catalog.
+		Struct Permission Permissions
+			Multiple
+			Description
+				|List of the permissions that the contact has been granted.
+		TStruct Contact Contact
+			Description
+				|The contact information as edited by the catalog owner.
+
+	Structure CatalogedContactRecryption
+		Inherits CatalogedContact
+
+
+		// Recryption group user has accepted membership of
+		// Describe document stores, chat groups, etc accessible
+
+
+	Structure CatalogedCapability
+		Inherits CatalogedEntry
+		Description
+			|
+		String SubjectUdf
+			Description
+				|Fingerprint of a cryptographic key that is presented to claim 
+				|the specified capability.
+		String Permissions
+			Multiple
+			Description
+				|
+		TStruct CryptographicCapability Keys
+			Multiple
+			Description
+				|Cryptographic keys representing capabilities.
+
+	Structure CryptographicCapability
+		Abstract
+		String Id
+			Description
+				|Key identifier in URI form (mmm://service/udf
+		TStruct Key Part
+			Description
+				|The cryptographic key whose use controls the exchange.
+		DateTime NotBefore
+			Description
+				|If present specifies a time instant that the specified 
+				|capability MUST NOT be supported before.
+		DateTime NotOnOrAfter
+			Description
+				|If present specifies a time instant that the specified 
+				|capability MUST NOT be supported at or after.
+		
+	Structure CapabilityThresholdDecrypt
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a threshold decryption key.
+
+	Structure CapabilityThresholdSign
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a threshold signature key.
+
+	Structure CapabilityThresholdMicali
+		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a decryption key to be used in accordance 
+			|with the Fair Electronic Exchange with Invisible Trusted Parties
+			|protocol.
+
+
+	Structure CatalogedBookmark
+		Inherits CatalogedEntry
+		String Uri
+		String Title
+		String Path
+
+
+	Structure CatalogedTask
+		Inherits CatalogedEntry
+		Struct DareEnvelope EnvelopedTask
+		// Calendar entry
+		// Geolocation entry
+		String Title
+		String Key
+			Description
+				|Unique key.
+
+
+		
+
+	Structure CatalogedApplication
+		// The application profile
+		Inherits CatalogedEntry
+		String Key
+
+
+
+
+	Structure CatalogedMember
+		String UDF
+		Inherits CatalogedEntry
+
+	Structure CatalogedGroup
+		Inherits CatalogedApplication
+		Struct ProfileGroup Profile
+
+		// The recryption key
+
+	Structure CatalogedApplicationSSH
+		Inherits CatalogedApplication
+		// The recryption key
+	Structure CatalogedApplicationMail
+		Inherits CatalogedApplication
+		// The recryption key
+	Structure CatalogedApplicationNetwork
+		Inherits CatalogedApplication
+		// The recryption key
+
+
+	Section 2 "Static Assertions"
+
+	Structure DevicePreconfiguration
+		Description
+			|A data structure that is passed 
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|The device profile
+		TStruct Key PrivateKey
+			Description
+				|The device private key
+		String ConnectUri
+			Description
+				|The connection URI. This would normally be printed on the device as a 
+				|QR code.
+
+
+	Section 2 "Messages"
+
+	Structure Message
+		String MessageID
+			Description
+				|Unique per-message ID. When encapsulating a Mesh Message in a DARE envelope,
+				|the envelope EnvelopeID field MUST be a UDF fingerprint of the MessageID
+				|value. 
+		String Sender
+		String Recipient
+		Struct Reference References
+			Multiple
+
+	Structure MessageComplete
+		Inherits Message
+
+	Structure MessagePIN
+		String Account
+
+		Inherits Message
+		DateTime Expires
+		Boolean Automatic
+			Description
+				|If true, authentication against the PIN code is sufficient to complete
+				|the associated action without further authorization.
+		String SaltedPIN
+			Description
+				|PIN code bound to the specified action.
+		String Action
+			Description
+				|The action to which this PIN code is bound.
+				
+	Structure RequestConnection
+		Description
+			|Connection request message. This message contains the information
+		Inherits Message
+		String AccountAddress
+			Description
+				|
+		Struct DareEnvelope EnvelopedProfileDevice
+			Description
+				|Device profile of the device making the request.
+		Binary ClientNonce
+			Description
+				|
+		String PinUDF
+			Description
+				|Fingerprint of the PIN value used to authenticate the request.
+		Binary PinWitness
+			Description
+				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+
+
+	Structure AcknowledgeConnection
+		Description
+			|Connection request message generated by a service on receipt of a valid
+			|MessageConnectionRequestClient
+		Inherits Message
+		Struct DareEnvelope EnvelopedRequestConnection
+			Description
+				|The client connection request.
+		Binary ServerNonce
+			Description
+				|
+		String Witness
+			Description
+				|
+
+	Structure RespondConnection
+		Description
+			|Respond to RequestConnection message to grant or refuse the connection
+			|request.
+		Inherits Message
+		String Result 
+			Description
+				|The response to the request. One of "Accept", "Reject" or "Pending".
+				
+		Struct CatalogedDevice CatalogedDevice
+			Description
+				|The device information. MUST be present if the value of Result is
+				|"Accept". MUST be absent or null otherwise.
+
+
+	Structure RequestContact
+		Inherits Message
+		Boolean Reply
+		String Subject
+		String PinUDF
+		String PIN
+			Description
+				|One time authentication code.
+		Struct DareEnvelope Self
+			Description
+				|The contact data.
+	
+	Structure ReplyContact
+		Inherits RequestContact
+		Binary Nonce
+		Binary Witness
+			Description
+				|Witness value over contact that was presented.
+
+	Structure GroupInvitation
+		Inherits Message
+		String Text
+		Struct DareEnvelope EncryptedGroupConnection
+
+	Structure RequestConfirmation
+		Inherits Message
+		String Text
+
+
+	Structure ResponseConfirmation
+		Inherits Message
+		Struct DareEnvelope Request
+		Boolean Accept
+
+	Structure RequestTask
+		Inherits Message
+
+
+	Structure MessageClaim
+		Inherits Message
+		String PublicationId
+		String ServiceAuthenticate
+		String DeviceAuthenticate
+
+		DateTime Expires

@@ -32,11 +32,9 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class AccountHandle : Disposable {
 
-        ///<summary>Convenience accessor to the Mesh Profile.</summary>
-        public ProfileMesh ProfileMesh => AccountEntry.ProfileMesh;
 
-        ///<summary>Convenience accessor to the Account assertion.</summary>
-        public ProfileAccount AssertionAccount => AccountEntry.AssertionAccount;
+
+
 
 
         /// <summary>
@@ -57,10 +55,35 @@ namespace Goedel.Mesh.Server {
 
         }
 
+
+    /// <summary>
+    /// Unverified account accessor, only has access to spools
+    /// </summary>
+    public class AccountHandleGroup : AccountHandle {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="accountEntry">The account entry to create a handle for.</param>
+        public AccountHandleGroup(AccountGroup accountEntry) : base(accountEntry) {
+            }
+        }
+
     /// <summary>
     /// Unverified account accessor, only has access to spools
     /// </summary>
     public class AccountHandleUnverified : AccountHandle {
+
+        ///<summary>Convenience accessor to the Account assertion.</summary>
+        public ProfileAccount AssertionAccount => AccountPersonal.AssertionAccount;
+
+        /// <summary>
+        /// The account description. This is only accessible through the account handle.
+        /// </summary>
+        protected AccountPersonal AccountPersonal => AccountEntry as AccountPersonal;
+
+        ///<summary>Convenience accessor to the Mesh Profile.</summary>
+        public ProfileMesh ProfileMesh => AccountPersonal.ProfileMesh;
+
 
         /// <summary>
         /// Constructor.

@@ -49,34 +49,6 @@ namespace Goedel.Mesh {
             var envelope = entry.FrameIndex.GetEnvelope(Container);
             return envelope;
             }
-
-        ///// <summary>
-        ///// Apply the transactions specified in <paramref name="updates"/> to the catalog
-        ///// <paramref name="catalog"/>.
-        ///// </summary>
-        ///// <param name="catalog">The catalog to apply the transactions to.</param>
-        ///// <param name="updates">The updates to apply</param>
-        ///// <returns>True if the transactions were accepted, otherwise false.</returns>
-        //public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
-        //    //Console.WriteLine("  Blind transaction!");
-
-        //    return base.Transact(catalog, updates);
-
-        //    }
-
-        ///// <summary>
-        ///// Return a string describing the catalog entries.
-        ///// </summary>
-        ///// <returns>The string describing the catalog entries.</returns>
-        //public string Report() {
-
-        //    var builder = new StringBuilder();
-
-
-        //    return builder.ToString();
-        //    }
-
-
         }
 
     }

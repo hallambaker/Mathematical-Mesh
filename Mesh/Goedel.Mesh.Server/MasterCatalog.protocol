@@ -11,6 +11,7 @@
 			|Mesh profile specifications.a
 
 	Structure AccountEntry
+		Abstract
 		Description
 			|Represents a Mesh Account.
 		String Directory
@@ -19,6 +20,16 @@
 		String AccountAddress
 			Description
 				|The service account to bind to.
+
+		String Status
+			Description
+				|The profile status. Valid values are "Pending", "Connected", "Blocked"
+
+
+	Structure AccountPersonal
+		Inherits AccountEntry
+		Description
+			|Represents a Mesh Acco
 		Struct DareEnvelope SignedProfileMesh
 			Description
 				|The persistent profile that will be used to validate changes to the
@@ -26,6 +37,12 @@
 		Struct DareEnvelope SignedAssertionAccount
 			Description
 				|The signed assertion describing the account.
-		String Status
+
+	Structure AccountGroup
+		Inherits AccountEntry
+		Description
+			|Represents a Mesh Acco
+		Struct DareEnvelope SignedProfileGroup
 			Description
-				|The profile status. Valid values are "Pending", "Connected", "Blocked"
+				|The persistent profile that will be used to validate changes to the
+				|account assertion.

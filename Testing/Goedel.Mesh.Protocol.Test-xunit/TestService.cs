@@ -377,10 +377,7 @@ namespace Goedel.XUnit {
             // Generate a recryption group
             var contextGroup = contextAccountAlice.CreateGroup(AccountGroup);
 
-            // Bug - doesn't sign the Group Profile
-
             var groupList = new List<string>() { AccountGroup };
-
             // Encrypt to the group
             var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
 
@@ -412,6 +409,12 @@ namespace Goedel.XUnit {
 
             var decrypt3 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt3.IsEqualTo(plaintext).AssertTrue();
+
+            // Create a member entry fo Bob
+            contextGroup.Delete(AccountBob);
+
+            var decrypt4 = contextAccountAlice.DareDecode(envelope, verify: true);
+            decrypt4.IsEqualTo(plaintext).AssertTrue();
 
             throw new NYI();
             }

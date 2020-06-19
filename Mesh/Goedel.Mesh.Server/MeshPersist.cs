@@ -467,8 +467,8 @@ namespace Goedel.Mesh.Server {
         /// <param name="dareMessage">The message.</param>
         /// <returns>Identifier of the message posted.</returns>
         public string MessagePost(
-                    JpcSession jpcSession, 
-                    VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) => 
+                    JpcSession jpcSession,
+                    VerifiedAccount account, List<string> accounts, DareEnvelope dareMessage) =>
             accounts == null ? MessagePostSelf(jpcSession, account, dareMessage) :
                  MessagePostOther(jpcSession, account, accounts, dareMessage);
 
@@ -621,10 +621,28 @@ namespace Goedel.Mesh.Server {
 
 
 
-    public partial class AccountEntry {
+    public abstract partial class AccountEntry {
 
         ///<summary>The primary key</summary>
         public override string _PrimaryKey => AccountAddress;
+
+
+
+        /// <summary>
+        /// Default constructor for serialization.
+        /// </summary>
+        public AccountEntry() {
+            }
+
+        /// <summary>
+        /// Verification function.
+        /// </summary>
+        /// <returns>True if the account entry is properly formatted.</returns>
+        public bool Verify() => true; // NYI: Verification of signed profile.
+
+        }
+
+    public partial class AccountPersonal {
 
         ///<summary>Cached convenience accessor for <see cref="ProfileMesh"/></summary>
         public ProfileMesh ProfileMesh => profileMesh ??
@@ -639,29 +657,38 @@ namespace Goedel.Mesh.Server {
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public AccountEntry() {
+        public AccountPersonal() {
             }
 
         /// <summary>
         /// Constructor creating an Account entry from the request <paramref name="request"/>.
         /// </summary>
         /// <param name="request">The account creation request.</param>
-        public AccountEntry(CreateRequest request) {
+        public AccountPersonal(CreateRequest request) {
             AccountAddress = request.AccountAddress;
             SignedProfileMesh = request.SignedProfileMesh;
             SignedAssertionAccount = request.SignedAssertionAccount;
             Verify();
             Directory = AccountAddress;
             }
-
-        /// <summary>
-        /// Verification function.
-        /// </summary>
-        /// <returns>True if the account entry is properly formatted.</returns>
-        public bool Verify() => true; // NYI: Verification of signed profile.
-
         }
 
+    public partial class AccountGroup {
 
-
+        /// <summary>
+        /// Default constructor for serialization.
+        /// </summary>
+        public AccountGroup() {
+            }
+        /// <summary>
+        /// Constructor creating an Account entry from the request <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The account creation request.</param>
+        public AccountGroup(CreateGroupRequest request) {
+            AccountAddress = request.AccountAddress;
+            SignedProfileGroup = request.SignedProfileGroup;
+            Verify();
+            Directory = AccountAddress;
+            }
+        }
     }

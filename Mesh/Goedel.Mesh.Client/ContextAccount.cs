@@ -549,11 +549,16 @@ namespace Goedel.Mesh.Client {
                 SignedProfileGroup = profileGroup.DareEnvelope
                 };
 
-
             var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
-
+            createResponse.Success().AssertTrue();
 
             var catalogedGroup = new CatalogedGroup(profileGroup);
+
+            // Bug: need to add a contact entry for the group to the Admin's contacts list. 
+            // Bug: Should also encrypt the relevant admin key to the admin encryption key.
+
+            false.AssertTrue();
+
 
             return ContextGroup.CreateGroup(this, catalogedGroup);
             }
@@ -651,7 +656,7 @@ namespace Goedel.Mesh.Client {
 
 
         MessagePIN RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
-            var messageConnectionPIN = new MessagePIN(pin, automatic, expires, AccountAddress, action);
+            var messageConnectionPIN = new MessagePIN(pin, automatic, expires, accountAddress, action);
 
             SendMessageAdmin(messageConnectionPIN);
             return messageConnectionPIN;
@@ -898,7 +903,9 @@ namespace Goedel.Mesh.Client {
                 return null;
                 }
 
-            GetCatalogContact().Add(replyContact.Self);
+            if (accept) {
+                GetCatalogContact().Add(replyContact.Self);
+                }
 
             return null;
             }

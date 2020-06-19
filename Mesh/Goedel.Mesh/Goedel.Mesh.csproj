@@ -49,6 +49,10 @@
     <None Update="ProtocolSchema.Protocol">
       <Generator>Protogen</Generator>
     </None>
+    <None Update="SchemaMesh.g3l">
+      <LastGenOutput>SchemaMesh.cs</LastGenOutput>
+      <Generator>Protogen</Generator>
+    </None>
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>
       <Generator>Protogen</Generator>

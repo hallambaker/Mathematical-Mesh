@@ -139,7 +139,7 @@ namespace Goedel.Mesh.Server {
 
 
             try {
-                var accountEntry = new AccountEntry(request);
+                var accountEntry = new AccountPersonal(request);
                 Mesh.AccountAdd(jpcSession, accountEntry);
                 return new CreateResponse();
                 }
@@ -163,8 +163,8 @@ namespace Goedel.Mesh.Server {
 
 
             try {
-                //var accountEntry = new AccountEntry(request);
-                //Mesh.AccountAdd(jpcSession, accountEntry);
+                var accountEntry = new AccountGroup(request);
+                Mesh.AccountAdd(jpcSession, accountEntry);
                 return new CreateGroupResponse();
                 }
             catch (System.Exception exception) {

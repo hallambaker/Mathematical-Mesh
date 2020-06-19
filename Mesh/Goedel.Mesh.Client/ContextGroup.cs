@@ -95,6 +95,25 @@ namespace Goedel.Mesh.Client {
         /// <param name="id">The member to add.</param>
         /// <returns>The member catalog entry.</returns>
         public CatalogedMember Add(string id) {
+
+            // Bug: Should create an entry for the member
+
+            // Pull the contact information from the user's contact catalog
+
+            // Split the admin key
+
+            // Create the capability and add to the capability catalog
+
+            // Add the member to the member catalog
+
+
+            // Create and send the invitation
+
+
+            // return the member entry.
+
+
+
             throw new NotImplementedException();
             }
 
@@ -112,6 +131,17 @@ namespace Goedel.Mesh.Client {
             }
 
         // ToDo: Delete Add member from group
+
+        /// <summary>
+        /// Delete a member from the group
+        /// </summary>
+        /// <param name="memberAddress">The member to delete.</param>
+        /// <returns>The member catalog entry.</returns>
+        public void Delete(string memberAddress) {
+            var member = Locate(memberAddress);
+            Delete(member);
+            }
+
 
         /// <summary>
         /// Delete a member from the group

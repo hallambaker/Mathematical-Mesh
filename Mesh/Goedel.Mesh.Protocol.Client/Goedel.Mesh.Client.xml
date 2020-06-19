@@ -1137,6 +1137,13 @@
             <param name="id">The member to locate.</param>
             <returns>The member catalog entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Delete(System.String)">
+            <summary>
+            Delete a member from the group
+            </summary>
+            <param name="memberAddress">The member to delete.</param>
+            <returns>The member catalog entry.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Delete(Goedel.Mesh.CatalogedMember)">
             <summary>
             Delete a member from the group
