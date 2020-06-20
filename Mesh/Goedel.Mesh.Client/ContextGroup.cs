@@ -28,8 +28,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>The group profile.</summary>
         public ProfileGroup ProfileGroup => CatalogedGroup.Profile;
 
-
-
+        public ConnectionGroup ConnectionGroup;
+        ///<summary>Convenience accessor for the connection.</summary>
+        public override Connection Connection => ConnectionGroup;
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public override string StoresDirectory => storesDirectory ??
@@ -87,6 +88,11 @@ namespace Goedel.Mesh.Client {
 
         #region Implement Group operations
 
+        public override string GetAccountAddress() {
+            throw new NYI();
+            }
+
+
         // ToDo: Implement Add member to group
 
         /// <summary>
@@ -117,7 +123,40 @@ namespace Goedel.Mesh.Client {
             throw new NotImplementedException();
             }
 
-        // ToDo: Implement Locate member in group
+        /// <summary>
+        /// Get the default (i.e. minimum contact info). This has a single network 
+        /// address entry for this mesh and mesh account. 
+        /// </summary>
+        /// <returns>The default contact.</returns>
+        public override Contact CreateDefaultContact(bool meshUDF = false) {
+
+            var address = new NetworkAddress() {
+                //EnvelopedProfileAccount = AccountEntry.EnvelopedProfileAccount,
+                Address = AccountAddress
+                
+                };
+            var anchorAccount = new Anchor() {
+                //UDF = ProfileAccount.UDF,
+                Validation = "Self"
+                };
+            // ContextMesh.ProfileMesh.UDF 
+
+            var contact = new ContactPerson() {
+                Anchors = new List<Anchor>() { anchorAccount },
+                NetworkAddresses = new List<NetworkAddress>() { address }
+                };
+
+            if (meshUDF) {
+                var anchorMesh = new Anchor() {
+                    UDF = ContextMesh.ProfileMesh.UDF,
+                    Validation = "Self"
+                    };
+                contact.Anchors.Add(anchorMesh);
+                }
+
+
+            return contact;
+            }
 
         /// <summary>
         /// Locate the a member record in the group.

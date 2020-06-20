@@ -43,7 +43,7 @@ namespace Goedel.Test.Core {
         public override MeshService GetMeshClient(
                 string accountAddress,
                 CryptoKey keyAuthentication,
-                ConnectionAccount assertionAccountConnection,
+                Connection assertionAccountConnection,
                 Profile profile = null) =>
             testEnvironmentCommon.MeshLocalPortal.GetService(accountAddress);
 

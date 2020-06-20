@@ -160,7 +160,7 @@ namespace Goedel.Mesh {
         public virtual MeshService GetMeshClient(
                 string accountAddress,
                 CryptoKey keyAuthentication,
-                ConnectionAccount assertionAccountConnection,
+                Connection assertionAccountConnection,
                 Profile profile = null) =>
                     MeshService.GetService(accountAddress);
 

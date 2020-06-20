@@ -5391,10 +5391,10 @@ namespace Goedel.Mesh {
 
 		public virtual List<string>				Protocols  {get; set;}
         /// <summary>
-        ///Optional enveloped ConnectionAccount for the Address
+        ///Optional enveloped profile for the Address
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedConnectionAccount  {get; set;}
+		public virtual DareEnvelope						EnvelopedProfileAccount  {get; set;}
         /// <summary>
         ///Public keys associated with the network address
         /// </summary>
@@ -5465,10 +5465,10 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (EnvelopedConnectionAccount != null) {
+			if (EnvelopedProfileAccount != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedConnectionAccount", 1);
-					EnvelopedConnectionAccount.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedProfileAccount", 1);
+					EnvelopedProfileAccount.Serialize (_writer, false);
 				}
 			if (PublicKeys != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -5527,10 +5527,10 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "EnvelopedConnectionAccount" : {
+				case "EnvelopedProfileAccount" : {
 					// An untagged structure
-					EnvelopedConnectionAccount = new DareEnvelope ();
-					EnvelopedConnectionAccount.Deserialize (jsonReader);
+					EnvelopedProfileAccount = new DareEnvelope ();
+					EnvelopedProfileAccount.Deserialize (jsonReader);
  
 					break;
 					}

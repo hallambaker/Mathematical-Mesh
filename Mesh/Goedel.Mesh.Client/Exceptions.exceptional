@@ -37,7 +37,7 @@ Namespace Goedel.Mesh.Client
 				|Portal refused profile publication request
 
 
-	Exception Connection
+	Exception ConnectionException
         Console "Connection did not complete"
 		Description
 			|The connection request did not complete

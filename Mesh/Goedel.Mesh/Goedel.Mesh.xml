@@ -9680,9 +9680,9 @@
             the contact may be reached using the specified Address. 
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedConnectionAccount">
+        <member name="P:Goedel.Mesh.NetworkAddress.EnvelopedProfileAccount">
              <summary>
-            Optional enveloped ConnectionAccount for the Address
+            Optional enveloped profile for the Address
              </summary>
         </member>
         <member name="P:Goedel.Mesh.NetworkAddress.PublicKeys">

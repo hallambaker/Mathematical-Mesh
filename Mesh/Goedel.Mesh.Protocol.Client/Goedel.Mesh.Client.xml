@@ -439,24 +439,6 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.Client.SyncStatus">
-            <summary>Track the synchronization status of an upload or download operation.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.SyncStatus.Store">
-            <summary>The local store</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.SyncStatus.Index">
-            <summary>The last index at the remote store</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.SyncStatus.Digest">
-            <summary>The apex digest value at the remote store</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.SyncStatus.#ctor(Goedel.Mesh.Store)">
-            <summary>
-            Report the synchronization status of a Mesh store.
-            </summary>
-            <param name="store">The store reported on.</param>
-        </member>
         <member name="T:Goedel.Mesh.Client.ContextAccount">
             <summary>
             Bound context for a Mesh Account. 
@@ -477,23 +459,14 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.ConnectionAccount">
             <summary>Convenience accessor for the account connection</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyEncryptionUDF">
-            <summary>Convenience accessor for the encryption key fingerprint.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeySignatureUDF">
-            <summary>Convenience accessor for the signature key fingerprint.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAuthenticationUDF">
-            <summary>Convenience accessor for the authentication key fingerprint.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.MeshClient">
-            <summary>Returns the MeshClient and caches the result for future use.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
-            <summary>The Account Address</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.Connection">
+            <summary>Convenience accessor for the connection.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
+            <summary>The Account Address</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
             <summary>
@@ -502,13 +475,6 @@
             <param name="contextMesh">The Mesh context to which this account belongs.</param>
             <param name="accountEntry">The account entry within the device catalog entry.</param>
             <param name="accountAddress">The account service identifier.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(System.String)">
-            <summary>
-            Returns a Mesh service client for <paramref name="accountAddress"/>.
-            </summary>
-            <param name="accountAddress">The account service identifier.</param>
-            <returns>The Mesh service client</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.AddDevice(Goedel.Mesh.CatalogedDevice)">
             <summary>
@@ -532,6 +498,13 @@
             <paramref name="account"/>.
             </summary>
             <param name="account">The modified account profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.AddDevice(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Add a device to the account and the underlying Mesh.
+            </summary>
+            <param name="profileDevice">Profile of the device to add.</param>
+            <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDefaultContact(System.Boolean)">
             <summary>
@@ -581,10 +554,7 @@
             <summary>Returns the inbound spool for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolOutbound">
-            <summary>Returns the outbound spool catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolLocal">
-            <summary>Returns the outbound spool catalog for the account</summary>
+            <summary>Returns the outbound spool for the account</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetPendingMessageConnectionRequest">
             <summary>
@@ -656,19 +626,6 @@
             <param name="name">The name of the store to bind.</param>
             <returns>The store instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetPIN(System.String,System.Boolean,System.Int32,System.Int64)">
-            <summary>
-            Create a PIN value of length <paramref name="length"/> bits valid for 
-            <paramref name="validity"/> minutes.
-            </summary>
-            <param name="length">The size of the PIN value to create in bits.</param>
-            <param name="validity">The validity interval in minutes from the current 
-            date and time.</param>
-            <param name="action">The action to which this pin is bound.</param>
-            <param name="automatic">If true, presentation of the pin code is sufficient
-            to authenticate and authorize the action.</param>
-            <returns>A <see cref="T:Goedel.Mesh.MessagePIN"/> instance describing the created parameters.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
             <summary>
             Create an EARL for a device, publish the result to the Mesh service and return 
@@ -694,13 +651,6 @@
             <param name="uri">The connection URI</param>
             <returns>The </returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Sync">
-            <summary>
-            Synchronize this device to the catalogs at the service. Since the authoritative copy of
-            the service is held at the service, this means only downloading updates at present.
-            </summary>
-            <returns>The number of items synchronized</returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatics">
             <summary>
             Process automatic actions.
@@ -723,25 +673,12 @@
             <param name="acknowledgeConnection">Connection request to be processed.</param>
             <returns>The result of requesting the connection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.Status">
-            <summary>
-            Obtain the status of the remote store.
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Process(Goedel.Mesh.AcknowledgeConnection,System.Boolean)">
             <summary>
             Accept or reject a connection request.
             </summary>
             <param name="request">The request to accept or reject.</param>
             <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.AddDevice(Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Add a device to the account and the underlying Mesh.
-            </summary>
-            <param name="profileDevice">Profile of the device to add.</param>
-            <returns>The catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Process(System.String,System.Boolean,System.Boolean)">
             <summary>
@@ -820,29 +757,23 @@
             <param name="requestConfirmation">The request received.</param>
             <param name="response">If true, accept the confirmation request, otherwise reject.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.String)">
-            <summary>
-            Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
-            </summary>
-            <param name="meshMessage">The message to send.</param>
-            <param name="recipient">The recipient service ID.</param>
+        <member name="T:Goedel.Mesh.Client.SyncStatus">
+            <summary>Track the synchronization status of an upload or download operation.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String})">
-            <summary>
-            Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
-            is not null, the message is to be posted to the outbound spool to be forwarded to the
-            appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
-            collection.
-            </summary>
-            <param name="meshMessage">The message to post</param>
-            <param name="recipients">The recipients the message is to be sent to. If null, the
-            message is for local pickup.</param>
+        <member name="F:Goedel.Mesh.Client.SyncStatus.Store">
+            <summary>The local store</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessageAdmin(Goedel.Mesh.Message)">
+        <member name="F:Goedel.Mesh.Client.SyncStatus.Index">
+            <summary>The last index at the remote store</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.SyncStatus.Digest">
+            <summary>The apex digest value at the remote store</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.SyncStatus.#ctor(Goedel.Mesh.Store)">
             <summary>
-            Send a message signed using the mesh administration key.
+            Report the synchronization status of a Mesh store.
             </summary>
-            <param name="meshMessage"></param>
+            <param name="store">The store reported on.</param>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextAccountEntry">
             <summary>
@@ -868,6 +799,18 @@
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyEncryption">
             <summary>The group encryption key </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyAuthentication">
+            <summary>The authentication key used by this client to connect to the group</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyEncryptionUDF">
+            <summary>Convenience accessor for the encryption key fingerprint.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeySignatureUDF">
+            <summary>Convenience accessor for the signature key fingerprint.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyAuthenticationUDF">
+            <summary>Convenience accessor for the authentication key fingerprint.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
@@ -877,8 +820,100 @@
         <member name="F:Goedel.Mesh.Client.ContextAccountEntry.ContainerCryptoParameters">
             <summary>The cryptographic parameters for reading/writing to account containers</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.MeshClient">
+            <summary>Returns the MeshClient and caches the result for future use.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.AccountAddress">
+            <summary>The Account Address</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetCatalogCapability">
             <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetSpoolLocal">
+            <summary>Returns the local spool  for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetPIN(System.String,System.Boolean,System.Int32,System.Int64)">
+            <summary>
+            Create a PIN value of length <paramref name="length"/> bits valid for 
+            <paramref name="validity"/> minutes.
+            </summary>
+            <param name="length">The size of the PIN value to create in bits.</param>
+            <param name="validity">The validity interval in minutes from the current 
+            date and time.</param>
+            <param name="action">The action to which this pin is bound.</param>
+            <param name="automatic">If true, presentation of the pin code is sufficient
+            to authenticate and authorize the action.</param>
+            <returns>A <see cref="T:Goedel.Mesh.MessagePIN"/> instance describing the created parameters.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.RegisterPIN(System.String,System.Boolean,System.Nullable{System.DateTime},System.String,System.String)">
+            <summary>
+            Register the pin code <paramref name="pin"/> to the account <paramref name="accountAddress"/>
+            bound to the action <paramref name="action"/>.
+            </summary>
+            <param name="pin">The PIN code</param>
+            <param name="automatic">If true, proof of knowledge of the pin is sufficient authorization.</param>
+            <param name="expires">Expiry time.</param>
+            <param name="accountAddress">The account to which the pin is bound.</param>
+            <param name="action">The action to which the pin is bound.</param>
+            <returns>The message registered on the Admin spool.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetMessagePIN(System.String)">
+            <summary>
+            Fetch the <see cref="T:Goedel.Mesh.MessagePIN"/> with the identifier <paramref name="PinUDF"/>.
+            </summary>
+            <param name="PinUDF">The identifier of the PIN</param>
+            <returns>The message (if found), otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetMeshClient(System.String)">
+            <summary>
+            Returns a Mesh service client for <paramref name="accountAddress"/>.
+            </summary>
+            <param name="accountAddress">The account service identifier.</param>
+            <returns>The Mesh service client</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.Status">
+            <summary>
+            Obtain the status of the remote store.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.Sync">
+            <summary>
+            Synchronize this device to the catalogs at the service. Since the authoritative copy of
+            the service is held at the service, this means only downloading updates at present.
+            </summary>
+            <returns>The number of items synchronized</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.String)">
+            <summary>
+            Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
+            </summary>
+            <param name="meshMessage">The message to send.</param>
+            <param name="recipient">The recipient service ID.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String})">
+            <summary>
+            Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
+            is not null, the message is to be posted to the outbound spool to be forwarded to the
+            appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
+            collection.
+            </summary>
+            <param name="meshMessage">The message to post</param>
+            <param name="recipients">The recipients the message is to be sent to. If null, the
+            message is for local pickup.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessageAdmin(Goedel.Mesh.Message)">
+            <summary>
+            Send a message signed using the mesh administration key.
+            </summary>
+            <param name="meshMessage"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.CreateDefaultContact(System.Boolean)">
+            <summary>
+            Get the default (i.e. minimum contact info). This has a single network 
+            address entry for this mesh and mesh account. 
+            </summary>
+            <returns>The default contact.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetStoreStatus(Goedel.Mesh.ContainerStatus)">
             <summary>
@@ -1094,6 +1129,9 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
             <summary>The group profile.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.Connection">
+            <summary>Convenience accessor for the connection.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
@@ -1129,6 +1167,13 @@
             </summary>
             <param name="id">The member to add.</param>
             <returns>The member catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateDefaultContact(System.Boolean)">
+            <summary>
+            Get the default (i.e. minimum contact info). This has a single network 
+            address entry for this mesh and mesh account. 
+            </summary>
+            <returns>The default contact.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Locate(System.String)">
             <summary>
@@ -1525,35 +1570,35 @@
             The public fatory delegate
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.Client.Connection">
+        <member name="T:Goedel.Mesh.Client.ConnectionException">
             <summary>
             The connection request did not complete
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Connection.#ctor">
+        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor">
             <summary>
             Construct instance for exception "Connection did not complete"
             </summary>		
         </member>
-        <member name="M:Goedel.Mesh.Client.Connection.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String)">
             <summary>
             Construct instance for exception "Connection did not complete"
             </summary>		
             <param name="Description">Description of the error</param>	
         </member>
-        <member name="M:Goedel.Mesh.Client.Connection.#ctor(System.String,System.Exception)">
+        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception)">
             <summary>
             Construct instance for exception 		/// containing an inner exception.
             </summary>		
             <param name="Description">Description of the error</param>	
             <param name="Inner">Inner Exception</param>	
         </member>
-        <member name="F:Goedel.Mesh.Client.Connection.UserData">
+        <member name="F:Goedel.Mesh.Client.ConnectionException.UserData">
             <summary>
             User data associated with the exception.
             </summary>	
         </member>
-        <member name="F:Goedel.Mesh.Client.Connection.Throw">
+        <member name="F:Goedel.Mesh.Client.ConnectionException.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1706,16 +1751,16 @@
         <member name="P:Goedel.Mesh.Client.IMeshMachineClient.MeshHost">
             <summary>Direct access to the Catalog, should remove this</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.ConnectionAccount,Goedel.Mesh.Profile)">
+        <member name="M:Goedel.Mesh.Client.IMeshMachineClient.GetMeshClient(System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Connection,Goedel.Mesh.Profile)">
             <summary>
             Return a MeshService client for the service ID <paramref name="accountAddress"/>
             using the authentication key <paramref name="keyAuthentication"/> and credential
-            <paramref name="assertionAccountConnection"/>. 
+            <paramref name="connection"/>. 
             </summary>
             <param name="accountAddress">The service identifier to connect to.</param>
             <param name="keyAuthentication">The private key to be used for authentication
             (encryption).</param>
-            <param name="assertionAccountConnection">The credential binding the device
+            <param name="connection">The credential binding the device
             to the account.</param>
             <param name="profile">The profile. This is required when requesting
             an inbound connection or requesting that a new account be created and optional

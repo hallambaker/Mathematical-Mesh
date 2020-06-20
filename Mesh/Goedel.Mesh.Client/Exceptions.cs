@@ -362,19 +362,19 @@ namespace Goedel.Mesh.Client {
     /// The connection request did not complete
     /// </summary>
     [Serializable]
-	public class Connection : global::System.Exception {
+	public class ConnectionException : global::System.Exception {
 
 		/// <summary>
         /// Construct instance for exception "Connection did not complete"
         /// </summary>		
-		public Connection () : base ("Connection did not complete") {
+		public ConnectionException () : base ("Connection did not complete") {
 			}
         
 		/// <summary>
         /// Construct instance for exception "Connection did not complete"
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
-		public Connection (string Description) : base (Description) {
+		public ConnectionException (string Description) : base (Description) {
 			}
 
 		/// <summary>
@@ -382,7 +382,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>		
         /// <param name="Description">Description of the error</param>	
 		/// <param name="Inner">Inner Exception</param>	
-		public Connection (string Description, System.Exception Inner) : 
+		public ConnectionException (string Description, System.Exception Inner) : 
 				base (Description, Inner) {
 			}
 
@@ -401,10 +401,10 @@ namespace Goedel.Mesh.Client {
 
         static System.Exception _Throw(object Reason) {
 			if (Reason as string != null) {
-				return new Connection(Reason as string);
+				return new ConnectionException(Reason as string);
 				}
 			else {
-				return new Connection();
+				return new ConnectionException();
 				}
             }
         }
@@ -414,7 +414,7 @@ namespace Goedel.Mesh.Client {
     /// The connection request was refused
     /// </summary>
     [Serializable]
-	public class ConnectionRefused : Connection {
+	public class ConnectionRefused : ConnectionException {
 
 		/// <summary>
         /// Construct instance for exception "The connection request was refused"
@@ -462,7 +462,7 @@ namespace Goedel.Mesh.Client {
     /// The connection request is still pending
     /// </summary>
     [Serializable]
-	public class ConnectionPending : Connection {
+	public class ConnectionPending : ConnectionException {
 
 		/// <summary>
         /// Construct instance for exception "The connection request is still pending"
@@ -510,7 +510,7 @@ namespace Goedel.Mesh.Client {
     /// The connection request is still pending
     /// </summary>
     [Serializable]
-	public class ConnectionExpired : Connection {
+	public class ConnectionExpired : ConnectionException {
 
 		/// <summary>
         /// Construct instance for exception "The connection request is still pending"
@@ -558,7 +558,7 @@ namespace Goedel.Mesh.Client {
     /// The connection request is still pending
     /// </summary>
     [Serializable]
-	public class ConnectionAccountUnknown : Connection {
+	public class ConnectionAccountUnknown : ConnectionException {
 
 		/// <summary>
         /// Construct instance for exception "The connection request is still pending"
@@ -606,7 +606,7 @@ namespace Goedel.Mesh.Client {
     /// The request was refused because the pin was invalid
     /// </summary>
     [Serializable]
-	public class RefusedPINInvalid : Connection {
+	public class RefusedPINInvalid : ConnectionException {
 
 		/// <summary>
         /// Construct instance for exception "The request was refused because the pin was invalid"

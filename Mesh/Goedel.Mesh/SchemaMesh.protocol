@@ -571,9 +571,9 @@
 			Description
 				|The IANA protocol|identifier of the network protocols by which 
 				|the contact may be reached using the specified Address. 
-		Struct DareEnvelope EnvelopedConnectionAccount
+		Struct DareEnvelope EnvelopedProfileAccount
 			Description
-				|Optional enveloped ConnectionAccount for the Address
+				|Optional enveloped profile for the Address
 		Struct PublicKey PublicKeys
 			Description
 				|Public keys associated with the network address
