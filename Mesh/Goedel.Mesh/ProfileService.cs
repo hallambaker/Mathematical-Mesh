@@ -19,7 +19,7 @@ namespace Goedel.Mesh {
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
         public ProfileService(
-                    KeyCollection keyCollection,
+                    IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
             var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);

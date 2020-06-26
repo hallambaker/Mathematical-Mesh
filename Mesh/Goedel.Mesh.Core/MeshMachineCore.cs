@@ -26,7 +26,7 @@ namespace Goedel.Mesh {
         public virtual string DirectoryKeys { get; }
 
         ///<summary>The host key collection.</summary>
-        public virtual KeyCollection KeyCollection { get; }
+        public virtual IKeyCollection KeyCollection { get; }
 
         ///<summary>The IANA media type for the host file data.</summary>
         public const string FileTypeHost = "application/mmm-host";
@@ -58,7 +58,7 @@ namespace Goedel.Mesh {
         /// Get the host key collection.
         /// </summary>
         /// <returns></returns>
-        public virtual KeyCollection GetKeyCollection() =>
+        public virtual IKeyCollection GetKeyCollection() =>
             new KeyCollectionCore();
 
         #region // Implementation

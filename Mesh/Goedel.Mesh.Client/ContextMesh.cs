@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using Goedel.Mesh;
 using System;
@@ -23,7 +24,7 @@ namespace Goedel.Mesh.Client {
         public MeshHost MeshHost { get; }
 
         ///<summary>The key collection</summary>
-        public KeyCollection KeyCollection => MeshHost.KeyCollection;
+        public IKeyCollection KeyCollection => MeshHost.KeyCollection;
 
 
         ///<summary>The cataloged device</summary>

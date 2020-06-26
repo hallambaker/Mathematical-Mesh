@@ -59,6 +59,106 @@ namespace Goedel.Mesh.Client {
 
 
     /// <summary>
+    /// No mesh account could be found.
+    /// </summary>
+    [Serializable]
+	public class AccountNotFound : global::System.Exception {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public AccountNotFound () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public AccountNotFound (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public AccountNotFound (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+		/// <summary>
+        /// User data associated with the exception.
+        /// </summary>	
+		public object UserData;
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new AccountNotFound(Reason as string);
+				}
+			else {
+				return new AccountNotFound();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// No mesh profile could be found.
+    /// </summary>
+    [Serializable]
+	public class MeshNotFound : AccountNotFound {
+
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+		public MeshNotFound () : base ("An error occurred") {
+			}
+        
+		/// <summary>
+        /// Construct instance for exception "An error occurred"
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		public MeshNotFound (string Description) : base (Description) {
+			}
+
+		/// <summary>
+        /// Construct instance for exception 		/// containing an inner exception.
+        /// </summary>		
+        /// <param name="Description">Description of the error</param>	
+		/// <param name="Inner">Inner Exception</param>	
+		public MeshNotFound (string Description, System.Exception Inner) : 
+				base (Description, Inner) {
+			}
+
+
+
+
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object Reason) {
+			if (Reason as string != null) {
+				return new MeshNotFound(Reason as string);
+				}
+			else {
+				return new MeshNotFound();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// The action requested can only be performed by an administrator account
     /// </summary>
     [Serializable]

@@ -1204,35 +1204,6 @@ namespace Goedel.Cryptography {
             }
 
 
-        ///// <summary>
-        ///// Generate a UDF for forming an Encrypted, Authenticated Resource Locator.
-        ///// </summary>
-        ///// <param name="bits">Number of bits precision, if less than the minimum number
-        ///// of bits will be set equal to <see cref="MinimumBits"/></param>
-        ///// <param name="algorithmSign">The signature algorithm to use.</param>
-        ///// <param name="algorithmDigest">The digest algorithm to use.</param>
-        ///// <returns>The encryption and signature keys.</returns>
-        //public static (CryptoKey, KeyPair) DeriveKey(
-        //            int bits = 0,
-        //            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Ed448,
-        //            CryptoAlgorithmId algorithmDigest = CryptoAlgorithmId.SHA_2_512) {
-
-        //    bits = bits.Minimum (MinimumBits);
-        //    var signatureKey = KeyPair.Factory(algorithmSign, KeySecurity.Exportable);
-
-
-        //    var pkixKeyBytes = signatureKey.PKIXPublicKey.SubjectPublicKeyInfo().DER();
-        //    var secretValue = FromKeyInfo(pkixKeyBytes, bits, algorithmDigest);
-
-        //    var encryptionKey = new CryptoKeySymmetric(secretValue, UdfTypeIdentifier.EncryptionSignature);
-
-        //    Console.WriteLine($"Secret Value = {secretValue.ToStringBase16FormatHex()}");
-        //    Console.WriteLine($" Encryption key = {encryptionKey}, signature = {signatureKey} ");
-
-        //    return (encryptionKey, signatureKey);
-        //    }
-
-
         /// <summary>
         /// Derive a key pair from the UDF key <paramref name="udf"/> with Key security model
         /// <paramref name="keySecurity"/> and Key uses <paramref name="keyUses"/>.
@@ -1245,7 +1216,7 @@ namespace Goedel.Cryptography {
         /// <param name="saltSuffix">Optional salt suffix used to differentiate the key.</param>
         /// <returns>The derrived key pair.</returns>
         public static KeyPair DeriveKey(string udf,
-                    KeyCollection keyCollection,
+                    IKeyLocate keyCollection,
                     KeySecurity keySecurity = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmIDin = CryptoAlgorithmId.Default,

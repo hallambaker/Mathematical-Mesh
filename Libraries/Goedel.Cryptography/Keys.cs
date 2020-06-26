@@ -64,36 +64,34 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual CryptoKey TryMatchRecipient(string keyID) =>
+        public virtual CryptoKey TryFindKeyDecryption(string keyID) =>
             keyID == KeyIdentifier ? this : null;
-
-
 
         /// <summary>
         /// Resolve a public key by identifier. This always returns null because the collection
         /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey GetByAccountEncrypt(string keyID) => this;
+        public CryptoKey TryFindKeyEncryption(string keyId) => this;
 
         /// <summary>
         /// Resolve a private key by identifier.  This always returns null because the collection
         /// cannot contain a <see cref="KeyPair"/>
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public  CryptoKey GetByAccountSign(string keyID) => this;
+        public CryptoKey TryFindKeySignature(string keyId) => this;
 
         /// <summary>
-        /// Locate a private key  This always returns null because the collection
-        /// cannot contain a <see cref="KeyPair"/>
+        /// Locate the private key.
         /// </summary>
         /// <param name="UDF">fingerprint of key to locate.</param>
         /// <returns>A KeyPair instance bound to the private key.</returns>
         public  CryptoKey LocatePrivateKeyPair(string UDF) => this;
 
-
+        public void Add(KeyPair keyPair) => throw new NotImplementedException();
+        public void Persist(KeyPair keyPair) => throw new NotImplementedException();
 
         #endregion
 

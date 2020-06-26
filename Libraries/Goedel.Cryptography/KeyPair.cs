@@ -102,7 +102,7 @@ namespace Goedel.Cryptography {
         public static KeyPair Factory(
                     CryptoAlgorithmId algorithmID,
                     KeySecurity keySecurity,
-                    KeyCollection keyCollection = null,
+                    IKeyLocate keyCollection = null,
                     int keySize = 0,
                     KeyUses keyUses = KeyUses.Any) {
 
@@ -157,7 +157,7 @@ namespace Goedel.Cryptography {
             KeySecurity keySecurity,
             byte[] binaryData,
             byte[] salt,
-            KeyCollection keyCollection = null,
+            IKeyLocate keyCollection = null,
             int keySize = 0,
             KeyUses keyUses = KeyUses.Any) {
 
@@ -216,7 +216,7 @@ namespace Goedel.Cryptography {
         /// <param name="keySecurity">The key security model.</param>
         public static void Register(KeyPair keyPair,
             KeySecurity keySecurity,
-            KeyCollection keyCollection) {
+            IKeyLocate keyCollection) {
             Assert.NotNull(keyPair, NoProviderSpecified.Throw);
             keyPair.KeySecurity = keySecurity;
 

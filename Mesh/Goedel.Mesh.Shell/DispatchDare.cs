@@ -1,7 +1,9 @@
 ﻿using Goedel.Cryptography.Dare;
+using Goedel.Cryptography;
 using Goedel.Utilities;
 
 using System.IO;
+using Goedel.Mesh.Client;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -17,13 +19,20 @@ namespace Goedel.Mesh.Shell {
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
 
-            using var contextAccount = GetContextAccount(Options);
+            ContextAccount contextAccount = null;
+            try {
+                contextAccount = GetContextAccount(Options);
+                }
+            catch  {
 
+                }
+
+            IKeyLocate keyLocate = (IKeyLocate) contextAccount ?? GetKeyCollection(Options);
             // we are getting the wrong one here. we want the encryption recipients from the contacts file.
 
 
 
-            var cryptoParameters = GetCryptoParameters(contextAccount, Options);
+            var cryptoParameters = GetCryptoParameters(keyLocate, Options);
 
             var ContentInfo = new ContentMeta() {
                 Filename = inputFile,

@@ -21,9 +21,9 @@ namespace Goedel.XUnit {
                 new MeshMachineTest(TestEnvironment, "SpoolTest").CacheValue(out meshMachineTest);
         MeshMachineTest meshMachineTest;
 
-        public KeyCollection KeyCollection => keyCollection ??
+        public IKeyCollection KeyCollection => keyCollection ??
             MeshMachineTest.GetKeyCollection().CacheValue(out keyCollection);
-        KeyCollection keyCollection;
+        IKeyCollection keyCollection;
 
         static StoreTests() {
             TestEnvironmentCommon.Initialize();
@@ -136,7 +136,33 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void TestCatalog() => throw new NYI();
+        public void TestCatalog() {
+
+            var directory = TestEnvironment.Path;
+            var file = "TestCatalogSingle";
+
+            var encryptionKey = KeyPair.Factory(CryptoAlgorithmId.X448, KeySecurity.Exportable,
+                KeyCollection);
+
+            var catalog = new CatalogCredential(directory, file, keyCollection: KeyCollection);
+
+            // Alice
+            var contactAlice = new ContactPerson("Alice", "Example");
+            var catalogedAlice = new CatalogedContact(contactAlice, false);
+
+            catalog.New(catalogedAlice);
+
+            // Bob
+            var contactBob = new ContactPerson("Alice", "Example");
+            var catalogedBob = new CatalogedContact(contactBob, false);
+
+            catalog.New(catalogedBob);
+
+
+            // Now try to read back.
+
+
+            }
 
 
         }

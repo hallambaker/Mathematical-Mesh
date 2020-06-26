@@ -42,7 +42,7 @@ namespace Goedel.Mesh {
                     string directory,
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,

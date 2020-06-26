@@ -268,7 +268,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The new container.</returns>
         public static Container Open(
                         JbcdStream jbcdStream,
-                        KeyCollection keyCollection = null) {
+                        IKeyLocate keyCollection = null) {
 
 
             var container = OpenExisting(jbcdStream, keyCollection);

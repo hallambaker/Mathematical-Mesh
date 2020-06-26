@@ -581,7 +581,7 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolOutbound">
             <summary>Returns the outbound spool for the account</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.TryMatchRecipient(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyDecryption(System.String)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
             </summary>
@@ -984,17 +984,9 @@
             <param name="name">The name of the store to bind.</param>
             <returns>The store instance.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetByAccountEncrypt(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.TryFindKeyEncryption(System.String)">
             <summary>
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
-            an account identifier or strong account identifier.
-            </summary>
-            <param name="keyId">The identifier to resolve.</param>
-            <returns>The identifier.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetByAccountSign(System.String)">
-            <summary>
-            Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
             <param name="keyId">The identifier to resolve.</param>
@@ -1007,12 +999,28 @@
             <param name="keyId">The key identifier to match.</param>
             <returns>The key pair if found.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.TryMatchRecipient(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.TryFindKeyDecryption(System.String)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
             </summary>
             <param name="keyId">The key identifier to match.</param>
             <returns>The key pair if found.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.TryFindKeySignature(System.String)">
+            <summary>
+            Resolve a private key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="signingKey">The identifier to resolve.</param>
+            <returns>The identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.ValidateTrustAnchor(Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="cryptoKey">The key to validate.</param>
+            <returns>The identifier.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.DareEncode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Collections.Generic.List{System.String},System.Boolean)">
             <summary>
@@ -1431,6 +1439,67 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.AccountNotFound">
+            <summary>
+            No mesh account could be found.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotFound.UserData">
+            <summary>
+            User data associated with the exception.
+            </summary>	
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.MeshNotFound">
+            <summary>
+            No mesh profile could be found.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String)">
+            <summary>
+            Construct instance for exception "An error occurred"
+            </summary>		
+            <param name="Description">Description of the error</param>	
+        </member>
+        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception)">
+            <summary>
+            Construct instance for exception 		/// containing an inner exception.
+            </summary>		
+            <param name="Description">Description of the error</param>	
+            <param name="Inner">Inner Exception</param>	
+        </member>
+        <member name="F:Goedel.Mesh.Client.MeshNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.NotAdministrator">
             <summary>
             The action requested can only be performed by an administrator account
@@ -1810,74 +1879,6 @@
             an inbound connection or requesting that a new account be created and optional
             otherwise.</param>
             <returns></returns>
-        </member>
-        <member name="T:Goedel.Mesh.Client.KeyCollectionClient">
-            <summary>
-            A wrapper around a KeyCollection that allows other key resolution sources to be added.
-            This may well be unnecessary due to the move from multiple frameworks to .Core alone.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Cryptography.KeyCollection)">
-            <summary>
-            Maintain a client key collection.
-            </summary>
-            <param name="catalogHost">The machine parameters.</param>
-            <param name="keyCollection">The base key collection.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.Persist(System.String,Goedel.Cryptography.PKIX.IPKIXPrivateKey,System.Boolean)">
-            <summary>
-            Persist a key to the underlying key collection.
-            </summary>
-            <param name="udf">The identifier under which the key is to be persisted.</param>
-            <param name="privateKey">The key to persist.</param>
-            <param name="exportable">If true, the key is bound to the current machine and cannot
-            be exported.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.Persist(System.String,Goedel.Cryptography.IJson,System.Boolean)">
-            <summary>
-            Persist a key to the underlying key collection.
-            </summary>
-            <param name="udf">The identifier under which the key is to be persisted.</param>
-            <param name="joseKey">The key to persist.</param>
-            <param name="exportable">If true, the key is bound to the current machine and cannot
-            be exported.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.TryMatchRecipient(System.String)">
-            <summary>
-            Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
-            </summary>
-            <param name="keyID">The key identifier to match.</param>
-            <returns>The key pair if found.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.LocatePrivateKey(System.String)">
-            <summary>
-            Attempt to obtain a private key with identifier <paramref name="keyID"/>.
-            </summary>
-            <param name="keyID">The key identifier to match.</param>
-            <returns>The key pair if found as a JSON key.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.LocatePrivateKeyPair(System.String)">
-            <summary>
-            Attempt to obtain a private key with identifier <paramref name="keyID"/>.
-            </summary>
-            <param name="keyID">The key identifier to match.</param>
-            <returns>The key pair if found.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.GetByAccountEncrypt(System.String)">
-            <summary>
-            Resolve a public key by identifier. This may be a UDF fingerprint of the key,
-            an account identifier or strong account identifier.
-            </summary>
-            <param name="keyID">The identifier to resolve.</param>
-            <returns>The identifier.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.KeyCollectionClient.GetByAccountSign(System.String)">
-            <summary>
-            Resolve a private key by identifier. This may be a UDF fingerprint of the key,
-            an account identifier or strong account identifier.
-            </summary>
-            <param name="keyID">The identifier to resolve.</param>
-            <returns>The identifier.</returns>
         </member>
         <member name="T:Goedel.Mesh.Client.MeshHost">
             <summary>

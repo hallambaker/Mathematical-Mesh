@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.PKIX;
+using Goedel.Cryptography.Dare;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
@@ -15,7 +16,7 @@ namespace Goedel.Cryptography.Core {
 
 
 
-    public class KeyCollectionCore : KeyCollection {
+    public class KeyCollectionCore : KeyCollection, IKeyCollection {
         const string WindowsMeshKeys = @"Mesh\Keys";
         const string WindowsMeshProfiles = @"Mesh\Profiles";
         const string LinuxMeshKeys = @".Mesh/Keys";
@@ -131,6 +132,7 @@ namespace Goedel.Cryptography.Core {
                 }
             }
 
+        public TrustResult ValidateTrustPath(DareSignature dareSignature, string anchor = null) => throw new NotImplementedException();
         }
 
 

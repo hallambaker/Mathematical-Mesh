@@ -33,7 +33,7 @@ namespace Goedel.Mesh {
                     string directory,
                     string containerName,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
             base(directory, containerName, cryptoParameters, keyCollection,
                 readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastReadContainer();
 

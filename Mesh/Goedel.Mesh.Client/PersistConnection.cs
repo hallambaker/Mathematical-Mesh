@@ -199,18 +199,6 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        ///// <summary>
-        ///// Return a connection from the catalog by local name.
-        ///// </summary>
-        ///// <param name="local"></param>
-        ///// <returns></returns>
-        //public CatalogedMachine GetConnection(string local = null) =>
-        //    (local == null) ? DefaultEntry : DictionaryLocal2Connection.GetValue(local, null);
-
-
-        //public CatalogedPending GetPending(string local = null) =>
-        //    (local == null) ? DefaultPendingEntry : (DictionaryLocal2Connection.GetValue(local, null) as CatalogedPending);
-
 
         }
     }

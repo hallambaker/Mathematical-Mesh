@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 using System;
 using System.Reflection.Metadata.Ecma335;
@@ -163,7 +164,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair ActivatePrivate(this PrivateKeyUDF activationSeed,
-            PrivateKeyUDF baseSeed, MeshKeyType meshKeyType, KeyCollection keyCollection = null) =>
+            PrivateKeyUDF baseSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) =>
                 ActivatePrivate(baseSeed, activationSeed.PrivateValue, meshKeyType, keyCollection);
 
 
@@ -181,7 +182,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair ActivatePrivate(this PrivateKeyUDF baseSeed,
-            string activationSeed, MeshKeyType meshKeyType, KeyCollection keyCollection = null) {
+            string activationSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, baseSeed);

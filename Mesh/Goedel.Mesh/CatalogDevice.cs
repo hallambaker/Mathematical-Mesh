@@ -40,7 +40,7 @@ namespace Goedel.Mesh {
                     string directory,
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label, 
@@ -109,7 +109,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
         ///to return the <see cref="ActivationDevice"/> value.</summary>
-        public ActivationDevice GetActivationDevice(KeyCollection keyCollection) =>
+        public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>
             activationDevice ?? (keyCollection == null ? null :
                 ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
         ActivationDevice activationDevice;
@@ -139,7 +139,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
 
             builder.AppendIndent(indent, $"ContextDevice");

@@ -35,7 +35,7 @@ namespace Goedel.XUnit {
             var RecipientsGroup = new List<string> { groupName };
             var CryptoParametersGroup = new CryptoParametersTest(
                         recipients: RecipientsGroup);
-            var keyGroup = CryptoParametersGroup.KeyLocate.TryMatchRecipient(groupName) as KeyPairAdvanced;
+            var keyGroup = CryptoParametersGroup.KeyLocate.TryFindKeyDecryption(groupName) as KeyPairAdvanced;
 
             //var RecipientsAlice = new List<string> { userName };
             //var CryptoParametersAlice = new CryptoParametersTest(

@@ -1,5 +1,5 @@
 ﻿using Goedel.Cryptography;
-
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
 
@@ -36,7 +36,7 @@ namespace Goedel.Mesh {
         string DirectoryMesh { get; }
 
         ///<summary>The key collection to use.</summary>
-        KeyCollection KeyCollection { get; }
+        IKeyCollection KeyCollection { get; }
 
         /// <summary>
         /// Factory method to generate a keypair of a type specified by <paramref name="algorithmID"/>

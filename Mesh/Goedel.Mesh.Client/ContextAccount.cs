@@ -418,9 +418,9 @@ namespace Goedel.Mesh.Client {
 
 
 
-        public override CryptoKey GetByAccountEncrypt(string keyId) {
+        public override CryptoKey TryFindKeyEncryption(string keyId) {
 
-            var key = base.GetByAccountEncrypt(keyId);
+            var key = base.TryFindKeyEncryption(keyId);
             if (key != null) {
                 return key;
                 }
@@ -432,7 +432,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public override CryptoKey TryMatchRecipient(string keyId) {
+        public override CryptoKey TryFindKeyDecryption(string keyId) {
             var key = KeyCollection.LocatePrivateKeyPair(keyId);
             if (key != null) {
                 return key;

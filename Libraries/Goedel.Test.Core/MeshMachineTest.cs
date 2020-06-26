@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Core;
+using Goedel.Cryptography.Dare;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
@@ -140,7 +141,7 @@ namespace Goedel.Test.Core {
 
 
 
-        public override KeyCollection GetKeyCollection() => new KeyCollectionTest(this);
+        public override IKeyCollection GetKeyCollection() => new KeyCollectionTest(this);
 
 
         public MeshMachineTest(TestEnvironmentCommon testEnvironmentPerTest, string name = "Test") :

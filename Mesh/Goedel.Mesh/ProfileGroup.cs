@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh {
 
@@ -25,42 +26,6 @@ namespace Goedel.Mesh {
         public ProfileGroup() {
             }
 
-        /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
-        /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="keyCollection"/>.</param>
-        public ProfileGroup(
-                    KeyCollection keyCollection,
-                    PrivateKeyUDF secretSeed,
-                    bool persist = false) {
-
-            var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
-            var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
-
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
-
-            if (persist) {
-                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
-                }
-            }
-
-
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="keySign">The signature key.</param>
-        /// <param name="keyEncrypt">The encryption key.</param>
-        public ProfileGroup(
-            KeyPair keySign, KeyPair keyEncrypt) {
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
-            }
 
         /// <summary>
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
@@ -72,7 +37,7 @@ namespace Goedel.Mesh {
         /// <paramref name="keyCollection"/>.</param>
         public ProfileGroup(
                     PrivateKeyUDF secretSeed,
-                    KeyCollection keyCollection = null,
+                    IKeyCollection keyCollection = null,
                     bool? persist = false) {
 
             var meshKeyType = MeshKeyType.DeviceProfile;
@@ -88,6 +53,22 @@ namespace Goedel.Mesh {
 
             Sign(keySign);
             }
+
+
+
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="keySign">The signature key.</param>
+        /// <param name="keyEncrypt">The encryption key.</param>
+        public ProfileGroup(
+            KeyPair keySign, KeyPair keyEncrypt) {
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            }
+
+
 
 
         /// <summary>

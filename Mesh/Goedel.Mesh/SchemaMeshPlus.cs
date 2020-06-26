@@ -110,7 +110,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public virtual void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) =>
+        public virtual void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) =>
             _ = builder.AppendLine($"[{_Tag}]");
 
 

@@ -34,7 +34,7 @@ namespace Goedel.Mesh {
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
         public ProfileDevice(
-                    KeyCollection keyCollection,
+                    IKeyCollection keyCollection,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
@@ -55,7 +55,7 @@ namespace Goedel.Mesh {
         /// <paramref name="keyCollection"/>.</param>
         public ProfileDevice(
                     PrivateKeyUDF secretSeed,
-                    KeyCollection keyCollection=null,
+                    IKeyCollection keyCollection =null,
                     bool persist = false) {
 
             var meshKeyType = MeshKeyType.DeviceProfile;
@@ -93,7 +93,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Profile Device");
             indent++;
@@ -195,7 +195,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">Mesh machine providing cryptographic context.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
             builder.AppendIndent(indent, $"Activation Device");
             indent++;
             DareEnvelope.Report(builder, indent);
@@ -231,7 +231,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Connection Device");
             indent++;

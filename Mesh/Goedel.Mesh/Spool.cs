@@ -155,7 +155,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         public Spool(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
                 base(directory, storeName, cryptoParameters, keyCollection) {
 
             }
@@ -573,7 +573,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         public SpoolLocal(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
                 base(directory, storeName, cryptoParameters, keyCollection) {
 
             }
@@ -620,7 +620,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         public SpoolInbound(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
                 base(directory, storeName, cryptoParameters, keyCollection) {
 
             }
@@ -644,7 +644,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         public SpoolOutbound(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
                 base(directory, storeName, cryptoParameters, keyCollection) {
 
             }
@@ -668,7 +668,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
         public SpoolArchive(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null) :
+                    IKeyCollection keyCollection = null) :
                 base(directory, storeName, cryptoParameters, keyCollection) {
 
             }

@@ -39,13 +39,13 @@ namespace Goedel.Mesh {
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
         public ProfileAccount(
-                    ProfileMesh profileMesh,
-            KeyCollection keyCollection,
-            CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                ProfileMesh profileMesh,
+                IKeyCollection keyCollection,
+                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
 
-            byte[] secret = null,
-            bool? persist = null) : this(profileMesh, keyCollection,
+                byte[] secret = null,
+                bool? persist = null) : this(profileMesh, keyCollection,
                     new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileAccount,
                         algorithmEncrypt, algorithmSign, secret:secret),
                     persist: (persist != null ? persist == true : secret == null)) { }
@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
         /// <paramref name="keyCollection"/>.</param>
         public ProfileAccount(
                     ProfileMesh profileMesh,
-                    KeyCollection keyCollection,
+                    IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
             MeshProfileUDF = profileMesh.UDF;
@@ -105,7 +105,7 @@ namespace Goedel.Mesh {
         /// within the account.</param>
         /// <returns>The account description.</returns>
         public AccountEntry ConnectDevice(
-                        KeyCollection keyCollection,
+                        IKeyCollection keyCollection,
                         CatalogedDevice catalogedDevice,
                         List<Permission> permissions
                         ) {
@@ -142,7 +142,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Profile Account");
             indent++;
@@ -287,7 +287,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The Key collection.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Activation Account");
             indent++;
@@ -317,7 +317,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Connection Account");
             indent++;

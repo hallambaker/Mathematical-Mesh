@@ -84,7 +84,7 @@ namespace Goedel.Mesh {
         /// <param name="create">If true, create a container if it does not already exist.</param>
         public Catalog(string directory, string containerName,
             CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    IKeyCollection keyCollection = null,
                     bool readContainer = true,
                     bool decrypt = true,
                     bool create = true) :

@@ -3,6 +3,7 @@ using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh.Client {
 
@@ -28,9 +29,11 @@ namespace Goedel.Mesh.Client {
         PersistHost ContainerHost { get; }
 
         ///<summary>The Key Collection of the Mesh Machine.</summary>
-        public KeyCollection KeyCollection => keyCollection ??
-                new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
-        KeyCollection keyCollection;
+        public IKeyCollection KeyCollection => MeshMachine.KeyCollection;
+        
+        //keyCollection ??
+        //        new KeyCollectionClient(this, MeshMachine.KeyCollection).CacheValue(out keyCollection);
+        //KeyCollection keyCollection;
 
 
         #endregion
@@ -117,6 +120,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="key">The UDF or name to resolve.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
         public ContextMesh LocateMesh(string key) {
+            key.AssertNotNull(MeshNotFound.Throw);
+
+
             if (DictionaryUDFContextMesh.TryGetValue(key, out var context)) {
                 return context;
                 }
@@ -197,7 +203,7 @@ namespace Goedel.Mesh.Client {
 
             admin.Future();
 
-            var key = localName ?? ContainerHost.DefaultEntry.ID;
+            var key = localName ?? ContainerHost?.DefaultEntry?.ID;
             return LocateMesh(key);
             }
 

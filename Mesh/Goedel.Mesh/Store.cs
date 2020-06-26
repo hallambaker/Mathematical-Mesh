@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         protected CryptoParameters CryptoParameters { get; set; }
 
         ///<summary>The key collection used for decryption</summary>
-        public KeyCollection KeyCollection { get; set; }
+        public IKeyCollection KeyCollection { get; set; }
 
         ///<summary>The container identifier. Must be unique within a given account.</summary>
         public string ContainerName { get; set; }
@@ -62,7 +62,7 @@ namespace Goedel.Mesh {
         /// <param name="create"></param>
         public Store(string directory, string containerName = null,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) {
 

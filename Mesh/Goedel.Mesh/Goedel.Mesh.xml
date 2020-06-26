@@ -18,9 +18,9 @@
             <summary>Cached convenience accessor. Returns the corresponding 
             <see cref="P:Goedel.Mesh.AccountEntry.ConnectionAccount"/> .</summary>
         </member>
-        <member name="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor. Returns the corresponding 
-            <see cref="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.KeyCollection)"/> .</summary>
+            <see cref="M:Goedel.Mesh.AccountEntry.GetActivationAccount(Goedel.Cryptography.Dare.IKeyCollection)"/> .</summary>
         </member>
         <member name="M:Goedel.Mesh.AccountEntry.Validate">
             <summary>
@@ -454,7 +454,7 @@
             Disposal method, disposes the underlying persistence store if defined.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Base constuctor.
             </summary>
@@ -688,7 +688,7 @@
             <param name="key">Unique identifier of the device to return.</param>
             <returns>The <see cref="T:Goedel.Mesh.CatalogedApplication"/> entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogApplication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -894,7 +894,7 @@
         <member name="P:Goedel.Mesh.CatalogCapability.AsCatalogedMember">
             <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCapability.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCapability.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1051,7 +1051,7 @@
         <member name="P:Goedel.Mesh.CatalogBlind.ContainerDefault">
             <summary>The catalog label</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBlind.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogBlind.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor for a catalog named <paramref name="containerName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1083,7 +1083,7 @@
         <member name="P:Goedel.Mesh.CatalogBookmark.AsCatalogEntryBookmark">
             <summary>Enumerate the catalog as CatalogedBookmark instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1230,7 +1230,7 @@
         <member name="P:Goedel.Mesh.CatalogCalendar.AsCatalogEntryContact">
             <summary>Enumerate the catalog as CatalogedTask instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCalendar.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCalendar.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1430,7 +1430,7 @@
         <member name="P:Goedel.Mesh.CatalogContact.AsCatalogEntryContact">
             <summary>Enumerate the catalog as CatalogedContact instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2056,7 +2056,7 @@
             <param name="key">The service to be matched.</param>
             <returns>If a match is found, returns the matching entry, otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCredential.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2214,7 +2214,7 @@
         <member name="P:Goedel.Mesh.CatalogDevice.AsCatalogEntryDevice">
             <summary>Enumerate the catalog as CatalogedDevice instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2266,7 +2266,7 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice"/>
             to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileDevice"/> value.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationDevice(Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.GetActivationDevice(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedActivationDevice"/>
             to return the <see cref="T:Goedel.Mesh.ActivationDevice"/> value.</summary>
         </member>
@@ -2281,7 +2281,7 @@
             </summary>
             <returns>The string describing the cataloged device.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -2465,7 +2465,7 @@
         <member name="P:Goedel.Mesh.CatalogMember.AsCatalogedMember">
             <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2619,7 +2619,7 @@
             <param name="key">The service to be matched.</param>
             <returns>If a match is found, returns the matching entry, otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogNetwork.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -2785,7 +2785,7 @@
         <member name="P:Goedel.Mesh.CatalogPublication.AsAsCatalogPublication">
             <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -3459,7 +3459,7 @@
             <param name="indent">The number of units to indent the presentation.</param>
             <param name="nullText">Text to provide if the item is null.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.LocatePrivate(Goedel.Cryptography.KeyCollection,System.Collections.Generic.List{Goedel.Mesh.KeyData})">
+        <member name="M:Goedel.Mesh.Extensions.LocatePrivate(Goedel.Cryptography.Dare.IKeyCollection,System.Collections.Generic.List{Goedel.Mesh.KeyData})">
             <summary>
             Locate a keypair in the set <paramref name="publicKeys"/> that has a private key in 
             <paramref name="keyCollection"/>
@@ -3536,7 +3536,7 @@
             (the key is always generated as ephemeral.)</param>
             <returns>The derrived key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Derive an activation private key of type <paramref name="meshKeyType"/> from the 
             secret seed value <paramref name="baseSeed"/>, activation value 
@@ -3550,7 +3550,7 @@
             (the key is always generated as ephemeral.)</param>
             <returns>The derrived key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Derive an activation private key of type <paramref name="meshKeyType"/> from the 
             secret seed value <paramref name="baseSeed"/>, activation value 
@@ -4750,7 +4750,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.String)">
+        <member name="M:Goedel.Mesh.Assertion.Derive(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.String)">
             <summary>
             Derrive a key pair contribution to an aggregate key pair.
             </summary>
@@ -5082,7 +5082,7 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -5095,7 +5095,7 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileAccount.#ctor(Goedel.Mesh.ProfileMesh,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -5106,7 +5106,7 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.ConnectDevice(Goedel.Cryptography.KeyCollection,Goedel.Mesh.CatalogedDevice,System.Collections.Generic.List{Goedel.Mesh.Permission})">
+        <member name="M:Goedel.Mesh.ProfileAccount.ConnectDevice(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.CatalogedDevice,System.Collections.Generic.List{Goedel.Mesh.Permission})">
             <summary>
             Connect the device described by <paramref name="catalogedDevice"/> with 
             the set of permissions <paramref name="permissions"/>> to the account
@@ -5121,7 +5121,7 @@
             within the account.</param>
             <returns>The account description.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units.The cryptographic context from
@@ -5262,7 +5262,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The key collection 
@@ -5337,7 +5337,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -5446,7 +5446,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -5459,7 +5459,7 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyCollection,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -5477,7 +5477,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -5601,7 +5601,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ActivationDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -5684,7 +5684,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -5778,13 +5778,13 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileGroup.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection,System.Nullable{System.Boolean})">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
             </summary>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="secretSeed">The secret seed value.</param>
+            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
@@ -5794,16 +5794,6 @@
             </summary>
             <param name="keySign">The signature key.</param>
             <param name="keyEncrypt">The encryption key.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.KeyCollection,System.Nullable{System.Boolean})">
-            <summary>
-            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
-            seed.
-            </summary>
-            <param name="secretSeed">The secret seed value.</param>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-            <param name="persist">If <see langword="true"/> persist the secret seed value to
-            <paramref name="keyCollection"/>.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
             <summary>
@@ -6072,7 +6062,7 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileMesh.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -6090,7 +6080,7 @@
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.ProfileMesh.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -6174,7 +6164,7 @@
             Blank constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Boolean)">
             <summary>
             Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
             seed.
@@ -9256,7 +9246,7 @@
             <param name="keyCollection">The key collaecion to use to find the decryption key.</param>
             <returns>The decoded data item</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.MeshItem.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Append a description of the instance to the StringBuilder <paramref name="builder"/> with
             a leading indent of <paramref name="indent"/> units. The cryptographic context from
@@ -11517,7 +11507,7 @@
         <member name="P:Goedel.Mesh.Spool.SpoolEntryById">
             <summary>Dictionary of entries by identifier.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Spool.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor.
             </summary>
@@ -11670,7 +11660,7 @@
         <member name="F:Goedel.Mesh.SpoolLocal.Label">
             <summary>Canonical name for local spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.SpoolLocal.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor.
             </summary>
@@ -11697,7 +11687,7 @@
         <member name="F:Goedel.Mesh.SpoolInbound.Label">
             <summary>Canonical name for inbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.SpoolInbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor.
             </summary>
@@ -11714,7 +11704,7 @@
         <member name="F:Goedel.Mesh.SpoolOutbound.Label">
             <summary>Canonical name for outbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.SpoolOutbound.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor.
             </summary>
@@ -11731,7 +11721,7 @@
         <member name="F:Goedel.Mesh.SpoolArchive.Label">
             <summary>Canonical name for outbound spool</summary>
         </member>
-        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.SpoolArchive.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
             Constructor.
             </summary>
@@ -11766,7 +11756,7 @@
         <member name="M:Goedel.Mesh.Store.Disposing">
             <summary>The disposal routing</summary>
         </member>
-        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Store.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
             The constructor
             </summary>

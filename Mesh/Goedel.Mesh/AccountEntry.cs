@@ -1,4 +1,4 @@
-﻿using Goedel.Cryptography;
+﻿using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 namespace Goedel.Mesh {
@@ -19,7 +19,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="GetActivationAccount"/> .</summary>
-        public ActivationAccount GetActivationAccount(KeyCollection keyCollection) =>
+        public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
             activationAccount ?? (keyCollection == null ? null :
             ActivationAccount.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
         ActivationAccount activationAccount;

@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
         /// type.</param>
         /// <returns>The derrived key pair.</returns>
         public KeyPair Derive (
-                KeyCollection keyCollection,
+                IKeyCollection keyCollection,
                 PrivateKeyUDF secretSeed,
                 string saltSuffix) {
 

@@ -15,9 +15,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        CryptoKey TryMatchRecipient(string keyID);
-
-
+        CryptoKey TryFindKeyDecryption(string keyID);
 
         /// <summary>
         /// Locate a private key
@@ -26,22 +24,36 @@ namespace Goedel.Cryptography {
         /// <returns>A KeyPair instance bound to the private key.</returns>
         CryptoKey LocatePrivateKeyPair(string UDF);
 
-
         /// <summary>
         /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        CryptoKey GetByAccountEncrypt(string keyID);
+        CryptoKey TryFindKeyEncryption(string keyID);
 
         /// <summary>
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="signingKey">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        CryptoKey GetByAccountSign(string keyID);
+        CryptoKey TryFindKeySignature(string signingKey);
+
+
+
+        /// <summary>
+        /// Add a keypair to the collection.
+        /// </summary>
+        /// <param name="keyPair">The key pair to add.</param>
+        void Add(KeyPair keyPair);
+
+        /// <summary>
+        /// Persist a private key if permitted by the KeySecurity model of the key.
+        /// </summary>
+        /// <param name="keyPair">The key to persist.</param>
+        void Persist(KeyPair keyPair);
+
 
         }
 
@@ -67,9 +79,6 @@ namespace Goedel.Cryptography {
         public static KeyCollection Default;
 
         //static KeyCollection _Default = null;
-
-        ///<summary>Delegate returning a new KeyCollection</summary>
-        public static KeyCollectionDelegate NewKeyCollection;
 
         ///<summary>Key pairs by UDF value.</summary>
         protected Dictionary<string, KeyPair> DictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();
@@ -115,19 +124,13 @@ namespace Goedel.Cryptography {
                 }
             }
 
-        /// <summary>
-        /// Add a recryption group account to the group.
-        /// </summary>
-        /// <param name="recryptionGroup"></param>
-        public void Add(string recryptionGroup) {
-            }
 
         /// <summary>
         /// Attempt to find a private key for the specified recipient entry.
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual CryptoKey TryMatchRecipient(string keyID) => TryMatchRecipientKeyPair(keyID);
+        public virtual CryptoKey TryFindKeyDecryption(string keyID) => TryMatchRecipientKeyPair(keyID);
 
 
         /// <summary>
@@ -217,7 +220,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual CryptoKey GetByAccountEncrypt(string keyID) {
+        public virtual CryptoKey TryFindKeyEncryption(string keyID) {
             var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
             return Result;
             }
@@ -228,7 +231,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual CryptoKey GetByAccountSign(string keyID) {
+        public virtual CryptoKey TryFindKeySignature(string keyID) {
             var Found = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
             return Result;
             }

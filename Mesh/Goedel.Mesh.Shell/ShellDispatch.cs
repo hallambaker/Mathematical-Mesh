@@ -243,12 +243,16 @@ namespace Goedel.Mesh.Shell {
         /// <param name="options">The command options.</param>
         /// <returns>The key collection.</returns>
 
-        public KeyCollection KeyCollection(IAccountOptions options) {
+        public IKeyLocate GetKeyCollection(IAccountOptions options) {
 
             // here need to pull the account details and the contact catalogs from each account?
-
-            options.Future();
-            return CatalogHost.KeyCollection;
+            try {
+                var contextAccount = GetContextAccount(options);
+                return contextAccount;
+                }
+            catch {
+                return CatalogHost.KeyCollection;
+                }
             }
 
 

@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
         public ProfileMesh(
-                    KeyCollection keyCollection,
+                    IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
             //var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
@@ -81,7 +81,7 @@ namespace Goedel.Mesh {
         /// <param name="builder">The string builder to write to.</param>
         /// <param name="indent">The number of units to indent the presentation.</param>
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, KeyCollection keyCollection = null) {
+        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
             builder.AppendIndent(indent, $"Profile Mesh");
             indent++;

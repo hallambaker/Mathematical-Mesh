@@ -47,7 +47,7 @@ namespace Goedel.Mesh.Client {
         protected IMeshMachineClient MeshMachine => ContextMesh.MeshMachine;
 
         ///<summary>The key collection for use with the context.</summary>
-        protected KeyCollection KeyCollection => ContextMesh.KeyCollection;
+        protected IKeyCollection KeyCollection => ContextMesh.KeyCollection;
 
         ///<summary>The connection binding the calling context to the account.</summary>
         public abstract Connection Connection { get; }
@@ -421,18 +421,11 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public virtual CryptoKey GetByAccountEncrypt(string keyId) =>
-                    KeyCollection.GetByAccountEncrypt(keyId);
+        public virtual CryptoKey TryFindKeyEncryption(string keyId) =>
+                    KeyCollection.TryFindKeyEncryption(keyId);
 
 
-        /// <summary>
-        /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
-        /// </summary>
-        /// <param name="keyId">The identifier to resolve.</param>
-        /// <returns>The identifier.</returns>
-        public virtual CryptoKey GetByAccountSign(string keyId) =>
-                    KeyCollection.GetByAccountSign(keyId);
+
 
         /// <summary>
         /// Attempt to obtain a private key with identifier <paramref name="keyId"/>.
@@ -447,7 +440,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public virtual CryptoKey TryMatchRecipient(string keyId) {
+        public virtual CryptoKey TryFindKeyDecryption(string keyId) {
             var key = KeyCollection.LocatePrivateKeyPair(keyId);
             if (key != null) {
                 return key;
@@ -457,9 +450,33 @@ namespace Goedel.Mesh.Client {
             return null;
             }
 
+        /// <summary>
+        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="signingKey">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public CryptoKey TryFindKeySignature(string signingKey) {
+            throw new NYI();
+            }
+
+
+        public void Add(KeyPair keyPair) => KeyCollection.Add(keyPair);
+        public void Persist(KeyPair keyPair) => KeyCollection.Persist(keyPair);
+
+
         // Hack: This is just trying to resolve any known key. Should revise the implementation
         #endregion
 
+        /// <summary>
+        /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="cryptoKey">The key to validate.</param>
+        /// <returns>The identifier.</returns>
+        public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) {
+            throw new NYI();
+            }
 
 
         #region Implement IDare
@@ -497,7 +514,7 @@ namespace Goedel.Mesh.Client {
             if (recipients != null) {
                 encryptionKeys = new List<CryptoKey>();
                 foreach (var recipient in recipients) {
-                    var key = GetByAccountEncrypt(recipient);
+                    var key = TryFindKeyEncryption(recipient);
                     encryptionKeys.Add(key);
                     }
                 }
@@ -516,6 +533,7 @@ namespace Goedel.Mesh.Client {
         public byte[] DareDecode(
                     DareEnvelope envelope,
                     bool verify = false) => envelope.GetPlaintext(this);
+   
 
         #endregion
 
