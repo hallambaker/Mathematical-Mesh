@@ -32,7 +32,7 @@ namespace Goedel.Mesh {
 
 
 
-    public partial class PublicKey {
+    public partial class KeyData {
 
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public PublicKey() {
+        public KeyData() {
             }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="KeyPair">The key pair to bind.</param>
         /// <returns>The generated key pair</returns>
-        public PublicKey(KeyPair KeyPair) {
+        public KeyData(KeyPair KeyPair) {
             this.KeyPair = KeyPair;
             PublicParameters = Key.GetPublic(KeyPair);
             }
@@ -195,7 +195,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="PKIXUse">Bit mask specifying certificate uses.</param>
         /// <param name="Signer">The signing key (which must have an attached certificate).</param>
-        public void SignCertificate(Application PKIXUse, PublicKey Signer) => Certificate = new Certificate(keyPair, PKIXUse, Signer.Certificate);
+        public void SignCertificate(Application PKIXUse, KeyData Signer) => Certificate = new Certificate(keyPair, PKIXUse, Signer.Certificate);
 
         /// <summary>
         /// Create an application certificate with the specified SubjectAltName.
@@ -204,7 +204,7 @@ namespace Goedel.Mesh {
         /// <param name="SubjectAltName">The subjectAltName. Must be a DNS domain name
         /// or a RFC822 email address.</param>
         /// <param name="Signer">The signing key (which must have an attached certificate).</param>
-        public void SignCertificate(Application PKIXUse, string SubjectAltName, PublicKey Signer) {
+        public void SignCertificate(Application PKIXUse, string SubjectAltName, KeyData Signer) {
             //NB it is essential that the assignment to the Certificate property
             //takes place AFTER the cert is signed. Otherwise the value of X509Certificate
             // is not set correctly.

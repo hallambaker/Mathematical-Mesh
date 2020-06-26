@@ -28,6 +28,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The group profile.</summary>
         public ProfileGroup ProfileGroup => CatalogedGroup.Profile;
 
+        ///<summary>The group connection under which this context is formed.</summary>
         public ConnectionGroup ConnectionGroup;
         ///<summary>Convenience accessor for the connection.</summary>
         public override Connection Connection => ConnectionGroup;
@@ -36,6 +37,7 @@ namespace Goedel.Mesh.Client {
         public override string StoresDirectory => storesDirectory ??
             Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.UDF).CacheValue(out storesDirectory);
         string storesDirectory;
+
 
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace Goedel.Mesh.Client {
         public ContextGroup(ContextAccount contextAccount, CatalogedGroup catalogedGroup) {
             CatalogedGroup = catalogedGroup;
             ContextAccount = contextAccount;
-
+            AccountAddress = CatalogedGroup.Key;
 
             }
 
@@ -88,9 +90,8 @@ namespace Goedel.Mesh.Client {
 
         #region Implement Group operations
 
-        public override string GetAccountAddress() {
-            throw new NYI();
-            }
+        ///<summary>Return the account address.</summary>
+        public override string GetAccountAddress() => CatalogedGroup.Key;
 
 
         // ToDo: Implement Add member to group
@@ -130,13 +131,11 @@ namespace Goedel.Mesh.Client {
         /// <returns>The default contact.</returns>
         public override Contact CreateDefaultContact(bool meshUDF = false) {
 
-            var address = new NetworkAddress() {
-                //EnvelopedProfileAccount = AccountEntry.EnvelopedProfileAccount,
-                Address = AccountAddress
-                
-                };
+
+            var address = new NetworkAddress(AccountAddress, ProfileGroup);
+
             var anchorAccount = new Anchor() {
-                //UDF = ProfileAccount.UDF,
+                UDF = ProfileGroup.UDF,
                 Validation = "Self"
                 };
             // ContextMesh.ProfileMesh.UDF 

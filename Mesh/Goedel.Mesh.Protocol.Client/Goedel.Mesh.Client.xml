@@ -520,6 +520,31 @@
             <param name="contact">The contact parameters.</param>
             <param name="localname">Short name to apply to the signed contact info</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetAccountAddress">
+            <summary>
+            Get the primary account address bound to this profile. This is a bit of a hack right
+            now as the code doesn't really support the 'multiple services per account' model yet.
+            </summary>
+            <returns>The account service address.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetCapability(Goedel.Mesh.CatalogedApplication)">
+            <summary>
+            Return the first cryptographic capability granted to this particular device
+            for the application <paramref name="catalogedApplication"/>.
+            </summary>
+            <param name="catalogedApplication">The application to return the capability from.</param>
+            <returns>The first cryptographic capability this device has been granted if found,
+            otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetCapability(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
+            data is decoded and the enclosed capability returned. Otherwise, null is returned.
+            </summary>
+            <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
+            <returns>The first cryptographic capability this device has been granted if found,
+            otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
             <summary>
             Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
@@ -555,6 +580,13 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolOutbound">
             <summary>Returns the outbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryMatchRecipient(System.String)">
+            <summary>
+            Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">The key identifier to match.</param>
+            <returns>The key pair if found.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetPendingMessageConnectionRequest">
             <summary>
@@ -793,6 +825,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyCollection">
             <summary>The key collection for use with the context.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.Connection">
+            <summary>The connection binding the calling context to the account.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeySignature">
             <summary>The member's device signature key</summary>
         </member>
@@ -908,6 +943,9 @@
             </summary>
             <param name="meshMessage"></param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetAccountAddress">
+            <summary>Return the account address.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.CreateDefaultContact(System.Boolean)">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
@@ -951,7 +989,7 @@
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
-            <param name="keyID">The identifier to resolve.</param>
+            <param name="keyId">The identifier to resolve.</param>
             <returns>The identifier.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetByAccountSign(System.String)">
@@ -959,21 +997,21 @@
             Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
             an account identifier or strong account identifier.
             </summary>
-            <param name="keyID">The identifier to resolve.</param>
+            <param name="keyId">The identifier to resolve.</param>
             <returns>The identifier.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.LocatePrivateKeyPair(System.String)">
             <summary>
-            Attempt to obtain a private key with identifier <paramref name="keyID"/>.
+            Attempt to obtain a private key with identifier <paramref name="keyId"/>.
             </summary>
-            <param name="keyID">The key identifier to match.</param>
+            <param name="keyId">The key identifier to match.</param>
             <returns>The key pair if found.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.TryMatchRecipient(System.String)">
             <summary>
-            Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
+            Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
             </summary>
-            <param name="keyID">The key identifier to match.</param>
+            <param name="keyId">The key identifier to match.</param>
             <returns>The key pair if found.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.DareEncode(System.Byte[],Goedel.Cryptography.Dare.ContentMeta,System.Byte[],System.Collections.Generic.List{System.Byte[]},System.Collections.Generic.List{System.String},System.Boolean)">
@@ -1129,6 +1167,9 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
             <summary>The group profile.</summary>
         </member>
+        <member name="F:Goedel.Mesh.Client.ContextGroup.ConnectionGroup">
+            <summary>The group connection under which this context is formed.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.Connection">
             <summary>Convenience accessor for the connection.</summary>
         </member>
@@ -1160,6 +1201,9 @@
             </summary>
             <param name="name">The name of the store to bind.</param>
             <returns>The store instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.GetAccountAddress">
+            <summary>Return the account address.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String)">
             <summary>

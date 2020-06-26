@@ -802,7 +802,7 @@
             <param name="options">The command options.</param>
             <returns>The key collection.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GetCryptoParameters(Goedel.Cryptography.KeyCollection,Goedel.Mesh.Shell.IEncodeOptions)">
+        <member name="M:Goedel.Mesh.Shell.Shell.GetCryptoParameters(Goedel.Cryptography.IKeyLocate,Goedel.Mesh.Shell.IEncodeOptions)">
             <summary>
             Generate the CryptoParameters from a set of specified options. Encryption and 
             authentication are handled independently. 

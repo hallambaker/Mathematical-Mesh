@@ -143,8 +143,8 @@ namespace Goedel.Mesh.Client {
             var keyPairOnlineSignature = KeyPair.Factory(algorithmSign, keySecurity: KeySecurity.ExportableStored,
                     keyCollection: meshHost.KeyCollection, keyUses: KeyUses.Sign);
 
-            profileMaster.KeysOnlineSignature ??= new List<PublicKey>();
-            profileMaster.KeysOnlineSignature.Add(new PublicKey(keyPairOnlineSignature));
+            profileMaster.KeysOnlineSignature ??= new List<KeyData>();
+            profileMaster.KeysOnlineSignature.Add(new KeyData(keyPairOnlineSignature));
 
             // get the master signature.
             var privateSeed = profileMaster.GetPrivateKeyUDF(meshHost.MeshMachine);

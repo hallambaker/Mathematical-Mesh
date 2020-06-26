@@ -22,8 +22,9 @@ namespace Scratchpad {
 
 
             // Redo the service level tests so that we can get to the shell tests for group.
+            ShellTests.Test().TestFileEncrypt();
 
-            TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshCatalogGroup();
 
 
             //TestService.Test().MeshCatalogAccount();

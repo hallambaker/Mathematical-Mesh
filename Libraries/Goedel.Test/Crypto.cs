@@ -10,6 +10,7 @@ namespace Goedel.Test {
 
     public class CryptoParametersTest : CryptoParameters {
 
+        KeyCollection KeyCollection => KeyLocate as KeyCollectionCore;
 
         public CryptoParametersTest(
                     List<string> recipients = null,

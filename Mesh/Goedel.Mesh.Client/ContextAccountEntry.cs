@@ -49,7 +49,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The key collection for use with the context.</summary>
         protected KeyCollection KeyCollection => ContextMesh.KeyCollection;
 
-
+        ///<summary>The connection binding the calling context to the account.</summary>
         public abstract Connection Connection { get; }
 
 
@@ -293,7 +293,7 @@ namespace Goedel.Mesh.Client {
             meshClient = GetMeshClient(AccountAddress);
             }
 
-
+        ///<summary>Return the account address.</summary>
         public abstract string GetAccountAddress();
 
         #endregion
@@ -419,31 +419,45 @@ namespace Goedel.Mesh.Client {
         /// Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey GetByAccountEncrypt(string keyID) => throw new NotImplementedException();
+        public virtual CryptoKey GetByAccountEncrypt(string keyId) =>
+                    KeyCollection.GetByAccountEncrypt(keyId);
+
 
         /// <summary>
         /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="keyID">The identifier to resolve.</param>
+        /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey GetByAccountSign(string keyID) => throw new NotImplementedException();
+        public virtual CryptoKey GetByAccountSign(string keyId) =>
+                    KeyCollection.GetByAccountSign(keyId);
 
         /// <summary>
-        /// Attempt to obtain a private key with identifier <paramref name="keyID"/>.
+        /// Attempt to obtain a private key with identifier <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyID">The key identifier to match.</param>
+        /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public CryptoKey LocatePrivateKeyPair(string keyID) => throw new NotImplementedException();
+        public virtual CryptoKey LocatePrivateKeyPair(string keyId) => 
+                    KeyCollection.LocatePrivateKeyPair(keyId);
 
         /// <summary>
-        /// Attempt to obtain a recipient with identifier <paramref name="keyID"/>.
+        /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyID">The key identifier to match.</param>
+        /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public CryptoKey TryMatchRecipient(string keyID) => throw new NotImplementedException();
+        public virtual CryptoKey TryMatchRecipient(string keyId) {
+            var key = KeyCollection.LocatePrivateKeyPair(keyId);
+            if (key != null) {
+                return key;
+                }
+
+
+            return null;
+            }
+
+        // Hack: This is just trying to resolve any known key. Should revise the implementation
         #endregion
 
 
@@ -474,15 +488,17 @@ namespace Goedel.Mesh.Client {
                     List<string> recipients = null,
                     bool sign = false) {
 
-
-            true.AssertFalse(); // This method has serious issues.
-
             KeyPair signingKey = sign ? KeySignature : null;
             List<CryptoKey> encryptionKeys = null;
 
+
+            // probably going to fail here unless we have a way to pull keys out of the contacts catalog 
+            // for the group.
             if (recipients != null) {
+                encryptionKeys = new List<CryptoKey>();
                 foreach (var recipient in recipients) {
-                    encryptionKeys.Add(GetByAccountEncrypt(recipient));
+                    var key = GetByAccountEncrypt(recipient);
+                    encryptionKeys.Add(key);
                     }
                 }
 

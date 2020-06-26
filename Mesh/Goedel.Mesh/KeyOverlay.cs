@@ -29,7 +29,7 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="baseKey">The base key.</param>
         /// <param name="service">The decryption service.</param>
-        public KeyComposite(PublicKey baseKey, string service) :
+        public KeyComposite(KeyData baseKey, string service) :
                     this(baseKey.KeyPair as KeyPairAdvanced, service) {
             }
 
@@ -213,7 +213,7 @@ namespace Goedel.Mesh {
         /// <param name="activationSeed">The activation seed value.</param>
         /// <param name="meshKeyType">The mesh key type.</param>
         /// <returns>The derrived key.</returns>
-        public static KeyPairAdvanced ActivatePublic(this PublicKey baseKey,
+        public static KeyPairAdvanced ActivatePublic(this KeyData baseKey,
                 string activationSeed, MeshKeyType meshKeyType) =>
             ActivatePublic(baseKey.KeyPair as KeyPairAdvanced, activationSeed, meshKeyType);
 

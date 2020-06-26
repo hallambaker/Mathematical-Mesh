@@ -16,13 +16,14 @@ namespace Goedel.Mesh.Shell {
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
             var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
+
+            using var contextAccount = GetContextAccount(Options);
+
             // we are getting the wrong one here. we want the encryption recipients from the contacts file.
 
-            var keyCollection = KeyCollection(Options);
 
 
-
-            var cryptoParameters = GetCryptoParameters(keyCollection, Options);
+            var cryptoParameters = GetCryptoParameters(contextAccount, Options);
 
             var ContentInfo = new ContentMeta() {
                 Filename = inputFile,
@@ -47,10 +48,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareDecode(DareDecode Options) {
             var inputFile = Options.Input.Value;
-            var keyCollection = KeyCollection(Options);
+            using var contextAccount = GetContextAccount(Options);
 
-
-            var Length = DareEnvelope.Decode(inputFile, keyCollection: keyCollection);
+            var Length = DareEnvelope.Decode(inputFile, keyCollection: contextAccount);
 
             return new ResultFile() {
                 TotalBytes = (int)Length

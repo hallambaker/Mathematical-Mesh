@@ -10,6 +10,83 @@ using System.Text;
 namespace Goedel.Mesh {
 
     #region // The data classes CatalogContact, CatalogedContact
+
+    /// <summary>
+    /// Describes credentials bound to a network address.
+    /// </summary>
+    public class NetworkProtocolEntry {
+
+        ///<summary>The contact from which the network protocol data was obtained.
+        ///This may be used to update the credential data periodically.</summary>
+        public CatalogedContact CatalogedContact { get; }
+
+        ///<summary>The network address entry.</summary>
+        public NetworkAddress NetworkAddress { get; }
+
+
+        ///<summary>The encryption key to use for this contact.</summary>
+        public KeyPair MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
+             SetKeys(ref meshKeyEncryption);
+
+        KeyPair meshKeyEncryption;
+
+        ///<summary>The signature root of trust to use for this contact.</summary>
+        public KeyPair MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
+             SetKeys(ref meshKeyAdministrator);
+        KeyPair meshKeyAdministrator;
+        
+        ///<summary>The expiry time for the derived keys.</summary>
+        public DateTime? Expire { get; private set; }
+
+
+        /// <summary>
+        /// The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
+        /// from <paramref name="catalogedContact"/>.
+        /// </summary>
+        /// <param name="catalogedContact">The cataloged contact.</param>
+        /// <param name="networkAddress">The network address entry.</param>
+        public NetworkProtocolEntry(CatalogedContact catalogedContact, NetworkAddress networkAddress) {
+            CatalogedContact = catalogedContact;
+            NetworkAddress = networkAddress;
+            }
+
+        KeyPair SetKeys(ref KeyPair keyPair) {
+            if (NetworkAddress.Protocols != null) {
+
+                foreach (var protocol in NetworkAddress?.Protocols) {
+                    if (protocol.Protocol == "mmm") {
+                        SetKeysMesh(protocol);
+                        }
+
+                    }
+                }
+            return keyPair;
+            }
+
+
+        void SetKeysMesh(NetworkProtocol networkProtocol) {
+            if (networkProtocol.Capabilities == null) {
+                return;
+                }
+            foreach (var capability in networkProtocol.Capabilities) {
+
+                switch (capability) {
+                    case CapabilityEncryption capabilityEncryption: {
+                        meshKeyEncryption = capabilityEncryption.KeyData.KeyPair;
+                        break;
+                        }
+                    case CapabilityAdministrator capabilityAdministrator:     {
+                        meshKeyAdministrator = capabilityAdministrator.KeyData.KeyPair;
+                        break;
+                        }
+                    }
+
+                }
+
+            }
+
+        }
+    
     /// <summary>
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
@@ -24,8 +101,8 @@ namespace Goedel.Mesh {
         //public CatalogedContact Self { get; set; }
 
         ///<summary>Dictionary mapping email addresses to contacts.</summary>
-        public Dictionary<string, CatalogedContact> DictionaryByNetworkAddress { get; set; } =
-                    new Dictionary<string, CatalogedContact>();
+        public Dictionary<string, NetworkProtocolEntry> DictionaryByNetworkAddress { get; set; } =
+                    new Dictionary<string, NetworkProtocolEntry>();
 
 
         ///<summary>The catalog label</summary>
@@ -60,18 +137,35 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Update <paramref name="catalogedEntry"/>. This is overriden to manage the lookup 
-        /// by email dictionary.
+        /// Callback called before adding a new entry to the catalog. Overriden to update the values
+        /// in <see cref="DictionaryByNetworkAddress"/>.
         /// </summary>
-        /// <param name="catalogedEntry">The entry to update.</param>
-        protected override void UpdateEntry(CatalogedEntry catalogedEntry) {
+        /// <param name="catalogedEntry">The entry being added.</param>
+        protected override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+
+        /// <summary>
+        /// Callback called before updating an entry in the catalog. Overriden to update the values
+        /// in <see cref="DictionaryByNetworkAddress"/>.
+        /// </summary>
+        /// <param name="catalogedEntry">The entry being added.</param>
+        protected override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+
+        /// <summary>
+        /// Callback called before updating an entry in the catalog. Overriden to update the values
+        /// in <see cref="DictionaryByNetworkAddress"/>.
+        /// </summary>
+        /// <param name="catalogedEntry">The entry being updated.</param>
+        void UpdateLocal(CatalogedEntry catalogedEntry) {
             var catalogedContact = catalogedEntry as CatalogedContact;
             var contact = catalogedContact.Contact;
 
             foreach (var networkAddress in contact.NetworkAddresses) {
-                DictionaryByNetworkAddress.AddSafe(networkAddress.Address, catalogedContact);
+                DictionaryByNetworkAddress.AddSafe(networkAddress.Address, 
+                    new NetworkProtocolEntry( catalogedContact, networkAddress));
                 }
             }
+
+
 
         /// <summary>
         /// Update the entry <paramref name="catalogedContact"/> in the catalog.
@@ -147,6 +241,30 @@ namespace Goedel.Mesh {
                     string fileName, bool self = false, bool merge=true, string localName=null) {
             throw new NYI();
 
+            }
+
+        public CryptoKey GetByAccountEncrypt(string keyId) {
+
+            if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
+                return null;
+                }
+
+
+
+            return catalogedContact.MeshKeyEncryption;
+            }
+
+        /// <summary>
+        /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
+        /// </summary>
+        /// <param name="keyId">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
+        public CryptoKey TryMatchRecipient(string keyId) {
+            if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
+                return null;
+                }
+
+            return catalogedContact.MeshKeyEncryption;
             }
 
 
@@ -253,9 +371,9 @@ namespace Goedel.Mesh {
         public ContactPerson(
                         string first,
                         string last,
-                        string prefix=null,
-                        string suffix=null,
-                        string email=null) {
+                        string prefix = null,
+                        string suffix = null,
+                        string email = null) {
 
             var personName = new PersonName() {
                 First = first,
@@ -266,14 +384,70 @@ namespace Goedel.Mesh {
             personName.SetFullName();
             var networkAddress = new NetworkAddress {
                 Address = email,
-                Protocols = new List<string> { "SMTP" }
+                Protocols = new List<NetworkProtocol> {
+                    new NetworkProtocol() {
+                    Protocol = "SMTP" }
+                    }
                 };
             CommonNames = new List<PersonName> { personName };
             NetworkAddresses = new List<NetworkAddress> { networkAddress };
             }
         }
 
+    public partial class NetworkAddress {
 
+        ///<summary>Serialization constructor</summary>
+        public NetworkAddress() {
+            }
+
+        /// <summary>
+        /// Constructor returning a network address instance for the address
+        /// <paramref name="address"/> with keys populated from the Mesh profile
+        /// <paramref name="profile"/>.
+        /// </summary>
+        /// <param name="address">The Mesh account address (account@domain)</param>
+        /// <param name="profile">The Mesh profile to obtain public keys from.</param>
+        public NetworkAddress(string address, Profile profile) {
+
+            List<CryptographicCapability> keyList = null;
+
+            switch (profile) {
+                case ProfileAccount profileAccount: {
+                    keyList = new List<CryptographicCapability>() {
+                        new CapabilityEncryption () {
+                            KeyData = profileAccount.KeyEncryption },
+                        new CapabilityAdministrator () {
+                            KeyData = profileAccount.KeyOfflineSignature },
+                        new CapabilityAuthentication () {
+                            KeyData = profileAccount.KeyAuthentication },
+                        };
+                    break;
+                    }
+                case ProfileGroup profileGroup: {
+                    keyList = new List<CryptographicCapability>() {
+                        new CapabilityEncryption () {
+                            KeyData = profileGroup.KeyEncryption },
+                        new CapabilityAdministrator () {
+                            KeyData = profileGroup.KeyOfflineSignature },
+
+                        };
+                    break;
+                    }
+                }
+
+            EnvelopedProfileAccount = profile.DareEnvelope;
+            Address = address;
+            Protocols = new List<NetworkProtocol>() {
+                    new NetworkProtocol() {
+                    Protocol = "mmm",
+                    Capabilities = keyList
+                    }
+                };
+
+            }
+
+
+        }
 
     public partial class PersonName{
 

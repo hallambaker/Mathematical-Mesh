@@ -63,9 +63,9 @@ namespace Goedel.Mesh {
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
             var keyAuthenticate = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
 
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
-            KeyAuthentication = new PublicKey(keyAuthenticate.KeyPairPublic());
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
 
             if (persist) {
                 keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
@@ -168,9 +168,9 @@ namespace Goedel.Mesh {
 
             // Create the (unsigned) ConnectionDevice
             ConnectionDevice = new ConnectionDevice() {
-                KeyEncryption = new PublicKey(keyEncryption.KeyPairPublic()),
-                KeySignature = new PublicKey(KeySignature.KeyPairPublic()),
-                KeyAuthentication = new PublicKey(keyAuthentication.KeyPairPublic())
+                KeyEncryption = new KeyData(keyEncryption.KeyPairPublic()),
+                KeySignature = new KeyData(KeySignature.KeyPairPublic()),
+                KeyAuthentication = new KeyData(keyAuthentication.KeyPairPublic())
                 };
             }
 

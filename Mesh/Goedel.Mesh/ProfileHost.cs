@@ -18,8 +18,8 @@ namespace Goedel.Mesh {
         /// <param name="keyAuth">The authentication key.</param>
         public ProfileHost(KeyPair keySign,
                     KeyPair keyAuth) {
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyAuthentication = new PublicKey(keyAuth.KeyPairPublic());
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyAuthentication = new KeyData(keyAuth.KeyPairPublic());
             }
 
         /// <summary>

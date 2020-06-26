@@ -388,11 +388,14 @@ namespace Goedel.XUnit {
             decrypt.IsEqualTo(plaintext).AssertTrue();
 
 
-            // attempt to decrypt with Alice's key
-            // this should fail as Alice doesn't have the decryption key.
+            // We should in a check at this point to see that a non-admin device connected to
+            // Alice's account CANNOT decrypt here.
 
-            Xunit.Assert.Throws<NYI>(() =>
-              contextAccountAlice.DareDecode(envelope, verify: true));
+            //// attempt to decrypt with Alice's key
+            //// this should fail as Alice doesn't have the decryption key.
+
+            //Xunit.Assert.Throws<NYI>(() =>
+            //  contextAccountAlice.DareDecode(envelope, verify: true));
 
             // Create a member entry for Alice
             contextGroup.Add(AccountAlice);

@@ -53,6 +53,18 @@ namespace Goedel.Mesh {
             base(directory, storeName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
+
+
+        /// <summary>
+        /// Locate the group <paramref name="groupAddress"/> in the catalog.
+        /// </summary>
+        /// <param name="groupAddress">The address of the group to locate in account@domain 
+        /// format.</param>
+        /// <returns>The unique catalog identifier for the group.</returns>
+        public CatalogedGroup LocateGroup(string groupAddress) => 
+                Locate(CatalogedGroup.GetGroupID(groupAddress)) as CatalogedGroup;
+
+
         }
 
     public partial class CatalogedApplication {
@@ -62,9 +74,21 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => Key;
 
+        }
 
+    public partial class CatalogedGroup {
+
+        ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
+        public static string GetGroupID(string groupAddress) => Constants.PrefixCatalogedGroup + groupAddress;
+
+        /// <summary>
+        /// The primary key used to catalog the entry.
+        /// </summary>
+        public override string _PrimaryKey => GetGroupID(Key);
 
         }
+
+
     #endregion
     #region // Enumerators and associated classes
 

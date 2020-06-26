@@ -290,7 +290,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>File Container instance</returns>
         public FileContainerReader(
                 string FileName,
-                KeyCollection KeyCollection = null,
+                IKeyLocate KeyCollection = null,
                 FileStatus FileStatus = FileStatus.Read) {
 
             var JBCDStream = new JbcdStream(FileName, FileStatus);
@@ -305,7 +305,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
         public FileContainerReader(
                 byte[] Data,
-                KeyCollection KeyCollection = null) {
+                IKeyLocate KeyCollection = null) {
 
             var Stream = new MemoryStream(Data, 0, Data.Length, false);
             var JBCDStream = new JbcdStream(Stream, null);
@@ -322,7 +322,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="KeyCollection">Key collection to be used to resolve private key references.</param>
         public static void File(
                 string FileName,
-                KeyCollection KeyCollection,
+                IKeyLocate KeyCollection,
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 

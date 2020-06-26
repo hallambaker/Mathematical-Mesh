@@ -16,8 +16,9 @@ namespace Goedel.Mesh.Client {
     /// <summary>
     /// Bound context for a Mesh Account. 
     /// </summary>
-    public class ContextAccount : ContextAccountEntry {
+    public class ContextAccount : ContextAccountEntry, IKeyLocate {
 
+        #region // Properties
         ///<summary>The enclosing mesh context.</summary>
         public override ContextMesh ContextMesh { get; }
 
@@ -46,6 +47,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>The Account Address</summary>
         public override string AccountAddress { get; protected set; }
 
+
+        #endregion
+        #region // Constructors
 
         /// <summary>
         /// Constructor.
@@ -78,7 +82,8 @@ namespace Goedel.Mesh.Client {
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
             }
 
-
+        #endregion
+        #region // Methods managing devices, services and applications
 
         /// <summary>
         /// Add a device to the device catalog.
@@ -197,10 +202,8 @@ namespace Goedel.Mesh.Client {
         /// <returns>The default contact.</returns>
         public override Contact CreateDefaultContact(bool meshUDF = false) {
 
-            var address = new NetworkAddress() {
-                Address = AccountAddress,
-                EnvelopedProfileAccount = AccountEntry.EnvelopedProfileAccount
-                };
+            var address = new NetworkAddress(AccountAddress, ProfileAccount);
+
             var anchorAccount = new Anchor() {
                 UDF = ProfileAccount.UDF,
                 Validation = "Self"
@@ -254,6 +257,11 @@ namespace Goedel.Mesh.Client {
             return cataloged;
             }
 
+        /// <summary>
+        /// Get the primary account address bound to this profile. This is a bit of a hack right
+        /// now as the code doesn't really support the 'multiple services per account' model yet.
+        /// </summary>
+        /// <returns>The account service address.</returns>
         public override string GetAccountAddress() {
             ProfileAccount.AccountAddresses.AssertNotNull();
             (ProfileAccount.AccountAddresses.Count > 0).AssertTrue();
@@ -261,6 +269,38 @@ namespace Goedel.Mesh.Client {
             return ProfileAccount.AccountAddresses[0];
             }
 
+        /// <summary>
+        /// Return the first cryptographic capability granted to this particular device
+        /// for the application <paramref name="catalogedApplication"/>.
+        /// </summary>
+        /// <param name="catalogedApplication">The application to return the capability from.</param>
+        /// <returns>The first cryptographic capability this device has been granted if found,
+        /// otherwise null.</returns>
+        public CryptographicCapability GetCapability(CatalogedApplication catalogedApplication) {
+
+            foreach (var envelope in catalogedApplication.EnvelopedCapabilities) {
+                var capability = GetCapability(envelope);
+                if (capability != null) {
+                    return capability;
+                    }
+                }
+            return null;
+            }
+
+
+        /// <summary>
+        /// Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
+        /// data is decoded and the enclosed capability returned. Otherwise, null is returned.
+        /// </summary>
+        /// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
+        /// <returns>The first cryptographic capability this device has been granted if found,
+        /// otherwise null.</returns>
+        public CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
+            throw new NYI();
+
+            }
+
+        #endregion
 
         #region // Convenience accessors for catalogs and stores
 
@@ -377,6 +417,30 @@ namespace Goedel.Mesh.Client {
         public SpoolOutbound GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as SpoolOutbound;
 
 
+
+        public override CryptoKey GetByAccountEncrypt(string keyId) {
+
+            var key = base.GetByAccountEncrypt(keyId);
+            if (key != null) {
+                return key;
+                }
+            return GetCatalogContact().GetByAccountEncrypt(keyId);
+            }
+
+        /// <summary>
+        /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
+        /// </summary>
+        /// <param name="keyId">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
+        public override CryptoKey TryMatchRecipient(string keyId) {
+            var key = KeyCollection.LocatePrivateKeyPair(keyId);
+            if (key != null) {
+                return key;
+                }
+
+
+            return GetCatalogContact().TryMatchRecipient(keyId);
+            }
 
         #endregion
 
@@ -509,7 +573,8 @@ namespace Goedel.Mesh.Client {
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
 
-            var profileGroup = ProfileGroup.Generate(MeshMachine, algorithmSign, algorithmEncrypt);
+            (var profileGroup, var secretSeed) = ProfileGroup.Generate(
+                        MeshMachine, algorithmSign, algorithmEncrypt);
 
             // here we request creation of the group at the service.
 
@@ -520,15 +585,28 @@ namespace Goedel.Mesh.Client {
 
             var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
             createResponse.Success().AssertTrue();
+          
+            var capability = new CapabilityAdministrator() {
+                Id = profileGroup.UDF,
+                KeyData = new KeyData() {
+                    PrivateParameters = secretSeed
+                    }
+                };
 
-            var catalogedGroup = new CatalogedGroup(profileGroup);
+            var envelopedCapability = DareEnvelope.Encode(capability.GetBytes(), encryptionKey: KeyEncryption);
+
+            var catalogedGroup = new CatalogedGroup(profileGroup) {
+                EnvelopedCapabilities = new List<DareEnvelope>() { envelopedCapability },
+                Key = groupName
+                };
+            GetCatalogApplication().New(catalogedGroup);
 
 
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
 
             var contact = contextGroup.CreateDefaultContact();
             // Bug: Should also encrypt the relevant admin key to the admin encryption key.
-            false.AssertTrue();
+
 
             var contactCatalog = GetCatalogContact();
             contactCatalog.Add(contact);
@@ -543,8 +621,14 @@ namespace Goedel.Mesh.Client {
         /// <param name="groupAddress">The group to return the management context for.</param>
         /// <returns>The created management context.</returns>
         public ContextGroup GetContextGroup(string groupAddress) {
-            groupAddress.Future();
-            throw new NYI();
+
+            // read through the entries in CatalogApplication
+            var catalog = GetCatalogApplication();
+            var entry = catalog.LocateGroup(groupAddress);
+
+            // construct the group context
+            // We do not attempt to get admin privs here, we will do that if necessary.
+            return new ContextGroup(this, entry);
 
 
             }

@@ -266,29 +266,32 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command options.</param>
         /// <param name="keyCollection">The key collection to use to obtain and store keys.</param>
         /// <returns>The cryptographic parameter set.</returns>
-        public CryptoParameters GetCryptoParameters(KeyCollection keyCollection, IEncodeOptions Options) {
-            var cryptoParameters = new CryptoParameters();
+        public CryptoParameters GetCryptoParameters(IKeyLocate keyCollection, IEncodeOptions Options) {
+            List<string> recipients = null;
+            List<string> signers = null;
 
-            // Goal: do an encrypt self default option
+
+            // ToDo: enable specification of multiple recipients in COMMAND
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
-                    cryptoParameters.EncryptID = AlgorithmEncrypt.DefaultBulk(CryptoAlgorithmId.AES256CBC);
-                    cryptoParameters.EncryptionKeys = new List<CryptoKey>
-                        { keyCollection.GetByAccountEncrypt(Options.Encrypt.Value)};
+                    recipients = new List<string>();
+                    recipients.Add(Options.Encrypt.Value);
                     }
 
                 }
 
-
+            // ToDo: enable specification of multiple signers in COMMAND
             if (Options.Sign != null) {
                 if (Options.Sign.Value != null) {
-                    cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
-                    cryptoParameters.SignerKeys = new List<CryptoKey>
-                        { keyCollection.GetByAccountSign(Options.Sign.Value)};
+                    signers = new List<string> {
+                        Options.Sign.Value
+                        };
                     }
                 }
 
-            else if (Options.Hash.Value) {
+            var cryptoParameters = new CryptoParameters(keyCollection, recipients, signers) ;
+
+            if (Options.Hash.Value) {
                 cryptoParameters.DigestID = AlgorithmDigest.DefaultBulk(CryptoAlgorithmId.SHA_2_512);
                 }
 

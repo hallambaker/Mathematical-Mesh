@@ -41,8 +41,8 @@ namespace Goedel.Mesh {
             var keyEncrypt = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
             var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
 
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
 
             if (persist) {
                 keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
@@ -58,9 +58,37 @@ namespace Goedel.Mesh {
         /// <param name="keyEncrypt">The encryption key.</param>
         public ProfileGroup(
             KeyPair keySign, KeyPair keyEncrypt) {
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             }
+
+        /// <summary>
+        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        /// seed.
+        /// </summary>
+        /// <param name="secretSeed">The secret seed value.</param>
+        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <paramref name="keyCollection"/>.</param>
+        public ProfileGroup(
+                    PrivateKeyUDF secretSeed,
+                    KeyCollection keyCollection = null,
+                    bool? persist = false) {
+
+            var meshKeyType = MeshKeyType.DeviceProfile;
+            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
+            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
+
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+
+            if (persist == true) {
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                }
+
+            Sign(keySign);
+            }
+
 
         /// <summary>
         /// Generate a new <see cref="ProfileGroup"/>
@@ -68,17 +96,27 @@ namespace Goedel.Mesh {
         /// <param name="meshMachine">The mesh machine.</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <returns>the created group.</returns>
-        public static ProfileGroup Generate(
+        /// <param name="persist">If true, the secretSeed is persisted to the local store.</param>
+        /// <param name="secret">Specifies the value of the random seed. If null, a new seed 
+        /// is generated.</param>
+        /// <returns>The group profile and secret seed.</returns>
+        public static (ProfileGroup, PrivateKeyUDF) Generate(
                     IMeshMachine meshMachine,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default) {
-            algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
-            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
-            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.Device, keyUses: KeyUses.Encrypt);
-            return new ProfileGroup(keySign, keyEncrypt);
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                    byte[] secret = null,
+                    bool? persist = false) {
+
+            var secretSeed = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileGroup,
+                    algorithmEncrypt, algorithmSign, secret:secret);
+            var profileGroup =  new ProfileGroup(secretSeed, meshMachine.KeyCollection, persist);
+
+            return (profileGroup, secretSeed);
             }
+
+
+
+
 
 
         /// <summary>

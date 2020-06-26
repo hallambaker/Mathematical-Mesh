@@ -74,7 +74,7 @@ namespace Goedel.Mesh {
             Container = Container.Open(
                 fileName,
                 FileStatus.ConcurrentLocked,
-                keyCollection ?? cryptoParameters?.KeyCollection,
+                keyCollection ?? cryptoParameters?.KeyLocate,
                 cryptoParameters,
                 ContainerType.MerkleTree,
                 "application/mmm-catalog",

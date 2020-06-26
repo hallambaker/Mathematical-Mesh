@@ -150,7 +150,7 @@ namespace Goedel.XUnit {
             FileContainerWriter.File(FileName, CryptoParameters, TestData, null);
 
             // Read Container
-            FileContainerReader.File(FileName, CryptoParameters.KeyCollection,
+            FileContainerReader.File(FileName, CryptoParameters.KeyLocate,
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
@@ -182,7 +182,7 @@ namespace Goedel.XUnit {
 
             // Test retrieval by index number. Note that since record 0 has the 
             // container header data, the data items run through [1..Entries]
-            using var Reader = new FileContainerReader(Filename, CryptoParameters.KeyCollection);
+            using var Reader = new FileContainerReader(Filename, CryptoParameters.KeyLocate);
             for (var i = 0; i < Entries; i++) {
 
                 Reader.Read(out var ReadData, out var ContentMeta, Index: i + 1);

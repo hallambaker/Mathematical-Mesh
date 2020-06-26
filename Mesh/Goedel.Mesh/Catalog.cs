@@ -94,6 +94,14 @@ namespace Goedel.Mesh {
                 }
 
             PersistenceStore = new PersistenceStore(Container, readContainer);
+
+            if (readContainer) {
+                foreach (var indexEntry in PersistenceStore.ObjectIndex) {
+                    var objectData = indexEntry.Value.JsonObject as CatalogedEntry;
+                    NewEntry(objectData);
+                    }
+                }
+
             }
 
         /// <summary>
@@ -172,18 +180,18 @@ namespace Goedel.Mesh {
             foreach (var update in updates) {
                 switch (update.Action) {
                     case CatalogAction.New: {
-                        catalog.PersistenceStore.New(update.CatalogEntry);
                         NewEntry(update.CatalogEntry);
+                        catalog.PersistenceStore.New(update.CatalogEntry);
                         break;
                         }
                     case CatalogAction.Update: {
-                        catalog.PersistenceStore.Update(update.CatalogEntry);
                         UpdateEntry(update.CatalogEntry);
+                        catalog.PersistenceStore.Update(update.CatalogEntry);
                         break;
                         }
                     case CatalogAction.Delete: {
-                        catalog.PersistenceStore.Delete(update.PrimaryKey);
                         DeleteEntry(update.PrimaryKey);
+                        catalog.PersistenceStore.Delete(update.PrimaryKey);
                         break;
                         }
 
@@ -195,25 +203,25 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Add <paramref name="catalogedEntry"/> to the catalog as a new entry.
+        /// Callback called before adding a new entry to the catalog. May be overriden in 
+        /// derrived classes to update local indexes.
         /// </summary>
-        /// <param name="catalogedEntry">The entry to add.</param>
-        protected virtual void NewEntry(CatalogedEntry catalogedEntry) =>
-            "Is this redundant code".TaskRedundant();
+        /// <param name="catalogedEntry">The entry being added.</param>
+        protected virtual void NewEntry(CatalogedEntry catalogedEntry) { }
 
         /// <summary>
-        /// Update <paramref name="catalogedEntry"/> in the catalog.
+        /// Callback called before updating an entry in the catalog. May be overriden in 
+        /// derrived classes to update local indexes.
         /// </summary>
-        /// <param name="catalogedEntry">The entry to update.</param>
-        protected virtual void UpdateEntry(CatalogedEntry catalogedEntry) => 
-            "Is this redundant code".TaskRedundant();
+        /// <param name="catalogedEntry">The entry being updated.</param>
+        protected virtual void UpdateEntry(CatalogedEntry catalogedEntry) { }
 
         /// <summary>
-        /// Delete the entry with unique id <paramref name="Key"/> from the catalog.
+        /// Callback called before deleting an entry from the catalog. May be overriden in 
+        /// derrived classes to update local indexes.
         /// </summary>
-        /// <param name="Key">The entry to delete.</param>
-        protected virtual void DeleteEntry(string Key) =>
-            "Is this redundant code".TaskRedundant();
+        /// <param name="Key">The entry being deleted.</param>
+        protected virtual void DeleteEntry(string Key) { }
 
 
         // Test: Check what happens when an attempt is made to perform conflicting updates to a store.

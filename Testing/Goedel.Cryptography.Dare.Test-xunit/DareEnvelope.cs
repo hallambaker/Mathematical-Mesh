@@ -35,7 +35,7 @@ namespace Goedel.XUnit {
             var RecipientsGroup = new List<string> { groupName };
             var CryptoParametersGroup = new CryptoParametersTest(
                         recipients: RecipientsGroup);
-            var keyGroup = CryptoParametersGroup.KeyCollection.TryMatchRecipient(groupName) as KeyPairAdvanced;
+            var keyGroup = CryptoParametersGroup.KeyLocate.TryMatchRecipient(groupName) as KeyPairAdvanced;
 
             //var RecipientsAlice = new List<string> { userName };
             //var CryptoParametersAlice = new CryptoParametersTest(
@@ -63,7 +63,7 @@ namespace Goedel.XUnit {
             var keyCollectionDevice = new KeyCollectionCore();
             keyCollectionDevice.Add(keyPairPartialTest);
 
-            CheckDecode(envelope, plaintext, CryptoParametersGroup.KeyCollection);
+            CheckDecode(envelope, plaintext, CryptoParametersGroup.KeyLocate);
             CheckDecode(envelope, plaintext, keyCollectionDevice);
 
 
@@ -293,7 +293,7 @@ contentMeta: contentInfo, dataSequences: DataSequences);
             string ContentType = null) {
 
             var Message = DareEnvelope.FromJSON(Serialization, false,
-                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyCollection);
+                    decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyLocate);
             CheckDecodeResult(Message, DataSequences, ContentType);
 
             Utilities.Assert.True(Plaintext.IsEqualTo(Message.Body));
@@ -302,7 +302,7 @@ contentMeta: contentInfo, dataSequences: DataSequences);
         static void CheckDecode(
                     DareEnvelope envelope,
                     byte[] plaintext,
-                    KeyCollection keyCollection
+                    IKeyLocate keyCollection
                     ) {
 
             var cryptoStack = envelope.Header.GetCryptoStack(keyCollection);

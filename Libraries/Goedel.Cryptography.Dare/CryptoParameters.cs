@@ -9,7 +9,7 @@ namespace Goedel.Cryptography.Dare {
     public partial class CryptoParameters {
 
         /// <summary>The key collection to use to resolve names to keys</summary>
-        public KeyCollection KeyCollection;
+        public IKeyLocate KeyLocate;
         /// <summary>The set of keys to encrypt to.</summary>
         public List<CryptoKey> EncryptionKeys {
             get => encryptionKeys;
@@ -79,7 +79,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="digestID">The digest algorithm to be applied to the message
         /// encoding.</param>
         public CryptoParameters(
-                        KeyCollection keyCollection = null,
+                        IKeyLocate keyCollection = null,
                         List<string> recipients = null,
                         List<string> signers = null,
                         CryptoKey recipient = null,
@@ -89,7 +89,7 @@ namespace Goedel.Cryptography.Dare {
             this.DigestID = digestID;
             this.EncryptID = encryptID;
 
-            this.KeyCollection = keyCollection;
+            this.KeyLocate = keyCollection;
 
             if (recipients != null) {
                 EncryptionKeys = new List<CryptoKey>();
@@ -125,7 +125,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
             EncryptionKeys ??= new List<CryptoKey>();
-            EncryptionKeys.Add(KeyCollection.GetByAccountEncrypt(AccountId));
+            EncryptionKeys.Add(KeyLocate.GetByAccountEncrypt(AccountId));
             }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddSign(string AccountId) {
             SignerKeys ??= new List<CryptoKey>();
-            SignerKeys.Add(KeyCollection.GetByAccountSign(AccountId));
+            SignerKeys.Add(KeyLocate.GetByAccountSign(AccountId));
             }
 
 

@@ -204,7 +204,7 @@ namespace Goedel.XUnit {
                     CryptoParameters CryptoParametersEntry = null) {
             CryptoParameters ??= new CryptoParameters();
 
-            var KeyCollection = CryptoParameters?.KeyCollection ?? CryptoParametersEntry?.KeyCollection;
+            var KeyCollection = CryptoParameters?.KeyLocate ?? CryptoParametersEntry?.KeyLocate;
 
             ReOpen = ReOpen == 0 ? Records : ReOpen;
             MaxSize = MaxSize == 0 ? Records + 1 : MaxSize;

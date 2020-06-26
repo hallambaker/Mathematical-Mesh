@@ -39,7 +39,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to search.</param>
         /// <param name="publicKeys">The list of public keys to match</param>
         /// <returns>The key pair if found, otherwise <see langword="false"/></returns>
-        public static CryptoKey LocatePrivate(this KeyCollection keyCollection, List<PublicKey> publicKeys) {
+        public static CryptoKey LocatePrivate(this KeyCollection keyCollection, List<KeyData> publicKeys) {
 
             foreach (var publicKey in publicKeys) {
                 var keyPair = keyCollection.LocatePrivateKeyPair(publicKey.UDF);

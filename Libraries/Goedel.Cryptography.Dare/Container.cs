@@ -218,7 +218,7 @@ namespace Goedel.Cryptography.Dare {
         public static Container Open(
                         string fileName,
                         FileStatus fileStatus = FileStatus.Read,
-                        KeyCollection keyCollection = null,
+                        IKeyLocate keyCollection = null,
                         CryptoParameters cryptoParameters = null,
                         ContainerType containerType = ContainerType.Unknown,
                         string contentType = null,
@@ -242,7 +242,7 @@ namespace Goedel.Cryptography.Dare {
                         containerType, contentType: contentType);
                     }
                 else {
-                    keyCollection ??= cryptoParameters?.KeyCollection;
+                    keyCollection ??= cryptoParameters?.KeyLocate;
                     Container = OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
 
                     }
@@ -280,7 +280,7 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The default key collection to use for decryption
         /// </summary>
-        protected KeyCollection KeyCollection;
+        protected IKeyLocate KeyCollection;
 
         /// <summary>
         /// Open an existing container file.
@@ -294,7 +294,7 @@ namespace Goedel.Cryptography.Dare {
         public static Container OpenExisting(
                 string fileName,
                 FileStatus fileStatus = FileStatus.Read,
-                KeyCollection keyCollection = null, bool decrypt = true) {
+                IKeyLocate keyCollection = null, bool decrypt = true) {
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
             return OpenExisting(jbcdStream, keyCollection, decrypt: decrypt);
@@ -313,7 +313,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public static Container OpenExisting(
                         JbcdStream jbcdStream,
-                        KeyCollection keyCollection = null, bool decrypt = true) {
+                        IKeyLocate keyCollection = null, bool decrypt = true) {
 
             // Initialize frame zero
             var frameZero = jbcdStream.ReadDareEnvelope();
@@ -519,7 +519,7 @@ namespace Goedel.Cryptography.Dare {
             container.AppendFrame(headerBytes, payload, trailerBytes);
             container.FrameCount++;
 
-            container.KeyCollection = cryptoParameters.KeyCollection;
+            container.KeyCollection = cryptoParameters.KeyLocate;
 
             container.FrameZero = new DareEnvelope() {
                 Header = containerHeaderFirst,

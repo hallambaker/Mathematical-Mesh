@@ -54,6 +54,19 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class Assert {
 
+
+
+        public static T Expired<T>(this DateTime? expiry, T value) {
+            if (expiry == null) {
+                return value;
+                }
+            if (DateTime.Now < expiry) {
+                return value;
+                }
+            return default;
+            }
+
+
         /// <summary>
         /// Cache and return a value. This is used to produce compact expression
         /// body methods for properties that are only evaluated the first time

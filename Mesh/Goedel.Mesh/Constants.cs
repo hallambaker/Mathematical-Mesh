@@ -188,6 +188,10 @@ namespace Goedel.Mesh {
         ///<summary>HKDF info tag for deriving Device Authenticator from IKM</summary>
         public const string DeviceAuthenticatorInfo = "mmm/key/authenticate/device";
 
+
+        ///<summary>Prefix to be applied to form the ID of a mesh group in the catalog.</summary>
+        public const string PrefixCatalogedGroup = "mmm/CatalogedGroup/";
+
         // Constants for calculating timeout values.
 
         ///<summary>Number of ticks in a millisecond</summary>

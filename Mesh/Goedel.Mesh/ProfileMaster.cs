@@ -53,8 +53,8 @@ namespace Goedel.Mesh {
             var keySign = secretSeed.BasePrivate( meshKeyType | MeshKeyType.Sign);
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
 
-            KeyOfflineSignature = new PublicKey(keySign.KeyPairPublic());
-            KeyEncryption = new PublicKey(keyEncrypt.KeyPairPublic());
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
 
             if (persist) {
                 keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
