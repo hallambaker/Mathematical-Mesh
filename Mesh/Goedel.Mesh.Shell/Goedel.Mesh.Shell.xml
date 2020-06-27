@@ -252,28 +252,28 @@
             <summary>
             Dispatch method
             </summary>
-            <param name="Options">The command line options.</param>
+            <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareDecode(Goedel.Mesh.Shell.DareDecode)">
             <summary>
             Dispatch method
             </summary>
-            <param name="Options">The command line options.</param>)
+            <param name="options">The command line options.</param>)
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareVerify(Goedel.Mesh.Shell.DareVerify)">
             <summary>
             Dispatch method
             </summary>
-            <param name="Options">The command line options.</param>
+            <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareEARL(Goedel.Mesh.Shell.DareEARL)">
             <summary>
             Dispatch method
             </summary>
-            <param name="Options">The command line options.</param>
+            <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceRequestConnect(Goedel.Mesh.Shell.DeviceRequestConnect)">

@@ -16,6 +16,9 @@ namespace Goedel.XUnit {
 
 
         string DeviceAliceName => "MachineAlice";
+
+        string DeviceAliceName2 => "MachineAlice2";
+
         string DeviceBobName => "MachineBob";
 
         [Fact]
@@ -27,40 +30,11 @@ namespace Goedel.XUnit {
 
             }
 
-        [Fact]
-        public void TestProfileEscrow() {
-            var account = "alice@example.com";
-
-            Dispatch("profile list");
-            // check we have no profiles.
-
-            Dispatch($"profile create {account}");
-            //DefaultDevice.AssertAccount(1, account);
-
-            var result = Dispatch("profile escrow test1.escrow /quorum 2 /shares 3");
-            //Dispatch("profile delete");
-            //DefaultDevice.AssertAccount(0, account, false);
-            var resultEscrow = result as ResultEscrow;
-            var share1 = resultEscrow.Shares[0];
-            var share2 = resultEscrow.Shares[1];
-            Dispatch($"profile recover  {share1} {share2} /file test1.escrow /verify");
-
-            //DefaultDevice.AssertAccount(1, account);
-
-            // Goal: implement comprehensive key escrow.
-            "Check ability to delete account".TaskTest();
-            "Check ability to recover deleted account from the service".TaskTest();
-            "Implement ability to store escrow records to service".TaskFunctionality();
-            "Implement encryption key escrow".TaskFunctionality();
-            "Implement encryption key recovery".TaskFunctionality();
-
-            throw new NYI();
-            }
 
 
         [Fact]
         public void TestProfileConnect() {
-            var accountA = "alice@example.com";
+
 
 
 
@@ -68,14 +42,14 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create /service={accountA}");
+            device1.Dispatch($"mesh create /service={AccountA}");
 
             device1.CheckHostCatalogExtended();
 
             device1.Dispatch($"account sync");
 
 
-            device2.Dispatch($"device request {accountA}");
+            device2.Dispatch($"device request {AccountA}");
             device2.CheckHostCatalogExtended();
 
             device2.Dispatch($"account sync", fail: true);
@@ -92,7 +66,7 @@ namespace Goedel.XUnit {
 
             device2.Dispatch($"account sync");
 
-            device3.Dispatch($"device request {accountA}  /new");
+            device3.Dispatch($"device request {AccountA}  /new");
             device3.Dispatch($"account sync", fail: true);
 
             var result3 = device1.Dispatch($"device pending");

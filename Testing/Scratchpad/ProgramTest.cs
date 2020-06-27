@@ -21,9 +21,14 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
-            // Redo the service level tests so that we can get to the shell tests for group.
-            ShellTests.Test().TestFilePlain();
+
             ShellTests.Test().TestFileEncrypt();
+
+
+            // The whole Escrow thing
+            // Failing because key lookup is currently bjorked
+            //ShellTests.Test().TestEscrowAccountService();
+            //ShellTests.Test().TestEscrowMeshOnly();
 
             //TestService.Test().MeshCatalogGroup();
 
@@ -86,8 +91,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
 
-            // The whole Escrow thing
-            //ShellTests.Test().TestProfileEscrow();
+
 
 
             }

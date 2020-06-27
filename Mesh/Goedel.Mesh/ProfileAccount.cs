@@ -16,6 +16,8 @@ namespace Goedel.Mesh {
         public string ServiceDefault => AccountAddresses?[0];
 
 
+
+
         //KeyPair keySignOffline;
         CryptoKey keySignOnline;
 
@@ -116,6 +118,18 @@ namespace Goedel.Mesh {
             keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
 
             var activationAccount = new ActivationAccount(catalogedDevice.ProfileDevice);
+
+
+            if (true) { // always add the admin keys in.
+
+                // key was stored thus
+                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+
+                // fetch and bind the decryption key
+                // make this a separate dohickey though.
+                activationAccount.KeyAccountEncryption = new KeyData(keyEncrypt.KeyPairPrivate());
+                }
+
 
             // Sign and encrypt the activation
             activationAccount.Package(keySignOnline);

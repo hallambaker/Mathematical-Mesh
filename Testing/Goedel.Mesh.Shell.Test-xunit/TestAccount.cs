@@ -51,7 +51,7 @@ namespace Goedel.XUnit {
         public string MalletDevice1 = "Mallet1";
 
         [Fact]
-        public void TestEscrow() {
+        public void TestEscrowMeshOnly() {
 
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
 
@@ -68,14 +68,47 @@ namespace Goedel.XUnit {
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
             var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
+            var testCLIAlice2 = GetTestCLI(AliceDevice2);
+            var ProfileRecover = testCLIAlice2.Example($"mesh recover {share1} {share2} /verify");
+
+            testCLIAlice2.Dispatch($"account sync");
+
+            "Should add much more test functionality here".TaskTest();
+            }
+
+        [Fact]
+        public void TestEscrowAccountService() {
+            var testCLIAlice1 = GetTestCLI(AliceDevice1);
+            testCLIAlice1.Dispatch($"mesh create /service={AccountA}");
+
+            var ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
+            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
             var ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
-            // ToDo - check that the account was deleted.
 
+            var testCLIAlice2 = GetTestCLI(AliceDevice2);
+            var ProfileRecover = testCLIAlice2.Example($"mesh recover {share1} {share2} /verify");
 
-            var ProfileRecover = testCLIAlice1.Example($"mesh recover {share1} {share2} /verify");
-            // ToDo - check that the recovered account has the same profile.
+            testCLIAlice2.Dispatch($"account sync");
+
+            "Should add much more test functionality here".TaskTest();
             }
+
+
+
+        [Fact]
+        public void TestAccountDelete() {
+            var testCLIAlice1 = GetTestCLI(AliceDevice1);
+            testCLIAlice1.Dispatch($"mesh create /service={AccountA}");
+
+            var ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+
+            // failing here as account was not deleted off the service.
+            testCLIAlice1.Dispatch($"account sync", fail: true);
+            }
+
+
 
         [Fact]
         public void TestConnectRequest() {

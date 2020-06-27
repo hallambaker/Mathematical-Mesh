@@ -468,6 +468,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyDeviceEncryption">
+            <summary>The group encryption key </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
             <summary>
             Constructor.
@@ -831,11 +834,11 @@
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeySignature">
             <summary>The member's device signature key</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyEncryption">
-            <summary>The group encryption key </summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyAccountEncryption">
+            <summary>The account encryption key </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyAuthentication">
-            <summary>The authentication key used by this client to connect to the group</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyDeviceAuthentication">
+            <summary>The authentication key used by this device to authenticate</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccountEntry.KeyEncryptionUDF">
             <summary>Convenience accessor for the encryption key fingerprint.</summary>

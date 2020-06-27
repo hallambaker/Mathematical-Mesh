@@ -48,6 +48,13 @@ namespace Goedel.Mesh.Client {
         public override string AccountAddress { get; protected set; }
 
 
+        ///<summary>The group encryption key </summary>
+        protected KeyPair KeyDeviceEncryption { get; set; }
+
+
+
+
+
         #endregion
         #region // Constructors
 
@@ -67,16 +74,21 @@ namespace Goedel.Mesh.Client {
             AccountEntry = accountEntry;
             this.AccountAddress = accountAddress ?? AccountEntry.ProfileAccount?.ServiceDefault;
 
+            // if the AccountEntry has an encrypted account key...
+
+
             var activationKey = ActivationAccount.ActivationKey;
             KeySignature = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceSign);
-            KeyEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
-            KeyAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
+            KeyDeviceEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
+            KeyDeviceAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
             KeySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF);
-            KeyEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
-            KeyAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
+            KeyDeviceEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
+            KeyDeviceAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
 
-            KeyCollection.Add(KeyEncryption);
+            KeyCollection.Add(KeyDeviceEncryption);
+
+
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
@@ -593,7 +605,7 @@ namespace Goedel.Mesh.Client {
                     }
                 };
 
-            var envelopedCapability = DareEnvelope.Encode(capability.GetBytes(), encryptionKey: KeyEncryption);
+            var envelopedCapability = DareEnvelope.Encode(capability.GetBytes(), encryptionKey: KeyDeviceEncryption);
 
             var catalogedGroup = new CatalogedGroup(profileGroup) {
                 EnvelopedCapabilities = new List<DareEnvelope>() { envelopedCapability },

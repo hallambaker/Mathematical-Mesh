@@ -318,7 +318,8 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            // Probably failing due to the salted key being used??
+            // Failing here because the file is encrypted under the Account key and 
+            // the only keys being registered are the DeviceAccount keys.
             throw new NoAvailableDecryptionKey();
             }
         }

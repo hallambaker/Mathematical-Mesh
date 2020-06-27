@@ -319,6 +319,12 @@
 		String AccountUDF
 			Description
 				|The UDF of the account
+		Struct KeyData KeyAccountEncryption
+			Description
+				|Key used to encrypt data under this profile
+		Struct KeyData KeyAccountSignature
+			Description
+				|Key used to encrypt data under this profile
 
 	Structure ConnectionAccount
 		Inherits Connection

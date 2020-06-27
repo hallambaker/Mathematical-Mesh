@@ -57,21 +57,20 @@ namespace Goedel.Mesh.Client {
         ///<summary>The member's device signature key</summary>
         protected KeyPair KeySignature { get; set; }
 
-        ///<summary>The group encryption key </summary>
-        protected KeyPair KeyEncryption { get; set; }
+        ///<summary>The account encryption key </summary>
+        protected KeyPair KeyAccountEncryption { get; set; }
 
-        ///<summary>The authentication key used by this client to connect to the group</summary>
-
-        protected KeyPair KeyAuthentication { get; set; }
+        ///<summary>The authentication key used by this device to authenticate</summary>
+        protected KeyPair KeyDeviceAuthentication { get; set; }
 
 
         ///<summary>Convenience accessor for the encryption key fingerprint.</summary>
-        public string KeyEncryptionUDF => KeyEncryption.KeyIdentifier;
+        public string KeyEncryptionUDF => KeyAccountEncryption.KeyIdentifier;
         ///<summary>Convenience accessor for the signature key fingerprint.</summary>
         public string KeySignatureUDF => KeySignature.KeyIdentifier;
-        ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
-        public string KeyAuthenticationUDF => KeyAuthentication.KeyIdentifier;
 
+        ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
+        public string KeyAuthenticationUDF => KeyDeviceAuthentication.KeyIdentifier;
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public virtual string StoresDirectory { get; set; }
@@ -164,7 +163,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
         protected MeshService GetMeshClient(string accountAddress) =>
-                    MeshMachine.GetMeshClient(accountAddress, KeyAuthentication,
+                    MeshMachine.GetMeshClient(accountAddress, KeyDeviceAuthentication,
                             Connection, ContextMesh.ProfileMesh);
 
 

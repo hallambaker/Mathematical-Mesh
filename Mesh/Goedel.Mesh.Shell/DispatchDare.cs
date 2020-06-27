@@ -11,28 +11,19 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DareEncode(DareEncode Options) {
-            var inputFile = Options.Input.Value;
+        public override ShellResult DareEncode(DareEncode options) {
+            var inputFile = options.Input.Value;
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
-            var contentType = Options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
+            var contentType = options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
-
-            ContextAccount contextAccount = null;
-            try {
-                contextAccount = GetContextAccount(Options);
-                }
-            catch  {
-
-                }
-
-            IKeyLocate keyLocate = (IKeyLocate) contextAccount ?? GetKeyCollection(Options);
+            var keyLocate = GetKeyCollection (options);
             // we are getting the wrong one here. we want the encryption recipients from the contacts file.
 
 
 
-            var cryptoParameters = GetCryptoParameters(keyLocate, Options);
+            var cryptoParameters = GetCryptoParameters(keyLocate, options);
 
             var ContentInfo = new ContentMeta() {
                 Filename = inputFile,
@@ -53,13 +44,13 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>)
+        /// <param name="options">The command line options.</param>)
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DareDecode(DareDecode Options) {
-            var inputFile = Options.Input.Value;
-            using var contextAccount = GetContextAccount(Options);
+        public override ShellResult DareDecode(DareDecode options) {
+            var inputFile = options.Input.Value;
+            var keyLocate = GetKeyCollection(options);
 
-            var Length = DareEnvelope.Decode(inputFile, keyCollection: contextAccount);
+            var Length = DareEnvelope.Decode(inputFile, keyCollection: keyLocate);
 
             return new ResultFile() {
                 TotalBytes = (int)Length
@@ -69,10 +60,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DareVerify(DareVerify Options) {
-            var inputFile = Options.Input.Value;
+        public override ShellResult DareVerify(DareVerify options) {
+            var inputFile = options.Input.Value;
             var result = DareEnvelope.Verify(inputFile);
 
             return new ResultFile() {
@@ -84,10 +75,10 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// Dispatch method
         /// </summary>
-        /// <param name="Options">The command line options.</param>
+        /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult DareEARL(DareEARL Options) {
-            var inputFile = Options.Input.Value;
+        public override ShellResult DareEARL(DareEARL options) {
+            var inputFile = options.Input.Value;
             throw new NYI();
             //var result = DareEnvelope.Verify(inputFile);
 
