@@ -48,10 +48,11 @@ namespace Goedel.Mesh.Client {
         public override string AccountAddress { get; protected set; }
 
 
-        ///<summary>The group encryption key </summary>
+        ///<summary>The device encryption key </summary>
         protected KeyPair KeyDeviceEncryption { get; set; }
 
-
+        ///<summary>The account encryption key</summary>
+        protected KeyPair KeyAccountEncryption { get; set; }
 
 
 
@@ -68,7 +69,7 @@ namespace Goedel.Mesh.Client {
                     ContextMesh contextMesh,
                     AccountEntry accountEntry,
                     string accountAddress = null
-                    )  {
+                    ) {
             // Set up the basic context
             ContextMesh = contextMesh;
             AccountEntry = accountEntry;
@@ -88,7 +89,10 @@ namespace Goedel.Mesh.Client {
 
             KeyCollection.Add(KeyDeviceEncryption);
 
-
+            if (ActivationAccount.KeyAccountEncryption != null) {
+                KeyAccountEncryption = ActivationAccount.KeyAccountEncryption.GetKeyPair();
+                KeyCollection.Add(KeyAccountEncryption);
+                }
 
             //ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection, recipient: KeyEncryption);
             ContainerCryptoParameters = new CryptoParameters(keyCollection: KeyCollection);
@@ -193,8 +197,9 @@ namespace Goedel.Mesh.Client {
         public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
             var device = ContextMeshAdmin.CreateCataloguedDevice(profileDevice);
 
+            var accountEncryptionKey = GetAccountEncryptionKey();
             // Connect the device to the Account
-            ProfileAccount.ConnectDevice(KeyCollection, device, null);
+            ProfileAccount.ConnectDevice(KeyCollection, device, accountEncryptionKey, null);
 
 
             //Console.WriteLine(device.ToString());
@@ -206,6 +211,14 @@ namespace Goedel.Mesh.Client {
             return device;
             }
 
+        /// <summary>
+        /// Function returning the key or key share used to decrypt data encrypted to the account.
+        /// This MAY be either the full key or a key share.
+        /// </summary>
+        /// <returns></returns>
+        KeyData GetAccountEncryptionKey() {
+            return new KeyData(KeyAccountEncryption);
+            }
 
         /// <summary>
         /// Get the default (i.e. minimum contact info). This has a single network 
@@ -445,7 +458,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
         public override CryptoKey TryFindKeyDecryption(string keyId) {
-            var key = KeyCollection.LocatePrivateKeyPair(keyId);
+            var key = base.TryFindKeyDecryption(keyId);
             if (key != null) {
                 return key;
                 }

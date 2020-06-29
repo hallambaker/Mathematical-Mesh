@@ -106,10 +106,17 @@ namespace Goedel.Mesh.Client {
             // Bug: Should create an entry for the member
 
             // Pull the contact information from the user's contact catalog
+            var userEncryptionKey = ContextAccount.GetCatalogContact().GetByAccountEncrypt(id);
+
 
             // Split the admin key
 
+            (var serviceKey, var userKey) = GetKeySplit(userEncryptionKey);
+
             // Create the capability and add to the capability catalog
+
+
+
 
             // Add the member to the member catalog
 
@@ -118,11 +125,21 @@ namespace Goedel.Mesh.Client {
 
 
             // return the member entry.
-
+            var catalogedMember = new CatalogedMember() {
+                ContactAddress = id
+                };
 
 
             throw new NotImplementedException();
             }
+
+
+        (DareEnvelope, DareEnvelope) GetKeySplit(CryptoKey userEncryptionKey) {
+            userEncryptionKey.Future();
+            throw new NYI();
+
+            }
+
 
         /// <summary>
         /// Get the default (i.e. minimum contact info). This has a single network 

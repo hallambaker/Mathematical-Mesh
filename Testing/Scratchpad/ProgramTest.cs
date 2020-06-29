@@ -22,7 +22,7 @@ namespace Scratchpad {
 
 
 
-            ShellTests.Test().TestFileEncrypt();
+            //ShellTests.Test().TestFileEncrypt();
 
 
             // The whole Escrow thing
@@ -30,7 +30,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestEscrowAccountService();
             //ShellTests.Test().TestEscrowMeshOnly();
 
-            //TestService.Test().MeshCatalogGroup();
+            TestService.Test().MeshCatalogGroup();
 
 
             //TestService.Test().MeshCatalogAccount();

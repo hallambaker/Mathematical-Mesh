@@ -40,7 +40,8 @@
                 byte[] secret = null,
                 int bits = 256) : this(
                     udfAlgorithmIdentifier,
-                    UDF.DerivedKey(udfAlgorithmIdentifier, data: secret ?? Platform.GetRandomBits(bits)), algorithmEncrypt, algorithmSign, algorithmAuthenticate
+                    UDF.DerivedKey(udfAlgorithmIdentifier, data: secret ?? Platform.GetRandomBits(bits)), 
+                                algorithmEncrypt, algorithmSign, algorithmAuthenticate
                     ) {
             }
 

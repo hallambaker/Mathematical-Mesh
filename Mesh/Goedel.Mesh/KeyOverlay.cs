@@ -31,7 +31,7 @@ namespace Goedel.Mesh {
         /// <param name="baseKey">The base key.</param>
         /// <param name="service">The decryption service.</param>
         public KeyComposite(KeyData baseKey, string service) :
-                    this(baseKey.KeyPair as KeyPairAdvanced, service) {
+                    this(baseKey.CryptoKey as KeyPairAdvanced, service) {
             }
 
         /// <summary>
@@ -142,13 +142,14 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
-                    MeshKeyType meshKeyType, KeyCollection keyCollection = null) {
+                    MeshKeyType meshKeyType, KeyCollection keyCollection = null,
+                    KeySecurity keySecurity= KeySecurity.Ephemeral) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, secretSeed);
 
             return UDF.DeriveKey(secretSeed.PrivateValue, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
+                    keySecurity, keyUses: keyUses, cryptoAlgorithmID, saltSuffix);
             }
 
         /// <summary>
@@ -216,7 +217,7 @@ namespace Goedel.Mesh {
         /// <returns>The derrived key.</returns>
         public static KeyPairAdvanced ActivatePublic(this KeyData baseKey,
                 string activationSeed, MeshKeyType meshKeyType) =>
-            ActivatePublic(baseKey.KeyPair as KeyPairAdvanced, activationSeed, meshKeyType);
+            ActivatePublic(baseKey.CryptoKey as KeyPairAdvanced, activationSeed, meshKeyType);
 
 
 

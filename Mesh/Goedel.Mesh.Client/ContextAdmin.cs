@@ -241,7 +241,13 @@ namespace Goedel.Mesh.Client {
             var profileAccount = new ProfileAccount(ProfileMesh, KeyCollection,
                 algorithmEncrypt, algorithmSign);
 
-            var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice, null);
+
+            var accountEncryptionKey = new KeyData(profileAccount.KeyEncrypt);
+            accountEncryptionKey.ExportPrivateParameters();
+
+
+            var accountEntry = profileAccount.ConnectDevice(KeyCollection, CatalogedDevice,
+                    accountEncryptionKey, null);
 
             var contextAccount = new ContextAccount(this, accountEntry);
 

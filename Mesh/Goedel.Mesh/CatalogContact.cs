@@ -25,15 +25,15 @@ namespace Goedel.Mesh {
 
 
         ///<summary>The encryption key to use for this contact.</summary>
-        public KeyPair MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
+        public CryptoKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
              SetKeys(ref meshKeyEncryption);
 
-        KeyPair meshKeyEncryption;
+        CryptoKey meshKeyEncryption;
 
         ///<summary>The signature root of trust to use for this contact.</summary>
-        public KeyPair MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
+        public CryptoKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
              SetKeys(ref meshKeyAdministrator);
-        KeyPair meshKeyAdministrator;
+        CryptoKey meshKeyAdministrator;
         
         ///<summary>The expiry time for the derived keys.</summary>
         public DateTime? Expire { get; private set; }
@@ -50,7 +50,7 @@ namespace Goedel.Mesh {
             NetworkAddress = networkAddress;
             }
 
-        KeyPair SetKeys(ref KeyPair keyPair) {
+        CryptoKey SetKeys(ref CryptoKey keyPair) {
             if (NetworkAddress.Protocols != null) {
 
                 foreach (var protocol in NetworkAddress?.Protocols) {
@@ -72,11 +72,11 @@ namespace Goedel.Mesh {
 
                 switch (capability) {
                     case CapabilityEncryption capabilityEncryption: {
-                        meshKeyEncryption = capabilityEncryption.KeyData.KeyPair;
+                        meshKeyEncryption = capabilityEncryption.KeyData.CryptoKey;
                         break;
                         }
                     case CapabilityAdministrator capabilityAdministrator:     {
-                        meshKeyAdministrator = capabilityAdministrator.KeyData.KeyPair;
+                        meshKeyAdministrator = capabilityAdministrator.KeyData.CryptoKey;
                         break;
                         }
                     }

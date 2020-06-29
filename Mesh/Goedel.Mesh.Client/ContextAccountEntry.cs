@@ -439,15 +439,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public virtual CryptoKey TryFindKeyDecryption(string keyId) {
-            var key = KeyCollection.LocatePrivateKeyPair(keyId);
-            if (key != null) {
-                return key;
-                }
-
-
-            return null;
-            }
+        public virtual CryptoKey TryFindKeyDecryption(string keyId) =>
+                    KeyCollection.TryFindKeyDecryption(keyId);
 
         /// <summary>
         /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,

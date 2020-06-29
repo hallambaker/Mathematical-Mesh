@@ -72,10 +72,6 @@ namespace Goedel.Mesh {
         ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
         public string UDF => KeyOfflineSignature.UDF;
 
-        ///<summary>The full UDF binary key value.</summary>
-        public byte[] UDFBytes => KeyOfflineSignature.KeyPair.PKIXPublicKey.UDFBytes(512);
-
-
         /// <summary>
         /// Verify the profile to check that it is correctly signed and consistent.
         /// </summary>
@@ -169,7 +165,7 @@ namespace Goedel.Mesh {
 
             EnvelopedConnection = Connection.Sign(SignatureKey);
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), 
-                signingKey: SignatureKey, encryptionKey: ProfileDevice.KeyEncryption.KeyPair);
+                signingKey: SignatureKey, encryptionKey: ProfileDevice.KeyEncryption.CryptoKey);
 
             return DareEnvelope;
             }

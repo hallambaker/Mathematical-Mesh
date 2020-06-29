@@ -52,7 +52,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>Public portion.</returns>
-        public static Key GetPublic(KeyPair keyPair) => keyPair switch
+        public static Key GetPublic(CryptoKey keyPair) => keyPair switch
             {
                 KeyPairBaseRSA keyPairBaseRSA => new PublicKeyRSA(keyPairBaseRSA),
                 KeyPairBaseDH keyPairBaseDH => new PublicKeyDH(keyPairBaseDH),
@@ -65,7 +65,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="keyPair">The key pair.</param>
         /// <returns>The private data.</returns>
-        public static Key GetPrivate(KeyPair keyPair) => keyPair switch
+        public static Key GetPrivate(CryptoKey keyPair) => keyPair switch
             {
                 KeyPairBaseRSA keyPairBaseRSA => new PrivateKeyRSA(keyPairBaseRSA),
                 KeyPairBaseDH keyPairBaseDH => new PrivateKeyDH(keyPairBaseDH),

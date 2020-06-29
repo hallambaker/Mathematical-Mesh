@@ -731,6 +731,8 @@
 			Description
 				|Cryptographic keys representing capabilities.
 
+
+
 	Structure CryptographicCapability
 		Abstract
 		String Id
@@ -815,6 +817,7 @@
 
 	Structure CatalogedMember
 		String UDF
+		String ContactAddress
 		Inherits CatalogedEntry
 
 	Structure CatalogedGroup

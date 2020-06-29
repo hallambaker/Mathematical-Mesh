@@ -15,7 +15,8 @@ namespace Goedel.Mesh {
         ///<summary>The identifier of the default service.</summary>
         public string ServiceDefault => AccountAddresses?[0];
 
-
+        ///<summary>The secret seed value used to derrive profile parameters.</summary>
+        public KeyPair KeyEncrypt;
 
 
         //KeyPair keySignOffline;
@@ -68,14 +69,19 @@ namespace Goedel.Mesh {
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
             MeshProfileUDF = profileMesh.UDF;
+            //SecretSeed = secretSeed;
+
+            Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
+
 
             var meshKeyType = MeshKeyType.AccountProfile;
             var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
-            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
+            KeyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt, 
+                    keySecurity:KeySecurity.Exportable);
             var keyAuthenticate = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
 
             KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            KeyEncryption = new KeyData(KeyEncrypt.KeyPairPublic());
             KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
 
 
@@ -105,10 +111,13 @@ namespace Goedel.Mesh {
         /// be updated to reflect the connection to the account.</param>
         /// <param name="permissions">The set of permissions to grant to the device
         /// within the account.</param>
+        /// <param name="accountEncryptionKey">Key or key share used to decrypt the
+        /// data encrypted to the account key.</param>
         /// <returns>The account description.</returns>
         public AccountEntry ConnectDevice(
                         IKeyCollection keyCollection,
                         CatalogedDevice catalogedDevice,
+                        KeyData accountEncryptionKey,
                         List<Permission> permissions
                         ) {
 
@@ -117,18 +126,9 @@ namespace Goedel.Mesh {
             // Get an online signature key if not already found
             keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
 
-            var activationAccount = new ActivationAccount(catalogedDevice.ProfileDevice);
-
-
-            if (true) { // always add the admin keys in.
-
-                // key was stored thus
-                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
-
-                // fetch and bind the decryption key
-                // make this a separate dohickey though.
-                activationAccount.KeyAccountEncryption = new KeyData(keyEncrypt.KeyPairPrivate());
-                }
+            var activationAccount = new ActivationAccount(catalogedDevice.ProfileDevice) {
+                KeyAccountEncryption = accountEncryptionKey
+                };
 
 
             // Sign and encrypt the activation
@@ -147,6 +147,11 @@ namespace Goedel.Mesh {
 
             return accountEntry;
             }
+
+
+
+
+
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with

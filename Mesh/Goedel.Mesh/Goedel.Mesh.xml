@@ -2496,6 +2496,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedMember.ContactAddress">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedMember._Tag">
             <summary>
             Tag identifying this class
@@ -3524,7 +3528,7 @@
             <param name="suffix">The salt suffix to apply.</param>
             <param name="activate">If true return the activation value (currently unused.)</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.KeySecurity)">
             <summary>
             Derive a base private key of type <paramref name="meshKeyType"/> from the 
             secret seed value <paramref name="secretSeed"/> and register the private component
@@ -4863,9 +4867,6 @@
         <member name="P:Goedel.Mesh.Profile.UDF">
             <summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Profile.UDFBytes">
-            <summary>The full UDF binary key value.</summary>
-        </member>
         <member name="M:Goedel.Mesh.Profile.Validate">
             <summary>
             Verify the profile to check that it is correctly signed and consistent.
@@ -5077,6 +5078,9 @@
         <member name="P:Goedel.Mesh.ProfileAccount.ServiceDefault">
             <summary>The identifier of the default service.</summary>
         </member>
+        <member name="F:Goedel.Mesh.ProfileAccount.KeyEncrypt">
+            <summary>The secret seed value used to derrive profile parameters.</summary>
+        </member>
         <member name="M:Goedel.Mesh.ProfileAccount.#ctor">
             <summary>
             Blank constructor for use by deserializers.
@@ -5106,7 +5110,7 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.ConnectDevice(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.CatalogedDevice,System.Collections.Generic.List{Goedel.Mesh.Permission})">
+        <member name="M:Goedel.Mesh.ProfileAccount.ConnectDevice(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.CatalogedDevice,Goedel.Mesh.KeyData,System.Collections.Generic.List{Goedel.Mesh.Permission})">
             <summary>
             Connect the device described by <paramref name="catalogedDevice"/> with 
             the set of permissions <paramref name="permissions"/>> to the account
@@ -5119,6 +5123,8 @@
             be updated to reflect the connection to the account.</param>
             <param name="permissions">The set of permissions to grant to the device
             within the account.</param>
+            <param name="accountEncryptionKey">Key or key share used to decrypt the
+            data encrypted to the account key.</param>
             <returns>The account description.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.ToBuilder(System.Text.StringBuilder,System.Int32,Goedel.Cryptography.Dare.IKeyCollection)">
@@ -5275,6 +5281,16 @@
         <member name="P:Goedel.Mesh.ActivationAccount.AccountUDF">
              <summary>
             The UDF of the account
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.KeyAccountEncryption">
+             <summary>
+            Key used to encrypt data under this profile
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ActivationAccount.KeyAccountSignature">
+             <summary>
+            Key used to encrypt data under this profile
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ActivationAccount._Tag">
@@ -9011,7 +9027,7 @@
             for all cryptolib operations. 
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.KeyData.KeyPair">
+        <member name="P:Goedel.Mesh.KeyData.CryptoKey">
             <summary>
             The cryptolib representation of the Key Pair. This is the point of access
             for all cryptolib operations. 
@@ -9038,7 +9054,7 @@
         </member>
         <member name="M:Goedel.Mesh.KeyData.GetKeyPair">
             <summary>
-            Return a <see cref="P:Goedel.Mesh.KeyData.KeyPair"/> instance for the key parameters.
+            Return a <see cref="P:Goedel.Mesh.KeyData.CryptoKey"/> instance for the key parameters.
             </summary>
             <returns>The created key pair.</returns>
         </member>
@@ -9047,11 +9063,11 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptoKey)">
             <summary>
             Return a PublicKey object for the specified KeyPair
             </summary>
-            <param name="KeyPair">The key pair to bind.</param>
+            <param name="cryptoKey">The key pair to bind.</param>
             <returns>The generated key pair</returns>
         </member>
         <member name="M:Goedel.Mesh.KeyData.ExportPrivateParameters">

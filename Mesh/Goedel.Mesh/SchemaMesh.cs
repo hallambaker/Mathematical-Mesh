@@ -2791,6 +2791,16 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						AccountUDF  {get; set;}
+        /// <summary>
+        ///Key used to encrypt data under this profile
+        /// </summary>
+
+		public virtual KeyData						KeyAccountEncryption  {get; set;}
+        /// <summary>
+        ///Key used to encrypt data under this profile
+        /// </summary>
+
+		public virtual KeyData						KeyAccountSignature  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2840,6 +2850,16 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("AccountUDF", 1);
 					_writer.WriteString (AccountUDF);
 				}
+			if (KeyAccountEncryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyAccountEncryption", 1);
+					KeyAccountEncryption.Serialize (_writer, false);
+				}
+			if (KeyAccountSignature != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyAccountSignature", 1);
+					KeyAccountSignature.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2875,6 +2895,20 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "AccountUDF" : {
 					AccountUDF = jsonReader.ReadString ();
+					break;
+					}
+				case "KeyAccountEncryption" : {
+					// An untagged structure
+					KeyAccountEncryption = new KeyData ();
+					KeyAccountEncryption.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "KeyAccountSignature" : {
+					// An untagged structure
+					KeyAccountSignature = new KeyData ();
+					KeyAccountSignature.Deserialize (jsonReader);
+ 
 					break;
 					}
 				default : {
@@ -8693,6 +8727,10 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						UDF  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						ContactAddress  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8742,6 +8780,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("UDF", 1);
 					_writer.WriteString (UDF);
 				}
+			if (ContactAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ContactAddress", 1);
+					_writer.WriteString (ContactAddress);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -8777,6 +8820,10 @@ namespace Goedel.Mesh {
 			switch (tag) {
 				case "UDF" : {
 					UDF = jsonReader.ReadString ();
+					break;
+					}
+				case "ContactAddress" : {
+					ContactAddress = jsonReader.ReadString ();
 					break;
 					}
 				default : {
