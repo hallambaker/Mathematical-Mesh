@@ -313,6 +313,10 @@
 		Struct KeyData KeyAuthentication
 			Description
 				|Key used to authenticate requests made by the device.
+		Struct DareEnvelope EnvelopedProfileService
+			Description
+				|The service profile
+
 
 	Structure ActivationAccount
 		Inherits Activation
@@ -412,6 +416,9 @@
 		Struct KeyData KeyAuthentication
 			Description
 				|Key used to authenticate service connections.
+		Struct KeyData KeyEncryption
+			Description
+				|Key used to encrypt data under this profile
 
 	Structure ConnectionService
 		Inherits Connection
@@ -718,7 +725,7 @@
 		Inherits CatalogedEntry
 		Description
 			|
-		String SubjectUdf
+		String SubjectId
 			Description
 				|Fingerprint of a cryptographic key that is presented to claim 
 				|the specified capability.
@@ -741,12 +748,18 @@
 		String Role
 			Description
 				|The role for which the key is authorized
-		Struct KeyData KeyData
+		Struct KeyData KeySignature 
 			Description
 				|The key that enables the capability
+		Struct KeyData KeyEncryption
+			Description
+				|The key that enables the capability
+		Struct DareEnvelope EnvelopedCapabilityContribution
+			Multiple
+			Description
+				|Encrypted contribution to the capability provided by a different source
 
-
-	Structure CapabilityEncryption
+	Structure CapabilityDecryption
 		Inherits CryptographicCapability
 		Description
 			|The corresponding key is an encryption key
@@ -766,6 +779,9 @@
 		Inherits CryptographicCapability
 		Description
 			|The corresponding key is an administration key
+
+
+
 
 	Structure CapabilityThresholdDecrypt
 		Inherits CryptographicCapability
@@ -959,7 +975,8 @@
 	Structure GroupInvitation
 		Inherits Message
 		String Text
-		Struct DareEnvelope EncryptedGroupConnection
+		Struct ProfileGroup ProfileGroup
+		Struct CryptographicCapability CryptographicCapability
 
 	Structure RequestConfirmation
 		Inherits Message

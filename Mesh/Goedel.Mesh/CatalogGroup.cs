@@ -107,6 +107,28 @@ namespace Goedel.Mesh {
         /// <param name="profileGroup">The profile of the group to create an entry for.</param>
         public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
 
+
+        public IKeyAdvancedPrivate GetPrivateEncryption(IKeyLocate keyLocate) {
+            foreach (var envelope in EnvelopedCapabilities) {
+                var capability = CryptographicCapability.Decode(envelope, keyLocate);
+
+                switch (capability) {
+                    case CapabilityAdministrator capabilityAdministrator: {
+
+                        return capabilityAdministrator.GetKeyPairAdvancedPrivate() ;
+
+                        }
+
+                    }
+
+
+
+                }
+
+            throw new NYI();
+            }
+
+
         }
 
     #endregion

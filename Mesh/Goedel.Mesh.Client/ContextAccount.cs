@@ -7,6 +7,7 @@ using Goedel.Mesh;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.Client {
 
@@ -123,11 +124,19 @@ namespace Goedel.Mesh.Client {
         public void AddService(
                 string accountAddress,
                 bool sync = true) {
+
+            AccountAddress = accountAddress;
+
+            var helloRequest = new HelloRequest();
+            var helloResponse = MeshClient.Hello(helloRequest);
+
             // Add to assertion
             ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
             ProfileAccount.AccountAddresses.Add(accountAddress);
+            ProfileAccount.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
+
             ContextMeshAdmin.Sign(ProfileAccount);
-            this.AccountAddress = accountAddress;
+
 
             var createRequest = new CreateRequest() {
                 AccountAddress = accountAddress,
@@ -597,9 +606,13 @@ namespace Goedel.Mesh.Client {
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
-
+            var meshKeyType = MeshKeyType.GroupProfile;
             (var profileGroup, var secretSeed) = ProfileGroup.Generate(
                         MeshMachine, algorithmSign, algorithmEncrypt);
+            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign,
+                        keySecurity: KeySecurity.Exportable);
+            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt,
+                        keySecurity: KeySecurity.Exportable);
 
             // here we request creation of the group at the service.
 
@@ -613,9 +626,8 @@ namespace Goedel.Mesh.Client {
           
             var capability = new CapabilityAdministrator() {
                 Id = profileGroup.UDF,
-                KeyData = new KeyData() {
-                    PrivateParameters = secretSeed
-                    }
+                KeySignature = new KeyData(keySign, true),
+                KeyEncryption = new KeyData(keyEncrypt, true) 
                 };
 
             var envelopedCapability = DareEnvelope.Encode(capability.GetBytes(), encryptionKey: KeyDeviceEncryption);

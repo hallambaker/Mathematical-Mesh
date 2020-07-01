@@ -64,7 +64,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The primary key used to catalog the entry.
         /// </summary>
-        public override string _PrimaryKey => SubjectUdf;
+        public override string _PrimaryKey => SubjectId;
 
         /// <summary>
         /// Default constructor for serialization.

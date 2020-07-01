@@ -109,7 +109,7 @@ namespace Goedel.Mesh {
 			{"CatalogedContactRecryption", CatalogedContactRecryption._Factory},
 			{"CatalogedCapability", CatalogedCapability._Factory},
 			{"CryptographicCapability", CryptographicCapability._Factory},
-			{"CapabilityEncryption", CapabilityEncryption._Factory},
+			{"CapabilityDecryption", CapabilityDecryption._Factory},
 			{"CapabilityVerification", CapabilityVerification._Factory},
 			{"CapabilityAuthentication", CapabilityAuthentication._Factory},
 			{"CapabilityAdministrator", CapabilityAdministrator._Factory},
@@ -2639,6 +2639,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual KeyData						KeyAuthentication  {get; set;}
+        /// <summary>
+        ///The service profile
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedProfileService  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2710,6 +2715,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("KeyAuthentication", 1);
 					KeyAuthentication.Serialize (_writer, false);
 				}
+			if (EnvelopedProfileService != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedProfileService", 1);
+					EnvelopedProfileService.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2769,6 +2779,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					KeyAuthentication = new KeyData ();
 					KeyAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedProfileService" : {
+					// An untagged structure
+					EnvelopedProfileService = new DareEnvelope ();
+					EnvelopedProfileService.Deserialize (jsonReader);
  
 					break;
 					}
@@ -3740,6 +3757,11 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual KeyData						KeyAuthentication  {get; set;}
+        /// <summary>
+        ///Key used to encrypt data under this profile
+        /// </summary>
+
+		public virtual KeyData						KeyEncryption  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3789,6 +3811,11 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("KeyAuthentication", 1);
 					KeyAuthentication.Serialize (_writer, false);
 				}
+			if (KeyEncryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_writer, false);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -3826,6 +3853,13 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					KeyAuthentication = new KeyData ();
 					KeyAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new KeyData ();
+					KeyEncryption.Deserialize (jsonReader);
  
 					break;
 					}
@@ -7374,7 +7408,7 @@ namespace Goedel.Mesh {
         ///the specified capability.
         /// </summary>
 
-		public virtual string						SubjectUdf  {get; set;}
+		public virtual string						SubjectId  {get; set;}
         /// <summary>
         ///
         /// </summary>
@@ -7429,10 +7463,10 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
-			if (SubjectUdf != null) {
+			if (SubjectId != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SubjectUdf", 1);
-					_writer.WriteString (SubjectUdf);
+				_writer.WriteToken ("SubjectId", 1);
+					_writer.WriteString (SubjectId);
 				}
 			if (Permissions != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -7495,8 +7529,8 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "SubjectUdf" : {
-					SubjectUdf = jsonReader.ReadString ();
+				case "SubjectId" : {
+					SubjectId = jsonReader.ReadString ();
 					break;
 					}
 				case "Permissions" : {
@@ -7549,7 +7583,17 @@ namespace Goedel.Mesh {
         ///The key that enables the capability
         /// </summary>
 
-		public virtual KeyData						KeyData  {get; set;}
+		public virtual KeyData						KeySignature  {get; set;}
+        /// <summary>
+        ///The key that enables the capability
+        /// </summary>
+
+		public virtual KeyData						KeyEncryption  {get; set;}
+        /// <summary>
+        ///Enveloped key data
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedKeyData  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7603,10 +7647,20 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Role", 1);
 					_writer.WriteString (Role);
 				}
-			if (KeyData != null) {
+			if (KeySignature != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("KeyData", 1);
-					KeyData.Serialize (_writer, false);
+				_writer.WriteToken ("KeySignature", 1);
+					KeySignature.Serialize (_writer, false);
+				}
+			if (KeyEncryption != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyEncryption", 1);
+					KeyEncryption.Serialize (_writer, false);
+				}
+			if (EnvelopedKeyData != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedKeyData", 1);
+					EnvelopedKeyData.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -7646,10 +7700,24 @@ namespace Goedel.Mesh {
 					Role = jsonReader.ReadString ();
 					break;
 					}
-				case "KeyData" : {
+				case "KeySignature" : {
 					// An untagged structure
-					KeyData = new KeyData ();
-					KeyData.Deserialize (jsonReader);
+					KeySignature = new KeyData ();
+					KeySignature.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "KeyEncryption" : {
+					// An untagged structure
+					KeyEncryption = new KeyData ();
+					KeyEncryption.Deserialize (jsonReader);
+ 
+					break;
+					}
+				case "EnvelopedKeyData" : {
+					// An untagged structure
+					EnvelopedKeyData = new DareEnvelope ();
+					EnvelopedKeyData.Deserialize (jsonReader);
  
 					break;
 					}
@@ -7667,7 +7735,7 @@ namespace Goedel.Mesh {
 	///
 	/// The corresponding key is an encryption key
 	/// </summary>
-	public partial class CapabilityEncryption : CryptographicCapability {
+	public partial class CapabilityDecryption : CryptographicCapability {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7677,13 +7745,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "CapabilityEncryption";
+		public new const string __Tag = "CapabilityDecryption";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new CapabilityEncryption();
+		public static new JSONObject _Factory () => new CapabilityDecryption();
 
 
         /// <summary>
@@ -7723,15 +7791,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new CapabilityEncryption FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new CapabilityDecryption FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as CapabilityEncryption;
+				return Out as CapabilityDecryption;
 				}
-		    var Result = new CapabilityEncryption ();
+		    var Result = new CapabilityDecryption ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;

@@ -71,12 +71,12 @@ namespace Goedel.Mesh {
             foreach (var capability in networkProtocol.Capabilities) {
 
                 switch (capability) {
-                    case CapabilityEncryption capabilityEncryption: {
-                        meshKeyEncryption = capabilityEncryption.KeyData.CryptoKey;
+                    case CapabilityDecryption capabilityEncryption: {
+                        meshKeyEncryption = capabilityEncryption.KeySignature.CryptoKey;
                         break;
                         }
                     case CapabilityAdministrator capabilityAdministrator:     {
-                        meshKeyAdministrator = capabilityAdministrator.KeyData.CryptoKey;
+                        meshKeyAdministrator = capabilityAdministrator.KeySignature.CryptoKey;
                         break;
                         }
                     }
@@ -86,7 +86,7 @@ namespace Goedel.Mesh {
             }
 
         }
-    
+
     /// <summary>
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
@@ -160,8 +160,8 @@ namespace Goedel.Mesh {
             var contact = catalogedContact.Contact;
 
             foreach (var networkAddress in contact.NetworkAddresses) {
-                DictionaryByNetworkAddress.AddSafe(networkAddress.Address, 
-                    new NetworkProtocolEntry( catalogedContact, networkAddress));
+                DictionaryByNetworkAddress.AddSafe(networkAddress.Address,
+                    new NetworkProtocolEntry(catalogedContact, networkAddress));
                 }
             }
 
@@ -238,9 +238,14 @@ namespace Goedel.Mesh {
         /// <param name="merge">Add this data to the existing contact.</param>
         /// <returns></returns>
         public CatalogedContact AddFromFile(
-                    string fileName, bool self = false, bool merge=true, string localName=null) {
+                    string fileName, bool self = false, bool merge = true, string localName = null) {
             throw new NYI();
 
+            }
+
+        public NetworkProtocolEntry GetNetworkEntry(string keyId) {
+            DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact);
+            return catalogedContact;
             }
 
         public CryptoKey GetByAccountEncrypt(string keyId) {
@@ -414,21 +419,21 @@ namespace Goedel.Mesh {
             switch (profile) {
                 case ProfileAccount profileAccount: {
                     keyList = new List<CryptographicCapability>() {
-                        new CapabilityEncryption () {
-                            KeyData = profileAccount.KeyEncryption },
+                        new CapabilityDecryption () {
+                            KeySignature = profileAccount.KeyEncryption },
                         new CapabilityAdministrator () {
-                            KeyData = profileAccount.KeyOfflineSignature },
+                            KeySignature = profileAccount.KeyOfflineSignature },
                         new CapabilityAuthentication () {
-                            KeyData = profileAccount.KeyAuthentication },
+                            KeySignature = profileAccount.KeyAuthentication },
                         };
                     break;
                     }
                 case ProfileGroup profileGroup: {
                     keyList = new List<CryptographicCapability>() {
-                        new CapabilityEncryption () {
-                            KeyData = profileGroup.KeyEncryption },
+                        new CapabilityDecryption () {
+                            KeySignature = profileGroup.KeyEncryption },
                         new CapabilityAdministrator () {
-                            KeyData = profileGroup.KeyOfflineSignature },
+                            KeySignature = profileGroup.KeyOfflineSignature },
 
                         };
                     break;

@@ -24,9 +24,11 @@ namespace Goedel.Mesh {
                     bool persist = false) {
             var keySign = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixSign);
             var keyAuthenticate = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixAuthenticate);
+            var keyEncryption = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
 
             KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncryption.KeyPairPublic());
 
             if (persist) {
                 keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
@@ -39,8 +41,10 @@ namespace Goedel.Mesh {
         /// Constructor create service with the signature key <paramref name="keySign"/>
         /// </summary>
         /// <param name="keySign">The offline signature key.</param>
-        public ProfileService(KeyPair keySign) => KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-
+        public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
+            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            }
 
 
 
@@ -49,17 +53,24 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="meshMachine">The mesh machine</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <returns>The service profile.</returns>
         public static ProfileService Generate(
             IMeshMachine meshMachine,
+            CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
             CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
 
 
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.Sign);
+            algorithmEncrypt = algorithmSign.DefaultAlgorithmEncrypt();
 
-            var result = new ProfileService(keySign);
+            var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.ExportableStored, keyUses: KeyUses.Sign);
+            var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.ExportableStored, keyUses: KeyUses.Encrypt);
+            //var keyAuthenticate = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.Device, keyUses: KeyUses.KeyAgreement);
+
+
+            var result = new ProfileService(keySign, keyEncrypt);
             result.Sign(keySign);
             return result;
             }

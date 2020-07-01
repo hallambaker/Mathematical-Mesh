@@ -22,6 +22,12 @@ namespace Goedel.Mesh {
         //KeyPair keySignOffline;
         CryptoKey keySignOnline;
 
+        ///<summary>Cached convenience accessor. Returns the corresponding 
+        ///<see cref="ProfileService"/> .</summary>
+        public ProfileService ProfileService => profileService ??
+            ProfileService.Decode(EnvelopedProfileService).CacheValue(out profileService);
+        ProfileService profileService = null;
+
 
         /// <summary>
         /// Blank constructor for use by deserializers.
@@ -187,7 +193,7 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileAccount"/>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ProfileService"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>

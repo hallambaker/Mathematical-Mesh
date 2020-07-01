@@ -17,19 +17,28 @@ namespace Goedel.Mesh {
             }
 
         public CryptographicCapability(KeyPair keyPair) {
-            KeyData = new KeyData(keyPair);
+            KeySignature = new KeyData(keyPair);
             }
+
+
+        public IKeyAdvancedPrivate GetKeyPairAdvancedPrivate() {
+            var keypair = KeyEncryption.GetKeyPair() as KeyPairAdvanced;
+            return keypair.IKeyAdvancedPrivate;
+
+
+            }
+
 
         }
 
-    public partial class CapabilityEncryption {
+    public partial class CapabilityDecryption {
 
-        public CapabilityEncryption() {
+        public CapabilityDecryption() {
 
             }
 
 
-        public CapabilityEncryption(KeyPair keyPair) : base(keyPair) {
+        public CapabilityDecryption(KeyPair keyPair) : base(keyPair) {
             Role = "Encrypt";
             }
 

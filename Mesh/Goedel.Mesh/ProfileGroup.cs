@@ -40,7 +40,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool? persist = false) {
 
-            var meshKeyType = MeshKeyType.DeviceProfile;
+            var meshKeyType = MeshKeyType.GroupProfile;
             var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
 

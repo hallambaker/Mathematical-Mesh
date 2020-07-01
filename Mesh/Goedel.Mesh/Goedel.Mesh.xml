@@ -116,9 +116,19 @@
             The role for which the key is authorized
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CryptographicCapability.KeyData">
+        <member name="P:Goedel.Mesh.CryptographicCapability.KeySignature">
              <summary>
             The key that enables the capability
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.KeyEncryption">
+             <summary>
+            The key that enables the capability
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CryptographicCapability.EnvelopedKeyData">
+             <summary>
+            Enveloped key data
              </summary>
         </member>
         <member name="P:Goedel.Mesh.CryptographicCapability._Tag">
@@ -172,29 +182,29 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.CapabilityEncryption">
+        <member name="T:Goedel.Mesh.CapabilityDecryption">
              <summary>
             
              The corresponding key is an encryption key
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.CapabilityEncryption._Tag">
+        <member name="P:Goedel.Mesh.CapabilityDecryption._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.CapabilityEncryption.__Tag">
+        <member name="F:Goedel.Mesh.CapabilityDecryption.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityEncryption._Factory">
+        <member name="M:Goedel.Mesh.CapabilityDecryption._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityEncryption.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.CapabilityDecryption.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -203,7 +213,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityEncryption.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.CapabilityDecryption.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -214,7 +224,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityEncryption.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityDecryption.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -222,7 +232,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityEncryption.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityDecryption.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -923,7 +933,7 @@
             Default constructor for serialization.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.CatalogedCapability.SubjectUdf">
+        <member name="P:Goedel.Mesh.CatalogedCapability.SubjectId">
              <summary>
             Fingerprint of a cryptographic key that is presented to claim 
             the specified capability.
@@ -5081,6 +5091,10 @@
         <member name="F:Goedel.Mesh.ProfileAccount.KeyEncrypt">
             <summary>The secret seed value used to derrive profile parameters.</summary>
         </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.ProfileService">
+            <summary>Cached convenience accessor. Returns the corresponding 
+            <see cref="P:Goedel.Mesh.ProfileAccount.ProfileService"/> .</summary>
+        </member>
         <member name="M:Goedel.Mesh.ProfileAccount.#ctor">
             <summary>
             Blank constructor for use by deserializers.
@@ -5139,7 +5153,7 @@
         </member>
         <member name="M:Goedel.Mesh.ProfileAccount.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
-            Decode <paramref name="envelope"/> and return the inner <see cref="T:Goedel.Mesh.ProfileAccount"/>
+            Decode <paramref name="envelope"/> and return the inner <see cref="P:Goedel.Mesh.ProfileAccount.ProfileService"/>
             </summary>
             <param name="envelope">The envelope to decode.</param>
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
@@ -5170,6 +5184,11 @@
         <member name="P:Goedel.Mesh.ProfileAccount.KeyAuthentication">
              <summary>
             Key used to authenticate requests made by the device.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileAccount.EnvelopedProfileService">
+             <summary>
+            The service profile
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileAccount._Tag">
@@ -6190,18 +6209,19 @@
             <param name="persist">If <see langword="true"/> persist the secret seed value to
             <paramref name="keyCollection"/>.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyPair)">
+        <member name="M:Goedel.Mesh.ProfileService.#ctor(Goedel.Cryptography.KeyPair,Goedel.Cryptography.KeyPair)">
             <summary>
             Constructor create service with the signature key <paramref name="keySign"/>
             </summary>
             <param name="keySign">The offline signature key.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
             Generate a new <see cref="T:Goedel.Mesh.ProfileService"/>
             </summary>
             <param name="meshMachine">The mesh machine</param>
             <param name="algorithmSign">The signature algorithm.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
             <returns>The service profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
@@ -6223,6 +6243,11 @@
         <member name="P:Goedel.Mesh.ProfileService.KeyAuthentication">
              <summary>
             Key used to authenticate service connections.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProfileService.KeyEncryption">
+             <summary>
+            Key used to encrypt data under this profile
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ProfileService._Tag">
@@ -9063,7 +9088,7 @@
             Default Constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptoKey,System.Boolean)">
             <summary>
             Return a PublicKey object for the specified KeyPair
             </summary>

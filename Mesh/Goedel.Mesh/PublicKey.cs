@@ -122,6 +122,9 @@ namespace Goedel.Mesh {
 
 
 
+
+
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -133,10 +136,13 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="cryptoKey">The key pair to bind.</param>
         /// <returns>The generated key pair</returns>
-        public KeyData(CryptoKey cryptoKey) {
+        public KeyData(CryptoKey cryptoKey, bool export = false) {
             CryptoKey = cryptoKey;
             if (cryptoKey is KeyPair keyPair) {
                 PublicParameters = Key.GetPublic(keyPair);
+                }
+            if (export) {
+                ExportPrivateParameters();
                 }
             }
 

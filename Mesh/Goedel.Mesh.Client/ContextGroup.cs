@@ -106,17 +106,33 @@ namespace Goedel.Mesh.Client {
             // Bug: Should create an entry for the member
 
             // Pull the contact information from the user's contact catalog
-            var userEncryptionKey = ContextAccount.GetCatalogContact().GetByAccountEncrypt(id);
+            var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(id);
+
+            var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
+            var userAdministrationKey = networkProtocolEntry.MeshKeyAdministrator;
 
 
-            // Split the admin key
+            var serviceEncryptionKey = ContextAccount.ProfileAccount.ProfileService.KeyEncryption.CryptoKey;
 
-            (var serviceKey, var userKey) = GetKeySplit(userEncryptionKey);
+
+
+            // Split the group key
+
+            var keys = GetKeySplit(userEncryptionKey, serviceEncryptionKey);
+
+            var keyService = keys[0] as CryptoKey;
+            var keyMember= keys[0] as CryptoKey;
 
             // Create the capability and add to the capability catalog
+            var capabilityService = new CapabilityDecryption() {
+                Id = keyMember.KeyIdentifier,
+                KeyEncryption = new KeyData(keyService)
+                };
 
-
-
+            var capabilityMember = new CapabilityDecryption() {
+                Id = keyService.KeyIdentifier,
+                KeyEncryption = new KeyData(keyMember)
+                };
 
             // Add the member to the member catalog
 
@@ -134,9 +150,20 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        (DareEnvelope, DareEnvelope) GetKeySplit(CryptoKey userEncryptionKey) {
+        IKeyAdvancedPrivate[] GetKeySplit(
+                    CryptoKey userEncryptionKey, CryptoKey serviceEncryptionKey) {
             userEncryptionKey.Future();
-            throw new NYI();
+
+            var groupPrivate = CatalogedGroup.GetPrivateEncryption(KeyCollection);
+
+
+            var keys = groupPrivate.MakeRecryptionKeySet(2);
+
+
+
+
+
+            return keys;
 
             }
 

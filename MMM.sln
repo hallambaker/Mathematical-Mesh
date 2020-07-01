@@ -154,7 +154,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Shell.Test-xuni
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Web", "Web\", "{10AC4BAE-C575-4A2E-8C88-EC2D05D6A29D}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.2"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_4335"
 		Debug.AspNetCompiler.PhysicalPath = "Web\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_4335\"
@@ -183,7 +183,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Presence", "Mes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MeshPass", "Applications\MeshPass\MeshPass.csproj", "{36ED18F9-76B1-403E-845F-27C335D2796B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goedel.Mesh.Store.Test-xunit", "Testing\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj", "{40D0BC44-8881-4B09-B8BF-18397EA1D3C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.Mesh.Store.Test-xunit", "Testing\Goedel.Mesh.Store.Test-xunit\Goedel.Mesh.Store.Test-xunit.csproj", "{40D0BC44-8881-4B09-B8BF-18397EA1D3C4}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
