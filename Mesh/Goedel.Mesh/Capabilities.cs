@@ -12,6 +12,9 @@ using System.IO;
 namespace Goedel.Mesh {
     public partial class CryptographicCapability {
 
+        ///<summary>The primary key is the value of the <see cref="Id"/> property.</summary>
+        public override string _PrimaryKey => Id;
+
         public CryptographicCapability() {
 
             }
@@ -31,53 +34,5 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class CapabilityDecryption {
-
-        public CapabilityDecryption() {
-
-            }
-
-
-        public CapabilityDecryption(KeyPair keyPair) : base(keyPair) {
-            Role = "Encrypt";
-            }
-
-        }
-
-    public partial class CapabilityAdministrator {
-
-        public CapabilityAdministrator() {
-
-            }
-
-
-        public CapabilityAdministrator(KeyPair keyPair) : base(keyPair) {
-
-            }
-
-        }
-
-
-    public partial class CapabilityVerification {
-        public CapabilityVerification() {
-
-            }
-
-
-        public CapabilityVerification(KeyPair keyPair) : base(keyPair) {
-
-            }
-        }
-
-    public partial class CapabilityAuthentication {
-        public CapabilityAuthentication() {
-
-            }
-
-
-        public CapabilityAuthentication(KeyPair keyPair) : base(keyPair) {
-
-            }
-        }
 
     }

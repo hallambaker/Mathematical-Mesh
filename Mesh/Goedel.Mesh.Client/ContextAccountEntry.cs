@@ -232,8 +232,9 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="meshMessage">The message to send.</param>
         /// <param name="recipient">The recipient service ID.</param>
-        public void SendMessage(Message meshMessage, string recipient) =>
-            SendMessage(meshMessage, new List<string> { recipient });
+        public void SendMessage(Message meshMessage, string recipient,
+                    CryptoKey encryptionKey=null) =>
+            SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
 
 
         /// <summary>
@@ -247,13 +248,15 @@ namespace Goedel.Mesh.Client {
         /// message is for local pickup.</param>
         public void SendMessage(
                     Message meshMessage,
-                    List<string> recipients = null) {
+                    List<string> recipients = null,
+                    CryptoKey encryptionKey = null
+                    ) {
             Connect();
 
             meshMessage.Sender = AccountAddress;
 
 
-            var envelope = meshMessage.Encode();
+            var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
 
             var postRequest = new PostRequest() {
                 Accounts = recipients,

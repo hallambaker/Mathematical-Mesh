@@ -7,6 +7,7 @@ using Goedel.Mesh;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Goedel.Protocol;
 
 namespace Goedel.Mesh.Client {
 
@@ -99,29 +100,26 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Add a member to the group.
         /// </summary>
-        /// <param name="id">The member to add.</param>
+        /// <param name="memberAddress">The member to add.</param>
         /// <returns>The member catalog entry.</returns>
-        public CatalogedMember Add(string id) {
+        public CatalogedMember Add(string memberAddress, string text=null) {
 
             // Bug: Should create an entry for the member
 
             // Pull the contact information from the user's contact catalog
-            var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(id);
+            var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(memberAddress);
 
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
             var userAdministrationKey = networkProtocolEntry.MeshKeyAdministrator;
 
-
             var serviceEncryptionKey = ContextAccount.ProfileAccount.ProfileService.KeyEncryption.CryptoKey;
-
-
 
             // Split the group key
 
             var keys = GetKeySplit(userEncryptionKey, serviceEncryptionKey);
 
-            var keyService = keys[0] as CryptoKey;
-            var keyMember= keys[0] as CryptoKey;
+            var keyService = keys[0].GetKeyPair(keySecurity: KeySecurity.Exportable);
+            var keyMember= keys[1].GetKeyPair(keySecurity: KeySecurity.Exportable);
 
             // Create the capability and add to the capability catalog
             var capabilityService = new CapabilityDecryption() {
@@ -134,19 +132,36 @@ namespace Goedel.Mesh.Client {
                 KeyEncryption = new KeyData(keyMember)
                 };
 
-            // Add the member to the member catalog
-
-
             // Create and send the invitation
 
-
-            // return the member entry.
-            var catalogedMember = new CatalogedMember() {
-                ContactAddress = id
+            var groupInvitation = new GroupInvitation() {
+                Sender = ContextAccount.AccountAddress,
+                Recipient = memberAddress,
+                Text = text,
+                ProfileGroup = ProfileGroup,
+                CryptographicCapability = capabilityMember
                 };
 
+            ContextAccount.SendMessage(groupInvitation, memberAddress, userEncryptionKey);
 
-            throw new NotImplementedException();
+
+            // Add the member to the member catalog
+            var envelopedCapabilityService = capabilityService.Encode(encryptionKey:serviceEncryptionKey);
+            GetCatalogCapability().AppendDirect(envelopedCapabilityService);
+
+            // Add the member to the member catalog
+
+            var catalogedMember = new CatalogedMember() {
+                ContactAddress = memberAddress,
+                MemberKeyIdentifier = keyMember.KeyIdentifier,
+                ServiceKeyIdentifier = keyService.KeyIdentifier,
+                };
+            GetCatalogMember().New(catalogedMember);
+
+            ContextAccount.Sync();
+
+            // return the member entry.
+            return catalogedMember;
             }
 
 

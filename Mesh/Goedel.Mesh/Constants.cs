@@ -172,6 +172,10 @@ namespace Goedel.Mesh {
         public const string IanaTypeMeshMessage = "application/mmm/message";
 
         ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
+        public const string IanaTypeMeshObject = "application/mmm/object";
+
+
+        ///<summary>The proposed IANA content identifier for the Mesh message type.</summary>
         public const string IanaTypeMeshNonce = "application/mmm/nonce";
 
 

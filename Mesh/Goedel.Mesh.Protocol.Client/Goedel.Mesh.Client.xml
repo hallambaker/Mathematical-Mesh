@@ -932,14 +932,14 @@
             </summary>
             <returns>The number of items synchronized</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.String,Goedel.Cryptography.CryptoKey)">
             <summary>
             Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
             </summary>
             <param name="meshMessage">The message to send.</param>
             <param name="recipient">The recipient service ID.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String})">
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String},Goedel.Cryptography.CryptoKey)">
             <summary>
             Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
             is not null, the message is to be posted to the outbound spool to be forwarded to the
@@ -1226,11 +1226,11 @@
         <member name="M:Goedel.Mesh.Client.ContextGroup.GetAccountAddress">
             <summary>Return the account address.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
             <summary>
             Add a member to the group.
             </summary>
-            <param name="id">The member to add.</param>
+            <param name="memberAddress">The member to add.</param>
             <returns>The member catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateDefaultContact(System.Boolean)">

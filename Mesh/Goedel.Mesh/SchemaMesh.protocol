@@ -834,6 +834,8 @@
 	Structure CatalogedMember
 		String UDF
 		String ContactAddress
+		String MemberKeyIdentifier
+		String ServiceKeyIdentifier
 		Inherits CatalogedEntry
 
 	Structure CatalogedGroup
@@ -976,7 +978,7 @@
 		Inherits Message
 		String Text
 		Struct ProfileGroup ProfileGroup
-		Struct CryptographicCapability CryptographicCapability
+		TStruct CryptographicCapability CryptographicCapability
 
 	Structure RequestConfirmation
 		Inherits Message

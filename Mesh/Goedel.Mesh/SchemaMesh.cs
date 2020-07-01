@@ -7590,10 +7590,10 @@ namespace Goedel.Mesh {
 
 		public virtual KeyData						KeyEncryption  {get; set;}
         /// <summary>
-        ///Enveloped key data
+        ///Encrypted contribution to the capability provided by a different source
         /// </summary>
 
-		public virtual DareEnvelope						EnvelopedKeyData  {get; set;}
+		public virtual List<DareEnvelope>				EnvelopedCapabilityContribution  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -7657,11 +7657,23 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("KeyEncryption", 1);
 					KeyEncryption.Serialize (_writer, false);
 				}
-			if (EnvelopedKeyData != null) {
+			if (EnvelopedCapabilityContribution != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EnvelopedKeyData", 1);
-					EnvelopedKeyData.Serialize (_writer, false);
+				_writer.WriteToken ("EnvelopedCapabilityContribution", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in EnvelopedCapabilityContribution) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
 				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -7714,11 +7726,18 @@ namespace Goedel.Mesh {
  
 					break;
 					}
-				case "EnvelopedKeyData" : {
-					// An untagged structure
-					EnvelopedKeyData = new DareEnvelope ();
-					EnvelopedKeyData.Deserialize (jsonReader);
- 
+				case "EnvelopedCapabilityContribution" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					EnvelopedCapabilityContribution = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
+						EnvelopedCapabilityContribution.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {
@@ -8799,6 +8818,14 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						ContactAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						MemberKeyIdentifier  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual string						ServiceKeyIdentifier  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -8853,6 +8880,16 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("ContactAddress", 1);
 					_writer.WriteString (ContactAddress);
 				}
+			if (MemberKeyIdentifier != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("MemberKeyIdentifier", 1);
+					_writer.WriteString (MemberKeyIdentifier);
+				}
+			if (ServiceKeyIdentifier != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ServiceKeyIdentifier", 1);
+					_writer.WriteString (ServiceKeyIdentifier);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -8892,6 +8929,14 @@ namespace Goedel.Mesh {
 					}
 				case "ContactAddress" : {
 					ContactAddress = jsonReader.ReadString ();
+					break;
+					}
+				case "MemberKeyIdentifier" : {
+					MemberKeyIdentifier = jsonReader.ReadString ();
+					break;
+					}
+				case "ServiceKeyIdentifier" : {
+					ServiceKeyIdentifier = jsonReader.ReadString ();
 					break;
 					}
 				default : {
@@ -10577,7 +10622,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// </summary>
 
-		public virtual DareEnvelope						EncryptedGroupConnection  {get; set;}
+		public virtual ProfileGroup						ProfileGroup  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual CryptographicCapability						CryptographicCapability  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -10627,10 +10676,23 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Text", 1);
 					_writer.WriteString (Text);
 				}
-			if (EncryptedGroupConnection != null) {
+			if (ProfileGroup != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("EncryptedGroupConnection", 1);
-					EncryptedGroupConnection.Serialize (_writer, false);
+				_writer.WriteToken ("ProfileGroup", 1);
+					ProfileGroup.Serialize (_writer, false);
+				}
+			if (CryptographicCapability != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("CryptographicCapability", 1);
+					// expand this to a tagged structure
+					//CryptographicCapability.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(CryptographicCapability._Tag, 1);
+						bool firstinner = true;
+						CryptographicCapability.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -10669,11 +10731,15 @@ namespace Goedel.Mesh {
 					Text = jsonReader.ReadString ();
 					break;
 					}
-				case "EncryptedGroupConnection" : {
+				case "ProfileGroup" : {
 					// An untagged structure
-					EncryptedGroupConnection = new DareEnvelope ();
-					EncryptedGroupConnection.Deserialize (jsonReader);
+					ProfileGroup = new ProfileGroup ();
+					ProfileGroup.Deserialize (jsonReader);
  
+					break;
+					}
+				case "CryptographicCapability" : {
+					CryptographicCapability = CryptographicCapability.FromJSON (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {

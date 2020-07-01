@@ -56,6 +56,21 @@ namespace Goedel.Cryptography {
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);
 
+
+        /// <summary>
+        /// Create a new key pair instance for this private key.
+        /// </summary>
+        /// <param name="keySecurity">The key type.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+        /// in signature operations.</param>
+        /// <returns>The KeyPair instance.</returns>
+        KeyPairAdvanced GetKeyPair(
+                    KeySecurity keySecurity = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default);
+
+
         /// <summary>
         /// Perform a partial key agreement.
         /// </summary>

@@ -595,6 +595,22 @@ namespace Goedel.Cryptography.Algorithms {
                 }
             }
 
+
+        /// <summary>
+        /// Create a new key pair instance for this private key.
+        /// </summary>
+        /// <param name="keyType">The key type.</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="cryptoAlgorithmID">Specifies the default algorithm variation for use
+        /// in signature operations.</param>
+        /// <returns>The KeyPair instance.</returns>
+        public override KeyPairAdvanced GetKeyPair(
+                    KeySecurity keyType = KeySecurity.Public,
+                    KeyUses keyUses = KeyUses.Any,
+                    CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) => new
+                        KeyPairEd448(this, keyType, keyUses, cryptoAlgorithmID);
+
+
         /// <summary>
         /// Verify that a witness value was used to construct a public key.
         /// </summary>

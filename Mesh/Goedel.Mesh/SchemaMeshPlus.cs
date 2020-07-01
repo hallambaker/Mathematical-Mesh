@@ -3,6 +3,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Utilities;
 
+using System;
 using System.Text;
 namespace Goedel.Mesh {
 
@@ -99,7 +100,29 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Encode the message using the signature key <paramref name="signingKey"/>.
+        /// </summary>
+        /// <param name="signingKey">The signature key.</param>
+        /// <param name="encryptionKey">The encryption key.</param>
+        /// <returns>The enveloped, signed message.</returns>
+        public DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
+            var data = this.GetBytes();
+            var contentMeta = new ContentMeta() {
+                UniqueID = _PrimaryKey,
+                Created = DateTime.Now,
+                ContentType = Constants.IanaTypeMeshObject,
+                MessageType = _Tag
+                };
+
+            DareEnvelope = DareEnvelope.Encode(data, contentMeta: contentMeta,
+                signingKey: signingKey, encryptionKey: encryptionKey);
+
+            DareEnvelope.Header.EnvelopeID = _PrimaryKey;
+
+            return DareEnvelope;
+            }
 
 
         /// <summary>

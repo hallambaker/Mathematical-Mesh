@@ -54,20 +54,6 @@ namespace Goedel.Mesh {
                 cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
-
-        //public void Add(DareEnvelope contact, bool self = false) {
-
-        //    "Implement the add group member function".TaskFunctionality();
-
-        //    var entry = new CatalogedMember(contact) {
-        //        };
-        //    New(entry);
-        //    }
-
-        //public void Add(Contact contact, bool self = false) => Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
-
-        //public CatalogedMember Add(string memberID) => throw new NYI();
-
         }
 
     // NYI should all be DareMessages to allow them to be signed.
@@ -76,19 +62,12 @@ namespace Goedel.Mesh {
         /// <summary>
         /// The primary key used to catalog the entry.
         /// </summary>
-        public override string _PrimaryKey => UDF;
+        public override string _PrimaryKey => ContactAddress;
 
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
         public CatalogedMember() { }
-
-        ///// <summary>
-        ///// Create a member for the specified contact.
-        ///// </summary>
-        ///// <param name="contact"></param>
-        //public CatalogedMember(DareEnvelope contact) : this() { }
-        ////=> EnvelopedContact = contact;
 
         }
 
@@ -114,15 +93,9 @@ namespace Goedel.Mesh {
 
                 switch (capability) {
                     case CapabilityAdministrator capabilityAdministrator: {
-
                         return capabilityAdministrator.GetKeyPairAdvancedPrivate() ;
-
                         }
-
                     }
-
-
-
                 }
 
             throw new NYI();
