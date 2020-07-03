@@ -148,7 +148,7 @@ namespace Goedel.Mesh.Client {
             MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
 
             // Generate a contact and self-sign
-            var contact = CreateDefaultContact();
+            var contact = CreateContact();
             SetContactSelf(contact);
 
 
@@ -234,9 +234,12 @@ namespace Goedel.Mesh.Client {
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public override Contact CreateDefaultContact(bool meshUDF = false) {
+        public override Contact CreateContact(bool meshUDF = false, 
+                    List<CryptographicCapability> capabilities = null) {
 
-            var address = new NetworkAddress(AccountAddress, ProfileAccount);
+            var address = new NetworkAddress(AccountAddress, ProfileAccount) {
+                Capabilities = capabilities
+                };
 
             var anchorAccount = new Anchor() {
                 UDF = ProfileAccount.UDF,
@@ -281,7 +284,7 @@ namespace Goedel.Mesh.Client {
 
 
             var catalog = GetCatalogContact();
-                
+
             var (cataloged, success) = catalog.TryAdd(contact, true);
 
             if (!success) {
@@ -466,14 +469,14 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public override CryptoKey TryFindKeyDecryption(string keyId) {
+        public override IKeyDecrypt TryFindKeyDecryption(string keyId) {
             var key = base.TryFindKeyDecryption(keyId);
             if (key != null) {
                 return key;
                 }
 
 
-            return GetCatalogContact().TryMatchRecipient(keyId);
+            return GetCatalogCapability().TryFindKeyDecryption(keyId);
             }
 
         #endregion
@@ -623,17 +626,32 @@ namespace Goedel.Mesh.Client {
 
             var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
             createResponse.Success().AssertTrue();
-          
-            var capability = new CapabilityAdministrator() {
-                Id = profileGroup.UDF,
-                KeySignature = new KeyData(keySign, true),
-                KeyEncryption = new KeyData(keyEncrypt, true) 
+
+            var capabilityAdmin = new CapabilitySign() {
+                Id = UDF.Nonce(),
+                SubjectAddress = groupName,
+                SubjectId = keySign.KeyIdentifier,
+                KeyData = new KeyData(keySign, true),
                 };
 
-            var envelopedCapability = DareEnvelope.Encode(capability.GetBytes(), encryptionKey: KeyDeviceEncryption);
+            var capabilityDecrypt = new CapabilityKeyGenerate() {
+                Id = UDF.Nonce(),
+                SubjectAddress = groupName,
+                SubjectId = keyEncrypt.KeyIdentifier,
+                KeyData = new KeyData(keyEncrypt, true)
+                };
+
+            GetCatalogCapability().Add(capabilityAdmin);
+            GetCatalogCapability().Add(capabilityDecrypt);
+
+
+
+            //var envelopedCapabilityAdmin = DareEnvelope.Encode(capabilityAdmin.GetBytes(), encryptionKey: KeyDeviceEncryption);
+            //var envelopedCapabilityDecrypt = DareEnvelope.Encode(capabilityDecrypt.GetBytes(), encryptionKey: KeyDeviceEncryption);
+
+
 
             var catalogedGroup = new CatalogedGroup(profileGroup) {
-                EnvelopedCapabilities = new List<DareEnvelope>() { envelopedCapability },
                 Key = groupName
                 };
             GetCatalogApplication().New(catalogedGroup);
@@ -641,7 +659,7 @@ namespace Goedel.Mesh.Client {
 
             var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
 
-            var contact = contextGroup.CreateDefaultContact();
+            var contact = contextGroup.CreateContact();
             // Bug: Should also encrypt the relevant admin key to the admin encryption key.
 
 
@@ -693,7 +711,7 @@ namespace Goedel.Mesh.Client {
                 CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
                 CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
                 CatalogCapability.Label => new CatalogCapability(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                _ => base.MakeStore (name),
+                _ => base.MakeStore(name),
                 };
 
 
@@ -858,12 +876,37 @@ namespace Goedel.Mesh.Client {
                         results.Add(ProcessAutomatic(replyContact));
                         break;
                         }
+                    case GroupInvitation groupInvitation: {
+                        results.Add(ProcessAutomatic(groupInvitation));
+                        break;
+                        }
                     }
                 }
 
             return results;
             }
 
+
+
+        /// <summary>
+        /// Perform automatic processing of the message <paramref name="groupInvitation"/>.
+        /// </summary>
+        /// <param name="groupInvitation">Reply to contact request to be processed.</param>
+        /// <param name="accept">Accept the requested action.</param>
+        /// <param name="authorize">If true, the action is explicitly authorized.</param>
+        /// <returns>The result of requesting the connection.</returns>
+        public IProcessResult ProcessAutomatic(GroupInvitation groupInvitation, bool accept = true,
+                        bool authorize = false) {
+
+
+            GetCatalogContact().Add(groupInvitation.Contact);
+
+
+            "Need to add the contact data to the capabilities catalog".TaskFunctionality(true);
+
+
+            return null;
+            }
 
         /// <summary>
         /// Perform automatic processing of the message <paramref name="replyContact"/>.

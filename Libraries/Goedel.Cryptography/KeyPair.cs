@@ -5,7 +5,7 @@ namespace Goedel.Cryptography {
     /// <summary>
     /// Base class for all cryptographic key pairs.
     /// </summary>
-    public abstract partial class KeyPair : CryptoKey {
+    public abstract partial class KeyPair : CryptoKey, IKeyDecrypt {
 
         /// <summary>
         /// The key locator, an Internet name in username@domain format. This is used as the basis 

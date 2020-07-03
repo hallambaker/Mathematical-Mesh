@@ -515,6 +515,7 @@
 
 
 
+
 	Structure ContactPerson
 		Inherits Contact
 		Description
@@ -598,7 +599,10 @@
 			Multiple
 			Description
 				|Public keys associated with the network address
-
+		TStruct CryptographicCapability Capabilities
+			Multiple
+			Description
+				|Cryptographic capabilities that may be claimed from this address
 
 	Structure NetworkProtocol
 		String Protocol
@@ -725,80 +729,83 @@
 		Inherits CatalogedEntry
 		Description
 			|
-		String SubjectId
+
+		TStruct CryptographicCapability Capability
 			Description
-				|Fingerprint of a cryptographic key that is presented to claim 
-				|the specified capability.
-		String Permissions
-			Multiple
-			Description
-				|
-		TStruct CryptographicCapability Keys
-			Multiple
-			Description
-				|Cryptographic keys representing capabilities.
+				|The cataloged capability.
 
 
 
 	Structure CryptographicCapability
 		Abstract
+
 		String Id
 			Description
-				|Key identifier in URI form (mmm://service/udf
-		String Role
-			Description
-				|The role for which the key is authorized
-		Struct KeyData KeySignature 
-			Description
-				|The key that enables the capability
-		Struct KeyData KeyEncryption
+				|The identifier of the capability. If this is a user capability, MUST match the
+				|KeyData identifier. If this is a serviced capability, MUST match the value of
+				|ServiceId on the corresponding service capability.
+		Struct KeyData KeyData 
 			Description
 				|The key that enables the capability
-		Struct DareEnvelope EnvelopedCapabilityContribution
+		Struct DareEnvelope EnvelopedKeyShares
 			Multiple
 			Description
-				|Encrypted contribution to the capability provided by a different source
+				|One or more enveloped key shares.
+		String SubjectId
+			Description
+				|The identifier of the resource that is controlled using the key.
+		String SubjectAddress
+			Description
+				|The address of the resource that is controlled using the key.
 
-	Structure CapabilityDecryption
+	Structure CapabilityDecrypt
 		Inherits CryptographicCapability
+		Description
+			|The corresponding key is a decryption key
+
+	Structure CapabilityDecryptPartial 
+		Inherits CapabilityDecrypt
 		Description
 			|The corresponding key is an encryption key
+		String ServiceId
+			Description
+				|The identifier used to claim the capability from the service.[Only present for
+				|a partial capability.]
+		String ServiceAddress
+			Description
+				|The service account that supports a serviced capability. [Only present for
+				|a partial capability.]
 
-	Structure CapabilityVerification
-		Inherits CryptographicCapability
+	Structure CapabilityDecryptServiced
+		Inherits CapabilityDecrypt
 		Description
-			|The corresponding key is a signature verification key
+			|The corresponding key is an encryption key
+		String AuthenticationId
+			Description
+				|UDF of trust root under which request to use a serviced capability must be 
+				|authorized. [Only present for a serviced capability]
 
-	Structure CapabilityAuthentication
-		Inherits CryptographicCapability
-		Description
-			|The corresponding key is a key which may be used to authenticate the party
 
-		
-	Structure CapabilityAdministrator
+	Structure CapabilitySign
 		Inherits CryptographicCapability
 		Description
 			|The corresponding key is an administration key
 
 
-
-
-	Structure CapabilityThresholdDecrypt
+	Structure CapabilityKeyGenerate
 		Inherits CryptographicCapability
 		Description
-			|The corresponding key is a threshold decryption key.
+			|The corresponding key is a key that may be used to generate key shares.
 
-	Structure CapabilityThresholdSign
-		Inherits CryptographicCapability
-		Description
-			|The corresponding key is a threshold signature key.
 
-	Structure CapabilityThresholdMicali
+	Structure CapabilityFairExchange
 		Inherits CryptographicCapability
 		Description
 			|The corresponding key is a decryption key to be used in accordance 
-			|with the Fair Electronic Exchange with Invisible Trusted Parties
+			|with the Micali Fair Electronic Exchange with Invisible Trusted Parties
 			|protocol.
+
+
 
 
 	Structure CatalogedBookmark
@@ -832,10 +839,9 @@
 
 
 	Structure CatalogedMember
-		String UDF
 		String ContactAddress
-		String MemberKeyIdentifier
-		String ServiceKeyIdentifier
+		String MemberCapabilityId
+		String ServiceCapabilityId
 		Inherits CatalogedEntry
 
 	Structure CatalogedGroup
@@ -977,8 +983,12 @@
 	Structure GroupInvitation
 		Inherits Message
 		String Text
-		Struct ProfileGroup ProfileGroup
-		TStruct CryptographicCapability CryptographicCapability
+		TStruct Contact Contact
+			Description
+				|The contact data.
+
+
+
 
 	Structure RequestConfirmation
 		Inherits Message

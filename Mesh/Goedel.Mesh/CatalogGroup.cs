@@ -87,19 +87,7 @@ namespace Goedel.Mesh {
         public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
 
 
-        public IKeyAdvancedPrivate GetPrivateEncryption(IKeyLocate keyLocate) {
-            foreach (var envelope in EnvelopedCapabilities) {
-                var capability = CryptographicCapability.Decode(envelope, keyLocate);
 
-                switch (capability) {
-                    case CapabilityAdministrator capabilityAdministrator: {
-                        return capabilityAdministrator.GetKeyPairAdvancedPrivate() ;
-                        }
-                    }
-                }
-
-            throw new NYI();
-            }
 
 
         }

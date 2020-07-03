@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Goedel.Utilities;
+using System.Collections.Generic;
 namespace Goedel.Cryptography.Dare {
 
 
@@ -124,8 +125,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="AccountId">Identifier of the key to add.</param>
         protected virtual void AddEncrypt(string AccountId) {
+            var key = KeyLocate.TryFindKeyEncryption(AccountId);
+            key.AssertNotNull(NoAvailableDecryptionKey.Throw);
+
+
             EncryptionKeys ??= new List<CryptoKey>();
-            EncryptionKeys.Add(KeyLocate.TryFindKeyEncryption(AccountId));
+            EncryptionKeys.Add(key);
             }
 
         /// <summary>

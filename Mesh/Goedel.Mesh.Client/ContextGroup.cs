@@ -39,8 +39,6 @@ namespace Goedel.Mesh.Client {
             Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.UDF).CacheValue(out storesDirectory);
         string storesDirectory;
 
-
-
         /// <summary>
         /// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
         /// </summary>
@@ -110,36 +108,51 @@ namespace Goedel.Mesh.Client {
             var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(memberAddress);
 
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
-            var userAdministrationKey = networkProtocolEntry.MeshKeyAdministrator;
-
             var serviceEncryptionKey = ContextAccount.ProfileAccount.ProfileService.KeyEncryption.CryptoKey;
 
-            // Split the group key
 
-            var keys = GetKeySplit(userEncryptionKey, serviceEncryptionKey);
-
-            var keyService = keys[0].GetKeyPair(keySecurity: KeySecurity.Exportable);
-            var keyMember= keys[1].GetKeyPair(keySecurity: KeySecurity.Exportable);
-
-            // Create the capability and add to the capability catalog
-            var capabilityService = new CapabilityDecryption() {
-                Id = keyMember.KeyIdentifier,
-                KeyEncryption = new KeyData(keyService)
+            // Create the capability 
+            var capabilityService = new CapabilityDecryptServiced() {
+                AuthenticationId = ContextAccount.ProfileAccount.UDF,
+                KeyDataEncryptionKey = serviceEncryptionKey
                 };
 
-            var capabilityMember = new CapabilityDecryption() {
-                Id = keyService.KeyIdentifier,
-                KeyEncryption = new KeyData(keyMember)
+            var capabilityMember = new CapabilityDecryptPartial() {
+                Id = ProfileGroup.KeyEncryption.UDF,
+                SubjectId = ProfileGroup.KeyEncryption.UDF,
+                ServiceAddress = ContextAccount.GetAccountAddress(),
+                KeyDataEncryptionKey = userEncryptionKey
                 };
+
+
+            var keyGenerate = ContextAccount.GetCatalogCapability().TryFindKeyGenerate(
+                            ProfileGroup.KeyEncryption.UDF);
+            keyGenerate.CreateShares(capabilityService, capabilityMember);
+
+            // Fix up the identifiers.
+            capabilityMember.ServiceId = capabilityMember.KeyData.UDF;
+            capabilityService.Id = capabilityMember.ServiceId;
+            capabilityService.SubjectId = capabilityMember.ServiceId;
+
+
+
+
+            // Add the service capability to the service catalog
+            GetCatalogCapability().Add(capabilityService);
+
+
 
             // Create and send the invitation
+
+            var listCapability = new List<CryptographicCapability> { capabilityMember };
+
+            var contact = CreateContact(false, listCapability);
 
             var groupInvitation = new GroupInvitation() {
                 Sender = ContextAccount.AccountAddress,
                 Recipient = memberAddress,
                 Text = text,
-                ProfileGroup = ProfileGroup,
-                CryptographicCapability = capabilityMember
+                Contact = contact
                 };
 
             ContextAccount.SendMessage(groupInvitation, memberAddress, userEncryptionKey);
@@ -153,8 +166,8 @@ namespace Goedel.Mesh.Client {
 
             var catalogedMember = new CatalogedMember() {
                 ContactAddress = memberAddress,
-                MemberKeyIdentifier = keyMember.KeyIdentifier,
-                ServiceKeyIdentifier = keyService.KeyIdentifier,
+                MemberCapabilityId = capabilityMember.Id,
+                ServiceCapabilityId = capabilityService.Id,
                 };
             GetCatalogMember().New(catalogedMember);
 
@@ -169,16 +182,19 @@ namespace Goedel.Mesh.Client {
                     CryptoKey userEncryptionKey, CryptoKey serviceEncryptionKey) {
             userEncryptionKey.Future();
 
-            var groupPrivate = CatalogedGroup.GetPrivateEncryption(KeyCollection);
+            var keyGenerate = ContextAccount.GetCatalogCapability().TryFindKeyGenerate(
+                            ProfileGroup.KeyEncryption.UDF);
 
 
-            var keys = groupPrivate.MakeRecryptionKeySet(2);
+            throw new NYI();
+
+            //var keys = groupPrivate.MakeRecryptionKeySet(2);
 
 
 
 
 
-            return keys;
+            //return keys;
 
             }
 
@@ -188,10 +204,13 @@ namespace Goedel.Mesh.Client {
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public override Contact CreateDefaultContact(bool meshUDF = false) {
+        public override Contact CreateContact(bool meshUDF = false, 
+                    List<CryptographicCapability> capabilities= null) {
 
 
-            var address = new NetworkAddress(AccountAddress, ProfileGroup);
+            var address = new NetworkAddress(AccountAddress, ProfileGroup) {
+                Capabilities = capabilities
+                };
 
             var anchorAccount = new Anchor() {
                 UDF = ProfileGroup.UDF,
@@ -215,6 +234,10 @@ namespace Goedel.Mesh.Client {
 
             return contact;
             }
+
+
+
+
 
         /// <summary>
         /// Locate the a member record in the group.

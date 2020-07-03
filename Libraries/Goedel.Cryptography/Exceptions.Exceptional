@@ -18,6 +18,10 @@ Namespace Goedel.Cryptography
 			Description
 				|The operation requires platform initialization
 
+		Exception OperationNotSupported
+			Console "The requested cryptographic operation is not supported"
+			Description
+				|The requested cryptographic operation is not supported
 
 		Exception NoAvailableDecryptionKey
 			Console "No decryption key is available"

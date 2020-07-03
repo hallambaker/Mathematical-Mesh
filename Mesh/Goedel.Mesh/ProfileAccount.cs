@@ -132,8 +132,11 @@ namespace Goedel.Mesh {
             // Get an online signature key if not already found
             keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
 
+            // Grant the device access to data encrypted under the account key.
+            // Note that this cannot be granted through the capabilities catalog because that
+            // is also encrypted under the account key.
             var activationAccount = new ActivationAccount(catalogedDevice.ProfileDevice) {
-                KeyAccountEncryption = accountEncryptionKey
+                KeyAccountEncryption = accountEncryptionKey 
                 };
 
 

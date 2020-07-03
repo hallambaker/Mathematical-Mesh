@@ -29,6 +29,23 @@ namespace Goedel.Mesh {
         public AsCatalogedCapability AsCatalogedMember => new AsCatalogedCapability(this);
 
 
+        ///<summary>Dictionary for locating capabilities for use.</summary>
+        public Dictionary<string, CapabilityDecrypt> DictionaryDecryptByKeyId =
+                new Dictionary<string, CapabilityDecrypt>();
+
+        ///<summary>Dictionary for locating capabilities for use.</summary>
+        public Dictionary<string, CapabilitySign> DictionarySignByAccountAddress =
+                new Dictionary<string, CapabilitySign>();
+
+        ///<summary>Dictionary for locating capabilities for use.</summary>
+        public Dictionary<string, CapabilityKeyGenerate> DictionaryKeyGenerate =
+                new Dictionary<string, CapabilityKeyGenerate>();
+
+        ///<summary>Dictionary for locating capabilities for use.</summary>
+        public Dictionary<string, CapabilityFairExchange> DictionaryFairExchange =
+                new Dictionary<string, CapabilityFairExchange>();
+
+
         //public CatalogedMember LocateByID(string Key) => Locate(Key) as CatalogedMember;
 
 
@@ -55,6 +72,84 @@ namespace Goedel.Mesh {
             }
 
 
+        public IKeyDecrypt TryFindKeyDecryption(string keyId) {
+            DictionaryDecryptByKeyId.TryGetValue(keyId, out var result);
+
+            return result;
+            }
+
+        public IKeySign TryFindKeySign(string keyId) {
+            DictionarySignByAccountAddress.TryGetValue(keyId, out var result);
+
+            return result;
+            }
+
+
+
+        public CapabilityKeyGenerate TryFindKeyGenerate(string keyId) {
+            DictionaryKeyGenerate.TryGetValue(keyId, out var result);
+
+            return result;
+            }
+
+
+        /// <summary>
+        /// Add <paramref name="capability"/> to the catalog, encrypting the data under
+        /// <paramref name="encryptionKey"/> if that turns out to be a good idea.
+        /// </summary>
+        /// <param name="capability">Capability to add.</param>
+        /// <param name="encryptionKey">Stub for possible encryption key entry.</param>
+        public void Add(
+                    CryptographicCapability capability,
+                    CryptoKey encryptionKey = null
+                    ) {
+            var catalogedCapability = new CatalogedCapability(capability);
+            New(catalogedCapability, encryptionKey);
+            }
+
+        /// <summary>
+        /// Callback called before adding a new entry to the catalog. Overriden to update the values
+        /// in the dictionaries serving key discovery.
+        /// </summary>
+        /// <param name="catalogedEntry">The entry being added.</param>
+        protected override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+
+
+        /// <summary>
+        /// Callback called before updating an entry in the catalog. Overriden to update the values
+        /// in the dictionaries serving key discovery.
+        /// </summary>
+        /// <param name="catalogedEntry">The entry being updated.</param>
+        protected override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+
+        void UpdateLocal(CatalogedEntry catalogedEntry) {
+            var catalogedCapability = catalogedEntry as CatalogedCapability;
+            switch (catalogedCapability.Capability) {
+                case CapabilityDecrypt capabilityDecryption: {
+                    DictionaryDecryptByKeyId.Add(capabilityDecryption.SubjectId,
+                        capabilityDecryption);
+                    break;
+                    }
+                case CapabilitySign capabilityAdministrator: {
+                    DictionarySignByAccountAddress.Add(capabilityAdministrator.SubjectAddress,
+                        capabilityAdministrator);
+                    break;
+                    }
+                case CapabilityKeyGenerate capabilityKeyGenerate: {
+                    DictionaryKeyGenerate.Add(capabilityKeyGenerate.SubjectId,
+                        capabilityKeyGenerate);
+                    break;
+                    }
+                case CapabilityFairExchange capabilityFairExchange: {
+                    DictionaryFairExchange.Add(capabilityFairExchange.SubjectAddress,
+                        capabilityFairExchange);
+                    break;
+                    }
+                }
+
+            }
+
+
 
         }
 
@@ -62,23 +157,30 @@ namespace Goedel.Mesh {
     public partial class CatalogedCapability {
 
         /// <summary>
-        /// The primary key used to catalog the entry.
+        /// The primary key used to catalog the entry, this is the identifier of the key.
         /// </summary>
-        public override string _PrimaryKey => SubjectId;
+        public override string _PrimaryKey => Capability._PrimaryKey;
 
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
         public CatalogedCapability() { }
 
-        ///// <summary>
-        ///// Create a member for the specified contact.
-        ///// </summary>
-        ///// <param name="contact"></param>
-        //public CatalogedMember(DareEnvelope contact) : this() { }
-        ////=> EnvelopedContact = contact;
+
+        /// <summary>
+        /// Default constructor for serialization.
+        /// </summary>
+        public CatalogedCapability(CryptographicCapability capability) {
+
+
+            Capability = capability;
+
+
+
+            }
 
         }
+
 
 
     #endregion

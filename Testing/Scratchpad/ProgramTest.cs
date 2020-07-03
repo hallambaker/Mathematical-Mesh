@@ -22,7 +22,7 @@ namespace Scratchpad {
 
 
 
-            //ShellTests.Test().TestFileEncrypt();
+            ShellTests.Test().TestFileEncrypt();
 
 
             // The whole Escrow thing

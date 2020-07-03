@@ -318,8 +318,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 }
 
-            // Failing here because the file is encrypted under the Account key and 
-            // the only keys being registered are the DeviceAccount keys.
+            // Could not find any decryption key.
             throw new NoAvailableDecryptionKey();
             }
         }

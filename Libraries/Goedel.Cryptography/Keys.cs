@@ -26,11 +26,60 @@ using System;
 
 namespace Goedel.Cryptography {
 
+    /// <summary>
+    /// Interface describing private key operations
+    /// </summary>
+    public interface IKeyDecrypt {
+        /// <summary>
+        /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
+        /// </summary>
+        /// <param name="encryptedKey">The encrypted session</param>
+        /// <param name="ephemeral">Ephemeral key input (required for DH)</param>
+        /// <param name="algorithmID">The algorithm to use (redundant?)</param>
+        /// <param name="partial">Partial key agreement carry in (for recryption)</param>
+        /// <param name="salt">Optional salt value for use in key derivation. If specified
+        /// must match the salt used to encrypt.</param>        
+        /// <returns>The decoded data instance</returns>
+        byte[] Decrypt(
+                    byte[] encryptedKey,
+                    KeyPair ephemeral = null,
+                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default, // hack: redundant?
+                    KeyAgreementResult partial = null,
+                    byte[] salt = null);
+
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
+        KeyAgreementResult Agreement(KeyPair keyPair);
+
+
+
+        }
+
+    /// <summary>
+    /// Interface describing private key operations
+    /// </summary>
+    public interface IKeySign {
+
+        /// <summary>
+        /// Sign a precomputed digest
+        /// </summary>
+        /// <param name="data">The data to sign.</param>
+        /// <param name="algorithmID">The algorithm to use.</param>
+        /// <param name="context">Additional data added to the signature scope
+        /// for protocol isolation.</param>
+        /// <returns>The signature data</returns>
+        byte[] SignHash(byte[] data,
+                CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
+                byte[] context = null);
+        }
 
     /// <summary>
     /// Base class for all cryptographic keys.
     /// </summary>
-    public abstract class CryptoKey: IKeyLocate {
+    public abstract class CryptoKey: IKeyLocate, IKeyDecrypt, IKeySign {
 
         /// <summary>
         /// Cryptographic Algorithm Identifier
@@ -64,7 +113,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual CryptoKey TryFindKeyDecryption(string keyID) =>
+        public virtual IKeyDecrypt TryFindKeyDecryption(string keyID) =>
             keyID == KeyIdentifier ? this : null;
 
         /// <summary>
@@ -158,6 +207,9 @@ namespace Goedel.Cryptography {
         /// <param name="baseID">The base identifier.</param>
         /// <returns>The computed CryptoAlgorithmID</returns>
         public virtual CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId baseID) => baseID;
+
+
+        public virtual KeyAgreementResult Agreement(KeyPair keyPair) => throw new System.NotImplementedException();
 
         }
 

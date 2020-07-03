@@ -307,7 +307,9 @@ namespace Goedel.Mesh.Client {
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public abstract Contact CreateDefaultContact(bool meshUDF = false);
+        public abstract Contact CreateContact(
+                bool meshUDF = false, 
+                List<CryptographicCapability> capabilities = null);
 
         #endregion
 
@@ -442,7 +444,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public virtual CryptoKey TryFindKeyDecryption(string keyId) =>
+        public virtual IKeyDecrypt TryFindKeyDecryption(string keyId) =>
                     KeyCollection.TryFindKeyDecryption(keyId);
 
         /// <summary>
@@ -514,7 +516,8 @@ namespace Goedel.Mesh.Client {
                     }
                 }
 
-            var cryptoParameters = new CryptoParameters(signer: signingKey, recipients: null);
+            var cryptoParameters = new CryptoParameters(keyCollection: this,
+                        signer: signingKey, recipients: recipients);
             return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
 
             }

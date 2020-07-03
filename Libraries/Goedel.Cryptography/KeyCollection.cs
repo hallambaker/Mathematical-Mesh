@@ -15,7 +15,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        CryptoKey TryFindKeyDecryption(string keyID);
+        IKeyDecrypt TryFindKeyDecryption(string keyID);
 
         /// <summary>
         /// Locate a private key
@@ -130,7 +130,8 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyID">The key identifier to match</param>
         /// <returns>True if a match is found, otherwise false.</returns>
-        public virtual CryptoKey TryFindKeyDecryption(string keyID) => TryMatchRecipientKeyPair(keyID);
+        public virtual IKeyDecrypt TryFindKeyDecryption(string keyID) => 
+                        TryMatchRecipientKeyPair(keyID);
 
 
         /// <summary>

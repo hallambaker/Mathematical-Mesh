@@ -519,7 +519,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateDefaultContact(System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
@@ -701,6 +701,15 @@
             Process automatic actions.
             </summary>
             <returns>The results of the automatic processing attempted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.GroupInvitation,System.Boolean,System.Boolean)">
+            <summary>
+            Perform automatic processing of the message <paramref name="groupInvitation"/>.
+            </summary>
+            <param name="groupInvitation">Reply to contact request to be processed.</param>
+            <param name="accept">Accept the requested action.</param>
+            <param name="authorize">If true, the action is explicitly authorized.</param>
+            <returns>The result of requesting the connection.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.ProcessAutomatic(Goedel.Mesh.ReplyContact,System.Boolean,System.Boolean)">
             <summary>
@@ -959,7 +968,7 @@
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.GetAccountAddress">
             <summary>Return the account address.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.CreateDefaultContact(System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 
@@ -1233,7 +1242,7 @@
             <param name="memberAddress">The member to add.</param>
             <returns>The member catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateDefaultContact(System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
             address entry for this mesh and mesh account. 

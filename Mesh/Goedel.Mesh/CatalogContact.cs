@@ -51,39 +51,24 @@ namespace Goedel.Mesh {
             }
 
         CryptoKey SetKeys(ref CryptoKey keyPair) {
-            if (NetworkAddress.Protocols != null) {
+            if (NetworkAddress.EnvelopedProfileAccount != null) {
+                var meshItem = MeshItem.Decode(NetworkAddress.EnvelopedProfileAccount);
 
-                foreach (var protocol in NetworkAddress?.Protocols) {
-                    if (protocol.Protocol == "mmm") {
-                        SetKeysMesh(protocol);
-                        }
+                switch (meshItem) {
+                    case ProfileAccount profileAccount:
+                        meshKeyEncryption = profileAccount.KeyEncryption.CryptoKey;
+                        meshKeyAdministrator = profileAccount.KeyOfflineSignature.CryptoKey;
+                        break;
+                    case ProfileGroup profileGroup:
+                        meshKeyEncryption = profileGroup.KeyEncryption.CryptoKey;
+                        meshKeyAdministrator = profileGroup.KeyOfflineSignature.CryptoKey;
+                        break;
 
                     }
                 }
             return keyPair;
             }
 
-
-        void SetKeysMesh(NetworkProtocol networkProtocol) {
-            if (networkProtocol.Capabilities == null) {
-                return;
-                }
-            foreach (var capability in networkProtocol.Capabilities) {
-
-                switch (capability) {
-                    case CapabilityDecryption capabilityEncryption: {
-                        meshKeyEncryption = capabilityEncryption.KeySignature.CryptoKey;
-                        break;
-                        }
-                    case CapabilityAdministrator capabilityAdministrator:     {
-                        meshKeyAdministrator = capabilityAdministrator.KeySignature.CryptoKey;
-                        break;
-                        }
-                    }
-
-                }
-
-            }
 
         }
 
@@ -150,11 +135,6 @@ namespace Goedel.Mesh {
         /// <param name="catalogedEntry">The entry being added.</param>
         protected override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
 
-        /// <summary>
-        /// Callback called before updating an entry in the catalog. Overriden to update the values
-        /// in <see cref="DictionaryByNetworkAddress"/>.
-        /// </summary>
-        /// <param name="catalogedEntry">The entry being updated.</param>
         void UpdateLocal(CatalogedEntry catalogedEntry) {
             var catalogedContact = catalogedEntry as CatalogedContact;
             var contact = catalogedContact.Contact;
@@ -164,8 +144,6 @@ namespace Goedel.Mesh {
                     new NetworkProtocolEntry(catalogedContact, networkAddress));
                 }
             }
-
-
 
         /// <summary>
         /// Update the entry <paramref name="catalogedContact"/> in the catalog.
@@ -416,29 +394,27 @@ namespace Goedel.Mesh {
 
             List<CryptographicCapability> keyList = null;
 
-            switch (profile) {
-                case ProfileAccount profileAccount: {
-                    keyList = new List<CryptographicCapability>() {
-                        new CapabilityDecryption () {
-                            KeySignature = profileAccount.KeyEncryption },
-                        new CapabilityAdministrator () {
-                            KeySignature = profileAccount.KeyOfflineSignature },
-                        new CapabilityAuthentication () {
-                            KeySignature = profileAccount.KeyAuthentication },
-                        };
-                    break;
-                    }
-                case ProfileGroup profileGroup: {
-                    keyList = new List<CryptographicCapability>() {
-                        new CapabilityDecryption () {
-                            KeySignature = profileGroup.KeyEncryption },
-                        new CapabilityAdministrator () {
-                            KeySignature = profileGroup.KeyOfflineSignature },
+            //switch (profile) {
+            //    case ProfileAccount profileAccount: {
+            //        keyList = new List<CryptographicCapability>() {
+            //            new CapabilityDecryption () {
+            //                KeyData = profileAccount.KeyEncryption },
+            //            new CapabilityAdministrator () {
+            //                KeyData = profileAccount.KeyOfflineSignature },
+            //            };
+            //        break;
+            //        }
+            //    case ProfileGroup profileGroup: {
+            //        keyList = new List<CryptographicCapability>() {
+            //            new CapabilityDecryption () {
+            //                KeyData = profileGroup.KeyEncryption },
+            //            new CapabilityAdministrator () {
+            //                KeyData = profileGroup.KeyOfflineSignature },
 
-                        };
-                    break;
-                    }
-                }
+            //            };
+            //        break;
+            //        }
+            //    }
 
             EnvelopedProfileAccount = profile.DareEnvelope;
             Address = address;

@@ -63,7 +63,7 @@ namespace Goedel.Mesh {
 
 
             algorithmSign = algorithmSign.DefaultAlgorithmSign();
-            algorithmEncrypt = algorithmSign.DefaultAlgorithmEncrypt();
+            algorithmEncrypt = algorithmEncrypt.DefaultAlgorithmEncrypt();
 
             var keySign = meshMachine.CreateKeyPair(algorithmSign, KeySecurity.ExportableStored, keyUses: KeyUses.Sign);
             var keyEncrypt = meshMachine.CreateKeyPair(algorithmEncrypt, KeySecurity.ExportableStored, keyUses: KeyUses.Encrypt);

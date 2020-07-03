@@ -381,30 +381,24 @@ namespace Goedel.XUnit {
             // Encrypt to the group
             var envelope = contextAccountAlice.DareEncode(plaintext, recipients: groupList, sign: true);
 
+            // attempt to decrypt with Alice's key
+            // this should fail as Alice doesn't have the decryption key.
 
-            // Decrypt using admin key
-            // this should succeed because the group context has the decryption key.
-            var decrypt = contextGroup.DareDecode(envelope, verify: true);
-            decrypt.IsEqualTo(plaintext).AssertTrue();
-
-
-            // We should in a check at this point to see that a non-admin device connected to
-            // Alice's account CANNOT decrypt here.
-
-            //// attempt to decrypt with Alice's key
-            //// this should fail as Alice doesn't have the decryption key.
-
-            //Xunit.Assert.Throws<NYI>(() =>
-            //  contextAccountAlice.DareDecode(envelope, verify: true));
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
+                contextAccountAlice.DareDecode(envelope, verify: true));
 
             // Create a member entry for Alice
             contextGroup.Add(AccountAlice);
+            contextAccountAlice.Sync();
+            contextAccountAlice.ProcessAutomatics();
+
+            // need to sync messages here to accept the group addition.
 
             // this should now succeed
             var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt2.IsEqualTo(plaintext).AssertTrue();
 
-            Xunit.Assert.Throws<NYI>(() =>
+            Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
               contextAccountBob.DareDecode(envelope, verify: true));
 
             // Create a member entry fo Bob
