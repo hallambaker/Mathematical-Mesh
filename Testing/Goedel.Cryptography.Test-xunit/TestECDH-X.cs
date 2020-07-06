@@ -579,7 +579,7 @@ namespace Goedel.XUnit {
             var KeyA = new CurveX25519Private();
             var KeyAPublic = KeyA.Public;
 
-            var RecryptKeys = KeyA.MakeRecryptionKeySet(2);
+            var RecryptKeys = KeyA.MakeThresholdKeySet(2);
 
             var Result = KeyAPublic.Agreement();
 

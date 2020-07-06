@@ -52,9 +52,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>The device encryption key </summary>
         protected KeyPair KeyDeviceEncryption { get; set; }
 
-        ///<summary>The account encryption key</summary>
-        protected KeyPair KeyAccountEncryption { get; set; }
-
 
 
         #endregion
@@ -160,6 +157,7 @@ namespace Goedel.Mesh.Client {
                 GetCatalogContact();
                 GetCatalogDevice();
                 GetCatalogCredential();
+                GetCatalogCapability();
                 GetCatalogBookmark();
                 GetCatalogCalendar();
                 GetCatalogNetwork();
@@ -342,87 +340,7 @@ namespace Goedel.Mesh.Client {
         #region // Convenience accessors for catalogs and stores
 
 
-        //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
 
-        /// <summary>
-        /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
-        /// at a time. This should really be changed to something more Async callback friendly. Hours in
-        /// a day... ??? Its midnight.
-        /// </summary>
-        /// <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
-        /// <returns>If true, the synchronization has completed.</returns>
-        public bool SyncProgressUpload(int maxEnvelopes = -1) {
-            bool complete = true;
-            var updates = new List<ContainerUpdate>();
-
-            //// Always do the devices first (if we are an admin device)
-            //if (SyncStatusDevice != null) {
-            //    maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
-            //    }
-
-            try {
-                // upload all the containers here
-                foreach (var store in DictionaryStores) {
-                    maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
-                    }
-                }
-            catch {
-                }
-
-
-            if (updates.Count > 0) {
-                var uploadRequest = new UploadRequest() {
-                    Updates = updates
-                    };
-                MeshClient.Upload(uploadRequest);
-                }
-
-            return complete;
-            }
-
-        int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
-
-            //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
-
-            int uploads = 0;
-            if (maxEnvelopes == 0) {
-                return 0; // no more room left in this request.
-                }
-
-
-            if (syncStatus.Index <= syncStatus.Store.FrameCount) {
-                var container = syncStatus.Store.Container;
-                var envelopes = new List<DareEnvelope>();
-                var containerUpdate = new ContainerUpdate() {
-                    Container = syncStatus.Store.ContainerName,
-                    Envelopes = envelopes,
-                    Digest = container.Digest
-                    // put the digest value here
-                    };
-
-                var start = 1 + syncStatus.Index;
-                long last = (maxEnvelopes < 0) ? syncStatus.Store.FrameCount :
-                    Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
-
-                if (start == 0) {
-                    envelopes.Add(container.FrameZero);
-                    start++;
-                    }
-
-
-                for (var i = start; i < last; i++) {
-                    container.MoveToIndex(i);
-                    envelopes.Add(container.ReadDirect());
-                    }
-
-
-                containerUpdates.Add(containerUpdate);
-                }
-
-
-            return uploads;
-
-            }
 
         #region // Convenience accessors to fetch store contexts
 
@@ -898,11 +816,28 @@ namespace Goedel.Mesh.Client {
         public IProcessResult ProcessAutomatic(GroupInvitation groupInvitation, bool accept = true,
                         bool authorize = false) {
 
+            if (groupInvitation.Contact == null) {
+                return null; // invitation did not contain a credential
+                }
 
             GetCatalogContact().Add(groupInvitation.Contact);
+            if (groupInvitation.Contact?.NetworkAddresses == null) {
+                return null; // invitation did not contain a credential
+                }
 
+            var catalogCapability = GetCatalogCapability();
+            foreach (var address in groupInvitation.Contact.NetworkAddresses) {
+                if (address.Capabilities != null) {
+                    foreach (var capability in address.Capabilities) {
+                        if (capability is ICapabilityPartial meshClientCapability) {
+                            meshClientCapability.CryptographicClient = this;
+                            }
 
-            "Need to add the contact data to the capabilities catalog".TaskFunctionality(true);
+                        catalogCapability.Add(capability);
+                        }
+                    }
+                }
+
 
 
             return null;

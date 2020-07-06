@@ -44,7 +44,7 @@ namespace Goedel.XUnit {
             var KeyAPublic = KeyA.DiffeHellmanPublic;
 
 
-            var RecryptKeys = KeyA.MakeRecryptionKeySet(2);
+            var RecryptKeys = KeyA.MakeThresholdKeySet(2);
 
             var Result = KeyAPublic.Agreement();
 

@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Client {
             var capabilityMember = new CapabilityDecryptPartial() {
                 Id = ProfileGroup.KeyEncryption.UDF,
                 SubjectId = ProfileGroup.KeyEncryption.UDF,
-                ServiceAddress = ContextAccount.GetAccountAddress(),
+                ServiceAddress = AccountAddress,
                 KeyDataEncryptionKey = userEncryptionKey
                 };
 
@@ -137,7 +137,12 @@ namespace Goedel.Mesh.Client {
 
 
 
+
             // Add the service capability to the service catalog
+
+            // This is failing to push out to the service catalog as it should
+            // Sync is only for downloads.
+
             GetCatalogCapability().Add(capabilityService);
 
 
@@ -158,9 +163,10 @@ namespace Goedel.Mesh.Client {
             ContextAccount.SendMessage(groupInvitation, memberAddress, userEncryptionKey);
 
 
-            // Add the member to the member catalog
-            var envelopedCapabilityService = capabilityService.Encode(encryptionKey:serviceEncryptionKey);
-            GetCatalogCapability().AppendDirect(envelopedCapabilityService);
+            //var envelopedCapabilityService = capabilityService.Encode(
+            //    //encryptionKey:serviceEncryptionKey
+            //    );
+            //GetCatalogCapability().AppendDirect(envelopedCapabilityService);
 
             // Add the member to the member catalog
 
@@ -171,7 +177,8 @@ namespace Goedel.Mesh.Client {
                 };
             GetCatalogMember().New(catalogedMember);
 
-            ContextAccount.Sync();
+            SyncProgressUpload();
+
 
             // return the member entry.
             return catalogedMember;

@@ -92,7 +92,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from a PKIX PKIXPrivateKeyDH structure.
         /// </summary>
         /// <param name="pkixKey">DH Public Key.</param>
-        public PrivateKeyECDH(PKIXPrivateKeyECDH pkixKey) {
+        public PrivateKeyECDH(IKeyPrivateECDH pkixKey) {
             Assert.AssertNotNull(pkixKey, NotExportable.Throw);
 
             Private = pkixKey.Data;
@@ -119,7 +119,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyECDH PKIXParametersPrivate { get; }
+        public virtual IKeyPrivateECDH PKIXParametersPrivate { get; }
 
         /// <summary>
         /// Extract a KeyPair object from the JOSE data structure.

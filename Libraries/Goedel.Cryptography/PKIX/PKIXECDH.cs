@@ -4,17 +4,11 @@
     /// <summary>
 	/// PKIXPublicKeyECDH 
     /// </summary>
-	public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim, IPKIXPublicKey {
+	public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim, 
+                    IPKIXPublicKey, IKeyPublicECDH {
 
-        /// <summary>
-        /// The Jose curve identifier.
-        /// </summary>
+        /// <summary>The Jose curve identifier.</summary>
         public abstract string CurveJose { get; }
-
-        ///// <summary>
-        ///// The RFC8032 Public Key byte data
-        ///// </summary>
-        ////public byte[] PublicKeyData;
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -26,9 +20,7 @@
             return new SubjectPublicKeyInfo(oidValue, DER());
             }
 
-        /// <summary>
-        /// Empty constructor for deserialization operations.
-        /// </summary>
+        /// <summary>Empty constructor for deserialization operations.</summary>
         public PKIXPublicKeyECDH() {
             }
 
@@ -47,9 +39,7 @@
         /// <param name="buffer">Output buffer</param>
         public override void Encode(Goedel.ASN.Buffer buffer) => buffer.Encode__Octets(Data, 0, -1);
 
-        /// <summary>
-        /// Return the corresponding public parameters
-        /// </summary>
+        /// <summary>Return the corresponding public parameters</summary>
         public IPKIXPublicKey PublicParameters => this;
 
         }
@@ -57,12 +47,15 @@
     /// <summary>
 	/// PKIXPrivateKeyECDH 
     /// </summary>
-	public abstract partial class PKIXPrivateKeyECDH : Goedel.ASN.ByteArrayVerbatim, IPKIXPrivateKey {
+	public abstract partial class PKIXPrivateKeyECDH : Goedel.ASN.ByteArrayVerbatim, 
+                        IPKIXPrivateKey, IKeyPrivateECDH {
 
-        /// <summary>
-        /// The Jose curve identifier.
-        /// </summary>
+        /// <summary>The Jose curve identifier.</summary>
         public abstract string CurveJose { get; }
+
+
+        /// <summary>If true, this is a recryption key.</summary>
+        public bool IsRecryption { get; set; } = false;
 
         /// <summary>
         /// Empty constructor for deserialization operations.

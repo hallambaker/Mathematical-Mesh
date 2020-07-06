@@ -63,7 +63,7 @@
         }
 
 
-    public partial class PKIXPublicKeyDH : IPKIXPublicKey {
+    public partial class PKIXPublicKeyDH : IPKIXPublicKey, IKeyPublicDH {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -88,7 +88,7 @@
 
         }
 
-    public partial class PKIXPrivateKeyDH : IPKIXPrivateKey {
+    public partial class PKIXPrivateKeyDH : IPKIXPrivateKey, IKeyPrivateDH {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block

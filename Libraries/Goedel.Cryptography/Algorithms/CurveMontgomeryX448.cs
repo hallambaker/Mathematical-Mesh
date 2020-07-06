@@ -278,8 +278,27 @@ namespace Goedel.Cryptography.Algorithms {
     /// <summary>
     /// Manages the public key
     /// </summary>
-    public class CurveX448Private : IKeyAdvancedPrivate {
+    public class CurveX448Private : IKeyAdvancedPrivate, IKeyPrivateECDH {
 
+
+        /// <summary>
+        /// The Jose curve identifier (Ed25519);
+        /// </summary>
+        public string CurveJose => "X448";
+
+        /// <summary> ASN.1 member Data </summary>
+        public byte[] Data => Encoding;
+
+
+
+        /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public CurveX448Public Public { get; set; }
@@ -396,20 +415,20 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="shares">The number of keys to create.</param>
         /// <returns>The created keys</returns>
-        public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+        public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
             BigInteger Accumulator = 0;
             var Result = new IKeyAdvancedPrivate[shares];
 
             for (var i = 1; i < shares; i++) {
                 var NewPrivate = Platform.GetRandomBigInteger(CurveX448.Q);
-                Result[i] = new CurveX448Private(NewPrivate) { IsRecryption = true };
+                Result[i] = new CurveX448Private(NewPrivate, exportable: true) { IsRecryption = true};
                 Accumulator = (Accumulator + NewPrivate).Mod(CurveX448.Q);
                 }
 
             //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
             Result[0] = new CurveX448Private(
-                (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q)) {
+                (CurveX448.Q + Private - Accumulator).Mod(CurveX448.Q), exportable: true) {
                 IsRecryption = true
                 };
             return Result;

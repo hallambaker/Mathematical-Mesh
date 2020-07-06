@@ -1,6 +1,7 @@
 ﻿Protocol Goedel.Mesh MeshProtocol MeshProtocol
 	Using Goedel.Mesh
 	Using Goedel.Cryptography.Dare
+	Using Goedel.Cryptography.Jose 
 
 	Description
 		|Protocol interactions supported by the Mesh Service.
@@ -527,13 +528,62 @@
 
 
 
+	Structure CryptographicOperation
+		Abstract
 
-	Transaction Public Decrypt DecryptRequest DecryptResponse
+		String KeyId
+			Description
+				|The key identifier			
+		Binary KeyCoefficient
+			Description
+				|Lagrange coefficient multiplier to be applied to the private key
+
+	Structure CryptographicOperationSign
+		Inherits CryptographicOperation
+		Binary Data
+			Description
+				|The data to sign
+		Binary PartialR
+			Description
+				|Contribution to the R offset.
+
+	Structure CryptographicOperationKeyAgreement
+		Inherits CryptographicOperation
+		TStruct Key PublicKey
+			Description
+				|The public key value to perform the agreement on.
+
+	Structure CryptographicOperationGenerate
+		Inherits CryptographicOperation
+
+
+	Structure CryptographicOperationShare
+		Inherits CryptographicOperation
+		Integer Threshold
+		Integer Shares
+
+
+	Structure CryptographicResult
+		Binary Result
+			Multiple
+
+
+	Transaction Public Operate OperateRequest OperateResponse
 		Description
-			|Check party making claim
+			|Perform a set of cryptographic operations
 
-	Message DecryptRequest
+	Message OperateRequest
 		Inherits MeshRequest
+		String AccountAddress
+			Description
+				|The service account the capability is bound to
+		TStruct CryptographicOperation Operations
+			Multiple
 
-	Message DecryptResponse
+	Message OperateResponse
 		Inherits MeshResponse
+		Struct CryptographicResult Results
+			Multiple
+
+
+

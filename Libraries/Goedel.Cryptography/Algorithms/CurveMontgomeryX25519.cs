@@ -251,6 +251,16 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveX25519Private : IKeyAdvancedPrivate {
 
+        /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+
+
         /// <summary>The public key, i.e. a point on the curve</summary>
         public CurveX25519Public Public { get; set; }
 
@@ -366,13 +376,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="shares">The number of keys to create.</param>
         /// <returns>The created keys</returns>
-        public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+        public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
             BigInteger Accumulator = 0;
             var Result = new IKeyAdvancedPrivate[shares];
 
             for (var i = 1; i < shares; i++) {
                 var NewPrivate = Platform.GetRandomBigInteger(CurveX25519.Q);
-                Result[i] = new CurveX25519Private(NewPrivate) { IsRecryption = true };
+                Result[i] = new CurveX25519Private(NewPrivate, exportable: true) { IsRecryption = true };
                 Accumulator = (Accumulator + NewPrivate).Mod(CurveX25519.Q);
                 }
 

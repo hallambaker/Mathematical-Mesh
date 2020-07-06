@@ -9,6 +9,46 @@ namespace Goedel.Cryptography {
 
 
     /// <summary>
+    /// Interface exposing the public Diffie Hellman parameters in the same form provided
+    /// by PKIXPublicKeyDH
+    /// </summary>
+    public interface IKeyPublicECDH {
+        /// <summary>The Jose curve identifier.</summary>
+        string CurveJose { get; }
+
+        /// <summary> ASN.1 member Data </summary>
+        byte[] Data { get; } 
+        }
+
+    /// <summary>
+    /// Interface exposing the private Diffie Hellman parameters in the same form provided
+    /// by PKIXPrivateKeyDH
+    /// </summary>
+    public interface IKeyPrivateECDH {
+        /// <summary>The Jose curve identifier.</summary>
+        string CurveJose { get; }
+
+        /// <summary> ASN.1 member Data </summary>
+        byte[] Data { get; }
+
+        /// <summary>If true, this is a recryption key.</summary>
+        bool IsRecryption { get;}
+        }
+
+    /// <summary>
+    /// Interface exposing the Diffie Hellman result parameters in the same form provided
+    /// by AgreementDH
+    /// </summary>
+    public interface IKeyResultECDH {
+        /// <summary>The Jose curve identifier.</summary>
+        string CurveJose { get; }
+
+        /// <summary> ASN.1 member Data </summary>
+        byte[] Data { get;}
+        }
+
+
+    /// <summary>
     /// DH Key Pair
     /// </summary>
     public abstract class KeyPairBaseECDH : KeyPairAdvanced {

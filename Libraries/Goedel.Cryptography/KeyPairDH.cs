@@ -7,6 +7,50 @@ using System.Numerics;
 
 namespace Goedel.Cryptography {
 
+
+    /// <summary>
+    /// Interface exposing the public Diffie Hellman parameters in the same form provided
+    /// by PKIXPublicKeyDH
+    /// </summary>
+    public interface IKeyPublicDH {
+
+        /// <summary> ASN.1 member Shared </summary>
+        byte[] Shared { get; set; }
+
+        /// <summary> ASN.1 member Public </summary>
+        byte[] Public { get; set; }
+        }
+
+    /// <summary>
+    /// Interface exposing the private Diffie Hellman parameters in the same form provided
+    /// by PKIXPrivateKeyDH
+    /// </summary>
+    public interface IKeyPrivateDH {
+
+        public 
+
+        /// <summary> ASN.1 member Shared </summary>
+        byte[] Shared { get; set; }
+
+        /// <summary> ASN.1 member Public </summary>
+        byte[] Public { get; set; }
+
+        /// <summary> ASN.1 member Private </summary>
+        byte[] Private { get; set; }
+        }
+
+
+    /// <summary>
+    /// Interface exposing the Diffie Hellman result parameters in the same form provided
+    /// by AgreementDH
+    /// </summary>
+    public interface IKeyResultDH {
+
+        /// <summary> ASN.1 member Result </summary>
+        byte[] Result { get; set; }
+        }
+
+
     /// <summary>
     /// Base class for DH key exchange. Algorithm identifier, factory and conversion methods are
     /// defined in this class. To make use of a different cryptographic implementation, implement
@@ -269,7 +313,7 @@ namespace Goedel.Cryptography {
         public override KeyPairAdvanced KeyPair(IKeyAdvancedPrivate privateKey,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any)
-            => new KeyPairDH((DiffeHellmanPrivate)privateKey, 
+            => new KeyPairDH((DiffeHellmanPrivate)privateKey,
                     keySecurity: keySecurity);
 
         /// <summary>

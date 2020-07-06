@@ -74,6 +74,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetCatalogCapability">
+            <summary>
+            Return the publication catalog. This is a catalog that the service MUST have
+            read access to. Not clear that the clients need access though.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
@@ -664,16 +671,7 @@
             <param name="id"></param>
             <returns>The result of the transaction.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.CreateGroup(Goedel.Protocol.JpcSession,System.String,Goedel.Mesh.ProfileGroup)">
-            <summary>
-            Create a recryption group.
-            </summary>
-            <param name="jpcSession">The Mesh client session.</param>
-            <param name="subjectAccount">The owner of the group.</param>
-            <param name="profileGroup">The group profile.</param>
-            <returns>The result of the transaction.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.Decrypt(Goedel.Protocol.JpcSession,System.String,Goedel.Cryptography.KeyPair,System.String)">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.Operate(Goedel.Protocol.JpcSession,System.String,System.Collections.Generic.List{Goedel.Mesh.CryptographicOperation})">
             <summary>
             Respond to a decryption request.
             <para>This involves the steps of resolving the group, resolving the membership

@@ -107,7 +107,7 @@ namespace Goedel.ASN {
         /// <summary>
         /// ASN.1 member Data 
         /// </summary>
-        public byte[] Data;
+        public byte[] Data { get; set; }
 
 
         /// <summary>

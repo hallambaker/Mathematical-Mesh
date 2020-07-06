@@ -78,7 +78,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestDH_Recryption_2() {
 
-            var BobSplit = GroupPrivate.MakeRecryptionKeySet(2);
+            var BobSplit = GroupPrivate.MakeThresholdKeySet(2);
             var BobRecryption = BobSplit[0] as DiffeHellmanPrivate;
             var BobDecryption = BobSplit[1] as DiffeHellmanPrivate;
 
@@ -116,7 +116,7 @@ namespace Goedel.XUnit {
             var AliceAgreeW = AlicePrivate.Agreement(GroupKeyPublic);
 
             // Keyset for decryption
-            var KeySet = GroupPrivate.MakeRecryptionKeySet(Shares);
+            var KeySet = GroupPrivate.MakeThresholdKeySet(Shares);
 
             // Calculate part results
             var Recrypts = new BigInteger[Shares];

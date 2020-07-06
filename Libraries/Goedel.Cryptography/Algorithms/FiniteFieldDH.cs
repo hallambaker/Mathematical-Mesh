@@ -323,12 +323,23 @@ namespace Goedel.Cryptography.Algorithms {
             }
         #endregion
         #region // Advanced functions
+
+
+        /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
         /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        public IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+        public IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
             BigInteger accumulator = 0;
             var result = new IKeyAdvancedPrivate[shares];
 

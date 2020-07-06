@@ -32,6 +32,7 @@ using Goedel.Protocol;
 
 using Goedel.Mesh;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 
 
 namespace Goedel.Mesh {
@@ -94,8 +95,14 @@ namespace Goedel.Mesh {
 			{"PollClaimResponse", PollClaimResponse._Factory},
 			{"CreateGroupRequest", CreateGroupRequest._Factory},
 			{"CreateGroupResponse", CreateGroupResponse._Factory},
-			{"DecryptRequest", DecryptRequest._Factory},
-			{"DecryptResponse", DecryptResponse._Factory}			};
+			{"CryptographicOperation", CryptographicOperation._Factory},
+			{"CryptographicOperationSign", CryptographicOperationSign._Factory},
+			{"CryptographicOperationKeyAgreement", CryptographicOperationKeyAgreement._Factory},
+			{"CryptographicOperationGenerate", CryptographicOperationGenerate._Factory},
+			{"CryptographicOperationShare", CryptographicOperationShare._Factory},
+			{"CryptographicResult", CryptographicResult._Factory},
+			{"OperateRequest", OperateRequest._Factory},
+			{"OperateResponse", OperateResponse._Factory}			};
 
 		/// <summary>
         /// Construct an instance from the specified tagged JSONReader stream.
@@ -277,14 +284,14 @@ namespace Goedel.Mesh {
 						JPCInterface.CreateGroup (request, session ?? JpcSession);
 
         /// <summary>
-		/// Base method for implementing the transaction  Decrypt.
+		/// Base method for implementing the transaction  Operate.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual DecryptResponse Decrypt (
-                DecryptRequest request, JpcSession session=null) => 
-						JPCInterface.Decrypt (request, session ?? JpcSession);
+        public virtual OperateResponse Operate (
+                OperateRequest request, JpcSession session=null) => 
+						JPCInterface.Operate (request, session ?? JpcSession);
 
         }
 
@@ -513,11 +520,11 @@ namespace Goedel.Mesh {
         /// <param name="request">The request object.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override DecryptResponse Decrypt (
-                DecryptRequest request, JpcSession session=null) {
+        public override OperateResponse Operate (
+                OperateRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Decrypt", request);
-            var response = DecryptResponse.FromJSON(responseData.JSONReader(), true);
+            var responseData = JPCRemoteSession.Post("Operate", request);
+            var response = OperateResponse.FromJSON(responseData.JSONReader(), true);
 
             return response;
             }
@@ -628,10 +635,10 @@ namespace Goedel.Mesh {
 					Response = Service.CreateGroup (Request, session);
 					break;
 					}
-				case "Decrypt" : {
-					var Request = new DecryptRequest();
+				case "Operate" : {
+					var Request = new OperateRequest();
 					Request.Deserialize (jsonReader);
-					Response = Service.Decrypt (Request, session);
+					Response = Service.Operate (Request, session);
 					break;
 					}
 				default : {
@@ -5256,7 +5263,17 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class DecryptRequest : MeshRequest {
+	abstract public partial class CryptographicOperation : MeshProtocol {
+        /// <summary>
+        ///The key identifier			
+        /// </summary>
+
+		public virtual string						KeyId  {get; set;}
+        /// <summary>
+        ///Lagrange coefficient multiplier to be applied to the private key
+        /// </summary>
+
+		public virtual byte[]						KeyCoefficient  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5266,13 +5283,692 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DecryptRequest";
+		public new const string __Tag = "CryptographicOperation";
+
+		/// <summary>
+        /// Factory method. Throws exception as this is an abstract class.
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (KeyId != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyId", 1);
+					_writer.WriteString (KeyId);
+				}
+			if (KeyCoefficient != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("KeyCoefficient", 1);
+					_writer.WriteBinary (KeyCoefficient);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicOperation FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicOperation;
+				}
+			throw new CannotCreateAbstract();
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "KeyId" : {
+					KeyId = jsonReader.ReadString ();
+					break;
+					}
+				case "KeyCoefficient" : {
+					KeyCoefficient = jsonReader.ReadBinary ();
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CryptographicOperationSign : CryptographicOperation {
+        /// <summary>
+        ///The data to sign
+        /// </summary>
+
+		public virtual byte[]						Data  {get; set;}
+        /// <summary>
+        ///Contribution to the R offset.
+        /// </summary>
+
+		public virtual byte[]						PartialR  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CryptographicOperationSign";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DecryptRequest();
+		public static new JSONObject _Factory () => new CryptographicOperationSign();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((CryptographicOperation)this).SerializeX(_writer, false, ref _first);
+			if (Data != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Data", 1);
+					_writer.WriteBinary (Data);
+				}
+			if (PartialR != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PartialR", 1);
+					_writer.WriteBinary (PartialR);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicOperationSign FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicOperationSign;
+				}
+		    var Result = new CryptographicOperationSign ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Data" : {
+					Data = jsonReader.ReadBinary ();
+					break;
+					}
+				case "PartialR" : {
+					PartialR = jsonReader.ReadBinary ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CryptographicOperationKeyAgreement : CryptographicOperation {
+        /// <summary>
+        ///The public key value to perform the agreement on.
+        /// </summary>
+
+		public virtual Key						PublicKey  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CryptographicOperationKeyAgreement";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CryptographicOperationKeyAgreement();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((CryptographicOperation)this).SerializeX(_writer, false, ref _first);
+			if (PublicKey != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("PublicKey", 1);
+					// expand this to a tagged structure
+					//PublicKey.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(PublicKey._Tag, 1);
+						bool firstinner = true;
+						PublicKey.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicOperationKeyAgreement FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicOperationKeyAgreement;
+				}
+		    var Result = new CryptographicOperationKeyAgreement ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "PublicKey" : {
+					PublicKey = Key.FromJSON (jsonReader, true) ;  // A tagged structure
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CryptographicOperationGenerate : CryptographicOperation {
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CryptographicOperationGenerate";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CryptographicOperationGenerate();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((CryptographicOperation)this).SerializeX(_writer, false, ref _first);
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicOperationGenerate FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicOperationGenerate;
+				}
+		    var Result = new CryptographicOperationGenerate ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CryptographicOperationShare : CryptographicOperation {
+		bool								__Threshold = false;
+		private int						_Threshold;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Threshold {
+			get => _Threshold;
+			set {_Threshold = value; __Threshold = true; }
+			}
+		bool								__Shares = false;
+		private int						_Shares;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						Shares {
+			get => _Shares;
+			set {_Shares = value; __Shares = true; }
+			}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CryptographicOperationShare";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CryptographicOperationShare();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((CryptographicOperation)this).SerializeX(_writer, false, ref _first);
+			if (__Threshold){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Threshold", 1);
+					_writer.WriteInteger32 (Threshold);
+				}
+			if (__Shares){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Shares", 1);
+					_writer.WriteInteger32 (Shares);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicOperationShare FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicOperationShare;
+				}
+		    var Result = new CryptographicOperationShare ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Threshold" : {
+					Threshold = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "Shares" : {
+					Shares = jsonReader.ReadInteger32 ();
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class CryptographicResult : MeshProtocol {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<byte[]>				Result  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CryptographicResult";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new CryptographicResult();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			if (Result != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Result", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Result) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteBinary (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CryptographicResult FromJSON (JSONReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CryptographicResult;
+				}
+		    var Result = new CryptographicResult ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "Result" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Result = new List <byte[]> ();
+					while (_Going) {
+						byte[] _Item = jsonReader.ReadBinary ();
+						Result.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				default : {
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	/// </summary>
+	public partial class OperateRequest : MeshRequest {
+        /// <summary>
+        ///The service account the capability is bound to
+        /// </summary>
+
+		public virtual string						AccountAddress  {get; set;}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<CryptographicOperation>				Operations  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "OperateRequest";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JSONObject _Factory () => new OperateRequest();
 
 
         /// <summary>
@@ -5301,6 +5997,27 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshRequest)this).SerializeX(_writer, false, ref _first);
+			if (AccountAddress != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("AccountAddress", 1);
+					_writer.WriteString (AccountAddress);
+				}
+			if (Operations != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Operations", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Operations) {
+					_writer.WriteArraySeparator (ref _firstarray);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -5312,15 +6029,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DecryptRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new OperateRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DecryptRequest;
+				return Out as OperateRequest;
 				}
-		    var Result = new DecryptRequest ();
+		    var Result = new OperateRequest ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -5334,6 +6051,21 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "AccountAddress" : {
+					AccountAddress = jsonReader.ReadString ();
+					break;
+					}
+				case "Operations" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Operations = new List <CryptographicOperation> ();
+					while (_Going) {
+						var _Item = CryptographicOperation.FromJSON (jsonReader, true); // a tagged structure
+						Operations.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;
@@ -5347,7 +6079,11 @@ namespace Goedel.Mesh {
 
 	/// <summary>
 	/// </summary>
-	public partial class DecryptResponse : MeshResponse {
+	public partial class OperateResponse : MeshResponse {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<CryptographicResult>				Results  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -5357,13 +6093,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "DecryptResponse";
+		public new const string __Tag = "OperateResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new DecryptResponse();
+		public static new JSONObject _Factory () => new OperateResponse();
 
 
         /// <summary>
@@ -5392,6 +6128,23 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((MeshResponse)this).SerializeX(_writer, false, ref _first);
+			if (Results != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Results", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Results) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -5403,15 +6156,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DecryptResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new OperateResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as DecryptResponse;
+				return Out as OperateResponse;
 				}
-		    var Result = new DecryptResponse ();
+		    var Result = new OperateResponse ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -5425,6 +6178,20 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Results" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Results = new List <CryptographicResult> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  CryptographicResult ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new CryptographicResult (jsonReader);
+						Results.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

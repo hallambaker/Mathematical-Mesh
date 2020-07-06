@@ -807,13 +807,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="shares">The number of keys to create.</param>
         /// <returns>The created keys</returns>
-        public override IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+        public override IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
             BigInteger Accumulator = 0;
             var Result = new IKeyAdvancedPrivate[shares];
 
             for (var i = 1; i < shares; i++) {
                 var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards25519.Q);
-                Result[i] = new CurveEdwards25519Private(NewPrivate) { IsRecryption = true };
+                Result[i] = new CurveEdwards25519Private(NewPrivate, exportable: true) { IsRecryption = true };
                 Accumulator = (Accumulator + NewPrivate).Mod(CurveEdwards25519.Q);
                 }
 

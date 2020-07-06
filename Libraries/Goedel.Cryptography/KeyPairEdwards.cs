@@ -244,25 +244,6 @@ namespace Goedel.Cryptography {
         /// <param name="aggregateR">The aggregare value of R</param>
         /// <param name="A">The public key value.</param>
         /// <param name="data">The data to sign.</param>
-        /// <param name="algorithmID">The algorithm identifier for the signature.</param>
-        /// <param name="context">The signature context information.</param>
-        /// <param name="prehash">If true, perform prehashing.</param>
-        /// <returns>The threshold signature contribution.</returns>
-        public BigInteger Complete(
-                    byte[] aggregateR,
-                    CurveEdwards A,
-                    byte[] data,
-                    CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
-                    byte[] context = null,
-                    bool prehash = true) =>
-            GetS(aggregateR, A, data, 1, algorithmID, context, prehash);
-
-        /// <summary>
-        /// Complete the threshold signature contribution
-        /// </summary>
-        /// <param name="aggregateR">The aggregare value of R</param>
-        /// <param name="A">The public key value.</param>
-        /// <param name="data">The data to sign.</param>
 
         /// <param name="lagrange">The Lagrange cofactor</param>
         /// <param name="algorithmID">The algorithm identifier for the signature.</param>

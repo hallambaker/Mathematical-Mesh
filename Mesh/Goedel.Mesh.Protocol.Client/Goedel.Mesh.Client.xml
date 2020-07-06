@@ -471,9 +471,6 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyDeviceEncryption">
             <summary>The device encryption key </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAccountEncryption">
-            <summary>The account encryption key</summary>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.ContextMesh,Goedel.Mesh.AccountEntry,System.String)">
             <summary>
             Constructor.
@@ -557,15 +554,6 @@
             <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
             <returns>The first cryptographic capability this device has been granted if found,
             otherwise null.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SyncProgressUpload(System.Int32)">
-            <summary>
-            Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
-            at a time. This should really be changed to something more Async callback friendly. Hours in
-            a day... ??? Its midnight.
-            </summary>
-            <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
-            <returns>If true, the synchronization has completed.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogApplication">
             <summary>Returns the application catalog for the account</summary>
@@ -940,6 +928,15 @@
             the service is held at the service, this means only downloading updates at present.
             </summary>
             <returns>The number of items synchronized</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SyncProgressUpload(System.Int32)">
+            <summary>
+            Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
+            at a time. This should really be changed to something more Async callback friendly. Hours in
+            a day... ??? Its midnight.
+            </summary>
+            <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
+            <returns>If true, the synchronization has completed.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.String,Goedel.Cryptography.CryptoKey)">
             <summary>

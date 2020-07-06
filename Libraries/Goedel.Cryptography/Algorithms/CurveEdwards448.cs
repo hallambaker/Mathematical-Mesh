@@ -741,7 +741,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="shares">The number of keys to create.</param>
         /// <returns>The created keys</returns>
-        public override IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares) {
+        public override IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares) {
             BigInteger Accumulator = 0;
             var Result = new IKeyAdvancedPrivate[shares];
 
@@ -756,7 +756,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
                 var NewPrivate = Platform.GetRandomBigInteger(CurveEdwards448.Q);
-                Result[i] = new CurveEdwards448Private(NewPrivate) { IsRecryption = true };
+                Result[i] = new CurveEdwards448Private(NewPrivate, exportable: true) { IsRecryption = true };
                 Accumulator = (Accumulator + NewPrivate) % (CurveEdwards448.Q);
 
                 }

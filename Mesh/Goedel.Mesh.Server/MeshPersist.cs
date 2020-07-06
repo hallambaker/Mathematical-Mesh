@@ -188,7 +188,11 @@ namespace Goedel.Mesh.Server {
 
 
 
-            var containerStatus = new List<ContainerStatus> {
+            var containerStatus = accountHandle.GetContainerStatuses();
+
+
+
+                new List<ContainerStatus> {
                     accountHandle.GetStatusSpool (SpoolInbound.Label),
                     accountHandle.GetStatusSpool (SpoolOutbound.Label),
                     accountHandle.GetStatusSpool (SpoolLocal.Label),
@@ -202,7 +206,7 @@ namespace Goedel.Mesh.Server {
 
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
-                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
+                EnvelopedProfileMaster = accountHandle.ProfileMesh?.DareEnvelope,
                 EnvelopedCatalogEntryDevice = null
                 };
 
@@ -395,32 +399,6 @@ namespace Goedel.Mesh.Server {
 
             }
 
-        /// <summary>
-        /// Create a recryption group.
-        /// </summary>
-        /// <param name="jpcSession">The Mesh client session.</param>
-        /// <param name="subjectAccount">The owner of the group.</param>
-        /// <param name="profileGroup">The group profile.</param>
-        /// <returns>The result of the transaction.</returns>
-        public CreateGroupResponse CreateGroup(
-                    JpcSession jpcSession,
-                    string subjectAccount,
-                    ProfileGroup profileGroup) {
-
-            // create account entry
-
-            // initialize member store
-
-            // create admin entry
-
-
-
-            var response = new CreateGroupResponse() {
-                };
-
-
-            return response;
-            }
 
         /// <summary>
         /// Respond to a decryption request.
@@ -434,27 +412,62 @@ namespace Goedel.Mesh.Server {
         /// <param name="ephemeral">The ephemeral key.</param>
         /// <param name="partialId">The partial key identifier.</param>
         /// <returns>Result of the decryption request.</returns>
-        public DecryptResponse Decrypt(
+        public OperateResponse Operate(
                     JpcSession jpcSession,
-                    string groupAccount,
-                    KeyPair ephemeral,
-                    string partialId) {
+                    string AccountAddress,
+                    List<CryptographicOperation> operations) {
 
             // Fetch the account 
+            using var accountEntry = GetAccountUnverified(AccountAddress);
 
+
+            // failing because the user didn't grant a decryption key.
+            using var catalogCapability = accountEntry.GetCatalogCapability();
+
+            var results = new List<CryptographicResult>();
             // Different stores depending on user or group account
-
+            foreach (var operation in operations) {
+                results.Add(Operate(catalogCapability, operation));
+                }
 
             // is the request authorized?
 
 
             // partial decrypt
 
-            var response = new DecryptResponse() {
+            var response = new OperateResponse() {
+                Results = results
                 };
 
 
             return response;
+            }
+
+
+        CryptographicResult Operate(
+                        CatalogCapability catalogCapability,
+                        CryptographicOperation cryptographicOperation) {
+
+            switch (cryptographicOperation) {
+                case CryptographicOperationKeyAgreement operationKeyAgreement: {
+                    return Operate(catalogCapability, operationKeyAgreement);
+                    }
+                }
+
+
+            throw new NYI();
+            }
+
+        CryptographicResult Operate(
+                CatalogCapability catalogCapability,
+                CryptographicOperationKeyAgreement cryptographicOperation) {
+
+            var capability = catalogCapability.TryFindKeyDecryption(cryptographicOperation.KeyId);
+            var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
+
+            var result = capability.Agreement(keypair);
+
+            throw new NYI();
             }
 
 

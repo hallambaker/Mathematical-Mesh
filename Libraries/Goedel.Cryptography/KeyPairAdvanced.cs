@@ -7,6 +7,15 @@ using System;
 
 namespace Goedel.Cryptography {
 
+
+    public struct ShamirSharePrivate {
+        public int Index;
+
+        public IKeyAdvancedPrivate Key;
+
+        }
+
+
     /// <summary>
     /// Key handle for an implementation level public key.
     /// </summary>
@@ -31,11 +40,21 @@ namespace Goedel.Cryptography {
     public interface IKeyAdvancedPrivate {
 
         /// <summary>
-        /// Make a recryption keyset by splitting the private key.
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
         /// </summary>
         /// <param name="shares">Number of shares to create</param>
-        /// <returns>Array shares.</returns>
-        IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares);
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold);
+
+
+        /// <summary>
+        /// Make a direct threshold keyset by splitting the private key.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <returns>The shares created.</returns>
+        IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares);
 
 
         /// <summary>

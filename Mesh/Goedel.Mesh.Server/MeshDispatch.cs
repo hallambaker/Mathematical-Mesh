@@ -371,7 +371,10 @@ namespace Goedel.Mesh.Server {
 
 
 
-
+        public override OperateResponse Operate(
+                    OperateRequest request, 
+                    JpcSession session = null) =>
+            Mesh.Operate(session, request.AccountAddress, request.Operations);
 
         }
     }

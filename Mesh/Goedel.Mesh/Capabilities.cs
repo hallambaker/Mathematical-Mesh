@@ -12,14 +12,14 @@ using System.IO;
 namespace Goedel.Mesh {
 
 
-    public interface ICryptographicClient {
+    public interface IMeshClient {
 
         /// <summary>
-        /// Perform a partial key agreement.
+        /// Get a Mesh client for the address <paramref name="accountAddress"/>.
         /// </summary>
-        /// <param name="keyPair">The key pair to perform the agreement against.</param>
-        /// <returns>The key agreement result.</returns>
-        public KeyAgreementResult Agreement(string service, KeyPair keyPair);
+        /// <param name="accountAddress">The account to obtain a client for.</param>
+        /// <returns>The client.</returns>
+        MeshService GetMeshClient (string accountAddress);
 
         }
 
@@ -38,6 +38,9 @@ namespace Goedel.Mesh {
         /// </summary>
 
         string ServiceAddress { get; set; }
+
+
+        IMeshClient CryptographicClient { get; set; }
 
         }
 
@@ -106,7 +109,8 @@ namespace Goedel.Mesh {
 
 
 
-        protected KeyPairAdvanced KeyPair => keyPair ?? null;
+        protected KeyPairAdvanced KeyPair => keyPair ?? 
+                KeyData.GetKeyPairAdvanced().CacheValue (out keyPair);
 
         KeyPairAdvanced keyPair;
 
@@ -141,7 +145,7 @@ namespace Goedel.Mesh {
         }
     public partial class CapabilityDecryptPartial :ICapabilityPartial {
 
-        public ICryptographicClient CryptographicClient { protected get; set; }
+        public IMeshClient CryptographicClient { get; set; }
         
         /// <summary>
         /// Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -160,8 +164,11 @@ namespace Goedel.Mesh {
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
+
+            var client = CryptographicClient.GetMeshClient(ServiceAddress);
+
             // delegate service... 
-            var partial2 = CryptographicClient.Agreement(ServiceAddress, ephemeral);
+            var partial2 = client.KeyAgreement(ServiceAddress, ServiceId, ephemeral);
 
             if (partial != null) {
                 //partial2 = partial2.Add(partial);
@@ -184,11 +191,12 @@ namespace Goedel.Mesh {
             var keyAdvanced = KeyData.GetKeyPair() as KeyPairAdvanced;
             var privateAdvanced = keyAdvanced.IKeyAdvancedPrivate;
 
-            var keys = privateAdvanced.MakeRecryptionKeySet(capabilities.Length);
+            var keys = privateAdvanced.MakeThresholdKeySet(capabilities.Length);
 
             for (var i = 0; i < capabilities.Length; i++) {
-                var key = keys[i].GetKeyPair(keySecurity: KeySecurity.Exportable);
-                capabilities[i].KeyData = new KeyData(key);
+                //var key = keys[i].GetKeyPair(keySecurity: KeySecurity.Exportable);
+                capabilities[i].KeyData = new KeyData(keys[i]) {
+                    UDF = UDF.Nonce()};
                 }
             }
 

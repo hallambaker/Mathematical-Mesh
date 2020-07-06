@@ -720,6 +720,16 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
 
+        /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+
+
         /// <summary>The public key, a point on the curve</summary>
         public abstract CurveEdwards PublicPoint { get;}
 
@@ -743,7 +753,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="shares">The number of keys to create.</param>
         /// <returns>The created keys</returns>
-        public abstract IKeyAdvancedPrivate[] MakeRecryptionKeySet(int shares);
+        public abstract IKeyAdvancedPrivate[] MakeThresholdKeySet(int shares);
 
         /// <summary>
         /// Make a recryption keyset by splitting the private key.

@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Client {
     /// Base class from which Contexts for Accounts and Groups are derrived. These are
     /// separate contexts but share functions and thus code.
     /// </summary>
-    public abstract class ContextAccountEntry : Disposable, IKeyLocate {
+    public abstract class ContextAccountEntry : Disposable, IKeyLocate, IMeshClient {
 
         #region // Properties
         ///<summary>The enclosing mesh context.</summary>
@@ -162,7 +162,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="accountAddress">The account service identifier.</param>
         /// <returns>The Mesh service client</returns>
-        protected MeshService GetMeshClient(string accountAddress) =>
+        public MeshService GetMeshClient(string accountAddress) =>
                     MeshMachine.GetMeshClient(accountAddress, KeyDeviceAuthentication,
                             Connection, ContextMesh.ProfileMesh);
 
@@ -226,6 +226,91 @@ namespace Goedel.Mesh.Client {
 
             return count;
             }
+
+        //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
+
+        /// <summary>
+        /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
+        /// at a time. This should really be changed to something more Async callback friendly. Hours in
+        /// a day... ??? Its midnight.
+        /// </summary>
+        /// <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
+        /// <returns>If true, the synchronization has completed.</returns>
+        public bool SyncProgressUpload(int maxEnvelopes = -1) {
+            bool complete = true;
+            var updates = new List<ContainerUpdate>();
+
+            //// Always do the devices first (if we are an admin device)
+            //if (SyncStatusDevice != null) {
+            //    maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
+            //    }
+
+            try {
+                // upload all the containers here
+                foreach (var store in DictionaryStores) {
+                    maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
+                    }
+                }
+            catch {
+                }
+
+
+            if (updates.Count > 0) {
+                var uploadRequest = new UploadRequest() {
+                    Updates = updates
+                    };
+                MeshClient.Upload(uploadRequest);
+                }
+
+            return complete;
+            }
+
+        int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+
+            //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
+
+            int uploads = 0;
+            if (maxEnvelopes == 0) {
+                return 0; // no more room left in this request.
+                }
+
+
+            if (syncStatus.Index <= syncStatus.Store.FrameCount) {
+                var container = syncStatus.Store.Container;
+                var envelopes = new List<DareEnvelope>();
+                var containerUpdate = new ContainerUpdate() {
+                    Container = syncStatus.Store.ContainerName,
+                    Envelopes = envelopes,
+                    Digest = container.Digest
+                    // put the digest value here
+                    };
+
+                var start = 1 + syncStatus.Index;
+                long last = (maxEnvelopes < 0) ? syncStatus.Store.FrameCount :
+                    Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
+
+                if (start == 0) {
+                    envelopes.Add(container.FrameZero);
+                    start++;
+                    }
+
+
+                for (var i = start; i < last; i++) {
+                    container.MoveToIndex(i);
+                    envelopes.Add(container.ReadDirect());
+                    }
+
+
+                containerUpdates.Add(containerUpdate);
+                }
+
+
+            return uploads;
+
+            }
+
+
+
 
         /// <summary>
         /// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.

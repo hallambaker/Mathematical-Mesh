@@ -120,7 +120,7 @@ namespace Goedel.Mesh {
             return null;
             }
 
-
+        public KeyPairAdvanced GetKeyPairAdvanced() => GetKeyPair() as KeyPairAdvanced;
 
 
 
@@ -145,6 +145,15 @@ namespace Goedel.Mesh {
                 ExportPrivateParameters();
                 }
             }
+
+        public KeyData(IKeyAdvancedPrivate keyAdvancedPrivate) =>
+            PrivateParameters = keyAdvancedPrivate switch {
+                IKeyPrivateECDH keyPrivateECDH => new PrivateKeyECDH(keyPrivateECDH),
+                _ => throw new NYI()
+                };
+
+ 
+
 
 
         /// <summary>
@@ -177,19 +186,6 @@ namespace Goedel.Mesh {
                 //var RSAKeyPair = KeyPair as RSAKeyPair;
 
                 throw new NYI("RSA Key Pair Management");
-
-
-                //var RSAParameters = PrivateKeyRSA.Parameters;
-                //KeyPair = new RSAKeyPair(RSAParameters);
-                //Certificate.KeyPair = KeyPair;
-
-                //if (X509Chain != null) {
-                //    foreach (var cert in X509Chain) {
-                //        CertificateStore.RegisterTrustedRoot(cert);
-                //        }
-                //    }
-
-                //CertificateStore.Register(Certificate);
                 }
             }
 

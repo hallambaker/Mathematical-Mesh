@@ -1488,18 +1488,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class Certificate : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member TBSCertificate 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.TBSCertificate TBSCertificate ;
-		/// <summary>
-		/// ASN.1 member SignatureAlgorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public byte []  Signature ;
+		/// <summary> ASN.1 member TBSCertificate </summary>
+		public Goedel.Cryptography.PKIX.TBSCertificate TBSCertificate  {get; set;}
+
+		/// <summary> ASN.1 member SignatureAlgorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public byte []  Signature  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1548,46 +1545,36 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class TBSCertificate : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member SerialNumber 
-		/// </summary>
-		public byte []  SerialNumber ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature ;
-		/// <summary>
-		/// ASN.1 member Issuer 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
-		/// <summary>
-		/// ASN.1 member Validity 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.Validity Validity ;
-		/// <summary>
-		/// ASN.1 member Subject 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Subject ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKeyInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
-		/// <summary>
-		/// ASN.1 member IssuerUniqueID 
-		/// </summary>
-		public byte []  IssuerUniqueID ;
-		/// <summary>
-		/// ASN.1 member SubjectUniqueID 
-		/// </summary>
-		public byte []  SubjectUniqueID ;
-		/// <summary>
-		/// ASN.1 member Extensions 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member SerialNumber </summary>
+		public byte []  SerialNumber  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature  {get; set;}
+
+		/// <summary> ASN.1 member Issuer </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Issuer  {get; set;}
+
+		/// <summary> ASN.1 member Validity </summary>
+		public Goedel.Cryptography.PKIX.Validity Validity  {get; set;}
+
+		/// <summary> ASN.1 member Subject </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Subject  {get; set;}
+
+		/// <summary> ASN.1 member SubjectPublicKeyInfo </summary>
+		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo  {get; set;}
+
+		/// <summary> ASN.1 member IssuerUniqueID </summary>
+		public byte []  IssuerUniqueID  {get; set;}
+
+		/// <summary> ASN.1 member SubjectUniqueID </summary>
+		public byte []  SubjectUniqueID  {get; set;}
+
+		/// <summary> ASN.1 member Extensions </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > Extensions  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1738,14 +1725,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class SubjectPublicKeyInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
+		/// <summary> ASN.1 member Algorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member SubjectPublicKey </summary>
+		public byte []  SubjectPublicKey  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1788,14 +1773,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class DigestInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
+		/// <summary> ASN.1 member Algorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member SubjectPublicKey </summary>
+		public byte []  SubjectPublicKey  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1838,14 +1821,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class AlgorithmIdentifier : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public int []  Algorithm ;
-		/// <summary>
-		/// ASN.1 member Parameters 
-		/// </summary>
-		public List <byte []  > Parameters ;
+		/// <summary> ASN.1 member Algorithm </summary>
+		public int []  Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member Parameters </summary>
+		public List <byte []  > Parameters  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1908,14 +1889,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class TaggedBitString : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public int []  Algorithm ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKey 
-		/// </summary>
-		public byte []  SubjectPublicKey ;
+		/// <summary> ASN.1 member Algorithm </summary>
+		public int []  Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member SubjectPublicKey </summary>
+		public byte []  SubjectPublicKey  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -1958,18 +1937,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class Extension : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member ObjectIdentifier 
-		/// </summary>
-		public int []  ObjectIdentifier ;
-		/// <summary>
-		/// ASN.1 member Critical 
-		/// </summary>
-		public bool  Critical ;
-		/// <summary>
-		/// ASN.1 member Data 
-		/// </summary>
-		public byte []  Data ;
+		/// <summary> ASN.1 member ObjectIdentifier </summary>
+		public int []  ObjectIdentifier  {get; set;}
+
+		/// <summary> ASN.1 member Critical </summary>
+		public bool  Critical  {get; set;}
+
+		/// <summary> ASN.1 member Data </summary>
+		public byte []  Data  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2024,14 +2000,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class Validity : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member NotBefore 
-		/// </summary>
-		public DateTime  NotBefore ;
-		/// <summary>
-		/// ASN.1 member NotAfter 
-		/// </summary>
-		public DateTime  NotAfter ;
+		/// <summary> ASN.1 member NotBefore </summary>
+		public DateTime  NotBefore  {get; set;}
+
+		/// <summary> ASN.1 member NotAfter </summary>
+		public DateTime  NotAfter  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2074,14 +2048,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class CertificateList : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member TBSCertList 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.TBSCertList TBSCertList ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.TaggedBitString Signature ;
+		/// <summary> ASN.1 member TBSCertList </summary>
+		public Goedel.Cryptography.PKIX.TBSCertList TBSCertList  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public Goedel.Cryptography.PKIX.TaggedBitString Signature  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2124,34 +2096,27 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class TBSCertList : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature ;
-		/// <summary>
-		/// ASN.1 member Issuer 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Issuer ;
-		/// <summary>
-		/// ASN.1 member ThisUpdate 
-		/// </summary>
-		public DateTime  ThisUpdate ;
-		/// <summary>
-		/// ASN.1 member NextUpdate 
-		/// </summary>
-		public DateTime  NextUpdate ;
-		/// <summary>
-		/// ASN.1 member RevokedCertificates 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.CertEntry > RevokedCertificates ;
-		/// <summary>
-		/// ASN.1 member CrlExtensions 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > CrlExtensions ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Signature  {get; set;}
+
+		/// <summary> ASN.1 member Issuer </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Issuer  {get; set;}
+
+		/// <summary> ASN.1 member ThisUpdate </summary>
+		public DateTime  ThisUpdate  {get; set;}
+
+		/// <summary> ASN.1 member NextUpdate </summary>
+		public DateTime  NextUpdate  {get; set;}
+
+		/// <summary> ASN.1 member RevokedCertificates </summary>
+		public List <Goedel.Cryptography.PKIX.CertEntry > RevokedCertificates  {get; set;}
+
+		/// <summary> ASN.1 member CrlExtensions </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > CrlExtensions  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2284,18 +2249,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class CertEntry : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member UserCertificate 
-		/// </summary>
-		public byte []  UserCertificate ;
-		/// <summary>
-		/// ASN.1 member RevocationDate 
-		/// </summary>
-		public DateTime  RevocationDate ;
-		/// <summary>
-		/// ASN.1 member CrlEntryExtensions 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > CrlEntryExtensions ;
+		/// <summary> ASN.1 member UserCertificate </summary>
+		public byte []  UserCertificate  {get; set;}
+
+		/// <summary> ASN.1 member RevocationDate </summary>
+		public DateTime  RevocationDate  {get; set;}
+
+		/// <summary> ASN.1 member CrlEntryExtensions </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > CrlEntryExtensions  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2370,10 +2332,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_at;  
 
-		/// <summary>
-		/// ASN.1 member Member 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.AttributeTypeValue > Member ;
+		/// <summary> ASN.1 member Member </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValue > Member  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2427,14 +2388,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class AttributeTypeValue : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Type 
-		/// </summary>
-		public int []  Type ;
-		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AnyString Value ;
+		/// <summary> ASN.1 member Type </summary>
+		public int []  Type  {get; set;}
+
+		/// <summary> ASN.1 member Value </summary>
+		public Goedel.Cryptography.PKIX.AnyString Value  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2483,22 +2442,18 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_at;  
 
-		/// <summary>
-		/// ASN.1 member IA5String 
-		/// </summary>
-		public string IA5String ;
-		/// <summary>
-		/// ASN.1 member BMPString 
-		/// </summary>
-		public string BMPString ;
-		/// <summary>
-		/// ASN.1 member UTF8String 
-		/// </summary>
-		public string UTF8String ;
-		/// <summary>
-		/// ASN.1 member PrintableString 
-		/// </summary>
-		public string PrintableString ;
+		/// <summary> ASN.1 member IA5String </summary>
+		public string IA5String  {get; set;}
+
+		/// <summary> ASN.1 member BMPString </summary>
+		public string BMPString  {get; set;}
+
+		/// <summary> ASN.1 member UTF8String </summary>
+		public string UTF8String  {get; set;}
+
+		/// <summary> ASN.1 member PrintableString </summary>
+		public string PrintableString  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2556,18 +2511,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class CertificationRequest : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member CertificationRequestInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.CertificationRequestInfo CertificationRequestInfo ;
-		/// <summary>
-		/// ASN.1 member SignatureAlgorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public byte []  Signature ;
+		/// <summary> ASN.1 member CertificationRequestInfo </summary>
+		public Goedel.Cryptography.PKIX.CertificationRequestInfo CertificationRequestInfo  {get; set;}
+
+		/// <summary> ASN.1 member SignatureAlgorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public byte []  Signature  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2616,22 +2568,18 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class CertificationRequestInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member Subject 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Subject ;
-		/// <summary>
-		/// ASN.1 member SubjectPublicKeyInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo ;
-		/// <summary>
-		/// ASN.1 member Attributes 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member Subject </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Subject  {get; set;}
+
+		/// <summary> ASN.1 member SubjectPublicKeyInfo </summary>
+		public Goedel.Cryptography.PKIX.SubjectPublicKeyInfo SubjectPublicKeyInfo  {get; set;}
+
+		/// <summary> ASN.1 member Attributes </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2726,14 +2674,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class AttributeTypeValues : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Type 
-		/// </summary>
-		public int []  Type ;
-		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public List <byte []  > Value ;
+		/// <summary> ASN.1 member Type </summary>
+		public int []  Type  {get; set;}
+
+		/// <summary> ASN.1 member Value </summary>
+		public List <byte []  > Value  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -2800,18 +2746,15 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID => Constants.OID__id_ce_authorityKeyIdentifier; 
 
-		/// <summary>
-		/// ASN.1 member KeyIdentifier 
-		/// </summary>
-		public byte []  KeyIdentifier ;
-		/// <summary>
-		/// ASN.1 member AuthorityCertIssuer 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.GeneralName > AuthorityCertIssuer ;
-		/// <summary>
-		/// ASN.1 member AuthorityCertSerialNumber 
-		/// </summary>
-		public int  AuthorityCertSerialNumber ;
+		/// <summary> ASN.1 member KeyIdentifier </summary>
+		public byte []  KeyIdentifier  {get; set;}
+
+		/// <summary> ASN.1 member AuthorityCertIssuer </summary>
+		public List <Goedel.Cryptography.PKIX.GeneralName > AuthorityCertIssuer  {get; set;}
+
+		/// <summary> ASN.1 member AuthorityCertSerialNumber </summary>
+		public int  AuthorityCertSerialNumber  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2882,10 +2825,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_subjectKeyIdentifier;  
 
-		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public byte []  Value ;
+		/// <summary> ASN.1 member Value </summary>
+		public byte []  Value  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2925,10 +2867,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_keyUsage;  
 
-		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public byte []  Value ;
+		/// <summary> ASN.1 member Value </summary>
+		public byte []  Value  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -2968,10 +2909,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_certificatePolicies;  
 
-		/// <summary>
-		/// ASN.1 member Value 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.PolicyInformation > Value ;
+		/// <summary> ASN.1 member Value </summary>
+		public List <Goedel.Cryptography.PKIX.PolicyInformation > Value  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3025,14 +2965,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PolicyInformation : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member PolicyIdentifier 
-		/// </summary>
-		public int []  PolicyIdentifier ;
-		/// <summary>
-		/// ASN.1 member PolicyQualifiers 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.PolicyQualifierInfo > PolicyQualifiers ;
+		/// <summary> ASN.1 member PolicyIdentifier </summary>
+		public int []  PolicyIdentifier  {get; set;}
+
+		/// <summary> ASN.1 member PolicyQualifiers </summary>
+		public List <Goedel.Cryptography.PKIX.PolicyQualifierInfo > PolicyQualifiers  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3095,14 +3033,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PolicyQualifierInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member PolicyQualifierId 
-		/// </summary>
-		public int []  PolicyQualifierId ;
-		/// <summary>
-		/// ASN.1 member Qualifier 
-		/// </summary>
-		public byte []  Qualifier ;
+		/// <summary> ASN.1 member PolicyQualifierId </summary>
+		public int []  PolicyQualifierId  {get; set;}
+
+		/// <summary> ASN.1 member Qualifier </summary>
+		public byte []  Qualifier  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3151,10 +3087,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_subjectAltName;  
 
-		/// <summary>
-		/// ASN.1 member Names 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.GeneralName > Names ;
+		/// <summary> ASN.1 member Names </summary>
+		public List <Goedel.Cryptography.PKIX.GeneralName > Names  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3214,14 +3149,12 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_subjectAltName;  
 
-		/// <summary>
-		/// ASN.1 member RFC822Name 
-		/// </summary>
-		public string RFC822Name ;
-		/// <summary>
-		/// ASN.1 member DNSName 
-		/// </summary>
-		public string DNSName ;
+		/// <summary> ASN.1 member RFC822Name </summary>
+		public string RFC822Name  {get; set;}
+
+		/// <summary> ASN.1 member DNSName </summary>
+		public string DNSName  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3264,14 +3197,12 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID => Constants.OID__id_ce_basicConstraints; 
 
-		/// <summary>
-		/// ASN.1 member CA 
-		/// </summary>
-		public bool  CA ;
-		/// <summary>
-		/// ASN.1 member PathLenConstraint 
-		/// </summary>
-		public int  PathLenConstraint ;
+		/// <summary> ASN.1 member CA </summary>
+		public bool  CA  {get; set;}
+
+		/// <summary> ASN.1 member PathLenConstraint </summary>
+		public int  PathLenConstraint  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3321,14 +3252,12 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID => Constants.OID__id_ce_nameConstraints; 
 
-		/// <summary>
-		/// ASN.1 member PermittedSubtrees 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.GeneralSubtrees PermittedSubtrees ;
-		/// <summary>
-		/// ASN.1 member ExcludedSubtrees 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.GeneralSubtrees ExcludedSubtrees ;
+		/// <summary> ASN.1 member PermittedSubtrees </summary>
+		public Goedel.Cryptography.PKIX.GeneralSubtrees PermittedSubtrees  {get; set;}
+
+		/// <summary> ASN.1 member ExcludedSubtrees </summary>
+		public Goedel.Cryptography.PKIX.GeneralSubtrees ExcludedSubtrees  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3368,18 +3297,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class GeneralSubtrees : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Base 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.GeneralName Base ;
-		/// <summary>
-		/// ASN.1 member Minimum 
-		/// </summary>
-		public int  Minimum ;
-		/// <summary>
-		/// ASN.1 member Maximum 
-		/// </summary>
-		public int  Maximum ;
+		/// <summary> ASN.1 member Base </summary>
+		public Goedel.Cryptography.PKIX.GeneralName Base  {get; set;}
+
+		/// <summary> ASN.1 member Minimum </summary>
+		public int  Minimum  {get; set;}
+
+		/// <summary> ASN.1 member Maximum </summary>
+		public int  Maximum  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3434,10 +3360,9 @@ namespace Goedel.Cryptography.PKIX {
 		/// </summary>
 		public override int [] OID  => Constants.OID__id_ce_extKeyUsage;  
 
-		/// <summary>
-		/// ASN.1 member KeyPurpose 
-		/// </summary>
-		public List <int []  > KeyPurpose ;
+		/// <summary> ASN.1 member KeyPurpose </summary>
+		public List <int []  > KeyPurpose  {get; set;}
+
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
 		///
@@ -3491,18 +3416,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PFX : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member AuthSafe 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.ContentInfo AuthSafe ;
-		/// <summary>
-		/// ASN.1 member MacData 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.MacData MacData ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member AuthSafe </summary>
+		public Goedel.Cryptography.PKIX.ContentInfo AuthSafe  {get; set;}
+
+		/// <summary> ASN.1 member MacData </summary>
+		public Goedel.Cryptography.PKIX.MacData MacData  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3551,14 +3473,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class ContentInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member ContentType 
-		/// </summary>
-		public int []  ContentType ;
-		/// <summary>
-		/// ASN.1 member Content 
-		/// </summary>
-		public byte []  Content ;
+		/// <summary> ASN.1 member ContentType </summary>
+		public int []  ContentType  {get; set;}
+
+		/// <summary> ASN.1 member Content </summary>
+		public byte []  Content  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3601,18 +3521,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class MacData : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member MAC 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.DigestInfo MAC ;
-		/// <summary>
-		/// ASN.1 member MacSalt 
-		/// </summary>
-		public byte []  MacSalt ;
-		/// <summary>
-		/// ASN.1 member Iterations 
-		/// </summary>
-		public int  Iterations ;
+		/// <summary> ASN.1 member MAC </summary>
+		public Goedel.Cryptography.PKIX.DigestInfo MAC  {get; set;}
+
+		/// <summary> ASN.1 member MacSalt </summary>
+		public byte []  MacSalt  {get; set;}
+
+		/// <summary> ASN.1 member Iterations </summary>
+		public int  Iterations  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3667,14 +3584,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class EncryptedData : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member EncryptedContent 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.EncryptedContentInfo EncryptedContent ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member EncryptedContent </summary>
+		public Goedel.Cryptography.PKIX.EncryptedContentInfo EncryptedContent  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3717,18 +3632,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class EncryptedContentInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member ContentType 
-		/// </summary>
-		public int []  ContentType ;
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm ;
-		/// <summary>
-		/// ASN.1 member EncryptedContent 
-		/// </summary>
-		public byte []  EncryptedContent ;
+		/// <summary> ASN.1 member ContentType </summary>
+		public int []  ContentType  {get; set;}
+
+		/// <summary> ASN.1 member Algorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member EncryptedContent </summary>
+		public byte []  EncryptedContent  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3777,14 +3689,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class EncryptedPrivateKeyInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member EncryptionAlgorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier EncryptionAlgorithm ;
-		/// <summary>
-		/// ASN.1 member EncryptedData 
-		/// </summary>
-		public byte []  EncryptedData ;
+		/// <summary> ASN.1 member EncryptionAlgorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier EncryptionAlgorithm  {get; set;}
+
+		/// <summary> ASN.1 member EncryptedData </summary>
+		public byte []  EncryptedData  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3827,22 +3737,18 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PrivateKeyInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member PrivateKeyAlgorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier PrivateKeyAlgorithm ;
-		/// <summary>
-		/// ASN.1 member PrivateKey 
-		/// </summary>
-		public byte []  PrivateKey ;
-		/// <summary>
-		/// ASN.1 member Attributes 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member PrivateKeyAlgorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier PrivateKeyAlgorithm  {get; set;}
+
+		/// <summary> ASN.1 member PrivateKey </summary>
+		public byte []  PrivateKey  {get; set;}
+
+		/// <summary> ASN.1 member Attributes </summary>
+		public List <Goedel.Cryptography.PKIX.AttributeTypeValues > Attributes  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3917,14 +3823,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PKIXPublicKeyRSA : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Modulus 
-		/// </summary>
-		public byte []  Modulus ;
-		/// <summary>
-		/// ASN.1 member PublicExponent 
-		/// </summary>
-		public byte []  PublicExponent ;
+		/// <summary> ASN.1 member Modulus </summary>
+		public byte []  Modulus  {get; set;}
+
+		/// <summary> ASN.1 member PublicExponent </summary>
+		public byte []  PublicExponent  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -3967,42 +3871,33 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PKIXPrivateKeyRSA : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member Modulus 
-		/// </summary>
-		public byte []  Modulus ;
-		/// <summary>
-		/// ASN.1 member PublicExponent 
-		/// </summary>
-		public byte []  PublicExponent ;
-		/// <summary>
-		/// ASN.1 member PrivateExponent 
-		/// </summary>
-		public byte []  PrivateExponent ;
-		/// <summary>
-		/// ASN.1 member Prime1 
-		/// </summary>
-		public byte []  Prime1 ;
-		/// <summary>
-		/// ASN.1 member Prime2 
-		/// </summary>
-		public byte []  Prime2 ;
-		/// <summary>
-		/// ASN.1 member Exponent1 
-		/// </summary>
-		public byte []  Exponent1 ;
-		/// <summary>
-		/// ASN.1 member Exponent2 
-		/// </summary>
-		public byte []  Exponent2 ;
-		/// <summary>
-		/// ASN.1 member Coefficient 
-		/// </summary>
-		public byte []  Coefficient ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member Modulus </summary>
+		public byte []  Modulus  {get; set;}
+
+		/// <summary> ASN.1 member PublicExponent </summary>
+		public byte []  PublicExponent  {get; set;}
+
+		/// <summary> ASN.1 member PrivateExponent </summary>
+		public byte []  PrivateExponent  {get; set;}
+
+		/// <summary> ASN.1 member Prime1 </summary>
+		public byte []  Prime1  {get; set;}
+
+		/// <summary> ASN.1 member Prime2 </summary>
+		public byte []  Prime2  {get; set;}
+
+		/// <summary> ASN.1 member Exponent1 </summary>
+		public byte []  Exponent1  {get; set;}
+
+		/// <summary> ASN.1 member Exponent2 </summary>
+		public byte []  Exponent2  {get; set;}
+
+		/// <summary> ASN.1 member Coefficient </summary>
+		public byte []  Coefficient  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4087,14 +3982,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class DHDomain : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Modulus 
-		/// </summary>
-		public byte []  Modulus ;
-		/// <summary>
-		/// ASN.1 member Generator 
-		/// </summary>
-		public byte []  Generator ;
+		/// <summary> ASN.1 member Modulus </summary>
+		public byte []  Modulus  {get; set;}
+
+		/// <summary> ASN.1 member Generator </summary>
+		public byte []  Generator  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4137,14 +4030,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PKIXPublicKeyDH : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Shared 
-		/// </summary>
-		public byte []  Shared ;
-		/// <summary>
-		/// ASN.1 member Public 
-		/// </summary>
-		public byte []  Public ;
+		/// <summary> ASN.1 member Shared </summary>
+		public byte []  Shared  {get; set;}
+
+		/// <summary> ASN.1 member Public </summary>
+		public byte []  Public  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4187,18 +4078,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class PKIXPrivateKeyDH : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Shared 
-		/// </summary>
-		public byte []  Shared ;
-		/// <summary>
-		/// ASN.1 member Public 
-		/// </summary>
-		public byte []  Public ;
-		/// <summary>
-		/// ASN.1 member Private 
-		/// </summary>
-		public byte []  Private ;
+		/// <summary> ASN.1 member Shared </summary>
+		public byte []  Shared  {get; set;}
+
+		/// <summary> ASN.1 member Public </summary>
+		public byte []  Public  {get; set;}
+
+		/// <summary> ASN.1 member Private </summary>
+		public byte []  Private  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4247,10 +4135,9 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class AgreementDH : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Result 
-		/// </summary>
-		public byte []  Result ;
+		/// <summary> ASN.1 member Result </summary>
+		public byte []  Result  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4287,18 +4174,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class Endorsement : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member TBSEndorsement 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.TBSEndorsement TBSEndorsement ;
-		/// <summary>
-		/// ASN.1 member SignatureAlgorithm 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm ;
-		/// <summary>
-		/// ASN.1 member Signature 
-		/// </summary>
-		public byte []  Signature ;
+		/// <summary> ASN.1 member TBSEndorsement </summary>
+		public Goedel.Cryptography.PKIX.TBSEndorsement TBSEndorsement  {get; set;}
+
+		/// <summary> ASN.1 member SignatureAlgorithm </summary>
+		public Goedel.Cryptography.PKIX.AlgorithmIdentifier SignatureAlgorithm  {get; set;}
+
+		/// <summary> ASN.1 member Signature </summary>
+		public byte []  Signature  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4347,34 +4231,27 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class TBSEndorsement : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Version 
-		/// </summary>
-		public int  Version ;
-		/// <summary>
-		/// ASN.1 member Issued 
-		/// </summary>
-		public DateTime  Issued ;
-		/// <summary>
-		/// ASN.1 member IssuerKeyIdentifier 
-		/// </summary>
-		public byte []  IssuerKeyIdentifier ;
-		/// <summary>
-		/// ASN.1 member SubjectKeyIdentifier 
-		/// </summary>
-		public byte []  SubjectKeyIdentifier ;
-		/// <summary>
-		/// ASN.1 member Subject 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Name > Subject ;
-		/// <summary>
-		/// ASN.1 member SubjectAltName 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.SubjectAltName > SubjectAltName ;
-		/// <summary>
-		/// ASN.1 member Extensions 
-		/// </summary>
-		public List <Goedel.Cryptography.PKIX.Extension > Extensions ;
+		/// <summary> ASN.1 member Version </summary>
+		public int  Version  {get; set;}
+
+		/// <summary> ASN.1 member Issued </summary>
+		public DateTime  Issued  {get; set;}
+
+		/// <summary> ASN.1 member IssuerKeyIdentifier </summary>
+		public byte []  IssuerKeyIdentifier  {get; set;}
+
+		/// <summary> ASN.1 member SubjectKeyIdentifier </summary>
+		public byte []  SubjectKeyIdentifier  {get; set;}
+
+		/// <summary> ASN.1 member Subject </summary>
+		public List <Goedel.Cryptography.PKIX.Name > Subject  {get; set;}
+
+		/// <summary> ASN.1 member SubjectAltName </summary>
+		public List <Goedel.Cryptography.PKIX.SubjectAltName > SubjectAltName  {get; set;}
+
+		/// <summary> ASN.1 member Extensions </summary>
+		public List <Goedel.Cryptography.PKIX.Extension > Extensions  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4507,18 +4384,15 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class RFC2631OtherInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member KeyInfo 
-		/// </summary>
-		public Goedel.Cryptography.PKIX.KeySpecificInfo KeyInfo ;
-		/// <summary>
-		/// ASN.1 member PartyAInfo 
-		/// </summary>
-		public byte []  PartyAInfo ;
-		/// <summary>
-		/// ASN.1 member SuppPubInfo 
-		/// </summary>
-		public byte []  SuppPubInfo ;
+		/// <summary> ASN.1 member KeyInfo </summary>
+		public Goedel.Cryptography.PKIX.KeySpecificInfo KeyInfo  {get; set;}
+
+		/// <summary> ASN.1 member PartyAInfo </summary>
+		public byte []  PartyAInfo  {get; set;}
+
+		/// <summary> ASN.1 member SuppPubInfo </summary>
+		public byte []  SuppPubInfo  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 
@@ -4567,14 +4441,12 @@ namespace Goedel.Cryptography.PKIX {
     /// </summary>
 	public partial class KeySpecificInfo : Goedel.ASN.Root {
 
-		/// <summary>
-		/// ASN.1 member Algorithm 
-		/// </summary>
-		public int []  Algorithm ;
-		/// <summary>
-		/// ASN.1 member Counter 
-		/// </summary>
-		public byte []  Counter ;
+		/// <summary> ASN.1 member Algorithm </summary>
+		public int []  Algorithm  {get; set;}
+
+		/// <summary> ASN.1 member Counter </summary>
+		public byte []  Counter  {get; set;}
+
 
 		/// <summary>
 		/// Encode ASN.1 class members to specified buffer. 

@@ -82,7 +82,7 @@ namespace Goedel.Mesh.Server {
         protected AccountPersonal AccountPersonal => AccountEntry as AccountPersonal;
 
         ///<summary>Convenience accessor to the Mesh Profile.</summary>
-        public ProfileMesh ProfileMesh => AccountPersonal.ProfileMesh;
+        public ProfileMesh ProfileMesh => AccountPersonal?.ProfileMesh;
 
 
         /// <summary>
@@ -114,6 +114,15 @@ namespace Goedel.Mesh.Server {
         /// <returns></returns>
         public CatalogPublication GetCatalogPublication() =>
             new CatalogPublication(AccountEntry.Directory);
+
+
+        /// <summary>
+        /// Return the publication catalog. This is a catalog that the service MUST have
+        /// read access to. Not clear that the clients need access though.
+        /// </summary>
+        /// <returns></returns>
+        public CatalogCapability GetCatalogCapability() =>
+            new CatalogCapability(AccountEntry.Directory);
 
 
         /// <summary>
@@ -211,6 +220,38 @@ namespace Goedel.Mesh.Server {
         /// <param name="envelopes">The envelopes to append.</param>
         public void StoreAppend(string label, List<DareEnvelope> envelopes) =>
             Store.Append(AccountEntry.Directory, envelopes, label);
+
+
+
+
+        public List<ContainerStatus> GetContainerStatuses() {
+            var result = new List<ContainerStatus> {
+                    GetStatusSpool (SpoolInbound.Label),
+                    GetStatusSpool (SpoolOutbound.Label),
+                    GetStatusSpool (SpoolLocal.Label),
+                    GetStatusCatalog (CatalogCapability.Label)
+
+                };
+
+            switch (AccountEntry) {
+                case AccountGroup _: {
+                    result.Add(GetStatusCatalog(CatalogMember.Label));
+                    break;
+                    }
+
+                case Goedel.Mesh.Server.AccountPersonal _: {
+                    result.Add(GetStatusCatalog(CatalogCredential.Label));
+                    result.Add(GetStatusCatalog(CatalogDevice.Label));
+                    result.Add(GetStatusCatalog(CatalogContact.Label));
+                    result.Add(GetStatusCatalog(CatalogApplication.Label));
+                    result.Add(GetStatusCatalog(CatalogBookmark.Label));
+                    result.Add(GetStatusCatalog(CatalogCalendar.Label));
+                    break;
+                    }
+                }
+
+            return result;
+            }
 
         }
     }
