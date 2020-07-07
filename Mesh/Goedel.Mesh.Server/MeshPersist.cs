@@ -20,6 +20,7 @@
 
 using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
@@ -465,9 +466,14 @@ namespace Goedel.Mesh.Server {
             var capability = catalogCapability.TryFindKeyDecryption(cryptographicOperation.KeyId);
             var keypair = cryptographicOperation.PublicKey.GetKeyPair(KeySecurity.Exportable);
 
-            var result = capability.Agreement(keypair);
+            var keyAgreement = capability.Agreement(keypair);
 
-            throw new NYI();
+            var cryptographicResultKeyAgreement = new CryptographicResultKeyAgreement() {
+                KeyAgreement = KeyAgreement.Factory(keyAgreement)
+                };
+
+
+            return cryptographicResultKeyAgreement;
             }
 
 

@@ -219,10 +219,22 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the Goedel.Cryptography result.
         /// </summary>
-        public override KeyAgreementResult KeyAgreementResult => throw new NYI();
-        //new ResultECDH() {
-        //    Agreement = Result.BigIntegerLittleEndian()
-        //    };
+        public override KeyAgreementResult KeyAgreementResult => Curve switch
+            {
+                CurveX448.CurveJose => new CurveX448Result() {
+                    AgreementX448 = new CurveX448 (Result)},
+                CurveX25519.CurveJose => new CurveX25519Result() {
+                    AgreementX25519 = new CurveX25519(Result)
+                    },
+                //CurveEdwards448.CurveJose => new CurveEdwards448Result() {
+                //    AgreementEd448 = new CurveEdwards448(Result)
+                //    },
+                //CurveEdwards25519.CurveJose => new CurveEdwards25519Result() {
+                //    AgreementEd25519 = new CurveEdwards25519(Result)
+                //    },
+                _ => throw new NYI()
+                };
+
 
         /// <summary>
         /// Default constructor
@@ -234,7 +246,10 @@ namespace Goedel.Cryptography.Jose {
         /// Constructor from the specified Goedel.Cryptography result.
         /// </summary>
         /// <param name="result">The Goedel.Cryptography result.</param>
-        public KeyAgreementECDH(ResultECDH result) => throw new NYI();
+        public KeyAgreementECDH(ResultECDH result) {
+            Result = result.Agreement.KeyAdvancedPublic.Encoding;
+            Curve = result.CurveJose;
+            }
         //Result = result.Agreement.ToByteArray();
         }
 

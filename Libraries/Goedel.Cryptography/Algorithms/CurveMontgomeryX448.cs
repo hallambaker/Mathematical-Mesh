@@ -12,6 +12,9 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public class CurveX448 : CurveMontgomery {
 
+        ///<summary>The Jose curve name</summary>
+        public const string CurveJose = "X448";
+
         #region // curve parameter constant definitions
         ///<summary>The domain parameters</summary>
         public override DomainParameters DomainParameters => DomainParameters.Curve448;
@@ -495,7 +498,8 @@ namespace Goedel.Cryptography.Algorithms {
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
     public class CurveX448Result : ResultECDH {
-
+        ///<summary>The Jose curve name</summary>
+        public override string CurveJose => CurveX448.CurveJose;
         ///<summary>The key agreement value, a point on the curve.</summary>
         public override Curve Agreement => AgreementX448;
 

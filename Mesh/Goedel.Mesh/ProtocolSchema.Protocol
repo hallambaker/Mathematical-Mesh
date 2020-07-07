@@ -564,8 +564,12 @@
 
 
 	Structure CryptographicResult
-		Binary Result
-			Multiple
+		String Error
+
+	Structure CryptographicResultKeyAgreement
+		Inherits CryptographicResult
+		TStruct KeyAgreement KeyAgreement
+			
 
 
 	Transaction Public Operate OperateRequest OperateResponse
@@ -582,7 +586,7 @@
 
 	Message OperateResponse
 		Inherits MeshResponse
-		Struct CryptographicResult Results
+		TStruct CryptographicResult Results
 			Multiple
 
 

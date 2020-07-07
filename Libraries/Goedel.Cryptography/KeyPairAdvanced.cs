@@ -306,6 +306,8 @@ namespace Goedel.Cryptography {
     /// Base clase for elliptic curve key agreement results (may be eliminated at a future date).
     /// </summary>
     public abstract class ResultECDH : KeyAgreementResult {
+        ///<summary>The Jose curve name</summary>
+        public abstract string CurveJose { get; }
 
         ///<summary>The key agreement value, a point on the curve.</summary>
         public abstract Curve Agreement { get; }

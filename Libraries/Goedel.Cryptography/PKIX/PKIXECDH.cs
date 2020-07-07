@@ -1,4 +1,7 @@
-﻿namespace Goedel.Cryptography.PKIX {
+﻿
+using Goedel.Cryptography.Algorithms;
+
+namespace Goedel.Cryptography.PKIX {
 
 
     /// <summary>
@@ -108,7 +111,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "Ed25519";
+        public override string CurveJose => CurveEdwards25519.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -136,7 +139,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "Ed25519";
+        public override string CurveJose => CurveEdwards25519.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -168,7 +171,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "Ed448";
+        public override string CurveJose => CurveEdwards448.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -196,7 +199,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "Ed448";
+        public override string CurveJose => CurveEdwards448.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -226,7 +229,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "X25519";
+        public override string CurveJose => CurveX25519.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -256,7 +259,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "X25519";
+        public override string CurveJose => CurveX25519.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -288,7 +291,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "X448";
+        public override string CurveJose => CurveX448.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key
@@ -318,7 +321,7 @@
         /// <summary>
         /// The Jose curve identifier (Ed25519);
         /// </summary>
-        public override string CurveJose => "X448";
+        public override string CurveJose => CurveX448.CurveJose;
 
         /// <summary>
         /// Return the algorithm identifier that represents this key

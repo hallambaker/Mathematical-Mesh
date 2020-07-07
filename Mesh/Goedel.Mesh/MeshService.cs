@@ -126,8 +126,9 @@ namespace Goedel.Mesh {
 
             var response = Operate(operateRequest);
 
+            var result = response.Results[0] as CryptographicResultKeyAgreement;
 
-            throw new NYI();
+            return result.KeyAgreement.KeyAgreementResult;
             }
 
 

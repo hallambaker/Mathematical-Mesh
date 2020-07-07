@@ -2849,6 +2849,11 @@ namespace Goedel.Cryptography.Jose {
 	/// </summary>
 	public partial class KeyAgreementECDH : KeyAgreement {
         /// <summary>
+        ///The curve name
+        /// </summary>
+
+		public virtual string						Curve  {get; set;}
+        /// <summary>
         ///The result
         /// </summary>
 
@@ -2897,6 +2902,11 @@ namespace Goedel.Cryptography.Jose {
 				_writer.WriteObjectStart ();
 				}
 			((KeyAgreement)this).SerializeX(_writer, false, ref _first);
+			if (Curve != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Curve", 1);
+					_writer.WriteString (Curve);
+				}
 			if (Result != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("Result", 1);
@@ -2935,6 +2945,10 @@ namespace Goedel.Cryptography.Jose {
 		public override void DeserializeToken (JSONReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "Curve" : {
+					Curve = jsonReader.ReadString ();
+					break;
+					}
 				case "Result" : {
 					Result = jsonReader.ReadBinary ();
 					break;
