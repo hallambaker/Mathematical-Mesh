@@ -188,7 +188,7 @@ namespace Goedel.Mesh {
 
 
         public void CreateShares(params CryptographicCapability[] capabilities) {
-            var keyAdvanced = KeyData.GetKeyPair() as KeyPairAdvanced;
+            var keyAdvanced = KeyData.GetKeyPairAdvanced();
             var privateAdvanced = keyAdvanced.IKeyAdvancedPrivate;
 
             var keys = privateAdvanced.MakeThresholdKeySet(capabilities.Length);
@@ -197,6 +197,16 @@ namespace Goedel.Mesh {
                 //var key = keys[i].GetKeyPair(keySecurity: KeySecurity.Exportable);
                 capabilities[i].KeyData = new KeyData(keys[i]) {
                     UDF = UDF.Nonce()};
+
+                //var privateParams = capabilities[i].KeyData.PrivateParameters as PrivateKeyECDH;
+                //var privateScalar = privateParams.Private.BigIntegerLittleEndian();
+
+                //var checkKey2 = KeyPairECDH.KeyPairFactory(keyAdvanced.CryptoAlgorithmId, privateScalar);
+                //checkKey2.IKeyAdvancedPrivate.Private.AssertEqual(keys[i].Private);
+
+                //var checkKey = capabilities[i].KeyData.GetKeyPairAdvanced().IKeyAdvancedPrivate;
+                //checkKey.Private.AssertEqual(keys[i].Private);
+
                 }
             }
 

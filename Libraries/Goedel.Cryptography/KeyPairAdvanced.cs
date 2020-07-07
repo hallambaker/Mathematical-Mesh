@@ -65,12 +65,12 @@ namespace Goedel.Cryptography {
         IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares);
 
         /// <summary>
-        /// Combine two private keys to obtain a new public key.
+        /// Combine two private keys to obtain a new private key.
         /// </summary>
         /// <param name="contribution">The private key contribution.</param>
         /// <param name="keySecurity">The key security model.</param>
         /// <param name="keyUses">The permitted key uses.</param>
-        /// <returns>The new public key.</returns>
+        /// <returns>The new private key.</returns>
         IKeyAdvancedPrivate Combine(IKeyAdvancedPrivate contribution,
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any);

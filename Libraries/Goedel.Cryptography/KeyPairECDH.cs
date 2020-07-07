@@ -133,7 +133,7 @@ namespace Goedel.Cryptography {
         /// <param name="keySecurity">The key security model</param>
         /// <param name="keyUses">The permitted uses (signing, exchange) for the key.</param>
         /// <returns>The generated key pair</returns>
-        public static KeyPair KeyPairFactory(
+        public static KeyPairAdvanced KeyPairFactory(
             CryptoAlgorithmId cryptoAlgorithmID,
             BigInteger privateScalar,
             KeySecurity keySecurity = KeySecurity.Bound,

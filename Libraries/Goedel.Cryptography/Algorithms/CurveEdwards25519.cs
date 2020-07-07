@@ -8,23 +8,7 @@ using System.Security.Cryptography;
 
 namespace Goedel.Cryptography.Algorithms {
 
-    /// <summary>
-    /// Extension class.
-    /// </summary>
-    public static class Extension {
-
-        /// <summary>
-        /// If <paramref name="buffer"/> is not null, present the entire contents to
-        /// the digest function <paramref name="hashAlgorithm"/>.
-        /// </summary>
-        /// <param name="hashAlgorithm">The digest function to use.</param>
-        /// <param name="buffer">The data to be digested.</param>
-        public static void Digest(this HashAlgorithm hashAlgorithm, byte[] buffer) {
-            if (buffer != null) {
-                hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, buffer, 0);
-                }
-            }
-        }
+    #region // Curve Implementation
 
     /// <summary>
     /// Edwards Curve [x^2 = (y^2 - 1) / (d y^2 + 1) (mod p)] for 2^255-19
@@ -34,6 +18,9 @@ namespace Goedel.Cryptography.Algorithms {
         #region // curve parameter constant definitions
         ///<summary>The Jose curve name</summary>
         public const string CurveJose = "Ed25519";
+
+        ///<summary>The Jose curve name for direct encoding</summary>
+        public const string CurveJoseDirect = CurveJose + CurveJoseDirectSuffix;
 
         ///<summary>The domain parameters</summary>
         public override DomainParameters DomainParameters => DomainParameters.Curve25519;
@@ -431,10 +418,18 @@ namespace Goedel.Cryptography.Algorithms {
 
         }
 
+    #endregion
+    #region // Public key on curve
+
     /// <summary>
     /// Manages the public key
     /// </summary>
     public class CurveEdwards25519Public : CurveEdwardsPublic {
+
+        ///<summary>The Jose curve name</summary>
+        public override string CurveJose => CurveEdwards25519.CurveJose;
+
+
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public virtual CurveEdwards25519 Public { get; }
@@ -450,8 +445,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="publicKey">The public key values.</param>
         public CurveEdwards25519Public(CurveEdwards25519 publicKey) {
-            this.Public = publicKey;
-            this.Encoding = publicKey.Encode();
+            Public = publicKey;
+            Encoding = publicKey.Encode();
             }
 
         /// <summary>
@@ -459,8 +454,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// </summary>
         /// <param name="encoding">The encoded public key value.</param>
         public CurveEdwards25519Public(byte[] encoding) {
-            this.Public = CurveEdwards25519.Decode(encoding);
-            this.Encoding = encoding;
+            Public = CurveEdwards25519.Decode(encoding);
+            Encoding = encoding;
             }
 
         /// <summary>
@@ -470,11 +465,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
         public CurveEdwards25519Result Agreement() {
-            var Private = new CurveEdwards25519Private();
+            var privateKey = new CurveEdwards25519Private();
 
             return new CurveEdwards25519Result() {
-                EphemeralPublicValue = Private.Public,
-                AgreementEd25519 = Private.Agreement(this)
+                EphemeralPublicValue = privateKey.Public,
+                AgreementEd25519 = privateKey.Agreement(this)
                 };
             }
 
@@ -482,13 +477,13 @@ namespace Goedel.Cryptography.Algorithms {
         /// Perform final stage in a Diffie Hellman Agreement to reduce an 
         /// array of carry returns to a single agreement result.
         /// </summary>
-        /// <param name="Carry">The partial recryption results.</param>
+        /// <param name="carry">The partial recryption results.</param>
         /// <returns>The key agreement value ZZ</returns>
-        public CurveEdwards25519 Agreement(CurveEdwards25519[] Carry) {
-            Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
+        public CurveEdwards25519 Agreement(CurveEdwards25519[] carry) {
+            Assert.True(carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = CurveEdwards25519.Neutral;
-            foreach (var Part in Carry) {
+            foreach (var Part in carry) {
                 Total.Accumulate(Part);
                 }
 
@@ -510,10 +505,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Combine the two public keys to create a composite public key.
         /// </summary>
-        /// <param name="Contribution">The key contribution.</param>
+        /// <param name="contribution">The key contribution.</param>
         /// <returns>The composite key</returns>
-        public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic Contribution) =>
-            Combine(Contribution as CurveEdwards25519Public);
+        public override IKeyAdvancedPublic Combine(IKeyAdvancedPublic contribution) =>
+            Combine(contribution as CurveEdwards25519Public);
 
         /// <summary>
         /// Verify a signature on a message according to RFC8032.
@@ -521,18 +516,18 @@ namespace Goedel.Cryptography.Algorithms {
         /// <remarks>This method does not prehash the message data since if
         /// prehashing is desired, it is because the data needs to be hashed
         /// before being presented.</remarks>
-        /// <param name="Public">The public key</param>
-        /// <param name="Message">The message data.</param>
-        /// <param name="Signature">The encoded signature data.</param>
-        /// <param name="Context">Context value, if used.</param>
+        /// <param name="public">The public key</param>
+        /// <param name="message">The message data.</param>
+        /// <param name="signature">The encoded signature data.</param>
+        /// <param name="context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public static bool Verify(byte[] Public, byte[] Message, byte[] Signature, byte[] Context = null) {
-            Assert.True(Public.Length == 32, InvalidOperation.Throw);
-            Assert.True(Signature.Length == 64, InvalidOperation.Throw);
+        public static bool Verify(byte[] @public, byte[] message, byte[] signature, byte[] context = null) {
+            Assert.True(@public.Length == 32, InvalidOperation.Throw);
+            Assert.True(signature.Length == 64, InvalidOperation.Throw);
 
-            var A = CurveEdwards25519.Decode(Public);
+            var A = CurveEdwards25519.Decode(@public);
 
-            return A.VerifySignature(Message, Signature, Context);
+            return A.VerifySignature(message, signature, context);
             }
 
 
@@ -542,23 +537,32 @@ namespace Goedel.Cryptography.Algorithms {
         /// <remarks>This method does not prehash the message data since if
         /// prehashing is desired, it is because the data needs to be hashed
         /// before being presented.</remarks>
-        /// <param name="Message">The message data.</param>
-        /// <param name="Signature">The encoded signature data.</param>
-        /// <param name="Context">Context value, if used.</param>
+        /// <param name="message">The message data.</param>
+        /// <param name="signature">The encoded signature data.</param>
+        /// <param name="context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public bool Verify(byte[] Message, byte[] Signature, byte[] Context = null) =>
-            Public.VerifySignature(Message, Signature, Context);
+        public bool Verify(byte[] message, byte[] signature, byte[] context = null) =>
+            Public.VerifySignature(message, signature, context);
 
 
 
 
         }
 
+    #endregion
+    #region // Private key on curve
 
     /// <summary>
     /// Manages the private key.
     /// </summary>
-    public class CurveEdwards25519Private : CurveEdwardsPrivate  {
+    public class CurveEdwards25519Private : CurveEdwardsPrivate, IKeyPrivateECDH {
+
+        ///<summary>The Jose curve name</summary>
+        public override string CurveJose => CurveEdwards25519.CurveJose;
+
+        /// <summary> ASN.1 member Data </summary>
+        public byte[] Data => Encoding;
+
 
         /// <summary>The random secret used to generate the private key</summary>
         byte[] Secret { get; }
@@ -799,6 +803,7 @@ namespace Goedel.Cryptography.Algorithms {
 
         #region // Advanced functions
 
+
         /// <summary>
         /// Split the private key into a number of recryption keys.
         /// <para>
@@ -822,7 +827,7 @@ namespace Goedel.Cryptography.Algorithms {
             //Assert.True(Accumulator > 0 & Accumulator < Private, CryptographicException.Throw);
 
             Result[0] = new CurveEdwards25519Private(
-                (CurveEdwards25519.Q + Private - Accumulator).Mod(CurveEdwards25519.Q)) {
+                (CurveEdwards25519.Q + Private - Accumulator).Mod(CurveEdwards25519.Q), exportable: true) {
                 IsRecryption = true
                 };
             return Result;
@@ -833,12 +838,12 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>
         /// Make a recryption keyset by splitting the private key.
         /// </summary>
-        /// <param name="Shares">Number of shares to create</param>
+        /// <param name="shares">Number of shares to create</param>
         /// <returns>Array shares.</returns>
-        public override IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> Shares) {
+        public override IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
             BigInteger Accumulator = 0;
 
-            foreach (var share in Shares) {
+            foreach (var share in shares) {
                 var key = share as KeyPairEd25519;
                 var privateKey = (key.IKeyAdvancedPrivate as CurveEdwards25519Private);
 
@@ -881,6 +886,8 @@ namespace Goedel.Cryptography.Algorithms {
         #endregion
         }
 
+    #endregion
+    #region // Result on curve
 
     /// <summary>
     /// Represent the result of a Diffie Hellman Key exchange.
@@ -914,4 +921,6 @@ namespace Goedel.Cryptography.Algorithms {
         /// <summary>Public key generated by ephemeral key generation.</summary>
         public CurveEdwards25519Public Public => EphemeralPublicValue as CurveEdwards25519Public;
         }
+
+    #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.Cryptography.Algorithms;
 
 using System;
 
@@ -97,7 +98,7 @@ namespace Goedel.Cryptography.Jose {
 
             Private = pkixKey.Data;
             PKIXParametersPrivate = pkixKey;
-            Curve = pkixKey.CurveJose;
+            Curve = pkixKey.IsRecryption ? pkixKey.CurveJose + "z" : pkixKey.CurveJose;
             }
 
 
@@ -129,14 +130,36 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The extracted key pair</returns>
         public override KeyPair GetKeyPair(KeySecurity keySecurity, KeyCollection keyCollection) {
             var keyUses = Use.GetUses();
-            return Curve switch
-                {
-                    "Ed25519" => new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed25519),
-                    "Ed448" => new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed448),
-                    "X25519" => new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmId.X25519),
-                    "X448" => new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmId.X448),
-                    _ => throw new NotSupportedException(),
-                    };
+            switch (Curve) {
+                case CurveEdwards25519.CurveJose:
+                    return new KeyPairEd25519(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed25519);
+                case CurveEdwards448.CurveJose:
+                    return new KeyPairEd448(Private, keySecurity, keyUses, CryptoAlgorithmId.Ed448);
+                case CurveX25519.CurveJose:
+                    return new KeyPairX25519(Private, keySecurity, keyUses, CryptoAlgorithmId.X25519);
+                case CurveX448.CurveJose:
+                    return new KeyPairX448(Private, keySecurity, keyUses, CryptoAlgorithmId.X448);
+                default: break;
+                }
+            var privateScalar = Private.BigIntegerLittleEndian();
+            var exportable = keySecurity.IsExportable();
+            switch (Curve) {
+                case CurveEdwards25519.CurveJoseDirect:
+                    return new KeyPairEd25519(new CurveEdwards25519Private(privateScalar, exportable), 
+                                keySecurity, keyUses, CryptoAlgorithmId.Ed25519);
+                case CurveEdwards448.CurveJoseDirect:
+                    return new KeyPairEd448(new CurveEdwards448Private(privateScalar, exportable),
+                                keySecurity, keyUses, CryptoAlgorithmId.Ed448);
+                case CurveX25519.CurveJoseDirect:
+                    return new KeyPairX25519(new CurveX25519Private(privateScalar, exportable),
+                                keySecurity, keyUses, CryptoAlgorithmId.X25519);
+                case CurveX448.CurveJoseDirect:
+                    return new KeyPairX448(new CurveX448Private(privateScalar, exportable),
+                                keySecurity, keyUses, CryptoAlgorithmId.X448);
+                default: break;
+                }
+
+            throw new NotSupportedException();
             }
 
 

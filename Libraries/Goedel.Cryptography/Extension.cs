@@ -14,6 +14,18 @@ namespace Goedel.Cryptography {
     public static class ExtensionMethods {
 
         /// <summary>
+        /// If <paramref name="buffer"/> is not null, present the entire contents to
+        /// the digest function <paramref name="hashAlgorithm"/>.
+        /// </summary>
+        /// <param name="hashAlgorithm">The digest function to use.</param>
+        /// <param name="buffer">The data to be digested.</param>
+        public static void Digest(this HashAlgorithm hashAlgorithm, byte[] buffer) {
+            if (buffer != null) {
+                hashAlgorithm.TransformBlock(buffer, 0, buffer.Length, buffer, 0);
+                }
+            }
+
+        /// <summary>
         /// Create PKIX RSAPrivateKey from RSAParameters structure.
         /// </summary>
         /// <param name="RSAParameters">The RSA Parameters in .NET format.</param>
@@ -125,10 +137,6 @@ namespace Goedel.Cryptography {
         /// <returns>Portable extension representation.</returns>
         public static PKIX.Extension Extension(this X509Extension X509Extension) => null;
 
-
-
-
-
         /// <summary>
         /// Convert CryptoAlgorithmID <paramref name="cryptoAlgorithmID"/> to the 
         /// corresponding UDF identifier.
@@ -145,8 +153,6 @@ namespace Goedel.Cryptography {
                         CryptoAlgorithmId.Ed448 => UdfAlgorithmIdentifier.Ed448,
                         _ => UdfAlgorithmIdentifier.Any,
                         };
-
-
         }
 
     }

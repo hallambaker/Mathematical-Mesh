@@ -13,7 +13,7 @@ using Xunit;
 #pragma warning disable IDE0059
 
 namespace Goedel.XUnit {
-    public class TestService {
+    public partial class TestService {
         // Goal: Authenticate service requests and responses
         // Goal: Lightweight key exchange mechanism for service
         // Goal: Service handoff to a different IP address
@@ -32,6 +32,11 @@ namespace Goedel.XUnit {
         // Encrypt: Encrypt contact request
         // Encrypt: Encrypt connection request
         // Encrypt: Encrypt confirmation request
+
+        static TestService() {
+            TestEnvironmentCommon.Initialize();
+            Mesh.Mesh.Initialize();
+            }
 
 
         public static TestService Test() => new TestService();
@@ -413,7 +418,6 @@ namespace Goedel.XUnit {
             var decrypt4 = contextAccountAlice.DareDecode(envelope, verify: true);
             decrypt4.IsEqualTo(plaintext).AssertTrue();
 
-            throw new NYI();
             }
 
 

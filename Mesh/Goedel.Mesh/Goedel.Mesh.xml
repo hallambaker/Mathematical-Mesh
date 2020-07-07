@@ -9699,9 +9699,15 @@
             <param name="TestUDF">The fingerprint value.</param>
             <returns>true if the verification succeeds, false otherwise.</returns>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.GetKeyPair">
+        <member name="M:Goedel.Mesh.KeyData.GetKeyPair(Goedel.Cryptography.KeySecurity)">
             <summary>
-            Return a <see cref="P:Goedel.Mesh.KeyData.CryptoKey"/> instance for the key parameters.
+            Return a <see cref="T:Goedel.Cryptography.KeyPair"/> instance for the key parameters.
+            </summary>
+            <returns>The created key pair.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.KeyData.GetKeyPairAdvanced(Goedel.Cryptography.KeySecurity)">
+            <summary>
+            Return a <see cref="T:Goedel.Cryptography.KeyPairAdvanced"/> instance for the key parameters.
             </summary>
             <returns>The created key pair.</returns>
         </member>

@@ -7,6 +7,8 @@ using System.Numerics;
 
 namespace Goedel.Cryptography.Algorithms {
 
+    #region // Curve Implementation
+
     /// <summary>
     /// Montgomery Curve [v^2 = u^3 + A*u^2 + u] for 2^448 - 2^224 -1
     /// </summary>
@@ -14,6 +16,10 @@ namespace Goedel.Cryptography.Algorithms {
 
         ///<summary>The Jose curve name</summary>
         public const string CurveJose = "X448";
+
+        ///<summary>The Jose curve name for direct encoding</summary>
+        public const string CurveJoseDirect = CurveJose + CurveJoseDirectSuffix;
+
 
         #region // curve parameter constant definitions
         ///<summary>The domain parameters</summary>
@@ -190,8 +196,8 @@ namespace Goedel.Cryptography.Algorithms {
 
         }
 
-
-
+    #endregion
+    #region // Public key on curve
 
     /// <summary>
     /// Manages the public key
@@ -278,6 +284,9 @@ namespace Goedel.Cryptography.Algorithms {
             Combine(Contribution as CurveX448Public);
         }
 
+    #endregion
+    #region // Private key on curve
+
     /// <summary>
     /// Manages the public key
     /// </summary>
@@ -294,14 +303,7 @@ namespace Goedel.Cryptography.Algorithms {
 
 
 
-        /// <summary>
-        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
-        /// with a threshold of <paramref name="threshold"/>.
-        /// </summary>
-        /// <param name="shares">Number of shares to create</param>
-        /// <param name="threshold">The number of shares required to recover the key.</param>
-        /// <returns>The shares created.</returns>
-        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+
 
         /// <summary>The public key, i.e. a point on the curve</summary>
         public CurveX448Public Public { get; set; }
@@ -409,6 +411,16 @@ namespace Goedel.Cryptography.Algorithms {
         #region // Advanced functions
 
         /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+
+
+        /// <summary>
         /// Split the private key into a number of recryption keys.
         /// <para>
         /// Since the
@@ -494,6 +506,9 @@ namespace Goedel.Cryptography.Algorithms {
 
         }
 
+    #endregion
+    #region // Result on curve
+
     /// <summary>
     /// Represent the result of a Diffie Hellman Key exchange.
     /// </summary>
@@ -527,5 +542,5 @@ namespace Goedel.Cryptography.Algorithms {
         public CurveX448Public Public => EphemeralPublicValue as CurveX448Public;
         }
 
-
+    #endregion
     }

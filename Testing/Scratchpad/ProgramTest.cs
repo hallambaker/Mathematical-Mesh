@@ -20,6 +20,10 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            //TestService.Test().PrivateKeyRoundTripFull(10);
+
+            //TestService.Test().KeyShareTestDirectAll();
+
 
 
             ShellTests.Test().TestFileEncrypt();

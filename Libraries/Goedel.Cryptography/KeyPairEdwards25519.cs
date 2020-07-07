@@ -118,8 +118,8 @@ namespace Goedel.Cryptography {
                     KeyUses keyUses = KeyUses.Any,
                     CryptoAlgorithmId cryptoAlgorithmID = CryptoAlgorithmId.Default) {
             CryptoAlgorithmId = cryptoAlgorithmID.DefaultMeta(CryptoAlgorithmId.Ed25519);
-            this.PrivateKey = privateKey ?? new CurveEdwards25519Private();
-            PublicKey = this.PrivateKey.Public;
+            PrivateKey = privateKey ?? new CurveEdwards25519Private();
+            PublicKey = PrivateKey.Public;
             PKIXPublicKeyECDH = new PKIXPublicKeyEd25519(PublicKey.Encoding);
             KeyType = keySecurity;
             KeyUses = keyUses;

@@ -105,22 +105,28 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Return a <see cref="CryptoKey"/> instance for the key parameters.
+        /// Return a <see cref="KeyPair"/> instance for the key parameters.
         /// </summary>
         /// <returns>The created key pair.</returns>
-        public KeyPair GetKeyPair() {
+        public KeyPair GetKeyPair(KeySecurity keySecurity = KeySecurity.Bound) {
             if (PrivateParameters != null) {
-                return PrivateParameters.GetKeyPair(KeySecurity.Bound);
+                return PrivateParameters.GetKeyPair(keySecurity);
                 }
             if (PublicParameters != null) {
-                return PublicParameters.GetKeyPair(KeySecurity.Bound);
+                return PublicParameters.GetKeyPair(keySecurity);
                 }
             Assert.Fail(NYI.Throw, "No key parameters specified");
 
             return null;
             }
 
-        public KeyPairAdvanced GetKeyPairAdvanced() => GetKeyPair() as KeyPairAdvanced;
+        /// <summary>
+        /// Return a <see cref="KeyPairAdvanced"/> instance for the key parameters.
+        /// </summary>
+        /// <returns>The created key pair.</returns>
+        public KeyPairAdvanced GetKeyPairAdvanced(
+                KeySecurity keySecurity = KeySecurity.Bound
+                ) => GetKeyPair(keySecurity) as KeyPairAdvanced;
 
 
 

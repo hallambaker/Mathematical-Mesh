@@ -12,6 +12,12 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public abstract class Curve {
 
+        ///<summary>The Jose curve name for direct encoding</summary>
+        public const string CurveJoseDirectSuffix = "z";
+
+        public static string GetCurveJoseDirect (string curve) => curve + "z";
+
+
         ///<summary>The domain parameters</summary>
         public abstract DomainParameters DomainParameters { get;  }
 
@@ -20,9 +26,6 @@ namespace Goedel.Cryptography.Algorithms {
 
         /// <summary>The number of bits to multiply</summary>
         public int Bits => DomainParameters.Bits;
-
-
-
 
         ///<summary>The square root of -1.</summary>
         public BigInteger SqrtMinus1 => DomainParameters.SqrtMinus1;
@@ -701,6 +704,9 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public abstract class CurveEdwardsPublic : IKeyAdvancedPublic {
 
+        ///<summary>The Jose curve name</summary>
+        public abstract string CurveJose { get; }
+
         /// <summary>The public key, i.e. a point on the curve</summary>
         public abstract CurveEdwards PublicKey { get; }
 
@@ -720,14 +726,8 @@ namespace Goedel.Cryptography.Algorithms {
     /// </summary>
     public abstract class CurveEdwardsPrivate : IKeyAdvancedPrivate {
 
-        /// <summary>
-        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
-        /// with a threshold of <paramref name="threshold"/>.
-        /// </summary>
-        /// <param name="shares">Number of shares to create</param>
-        /// <param name="threshold">The number of shares required to recover the key.</param>
-        /// <returns>The shares created.</returns>
-        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
+        ///<summary>The Jose curve name</summary>
+        public abstract string CurveJose { get; }
 
 
         /// <summary>The public key, a point on the curve</summary>
@@ -742,6 +742,16 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
         public abstract KeyAgreementResult Agreement(KeyPair keyPair);
+
+
+        /// <summary>
+        /// Make a Shamir threshold keyset with <paramref name="shares"/> shares
+        /// with a threshold of <paramref name="threshold"/>.
+        /// </summary>
+        /// <param name="shares">Number of shares to create</param>
+        /// <param name="threshold">The number of shares required to recover the key.</param>
+        /// <returns>The shares created.</returns>
+        public ShamirSharePrivate[] MakeThresholdKeySet(int shares, int threshold) => throw new NYI();
 
         /// <summary>
         /// Split the private key into a number of recryption keys.

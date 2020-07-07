@@ -65,7 +65,6 @@ namespace Goedel.Cryptography {
             if (keyType == KeySecurity.Public) {
                 PublicKey = new CurveX448Public(key);
                 PKIXPublicKeyECDH = new PKIXPublicKeyX448(PublicKey.Encoding);
-                keyType = KeySecurity.Public;
                 }
             else {
                 encodedPrivateKey = key;
