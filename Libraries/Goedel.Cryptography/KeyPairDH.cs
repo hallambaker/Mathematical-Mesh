@@ -27,8 +27,6 @@ namespace Goedel.Cryptography {
     /// </summary>
     public interface IKeyPrivateDH {
 
-        public 
-
         /// <summary> ASN.1 member Shared </summary>
         byte[] Shared { get; set; }
 
@@ -185,14 +183,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override PKIXPublicKeyDH PKIXPublicKeyDH {
             get {
-                _DHPublicKey ??= new PKIXPublicKeyDH() {
+                dhPublicKey ??= new PKIXPublicKeyDH() {
                     Domain = DHDomain,
                     Public = PublicKey.Public.ToByteArray()
                     };
-                return _DHPublicKey;
+                return dhPublicKey;
                 }
             }
-        PKIXPublicKeyDH _DHPublicKey = null;
+        PKIXPublicKeyDH dhPublicKey = null;
 
         /// <summary>
         /// The public key data formatted as a PKIX KeyInfo data blob.

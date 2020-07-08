@@ -106,7 +106,7 @@ namespace Goedel.Mesh {
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
         /// <returns>The enveloped, signed message.</returns>
-        public DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
+        public virtual DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey = null) {
 
             var data = this.GetBytes();
             var contentMeta = new ContentMeta() {

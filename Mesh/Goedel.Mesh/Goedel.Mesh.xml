@@ -102,6 +102,11 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="T:Goedel.Mesh.IMeshClient">
+            <summary>
+            Interface that returns a Mesh client for an account.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.IMeshClient.GetMeshClient(System.String)">
             <summary>
             Get a Mesh client for the address <paramref name="accountAddress"/>.
@@ -109,17 +114,33 @@
             <param name="accountAddress">The account to obtain a client for.</param>
             <returns>The client.</returns>
         </member>
+        <member name="T:Goedel.Mesh.ICapabilityPartial">
+            <summary>
+            Interface containing methods and properties used to request a service perform
+            the counterparty operation for a partial capability.
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.ICapabilityPartial.ServiceId">
              <summary>
-            The identifier used to claim the capability from the service.[Only present for
-            a partial capability.]
+            The identifier used to claim the capability from the service.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.ICapabilityPartial.ServiceAddress">
              <summary>
-            The service account that supports a serviced capability. [Only present for
-            a partial capability.]
+            The service account that supports a serviced capability. 
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ICapabilityPartial.CryptographicClient">
+            <summary>
+            Instance with interface that returns a Mesh client for an account. This could
+            be changed to a delegate function.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ICapabilityServiced">
+            <summary>
+            Interface containing methods and properties used to implement a service performing
+            the counterparty operation for a partial capability.
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.ICapabilityServiced.AuthenticationId">
              <summary>
@@ -289,6 +310,10 @@
              The corresponding key is a decryption key
              </summary>
         </member>
+        <member name="P:Goedel.Mesh.CapabilityDecrypt.KeyPair">
+            <summary>The cached <see cref="T:Goedel.Cryptography.KeyPairAdvanced"/> instance corresponding
+            to <see cref="T:Goedel.Mesh.KeyData"/></summary>
+        </member>
         <member name="M:Goedel.Mesh.CapabilityDecrypt.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
             Perform a key exchange to encrypt a bulk or wrapped key under this one.
@@ -364,6 +389,10 @@
             
              The corresponding key is an encryption key
              </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CapabilityDecryptPartial.CryptographicClient">
+            <summary>Instance exposing the <see cref="T:Goedel.Mesh.IMeshClient"/> interface allowing
+            a client to be obtained for resolving the service.</summary>
         </member>
         <member name="M:Goedel.Mesh.CapabilityDecryptPartial.Decrypt(System.Byte[],Goedel.Cryptography.KeyPair,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.KeyAgreementResult,System.Byte[])">
             <summary>
@@ -508,6 +537,14 @@
             
              The corresponding key is a key that may be used to generate key shares.
              </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.CreateShares(Goedel.Mesh.CryptographicCapability[])">
+            <summary>
+            Create key shares to augment the array of capabilities <paramref name="capabilities"/>
+            with the threshold set to the total number of shares created and bind to the
+            <see cref="T:Goedel.Mesh.KeyData"/> properties of each.
+            </summary>
+            <param name="capabilities">The capabilities to augment.</param>
         </member>
         <member name="P:Goedel.Mesh.CapabilityKeyGenerate._Tag">
             <summary>
@@ -695,12 +732,14 @@
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
             <param name="catalogEntry">The entry to add.</param>
+            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog.Update(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
             <summary>
             Update <paramref name="catalogEntry"/> in the catalog.
             </summary>
             <param name="catalogEntry">The entry to update.</param>
+            <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog.Delete(Goedel.Mesh.CatalogedEntry)">
             <summary>
@@ -1422,6 +1461,30 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
+        <member name="M:Goedel.Mesh.CatalogCapability.TryFindKeyDecryption(System.String)">
+            <summary>
+            Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">The identifier of the public key to obtain a decryption 
+            capability against.</param>
+            <returns>The decryption capability if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogCapability.TryFindKeySign(System.String)">
+            <summary>
+            Resolve a signing capability for the key <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">The identifier of the public key to obtain a signature 
+            capability for.</param>
+            <returns>The signing capability if found, otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogCapability.TryFindKeyGenerate(System.String)">
+            <summary>
+            Resolve a key share generation capability for the key <paramref name="keyId"/>
+            </summary>
+            <param name="keyId">The identifier of the public key to obtain a key share 
+            generation capability for.</param>
+            <returns>The key share generation capability if found, otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogCapability.Add(Goedel.Mesh.CryptographicCapability,Goedel.Cryptography.CryptoKey)">
             <summary>
             Add <paramref name="capability"/> to the catalog, encrypting the data under
@@ -1462,7 +1525,7 @@
         </member>
         <member name="M:Goedel.Mesh.CatalogedCapability.#ctor(Goedel.Mesh.CryptographicCapability)">
             <summary>
-            Default constructor for serialization.
+            Create a cataloged capability for <paramref name="capability"/>.
             </summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogedCapability.Capability">
@@ -1688,6 +1751,20 @@
             others.</param>
             <param name="merge">Add this data to the existing contact.</param>
             <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.GetNetworkEntry(System.String)">
+            <summary>
+            Return the network entry for the address <paramref name="networkAddress"/>
+            </summary>
+            <param name="networkAddress">The address to return the entry for.</param>
+            <returns>The network entry if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogContact.GetByAccountEncrypt(System.String)">
+            <summary>
+            Retuen the mesh account encryption key for the address <paramref name="networkAddress"/>
+            </summary>
+            <param name="networkAddress">The address to return the entry for.</param>
+            <returns>The mesh account encryption key if found, otherwise, null.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.TryMatchRecipient(System.String)">
             <summary>
@@ -3711,7 +3788,7 @@
             <param name="secretSeed">The secret seed.</param>
             <returns>The  <see cref="T:Goedel.Cryptography.CryptoAlgorithmId"/> identifier.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.ParseMeshKeyType(Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyUses@,System.String@,System.Boolean)">
+        <member name="M:Goedel.Mesh.Extensions.ParseMeshKeyType(Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyUses@,System.String@)">
             <summary>
             Return the <see cref="T:Goedel.Cryptography.KeyUses"/> and salt suffix values for the Mesh key type 
             <paramref name="meshKeyType"/>.
@@ -3719,7 +3796,6 @@
             <param name="meshKeyType">The Mesh Key identifier.</param>
             <param name="keyUses">The PKIX key uses.</param>
             <param name="suffix">The salt suffix to apply.</param>
-            <param name="activate">If true return the activation value (currently unused.)</param>
         </member>
         <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.KeySecurity)">
             <summary>
@@ -3731,6 +3807,7 @@
             <param name="meshKeyType">The mesh key type.</param>
             <param name="keyCollection">The key collection to register the private key to
             (the key is always generated as ephemeral.)</param>
+            <param name="keySecurity">The key security model of the derrived key.</param>
             <returns>The derrived key.</returns>
         </member>
         <member name="M:Goedel.Mesh.Extensions.ActivatePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.Dare.IKeyCollection)">
@@ -6397,6 +6474,7 @@
             Constructor create service with the signature key <paramref name="keySign"/>
             </summary>
             <param name="keySign">The offline signature key.</param>
+            <param name="keyEncrypt">The service encryption key.</param>
         </member>
         <member name="M:Goedel.Mesh.ProfileService.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>
@@ -9718,21 +9796,24 @@
         </member>
         <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.CryptoKey,System.Boolean)">
             <summary>
-            Return a PublicKey object for the specified KeyPair
+            Constructor for the key <paramref name="cryptoKey"/>.
             </summary>
             <param name="cryptoKey">The key pair to bind.</param>
+            <param name="export">If true, export the private parameters as well
+            as the public.</param>
             <returns>The generated key pair</returns>
+        </member>
+        <member name="M:Goedel.Mesh.KeyData.#ctor(Goedel.Cryptography.IKeyAdvancedPrivate)">
+            <summary>
+            Constructor for the key  <paramref name="keyAdvancedPrivate"/>. The
+            private parameters are always exported.
+            </summary>
+            <param name="keyAdvancedPrivate">The private key to bind.</param>
         </member>
         <member name="M:Goedel.Mesh.KeyData.ExportPrivateParameters">
             <summary>
             Create a Private Parameters property that contains the 
             private parameters of the key.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.KeyData.ImportPrivateParameters">
-            <summary>
-            Create a provider object that includes the private key parameters and add this
-            to the certificate.
             </summary>
         </member>
         <member name="M:Goedel.Mesh.KeyData.SelfSignCertificate(Goedel.Cryptography.PKIX.Application)">

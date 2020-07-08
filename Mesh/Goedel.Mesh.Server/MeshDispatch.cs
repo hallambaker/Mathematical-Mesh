@@ -336,15 +336,11 @@ namespace Goedel.Mesh.Server {
         public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
 
             Mesh.Publish(session, session.VerifiedAccount, request.Publications);
-
             var response = new PublishResponse() {
                 };
 
-
             return response;
             }
-
-
 
         /// <summary>
 		/// Server method implementing the transaction  Claim.
@@ -352,11 +348,10 @@ namespace Goedel.Mesh.Server {
         /// <param name="request">The request object to send to the host.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
-        public override ClaimResponse Claim(ClaimRequest request, JpcSession session = null) {
-
-            return Mesh.Claim(session, request.EnvelopedMessageClaim);
-
-            }
+        public override ClaimResponse Claim(
+                    ClaimRequest request, 
+                    JpcSession session = null) => 
+            Mesh.Claim(session, request.EnvelopedMessageClaim);
 
         /// <summary>
         /// Server method implementing the transaction  PollClaim.
@@ -365,12 +360,17 @@ namespace Goedel.Mesh.Server {
         /// <param name="session">The authentication binding.</param>
         /// <returns>The response object from the service</returns>
         public override PollClaimResponse PollClaim(
-                PollClaimRequest request,
-                JpcSession session = null) =>
-                    Mesh.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
+                    PollClaimRequest request,
+                    JpcSession session = null) =>
+            Mesh.PollClaim(session, request.TargetAccountAddress, request.PublicationId);
 
 
-
+        /// <summary>
+        /// Server method implementing the transaction Operate
+        /// </summary>
+        /// <param name="request">The request object to send to the host.</param>
+        /// <param name="session">The authentication binding.</param>
+        /// <returns>The response object from the service</returns>
         public override OperateResponse Operate(
                     OperateRequest request, 
                     JpcSession session = null) =>

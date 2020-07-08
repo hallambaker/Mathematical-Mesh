@@ -139,7 +139,16 @@ namespace Goedel.Cryptography {
         /// <returns>A KeyPair instance bound to the private key.</returns>
         public  CryptoKey LocatePrivateKeyPair(string UDF) => this;
 
+        /// <summary>
+        /// Add a keypair to the collection.
+        /// </summary>
+        /// <param name="keyPair">The key pair to add.</param>
         public void Add(KeyPair keyPair) => throw new NotImplementedException();
+
+        /// <summary>
+        /// Persist a private key if permitted by the KeySecurity model of the key.
+        /// </summary>
+        /// <param name="keyPair">The key to persist.</param>
         public void Persist(KeyPair keyPair) => throw new NotImplementedException();
 
         #endregion
@@ -208,7 +217,11 @@ namespace Goedel.Cryptography {
         /// <returns>The computed CryptoAlgorithmID</returns>
         public virtual CryptoAlgorithmId SignatureAlgorithmID(CryptoAlgorithmId baseID) => baseID;
 
-
+        /// <summary>
+        /// Perform a partial key agreement.
+        /// </summary>
+        /// <param name="keyPair">The key pair to perform the agreement against.</param>
+        /// <returns>The key agreement result.</returns>
         public virtual KeyAgreementResult Agreement(KeyPair keyPair) => throw new System.NotImplementedException();
 
         }

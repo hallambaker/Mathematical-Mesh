@@ -582,6 +582,14 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolOutbound">
             <summary>Returns the outbound spool for the account</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String)">
+            <summary>
+            Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="keyId">The identifier to resolve.</param>
+            <returns>The identifier.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyDecryption(System.String)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
@@ -944,6 +952,7 @@
             </summary>
             <param name="meshMessage">The message to send.</param>
             <param name="recipient">The recipient service ID.</param>
+            <param name="encryptionKey">The encryption key to encrypt the message to.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String},Goedel.Cryptography.CryptoKey)">
             <summary>
@@ -955,6 +964,7 @@
             <param name="meshMessage">The message to post</param>
             <param name="recipients">The recipients the message is to be sent to. If null, the
             message is for local pickup.</param>
+            <param name="encryptionKey">The encryption key to encrypt the message to.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.SendMessageAdmin(Goedel.Mesh.Message)">
             <summary>
@@ -1032,6 +1042,18 @@
             </summary>
             <param name="signingKey">The identifier to resolve.</param>
             <returns>The identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.Add(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Add a keypair to the collection.
+            </summary>
+            <param name="keyPair">The key pair to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccountEntry.Persist(Goedel.Cryptography.KeyPair)">
+            <summary>
+            Persist a private key if permitted by the KeySecurity model of the key.
+            </summary>
+            <param name="keyPair">The key to persist.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccountEntry.ValidateTrustAnchor(Goedel.Cryptography.CryptoKey)">
             <summary>
@@ -1237,6 +1259,7 @@
             Add a member to the group.
             </summary>
             <param name="memberAddress">The member to add.</param>
+            <param name="text">Constrained text to be included in the invitation.</param>
             <returns>The member catalog entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">

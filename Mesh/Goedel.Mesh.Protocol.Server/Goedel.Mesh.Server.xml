@@ -141,6 +141,12 @@
             <param name="label">The store to add the envelopes to.</param>
             <param name="envelopes">The envelopes to append.</param>
         </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleVerified.GetContainerStatuses">
+            <summary>
+            Obtain status values for all the stores associated with an account.
+            </summary>
+            <returns>The list of container status entries.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             
@@ -567,6 +573,14 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Operate(Goedel.Mesh.OperateRequest,Goedel.Protocol.JpcSession)">
+            <summary>
+            Server method implementing the transaction Operate
+            </summary>
+            <param name="request">The request object to send to the host.</param>
+            <param name="session">The authentication binding.</param>
+            <returns>The response object from the service</returns>
+        </member>
         <member name="T:Goedel.Mesh.Server.MeshPersist">
             <summary>
             The Mathematical Mesh persistence store.
@@ -673,16 +687,11 @@
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Operate(Goedel.Protocol.JpcSession,System.String,System.Collections.Generic.List{Goedel.Mesh.CryptographicOperation})">
             <summary>
-            Respond to a decryption request.
-            <para>This involves the steps of resolving the group, resolving the membership
-            record of the group member, authenticating and authorizing the request, and
-            if authorized, performing the relevant recovery request and logging the 
-            relevant records.</para>
+            Respond to a set of cryptographic operations.
             </summary>
             <param name="jpcSession">The Mesh client session.</param>
-            <param name="groupAccount">The address of the group.</param>
-            <param name="ephemeral">The ephemeral key.</param>
-            <param name="partialId">The partial key identifier.</param>
+            <param name="accountAddress">The account to which the capabilities are attached.</param>
+            <param name="operations">The operations requested.</param>
             <returns>Result of the decryption request.</returns>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.MessagePost(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{System.String},Goedel.Cryptography.Dare.DareEnvelope)">

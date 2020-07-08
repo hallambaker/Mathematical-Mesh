@@ -71,7 +71,8 @@ namespace Goedel.Cryptography {
     /// </summary>
     public abstract class KeyCollection : IKeyLocate {
 
-        Object ExclusiveAccess = new Object();
+        ///<summary>Lock used to ensure exclusive access during updates.</summary>
+        Object exclusiveAccess = new Object();
 
         /// <summary>
         /// The default collection.
@@ -109,7 +110,7 @@ namespace Goedel.Cryptography {
                 return;
                 }
 
-            lock (ExclusiveAccess) {
+            lock (exclusiveAccess) {
                 DictionaryKeyPairByUDF.AddSafe(keyPair.KeyIdentifier, keyPair);
                 if (keyPair.Locator != null) {
                     if (keyPair.KeyUses.HasFlag(KeyUses.Encrypt)) {
@@ -222,7 +223,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
         public virtual CryptoKey TryFindKeyEncryption(string keyID) {
-            var Found = DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
+            DictionaryKeyPairByAccountEncrypt.TryGetValue(keyID, out var Result);
             return Result;
             }
 
@@ -233,7 +234,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyID">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
         public virtual CryptoKey TryFindKeySignature(string keyID) {
-            var Found = DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
+            DictionaryKeyPairByAccountSign.TryGetValue(keyID, out var Result);
             return Result;
             }
 

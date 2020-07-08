@@ -402,27 +402,20 @@ namespace Goedel.Mesh.Server {
 
 
         /// <summary>
-        /// Respond to a decryption request.
-        /// <para>This involves the steps of resolving the group, resolving the membership
-        /// record of the group member, authenticating and authorizing the request, and
-        /// if authorized, performing the relevant recovery request and logging the 
-        /// relevant records.</para>
+        /// Respond to a set of cryptographic operations.
         /// </summary>
         /// <param name="jpcSession">The Mesh client session.</param>
-        /// <param name="groupAccount">The address of the group.</param>
-        /// <param name="ephemeral">The ephemeral key.</param>
-        /// <param name="partialId">The partial key identifier.</param>
+        /// <param name="accountAddress">The account to which the capabilities are attached.</param>
+        /// <param name="operations">The operations requested.</param>
         /// <returns>Result of the decryption request.</returns>
         public OperateResponse Operate(
                     JpcSession jpcSession,
-                    string AccountAddress,
+                    string accountAddress,
                     List<CryptographicOperation> operations) {
 
             // Fetch the account 
-            using var accountEntry = GetAccountUnverified(AccountAddress);
+            using var accountEntry = GetAccountUnverified(accountAddress);
 
-
-            // failing because the user didn't grant a decryption key.
             using var catalogCapability = accountEntry.GetCatalogCapability();
 
             var results = new List<CryptographicResult>();
@@ -430,11 +423,6 @@ namespace Goedel.Mesh.Server {
             foreach (var operation in operations) {
                 results.Add(Operate(catalogCapability, operation));
                 }
-
-            // is the request authorized?
-
-
-            // partial decrypt
 
             var response = new OperateResponse() {
                 Results = results

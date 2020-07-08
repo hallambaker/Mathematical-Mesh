@@ -317,6 +317,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="meshMessage">The message to send.</param>
         /// <param name="recipient">The recipient service ID.</param>
+        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
         public void SendMessage(Message meshMessage, string recipient,
                     CryptoKey encryptionKey=null) =>
             SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
@@ -331,6 +332,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshMessage">The message to post</param>
         /// <param name="recipients">The recipients the message is to be sent to. If null, the
         /// message is for local pickup.</param>
+        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
         public void SendMessage(
                     Message meshMessage,
                     List<string> recipients = null,
@@ -538,12 +540,18 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="signingKey">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey TryFindKeySignature(string signingKey) {
-            throw new NYI();
-            }
+        public CryptoKey TryFindKeySignature(string signingKey) => throw new NYI();
 
-
+        /// <summary>
+        /// Add a keypair to the collection.
+        /// </summary>
+        /// <param name="keyPair">The key pair to add.</param>
         public void Add(KeyPair keyPair) => KeyCollection.Add(keyPair);
+
+        /// <summary>
+        /// Persist a private key if permitted by the KeySecurity model of the key.
+        /// </summary>
+        /// <param name="keyPair">The key to persist.</param>
         public void Persist(KeyPair keyPair) => KeyCollection.Persist(keyPair);
 
 
@@ -588,7 +596,7 @@ namespace Goedel.Mesh.Client {
                     bool sign = false) {
 
             KeyPair signingKey = sign ? KeySignature : null;
-            List<CryptoKey> encryptionKeys = null;
+            List<CryptoKey> encryptionKeys;
 
 
             // probably going to fail here unless we have a way to pull keys out of the contacts catalog 

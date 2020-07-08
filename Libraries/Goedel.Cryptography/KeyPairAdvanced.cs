@@ -7,10 +7,15 @@ using System;
 
 namespace Goedel.Cryptography {
 
-
+    /// <summary>
+    /// Repreesents a Shamir Secret Shared private key.
+    /// </summary>
     public struct ShamirSharePrivate {
+
+        ///<summary>The x coorrdinate corresponding to this share.</summary>
         public int Index;
 
+        ///<summary>The private key value.</summary>
         public IKeyAdvancedPrivate Key;
 
         }
@@ -152,7 +157,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyPair">The key pair to perform the agreement against.</param>
         /// <returns>The key agreement result.</returns>
-        public KeyAgreementResult Agreement(KeyPair keyPair) => IKeyAdvancedPrivate.Agreement(keyPair);
+        public override KeyAgreementResult Agreement(KeyPair keyPair) => IKeyAdvancedPrivate.Agreement(keyPair);
 
         /// <summary>
         /// Calculate and return the partial private key such that its value plus the value of 
@@ -224,28 +229,26 @@ namespace Goedel.Cryptography {
         public virtual int[] OID => null;
 
 
-        byte[] salt;
-        KeyDerive _KeyDerive = null;
-
         /// <summary>Salt to use in HKDF key derivation. If set will set the 
         /// Key derivation function to HKDF with the specified salt.</summary>
         public virtual byte[] Salt {
             get => salt;
             set {
                 salt = value;
-                _KeyDerive = new KeyDeriveHKDF(IKM, salt);
+                keyDerive = new KeyDeriveHKDF(IKM, salt);
                 }
             }
+        byte[] salt;
 
         /// <summary>Key derivation function. May be overridden, defaults to KDF.</summary>
         public virtual KeyDerive KeyDerive {
             get {
-                _KeyDerive ??= new KeyDeriveHKDF(IKM, salt);
-                return _KeyDerive;
+                keyDerive ??= new KeyDeriveHKDF(IKM, salt);
+                return keyDerive;
                 }
-            set => _KeyDerive = value;
+            set => keyDerive = value;
             }
-
+        KeyDerive keyDerive = null;
 
         /// <summary>The key agreement result as a byte array</summary>
         public abstract byte[] IKM { get; }

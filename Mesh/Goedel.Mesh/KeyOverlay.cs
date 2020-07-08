@@ -100,26 +100,13 @@ namespace Goedel.Mesh {
         /// <param name="meshKeyType">The Mesh Key identifier.</param>
         /// <param name="keyUses">The PKIX key uses.</param>
         /// <param name="suffix">The salt suffix to apply.</param>
-        /// <param name="activate">If true return the activation value (currently unused.)</param>
         public static void ParseMeshKeyType(this MeshKeyType meshKeyType,
                 out KeyUses keyUses,
-                out string suffix, bool activate = false) {
+                out string suffix) {
 
-            var meshSeedType = meshKeyType & MeshKeyType.MaskSeedType;
             var meshKeyUse = meshKeyType & MeshKeyType.MaskKeyUse;
 
             suffix = meshKeyUse.ToString();
-
-            //udfAlgorithmIdentifier = meshSeedType switch
-            //    {
-            //        MeshKeyType.MasterProfile => UdfAlgorithmIdentifier.MeshProfileMaster,
-            //        MeshKeyType.DeviceProfile => activate ?
-            //            UdfAlgorithmIdentifier.MeshActivationDevice : UdfAlgorithmIdentifier.MeshProfileDevice,
-            //        MeshKeyType.AccountProfile => activate ?
-            //            UdfAlgorithmIdentifier.MeshActivationAccount : UdfAlgorithmIdentifier.MeshProfileAccount,
-            //        _ => throw new NYI()
-            //        };
-
             keyUses = meshKeyUse switch
                 {
                     MeshKeyType.OnlineSign => KeyUses.Sign,
@@ -127,8 +114,6 @@ namespace Goedel.Mesh {
 
                     _ => KeyUses.Encrypt
                     };
-
-
             }
 
         /// <summary>
@@ -140,6 +125,7 @@ namespace Goedel.Mesh {
         /// <param name="meshKeyType">The mesh key type.</param>
         /// <param name="keyCollection">The key collection to register the private key to
         /// (the key is always generated as ephemeral.)</param>
+        /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
                     MeshKeyType meshKeyType, KeyCollection keyCollection = null,

@@ -223,7 +223,10 @@ namespace Goedel.Mesh.Server {
 
 
 
-
+        /// <summary>
+        /// Obtain status values for all the stores associated with an account.
+        /// </summary>
+        /// <returns>The list of container status entries.</returns>
         public List<ContainerStatus> GetContainerStatuses() {
             var result = new List<ContainerStatus> {
                     GetStatusSpool (SpoolInbound.Label),

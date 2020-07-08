@@ -99,6 +99,7 @@ namespace Goedel.Mesh.Client {
         /// Add a member to the group.
         /// </summary>
         /// <param name="memberAddress">The member to add.</param>
+        /// <param name="text">Constrained text to be included in the invitation.</param>
         /// <returns>The member catalog entry.</returns>
         public CatalogedMember Add(string memberAddress, string text=null) {
 
@@ -162,14 +163,6 @@ namespace Goedel.Mesh.Client {
 
             ContextAccount.SendMessage(groupInvitation, memberAddress, userEncryptionKey);
 
-
-            //var envelopedCapabilityService = capabilityService.Encode(
-            //    //encryptionKey:serviceEncryptionKey
-            //    );
-            //GetCatalogCapability().AppendDirect(envelopedCapabilityService);
-
-            // Add the member to the member catalog
-
             var catalogedMember = new CatalogedMember() {
                 ContactAddress = memberAddress,
                 MemberCapabilityId = capabilityMember.Id,
@@ -182,27 +175,6 @@ namespace Goedel.Mesh.Client {
 
             // return the member entry.
             return catalogedMember;
-            }
-
-
-        IKeyAdvancedPrivate[] GetKeySplit(
-                    CryptoKey userEncryptionKey, CryptoKey serviceEncryptionKey) {
-            userEncryptionKey.Future();
-
-            var keyGenerate = ContextAccount.GetCatalogCapability().TryFindKeyGenerate(
-                            ProfileGroup.KeyEncryption.UDF);
-
-
-            throw new NYI();
-
-            //var keys = groupPrivate.MakeRecryptionKeySet(2);
-
-
-
-
-
-            //return keys;
-
             }
 
 

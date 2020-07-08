@@ -128,9 +128,6 @@ namespace Goedel.Mesh {
                 KeySecurity keySecurity = KeySecurity.Bound
                 ) => GetKeyPair(keySecurity) as KeyPairAdvanced;
 
-
-
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -138,9 +135,11 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Return a PublicKey object for the specified KeyPair
+        /// Constructor for the key <paramref name="cryptoKey"/>.
         /// </summary>
         /// <param name="cryptoKey">The key pair to bind.</param>
+        /// <param name="export">If true, export the private parameters as well
+        /// as the public.</param>
         /// <returns>The generated key pair</returns>
         public KeyData(CryptoKey cryptoKey, bool export = false) {
             CryptoKey = cryptoKey;
@@ -152,15 +151,16 @@ namespace Goedel.Mesh {
                 }
             }
 
+        /// <summary>
+        /// Constructor for the key  <paramref name="keyAdvancedPrivate"/>. The
+        /// private parameters are always exported.
+        /// </summary>
+        /// <param name="keyAdvancedPrivate">The private key to bind.</param>
         public KeyData(IKeyAdvancedPrivate keyAdvancedPrivate) =>
             PrivateParameters = keyAdvancedPrivate switch {
                 IKeyPrivateECDH keyPrivateECDH => new PrivateKeyECDH(keyPrivateECDH),
                 _ => throw new NYI()
                 };
-
- 
-
-
 
         /// <summary>
         /// Create a Private Parameters property that contains the 
@@ -173,28 +173,6 @@ namespace Goedel.Mesh {
                 KeyPairDH keyPairDH => new PrivateKeyDH(keyPairDH),
                 _ => throw new NYI()
                 };
-
-
-
-
-        /// <summary>
-        /// Create a provider object that includes the private key parameters and add this
-        /// to the certificate.
-        /// </summary>
-        public void ImportPrivateParameters() {
-            if (CryptoKey.GetType() == typeof(KeyPairBaseRSA)) {
-                if (PrivateParameters.GetType() != typeof(PrivateKeyRSA)) {
-                    throw new Exception("Invalid key description");
-                    }
-
-                //var RSAKeyPair = KeyPair as RSAKeyPair;
-                var PrivateKeyRSA = PrivateParameters as PrivateKeyRSA;
-                //var RSAKeyPair = KeyPair as RSAKeyPair;
-
-                throw new NYI("RSA Key Pair Management");
-                }
-            }
-
 
 
         /// <summary>

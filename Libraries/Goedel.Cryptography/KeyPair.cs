@@ -165,19 +165,18 @@ namespace Goedel.Cryptography {
             KeyPair keyPair;
 
             switch (algorithmID) {
-                //case CryptoAlgorithmID.RSAExch: {
-                //    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
-                //    break;
-                //    }
-
-                //case CryptoAlgorithmID.RSASign: {
-                //    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
-                //    break;
-                //    }
-                //case CryptoAlgorithmID.DH: {
-                //    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
-                //    break;
-                //    }
+                case CryptoAlgorithmId.RSAExch: {
+                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Encrypt, algorithmID);
+                    break;
+                    }
+                case CryptoAlgorithmId.RSASign: {
+                    keyPair = KeyPairFactoryRSA(keySize, keySecurity, KeyUses.Sign, algorithmID);
+                    break;
+                    }
+                case CryptoAlgorithmId.DH: {
+                    keyPair = KeyPairFactoryDH(keySize, keySecurity, keyUses, algorithmID);
+                    break;
+                    }
                 case CryptoAlgorithmId.X25519: {
                     keyPair = new KeyPairX25519(binaryData, salt, keySecurity, keyUses);
                     break;

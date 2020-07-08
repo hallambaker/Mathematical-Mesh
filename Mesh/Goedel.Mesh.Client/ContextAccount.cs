@@ -223,9 +223,7 @@ namespace Goedel.Mesh.Client {
         /// This MAY be either the full key or a key share.
         /// </summary>
         /// <returns></returns>
-        KeyData GetAccountEncryptionKey() {
-            return new KeyData(KeyAccountEncryption);
-            }
+        KeyData GetAccountEncryptionKey() => new KeyData(KeyAccountEncryption);
 
         /// <summary>
         /// Get the default (i.e. minimum contact info). This has a single network 
@@ -372,7 +370,12 @@ namespace Goedel.Mesh.Client {
         public SpoolOutbound GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as SpoolOutbound;
 
 
-
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyId">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
         public override CryptoKey TryFindKeyEncryption(string keyId) {
 
             var key = base.TryFindKeyEncryption(keyId);
@@ -1155,7 +1158,7 @@ namespace Goedel.Mesh.Client {
         public CatalogedContact ContactExchange(string uri, bool reciprocate, out Message message, string localname = null) {
             // Fetch, verify and decrypt the corresponding data.
 
-            var envelope = ClaimPublication(uri, out var responseId);
+            var envelope = ClaimPublication(uri, out var _);
 
             // Add to the catalog
             var catalog = GetCatalogContact();

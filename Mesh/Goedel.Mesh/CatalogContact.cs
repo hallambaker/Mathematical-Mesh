@@ -221,18 +221,26 @@ namespace Goedel.Mesh {
 
             }
 
-        public NetworkProtocolEntry GetNetworkEntry(string keyId) {
-            DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact);
+        /// <summary>
+        /// Return the network entry for the address <paramref name="networkAddress"/>
+        /// </summary>
+        /// <param name="networkAddress">The address to return the entry for.</param>
+        /// <returns>The network entry if found, otherwise, null.</returns>
+        public NetworkProtocolEntry GetNetworkEntry(string networkAddress) {
+            DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact);
             return catalogedContact;
             }
 
-        public CryptoKey GetByAccountEncrypt(string keyId) {
+        /// <summary>
+        /// Retuen the mesh account encryption key for the address <paramref name="networkAddress"/>
+        /// </summary>
+        /// <param name="networkAddress">The address to return the entry for.</param>
+        /// <returns>The mesh account encryption key if found, otherwise, null.</returns>
+        public CryptoKey GetByAccountEncrypt(string networkAddress) {
 
-            if (!DictionaryByNetworkAddress.TryGetValue(keyId, out var catalogedContact)) {
+            if (!DictionaryByNetworkAddress.TryGetValue(networkAddress, out var catalogedContact)) {
                 return null;
                 }
-
-
 
             return catalogedContact.MeshKeyEncryption;
             }
@@ -300,10 +308,12 @@ namespace Goedel.Mesh {
 
                     break;
                     }
-                case ContactOrganization contactPerson: {
+                case ContactOrganization contactOrganization: {
+                    builder.AppendLine($"  Organization {contactOrganization.Id}");
                     break;
                     }
-                case ContactGroup contactPerson: {
+                case ContactGroup ContactGroup: {
+                    builder.AppendLine($"  Group {ContactGroup.Id}");
                     break;
                     }
                 }

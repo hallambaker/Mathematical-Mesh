@@ -105,50 +105,13 @@ namespace Goedel.Mesh {
             }
 
 
-        public KeyAgreementResult KeyAgreement (
-                    string accountAddress,
-                    string keyId,
-                    KeyPair ephemeral,
-                    BigInteger? lagrange=null) {
-
-            var operation = new CryptographicOperationKeyAgreement() {
-                KeyId = keyId,
-                PublicKey = Key.GetPublic(ephemeral)
-            };
 
 
-            var operateRequest = new OperateRequest() {
-                AccountAddress = accountAddress,
-                Operations = new List<CryptographicOperation>() {
-                    operation
-                    }
-                };
-
-            var response = Operate(operateRequest);
-
-            var result = response.Results[0] as CryptographicResultKeyAgreement;
-
-            return result.KeyAgreement.KeyAgreementResult;
-            }
 
 
-        public byte[] Signature(
-                    string accountAddress,
-                    string keyId,
-                    byte[] data,
-                    byte[] partialR,
-                    BigInteger? lagrange = null
-                    ) {
-            throw new NYI();
-            }
 
 
-        public ShamirSharePrivate[] MakeThresholdKeySet(
-                    string accountAddress, 
-                    int shares, 
-                    int threshold) {
-            throw new NYI();
-            }
+
 
 
         }

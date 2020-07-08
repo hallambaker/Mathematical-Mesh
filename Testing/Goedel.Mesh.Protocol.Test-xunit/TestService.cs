@@ -13,6 +13,8 @@ using Xunit;
 #pragma warning disable IDE0059
 
 namespace Goedel.XUnit {
+
+
     public partial class TestService {
         // Goal: Authenticate service requests and responses
         // Goal: Lightweight key exchange mechanism for service

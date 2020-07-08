@@ -255,6 +255,7 @@ namespace Goedel.Mesh {
         /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
         /// </summary>
         /// <param name="catalogEntry">The entry to add.</param>
+        /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void New(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
             encryptionKey.AssertNull(); // for later use
 
@@ -267,6 +268,7 @@ namespace Goedel.Mesh {
         /// Update <paramref name="catalogEntry"/> in the catalog.
         /// </summary>
         /// <param name="catalogEntry">The entry to update.</param>
+        /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void Update(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
             encryptionKey.AssertNull(); // for later use
 

@@ -71,21 +71,36 @@ namespace Goedel.Mesh {
                 cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
-
+        /// <summary>
+        /// Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
+        /// </summary>
+        /// <param name="keyId">The identifier of the public key to obtain a decryption 
+        /// capability against.</param>
+        /// <returns>The decryption capability if found, otherwise null.</returns>
         public IKeyDecrypt TryFindKeyDecryption(string keyId) {
             DictionaryDecryptByKeyId.TryGetValue(keyId, out var result);
 
             return result;
             }
 
+        /// <summary>
+        /// Resolve a signing capability for the key <paramref name="keyId"/>.
+        /// </summary>
+        /// <param name="keyId">The identifier of the public key to obtain a signature 
+        /// capability for.</param>
+        /// <returns>The signing capability if found, otherwise null.</returns>
         public IKeySign TryFindKeySign(string keyId) {
             DictionarySignByAccountAddress.TryGetValue(keyId, out var result);
 
             return result;
             }
 
-
-
+        /// <summary>
+        /// Resolve a key share generation capability for the key <paramref name="keyId"/>
+        /// </summary>
+        /// <param name="keyId">The identifier of the public key to obtain a key share 
+        /// generation capability for.</param>
+        /// <returns>The key share generation capability if found, otherwise null.</returns>
         public CapabilityKeyGenerate TryFindKeyGenerate(string keyId) {
             DictionaryKeyGenerate.TryGetValue(keyId, out var result);
 
@@ -168,16 +183,9 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Default constructor for serialization.
+        /// Create a cataloged capability for <paramref name="capability"/>.
         /// </summary>
-        public CatalogedCapability(CryptographicCapability capability) {
-
-
-            Capability = capability;
-
-
-
-            }
+        public CatalogedCapability(CryptographicCapability capability) => Capability = capability;
 
         }
 

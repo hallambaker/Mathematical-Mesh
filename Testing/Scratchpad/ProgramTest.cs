@@ -8,6 +8,7 @@ using System;
 
 namespace Scratchpad {
 
+
     partial class Program {
         static void Main() {
             Console.WriteLine("Hello World");
@@ -20,82 +21,63 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            //TestService.Test().PrivateKeyRoundTripFull(10);
 
-            //TestService.Test().KeyShareTestDirectAll();
-
-
-
-            ShellTests.Test().TestFileEncrypt();
-
-
-            // The whole Escrow thing
-            // Failing because key lookup is currently bjorked
-            //ShellTests.Test().TestEscrowAccountService();
-            //ShellTests.Test().TestEscrowMeshOnly();
-
-            TestService.Test().MeshCatalogGroup();
-
-
-            //TestService.Test().MeshCatalogAccount();
-            //TestService.Test().MeshMessageContact();
-            //TestService.Test().MeshDeviceConnectPIN();
-            //TestService.Test().MeshCatalogStandalone();
-            //TestService.Test().MeshMessageContact();
-            //TestService.Test().MeshServiceFull();
-
-
-
-            //TestService.Test().MeshCatalogGroup();
-
+            // ** Finish off the group stuff
             //ShellTests.Test().TestMessageGroup();
 
-
-
-            //ShellTests.Test().TestMessageContactBusinessCardReject();
-
-
-            //ShellTests.Test().TestProfileConnectPin();
-
-            //ShellTests.Test().TestMessageContactRemote();
-            //ShellTests.Test().TestMessageContactBusinessCardFetch();
-            //ShellTests.Test().TestMessageContactBusinessCardExchange();
-
-
-            //ShellTests.Test().TestMessageContactInPerson();
-
-
-
+            // ** Sure this has worked in the past.
             //ShellTests.Test().TestMessageConfirmationAccept();
-
             //ShellTests.Test().TestMessageConfirmationReject();
 
 
-            // All the tests related to Groups.
-
-            //StoreTests.Test().TestCatalog(); // Better get the basics right.
 
 
+            // ** Just need some testing on the PIN expiry/reuse stuff.
+            //ShellTests.Test().TestProfileConnectDynamicQR();
+            //ShellTests.Test().TestProfileConnectPinExpired();
+            //ShellTests.Test().TestProfileConnectPinInvalid();
+            //ShellTests.Test().TestProfileConnectPinReused();
 
+            // ** The signature interface
+            //ShellTests.Test().TestFileSign();
+            //ShellTests.Test().TestFileSignEncrypt();
+
+            // ** The catalog/archive interfaces
             //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();
             //ShellTests.Test().TestContainerCatalogEncrypt();
 
-            //ShellTests.Test().TestFileEncrypt();
-            //ShellTests.Test().TestFileSignEncrypt();
+            // ** The whole Escrow thing
+            //ShellTests.Test().TestEscrowAccountService();
+            //ShellTests.Test().TestEscrowMeshOnly();
 
 
-            // Shell connect tests
+
+            // **** Needs a lot of design work
+            // ** Application related shell commands
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileContact();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
+
+            // ** The Device Authorization stuff - nix these and restart
             //ShellTests.Test().TestProfileConnectAuth();
             //ShellTests.Test().TestProfileConnectAuthAdmin();
             //ShellTests.Test().TestProfileConnectAuthAll();
 
-            // Application related shell commands
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
 
 
+            // **** Tests yet to be written
+
+            // ** Is the profile signed?
+
+            // ** Is the profile signature valid?
+
+            // ** Is the password catalog encrypted?
+
+            // ** Is the user capability encrypted?
+
+            // ** Is the service capability encrypted?
 
 
             }

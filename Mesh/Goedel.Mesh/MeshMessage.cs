@@ -52,7 +52,7 @@ namespace Goedel.Mesh {
         /// <param name="signingKey">The signature key.</param>
         /// <param name="encryptionKey">The encryption key.</param>
         /// <returns>The enveloped, signed message.</returns>
-        public DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey =null) {
+        public override DareEnvelope Encode(CryptoKey signingKey = null, CryptoKey encryptionKey =null) {
 
             MessageID ??= UDF.Nonce(); // Add a message ID unless one is already defined.
 
@@ -224,10 +224,8 @@ namespace Goedel.Mesh {
                     string pin,
                     string accountAddress,
                     string deviceUDF,
-                    byte[] clientNonce) {
-            return UDF.PinWitness(pin, accountAddress.ToUTF8(),
+                    byte[] clientNonce) => UDF.PinWitness(pin, accountAddress.ToUTF8(),
                         clientNonce, deviceUDF.ToUTF8());
-            }
 
         /// <summary>
         /// Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)

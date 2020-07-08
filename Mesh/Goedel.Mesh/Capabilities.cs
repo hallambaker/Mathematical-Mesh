@@ -4,14 +4,16 @@ using Goedel.Utilities;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
 
-using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.IO;
 
 
 namespace Goedel.Mesh {
 
-
+    /// <summary>
+    /// Interface that returns a Mesh client for an account.
+    /// </summary>
     public interface IMeshClient {
 
         /// <summary>
@@ -23,28 +25,34 @@ namespace Goedel.Mesh {
 
         }
 
-
+    /// <summary>
+    /// Interface containing methods and properties used to request a service perform
+    /// the counterparty operation for a partial capability.
+    /// </summary>
     public interface ICapabilityPartial {
 
         /// <summary>
-        ///The identifier used to claim the capability from the service.[Only present for
-        ///a partial capability.]
+        ///The identifier used to claim the capability from the service.
         /// </summary>
-
         string ServiceId { get; set; }
-        /// <summary>
-        ///The service account that supports a serviced capability. [Only present for
-        ///a partial capability.]
-        /// </summary>
 
+        /// <summary>
+        ///The service account that supports a serviced capability. 
+        /// </summary>
         string ServiceAddress { get; set; }
 
-
+        /// <summary>
+        /// Instance with interface that returns a Mesh client for an account. This could
+        /// be changed to a delegate function.
+        /// </summary>
         IMeshClient CryptographicClient { get; set; }
 
         }
 
-
+    /// <summary>
+    /// Interface containing methods and properties used to implement a service performing
+    /// the counterparty operation for a partial capability.
+    /// </summary>
     public interface ICapabilityServiced {
 
         /// <summary>
@@ -67,22 +75,6 @@ namespace Goedel.Mesh {
         ///<summary>The primary key is the value of the <see cref="Id"/> property.</summary>
         public override string _PrimaryKey => Id;
 
-        public CryptographicCapability() {
-
-            }
-
-        public CryptographicCapability(KeyPair keyPair) {
-            KeyData = new KeyData(keyPair);
-            }
-
-
-        public IKeyAdvancedPrivate GetKeyPairAdvancedPrivate() {
-            var keypair = KeyData.GetKeyPair() as KeyPairAdvanced;
-            return keypair.IKeyAdvancedPrivate;
-
-
-            }
-
         }
 
 
@@ -102,13 +94,26 @@ namespace Goedel.Mesh {
             CryptoAlgorithmId algorithmID =
             CryptoAlgorithmId.Default,
             byte[] context = null) => throw new OperationNotSupported();
+
+
+        //byte[] Signature(
+        //    string accountAddress,
+        //    string keyId,
+        //    byte[] data,
+        //    byte[] partialR,
+        //    BigInteger? lagrange = null
+        //    ) {
+        //    throw new NYI();
+        //    }
+
         }
 
     public partial class CapabilityDecrypt : IKeyDecrypt {
 
 
 
-
+        ///<summary>The cached <see cref="KeyPairAdvanced"/> instance corresponding
+        ///to <see cref="KeyData"/></summary>
         protected KeyPairAdvanced KeyPair => keyPair ?? 
                 KeyData.GetKeyPairAdvanced().CacheValue (out keyPair);
 
@@ -145,6 +150,9 @@ namespace Goedel.Mesh {
         }
     public partial class CapabilityDecryptPartial :ICapabilityPartial {
 
+
+        ///<summary>Instance exposing the <see cref="IMeshClient"/> interface allowing
+        ///a client to be obtained for resolving the service.</summary>
         public IMeshClient CryptographicClient { get; set; }
         
         /// <summary>
@@ -164,11 +172,8 @@ namespace Goedel.Mesh {
                 KeyAgreementResult partial = null,
                 byte[] salt = null) {
 
-
-            var client = CryptographicClient.GetMeshClient(ServiceAddress);
-
             // delegate service... 
-            var partial2 = client.KeyAgreement(ServiceAddress, ServiceId, ephemeral);
+            var partial2 = KeyAgreement(ServiceAddress, ServiceId, ephemeral);
 
             if (partial != null) {
                 //partial2 = partial2.Add(partial);
@@ -177,6 +182,31 @@ namespace Goedel.Mesh {
             return KeyPair.Decrypt(encryptedKey, ephemeral, algorithmID, partial2, salt);
             }
 
+        KeyAgreementResult KeyAgreement(
+            string accountAddress,
+            string keyId,
+            KeyPair ephemeral,
+            BigInteger? lagrange = null) {
+
+            var operation = new CryptographicOperationKeyAgreement() {
+                KeyId = keyId,
+                PublicKey = Key.GetPublic(ephemeral)
+                };
+
+            var operateRequest = new OperateRequest() {
+                AccountAddress = accountAddress,
+                Operations = new List<CryptographicOperation>() {
+                    operation
+                    }
+                };
+
+            var client = CryptographicClient.GetMeshClient(ServiceAddress);
+            var response = client.Operate(operateRequest);
+
+            var result = response.Results[0] as CryptographicResultKeyAgreement;
+
+            return result.KeyAgreement.KeyAgreementResult;
+            }
 
         }
     public partial class CapabilityDecryptServiced :ICapabilityServiced {
@@ -186,7 +216,12 @@ namespace Goedel.Mesh {
 
     public partial class CapabilityKeyGenerate {
 
-
+        /// <summary>
+        /// Create key shares to augment the array of capabilities <paramref name="capabilities"/>
+        /// with the threshold set to the total number of shares created and bind to the
+        /// <see cref="KeyData"/> properties of each.
+        /// </summary>
+        /// <param name="capabilities">The capabilities to augment.</param>
         public void CreateShares(params CryptographicCapability[] capabilities) {
             var keyAdvanced = KeyData.GetKeyPairAdvanced();
             var privateAdvanced = keyAdvanced.IKeyAdvancedPrivate;
@@ -194,21 +229,19 @@ namespace Goedel.Mesh {
             var keys = privateAdvanced.MakeThresholdKeySet(capabilities.Length);
 
             for (var i = 0; i < capabilities.Length; i++) {
-                //var key = keys[i].GetKeyPair(keySecurity: KeySecurity.Exportable);
                 capabilities[i].KeyData = new KeyData(keys[i]) {
-                    UDF = UDF.Nonce()};
-
-                //var privateParams = capabilities[i].KeyData.PrivateParameters as PrivateKeyECDH;
-                //var privateScalar = privateParams.Private.BigIntegerLittleEndian();
-
-                //var checkKey2 = KeyPairECDH.KeyPairFactory(keyAdvanced.CryptoAlgorithmId, privateScalar);
-                //checkKey2.IKeyAdvancedPrivate.Private.AssertEqual(keys[i].Private);
-
-                //var checkKey = capabilities[i].KeyData.GetKeyPairAdvanced().IKeyAdvancedPrivate;
-                //checkKey.Private.AssertEqual(keys[i].Private);
-
+                    UDF = UDF.Nonce() // Hack: ??? should this be some function of the base key???
+                    };
                 }
             }
+
+
+        //ShamirSharePrivate[] MakeThresholdKeySet(
+        //    string accountAddress,
+        //    int shares,
+        //    int threshold) {
+        //    throw new NYI();
+        //    }
 
         }
 

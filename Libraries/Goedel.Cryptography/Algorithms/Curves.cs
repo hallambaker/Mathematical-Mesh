@@ -15,7 +15,7 @@ namespace Goedel.Cryptography.Algorithms {
         ///<summary>The Jose curve name for direct encoding</summary>
         public const string CurveJoseDirectSuffix = "z";
 
-        public static string GetCurveJoseDirect (string curve) => curve + "z";
+        //public static string GetCurveJoseDirect (string curve) => curve + "z";
 
 
         ///<summary>The domain parameters</summary>

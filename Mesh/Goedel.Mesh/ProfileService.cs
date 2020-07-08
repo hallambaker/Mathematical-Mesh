@@ -41,6 +41,7 @@ namespace Goedel.Mesh {
         /// Constructor create service with the signature key <paramref name="keySign"/>
         /// </summary>
         /// <param name="keySign">The offline signature key.</param>
+        /// <param name="keyEncrypt">The service encryption key.</param>
         public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
             KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
