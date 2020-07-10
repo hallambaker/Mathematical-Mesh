@@ -17,6 +17,13 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public new const string Label = "Tree";
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="keyLocate">Key collection to be used to resolve public keys</param>
+        public ContainerTree(IKeyLocate keyLocate) : base(keyLocate) {
+            }
+
 
         /// <summary>
         /// Create a new container file of the specified type and write the initial
@@ -27,7 +34,8 @@ namespace Goedel.Cryptography.Dare {
         /// content in the file will be overwritten.</param>
         /// <returns>The newly constructed container.</returns>
         public static new Container MakeNewContainer(
-                        JbcdStream jbcdStream) {
+                        JbcdStream jbcdStream,
+                        IKeyLocate keyLocate) {
 
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
@@ -40,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
 
-            var container = new ContainerTree() {
+            var container = new ContainerTree(keyLocate) {
                 JBCDStream = jbcdStream,
                 ContainerHeaderFirst = containerHeader
                 };

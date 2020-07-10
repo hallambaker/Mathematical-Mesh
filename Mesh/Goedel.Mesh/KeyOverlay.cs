@@ -128,7 +128,7 @@ namespace Goedel.Mesh {
         /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
-                    MeshKeyType meshKeyType, KeyCollection keyCollection = null,
+                    MeshKeyType meshKeyType, keyCollection keyCollection = null,
                     KeySecurity keySecurity= KeySecurity.Ephemeral) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
@@ -219,7 +219,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPairAdvanced ActivatePublic(this KeyPair baseKey,
-            string activationSeed, MeshKeyType meshKeyType, KeyCollection keyCollection = null) {
+            string activationSeed, MeshKeyType meshKeyType, keyCollection keyCollection = null) {
             //Console.WriteLine($"Public: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);

@@ -46,7 +46,10 @@ namespace Goedel.Mesh {
                 new Dictionary<string, CapabilityFairExchange>();
 
 
-        //public CatalogedMember LocateByID(string Key) => Locate(Key) as CatalogedMember;
+        // public IMeshClient - the client
+        // bind each member to this value...
+
+
 
 
         /// <summary>
@@ -60,15 +63,17 @@ namespace Goedel.Mesh {
         /// <param name="storeName">The catalog persistence container file name.</param>
         /// <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
         /// <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         public CatalogCapability(
                     string directory,
                     string storeName = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool decrypt = true,
                     bool create = true) :
-            base(directory, storeName ?? Label,
-                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                    base(directory, storeName ?? Label,
+                        cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
             }
 
         /// <summary>
@@ -143,6 +148,11 @@ namespace Goedel.Mesh {
                 case CapabilityDecrypt capabilityDecryption: {
                     DictionaryDecryptByKeyId.Add(capabilityDecryption.SubjectId,
                         capabilityDecryption);
+
+                    if (capabilityDecryption is ICapabilityPartial meshClientCapability) {
+                        meshClientCapability.CryptographicClient = this.MeshClient;
+                        }
+
                     break;
                     }
                 case CapabilitySign capabilityAdministrator: {

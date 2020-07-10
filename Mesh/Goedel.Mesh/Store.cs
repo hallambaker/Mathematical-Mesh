@@ -93,7 +93,8 @@ namespace Goedel.Mesh {
         /// <param name="directory">Directory in which the containers are kept.</param>
         /// <param name="envelopes">The envelopes to add.</param>
         /// <param name="containerName">The name of the container.</param>
-        public static void Append(string directory, List<DareEnvelope> envelopes, string containerName = null) {
+        public static void Append(string directory, 
+                IKeyLocate keyLocate, List<DareEnvelope> envelopes, string containerName = null) {
             envelopes.AssertNotNull();
             if (envelopes.Count == 0) {
                 return;
@@ -102,7 +103,7 @@ namespace Goedel.Mesh {
             var fileName = FileName(directory, containerName);
 
             if (envelopes[0].Header.ContainerInfo.Index == 0) {
-                using var container = Container.MakeNewContainer(fileName, envelopes);
+                using var container = Container.MakeNewContainer(fileName, keyLocate, envelopes);
                 }
             else {
                 // here open the existing container.

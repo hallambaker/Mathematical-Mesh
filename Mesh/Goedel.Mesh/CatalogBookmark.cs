@@ -41,8 +41,8 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
-            base(directory, storeName ?? Label, 
-                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+            base(directory, storeName ?? Label,
+                        cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
         }

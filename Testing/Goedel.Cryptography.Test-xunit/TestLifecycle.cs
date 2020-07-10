@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Goedel.XUnit {
     public class TestLifecycle {
-        KeyCollection KeyCollection;
+        keyCollection KeyCollection;
 
         public MeshMachineTest MeshMachine;
 

@@ -64,12 +64,12 @@ namespace Goedel.Cryptography {
     /// Return a new KeyCollection
     /// </summary>
     /// <returns></returns>
-    public delegate KeyCollection KeyCollectionDelegate();
+    public delegate keyCollection KeyCollectionDelegate();
 
     /// <summary>
     /// Track a collection of keys from various sources allowing recall when required for recryption use.
     /// </summary>
-    public abstract class KeyCollection : IKeyLocate {
+    public abstract class keyCollection : IKeyLocate {
 
         ///<summary>Lock used to ensure exclusive access during updates.</summary>
         Object exclusiveAccess = new Object();
@@ -77,7 +77,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The default collection.
         /// </summary>
-        public static KeyCollection Default;
+        public static keyCollection Default;
 
         //static KeyCollection _Default = null;
 

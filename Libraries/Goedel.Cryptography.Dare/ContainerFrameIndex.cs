@@ -36,23 +36,14 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The frame trailer</summary>
         public DareTrailer Trailer;
 
-        /////<summary>The first byte of the data segment (excluding the length indicator)</summary>
-        //public long FramePosition;
-
         ///<summary>The first byte of the data segment (excluding the length indicator)</summary>
-        public long DataPosition;
+        public long dataPosition;
 
         ///<summary>The length of the data segment.</summary>
         public long DataLength;
 
         ///<summary>If true, the frame has a payload section</summary>
         public bool HasPayload => throw new NYI();
-
-        IKeyLocate keyCollection;
-
-        ///<summary>The envelope body</summary>
-        public byte[] Payload => payload ?? GetPayLoad().CacheValue(out payload);
-        byte[] payload;
 
         ///<summary>The decoded JSONObject</summary>
         public JSONObject JSONObject;
@@ -64,14 +55,24 @@ namespace Goedel.Cryptography.Dare {
         /// Return the frame payload.
         /// </summary>
         /// <returns>The frame payload data.</returns>
-        public byte[] GetPayLoad() {
-            using var input = jbcdStream.FramerGetReader(DataPosition, DataLength);
+        public byte[] GetPayload(IKeyLocate keyCollection) {
+            using var input = jbcdStream.FramerGetReader(dataPosition, DataLength);
             var Decoder = Header.GetDecoder(input, out var Reader,
                         keyCollection: keyCollection);
 
             using var output = new MemoryStream();
             Reader.CopyTo(output);
             return output.ToArray();
+            }
+
+
+        public ContainerFrameIndex(DareEnvelope envelope) {
+            Header = envelope.Header;
+            Trailer = envelope.Trailer;
+            JSONObject = envelope.JSONObject;
+            if (envelope.Body != null) {
+                DataLength = envelope.Body.Length;
+                }
             }
 
 
@@ -84,7 +85,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Position">The position in the file.</param>
         public ContainerFrameIndex(JbcdStream jsonStream, IKeyLocate keyCollection, long Position = -1) {
 
-            this.keyCollection = keyCollection;
+            //this.keyCollection = keyCollection;
             jbcdStream = jsonStream;
 
             var length = jsonStream.FramerOpen(Position);
@@ -93,7 +94,7 @@ namespace Goedel.Cryptography.Dare {
             var HeaderText = HeaderBytes.ToUTF8();
             Header = DareHeader.FromJSON(HeaderBytes.JSONReader(), false);
 
-            jsonStream.FramerGetFrameIndex(out DataPosition, out DataLength);
+            jsonStream.FramerGetFrameIndex(out dataPosition, out DataLength);
 
             var TrailerBytes = jsonStream.FramerGetData();
             if (TrailerBytes != null && TrailerBytes.Length > 0) {
@@ -108,8 +109,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The container that was indexed.</param>
         /// <returns>The deserialized object.</returns>
-        public JSONObject GetJSONObject(Container container) =>
-            Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+        public JSONObject GetJSONObject(Container container) => JSONObject ??
+            GetPayload(container.KeyLocate).JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
 
         /// <summary>
         /// Return a JSONReader for the content
@@ -124,7 +125,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="container">The indexed container.</param>
         /// <returns>The frame payload</returns>
         public byte[] GetBody(Container container) {
-            using var input = container.JBCDStream.FramerGetReader(DataPosition, DataLength);
+            using var input = container.JBCDStream.FramerGetReader(dataPosition, DataLength);
             using var output = new MemoryStream();
             input.CopyTo(output);
             return output.ToArray();

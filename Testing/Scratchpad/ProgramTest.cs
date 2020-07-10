@@ -21,12 +21,19 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+            // ** Fast access to simple tests for regression fixing.
+            TestService.Test().MeshCatalogAccount();
+            //ShellTests.Test().TestProfileConnect();
+
+
+            // ***** Currently failing tests
+
 
             // ** Finish off the group stuff
             //ShellTests.Test().TestMessageGroup();
 
             // ** Sure this has worked in the past.
-            //ShellTests.Test().TestMessageConfirmationAccept();
+            ShellTests.Test().TestMessageConfirmationAccept();
             //ShellTests.Test().TestMessageConfirmationReject();
 
 

@@ -20,6 +20,14 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="keyLocate">Key collection to be used to resolve public keys</param>
+        public ContainerChain(IKeyLocate keyLocate) : base(keyLocate) {
+            }
+
+
+        /// <summary>
         /// Create a new container file of the specified type and write the initial
         /// data record
         /// </summary>
@@ -27,7 +35,8 @@ namespace Goedel.Cryptography.Dare {
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
         public static new Container MakeNewContainer(
-                        JbcdStream JBCDStream) {
+                        JbcdStream JBCDStream,
+                        IKeyLocate keyLocate) {
 
 
 
@@ -41,7 +50,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerInfo = containerInfo
                 };
 
-            var container = new ContainerChain() {
+            var container = new ContainerChain(keyLocate) {
                 JBCDStream = JBCDStream,
                 ContainerHeaderFirst = containerHeader
                 };

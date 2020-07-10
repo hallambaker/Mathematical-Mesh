@@ -61,6 +61,10 @@ namespace Goedel.Mesh {
     /// </summary>
     public class Catalog : Store, IEnumerable<CatalogedEntry> {
 
+        ///<summary>Class exposing the Mesh Client locate interface.</summary>
+        public IMeshClient MeshClient;
+
+
         ///<summary>The persistence store.</summary>
         public PersistenceStore PersistenceStore { get; set;  } = null;
 
@@ -79,12 +83,14 @@ namespace Goedel.Mesh {
         /// <param name="containerName">Container name.</param>
         /// <param name="cryptoParameters">Cryptographic parameters.</param>
         /// <param name="keyCollection">Key collection to use for decryption.</param>
+        /// <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         /// <param name="readContainer">If true, read the container.</param>
         /// <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
         /// <param name="create">If true, create a container if it does not already exist.</param>
         public Catalog(string directory, string containerName,
-            CryptoParameters cryptoParameters = null,
+                    CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
+                    IMeshClient meshClient = null,
                     bool readContainer = true,
                     bool decrypt = true,
                     bool create = true) :
@@ -92,8 +98,9 @@ namespace Goedel.Mesh {
             if (!create & Container == null) {
                 return;
                 }
+            MeshClient = meshClient;
 
-            PersistenceStore = new PersistenceStore(Container, readContainer);
+            PersistenceStore = new PersistenceStore(Container, keyCollection, readContainer);
 
             if (readContainer) {
                 foreach (var indexEntry in PersistenceStore.ObjectIndex) {
@@ -131,11 +138,13 @@ namespace Goedel.Mesh {
                 switch (update.Action) {
                     case CatalogAction.New: {
                         var envelope = PersistenceStore.PrepareNew(update.CatalogEntry);
+                        envelope.JSONObject = update.CatalogEntry;
                         result.Add(envelope);
                         break;
                         }
                     case CatalogAction.Update: {
                         var envelope = PersistenceStore.PrepareUpdate(out _, update.CatalogEntry);
+                        envelope.JSONObject = update.CatalogEntry;
                         result.Add(envelope);
                         break;
                         }
@@ -157,15 +166,34 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Commit the updates in <paramref name="updates"/> to the local persistence store.
+        /// Commit the updates in <paramref name="envelopes"/> to the local persistence store.
         /// </summary>
-        /// <param name="updates">The updates to apply.</param>
-        public void Commit(List<DareEnvelope> updates) {
+        /// <param name="envelopes">The updates to apply.</param>
+        public void Commit(List<DareEnvelope> envelopes, List<CatalogUpdate> updates) {
 
-            foreach (var update in updates) {
-                PersistenceStore.Apply(update);
+            foreach (var envelope in envelopes) {
+                PersistenceStore.Apply(envelope);
+                // error - this is not updating the persistence store index 
                 }
+            foreach (var update in updates) {
+                switch (update.Action) {
+                    case CatalogAction.New: {
+                        NewEntry(update.CatalogEntry);
+                        break;
+                        }
+                    case CatalogAction.Update: {
+                        UpdateEntry(update.CatalogEntry);
+                        break;
+                        }
+                    case CatalogAction.Delete: {
+                        DeleteEntry(update.PrimaryKey);
+                        break;
+                        }
 
+                    default:
+                    break;
+                    }
+                }
 
             }
 

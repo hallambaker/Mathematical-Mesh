@@ -126,14 +126,14 @@ namespace Goedel.Cryptography.Dare {
                     bool readContainer = true,
                     bool decrypt = true) : this(
                         Container.Open(
-                fileName,
-                fileStatus,
-                keyCollection ?? cryptoParameters?.KeyLocate,
-                cryptoParameters,
-                containerType,
-                contentType,
-                decrypt
-                ), readContainer) { }
+                            fileName,
+                            fileStatus,
+                            keyCollection ?? cryptoParameters?.KeyLocate,
+                            cryptoParameters,
+                            containerType,
+                            contentType,
+                            decrypt
+                            ), keyCollection, readContainer) { }
 
 
         /// <summary>
@@ -141,11 +141,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container"></param>
         /// <param name="readContainer"></param>
-        public PersistenceStore(Container container, bool readContainer = true) {
+        public PersistenceStore(Container container, IKeyLocate keyCollection, bool readContainer = true) {
             Container = container;
 
             if (readContainer & container.JBCDStream.Length > 0) {
-                ReadContainer();
+                ReadContainer(keyCollection);
                 }
             }
 
@@ -185,11 +185,11 @@ namespace Goedel.Cryptography.Dare {
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
-        void ReadContainer(ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
+        void ReadContainer(IKeyLocate keyCollection, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
 
-                var item = frameIndex.Payload.JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+                var item = frameIndex.JSONObject;
 
                 // This is failing because ContentMetaData is not being written to envelopes...
                 CommitTransaction(frameIndex, item);
@@ -209,8 +209,11 @@ namespace Goedel.Cryptography.Dare {
         /// Apply the specified message to the container.
         /// </summary>
         /// <param name="dareMessage"></param>
-        public virtual void Apply(DareEnvelope dareMessage) => Container.Append(dareMessage);
+        public virtual void Apply(DareEnvelope dareMessage) {
+            var frameIndex = Container.Append(dareMessage);
 
+            CommitTransaction(frameIndex, dareMessage.JSONObject);
+            }
 
         #region Commit transaction to memory
 

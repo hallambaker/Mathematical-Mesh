@@ -220,7 +220,7 @@ namespace Goedel.Cryptography {
             keyPair.KeySecurity = keySecurity;
 
             if (keySecurity != KeySecurity.Ephemeral) {
-                keyCollection ??= KeyCollection.Default;
+                keyCollection ??= Cryptography.keyCollection.Default;
 
                 keyCollection.Persist(keyPair);
                 keyCollection.Add(keyPair);
@@ -313,7 +313,7 @@ namespace Goedel.Cryptography {
         /// Persist key to the key collection <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="keyCollection"></param>
-        public abstract void Persist(KeyCollection keyCollection);
+        public abstract void Persist(keyCollection keyCollection);
 
 
 

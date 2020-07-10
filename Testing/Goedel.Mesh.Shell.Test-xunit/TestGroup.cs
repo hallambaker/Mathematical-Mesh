@@ -19,11 +19,15 @@ namespace Goedel.XUnit {
             CreateAliceBob(out var deviceA, out var deviceB);
 
             deviceA.Dispatch($"group create {accountGroup}");
-            var result1 = Dispatch($"dare encode {filename} /encrypt {accountGroup}") as ResultFile;
-            deviceA.Dispatch($"dare decode {result1.Filename}");
-            deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
+            var result1 = deviceA.Dispatch($"dare encode {filename} /encrypt {accountGroup}") as ResultFile;
+            //deviceA.Dispatch($"dare decode {result1.Filename}", fail: true);
+            //deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
 
+            deviceA.Dispatch($"group add {accountGroup} {AccountA}");
+            deviceA.Dispatch($"account sync /auto");
             deviceA.Dispatch($"group add {accountGroup} {AccountB}");
+            deviceB.Dispatch($"account sync /auto");
+
             deviceA.Dispatch($"dare decode {result1.Filename}");
             deviceB.Dispatch($"dare decode {result1.Filename}");
 

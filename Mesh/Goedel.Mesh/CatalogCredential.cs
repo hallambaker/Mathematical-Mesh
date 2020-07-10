@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
                     bool decrypt = true,
                     bool create = true) :
             base(directory, storeName ?? Label,
-                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+                        cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
         }

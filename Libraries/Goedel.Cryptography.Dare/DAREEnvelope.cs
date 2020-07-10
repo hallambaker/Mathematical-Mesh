@@ -554,7 +554,7 @@ contentMeta, cloaked, dataSequences, chunk);
                 string outputFile = null,
                 IKeyLocate keyCollection = null) {
             long length = -1;
-            keyCollection ??= KeyCollection.Default;
+            keyCollection ??= Cryptography.keyCollection.Default;
 
             var jsonBcdReader = new JsonBcdReader(inputStream);
             using var message = DecodeHeader(jsonBcdReader);

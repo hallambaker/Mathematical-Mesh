@@ -247,6 +247,9 @@ namespace Goedel.Mesh.Client {
 
             try {
                 // upload all the containers here
+
+                // This is not working right because it is uploading all the envelopes every time
+                // regardless of the remote store status.
                 foreach (var store in DictionaryStores) {
                     maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
                     }
@@ -456,7 +459,7 @@ namespace Goedel.Mesh.Client {
             else {
                 // we have zero envelopes being returned in this update.
 
-                Store.Append(StoresDirectory, containerUpdate.Envelopes, containerUpdate.Container);
+                Store.Append(StoresDirectory, this, containerUpdate.Envelopes, containerUpdate.Container);
                 return containerUpdate.Envelopes.Count;
                 }
 
@@ -496,7 +499,8 @@ namespace Goedel.Mesh.Client {
         /// <returns>The store instance.</returns>
         protected virtual Store MakeStore(string name) => name switch
             {
-                CatalogCapability.Label => new CatalogCapability(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+                CatalogCapability.Label => new CatalogCapability(StoresDirectory,
+                    name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient)),
                 _ => throw new NYI(),
                 };
         #endregion

@@ -72,7 +72,7 @@ namespace Goedel.Mesh.Client {
                 var uploadResponse = meshClient.Upload(uploadRequest);
                 uploadResponse.Success().AssertTrue(SyncFailed.Throw);
                 }
-            catalog.Commit(envelopes);
+            catalog.Commit(envelopes, updates);
             }
         }
     }

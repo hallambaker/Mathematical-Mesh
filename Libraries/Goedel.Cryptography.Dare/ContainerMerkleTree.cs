@@ -16,6 +16,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         public new const string Label = "Merkle";
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="keyLocate">Key collection to be used to resolve public keys</param>
+        public ContainerMerkleTree(IKeyLocate keyLocate) : base(keyLocate) {
+            }
 
         /// <summary>
         /// Create a new container file of the specified type and write the initial
@@ -27,7 +33,8 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
-                        JbcdStream JBCDStream) {
+                        JbcdStream JBCDStream,
+                        IKeyLocate keyLocate) {
 
             var containerInfo = new ContainerInfo() {
                 ContainerType = Label,
@@ -39,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
                 ContainerInfo = containerInfo
                 };
 
-            var container = new ContainerMerkleTree() {
+            var container = new ContainerMerkleTree(keyLocate) {
                 JBCDStream = JBCDStream,
                 ContainerHeaderFirst = containerHeader
                 };

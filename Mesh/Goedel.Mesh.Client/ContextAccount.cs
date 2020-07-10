@@ -396,8 +396,8 @@ namespace Goedel.Mesh.Client {
                 return key;
                 }
 
-
-            return GetCatalogCapability().TryFindKeyDecryption(keyId);
+            var catalogCapability = GetCatalogCapability();
+            return catalogCapability.TryFindKeyDecryption(keyId);
             }
 
         #endregion
@@ -631,7 +631,6 @@ namespace Goedel.Mesh.Client {
                 CatalogNetwork.Label => new CatalogNetwork(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
                 CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
                 CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogCapability.Label => new CatalogCapability(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
                 _ => base.MakeStore(name),
                 };
 
@@ -832,10 +831,6 @@ namespace Goedel.Mesh.Client {
             foreach (var address in groupInvitation.Contact.NetworkAddresses) {
                 if (address.Capabilities != null) {
                     foreach (var capability in address.Capabilities) {
-                        if (capability is ICapabilityPartial meshClientCapability) {
-                            meshClientCapability.CryptographicClient = this;
-                            }
-
                         catalogCapability.Add(capability);
                         }
                     }

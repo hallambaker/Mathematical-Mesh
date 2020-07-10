@@ -191,20 +191,6 @@ namespace Goedel.Mesh.Server {
 
             var containerStatus = accountHandle.GetContainerStatuses();
 
-
-
-                new List<ContainerStatus> {
-                    accountHandle.GetStatusSpool (SpoolInbound.Label),
-                    accountHandle.GetStatusSpool (SpoolOutbound.Label),
-                    accountHandle.GetStatusSpool (SpoolLocal.Label),
-                    accountHandle.GetStatusCatalog (CatalogCredential.Label),
-                    accountHandle.GetStatusCatalog (CatalogDevice.Label),
-                    accountHandle.GetStatusCatalog (CatalogContact.Label),
-                    accountHandle.GetStatusCatalog (CatalogApplication.Label),
-                    accountHandle.GetStatusCatalog (CatalogBookmark.Label),
-                    accountHandle.GetStatusCatalog (CatalogCalendar.Label)
-                    };
-
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
                 EnvelopedProfileMaster = accountHandle.ProfileMesh?.DareEnvelope,

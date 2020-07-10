@@ -149,29 +149,11 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         bool Deleted { get; }
 
-        ///// <summary>
-        ///// The time at which the object instance was created.
-        ///// </summary>
-        //DateTime Created { get; }
-
-        ///// <summary>
-        ///// The time at which the object instance value was created. 
-        ///// </summary>
-        //DateTime Modified { get; }
-
-        ///// <summary>
-        ///// The binary data
-        ///// </summary>
-        //byte[] Data { get; }
-
-        /// <summary>
-        /// A deserialization reader for the data according to the encoding specified by 
-        /// the container header.
-        /// </summary>
-        //JSONReader JSONReader { get; }
 
         JSONObject JsonObject { get; }
 
+
+        //byte[] Payload { get; }
 
         /// <summary>
         /// The previous object instance value for this object instance.

@@ -113,6 +113,8 @@ namespace Goedel.Cryptography.Dare {
         public virtual int FrameIndexLast => DareHeaderFinal.Index;
 
 
+        public IKeyLocate KeyLocate;
+
 
         /// <summary>The current frame header as binary data</summary>
         public virtual byte[] FrameHeader {
@@ -173,6 +175,11 @@ namespace Goedel.Cryptography.Dare {
 
 
         #endregion
+
+        public Container(IKeyLocate keyLocate) {
+            KeyLocate = keyLocate;
+            }
+
 
         #region // IDisposable
         /// <summary>
@@ -343,7 +350,7 @@ namespace Goedel.Cryptography.Dare {
             Container container;
             switch (containerInfo.ContainerType) {
                 case ContainerList.Label: {
-                    container = new ContainerList() {
+                    container = new ContainerList(keyCollection) {
                         JBCDStream = jbcdStream,
                         ContainerHeaderFirst = containerHeaderFirst,
                         StartOfData = position1,
@@ -354,7 +361,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case ContainerDigest.Label: {
                     cryptoStack.Digest = true;
-                    container = new ContainerList() {
+                    container = new ContainerDigest(keyCollection) {
                         JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
@@ -366,7 +373,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case ContainerChain.Label: {
                     cryptoStack.Digest = true;
-                    container = new ContainerChain() {
+                    container = new ContainerChain(keyCollection) {
                         JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
@@ -377,7 +384,7 @@ namespace Goedel.Cryptography.Dare {
                     break;
                     }
                 case ContainerTree.Label: {
-                    container = new ContainerTree() {
+                    container = new ContainerTree(keyCollection) {
                         JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
@@ -389,7 +396,7 @@ namespace Goedel.Cryptography.Dare {
                     }
                 case ContainerMerkleTree.Label: {
                     cryptoStack.Digest = true;
-                    container = new ContainerMerkleTree() {
+                    container = new ContainerMerkleTree(keyCollection) {
                         JBCDStream = jbcdStream,
                         //DigestProvider = DigestProvider,
                         ContainerHeaderFirst = containerHeaderFirst,
@@ -550,25 +557,26 @@ namespace Goedel.Cryptography.Dare {
                         CryptoAlgorithmId digestAlgorithm = CryptoAlgorithmId.Default) {
             Container result;
 
+            var keyLocate = cryptoParameters.KeyLocate;
             switch (containerType) {
                 case ContainerType.List: {
-                    result = ContainerList.MakeNewContainer(jbcdStream);
+                    result = ContainerList.MakeNewContainer(jbcdStream, keyLocate);
                     break;
                     }
                 case ContainerType.Digest: {
-                    result = ContainerDigest.MakeNewContainer(jbcdStream);
+                    result = ContainerDigest.MakeNewContainer(jbcdStream, keyLocate);
                     break;
                     }
                 case ContainerType.Chain: {
-                    result = ContainerChain.MakeNewContainer(jbcdStream);
+                    result = ContainerChain.MakeNewContainer(jbcdStream, keyLocate);
                     break;
                     }
                 case ContainerType.Tree: {
-                    result = ContainerTree.MakeNewContainer(jbcdStream);
+                    result = ContainerTree.MakeNewContainer(jbcdStream, keyLocate);
                     break;
                     }
                 case ContainerType.MerkleTree: {
-                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream);
+                    result = ContainerMerkleTree.MakeNewContainer(jbcdStream, keyLocate);
                     break;
                     }
 
@@ -593,13 +601,14 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created container</returns>
         public static Container MakeNewContainer(
                         string fileName,
+                        IKeyLocate keyLocate,
                         List<DareEnvelope> envelopes,
                         FileStatus fileStatus = FileStatus.CreateNew) {
 
             var jbcdStream = new JbcdStream(fileName, fileStatus: fileStatus);
 
 
-            var container = new ContainerMerkleTree() {
+            var container = new ContainerMerkleTree(keyLocate) {
                 JBCDStream = jbcdStream,
                 ContainerHeaderFirst = envelopes[0].Header
                 };
@@ -671,11 +680,11 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="header">The frame header value.</param>
         /// <param name="trailer">The frame trailer value.</param>
         /// <returns>The number of bytes written.</returns>
-        long AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
+        void AppendFrame(byte[] header, byte[] payload = null, byte[] trailer = null) {
             // Write the frame ensuring the results get written out.
             var length = JBCDStream.WriteWrappedFrame(header, payload, trailer);
             //FrameCount++;
-            return length;
+            return;
             }
 
         /// <summary>
@@ -709,7 +718,10 @@ namespace Goedel.Cryptography.Dare {
         /// Write a previously prepared or validated Dare Envelope to the container directly.
         /// </summary>
         /// <param name="envelope"></param>
-        public virtual void Append(DareEnvelope envelope) {
+        public virtual ContainerFrameIndex Append(DareEnvelope envelope) {
+
+            var ContainerFrameIndex = new ContainerFrameIndex(envelope);
+
             //var header = envelope.Header as DareHeader; // fails ! need to copy over !!
             var headerIn = envelope.Header;
             var trailerIn = envelope.Trailer;
@@ -757,7 +769,9 @@ namespace Goedel.Cryptography.Dare {
             var dataTrailer = trailer.GetBytes(false);
             AppendFrame(dataHeader, envelope.Body, dataTrailer);
 
+            //ContainerFrameIndex.dataPosition = JBCDStream.PositionWrite + 
 
+            return ContainerFrameIndex;
 
             }
 

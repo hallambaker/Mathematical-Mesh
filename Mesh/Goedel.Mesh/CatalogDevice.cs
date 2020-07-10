@@ -43,8 +43,8 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) :
-            base(directory, storeName ?? Label, 
-                cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
+            base(directory, storeName ?? Label,
+                        cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
         /// <summary>
@@ -53,14 +53,6 @@ namespace Goedel.Mesh {
         /// <param name="key">Unique identifier of the device to return.</param>
         /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
         public CatalogedDevice Get(string key) => Locate(key) as CatalogedDevice;
-
-
-        //public override bool Transact(Catalog catalog, List<CatalogUpdate> updates) {
-        //    Console.WriteLine("  Device transaction!");
-
-        //    return base.Transact(catalog, updates);
-
-        //    }
 
         /// <summary>
         /// Return a string describing the catalog entries.

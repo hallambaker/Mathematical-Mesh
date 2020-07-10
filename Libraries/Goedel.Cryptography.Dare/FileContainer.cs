@@ -328,8 +328,8 @@ namespace Goedel.Cryptography.Dare {
 
             using var Reader = new FileContainerReader(FileName, KeyCollection);
             var ContainerDataReader = Reader.container.GetContainerFrameIndex(
-position: Reader.container.PositionFinalFrameStart);
-            Data = ContainerDataReader.Payload;
+                        position: Reader.container.PositionFinalFrameStart);
+            Data = ContainerDataReader.GetPayload(KeyCollection);
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
             }
 
@@ -341,13 +341,14 @@ position: Reader.container.PositionFinalFrameStart);
         /// <param name="Data"></param>
         /// <param name="ContentMeta"></param>
         public static void Data(
+                IKeyLocate keyCollection,
                 byte[] DataIn,
 
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
             using var Reader = new FileContainerReader(DataIn);
-            Reader.Read(out Data, out ContentMeta);
+            Reader.Read(keyCollection, out Data, out ContentMeta);
 
             }
 
@@ -359,13 +360,14 @@ position: Reader.container.PositionFinalFrameStart);
         /// <param name="Index">Specify the index of the entry to read</param>
         /// <param name="Path">Specify a path value of an entry to read.</param>
         public void Read(
+                IKeyLocate keyCollection,
                 out byte[] Data,
                 out ContentMeta ContentMeta,
                 int Index = -1,
                 string Path = null) {
 
             var ContainerDataReader = container.GetContainerFrameIndex(Index);
-            Data = ContainerDataReader.Payload;
+            Data = ContainerDataReader.GetPayload(keyCollection);
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
 
 
@@ -446,7 +448,7 @@ position: Reader.container.PositionFinalFrameStart);
         public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmId AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
-                var DecryptionKey = KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid);
+                var DecryptionKey = keyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid);
 
                 // Recipient has the following fields of interest
                 // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key

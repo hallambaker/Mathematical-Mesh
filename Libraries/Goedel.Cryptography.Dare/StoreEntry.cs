@@ -105,6 +105,8 @@ namespace Goedel.Cryptography.Dare {
             First = previous?.First ?? this;
             }
 
+        public JSONObject GetJsonObject(IKeyLocate keyCollection) => throw new System.NotImplementedException();
+        public byte[] GetPayload(IKeyLocate keyCollection) => throw new System.NotImplementedException();
         }
 
     }

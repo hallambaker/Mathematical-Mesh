@@ -643,6 +643,9 @@
             Base class for catalogs.
             </summary>
         </member>
+        <member name="F:Goedel.Mesh.Catalog.MeshClient">
+            <summary>Class exposing the Mesh Client locate interface.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Catalog.PersistenceStore">
             <summary>The persistence store.</summary>
         </member>
@@ -651,7 +654,7 @@
             Disposal method, disposes the underlying persistence store if defined.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Base constuctor.
             </summary>
@@ -659,6 +662,7 @@
             <param name="containerName">Container name.</param>
             <param name="cryptoParameters">Cryptographic parameters.</param>
             <param name="keyCollection">Key collection to use for decryption.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
             <param name="readContainer">If true, read the container.</param>
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
@@ -679,11 +683,11 @@
             <param name="updates">The updates to apply.</param>
             <returns>The processed updates.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+        <member name="M:Goedel.Mesh.Catalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
-            Commit the updates in <paramref name="updates"/> to the local persistence store.
+            Commit the updates in <paramref name="envelopes"/> to the local persistence store.
             </summary>
-            <param name="updates">The updates to apply.</param>
+            <param name="envelopes">The updates to apply.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
@@ -1448,7 +1452,7 @@
         <member name="F:Goedel.Mesh.CatalogCapability.DictionaryFairExchange">
             <summary>Dictionary for locating capabilities for use.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogCapability.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogCapability.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean)">
             <summary>
             Constructor for a catalog named <paramref name="storeName"/> in directory
             <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -1460,6 +1464,7 @@
             <param name="storeName">The catalog persistence container file name.</param>
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
+            <param name="meshClient">Parent account context used to obtain a mesh client.</param>
         </member>
         <member name="M:Goedel.Mesh.CatalogCapability.TryFindKeyDecryption(System.String)">
             <summary>
@@ -3797,7 +3802,7 @@
             <param name="keyUses">The PKIX key uses.</param>
             <param name="suffix">The salt suffix to apply.</param>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection,Goedel.Cryptography.KeySecurity)">
+        <member name="M:Goedel.Mesh.Extensions.BasePrivate(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.keyCollection,Goedel.Cryptography.KeySecurity)">
             <summary>
             Derive a base private key of type <paramref name="meshKeyType"/> from the 
             secret seed value <paramref name="secretSeed"/> and register the private component
@@ -3849,7 +3854,7 @@
             <param name="meshKeyType">The mesh key type.</param>
             <returns>The derrived key.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Cryptography.KeyPair,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.KeyCollection)">
+        <member name="M:Goedel.Mesh.Extensions.ActivatePublic(Goedel.Cryptography.KeyPair,System.String,Goedel.Mesh.MeshKeyType,Goedel.Cryptography.keyCollection)">
             <summary>
             Derive an activation public key of type <paramref name="meshKeyType"/> 
             activation value <paramref name="activationSeed"/> and base key 
@@ -6102,7 +6107,7 @@
             is generated.</param>
             <returns>The group profile and secret seed.</returns>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.AddMember(Goedel.Cryptography.KeyCollection,Goedel.Mesh.Contact)">
+        <member name="M:Goedel.Mesh.ProfileGroup.AddMember(Goedel.Cryptography.keyCollection,Goedel.Mesh.Contact)">
             <summary>
             Add a member to the group.
             </summary>
@@ -12412,7 +12417,7 @@
             <param name="decrypt"></param>
             <param name="create"></param>
         </member>
-        <member name="M:Goedel.Mesh.Store.Append(System.String,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
+        <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>
             Append the list of envelopes <paramref name="envelopes"/> to the
             container <paramref name="containerName"/> in <paramref name="directory"/>.

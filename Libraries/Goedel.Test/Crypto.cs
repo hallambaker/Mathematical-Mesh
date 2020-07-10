@@ -10,7 +10,7 @@ namespace Goedel.Test {
 
     public class CryptoParametersTest : CryptoParameters {
 
-        KeyCollection KeyCollection => KeyLocate as KeyCollectionCore;
+        keyCollection KeyCollection => KeyLocate as KeyCollectionCore;
 
         public CryptoParametersTest(
                     List<string> recipients = null,
@@ -62,12 +62,12 @@ namespace Goedel.Test {
 
     public class TestKeys {
 
-        public KeyCollection KeyCollection;
+        public keyCollection KeyCollection;
 
         public List<KeyPair> EncryptionKeys;
         public List<KeyPair> SignerKeys;
 
-        public TestKeys(KeyCollection keyCollection = null) => KeyCollection = keyCollection ?? KeyCollection.Default;
+        public TestKeys(keyCollection keyCollection = null) => KeyCollection = keyCollection ?? keyCollection.Default;
 
         public void AddEncrypt(bool register = true) {
             EncryptionKeys ??= new List<KeyPair>();
@@ -82,7 +82,7 @@ namespace Goedel.Test {
             //Console.WriteLine($"  Public {PublicKeyKeypair.UDF}");
 
             if (register) {
-                KeyCollection.Default.Add(Keypair);
+                keyCollection.Default.Add(Keypair);
                 }
             }
 

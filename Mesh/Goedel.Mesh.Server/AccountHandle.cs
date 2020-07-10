@@ -219,7 +219,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="label">The store to add the envelopes to.</param>
         /// <param name="envelopes">The envelopes to append.</param>
         public void StoreAppend(string label, List<DareEnvelope> envelopes) =>
-            Store.Append(AccountEntry.Directory, envelopes, label);
+            Store.Append(AccountEntry.Directory, null, envelopes, label);
 
 
 

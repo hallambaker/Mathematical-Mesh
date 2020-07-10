@@ -66,6 +66,7 @@ namespace Goedel.Mesh.Client {
 
             result.GetCatalogMember();
             result.GetCatalogCapability();
+            result.SyncProgressUpload();
 
             return result;
             }
@@ -136,18 +137,6 @@ namespace Goedel.Mesh.Client {
             capabilityService.SubjectId = capabilityMember.ServiceId;
 
 
-
-
-
-            // Add the service capability to the service catalog
-
-            // This is failing to push out to the service catalog as it should
-            // Sync is only for downloads.
-
-            GetCatalogCapability().Add(capabilityService);
-
-
-
             // Create and send the invitation
 
             var listCapability = new List<CryptographicCapability> { capabilityMember };
@@ -168,13 +157,45 @@ namespace Goedel.Mesh.Client {
                 MemberCapabilityId = capabilityMember.Id,
                 ServiceCapabilityId = capabilityService.Id,
                 };
-            GetCatalogMember().New(catalogedMember);
 
-            SyncProgressUpload();
 
+            // Push out the updates. NB: this should be replaced by properly interlocked transactions.
+
+            AddCapability(capabilityService);
+            AddMember(catalogedMember);
 
             // return the member entry.
             return catalogedMember;
+            }
+
+
+        /// <summary>
+        /// Add a device to the device catalog.
+        /// </summary>
+        /// <param name="capability">The capability to add.</param>
+        public void AddCapability(
+                    CryptographicCapability capability,
+                    CryptoKey encryptionKey = null) {
+            var catalog = GetCatalogCapability();
+            var transaction = new TransactionServiced(catalog, MeshClient);
+            var catalogedCapability = new CatalogedCapability(capability);
+            transaction.Update(catalogedCapability);
+            transaction.Commit();
+            }
+
+        /// <summary>
+        /// Add a device to the device catalog.
+        /// </summary>
+        /// <param name="CatalogedMember">The device to add.</param>
+        public void AddMember(
+                    CatalogedMember CatalogedMember) {
+            var catalog = GetCatalogMember();
+            var transaction = new TransactionServiced(catalog, MeshClient);
+            transaction.Update(CatalogedMember);
+            transaction.Commit();
+
+
+            // This is not applying the envelope locally!
             }
 
 

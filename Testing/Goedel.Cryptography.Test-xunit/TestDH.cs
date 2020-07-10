@@ -25,7 +25,7 @@ namespace Goedel.XUnit {
         public static DiffeHellmanPublic GroupKeyPublic;
 
         public MeshMachineTest MeshMachine;
-        public KeyCollection KeyCollection;
+        public keyCollection KeyCollection;
 
         static TestCryptography() {
             Cryptography.Cryptography.Initialize();

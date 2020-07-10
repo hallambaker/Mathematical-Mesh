@@ -1262,6 +1262,18 @@
             <param name="text">Constrained text to be included in the invitation.</param>
             <returns>The member catalog entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.AddCapability(Goedel.Mesh.CryptographicCapability,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Add a device to the device catalog.
+            </summary>
+            <param name="capability">The capability to add.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextGroup.AddMember(Goedel.Mesh.CatalogedMember)">
+            <summary>
+            Add a device to the device catalog.
+            </summary>
+            <param name="CatalogedMember">The device to add.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
@@ -2053,7 +2065,7 @@
         <member name="M:Goedel.Mesh.Client.PersistHost.#cctor">
             <summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.keyCollection,System.Boolean)">
             <summary>
             Open or create a persistence store in specified mode with 
             the specified file name, content type and optional comment.

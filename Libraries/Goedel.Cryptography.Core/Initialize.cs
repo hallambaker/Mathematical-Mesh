@@ -24,7 +24,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         public static void InitializationCore(bool TestMode = false) {
             CryptographyCommon.Initialize();
-            KeyCollection.Default = new Core.KeyCollectionCore();
+            keyCollection.Default = new Core.KeyCollectionCore();
             }
         }
     }

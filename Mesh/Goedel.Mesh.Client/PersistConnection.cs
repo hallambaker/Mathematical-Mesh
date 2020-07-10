@@ -68,7 +68,7 @@ namespace Goedel.Mesh.Client {
                     ContainerType containerType = ContainerType.Chain,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     CryptoParameters cryptoParameters = null,
-                    KeyCollection keyCollection = null,
+                    keyCollection keyCollection = null,
                     bool readContainer = true) : base(
                         fileName, type, comment,
                         fileStatus, containerType, dataEncoding, cryptoParameters,

@@ -185,7 +185,7 @@ namespace Goedel.XUnit {
             using var Reader = new FileContainerReader(Filename, CryptoParameters.KeyLocate);
             for (var i = 0; i < Entries; i++) {
 
-                Reader.Read(out var ReadData, out var ContentMeta, Index: i + 1);
+                Reader.Read(CryptoParameters?.KeyLocate, out var ReadData, out var ContentMeta, Index: i + 1);
                 Utilities.Assert.True(ReadData.IsEqualTo(TestData[i]));
                 }
             }

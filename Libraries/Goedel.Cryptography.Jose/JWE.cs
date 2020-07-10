@@ -408,7 +408,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The matching keypair</returns>
         /// <param name="keyCollection">The key collection that keys are to be persisted to </param>
         public static CryptoKey MatchDecryptionKey(List<Recipient> Recipients, out Recipient RecipientOut,
-            KeyCollection keyCollection = null) {
+            keyCollection keyCollection = null) {
             foreach (var Recipient in Recipients) {
                 var KID = Recipient.Header.Kid;
                 KID.SplitAccountIDService(out var Domain, out var Account);
