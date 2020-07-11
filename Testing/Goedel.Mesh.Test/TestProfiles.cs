@@ -136,7 +136,7 @@ namespace Goedel.Mesh.Test {
             //CheckCatalog(catalog, new List<CatalogEntry> { Entry1, Entry2, Entry3 });
             }
 
-        protected DareEnvelope Sign(JSONObject data, KeyPair keySign) =>
+        protected DareEnvelope Sign(JsonObject data, KeyPair keySign) =>
                     DareEnvelope.Encode(data.GetBytes(tag: true),
                         signingKey: keySign);
 
@@ -199,7 +199,7 @@ namespace Goedel.Mesh.Test {
 
 
 
-        void CheckCatalog(Catalog catalog, List<CatalogedEntry> entries) {
+        void CheckCatalog(ICatalog catalog, List<CatalogedEntry> entries) {
 
             var sorted = new SortedDictionary<string, CatalogedEntry>();
             foreach (var entry in entries) {

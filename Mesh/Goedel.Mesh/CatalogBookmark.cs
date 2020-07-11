@@ -11,16 +11,13 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
     /// </summary>
-    public class CatalogBookmark : Catalog {
+    public class CatalogBookmark : Catalog<CatalogedBookmark> {
         
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Bookmark";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
-
-        ///<summary>Enumerate the catalog as CatalogedBookmark instances.</summary>
-        public AsCatalogEntryBookmark AsCatalogEntryBookmark => new AsCatalogEntryBookmark(this);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -51,78 +48,7 @@ namespace Goedel.Mesh {
     public partial class CatalogedBookmark {
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => Path;
-
-        //public override string ToString() {
-        //    throw new NYI();
-
-
-        //    }
-
         }
-
-    #region // Enumerators and associated classes
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedBookmark"/> over a persistence
-    /// store.
-    /// </summary>
-    public class EnumeratorCatalogEntryBookmark : IEnumerator<CatalogedBookmark> {
-        IEnumerator<StoreEntry> baseEnumerator;
-
-        ///<summary>The current item in the enumeration.</summary>
-        public CatalogedBookmark Current => baseEnumerator.Current.JsonObject as CatalogedBookmark;
-        object IEnumerator.Current => Current;
-
-        /// <summary>
-        /// Disposal method.
-        /// </summary>
-        public void Dispose() => baseEnumerator.Dispose();
-
-        /// <summary>
-        /// Move to the next item in the enumeration.
-        /// </summary>
-        /// <returns>The next item in the enumeration</returns>
-        public bool MoveNext() => baseEnumerator.MoveNext();
-
-        /// <summary>
-        /// Restart the enumeration.
-        /// </summary>
-        public void Reset() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Construct enumerator from <see cref="PersistenceStore"/>,
-        /// <paramref name="persistenceStore"/>.
-        /// </summary>
-        /// <param name="persistenceStore">The persistence store to enumerate.</param>
-        public EnumeratorCatalogEntryBookmark(PersistenceStore persistenceStore) =>
-            baseEnumerator = persistenceStore.GetEnumerator();
-        }
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedBookmark"/> over a Catalog
-    /// </summary>
-    public class AsCatalogEntryBookmark : IEnumerable<CatalogedBookmark> {
-        CatalogBookmark catalog;
-
-        /// <summary>
-        /// Construct enumerator from <see cref="CatalogBookmark"/>,
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to enumerate.</param>
-        public AsCatalogEntryBookmark(CatalogBookmark catalog) => this.catalog = catalog;
-
-        /// <summary>
-        /// Return an enumerator for the catalog.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<CatalogedBookmark> GetEnumerator() =>
-                    new EnumeratorCatalogEntryBookmark(catalog.PersistenceStore);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
-    #endregion
 
 
     }

@@ -56,7 +56,7 @@ namespace Goedel.Mesh {
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MeshItem FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new MeshItem FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -93,7 +93,7 @@ namespace Goedel.Mesh {
             var plaintext = envelope.GetPlaintext(keyCollection);
 
             //Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), true);
+            var result = FromJson(plaintext.JsonReader(), true);
             result.DareEnvelope = envelope;
             result.KeyCollection = keyCollection;
             return result;

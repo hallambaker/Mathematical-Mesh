@@ -141,11 +141,12 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container"></param>
         /// <param name="readContainer"></param>
-        public PersistenceStore(Container container, IKeyLocate keyCollection, bool readContainer = true) {
+        /// <param name="keyLocate">The key collection to be used to resolve keys</param>
+        public PersistenceStore(Container container, IKeyLocate keyLocate, bool readContainer = true) {
             Container = container;
 
             if (readContainer & container.JBCDStream.Length > 0) {
-                ReadContainer(keyCollection);
+                ReadContainer(keyLocate);
                 }
             }
 
@@ -185,7 +186,8 @@ namespace Goedel.Cryptography.Dare {
         /// Read a container from the first frame to the last.
         /// </summary>
         /// <param name="containerIntegrity">Specifies the degree of container integrity checking to perform.</param>
-        void ReadContainer(IKeyLocate keyCollection, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
+        /// <param name="keyLocate">The key collection to be used to resolve keys</param>
+        void ReadContainer(IKeyLocate keyLocate, ContainerIntegrity containerIntegrity = ContainerIntegrity.None) {
 
             foreach (var frameIndex in Container) {
 
@@ -222,7 +224,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="frameIndex">The container position</param>
         /// <param name="jSONObject">The object being committed in deserialized form.</param>
-        public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JSONObject jSONObject) {
+        public virtual void CommitTransaction(ContainerFrameIndex frameIndex, JsonObject jSONObject) {
             var contentMeta = frameIndex.Header.ContentMeta;
 
             ObjectIndex.TryGetValue(contentMeta.UniqueID, out var Previous);
@@ -327,7 +329,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The prepared envelope.</returns>
         public DareEnvelope Prepare(
                 ContentMeta contentInfo,
-                JSONObject jsonObject,
+                JsonObject jsonObject,
                 Transaction transaction = null) {
 
             var contextWrite = new ContainerWriterDeferred(Container);
@@ -347,7 +349,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns></returns>
         public virtual StoreEntry CommitToContainer(
                 DareEnvelope dareEnvelope,
-                JSONObject item,
+                JsonObject item,
                 StoreEntry previous = null) {
 
             Container.Append(dareEnvelope);
@@ -365,7 +367,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonObject">Object to create</param>
         /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual DareEnvelope PrepareNew(
-                JSONObject jsonObject, Transaction transaction = null) {
+                JsonObject jsonObject, Transaction transaction = null) {
 
             // Precondition UniqueID does not exist
             var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
@@ -391,7 +393,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="transaction">The transaction context in which to prepare the update.</param>
         public virtual DareEnvelope PrepareUpdate(
                     out StoreEntry previous,
-                    JSONObject jsonObject,
+                    JsonObject jsonObject,
                     bool create = true, Transaction transaction = null) {
             // Precondition UniqueID does not exist
             var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
@@ -444,7 +446,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonObject">Object to create</param>
         /// <param name="transaction">The transaction context in which to prepare the update.</param>
-        public virtual IPersistenceEntry New(JSONObject jsonObject, Transaction transaction = null) {
+        public virtual IPersistenceEntry New(JsonObject jsonObject, Transaction transaction = null) {
             var envelope = PrepareNew(jsonObject, transaction);
             var ContainerStoreEntry = CommitToContainer(envelope, jsonObject);
             MemoryCommitNew(ContainerStoreEntry);
@@ -459,7 +461,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonObject">The new object value</param>
         /// <param name="create">If true, create a new value if one does not already exist</param>
         /// <param name="transaction">The transaction context in which to perform the update.</param>
-        public virtual IPersistenceEntry Update(JSONObject jsonObject, bool create = true, Transaction transaction = null) {
+        public virtual IPersistenceEntry Update(JsonObject jsonObject, bool create = true, Transaction transaction = null) {
 
             var envelope = PrepareUpdate(out var Previous, jsonObject, create, transaction);
 

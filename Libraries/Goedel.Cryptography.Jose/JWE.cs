@@ -86,7 +86,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="SigningKey">Optional signing key.</param>
         /// <param name="EncryptID">Composite ID for encryption and key exchange</param>
         /// <param name="SignID">Composite ID for signature and digest</param>
-        public JoseWebEncryption(JSONObject JSONObject,
+        public JoseWebEncryption(JsonObject JSONObject,
                     DataEncoding Encoding = DataEncoding.JSON,
                     KeyPair EncryptionKey = null,
                     KeyPair SigningKey = null,
@@ -471,7 +471,7 @@ namespace Goedel.Cryptography.Jose {
             var AlgorithmJose = Recipient?.Header.Alg;
             var ExchangeID = AlgorithmJose.FromJoseID();
 
-            var ProtectedHeader = Header.FromJSON(Protected.JSONReader(), false);
+            var ProtectedHeader = Header.FromJson(Protected.JsonReader(), false);
             var BulkID = ProtectedHeader.Enc.FromJoseID();
 
             var Ephemeral = Recipient.Header.Epk.GetKeyPair(KeySecurity.Bound);

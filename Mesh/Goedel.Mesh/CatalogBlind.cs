@@ -14,7 +14,7 @@ namespace Goedel.Mesh {
     /// opaque entries. Entries are not decrypted, only the ciphertext values are
     /// available.
     /// </summary>
-    public class CatalogBlind : Catalog {
+    public class CatalogBlind : Catalog<CatalogedEntry> {
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => throw new NYI();
@@ -38,17 +38,6 @@ namespace Goedel.Mesh {
                         readContainer: false, decrypt: false, create: false) => PersistenceStore?.FastReadContainer();
 
 
-        /// <summary>
-        /// Return the envelope with unique identifier <paramref name="key"/>.
-        /// </summary>
-        /// <param name="key">Unique identifier of entry to return.</param>
-        /// <returns>The envelope.</returns>
-        public DareEnvelope Get(string key) {
-
-            var entry = GetEntry(key);
-            var envelope = entry.FrameIndex.GetEnvelope(Container);
-            return envelope;
-            }
         }
 
     }

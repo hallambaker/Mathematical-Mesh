@@ -40,7 +40,7 @@ namespace Goedel.Protocol.Debug {
         public override Stream Post(MemoryStream data) {
 
             var DataText = data.GetUTF8();
-            var JSONReader = new JSONReader(DataText);
+            var JSONReader = new JsonReader(DataText);
 
             var ResultObject = Host.Dispatch(this, JSONReader);
 
@@ -53,7 +53,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="tag">Command</param>
         /// <param name="request">JSON encoded request.</param>
         /// <returns>JSON encoded response.</returns>
-        public override string Post(string tag, JSONObject request) {
+        public override string Post(string tag, JsonObject request) {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
@@ -66,7 +66,7 @@ namespace Goedel.Protocol.Debug {
 
             // Now prepare a reader so that the data can be unpacked
             var DataText = Buffer.GetUTF8();
-            var JSONReader = new JSONReader(DataText);
+            var JSONReader = new JsonReader(DataText);
 
             // Send the request
             var ResultObject = Host.Dispatch(this, JSONReader);

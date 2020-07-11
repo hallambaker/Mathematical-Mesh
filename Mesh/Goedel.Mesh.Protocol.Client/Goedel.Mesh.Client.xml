@@ -28,9 +28,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.HostCatalogItem.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+        <member name="M:Goedel.Mesh.Client.HostCatalogItem.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
-            Construct an instance from the specified tagged JSONReader stream.
+            Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
@@ -108,7 +108,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.CatalogedMachine.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -116,7 +116,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedMachine.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Client.CatalogedMachine.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -168,7 +168,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.CatalogedStandard.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -176,7 +176,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedStandard.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Client.CatalogedStandard.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -244,7 +244,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -252,7 +252,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Client.CatalogedAdmin.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -338,7 +338,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.CatalogedPending.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -346,7 +346,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPending.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Client.CatalogedPending.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -424,7 +424,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -432,7 +432,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Client.CatalogedPreconfigured.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -1267,6 +1267,7 @@
             Add a device to the device catalog.
             </summary>
             <param name="capability">The capability to add.</param>
+            <param name="encryptionKey">Optional encryption key used to encrypt the capability.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.AddMember(Goedel.Mesh.CatalogedMember)">
             <summary>
@@ -2133,30 +2134,32 @@
             Service account and the local store.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.#ctor(Goedel.Mesh.Catalog,Goedel.Mesh.MeshService)">
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.#ctor(Goedel.Mesh.MeshService)">
             <summary>
             Constructor for a transaction manager
             </summary>
-            <param name="catalog">The catalog to persist.</param>
             <param name="meshClient">The Mesh client to use to service the account.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.New(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.New(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
             <summary>
             Queue request to create <paramref name="catalogEntry"/> as a new persisted object.
             </summary>
             <param name="catalogEntry">The object to create.</param>
+            <param name="catalog">The catalog in which to create the object.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.Update(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.Update(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
             <summary>
             Queue request to create or update <paramref name="catalogEntry"/>.
             </summary>
             <param name="catalogEntry">The object to update or create.</param>
+            <param name="catalog">The catalog in which to create the object.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.Delete(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Client.TransactionServiced.Delete(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
             <summary>
             Queue request to delete <paramref name="catalogEntry"/>.
             </summary>
             <param name="catalogEntry">The object to delete.</param>
+            <param name="catalog">The catalog in which to create the object.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.TransactionServiced.Commit">
             <summary>

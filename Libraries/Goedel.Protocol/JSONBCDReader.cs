@@ -13,13 +13,13 @@ namespace Goedel.Protocol {
     /// <summary>
     /// JSON reader supporting JSON-B, JSON-C and JSON-D extended encodings.
     /// </summary>
-    public class JsonBcdReader : JSONReader {
+    public class JsonBcdReader : JsonReader {
 
         /// <summary>
         /// Returns a factory delegate that returns a reader of this type.
         /// </summary>
         public static new JSONReaderFactoryDelegate JSONReaderFactory => ReaderFactoryMethod;
-        static JSONReader ReaderFactoryMethod(byte[] Data) => new JsonBcdReader(Data);
+        static JsonReader ReaderFactoryMethod(byte[] Data) => new JsonBcdReader(Data);
 
 
         //IDisposable disposable1;

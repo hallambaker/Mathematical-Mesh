@@ -39,7 +39,7 @@ namespace Goedel.Protocol {
 	///
 	/// Base class for all PROTOGEN messages
 	/// </summary>
-	public abstract partial class Message : global::Goedel.Protocol.JSONObject {
+	public abstract partial class Message : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -54,8 +54,8 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"Request", Request._Factory},
 			{"Response", Response._Factory},
@@ -65,11 +65,11 @@ namespace Goedel.Protocol {
 			{"HelloResponse", HelloResponse._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -112,7 +112,7 @@ namespace Goedel.Protocol {
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Request FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Request FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -177,7 +177,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Service" : {
@@ -255,7 +255,7 @@ namespace Goedel.Protocol {
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Response FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Response FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -330,7 +330,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Status" : {
@@ -412,7 +412,7 @@ namespace Goedel.Protocol {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Version();
+		public static new JsonObject _Factory () => new Version();
 
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Version FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Version FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -509,7 +509,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Major" : {
@@ -587,7 +587,7 @@ namespace Goedel.Protocol {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Encoding();
+		public static new JsonObject _Factory () => new Encoding();
 
 
         /// <summary>
@@ -650,7 +650,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Encoding FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Encoding FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -669,7 +669,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "ID" : {
@@ -724,7 +724,7 @@ namespace Goedel.Protocol {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new HelloRequest();
+		public static new JsonObject _Factory () => new HelloRequest();
 
 
         /// <summary>
@@ -764,7 +764,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new HelloRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -783,7 +783,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -827,7 +827,7 @@ namespace Goedel.Protocol {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new HelloResponse();
+		public static new JsonObject _Factory () => new HelloResponse();
 
 
         /// <summary>
@@ -889,7 +889,7 @@ namespace Goedel.Protocol {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new HelloResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new HelloResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -908,7 +908,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Version" : {

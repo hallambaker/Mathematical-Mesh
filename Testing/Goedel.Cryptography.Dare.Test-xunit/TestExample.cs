@@ -33,7 +33,7 @@ namespace Goedel.XUnit {
     ///
     /// Classes that represent data written to the portal log.
     /// </summary>
-    public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
+    public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 
         /// <summary>
         /// Tag identifying this class
@@ -48,8 +48,8 @@ namespace Goedel.XUnit {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public static Dictionary<string, JSONFactoryDelegate> _TagDictionary =
-                new Dictionary<string, JSONFactoryDelegate>() {
+        public static Dictionary<string, JsonFactoryDelegate> _TagDictionary =
+                new Dictionary<string, JsonFactoryDelegate>() {
 
             {"TestEntry", TestEntry._Factory},
             {"TestItem", TestItem._Factory}         };
@@ -59,7 +59,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) =>
+        public static void Deserialize(JsonReader JSONReader, out JsonObject Out) =>
             Out = JSONReader.ReadTaggedObject(_TagDictionary);
 
         }
@@ -101,7 +101,7 @@ namespace Goedel.XUnit {
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject _Factory() => throw new CannotCreateAbstract();
+        public static new JsonObject _Factory() => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace Goedel.XUnit {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new TestEntry FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new TestEntry FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -165,7 +165,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken(JsonReader JSONReader, string Tag) {
 
             switch (Tag) {
                 case "Created": {
@@ -223,7 +223,7 @@ namespace Goedel.XUnit {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject _Factory() => new TestItem();
+        public static new JsonObject _Factory() => new TestItem();
 
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Goedel.XUnit {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new TestItem FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new TestItem FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -295,7 +295,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken(JsonReader JSONReader, string Tag) {
 
             switch (Tag) {
                 case "AccountID": {

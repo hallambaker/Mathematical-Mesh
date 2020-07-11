@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Services {
 	///
 	/// The Mesh Presence Protocol
 	/// </summary>
-	public abstract partial class ServiceProtocol : global::Goedel.Protocol.JSONObject {
+	public abstract partial class ServiceProtocol : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -56,8 +56,8 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"ThresholdSignRequest", ThresholdSignRequest._Factory},
 			{"ThresholdSignResponse", ThresholdSignResponse._Factory},
@@ -65,11 +65,11 @@ namespace Goedel.Mesh.Services {
 			{"ThresholdAgreementResponse", ThresholdAgreementResponse._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -169,7 +169,7 @@ namespace Goedel.Mesh.Services {
                 ThresholdSignRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("ThresholdSign", request);
-            var response = ThresholdSignResponse.FromJSON(responseData.JSONReader(), true);
+            var response = ThresholdSignResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
             }
@@ -184,7 +184,7 @@ namespace Goedel.Mesh.Services {
                 ThresholdAgreementRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("ThresholdAgreement", request);
-            var response = ThresholdAgreementResponse.FromJSON(responseData.JSONReader(), true);
+            var response = ThresholdAgreementResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
             }
@@ -209,12 +209,12 @@ namespace Goedel.Mesh.Services {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  session,  
-								Goedel.Protocol.JSONReader jsonReader) {
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JSONObject Response = null;
+			JsonObject Response = null;
 
 			switch (token) {
 				case "ThresholdSign" : {
@@ -264,7 +264,7 @@ namespace Goedel.Mesh.Services {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ThresholdSignRequest();
+		public static new JsonObject _Factory () => new ThresholdSignRequest();
 
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdSignRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ThresholdSignRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -323,7 +323,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -357,7 +357,7 @@ namespace Goedel.Mesh.Services {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ThresholdSignResponse();
+		public static new JsonObject _Factory () => new ThresholdSignResponse();
 
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdSignResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ThresholdSignResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -416,7 +416,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -450,7 +450,7 @@ namespace Goedel.Mesh.Services {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ThresholdAgreementRequest();
+		public static new JsonObject _Factory () => new ThresholdAgreementRequest();
 
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdAgreementRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ThresholdAgreementRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -509,7 +509,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -543,7 +543,7 @@ namespace Goedel.Mesh.Services {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ThresholdAgreementResponse();
+		public static new JsonObject _Factory () => new ThresholdAgreementResponse();
 
 
         /// <summary>
@@ -583,7 +583,7 @@ namespace Goedel.Mesh.Services {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ThresholdAgreementResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ThresholdAgreementResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -602,7 +602,7 @@ namespace Goedel.Mesh.Services {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {

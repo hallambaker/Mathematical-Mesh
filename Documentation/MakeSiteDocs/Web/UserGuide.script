@@ -212,7 +212,7 @@ executed without any output being made to the console.
 #end method2
 
 
-#method Format JSONObject data
+#method Format JsonObject data
 #{Preformat}
 #{JSONDebugWriter.Write (data)}
 #{Preformat}

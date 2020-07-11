@@ -87,7 +87,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.AccountEntry.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.AccountEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -95,7 +95,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.AccountEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.AccountEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -222,7 +222,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicCapability.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicCapability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -230,7 +230,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicCapability.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicCapability.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -289,7 +289,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilitySign.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilitySign.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -297,7 +297,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilitySign.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilitySign.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -369,7 +369,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecrypt.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityDecrypt.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -377,7 +377,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecrypt.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityDecrypt.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -454,7 +454,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -462,7 +462,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityDecryptPartial.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -517,7 +517,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -525,7 +525,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityDecryptServiced.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -582,7 +582,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -590,7 +590,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityKeyGenerate.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -611,10 +611,39 @@
         <member name="F:Goedel.Mesh.CatalogAction.Delete">
             <summary>Delete an entry.</summary>
         </member>
+        <member name="T:Goedel.Mesh.ICatalog">
+            <summary>
+            Interface to catalog functionality.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ICatalog.Container">
+            <summary>The container</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ICatalog.ContainerName">
+            <summary>The container identifier. Must be unique within a given account.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ICatalog.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+            <summary>
+            Prepare the set of catalog updates <paramref name="updates"/> returning a list
+            of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/> applying the updates to the sequence.
+            </summary>
+            <param name="updates">The updates to apply.</param>
+            <returns>The processed updates.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ICatalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+            <summary>
+            Commit the updates in <paramref name="envelopes"/> to the local persistence store.
+            </summary>
+            <param name="envelopes">The updates to apply.</param>
+            <param name="updates">The updates to apply.</param>
+        </member>
         <member name="T:Goedel.Mesh.CatalogUpdate">
             <summary>
             Describes a single update to be applied to a single catalog. 
             </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogUpdate.Catalog">
+            <summary>The catalog to which this update will be applied.</summary>
         </member>
         <member name="P:Goedel.Mesh.CatalogUpdate.Action">
             <summary>The action to apply</summary>
@@ -625,36 +654,41 @@
         <member name="P:Goedel.Mesh.CatalogUpdate.PrimaryKey">
             <summary>The primary key under which the entry is cataloged.</summary>
         </member>
-        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.CatalogAction,Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogAction,Goedel.Mesh.CatalogedEntry)">
             <summary>
             Construct a catalog update.
             </summary>
             <param name="action">The action to apply</param>
             <param name="catalogEntry">The entry to apply the action to</param>
+            <param name="catalog">The catalog to apply the update to</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.ICatalog,System.String)">
             <summary>
             Construct a catalog delete update.
             </summary>
             <param name="primaryKey">The primary key of the entry to delete.</param>
+            <param name="catalog">The catalog to apply the update to</param>
         </member>
-        <member name="T:Goedel.Mesh.Catalog">
+        <member name="T:Goedel.Mesh.Catalog`1">
             <summary>
             Base class for catalogs.
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Catalog.MeshClient">
+        <member name="F:Goedel.Mesh.Catalog`1.MeshClient">
             <summary>Class exposing the Mesh Client locate interface.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Catalog.PersistenceStore">
+        <member name="P:Goedel.Mesh.Catalog`1.PersistenceStore">
             <summary>The persistence store.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Disposing">
+        <member name="P:Goedel.Mesh.Catalog`1.AsCatalogedType">
+            <summary>Enumerate the catalog as the cataloged type.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Disposing">
             <summary>
             Disposal method, disposes the underlying persistence store if defined.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Goedel.Mesh.Catalog`1.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,Goedel.Mesh.IMeshClient,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             Base constuctor.
             </summary>
@@ -667,15 +701,7 @@
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Status(System.String,System.String)">
-            <summary>
-            Returns the status of the underlying persistence store without binding to it.
-            </summary>
-            <param name="directory">The directory in which the store is held.</param>
-            <param name="storeName">The store name.</param>
-            <returns>A <see cref="T:Goedel.Mesh.ContainerStatus"/> reporting the current status of the store.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+        <member name="M:Goedel.Mesh.Catalog`1.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
             Prepare the set of catalog updates <paramref name="updates"/> returning a list
             of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/> applying the updates to the sequence.
@@ -683,13 +709,14 @@
             <param name="updates">The updates to apply.</param>
             <returns>The processed updates.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+        <member name="M:Goedel.Mesh.Catalog`1.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
             Commit the updates in <paramref name="envelopes"/> to the local persistence store.
             </summary>
-            <param name="envelopes">The updates to apply.</param>
+            <param name="envelopes">The envelopes to append.</param>
+            <param name="updates">The updates to apply</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Transact(Goedel.Mesh.Catalog,System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
+        <member name="M:Goedel.Mesh.Catalog`1.Transact(Goedel.Mesh.Catalog{`0},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
             Apply the transactions specified in <paramref name="updates"/> to the catalog
             <paramref name="catalog"/>.
@@ -698,74 +725,81 @@
             <param name="updates">The updates to apply</param>
             <returns>True if the transactions were accepted, otherwise false.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.NewEntry(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Catalog`1.NewEntry(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Callback called before adding a new entry to the catalog. May be overriden in 
             derrived classes to update local indexes.
             </summary>
             <param name="catalogedEntry">The entry being added.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.UpdateEntry(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Catalog`1.UpdateEntry(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Callback called before updating an entry in the catalog. May be overriden in 
             derrived classes to update local indexes.
             </summary>
             <param name="catalogedEntry">The entry being updated.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.DeleteEntry(System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.DeleteEntry(System.String)">
             <summary>
             Callback called before deleting an entry from the catalog. May be overriden in 
             derrived classes to update local indexes.
             </summary>
             <param name="Key">The entry being deleted.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Catalog`1.Apply(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Apply the update in <paramref name="dareMessage"/> to the persistence store.
             </summary>
             <param name="dareMessage">The update to apply.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.TryNew(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Catalog`1.TryNew(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
             <param name="catalogEntry">The entry to add.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.New(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Catalog`1.New(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
             <summary>
             Add <paramref name="catalogEntry"/> to the catalog as a new entry.
             </summary>
             <param name="catalogEntry">The entry to add.</param>
             <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Update(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Catalog`1.Update(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
             <summary>
             Update <paramref name="catalogEntry"/> in the catalog.
             </summary>
             <param name="catalogEntry">The entry to update.</param>
             <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Delete(Goedel.Mesh.CatalogedEntry)">
+        <member name="M:Goedel.Mesh.Catalog`1.Delete(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Delete <paramref name="catalogEntry"/> from the catalog.
             </summary>
             <param name="catalogEntry">The entry to delete.</param>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.Locate(System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.Get(System.String)">
+            <summary>
+            Return the catalogued entry with key <paramref name="key"/> as the catalogued type.
+            </summary>
+            <param name="key">Unique identifier of the device to return.</param>
+            <returns>The <see cref="T:Goedel.Mesh.CatalogedDevice"/> entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.Locate(System.String)">
             <summary>
             Locate the entry with key <paramref name="key"/>.
             </summary>
             <param name="key">Unique identifier of the entry to locate.</param>
             <returns>The entry (if found).</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.GetEntry(System.String)">
+        <member name="M:Goedel.Mesh.Catalog`1.GetEntry(System.String)">
             <summary>
             Return the entry with unique identifier <paramref name="key"/>.
             </summary>
             <param name="key">Unique identifier of entry to return.</param>
             <returns>The entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Catalog.GetEnumerator">
+        <member name="M:Goedel.Mesh.Catalog`1.GetEnumerator">
             <summary>
             Returns an enumerator over the catalog entries. Most catalog classes offer typed
             enumerators as an alternative.
@@ -826,7 +860,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedEntry.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedEntry.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -834,7 +868,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedEntry.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedEntry.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -966,7 +1000,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplication.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedApplication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -974,7 +1008,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedApplication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -1044,7 +1078,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1052,36 +1086,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryApplication">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedApplication"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryApplication.#ctor(Goedel.Mesh.CatalogContact)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryApplication.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryApplication.EnumeratorCatalogEntryApplication">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedApplication"/> over a persistence
-            store.
-            </summary>
         </member>
         <member name="T:Goedel.Mesh.CatalogBlind">
             <summary>
@@ -1104,13 +1114,6 @@
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogBlind.Get(System.String)">
-            <summary>
-            Return the envelope with unique identifier <paramref name="key"/>.
-            </summary>
-            <param name="key">Unique identifier of entry to return.</param>
-            <returns>The envelope.</returns>
-        </member>
         <member name="T:Goedel.Mesh.CatalogBookmark">
             <summary>
             Bookmark catalog. Describes the bookmarks in the user's Mesh account.
@@ -1121,9 +1124,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogBookmark.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogBookmark.AsCatalogEntryBookmark">
-            <summary>Enumerate the catalog as CatalogedBookmark instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogBookmark.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -1193,7 +1193,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedBookmark.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedBookmark.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1201,62 +1201,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedBookmark.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedBookmark.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryBookmark">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedBookmark"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns>The next item in the enumeration</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryBookmark.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryBookmark">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedBookmark"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryBookmark.#ctor(Goedel.Mesh.CatalogBookmark)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogBookmark"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryBookmark.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogCalendar">
             <summary>
@@ -1268,9 +1218,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogCalendar.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogCalendar.AsCatalogEntryContact">
-            <summary>Enumerate the catalog as CatalogedTask instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogCalendar.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -1360,7 +1307,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTask.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedTask.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1368,67 +1315,16 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedTask.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedTask.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryTask">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedTask"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryTask.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryTask.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryTask">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogCalendar"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryTask.#ctor(Goedel.Mesh.CatalogCalendar)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogCalendar"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryTask.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
-        </member>
         <member name="T:Goedel.Mesh.CatalogCapability">
             <summary>
-            Device catalog. Describes the members of a Mesh Group.
+            Capability catalog. Contains keys used to perform capabilities.
             </summary>
         </member>
         <member name="F:Goedel.Mesh.CatalogCapability.Label">
@@ -1436,9 +1332,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogCapability.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogCapability.AsCatalogedMember">
-            <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
         <member name="F:Goedel.Mesh.CatalogCapability.DictionaryDecryptByKeyId">
             <summary>Dictionary for locating capabilities for use.</summary>
@@ -1574,7 +1467,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCapability.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedCapability.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1582,92 +1475,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCapability.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedCapability.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogedCapability">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedMember"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogedCapability.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedCapability.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedCapability.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedCapability.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedCapability.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogedCapability">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedCapability.#ctor(Goedel.Mesh.CatalogCapability)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogMember"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedCapability.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
-        </member>
-        <member name="T:Goedel.Mesh.NetworkProtocolEntry">
-            <summary>
-            Describes credentials bound to a network address.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocolEntry.CatalogedContact">
-            <summary>The contact from which the network protocol data was obtained.
-            This may be used to update the credential data periodically.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocolEntry.NetworkAddress">
-            <summary>The network address entry.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocolEntry.MeshKeyEncryption">
-            <summary>The encryption key to use for this contact.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocolEntry.MeshKeyAdministrator">
-            <summary>The signature root of trust to use for this contact.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.NetworkProtocolEntry.Expire">
-            <summary>The expiry time for the derived keys.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.NetworkProtocolEntry.#ctor(Goedel.Mesh.CatalogedContact,Goedel.Mesh.NetworkAddress)">
-            <summary>
-            The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
-            from <paramref name="catalogedContact"/>.
-            </summary>
-            <param name="catalogedContact">The cataloged contact.</param>
-            <param name="networkAddress">The network address entry.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogContact">
             <summary>
@@ -1682,9 +1495,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogContact.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogContact.AsCatalogEntryContact">
-            <summary>Enumerate the catalog as CatalogedContact instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -1862,7 +1672,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContact.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedContact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1870,7 +1680,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedContact.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -1962,7 +1772,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Contact.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Contact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -1970,7 +1780,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Contact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Contact.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -2037,7 +1847,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ContactPerson.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ContactPerson.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2045,7 +1855,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContactPerson.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ContactPerson.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -2137,7 +1947,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.NetworkAddress.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2145,7 +1955,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.NetworkAddress.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.NetworkAddress.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -2237,7 +2047,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PersonName.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PersonName.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2245,63 +2055,41 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PersonName.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PersonName.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryContact">
+        <member name="T:Goedel.Mesh.NetworkProtocolEntry">
             <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedContact"/> over a persistence
-            store.
+            Describes credentials bound to a network address.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryContact.Current">
-            <summary>The current item in the enumeration.</summary>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.CatalogedContact">
+            <summary>The contact from which the network protocol data was obtained.
+            This may be used to update the credential data periodically.</summary>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.NetworkAddress">
+            <summary>The network address entry.</summary>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.MeshKeyEncryption">
+            <summary>The encryption key to use for this contact.</summary>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.MeshKeyAdministrator">
+            <summary>The signature root of trust to use for this contact.</summary>
         </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryContact.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
+        <member name="P:Goedel.Mesh.NetworkProtocolEntry.Expire">
+            <summary>The expiry time for the derived keys.</summary>
         </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryContact">
+        <member name="M:Goedel.Mesh.NetworkProtocolEntry.#ctor(Goedel.Mesh.CatalogedContact,Goedel.Mesh.NetworkAddress)">
             <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedContact"/> over a Catalog
+            The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
+            from <paramref name="catalogedContact"/>.
             </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryContact.#ctor(Goedel.Mesh.CatalogContact)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogContact"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryContact.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
+            <param name="catalogedContact">The cataloged contact.</param>
+            <param name="networkAddress">The network address entry.</param>
         </member>
         <member name="T:Goedel.Mesh.CatalogCredential">
             <summary>
@@ -2313,9 +2101,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogCredential.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogCredential.AsCatalogEntryCredential">
-            <summary>Enumerate the catalog as CatalogedCredential instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogCredential.LocateByService(System.String)">
             <summary>
@@ -2402,7 +2187,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCredential.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedCredential.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2410,63 +2195,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedCredential.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedCredential.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryCredential">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedCredential"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryCredential.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryCredential.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryCredential">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedCredential"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryCredential.#ctor(Goedel.Mesh.CatalogCredential)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogCredential"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryCredential.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogDevice">
             <summary>
@@ -2478,9 +2212,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogDevice.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogDevice.AsCatalogEntryDevice">
-            <summary>Enumerate the catalog as CatalogedDevice instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogDevice.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -2494,13 +2225,6 @@
             <param name="storeName">The catalog persistence container file name.</param>
             <param name="cryptoParameters">The default cryptographic enhancements to be applied to container entries.</param>
             <param name="keyCollection">The key collection to be used to resolve keys when reading entries.</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogDevice.Get(System.String)">
-            <summary>
-            Return the catalogued device with key <paramref name="key"/>.
-            </summary>
-            <param name="key">Unique identifier of the device to return.</param>
-            <returns>The <see cref="T:Goedel.Mesh.CatalogedDevice"/> entry.</returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogDevice.Report">
             <summary>
@@ -2653,7 +2377,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2661,63 +2385,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryDevice">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryDevice.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryDevice.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogedDevice">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedDevice.#ctor(Goedel.Mesh.CatalogDevice)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedDevice.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogMember">
             <summary>
@@ -2729,9 +2402,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogMember.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogMember.AsCatalogedMember">
-            <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogMember.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -2808,7 +2478,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedMember.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedMember.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2816,63 +2486,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedMember.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedMember.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogedMember">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedMember"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogedMember.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedMember.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogedMember">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedMember.#ctor(Goedel.Mesh.CatalogMember)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogMember"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedMember.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogNetwork">
             <summary>
@@ -2884,9 +2503,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogNetwork.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogNetwork.AsCatalogEntryNetwork">
-            <summary>Enumerate the catalog as CatalogedNetwork instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogNetwork.LocateByService(System.String)">
             <summary>
@@ -2982,7 +2598,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedNetwork.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedNetwork.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -2990,62 +2606,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedNetwork.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedNetwork.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogEntryNetwork">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedNetwork"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns>The next item in the enumeration</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogEntryNetwork.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogEntryNetwork">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedNetwork"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryNetwork.#ctor(Goedel.Mesh.CatalogNetwork)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogNetwork"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogEntryNetwork.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.CatalogPublication">
             <summary>
@@ -3057,9 +2623,6 @@
         </member>
         <member name="P:Goedel.Mesh.CatalogPublication.ContainerDefault">
             <summary>The catalog label</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogPublication.AsAsCatalogPublication">
-            <summary>Enumerate the catalog as CatalogedMember instances.</summary>
         </member>
         <member name="M:Goedel.Mesh.CatalogPublication.#ctor(System.String,System.String,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.Dare.IKeyCollection,System.Boolean,System.Boolean)">
             <summary>
@@ -3204,7 +2767,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedPublication.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedPublication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3212,63 +2775,12 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedPublication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedPublication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.EnumeratorCatalogedPublication">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedMember"/> over a persistence
-            store.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.EnumeratorCatalogedPublication.Current">
-            <summary>The current item in the enumeration.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedPublication.Dispose">
-            <summary>
-            Disposal method.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedPublication.MoveNext">
-            <summary>
-            Move to the next item in the enumeration.
-            </summary>
-            <returns><see langword="true"/> if there was a next item to return, otherwise,
-            <see langword="false"/>.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedPublication.Reset">
-            <summary>
-            Restart the enumeration.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.EnumeratorCatalogedPublication.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
-            <paramref name="persistenceStore"/>.
-            </summary>
-            <param name="persistenceStore">The persistence store to enumerate.</param>
-        </member>
-        <member name="T:Goedel.Mesh.AsCatalogedPublication">
-            <summary>
-            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedPublication.#ctor(Goedel.Mesh.CatalogPublication)">
-            <summary>
-            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogMember"/>,
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to enumerate.</param>
-        </member>
-        <member name="M:Goedel.Mesh.AsCatalogedPublication.GetEnumerator">
-            <summary>
-            Return an enumerator for the catalog.
-            </summary>
-            <returns>The enumerator.</returns>
         </member>
         <member name="T:Goedel.Mesh.MeshKeyType">
             <summary>Enumeration for Key types</summary>
@@ -3549,6 +3061,57 @@
             <param name="cryptoAlgorithmID">The CryptoAlgorithmID to default.</param>
             <returns>The value <paramref name="cryptoAlgorithmID"/> with the
             specified substitution if the value is <see cref="F:Goedel.Cryptography.CryptoAlgorithmId.Default"/>.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.AsCatalogedType`1">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a Catalog
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedType`1.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Mesh.CatalogDevice"/>,
+            <paramref name="catalog"/>.
+            </summary>
+            <param name="catalog">The catalog to enumerate.</param>
+        </member>
+        <member name="M:Goedel.Mesh.AsCatalogedType`1.GetEnumerator">
+            <summary>
+            Return an enumerator for the catalog.
+            </summary>
+            <returns>The enumerator.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.EnumeratorAsCatalogedType`1">
+            <summary>
+            Enumerator class for sequences of <see cref="T:Goedel.Mesh.CatalogedDevice"/> over a persistence
+            store.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.EnumeratorAsCatalogedType`1.Current">
+            <summary>The current item in the enumeration.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.Dispose">
+            <summary>
+            Disposal method.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.MoveNext">
+            <summary>
+            Move to the next item in the enumeration.
+            </summary>
+            <returns><see langword="true"/> if there was a next item to return, otherwise,
+            <see langword="false"/>.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.Reset">
+            <summary>
+            Restart the enumeration.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.EnumeratorAsCatalogedType`1.#ctor(Goedel.Cryptography.Dare.PersistenceStore)">
+            <summary>
+            Construct enumerator from <see cref="T:Goedel.Cryptography.Dare.PersistenceStore"/>,
+            <paramref name="persistenceStore"/>.
+            </summary>
+            <param name="persistenceStore">The persistence store to enumerate.</param>
         </member>
         <member name="T:Goedel.Mesh.Internal">
             <summary>
@@ -3949,7 +3512,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.KeyComposite.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.KeyComposite.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -3957,7 +3520,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.KeyComposite.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.KeyComposite.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4069,7 +3632,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Reference.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Reference.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4077,7 +3640,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Reference.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Reference.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4170,7 +3733,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Message.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Message.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4178,7 +3741,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Message.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Message.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4274,7 +3837,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessageComplete.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MessageComplete.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4282,7 +3845,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MessageComplete.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MessageComplete.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4417,7 +3980,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessagePIN.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MessagePIN.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4425,7 +3988,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MessagePIN.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MessagePIN.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4501,7 +4064,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4509,7 +4072,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.AcknowledgeConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.AcknowledgeConnection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4627,7 +4190,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.RequestConnection.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4635,7 +4198,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.RequestConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.RequestConnection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4712,7 +4275,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.RespondConnection.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.RespondConnection.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -4720,7 +4283,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.RespondConnection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.RespondConnection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -4995,7 +4558,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MessageClaim.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MessageClaim.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5003,7 +4566,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MessageClaim.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MessageClaim.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5100,7 +4663,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Assertion.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Assertion.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5108,7 +4671,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Assertion.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5214,7 +4777,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Profile.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Profile.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5222,7 +4785,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Profile.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Profile.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5329,7 +4892,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Activation.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Activation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5337,7 +4900,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Activation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Activation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5492,7 +5055,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileAccount.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5500,7 +5063,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileAccount.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5613,7 +5176,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ActivationAccount.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5621,7 +5184,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ActivationAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ActivationAccount.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5716,7 +5279,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5724,7 +5287,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionAccount.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5839,7 +5402,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5847,7 +5410,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -5952,7 +5515,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ActivationDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -5960,7 +5523,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ActivationDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ActivationDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6050,7 +5613,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6058,7 +5621,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionDevice.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionDevice.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6162,7 +5725,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6170,7 +5733,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6245,7 +5808,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DeviceRecryptionKey.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6253,7 +5816,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DeviceRecryptionKey.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DeviceRecryptionKey.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6336,7 +5899,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileHost.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6344,7 +5907,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileHost.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileHost.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6438,7 +6001,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileMesh.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6446,7 +6009,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileMesh.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileMesh.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6552,7 +6115,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ProfileService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6560,7 +6123,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ProfileService.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ProfileService.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6588,9 +6151,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshProtocol.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+        <member name="M:Goedel.Mesh.MeshProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
-            Construct an instance from the specified tagged JSONReader stream.
+            Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
@@ -6737,7 +6300,7 @@
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JSONReader)">
+        <member name="M:Goedel.Mesh.MeshServiceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
             <summary>
             Dispatch object request in specified authentication context.
             </summary>			
@@ -6787,7 +6350,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6795,7 +6358,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MeshRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MeshRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6867,7 +6430,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshRequestUser.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshRequestUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6875,7 +6438,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MeshRequestUser.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MeshRequestUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -6925,7 +6488,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -6933,7 +6496,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MeshResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MeshResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7010,7 +6573,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.KeyValue.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.KeyValue.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7018,7 +6581,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.KeyValue.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.KeyValue.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7107,7 +6670,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsSelect.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConstraintsSelect.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7115,7 +6678,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsSelect.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConstraintsSelect.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7195,7 +6758,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsData.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConstraintsData.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7203,7 +6766,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConstraintsData.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConstraintsData.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7271,7 +6834,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PolicyAccount.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PolicyAccount.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7279,7 +6842,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PolicyAccount.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PolicyAccount.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7338,7 +6901,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ContainerStatus.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7346,7 +6909,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContainerStatus.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ContainerStatus.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7406,7 +6969,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ContainerUpdate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7414,7 +6977,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContainerUpdate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ContainerUpdate.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7494,7 +7057,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshHelloResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7502,7 +7065,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.MeshHelloResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.MeshHelloResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7567,7 +7130,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CreateRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CreateRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7575,7 +7138,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CreateRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CreateRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7635,7 +7198,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CreateResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CreateResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7643,7 +7206,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CreateResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CreateResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7700,7 +7263,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DeleteRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DeleteRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7708,7 +7271,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DeleteRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DeleteRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7757,7 +7320,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DeleteResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DeleteResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7765,7 +7328,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DeleteResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DeleteResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7826,7 +7389,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CompleteRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CompleteRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7834,7 +7397,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CompleteRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CompleteRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7886,7 +7449,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CompleteResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CompleteResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7894,7 +7457,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CompleteResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CompleteResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -7963,7 +7526,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.StatusRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.StatusRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -7971,7 +7534,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.StatusRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.StatusRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8032,7 +7595,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.StatusResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.StatusResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8040,7 +7603,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.StatusResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.StatusResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8118,7 +7681,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DownloadRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DownloadRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8126,7 +7689,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DownloadRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DownloadRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8184,7 +7747,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DownloadResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DownloadResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8192,7 +7755,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DownloadResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DownloadResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8259,7 +7822,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.UploadRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8267,7 +7830,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.UploadRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8328,7 +7891,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.UploadResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8336,7 +7899,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.UploadResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8413,7 +7976,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.EntryResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.EntryResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8421,7 +7984,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.EntryResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.EntryResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8476,7 +8039,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PublishRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PublishRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8484,7 +8047,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PublishRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PublishRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8533,7 +8096,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PublishResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PublishResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8541,7 +8104,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PublishResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PublishResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8609,7 +8172,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PostRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PostRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8617,7 +8180,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PostRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PostRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8666,7 +8229,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PostResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PostResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8674,7 +8237,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PostResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PostResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8732,7 +8295,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8740,7 +8303,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8802,7 +8365,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8810,7 +8373,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8868,7 +8431,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ClaimRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ClaimRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8876,7 +8439,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ClaimRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ClaimRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8928,7 +8491,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ClaimResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ClaimResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8936,7 +8499,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ClaimResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ClaimResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -8993,7 +8556,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PollClaimRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PollClaimRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9001,7 +8564,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PollClaimRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PollClaimRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9053,7 +8616,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.PollClaimResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.PollClaimResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9061,7 +8624,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.PollClaimResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.PollClaimResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9119,7 +8682,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CreateGroupRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CreateGroupRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9127,7 +8690,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CreateGroupRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CreateGroupRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9174,7 +8737,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CreateGroupResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CreateGroupResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9182,7 +8745,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CreateGroupResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CreateGroupResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9245,7 +8808,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperation.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicOperation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9253,7 +8816,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicOperation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9310,7 +8873,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationSign.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicOperationSign.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9318,7 +8881,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationSign.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicOperationSign.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9370,7 +8933,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9378,7 +8941,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicOperationKeyAgreement.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9425,7 +8988,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9433,7 +8996,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicOperationGenerate.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9488,7 +9051,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationShare.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicOperationShare.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9496,7 +9059,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicOperationShare.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicOperationShare.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9547,7 +9110,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResult.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicResult.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9555,7 +9118,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResult.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicResult.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9606,7 +9169,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9614,7 +9177,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CryptographicResultKeyAgreement.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9670,7 +9233,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.OperateRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.OperateRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9678,7 +9241,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.OperateRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.OperateRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9729,7 +9292,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.OperateResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.OperateResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9737,7 +9300,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.OperateResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.OperateResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9921,7 +9484,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.KeyData.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.KeyData.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -9929,7 +9492,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.KeyData.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.KeyData.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -9957,9 +9520,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+        <member name="M:Goedel.Mesh.MeshItem.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
-            Construct an instance from the specified tagged JSONReader stream.
+            Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
@@ -9985,7 +9548,7 @@
         <member name="P:Goedel.Mesh.MeshItem.Closed">
             <summary>Reports true if the item status is closed </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshItem.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.MeshItem.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10076,7 +9639,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.EscrowedKeySet.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.EscrowedKeySet.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10084,7 +9647,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.EscrowedKeySet.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.EscrowedKeySet.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10133,7 +9696,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Condition.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Condition.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10141,7 +9704,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Condition.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Condition.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10198,7 +9761,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Connection.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Connection.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10206,7 +9769,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Connection.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Connection.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10266,7 +9829,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Permission.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Permission.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10274,7 +9837,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10321,7 +9884,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionApplication.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionApplication.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10329,7 +9892,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionApplication.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionApplication.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10381,7 +9944,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ActivationGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10389,7 +9952,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ActivationGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ActivationGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10443,7 +10006,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10451,7 +10014,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10498,7 +10061,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionService.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionService.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10506,7 +10069,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionService.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionService.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10553,7 +10116,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ConnectionHost.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ConnectionHost.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10561,7 +10124,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ConnectionHost.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ConnectionHost.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10620,7 +10183,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Anchor.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Anchor.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10628,7 +10191,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Anchor.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Anchor.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10698,7 +10261,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.TaggedSource.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.TaggedSource.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10706,7 +10269,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.TaggedSource.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.TaggedSource.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10755,7 +10318,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ContactGroup.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ContactGroup.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10763,7 +10326,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContactGroup.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ContactGroup.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10817,7 +10380,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ContactOrganization.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ContactOrganization.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10825,7 +10388,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ContactOrganization.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ContactOrganization.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10890,7 +10453,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.OrganizationName.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.OrganizationName.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10898,7 +10461,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.OrganizationName.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.OrganizationName.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -10956,7 +10519,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.NetworkProtocol.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.NetworkProtocol.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -10964,7 +10527,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.NetworkProtocol.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.NetworkProtocol.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11026,7 +10589,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Role.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Role.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11034,7 +10597,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Role.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Role.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11109,7 +10672,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Location.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Location.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11117,7 +10680,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Location.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Location.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11176,7 +10739,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Bookmark.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Bookmark.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11184,7 +10747,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Bookmark.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Bookmark.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11284,7 +10847,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Task.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Task.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11292,7 +10855,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Task.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Task.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11339,7 +10902,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContactRecryption.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedContactRecryption.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11347,7 +10910,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedContactRecryption.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedContactRecryption.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11398,7 +10961,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CapabilityFairExchange.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CapabilityFairExchange.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11406,7 +10969,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CapabilityFairExchange.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CapabilityFairExchange.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11453,7 +11016,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11461,7 +11024,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationSSH.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11508,7 +11071,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11516,7 +11079,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationMail.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationMail.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11563,7 +11126,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11571,7 +11134,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.CatalogedApplicationNetwork.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11636,7 +11199,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfiguration.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.DevicePreconfiguration.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11644,7 +11207,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.DevicePreconfiguration.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.DevicePreconfiguration.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11731,7 +11294,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.RequestContact.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.RequestContact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11739,7 +11302,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.RequestContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.RequestContact.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11795,7 +11358,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ReplyContact.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ReplyContact.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11803,7 +11366,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ReplyContact.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ReplyContact.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11859,7 +11422,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.GroupInvitation.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.GroupInvitation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11867,7 +11430,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.GroupInvitation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.GroupInvitation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11918,7 +11481,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.RequestConfirmation.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.RequestConfirmation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11926,7 +11489,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.RequestConfirmation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.RequestConfirmation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -11981,7 +11544,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.ResponseConfirmation.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.ResponseConfirmation.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -11989,7 +11552,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.ResponseConfirmation.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.ResponseConfirmation.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -12036,7 +11599,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.RequestTask.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.RequestTask.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -12044,7 +11607,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.RequestTask.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.RequestTask.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -12165,14 +11728,6 @@
             <param name="storeName">The store name.</param>
             <param name="cryptoParameters">The cryptographic parameters.</param>
             <param name="keyCollection">The key collection to fetch keys from.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Spool.Status(System.String,System.String)">
-            <summary>
-            Return the status of the spool.
-            </summary>
-            <param name="directory">The directory in which the spool is stored.</param>
-            <param name="storeName">The store name.</param>
-            <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.Spool.Add(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
@@ -12417,6 +11972,14 @@
             <param name="decrypt"></param>
             <param name="create"></param>
         </member>
+        <member name="M:Goedel.Mesh.Store.Status(System.String,System.String)">
+            <summary>
+            Return the status of the spool.
+            </summary>
+            <param name="directory">The directory in which the spool is stored.</param>
+            <param name="storeName">The store name.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Store.Append(System.String,Goedel.Cryptography.IKeyLocate,System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.String)">
             <summary>
             Append the list of envelopes <paramref name="envelopes"/> to the
@@ -12425,6 +11988,7 @@
             <param name="directory">Directory in which the containers are kept.</param>
             <param name="envelopes">The envelopes to add.</param>
             <param name="containerName">The name of the container.</param>
+            <param name="keyLocate">The key location context.</param>
         </member>
         <member name="M:Goedel.Mesh.Store.FileName(System.String,System.String)">
             <summary>

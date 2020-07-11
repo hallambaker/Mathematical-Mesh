@@ -94,7 +94,7 @@ namespace Goedel.Protocol.Debug {
         /// </summary>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Request(JSONObject Payload) => new TraceMessage(Current, Payload, DateTime.Now, true);
+        public TraceMessage Request(JsonObject Payload) => new TraceMessage(Current, Payload, DateTime.Now, true);
 
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="Status">HTTP Status return line</param>
         /// <param name="Payload">The message Payload</param>
         /// <returns>The trace message entry</returns>
-        public TraceMessage Response(string Status, JSONObject Payload) {
+        public TraceMessage Response(string Status, JsonObject Payload) {
             var Message = new TraceMessage(Current, Payload, DateTime.Now, false) {
                 Status = Status
                 };
@@ -171,7 +171,7 @@ namespace Goedel.Protocol.Debug {
         /// <summary>
         /// The text of the message payload
         /// </summary>
-        public JSONObject Payload { get; }
+        public JsonObject Payload { get; }
 
         /// <summary>
         /// The time the message was sent
@@ -199,7 +199,7 @@ namespace Goedel.Protocol.Debug {
         /// <param name="IsRequest">If true, this was a request message (sent by the initiator
         /// of the conversation. Otherwise it is a response.</param>
         public TraceMessage(TracePoint TracePoint,
-                    JSONObject Payload, DateTime Time, bool IsRequest) {
+                    JsonObject Payload, DateTime Time, bool IsRequest) {
             this.TracePoint = TracePoint;
             this.Payload = Payload.DeepCopy();
             this.Time = Time.ToUniversalTime();

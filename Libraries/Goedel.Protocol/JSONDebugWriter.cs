@@ -115,7 +115,7 @@ namespace Goedel.Protocol {
         /// <param name="JSONObject">The object to convert</param>
         /// <param name="Tagged">If true, the object is wrapped with its type tag.</param>
         /// <returns>The input as a redacted JSON encoded string.</returns>
-        public static string Write(JSONObject JSONObject, bool Tagged = true) {
+        public static string Write(JsonObject JSONObject, bool Tagged = true) {
 
             if (JSONObject == null) {
                 return "$$$$ Empty $$$$";

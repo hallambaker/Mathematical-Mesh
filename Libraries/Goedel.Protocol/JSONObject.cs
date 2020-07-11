@@ -56,14 +56,14 @@ namespace Goedel.Protocol {
     /// Factory delegate that returns a JSONObject.
     /// </summary>
     /// <returns></returns>
-    public delegate JSONObject JSONFactoryDelegate();
+    public delegate JsonObject JsonFactoryDelegate();
 
 
 
     /// <summary>
     /// Base class for JSON Objects.
     /// </summary>
-    public abstract partial class JSONObject {
+    public abstract partial class JsonObject {
 
         /// <summary>
         /// Primary key to use for the object.
@@ -83,7 +83,7 @@ namespace Goedel.Protocol {
         /// <summary>
         /// Metadata header describing use in persistence store.
         /// </summary>
-        public virtual JSONObject _Metadata { get; set; }
+        public virtual JsonObject _Metadata { get; set; }
 
         /// <summary>
         /// Tag value used as substitute for reflection internally.
@@ -99,7 +99,7 @@ namespace Goedel.Protocol {
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static JSONObject _Factory() => throw new CannotCreateAbstract();
+        public static JsonObject _Factory() => throw new CannotCreateAbstract();
 
         /// <summary>
         /// Factory method used as default for ToString methods.
@@ -107,23 +107,23 @@ namespace Goedel.Protocol {
         public static JSONWriterFactoryDelegate JSONWriterFactory = JSONWriter.JSONWriterFactory;
 
         ///<summary>The tag dictionary for decoding entries.</summary>
-        public static Dictionary<string, JSONFactoryDelegate> TagDictionary = tagDictionary ??
-            new Dictionary<string, JSONFactoryDelegate>().CacheValue(out tagDictionary);
-        static Dictionary<string, JSONFactoryDelegate> tagDictionary;
+        public static Dictionary<string, JsonFactoryDelegate> TagDictionary = tagDictionary ??
+            new Dictionary<string, JsonFactoryDelegate>().CacheValue(out tagDictionary);
+        static Dictionary<string, JsonFactoryDelegate> tagDictionary;
 
         /// <summary>
         /// Add a dictionary to the persistence store decoder.
         /// </summary>
         /// <param name="dictionary">The dictionary to add</param>
         public void AddDictionary(
-                    Dictionary<string, JSONFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
+                    Dictionary<string, JsonFactoryDelegate> dictionary) => Append(TagDictionary, dictionary);
 
         /// <summary>
         /// Append the values from the tag dictionary of this type to <paramref name="dictionary"/>.
         /// </summary>
         /// <param name="dictionary">The dictionary to append the values to.</param>
         public static void AddDictionary(
-            ref Dictionary<string, JSONFactoryDelegate> dictionary) {
+            ref Dictionary<string, JsonFactoryDelegate> dictionary) {
             if (dictionary != TagDictionary) {
                 Append(TagDictionary, dictionary);
                 dictionary = TagDictionary;
@@ -131,19 +131,22 @@ namespace Goedel.Protocol {
             }
 
 
+        
         /// <summary>
         /// Base constructor.
         /// </summary>
-		public JSONObject() {
+        public JsonObject() {
             //_Initialize();
             }
+
+
 
         /// <summary>
         /// If implemented in the child class, performs a deep copy of the structure.
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public virtual JSONObject DeepCopy() => null;
+        public virtual JsonObject DeepCopy() => null;
 
         /// <summary>
         /// Convert object to string in JSON form
@@ -264,9 +267,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="data">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(byte[] data) {
-            using var reader = data.JSONReader();
-            return FromJSON(reader, true);
+        public static JsonObject From(byte[] data) {
+            using var reader = data.JsonReader();
+            return FromJson(reader, true);
             }
 
         /// <summary>
@@ -274,9 +277,9 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="input">Source</param>
         /// <returns>Constructed object</returns>
-        public static JSONObject From(string input) {
-            using var reader = input.JSONReader();
-            return FromJSON(reader, true);
+        public static JsonObject From(string input) {
+            using var reader = input.JsonReader();
+            return FromJson(reader, true);
             }
 
 
@@ -286,7 +289,7 @@ namespace Goedel.Protocol {
         /// <param name="input">The input stream</param>
         /// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static JSONObject FromJSON(JSONReader input, bool tagged) {
+        public static JsonObject FromJson(JsonReader input, bool tagged) {
             tagged.AssertTrue(Internal.Throw);
             return input.ReadTaggedObject(TagDictionary);
             }
@@ -297,7 +300,7 @@ namespace Goedel.Protocol {
         /// <param name="input">Input string</param>
         public virtual void Deserialize(string input) {
             var reader = new StringReader(input);
-            var jsonReader = new JSONReader(reader);
+            var jsonReader = new JsonReader(reader);
             Deserialize(jsonReader);
             }
 
@@ -305,7 +308,7 @@ namespace Goedel.Protocol {
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="jsonReader">Input data</param>
-        public virtual void Deserialize(JSONReader jsonReader) {
+        public virtual void Deserialize(JsonReader jsonReader) {
 
             bool going = jsonReader.StartObject();
             while (going) {
@@ -329,7 +332,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="jsonReader">Input data</param>
         /// <param name="Tag">Input tag</param>
-        public virtual void DeserializeToken(JSONReader jsonReader, string Tag) {
+        public virtual void DeserializeToken(JsonReader jsonReader, string Tag) {
             }
 
 
@@ -354,11 +357,11 @@ namespace Goedel.Protocol {
         /// <param name="Dictionary2">Second dictionary to merge</param>
         /// <param name="Dictionary3">Third dictionary to merge</param>
         /// <returns>Merged dictionaries</returns>
-        public static Dictionary<string, JSONFactoryDelegate> Merge(
-                    Dictionary<string, JSONFactoryDelegate> Dictionary1,
-                    Dictionary<string, JSONFactoryDelegate> Dictionary2 = null,
-                    Dictionary<string, JSONFactoryDelegate> Dictionary3 = null) {
-            var Result = new Dictionary<string, JSONFactoryDelegate>();
+        public static Dictionary<string, JsonFactoryDelegate> Merge(
+                    Dictionary<string, JsonFactoryDelegate> Dictionary1,
+                    Dictionary<string, JsonFactoryDelegate> Dictionary2 = null,
+                    Dictionary<string, JsonFactoryDelegate> Dictionary3 = null) {
+            var Result = new Dictionary<string, JsonFactoryDelegate>();
 
             foreach (var Entry in Dictionary1) {
                 Result.Add(Entry.Key, Entry.Value);
@@ -377,8 +380,8 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Base">Base dictionary to merge into</param>
         /// <param name="Dictionary">Second dictionary to merge</param>
-        public static void Append(Dictionary<string, JSONFactoryDelegate> Base,
-                    Dictionary<string, JSONFactoryDelegate> Dictionary) {
+        public static void Append(Dictionary<string, JsonFactoryDelegate> Base,
+                    Dictionary<string, JsonFactoryDelegate> Dictionary) {
             foreach (var Entry in Dictionary) {
                 Base.AddSafe(Entry.Key, Entry.Value);
                 }

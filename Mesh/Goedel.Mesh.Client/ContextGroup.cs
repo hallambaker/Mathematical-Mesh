@@ -173,13 +173,14 @@ namespace Goedel.Mesh.Client {
         /// Add a device to the device catalog.
         /// </summary>
         /// <param name="capability">The capability to add.</param>
+        /// <param name="encryptionKey">Optional encryption key used to encrypt the capability.</param>
         public void AddCapability(
                     CryptographicCapability capability,
                     CryptoKey encryptionKey = null) {
             var catalog = GetCatalogCapability();
-            var transaction = new TransactionServiced(catalog, MeshClient);
+            var transaction = new TransactionServiced(MeshClient);
             var catalogedCapability = new CatalogedCapability(capability);
-            transaction.Update(catalogedCapability);
+            transaction.Update(catalog, catalogedCapability);
             transaction.Commit();
             }
 
@@ -190,8 +191,8 @@ namespace Goedel.Mesh.Client {
         public void AddMember(
                     CatalogedMember CatalogedMember) {
             var catalog = GetCatalogMember();
-            var transaction = new TransactionServiced(catalog, MeshClient);
-            transaction.Update(CatalogedMember);
+            var transaction = new TransactionServiced(MeshClient);
+            transaction.Update(catalog, CatalogedMember);
             transaction.Commit();
 
 

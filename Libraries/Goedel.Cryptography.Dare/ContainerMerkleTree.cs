@@ -27,13 +27,14 @@ namespace Goedel.Cryptography.Dare {
         /// Create a new container file of the specified type and write the initial
         /// data record
         /// </summary>
-        /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
+        /// <param name="jbcdStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
+        /// <param name="keyLocate">Key collection to be used to resolve keys</param>
         /// <returns>The newly constructed container.</returns>
 
         public static new Container MakeNewContainer(
-                        JbcdStream JBCDStream,
+                        JbcdStream jbcdStream,
                         IKeyLocate keyLocate) {
 
             var containerInfo = new ContainerInfo() {
@@ -47,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
                 };
 
             var container = new ContainerMerkleTree(keyLocate) {
-                JBCDStream = JBCDStream,
+                JBCDStream = jbcdStream,
                 ContainerHeaderFirst = containerHeader
                 };
 
@@ -74,10 +75,10 @@ namespace Goedel.Cryptography.Dare {
         /// Create a set of master keys and other cryptographic parameters from the
         /// specified profile.
         /// </summary>
-        /// <param name="CryptoParameters">The cryptographic algorithms to use</param>
+        /// <param name="cryptoParameters">The cryptographic algorithms to use</param>
         /// <returns>The master parameters.</returns>
-        protected override CryptoStack GetCryptoStack(CryptoParameters CryptoParameters) {
-            var Result = CryptoParameters.GetCryptoStack();
+        protected override CryptoStack GetCryptoStack(CryptoParameters cryptoParameters) {
+            var Result = cryptoParameters.GetCryptoStack();
             Result.Digest = true;
             return Result;
             }
@@ -87,11 +88,11 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Register a frame in the container access dictionaries.
         /// </summary>
-        /// <param name="ContainerInfo">Frame header</param>
-        /// <param name="Position">Position of the frame</param>
-        protected override void RegisterFrame(ContainerInfo ContainerInfo, long Position) {
-            var Index = ContainerInfo.Index;
-            FrameIndexToPositionDictionary.Add(Index, Position);
+        /// <param name="containerInfo">Frame header</param>
+        /// <param name="position">Position of the frame</param>
+        protected override void RegisterFrame(ContainerInfo containerInfo, long position) {
+            var Index = containerInfo.Index;
+            FrameIndexToPositionDictionary.Add(Index, position);
             //FrameDigestDictionary.Add(Index, ContainerInfo.TreeDigest);
             }
 
@@ -105,9 +106,9 @@ namespace Goedel.Cryptography.Dare {
         /// Pre-populate the dummy trailer so as to allow the length to be calculated.
         /// </summary>
         /// <returns>The dummy trailer.</returns>
-        public override DareTrailer FillDummyTrailer(CryptoStack CryptoStack) {
+        public override DareTrailer FillDummyTrailer(CryptoStack cryptoStack) {
 
-            var Trailer = CryptoStack.GetDummyTrailer();
+            var Trailer = cryptoStack.GetDummyTrailer();
             Trailer.TreeDigest = Trailer.PayloadDigest;
 
             return Trailer;
@@ -116,16 +117,16 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// The dummy trailer to add to the end of the frame.
         /// </summary>
-        /// <returns></returns>
-        public override void MakeTrailer(ref DareTrailer Trailer) {
+        ///<param name="trailer">The trailer to augment.</param>
+        public override void MakeTrailer(ref DareTrailer trailer) {
 
-            Trailer ??= CryptoStackContainer.GetNullTrailer();
+            trailer ??= CryptoStackContainer.GetNullTrailer();
 
             if (FrameCount > 0) {
-                Trailer.TreeDigest = GetTreeDigest(FrameCount, Trailer.PayloadDigest);
+                trailer.TreeDigest = GetTreeDigest(FrameCount, trailer.PayloadDigest);
                 }
             else {
-                Trailer.TreeDigest = CryptoStackContainer.CombineDigest(null, Trailer.PayloadDigest);
+                trailer.TreeDigest = CryptoStackContainer.CombineDigest(null, trailer.PayloadDigest);
                 }
             }
 
@@ -134,35 +135,35 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Calculate the digest of the specified tree node
         /// </summary>
-        /// <param name="Frame">The frame number</param>
-        /// <param name="ContentDigest">The content digest</param>
+        /// <param name="frame">The frame number</param>
+        /// <param name="contentDigest">The content digest</param>
         /// <returns>The calculated digest</returns>
-        public virtual byte[] GetTreeDigest(long Frame, byte[] ContentDigest) {
-            long x2 = Frame + 1;
+        public virtual byte[] GetTreeDigest(long frame, byte[] contentDigest) {
+            long x2 = frame + 1;
             long d = 1;
 
             while (x2 > 0) {
                 if ((x2 & 1) == 1) {
-                    return DigestFrame(x2 == 1 ? (d / 2) - 1 : Frame - d, ContentDigest);
+                    return DigestFrame(x2 == 1 ? (d / 2) - 1 : frame - d, contentDigest);
                     }
                 else {
-                    ContentDigest = DigestFrame(Frame - d, ContentDigest);
+                    contentDigest = DigestFrame(frame - d, contentDigest);
                     }
                 d *= 2;
                 x2 /= 2;
                 }
-            return CryptoStackContainer.CombineDigest(null, ContentDigest);
+            return CryptoStackContainer.CombineDigest(null, contentDigest);
             }
 
         /// <summary>
         /// Obtain the digest value for a frame.
         /// </summary>
-        /// <param name="Frame">The frame index.</param>
-        /// <param name="Right">The digest of the rightmost component.</param>
+        /// <param name="frame">The frame index.</param>
+        /// <param name="right">The digest of the rightmost component.</param>
         /// <returns>The calculated digest.</returns>
-        public byte[] DigestFrame(long Frame, byte[] Right) {
-            var Left = GetFrameDigest(Frame);
-            return CryptoStackContainer.CombineDigest(Left, Right);
+        public byte[] DigestFrame(long frame, byte[] right) {
+            var left = GetFrameDigest(frame);
+            return CryptoStackContainer.CombineDigest(left, right);
             }
 
 
@@ -172,8 +173,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Frame">The frame index.</param>
         /// <returns>The digest value.</returns>
         public virtual byte[] GetFrameDigest(long Frame) {
-            var Found = FrameDigestDictionary.TryGetValue(Frame, out var Digest);
-            return Digest;
+            FrameDigestDictionary.TryGetValue(Frame, out var digest);
+            return digest;
             }
 
         #endregion
@@ -181,16 +182,16 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Perform sanity checking on a list of container headers.
         /// </summary>
-        /// <param name="Headers">List of headers to check</param>
-        public override void CheckContainer(List<DareHeader> Headers) {
-            int Index = 1;
-            foreach (var Header in Headers) {
-                Assert.NotNull(Header.ContainerInfo);
+        /// <param name="headers">List of headers to check</param>
+        public override void CheckContainer(List<DareHeader> headers) {
+            int index = 1;
+            foreach (var header in headers) {
+                Assert.NotNull(header.ContainerInfo);
 
-                Assert.True(Header.ContainerInfo.Index == Index);
-                Assert.NotNull(Header.PayloadDigest);
+                Assert.True(header.ContainerInfo.Index == index);
+                Assert.NotNull(header.PayloadDigest);
 
-                Index++;
+                index++;
                 }
             }
 

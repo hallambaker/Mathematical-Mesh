@@ -38,6 +38,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="JBCDStream">The underlying JBCDStream stream. This MUST be opened
         /// in a read access mode and should have exclusive read access. All existing
         /// content in the file will be overwritten.</param>
+        /// <param name="keyLocate">Key collection to be used to resolve keys</param>
         /// <returns>The newly constructed container.</returns>
 
         public static Container MakeNewContainer(
@@ -180,16 +181,6 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <returns>True if a next frame exists, otherwise false</returns>
         public override bool PreviousFrame() => JBCDStream.FramerPrevious();
-
-        ///// <summary>
-        ///// Begin reading record data. This method is called before ReadData
-        ///// to move the read pointer to the start of the payload data.
-        ///// </summary>
-        ///// <returns></returns>
-        //public override long ReadDataBegin() {
-        //    PayloadData = JBCDStream.ReadRecordBegin(ref FrameRemaining);
-        //    return PayloadData;
-        //    }
 
 
         /// <summary>

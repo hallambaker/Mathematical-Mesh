@@ -55,7 +55,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Object">Object to add.</param>
         /// <param name="transaction">The transaction context under which the object is 
         /// created.</param>
-        IPersistenceEntry New(JSONObject Object,
+        IPersistenceEntry New(JsonObject Object,
                 Transaction transaction = null);
 
 
@@ -66,7 +66,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Create">If true, create a new value if one does not already exist</param>
         /// <param name="transaction">The transaction context under which the object is 
         /// created.</param>
-        IPersistenceEntry Update(JSONObject Object, bool Create = true,
+        IPersistenceEntry Update(JsonObject Object, bool Create = true,
                 Transaction transaction = null);
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         bool Deleted { get; }
 
-
-        JSONObject JsonObject { get; }
+        ///<summary>The persisted JsonObject</summary>
+        JsonObject JsonObject { get; }
 
 
         //byte[] Payload { get; }

@@ -270,7 +270,7 @@ namespace ExampleGenerator {
 		//
 		// Format
 		//
-		public void Format (JSONObject data) {
+		public void Format (JsonObject data) {
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);
 			_Output.Write ("{1}\n{0}", _Indent, JSONDebugWriter.Write (data));
 			_Output.Write ("{1}\n{0}", _Indent, Preformat);

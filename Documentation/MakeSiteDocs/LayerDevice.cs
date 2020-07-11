@@ -36,7 +36,7 @@ namespace ExampleGenerator {
 
         public List<ExampleResult> ProfileCreateBob;
 
-        public JSONObject Profile;
+        public JsonObject Profile;
 
         public ResultCreatePersonal AliceProfiles;
         public ResultHello ResultHello;

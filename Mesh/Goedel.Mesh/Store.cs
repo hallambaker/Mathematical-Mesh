@@ -86,6 +86,21 @@ namespace Goedel.Mesh {
             CryptoParameters = cryptoParameters;
             }
 
+
+        /// <summary>
+        /// Return the status of the spool.
+        /// </summary>
+        /// <param name="directory">The directory in which the spool is stored.</param>
+        /// <param name="storeName">The store name.</param>
+        /// <returns></returns>
+        public static ContainerStatus Status(string directory, string storeName) {
+            using var store = new Store(directory, storeName);
+            return new ContainerStatus() {
+                Index = (int)store.Container.FrameCount,
+                Container = storeName
+                };
+            }
+
         /// <summary>
         /// Append the list of envelopes <paramref name="envelopes"/> to the
         /// container <paramref name="containerName"/> in <paramref name="directory"/>.
@@ -93,6 +108,7 @@ namespace Goedel.Mesh {
         /// <param name="directory">Directory in which the containers are kept.</param>
         /// <param name="envelopes">The envelopes to add.</param>
         /// <param name="containerName">The name of the container.</param>
+        /// <param name="keyLocate">The key location context.</param>
         public static void Append(string directory, 
                 IKeyLocate keyLocate, List<DareEnvelope> envelopes, string containerName = null) {
             envelopes.AssertNotNull();

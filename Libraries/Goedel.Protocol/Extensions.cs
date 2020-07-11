@@ -48,7 +48,7 @@ namespace Goedel.Protocol {
         /// <param name="dataEncoding">The encoding to convert to (defaults to JSON).</param>
         /// <param name="tagged">It true, tag the output value with the object type.</param>
         /// <returns>The encoded data.</returns>
-        public static byte[] GetBytes(this JSONObject jsonObject,
+        public static byte[] GetBytes(this JsonObject jsonObject,
                     DataEncoding dataEncoding = DataEncoding.JSON,
                     bool tagged = true) {
 
@@ -126,7 +126,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">The data to be read as a UTF8 data stream.</param>
         /// <returns>The JSONReader</returns>
-        public static JSONReader JSONReader(this byte[] Data) => new JSONReader(Data);
+        public static JsonReader JsonReader(this byte[] Data) => new JsonReader(Data);
 
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="Data">The data to be read as a UTF8 data stream.</param>
         /// <returns>The JSONReader</returns>
-        public static JSONReader JSONReader(this string Data) => new JSONReader(Data);
+        public static JsonReader JsonReader(this string Data) => new JsonReader(Data);
 
         /// <summary>
         /// Convert object to byte sequence in JSON form.
@@ -142,7 +142,7 @@ namespace Goedel.Protocol {
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJson(this JSONObject Object, bool Tagged = true) => Object.GetBytes(Tagged);
+        public static byte[] GetJson(this JsonObject Object, bool Tagged = true) => Object.GetBytes(Tagged);
 
         /// <summary>
         /// Convert object to byte sequence in JSON form.
@@ -150,7 +150,7 @@ namespace Goedel.Protocol {
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJsonA(this JSONObject Object, bool Tagged = true) {
+        public static byte[] GetJsonA(this JsonObject Object, bool Tagged = true) {
             JSONWriter JSONWriter = new JSONAWriter();
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
@@ -162,7 +162,7 @@ namespace Goedel.Protocol {
         /// <param name="Object">The object to convert</param>
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJsonB(this JSONObject Object, bool Tagged = true) {
+        public static byte[] GetJsonB(this JsonObject Object, bool Tagged = true) {
             JSONWriter JSONWriter = new JSONBWriter();
             Object.Serialize(JSONWriter, Tagged);
             return JSONWriter.GetBytes;
@@ -175,7 +175,7 @@ namespace Goedel.Protocol {
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJsonC(this JSONObject Object, bool Tagged = true,
+        public static byte[] GetJsonC(this JsonObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {
             JSONWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);
             Object.Serialize(JSONWriter, Tagged);
@@ -189,7 +189,7 @@ namespace Goedel.Protocol {
         /// <param name="Tagged">If true, serialization is tagged with the object type.</param>
         /// <param name="TagDictionary">Tag dictionary to use to decode type tags.</param>
         /// <returns>Data as byte sequence.</returns>
-        public static byte[] GetJsonD(this JSONObject Object, bool Tagged = true,
+        public static byte[] GetJsonD(this JsonObject Object, bool Tagged = true,
                     Dictionary<string, int> TagDictionary = null) {
             // NYI: Implement the JSON D format.
             JSONWriter JSONWriter = new JSONCWriter(TagDictionary: TagDictionary);

@@ -105,8 +105,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="catalogedDevice">The device to add.</param>
         public void AddDevice(CatalogedDevice catalogedDevice) {
             var catalog = GetCatalogDevice();
-            var transaction = new TransactionServiced(catalog, MeshClient);
-            transaction.Update(catalogedDevice);
+            var transaction = new TransactionServiced(MeshClient);
+            transaction.Update(catalog, catalogedDevice);
             transaction.Commit();
             }
 
@@ -175,7 +175,7 @@ namespace Goedel.Mesh.Client {
             var catalog = GetCatalogDevice();
 
             var updates = new List<CatalogedDevice>();
-            foreach (var device in catalog.AsCatalogEntryDevice) {
+            foreach (var device in catalog.AsCatalogedType) {
                 bool updated = false;
                 device.Accounts ??= new List<AccountEntry>();
 
@@ -451,7 +451,7 @@ namespace Goedel.Mesh.Client {
                 var contentMeta = message.Header.ContentMeta;
 
                 if (!completed.ContainsKey(contentMeta.UniqueID)) {
-                    var meshMessage = Message.FromJSON(message.GetBodyReader());
+                    var meshMessage = Message.FromJson(message.GetBodyReader());
                     //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
                     if (contentMeta.MessageType == tag) {
                         return meshMessage;
@@ -486,7 +486,7 @@ namespace Goedel.Mesh.Client {
                 var contentMeta = message.Header.ContentMeta;
 
 
-                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                var meshMessage = Message.FromJson(message.GetBodyReader());
                 //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
 
                 if (meshMessage.MessageID == messageID) {

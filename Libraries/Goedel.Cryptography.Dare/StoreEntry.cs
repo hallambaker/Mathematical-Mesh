@@ -35,8 +35,8 @@ namespace Goedel.Cryptography.Dare {
         public bool Deleted => ContentInfo?.Event == PersistenceStore.EventDelete;
 
         ///<summary>The JSONObject.</summary>
-        public JSONObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
-        JSONObject jsonObject;
+        public JsonObject JsonObject => jsonObject ?? FrameIndex.GetJSONObject(Container).CacheValue(out jsonObject);
+        JsonObject jsonObject;
 
         ///<summary>The frame index within the container</summary>
         public ContainerFrameIndex FrameIndex;
@@ -72,7 +72,7 @@ namespace Goedel.Cryptography.Dare {
         public StoreEntry(Container container,
                     DareEnvelope dareEnvelope,
                     StoreEntry previous,
-                    JSONObject item = null) {
+                    JsonObject item = null) {
             Container = container;
             jsonObject = item;
 
@@ -92,7 +92,7 @@ namespace Goedel.Cryptography.Dare {
                     ContainerFrameIndex frameIndex,
                     StoreEntry previous,
                     Container container,
-                    JSONObject item = null) {
+                    JsonObject item = null) {
             Container = container;
             ContainerHeader = frameIndex.Header;
 
@@ -105,8 +105,9 @@ namespace Goedel.Cryptography.Dare {
             First = previous?.First ?? this;
             }
 
-        public JSONObject GetJsonObject(IKeyLocate keyCollection) => throw new System.NotImplementedException();
-        public byte[] GetPayload(IKeyLocate keyCollection) => throw new System.NotImplementedException();
+
+        //public JsonObject GetJsonObject(IKeyLocate keyCollection) => throw new System.NotImplementedException();
+        //public byte[] GetPayload(IKeyLocate keyCollection) => throw new System.NotImplementedException();
         }
 
     }

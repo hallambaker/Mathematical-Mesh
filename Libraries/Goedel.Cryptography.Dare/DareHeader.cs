@@ -367,7 +367,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="data">The data to decode.</param>
         /// <returns>The decoded data.</returns>
         public static ContentMeta GetContentInfo(byte[] data) =>
-            data == null ? null : FromJSON(data.JSONReader(), TagData);
+            data == null ? null : FromJson(data.JsonReader(), TagData);
 
         }
 

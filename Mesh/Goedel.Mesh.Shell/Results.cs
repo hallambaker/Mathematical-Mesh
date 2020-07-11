@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Shell {
 	///
 	/// Classes to be used to test serialization an deserialization.
 	/// </summary>
-	public abstract partial class ShellResult : global::Goedel.Protocol.JSONObject {
+	public abstract partial class ShellResult : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -56,8 +56,8 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"Result", Result._Factory},
 			{"ResultKey", ResultKey._Factory},
@@ -94,11 +94,11 @@ namespace Goedel.Mesh.Shell {
 			{"ResultComplete", ResultComplete._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -141,7 +141,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Result();
+		public static new JsonObject _Factory () => new Result();
 
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Result FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Result FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -209,7 +209,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Success" : {
@@ -260,7 +260,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultKey();
+		public static new JsonObject _Factory () => new ResultKey();
 
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultKey FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultKey FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -341,7 +341,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Key" : {
@@ -409,7 +409,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultDigest();
+		public static new JsonObject _Factory () => new ResultDigest();
 
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultDigest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultDigest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -483,7 +483,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Digest" : {
@@ -549,7 +549,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultFile();
+		public static new JsonObject _Factory () => new ResultFile();
 
 
         /// <summary>
@@ -604,7 +604,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultFile FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultFile FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -623,7 +623,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Filename" : {
@@ -671,7 +671,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultDump();
+		public static new JsonObject _Factory () => new ResultDump();
 
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultDump FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultDump FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -747,7 +747,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogedEntries" : {
@@ -801,7 +801,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultList();
+		public static new JsonObject _Factory () => new ResultList();
 
 
         /// <summary>
@@ -874,7 +874,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultList FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultList FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -893,7 +893,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogedDevices" : {
@@ -915,7 +915,7 @@ namespace Goedel.Mesh.Shell {
 					bool _Going = jsonReader.StartArray ();
 					Profiles = new List <Assertion> ();
 					while (_Going) {
-						var _Item = Assertion.FromJSON (jsonReader, true); // a tagged structure
+						var _Item = Assertion.FromJson (jsonReader, true); // a tagged structure
 						Profiles.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -954,7 +954,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultAccountConnect();
+		public static new JsonObject _Factory () => new ResultAccountConnect();
 
 
         /// <summary>
@@ -999,7 +999,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultAccountConnect FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultAccountConnect FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1018,7 +1018,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "ProfileDevice" : {
@@ -1061,7 +1061,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultPublish();
+		public static new JsonObject _Factory () => new ResultPublish();
 
 
         /// <summary>
@@ -1106,7 +1106,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultPublish FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultPublish FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1125,7 +1125,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Uri" : {
@@ -1173,7 +1173,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultPublishDevice();
+		public static new JsonObject _Factory () => new ResultPublishDevice();
 
 
         /// <summary>
@@ -1228,7 +1228,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultPublishDevice FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultPublishDevice FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1247,7 +1247,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Uri" : {
@@ -1311,7 +1311,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultCreateDevice();
+		public static new JsonObject _Factory () => new ResultCreateDevice();
 
 
         /// <summary>
@@ -1366,7 +1366,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultCreateDevice FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultCreateDevice FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1385,7 +1385,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Default" : {
@@ -1440,7 +1440,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultCreatePersonal();
+		public static new JsonObject _Factory () => new ResultCreatePersonal();
 
 
         /// <summary>
@@ -1490,7 +1490,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultCreatePersonal FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultCreatePersonal FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1509,7 +1509,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "MeshUDF" : {
@@ -1560,7 +1560,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultCreateAccount();
+		public static new JsonObject _Factory () => new ResultCreateAccount();
 
 
         /// <summary>
@@ -1610,7 +1610,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultCreateAccount FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultCreateAccount FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1629,7 +1629,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "ProfileAccount" : {
@@ -1679,7 +1679,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultRegisterService();
+		public static new JsonObject _Factory () => new ResultRegisterService();
 
 
         /// <summary>
@@ -1724,7 +1724,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultRegisterService FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultRegisterService FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1743,7 +1743,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "AccountAddress" : {
@@ -1779,7 +1779,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultRecover();
+		public static new JsonObject _Factory () => new ResultRecover();
 
 
         /// <summary>
@@ -1819,7 +1819,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultRecover FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultRecover FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1838,7 +1838,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -1874,7 +1874,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultStatus();
+		public static new JsonObject _Factory () => new ResultStatus();
 
 
         /// <summary>
@@ -1919,7 +1919,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultStatus FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultStatus FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1938,7 +1938,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "StatusResponse" : {
@@ -1986,7 +1986,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultSync();
+		public static new JsonObject _Factory () => new ResultSync();
 
 
         /// <summary>
@@ -2031,7 +2031,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultSync FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultSync FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2050,7 +2050,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Fetched" : {
@@ -2094,7 +2094,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultEscrow();
+		public static new JsonObject _Factory () => new ResultEscrow();
 
 
         /// <summary>
@@ -2151,7 +2151,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultEscrow FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultEscrow FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2170,7 +2170,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Service" : {
@@ -2221,7 +2221,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultMachine();
+		public static new JsonObject _Factory () => new ResultMachine();
 
 
         /// <summary>
@@ -2278,7 +2278,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultMachine FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultMachine FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2297,7 +2297,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogedMachines" : {
@@ -2351,7 +2351,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultPIN();
+		public static new JsonObject _Factory () => new ResultPIN();
 
 
         /// <summary>
@@ -2401,7 +2401,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultPIN FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultPIN FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2420,7 +2420,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "MessagePIN" : {
@@ -2467,7 +2467,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultHello();
+		public static new JsonObject _Factory () => new ResultHello();
 
 
         /// <summary>
@@ -2512,7 +2512,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultHello FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultHello FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2531,7 +2531,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Response" : {
@@ -2574,7 +2574,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultEntry();
+		public static new JsonObject _Factory () => new ResultEntry();
 
 
         /// <summary>
@@ -2619,7 +2619,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultEntry FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultEntry FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2638,7 +2638,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogEntry" : {
@@ -2685,7 +2685,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultEntrySent();
+		public static new JsonObject _Factory () => new ResultEntrySent();
 
 
         /// <summary>
@@ -2735,7 +2735,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultEntrySent FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultEntrySent FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2754,7 +2754,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogEntry" : {
@@ -2800,7 +2800,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultMail();
+		public static new JsonObject _Factory () => new ResultMail();
 
 
         /// <summary>
@@ -2840,7 +2840,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultMail FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultMail FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2859,7 +2859,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -2891,7 +2891,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultSSH();
+		public static new JsonObject _Factory () => new ResultSSH();
 
 
         /// <summary>
@@ -2931,7 +2931,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultSSH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultSSH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2950,7 +2950,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -2982,7 +2982,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultGroupCreate();
+		public static new JsonObject _Factory () => new ResultGroupCreate();
 
 
         /// <summary>
@@ -3022,7 +3022,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultGroupCreate FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultGroupCreate FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3041,7 +3041,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -3081,7 +3081,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultSent();
+		public static new JsonObject _Factory () => new ResultSent();
 
 
         /// <summary>
@@ -3131,7 +3131,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultSent FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultSent FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3150,7 +3150,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Message" : {
@@ -3197,7 +3197,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultPending();
+		public static new JsonObject _Factory () => new ResultPending();
 
 
         /// <summary>
@@ -3254,7 +3254,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultPending FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultPending FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3273,7 +3273,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Messages" : {
@@ -3323,7 +3323,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultAuthorize();
+		public static new JsonObject _Factory () => new ResultAuthorize();
 
 
         /// <summary>
@@ -3380,7 +3380,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultAuthorize FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultAuthorize FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3399,7 +3399,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Messages" : {
@@ -3449,7 +3449,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultProcess();
+		public static new JsonObject _Factory () => new ResultProcess();
 
 
         /// <summary>
@@ -3494,7 +3494,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultProcess FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultProcess FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3513,7 +3513,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "ProcessResult" : {
@@ -3556,7 +3556,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultConnect();
+		public static new JsonObject _Factory () => new ResultConnect();
 
 
         /// <summary>
@@ -3601,7 +3601,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultConnect FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultConnect FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3620,7 +3620,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "CatalogedMachine" : {
@@ -3663,7 +3663,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultTransactionRequest();
+		public static new JsonObject _Factory () => new ResultTransactionRequest();
 
 
         /// <summary>
@@ -3708,7 +3708,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultTransactionRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultTransactionRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3727,7 +3727,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Identifier" : {
@@ -3771,7 +3771,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultConfirm();
+		public static new JsonObject _Factory () => new ResultConfirm();
 
 
         /// <summary>
@@ -3821,7 +3821,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultConfirm FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultConfirm FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3840,7 +3840,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Id" : {
@@ -3887,7 +3887,7 @@ namespace Goedel.Mesh.Shell {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ResultComplete();
+		public static new JsonObject _Factory () => new ResultComplete();
 
 
         /// <summary>
@@ -3932,7 +3932,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ResultComplete FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ResultComplete FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -3951,7 +3951,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "ConnectionStatus" : {

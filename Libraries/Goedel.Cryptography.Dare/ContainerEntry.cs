@@ -40,7 +40,7 @@ namespace Goedel.Cryptography.Dare {
 	///
 	/// Classes that describe the DARE Container Format.
 	/// </summary>
-	public abstract partial class ContainerData : global::Goedel.Protocol.JSONObject {
+	public abstract partial class ContainerData : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -55,8 +55,8 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"ContainerInfo", ContainerInfo._Factory},
 			{"ContainerIndex", ContainerIndex._Factory},
@@ -65,11 +65,11 @@ namespace Goedel.Cryptography.Dare {
 			{"IndexMeta", IndexMeta._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -180,7 +180,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContainerInfo();
+		public static new JsonObject _Factory () => new ContainerInfo();
 
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerInfo FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ContainerInfo FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -278,7 +278,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "DataEncoding" : {
@@ -366,7 +366,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new ContainerIndex();
+		public static new JsonObject _Factory () => new ContainerIndex();
 
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new ContainerIndex FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new ContainerIndex FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -463,7 +463,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Full" : {
@@ -548,7 +548,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new IndexPosition();
+		public static new JsonObject _Factory () => new IndexPosition();
 
 
         /// <summary>
@@ -597,7 +597,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexPosition FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new IndexPosition FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -616,7 +616,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Index" : {
@@ -667,7 +667,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyValue();
+		public static new JsonObject _Factory () => new KeyValue();
 
 
         /// <summary>
@@ -716,7 +716,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyValue FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyValue FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -735,7 +735,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Key" : {
@@ -797,7 +797,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new IndexMeta();
+		public static new JsonObject _Factory () => new IndexMeta();
 
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new IndexMeta FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new IndexMeta FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -896,7 +896,7 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Index" : {

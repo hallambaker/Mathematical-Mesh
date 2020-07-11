@@ -22,15 +22,15 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestInstance() => TestEncodeDecode(TestDataBasic,
-                        DataEncoding.JSON, JSONReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonReader.JSONReaderFactory);
 
         [Fact]
         public void TestArray() => TestEncodeDecode(TestDataArray,
-                        DataEncoding.JSON, JSONReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonReader.JSONReaderFactory);
 
         [Fact]
         public void TestStruct() => TestEncodeDecode(TestDataStruct,
-                        DataEncoding.JSON, JSONReader.JSONReaderFactory);
+                        DataEncoding.JSON, JsonReader.JSONReaderFactory);
 
 
 
@@ -87,15 +87,15 @@ namespace Goedel.XUnit {
                     DataEncoding DataEncoding,
                     JSONReaderFactoryDelegate ReaderFactory) {
             var FirstJSON = First.GetBytes(DataEncoding, true);
-            var Second = MultiInstance.FromJSON(ReaderFactory(FirstJSON));
+            var Second = MultiInstance.FromJson(ReaderFactory(FirstJSON));
             CheckEqual(First, Second);
             }
 
         public class JSONReadersTestData : IEnumerable<object[]> {
             public IEnumerator<object[]> GetEnumerator() {
-                yield return new object[] { TestDataBasic, DataEncoding.JSON, JSONReader.JSONReaderFactory };
-                yield return new object[] { TestDataArray, DataEncoding.JSON, JSONReader.JSONReaderFactory };
-                yield return new object[] { TestDataStruct, DataEncoding.JSON, JSONReader.JSONReaderFactory };
+                yield return new object[] { TestDataBasic, DataEncoding.JSON, JsonReader.JSONReaderFactory };
+                yield return new object[] { TestDataArray, DataEncoding.JSON, JsonReader.JSONReaderFactory };
+                yield return new object[] { TestDataStruct, DataEncoding.JSON, JsonReader.JSONReaderFactory };
 
                 yield return new object[] { TestDataBasic, DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory };
                 yield return new object[] { TestDataArray, DataEncoding.JSON_B, JsonBcdReader.JSONReaderFactory };

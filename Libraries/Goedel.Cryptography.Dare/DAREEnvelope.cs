@@ -18,8 +18,8 @@ namespace Goedel.Cryptography.Dare {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public static Dictionary<string, JSONFactoryDelegate> ThisTagDictionary =
-                new Dictionary<string, JSONFactoryDelegate>() {
+        public static Dictionary<string, JsonFactoryDelegate> ThisTagDictionary =
+                new Dictionary<string, JsonFactoryDelegate>() {
             {"DareEnvelope", Factory}           };
 
 
@@ -35,7 +35,7 @@ namespace Goedel.Cryptography.Dare {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static JSONObject Factory() => new DareEnvelope();
+        public static JsonObject Factory() => new DareEnvelope();
 
         /// <summary>
         /// Return the number of data sequences.
@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.Dare {
         public int DataSequences => Header.EDSS.Count;
 
         ///<summary>The inner enveloped content.</summary>
-        public JSONObject JSONObject { get; set; }
+        public JsonObject JSONObject { get; set; }
 
         ///<summary>Convenience accessor for the frame index.</summary>
         public long Index => Header.Index;
@@ -211,19 +211,19 @@ namespace Goedel.Cryptography.Dare {
         /// Create a JSONReader for the decrypted body content according to the specified encoding.
         /// </summary>
         /// <returns></returns>
-        public JSONReader GetBodyReader() => Body.JSONReader();
+        public JsonReader GetBodyReader() => Body.JsonReader();
 
         /// <summary>
         /// Create a JSONReader for the decrypted body content according to the specified encoding.
         /// </summary>
         /// <returns></returns>
-        public JSONReader GetBodyReader(SharedSecret secret) => throw new NYI();
+        public JsonReader GetBodyReader(SharedSecret secret) => throw new NYI();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool ReadChunk(JSONReader jsonReader, out byte[] chunk) => jsonReader.ReadBinaryIncremental(out chunk);
+        public bool ReadChunk(JsonReader jsonReader, out byte[] chunk) => jsonReader.ReadBinaryIncremental(out chunk);
 
 
         #endregion
@@ -273,7 +273,7 @@ namespace Goedel.Cryptography.Dare {
         /// Deserialize the input string to populate this object
         /// </summary>
         /// <param name="jsonReader">Input data</param>
-        public override void Deserialize(JSONReader jsonReader) {
+        public override void Deserialize(JsonReader jsonReader) {
             // NB: This was not filled in during testing. This implementation has not been regression 
             // tested and may cause other things to fail.
 
@@ -384,7 +384,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The DareEnvelope instance.</returns>
         public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
             Assert.True(jsonReader.StartArray());
-            var header = DareHeader.FromJSON(jsonReader, false);
+            var header = DareHeader.FromJson(jsonReader, false);
             Assert.NotNull(header);
             Assert.True(jsonReader.NextArray());
             return new DareEnvelope() {
@@ -495,7 +495,7 @@ contentMeta, cloaked, dataSequences, chunk);
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new DareEnvelope FromJSON(JSONReader jsonReader, bool tagged = true) {
+        public static new DareEnvelope FromJson(JsonReader jsonReader, bool tagged = true) {
             if (jsonReader == null) {
                 return null;
                 }
@@ -515,12 +515,12 @@ contentMeta, cloaked, dataSequences, chunk);
         /// </summary>
         /// <param name="keyCollection">Key collection to be used for decryption.</param>
         /// <returns>The decoded object.</returns>
-        public JSONObject DecodeJsonObject(IKeyLocate keyCollection = null) {
+        public JsonObject DecodeJsonObject(IKeyLocate keyCollection = null) {
 
             var plaintext = GetPlaintext(keyCollection);
 
             Console.WriteLine(plaintext.ToUTF8());
-            var result = FromJSON(plaintext.JSONReader(), true);
+            var result = FromJson(plaintext.JsonReader(), true);
             return result;
 
             }

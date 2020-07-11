@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Jose {
             }
 
         /// <summary>The JSONReader.</summary>
-        public virtual JSONReader JSONReader => new JSONReader(Data);
+        public virtual JsonReader JSONReader => new JsonReader(Data);
 
 
         /// <summary>Caches the CryptoData instance</summary>
@@ -70,7 +70,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="ContentType">Optional IANA content type identifier. 
         /// Omitted if null</param>
         /// <param name="Algorithm">The signature and encryption algorithm</param>
-        public JoseWebSignature(JSONObject JSONObject,
+        public JoseWebSignature(JsonObject JSONObject,
                     DataEncoding Encoding = DataEncoding.JSON,
                     KeyPair SigningKey = null,
                     string ContentType = null,

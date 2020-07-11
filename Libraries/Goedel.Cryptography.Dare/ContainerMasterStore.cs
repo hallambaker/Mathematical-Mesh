@@ -225,7 +225,7 @@ namespace Goedel.Cryptography.Dare {
         /// data is written in the specified transaction context allowing multiple 
         /// transactions to be staged and committed all or nothing.</param>
         /// <returns>The persistence entry.</returns>
-        public IPersistenceEntry New(JSONObject Object,
+        public IPersistenceEntry New(JsonObject Object,
                 Transaction transaction = null) {
             GetWrite();
             PersistenceStore.New(Object);
@@ -242,7 +242,7 @@ namespace Goedel.Cryptography.Dare {
         /// data is written in the specified transaction context allowing multiple 
         /// transactions to be staged and committed all or nothing.</param>
         /// <returns>The persistence entry.</returns>
-        public IPersistenceEntry Update(JSONObject Object, bool Create = true,
+        public IPersistenceEntry Update(JsonObject Object, bool Create = true,
                 Transaction transaction = null) {
             GetWrite();
             PersistenceStore.Update(Object, Create);

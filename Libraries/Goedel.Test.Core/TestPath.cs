@@ -170,7 +170,7 @@ namespace Goedel.Test.Core {
             MeshPortalTest.MeshProtocolMessages ??=                 new List<Trace>();
             var requestBytes = data.ToArray();
 
-            var JSONReader = new JSONReader(requestBytes);
+            var JSONReader = new JsonReader(requestBytes);
             var result = Host.Dispatch(this, JSONReader);
             var responseBytes = result.GetBytes();
 

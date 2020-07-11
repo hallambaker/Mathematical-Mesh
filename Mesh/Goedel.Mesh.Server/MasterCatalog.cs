@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Server {
 	///
 	/// An entry in the Mesh linked logchain.
 	/// </summary>
-	public abstract partial class CatalogItem : global::Goedel.Protocol.JSONObject {
+	public abstract partial class CatalogItem : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -56,19 +56,19 @@ namespace Goedel.Mesh.Server {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"AccountEntry", AccountEntry._Factory},
 			{"AccountPersonal", AccountPersonal._Factory},
 			{"AccountGroup", AccountGroup._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -115,7 +115,7 @@ namespace Goedel.Mesh.Server {
         /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => throw new CannotCreateAbstract();
+		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountEntry FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new AccountEntry FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -185,7 +185,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Directory" : {
@@ -241,7 +241,7 @@ namespace Goedel.Mesh.Server {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AccountPersonal();
+		public static new JsonObject _Factory () => new AccountPersonal();
 
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountPersonal FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new AccountPersonal FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -310,7 +310,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "SignedProfileMesh" : {
@@ -364,7 +364,7 @@ namespace Goedel.Mesh.Server {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AccountGroup();
+		public static new JsonObject _Factory () => new AccountGroup();
 
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Goedel.Mesh.Server {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountGroup FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new AccountGroup FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -428,7 +428,7 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "SignedProfileGroup" : {

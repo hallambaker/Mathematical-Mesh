@@ -13,15 +13,12 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
-    public class CatalogApplication : Catalog {
+    public class CatalogApplication : Catalog<CatalogedApplication> {
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Application";
         
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
-
-        //public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
-
 
 
         /// <summary>
@@ -86,56 +83,20 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => GetGroupID(Key);
 
-        }
-
-
-    #endregion
-    #region // Enumerators and associated classes
-
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedApplication"/> over a Catalog
-    /// </summary>
-    public class AsCatalogEntryApplication : IEnumerable<CatalogedApplication> {
-        CatalogContact catalog;
 
         /// <summary>
-        /// Construct enumerator from <see cref="CatalogDevice"/>,
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to enumerate.</param>
-        public AsCatalogEntryApplication(CatalogContact catalog) => this.catalog = catalog;
-
-        /// <summary>
-        /// Return an enumerator for the catalog.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<CatalogedApplication> GetEnumerator() =>
-                    new EnumeratorCatalogEntryApplication(catalog.PersistenceStore);
-
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-
-        /// <summary>
-        /// Enumerator class for sequences of <see cref="CatalogedApplication"/> over a persistence
-        /// store.
-        /// </summary>
-        // ToDo: Decide if we shouls use this template with the inner enumerator a private accessor or as public.
-        private class EnumeratorCatalogEntryApplication : IEnumerator<CatalogedApplication> {
-            IEnumerator<StoreEntry> baseEnumerator;
-
-            public CatalogedApplication Current => baseEnumerator.Current.JsonObject as CatalogedApplication;
-            object IEnumerator.Current => Current;
-            public void Dispose() => baseEnumerator.Dispose();
-            public bool MoveNext() => baseEnumerator.MoveNext();
-            public void Reset() => throw new NotImplementedException();
-
-            public EnumeratorCatalogEntryApplication(PersistenceStore container) =>
-                baseEnumerator = container.GetEnumerator();
+        /// Default constructor for serialization.
+        /// </summary>     
+        public CatalogedGroup() {
             }
-        }
 
+        /// <summary>
+        /// Construct a group entry from <paramref name="profileGroup"/>.
+        /// </summary>
+        /// <param name="profileGroup">The profile of the group to create an entry for.</param>
+        public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
+
+        }
     #endregion
 
 

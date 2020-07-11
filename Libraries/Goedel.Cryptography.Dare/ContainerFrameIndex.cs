@@ -46,7 +46,7 @@ namespace Goedel.Cryptography.Dare {
         public bool HasPayload => throw new NYI();
 
         ///<summary>The decoded JSONObject</summary>
-        public JSONObject JSONObject;
+        public JsonObject JSONObject;
 
 
         JbcdStream jbcdStream;
@@ -65,7 +65,10 @@ namespace Goedel.Cryptography.Dare {
             return output.ToArray();
             }
 
-
+        /// <summary>
+        /// Constructor returning an instance for the envelope <paramref name="envelope"/>.
+        /// </summary>
+        /// <param name="envelope">The envelope to return an index for.</param>
         public ContainerFrameIndex(DareEnvelope envelope) {
             Header = envelope.Header;
             Trailer = envelope.Trailer;
@@ -92,14 +95,14 @@ namespace Goedel.Cryptography.Dare {
 
             var HeaderBytes = jsonStream.FramerGetData();
             var HeaderText = HeaderBytes.ToUTF8();
-            Header = DareHeader.FromJSON(HeaderBytes.JSONReader(), false);
+            Header = DareHeader.FromJson(HeaderBytes.JsonReader(), false);
 
             jsonStream.FramerGetFrameIndex(out dataPosition, out DataLength);
 
             var TrailerBytes = jsonStream.FramerGetData();
             if (TrailerBytes != null && TrailerBytes.Length > 0) {
                 var TrailerText = TrailerBytes.ToUTF8();
-                Trailer = DareTrailer.FromJSON(TrailerText.JSONReader(), false);
+                Trailer = DareTrailer.FromJson(TrailerText.JsonReader(), false);
                 }
             }
 
@@ -109,15 +112,15 @@ namespace Goedel.Cryptography.Dare {
         /// </summary>
         /// <param name="container">The container that was indexed.</param>
         /// <returns>The deserialized object.</returns>
-        public JSONObject GetJSONObject(Container container) => JSONObject ??
-            GetPayload(container.KeyLocate).JSONReader().ReadTaggedObject(JSONObject.TagDictionary);
+        public JsonObject GetJSONObject(Container container) => JSONObject ??
+            GetPayload(container.KeyLocate).JsonReader().ReadTaggedObject(JsonObject.TagDictionary);
 
         /// <summary>
         /// Return a JSONReader for the content
         /// </summary>
         /// <param name="container">The indexed containerG.</param>
         /// <returns></returns>
-        public JSONReader GetReader(Container container) => throw new NYI();
+        public JsonReader GetReader(Container container) => throw new NYI();
 
         /// <summary>
         /// Return the frame payload verbatim (i.e. ciphertext if encrypted).

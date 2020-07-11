@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Presence {
 	///
 	/// The Mesh Presence Protocol
 	/// </summary>
-	public abstract partial class PresenceProtocol : global::Goedel.Protocol.JSONObject {
+	public abstract partial class PresenceProtocol : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -56,18 +56,18 @@ namespace Goedel.Mesh.Presence {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"AnnounceDeviceRequest", AnnounceDeviceRequest._Factory},
 			{"AnnounceDeviceResponse", AnnounceDeviceResponse._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -157,7 +157,7 @@ namespace Goedel.Mesh.Presence {
                 AnnounceDeviceRequest request, JpcSession session=null) {
 
             var responseData = JPCRemoteSession.Post("AnnounceDevice", request);
-            var response = AnnounceDeviceResponse.FromJSON(responseData.JSONReader(), true);
+            var response = AnnounceDeviceResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
             }
@@ -182,12 +182,12 @@ namespace Goedel.Mesh.Presence {
         /// <param name="session">The client context.</param>
         /// <param name="jsonReader">Reader for data object.</param>
         /// <returns>The response object returned by the corresponding dispatch.</returns>
-		public override Goedel.Protocol.JSONObject Dispatch(JpcSession  session,  
-								Goedel.Protocol.JSONReader jsonReader) {
+		public override Goedel.Protocol.JsonObject Dispatch(JpcSession  session,  
+								Goedel.Protocol.JsonReader jsonReader) {
 
 			jsonReader.StartObject ();
 			string token = jsonReader.ReadToken ();
-			JSONObject Response = null;
+			JsonObject Response = null;
 
 			switch (token) {
 				case "AnnounceDevice" : {
@@ -231,7 +231,7 @@ namespace Goedel.Mesh.Presence {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AnnounceDeviceRequest();
+		public static new JsonObject _Factory () => new AnnounceDeviceRequest();
 
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Goedel.Mesh.Presence {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AnnounceDeviceRequest FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new AnnounceDeviceRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -290,7 +290,7 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -324,7 +324,7 @@ namespace Goedel.Mesh.Presence {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new AnnounceDeviceResponse();
+		public static new JsonObject _Factory () => new AnnounceDeviceResponse();
 
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Goedel.Mesh.Presence {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AnnounceDeviceResponse FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new AnnounceDeviceResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -383,7 +383,7 @@ namespace Goedel.Mesh.Presence {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {

@@ -15,15 +15,12 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
-    public class CatalogDevice : Catalog {
+    public class CatalogDevice : Catalog<CatalogedDevice> {
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Device";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
-
-        ///<summary>Enumerate the catalog as CatalogedDevice instances.</summary>
-        public AsCatalogedDevice AsCatalogEntryDevice => new AsCatalogedDevice(this);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -48,26 +45,18 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Return the catalogued device with key <paramref name="key"/>.
-        /// </summary>
-        /// <param name="key">Unique identifier of the device to return.</param>
-        /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
-        public CatalogedDevice Get(string key) => Locate(key) as CatalogedDevice;
-
-        /// <summary>
         /// Return a string describing the catalog entries.
         /// </summary>
         /// <returns>The string describing the catalog entries.</returns>
         public string Report() {
 
             var builder = new StringBuilder();
-            foreach (var catalog in AsCatalogEntryDevice) {
+            foreach (var catalog in AsCatalogedType) {
                 catalog.ToBuilder(builder, 1);
                 }
 
             return builder.ToString();
             }
-
 
         }
 
@@ -111,7 +100,6 @@ namespace Goedel.Mesh {
         /// </summary>
         public CatalogedDevice() {
             }
-
 
         /// <summary>
         /// Convert the cataloged device to a string.
@@ -190,11 +178,8 @@ namespace Goedel.Mesh {
             if (Accounts == null || Accounts.Count == 0) {
                 return null;
                 }
-
-
             if (accountName == null) {
                 return Accounts[0];
-
                 }
 
             foreach (var account in Accounts) {
@@ -205,8 +190,6 @@ namespace Goedel.Mesh {
 
             return null;
             }
-
-
 
         /// <summary>
         /// Verify the Catalogued Device information and verify that it is all correctly signed.
@@ -231,76 +214,10 @@ namespace Goedel.Mesh {
 
             return true; // this will probably turn into exception return.
             }
-
-
         }
 
 
     #endregion
 
-    #region // Enumerators and associated classes
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedDevice"/> over a persistence
-    /// store.
-    /// </summary>
-    public class EnumeratorCatalogEntryDevice : IEnumerator<CatalogedDevice> {
-        IEnumerator<StoreEntry> baseEnumerator;
-
-        ///<summary>The current item in the enumeration.</summary>
-        public CatalogedDevice Current => baseEnumerator.Current.JsonObject as CatalogedDevice;
-        object IEnumerator.Current => Current;
-
-        /// <summary>
-        /// Disposal method.
-        /// </summary>
-        public void Dispose() => baseEnumerator.Dispose();
-
-        /// <summary>
-        /// Move to the next item in the enumeration.
-        /// </summary>
-        /// <returns><see langword="true"/> if there was a next item to return, otherwise,
-        /// <see langword="false"/>.</returns>
-        public bool MoveNext() => baseEnumerator.MoveNext();
-
-        /// <summary>
-        /// Restart the enumeration.
-        /// </summary>
-        public void Reset() => throw new NotImplementedException();
-
-        /// <summary>
-        /// Construct enumerator from <see cref="PersistenceStore"/>,
-        /// <paramref name="persistenceStore"/>.
-        /// </summary>
-        /// <param name="persistenceStore">The persistence store to enumerate.</param>
-        public EnumeratorCatalogEntryDevice(PersistenceStore persistenceStore) => baseEnumerator = persistenceStore.GetEnumerator();
-        }
-
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedDevice"/> over a Catalog
-    /// </summary>
-    public class AsCatalogedDevice : IEnumerable<CatalogedDevice> {
-        CatalogDevice catalog;
-
-        /// <summary>
-        /// Construct enumerator from <see cref="CatalogDevice"/>,
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to enumerate.</param>
-        public AsCatalogedDevice(CatalogDevice catalog) => this.catalog = catalog;
-
-        /// <summary>
-        /// Return an enumerator for the catalog.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<CatalogedDevice> GetEnumerator() =>
-                    new EnumeratorCatalogEntryDevice(catalog.PersistenceStore);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
-    #endregion
 
     }

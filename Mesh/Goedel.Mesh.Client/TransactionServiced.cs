@@ -12,26 +12,22 @@ namespace Goedel.Mesh.Client {
     /// Service account and the local store.
     /// </summary>
     public partial class TransactionServiced : Transaction {
-        Catalog catalog;
         List<CatalogUpdate> updates = new List<CatalogUpdate>();
-        MeshService meshClient;
+        MeshService MeshClient { get; }
 
         /// <summary>
         /// Constructor for a transaction manager
         /// </summary>
-        /// <param name="catalog">The catalog to persist.</param>
         /// <param name="meshClient">The Mesh client to use to service the account.</param>
-        public TransactionServiced(Catalog catalog, MeshService meshClient = null) {
-            this.meshClient = meshClient;
-            this.catalog = catalog;
-            }
+        public TransactionServiced(MeshService meshClient = null) => MeshClient = meshClient;
 
         /// <summary>
         /// Queue request to create <paramref name="catalogEntry"/> as a new persisted object.
         /// </summary>
         /// <param name="catalogEntry">The object to create.</param>
-        public void New(CatalogedEntry catalogEntry) {
-            var catalogUpdate = new CatalogUpdate(CatalogAction.New, catalogEntry);
+        /// <param name="catalog">The catalog in which to create the object.</param>
+        public void New(ICatalog catalog, CatalogedEntry catalogEntry) {
+            var catalogUpdate = new CatalogUpdate(catalog, CatalogAction.New, catalogEntry);
             updates.Add(catalogUpdate);
             }
 
@@ -39,8 +35,9 @@ namespace Goedel.Mesh.Client {
         /// Queue request to create or update <paramref name="catalogEntry"/>.
         /// </summary>
         /// <param name="catalogEntry">The object to update or create.</param>
-        public void Update(CatalogedEntry catalogEntry) {
-            var catalogUpdate = new CatalogUpdate(CatalogAction.Update, catalogEntry);
+        /// <param name="catalog">The catalog in which to create the object.</param>
+        public void Update(ICatalog catalog, CatalogedEntry catalogEntry) {
+            var catalogUpdate = new CatalogUpdate(catalog, CatalogAction.Update, catalogEntry);
             updates.Add(catalogUpdate);
             }
 
@@ -48,8 +45,9 @@ namespace Goedel.Mesh.Client {
         /// Queue request to delete <paramref name="catalogEntry"/>.
         /// </summary>
         /// <param name="catalogEntry">The object to delete.</param>
-        public void Delete(CatalogedEntry catalogEntry) {
-            var catalogUpdate = new CatalogUpdate(catalogEntry._PrimaryKey);
+        /// <param name="catalog">The catalog in which to create the object.</param>
+        public void Delete(ICatalog catalog, CatalogedEntry catalogEntry) {
+            var catalogUpdate = new CatalogUpdate(catalog, catalogEntry._PrimaryKey);
             updates.Add(catalogUpdate);
             }
 
@@ -58,9 +56,14 @@ namespace Goedel.Mesh.Client {
         /// Commit a set of queued requests.
         /// </summary>
         public void Commit() {
+            if (updates.Count == 0) {
+                return;
+                }
+
+            var catalog = updates[0].Catalog;
 
             var envelopes = catalog.Prepare(updates);
-            if (meshClient != null) {
+            if (MeshClient != null) {
                 var containerUpdate = new ContainerUpdate() {
                     Container = catalog.ContainerName,
                     Index = (int)catalog.Container.FrameCount,
@@ -69,7 +72,7 @@ namespace Goedel.Mesh.Client {
                 var uploadRequest = new UploadRequest() {
                     Updates = new List<ContainerUpdate> { containerUpdate }
                     };
-                var uploadResponse = meshClient.Upload(uploadRequest);
+                var uploadResponse = MeshClient.Upload(uploadRequest);
                 uploadResponse.Success().AssertTrue(SyncFailed.Throw);
                 }
             catalog.Commit(envelopes, updates);

@@ -355,7 +355,7 @@ namespace Goedel.Protocol {
                 //Trace.WriteLine(RequestBody);
 
                 // Call dispatcher
-                var JSONReader = new JSONReader(RequestBody);
+                var JSONReader = new JsonReader(RequestBody);
                 var ResponseObject = Port.Provider.Dispatch(null, JSONReader);
 
                 var ResponseBody = ResponseObject.ToString();

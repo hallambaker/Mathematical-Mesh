@@ -193,16 +193,8 @@ namespace Goedel.Mesh.Server {
         /// </summary>
         /// <param name="label">Catalog to return status on.</param>
         /// <returns>The status vector.</returns>
-        public ContainerStatus GetStatusCatalog(string label) =>
-            Catalog.Status(AccountEntry.Directory, label);
-
-        /// <summary>
-        /// Return the status of the spool <paramref name="label"/>.
-        /// </summary>
-        /// <param name="label">Spool to return status on.</param>
-        /// <returns>The status vector.</returns>
-        public ContainerStatus GetStatusSpool(string label) =>
-            Spool.Status(AccountEntry.Directory, label);
+        public ContainerStatus GetStatusStore(string label) =>
+            Store.Status(AccountEntry.Directory, label);
 
         /// <summary>
         /// Open the store <paramref name="label"/> and return an accessor.
@@ -229,26 +221,26 @@ namespace Goedel.Mesh.Server {
         /// <returns>The list of container status entries.</returns>
         public List<ContainerStatus> GetContainerStatuses() {
             var result = new List<ContainerStatus> {
-                    GetStatusSpool (SpoolInbound.Label),
-                    GetStatusSpool (SpoolOutbound.Label),
-                    GetStatusSpool (SpoolLocal.Label),
-                    GetStatusCatalog (CatalogCapability.Label)
+                    GetStatusStore (SpoolInbound.Label),
+                    GetStatusStore (SpoolOutbound.Label),
+                    GetStatusStore (SpoolLocal.Label),
+                    GetStatusStore (CatalogCapability.Label)
 
                 };
 
             switch (AccountEntry) {
                 case AccountGroup _: {
-                    result.Add(GetStatusCatalog(CatalogMember.Label));
+                    result.Add(GetStatusStore(CatalogMember.Label));
                     break;
                     }
 
                 case Goedel.Mesh.Server.AccountPersonal _: {
-                    result.Add(GetStatusCatalog(CatalogCredential.Label));
-                    result.Add(GetStatusCatalog(CatalogDevice.Label));
-                    result.Add(GetStatusCatalog(CatalogContact.Label));
-                    result.Add(GetStatusCatalog(CatalogApplication.Label));
-                    result.Add(GetStatusCatalog(CatalogBookmark.Label));
-                    result.Add(GetStatusCatalog(CatalogCalendar.Label));
+                    result.Add(GetStatusStore(CatalogCredential.Label));
+                    result.Add(GetStatusStore(CatalogDevice.Label));
+                    result.Add(GetStatusStore(CatalogContact.Label));
+                    result.Add(GetStatusStore(CatalogApplication.Label));
+                    result.Add(GetStatusStore(CatalogBookmark.Label));
+                    result.Add(GetStatusStore(CatalogCalendar.Label));
                     break;
                     }
                 }

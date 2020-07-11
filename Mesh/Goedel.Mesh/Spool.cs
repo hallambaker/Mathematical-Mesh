@@ -160,19 +160,19 @@ namespace Goedel.Mesh {
 
             }
 
-        /// <summary>
-        /// Return the status of the spool.
-        /// </summary>
-        /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <returns></returns>
-        public static ContainerStatus Status(string directory, string storeName) {
-            using var store = new Spool(directory, storeName);
-            return new ContainerStatus() {
-                Index = (int)store.Container.FrameCount,
-                Container = storeName
-                };
-            }
+        ///// <summary>
+        ///// Return the status of the spool.
+        ///// </summary>
+        ///// <param name="directory">The directory in which the spool is stored.</param>
+        ///// <param name="storeName">The store name.</param>
+        ///// <returns></returns>
+        //public static ContainerStatus Status(string directory, string storeName) {
+        //    using var store = new Spool(directory, storeName);
+        //    return new ContainerStatus() {
+        //        Index = (int)store.Container.FrameCount,
+        //        Container = storeName
+        //        };
+        //    }
 
         /// <summary>
         /// Add an envelope to the spool. All information provided in the ContainerInfo

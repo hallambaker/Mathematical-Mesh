@@ -68,7 +68,7 @@ namespace Goedel.XUnit {
             var JWEText = JWE.ToString();
             var JWEProt = JWE.Protected.ToUTF8();
 
-            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader(), false);
+            var JWE2 = JoseWebEncryption.FromJson(JWEText.JsonReader(), false);
             var Data = JWE2.Decrypt(EncrypterKeyPair);
             var Text = Data.ToUTF8();
 
@@ -84,7 +84,7 @@ namespace Goedel.XUnit {
             var JWE = new JoseWebEncryption(TestString, Key);
             var JWEText = JWE.ToString();
 
-            var JWE2 = JoseWebEncryption.FromJSON(JWEText.JSONReader(), false);
+            var JWE2 = JoseWebEncryption.FromJson(JWEText.JsonReader(), false);
 
             var Data = JWE2.Decrypt(Key);
             var Text = Data.ToUTF8();
@@ -102,7 +102,7 @@ namespace Goedel.XUnit {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWS2 = JoseWebSignature.FromJSON(JWSText.JSONReader(), false);
+            var JWS2 = JoseWebSignature.FromJson(JWSText.JsonReader(), false);
 
             var Verify1 = JWS2.Verify(SignerKeyPair);
             Utilities.Assert.True(Verify1);
@@ -124,7 +124,7 @@ namespace Goedel.XUnit {
                 var JWSProt = Signer.Protected.ToUTF8();
                 }
 
-            var JWES2 = JoseWebEncryption.FromJSON(JWESText.JSONReader(), false);
+            var JWES2 = JoseWebEncryption.FromJson(JWESText.JsonReader(), false);
 
             var Data2 = JWES2.Decrypt(EncrypterKeyPair);
             var Text = Data2.ToUTF8();

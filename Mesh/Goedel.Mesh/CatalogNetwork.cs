@@ -12,15 +12,12 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Device catalog. Describes the network entries in a Mesh account.
     /// </summary>
-    public class CatalogNetwork : Catalog {
+    public class CatalogNetwork : Catalog<CatalogedNetwork> {
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Network";
         
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
-
-        ///<summary>Enumerate the catalog as CatalogedNetwork instances.</summary>
-        public AsCatalogEntryNetwork AsCatalogEntryNetwork => new AsCatalogEntryNetwork(this);
 
         /// <summary>
         /// Locate credential matching the specified service name, ignoring the protocol value.
@@ -28,7 +25,7 @@ namespace Goedel.Mesh {
         /// <param name="key">The service to be matched.</param>
         /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
         public CatalogedNetwork LocateByService(string key) {
-            foreach (var network in AsCatalogEntryNetwork) {
+            foreach (var network in AsCatalogedType) {
                 if (network.Service == key) {
                     return network;
                     }
@@ -99,68 +96,7 @@ namespace Goedel.Mesh {
         }
 
     #endregion
-    #region // Enumerators and associated classes
 
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedNetwork"/> over a persistence
-    /// store.
-    /// </summary>
-    public class EnumeratorCatalogEntryNetwork : IEnumerator<CatalogedNetwork> {
-        IEnumerator<StoreEntry> BaseEnumerator;
-
-        ///<summary>The current item in the enumeration.</summary>
-        public CatalogedNetwork Current => BaseEnumerator.Current.JsonObject as CatalogedNetwork;
-        object IEnumerator.Current => Current;
-
-        /// <summary>
-        /// Disposal method.
-        /// </summary>
-        public void Dispose() => BaseEnumerator.Dispose();
-
-        /// <summary>
-        /// Move to the next item in the enumeration.
-        /// </summary>
-        /// <returns>The next item in the enumeration</returns>
-        public bool MoveNext() => BaseEnumerator.MoveNext();
-
-        /// <summary>
-        /// Restart the enumeration.
-        /// </summary>
-        public void Reset() => throw new NotImplementedException();
-        /// <summary>
-        /// Construct enumerator from <see cref="PersistenceStore"/>,
-        /// <paramref name="persistenceStore"/>.
-        /// </summary>
-        /// <param name="persistenceStore">The persistence store to enumerate.</param>
-        public EnumeratorCatalogEntryNetwork(PersistenceStore persistenceStore) =>
-            BaseEnumerator = persistenceStore.GetEnumerator();
-        }
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedNetwork"/> over a Catalog
-    /// </summary>
-    public class AsCatalogEntryNetwork : IEnumerable<CatalogedNetwork> {
-        CatalogNetwork catalog;
-
-        /// <summary>
-        /// Construct enumerator from <see cref="CatalogNetwork"/>,
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to enumerate.</param>
-        public AsCatalogEntryNetwork(CatalogNetwork catalog) => this.catalog = catalog;
-
-        /// <summary>
-        /// Return an enumerator for the catalog.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<CatalogedNetwork> GetEnumerator() =>
-                    new EnumeratorCatalogEntryNetwork(catalog.PersistenceStore);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
-    #endregion
 
 
     }

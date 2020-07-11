@@ -26,7 +26,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public new static Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; } =
+        public new static Dictionary<string, JsonFactoryDelegate> _TagDictionary { get; set; } =
                 MeshProtocol._TagDictionary;
 
 
@@ -64,12 +64,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public override JSONObject DeepCopy() {
+        public override JsonObject DeepCopy() {
             // Convert this object to text:
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = MeshResponse.FromJSON(Text.JSONReader());
+            var Result = MeshResponse.FromJson(Text.JsonReader());
 
             return Result;
             }
@@ -80,7 +80,7 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public static new Dictionary<string, JSONFactoryDelegate> _TagDictionary { get; set; } =
+        public static new Dictionary<string, JsonFactoryDelegate> _TagDictionary { get; set; } =
                 MeshProtocol._TagDictionary;
 
         /// <summary>
@@ -88,12 +88,12 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <returns>Deep copy of the object with all referenced objects
         /// copied.</returns>
-        public override JSONObject DeepCopy() {
+        public override JsonObject DeepCopy() {
             // Convert this object to text:
             var Text = ToString();
 
             // Convert text back to an object:
-            var Result = MeshRequest.FromJSON(Text.JSONReader());
+            var Result = MeshRequest.FromJson(Text.JsonReader());
 
             return Result;
             }

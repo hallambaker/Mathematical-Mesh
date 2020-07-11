@@ -39,7 +39,7 @@ namespace Goedel.Cryptography.Jose {
 	///
 	/// Support classes for JSON Object Signing and Encryption
 	/// </summary>
-	public abstract partial class Jose : global::Goedel.Protocol.JSONObject {
+	public abstract partial class Jose : global::Goedel.Protocol.JsonObject {
 
 		/// <summary>
         /// Tag identifying this class
@@ -54,8 +54,8 @@ namespace Goedel.Cryptography.Jose {
 		/// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-		public static Dictionary<string, JSONFactoryDelegate> _TagDictionary = 
-				new Dictionary<string, JSONFactoryDelegate> () {
+		public static Dictionary<string, JsonFactoryDelegate> _TagDictionary = 
+				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"JoseWebSignature", JoseWebSignature._Factory},
 			{"JoseWebEncryption", JoseWebEncryption._Factory},
@@ -79,11 +79,11 @@ namespace Goedel.Cryptography.Jose {
 			{"KeyAgreementECDH", KeyAgreementECDH._Factory}			};
 
 		/// <summary>
-        /// Construct an instance from the specified tagged JSONReader stream.
+        /// Construct an instance from the specified tagged JsonReader stream.
         /// </summary>
         /// <param name="jsonReader">Input stream</param>
         /// <param name="result">The created object</param>
-        public static void Deserialize(JSONReader jsonReader, out JSONObject result) => 
+        public static void Deserialize(JsonReader jsonReader, out JsonObject result) => 
 			result = jsonReader.ReadTaggedObject(_TagDictionary);
 
 		}
@@ -131,7 +131,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new JoseWebSignature();
+		public static new JsonObject _Factory () => new JoseWebSignature();
 
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new JoseWebSignature FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new JoseWebSignature FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -216,7 +216,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "unprotected" : {
@@ -309,7 +309,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new JoseWebEncryption();
+		public static new JsonObject _Factory () => new JoseWebEncryption();
 
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new JoseWebEncryption FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new JoseWebEncryption FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -415,7 +415,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "protected" : {
@@ -502,7 +502,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Signed();
+		public static new JsonObject _Factory () => new Signed();
 
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Signed FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Signed FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -575,7 +575,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "protected" : {
@@ -640,7 +640,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Encrypted();
+		public static new JsonObject _Factory () => new Encrypted();
 
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Encrypted FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Encrypted FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -718,7 +718,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "header" : {
@@ -811,7 +811,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyData();
+		public static new JsonObject _Factory () => new KeyData();
 
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyData FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyData FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -909,7 +909,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "enc" : {
@@ -1010,7 +1010,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Header();
+		public static new JsonObject _Factory () => new Header();
 
 
         /// <summary>
@@ -1108,7 +1108,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Header FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Header FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1127,7 +1127,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "jku" : {
@@ -1135,11 +1135,11 @@ namespace Goedel.Cryptography.Jose {
 					break;
 					}
 				case "jwk" : {
-					Jwk = Key.FromJSON (jsonReader, true) ;  // A tagged structure
+					Jwk = Key.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "epk" : {
-					Epk = Key.FromJSON (jsonReader, true) ;  // A tagged structure
+					Epk = Key.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "typ" : {
@@ -1211,7 +1211,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Signature();
+		public static new JsonObject _Factory () => new Signature();
 
 
         /// <summary>
@@ -1265,7 +1265,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Signature FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Signature FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1284,7 +1284,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "header" : {
@@ -1347,7 +1347,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyContainer();
+		public static new JsonObject _Factory () => new KeyContainer();
 
 
         /// <summary>
@@ -1396,7 +1396,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyContainer FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyContainer FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1415,7 +1415,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Exportable" : {
@@ -1488,7 +1488,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Key();
+		public static new JsonObject _Factory () => new Key();
 
 
         /// <summary>
@@ -1553,7 +1553,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Key FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Key FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1572,7 +1572,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Exportable" : {
@@ -1636,7 +1636,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new Recipient();
+		public static new JsonObject _Factory () => new Recipient();
 
 
         /// <summary>
@@ -1685,7 +1685,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new Recipient FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new Recipient FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1704,7 +1704,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Header" : {
@@ -1758,7 +1758,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PublicKeyRSA();
+		public static new JsonObject _Factory () => new PublicKeyRSA();
 
 
         /// <summary>
@@ -1808,7 +1808,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PublicKeyRSA FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PublicKeyRSA FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1827,7 +1827,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "n" : {
@@ -1899,7 +1899,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PrivateKeyRSA();
+		public static new JsonObject _Factory () => new PrivateKeyRSA();
 
 
         /// <summary>
@@ -1969,7 +1969,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PrivateKeyRSA FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PrivateKeyRSA FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -1988,7 +1988,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "d" : {
@@ -2056,7 +2056,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PublicKeyDH();
+		public static new JsonObject _Factory () => new PublicKeyDH();
 
 
         /// <summary>
@@ -2106,7 +2106,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PublicKeyDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PublicKeyDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2125,7 +2125,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Domain" : {
@@ -2172,7 +2172,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PrivateKeyDH();
+		public static new JsonObject _Factory () => new PrivateKeyDH();
 
 
         /// <summary>
@@ -2217,7 +2217,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PrivateKeyDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PrivateKeyDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2236,7 +2236,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Private" : {
@@ -2284,7 +2284,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PublicKeyECDH();
+		public static new JsonObject _Factory () => new PublicKeyECDH();
 
 
         /// <summary>
@@ -2334,7 +2334,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PublicKeyECDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PublicKeyECDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2353,7 +2353,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "crv" : {
@@ -2400,7 +2400,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PrivateKeyECDH();
+		public static new JsonObject _Factory () => new PrivateKeyECDH();
 
 
         /// <summary>
@@ -2445,7 +2445,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PrivateKeyECDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PrivateKeyECDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2464,7 +2464,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Private" : {
@@ -2527,7 +2527,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new PrivateKeyUDF();
+		public static new JsonObject _Factory () => new PrivateKeyUDF();
 
 
         /// <summary>
@@ -2592,7 +2592,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new PrivateKeyUDF FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new PrivateKeyUDF FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2611,7 +2611,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "PrivateValue" : {
@@ -2665,7 +2665,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyAgreement();
+		public static new JsonObject _Factory () => new KeyAgreement();
 
 
         /// <summary>
@@ -2704,7 +2704,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyAgreement FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyAgreement FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2723,7 +2723,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				default : {
@@ -2761,7 +2761,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyAgreementDH();
+		public static new JsonObject _Factory () => new KeyAgreementDH();
 
 
         /// <summary>
@@ -2806,7 +2806,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyAgreementDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyAgreementDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2825,7 +2825,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Result" : {
@@ -2873,7 +2873,7 @@ namespace Goedel.Cryptography.Jose {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JSONObject _Factory () => new KeyAgreementECDH();
+		public static new JsonObject _Factory () => new KeyAgreementECDH();
 
 
         /// <summary>
@@ -2923,7 +2923,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new KeyAgreementECDH FromJSON (JSONReader jsonReader, bool tagged=true) {
+        public static new KeyAgreementECDH FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
@@ -2942,7 +2942,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="jsonReader">The input stream</param>
         /// <param name="tag">The tag</param>
-		public override void DeserializeToken (JSONReader jsonReader, string tag) {
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
 				case "Curve" : {

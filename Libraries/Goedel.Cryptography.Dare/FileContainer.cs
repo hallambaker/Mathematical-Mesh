@@ -340,15 +340,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="DataIn"></param>
         /// <param name="Data"></param>
         /// <param name="ContentMeta"></param>
+        /// <param name="keyLocate">The key collection to be used to resolve keys</param>
         public static void Data(
-                IKeyLocate keyCollection,
+                IKeyLocate keyLocate,
                 byte[] DataIn,
 
                 out byte[] Data,
                 out ContentMeta ContentMeta) {
 
             using var Reader = new FileContainerReader(DataIn);
-            Reader.Read(keyCollection, out Data, out ContentMeta);
+            Reader.Read(keyLocate, out Data, out ContentMeta);
 
             }
 
@@ -359,15 +360,16 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="ContentMeta">The metadata of the entry.</param>
         /// <param name="Index">Specify the index of the entry to read</param>
         /// <param name="Path">Specify a path value of an entry to read.</param>
+        /// <param name="keyLocate">Key location instance.</param>
         public void Read(
-                IKeyLocate keyCollection,
+                IKeyLocate keyLocate,
                 out byte[] Data,
                 out ContentMeta ContentMeta,
                 int Index = -1,
                 string Path = null) {
 
             var ContainerDataReader = container.GetContainerFrameIndex(Index);
-            Data = ContainerDataReader.GetPayload(keyCollection);
+            Data = ContainerDataReader.GetPayload(keyLocate);
             ContentMeta = ContainerDataReader?.Header.ContentMeta;
 
 

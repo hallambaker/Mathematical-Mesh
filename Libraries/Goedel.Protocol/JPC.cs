@@ -52,8 +52,8 @@ namespace Goedel.Protocol {
         /// <param name="Session">The service session that is to handle the request.</param>
         /// <param name="JSONReader">The input stream to be read</param>
         /// <returns>The response to the request.</returns>
-        public abstract Goedel.Protocol.JSONObject Dispatch(JpcSession Session,
-            JSONReader JSONReader);
+        public abstract Goedel.Protocol.JsonObject Dispatch(JpcSession Session,
+            JsonReader JSONReader);
 
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Goedel.Protocol {
         /// <param name="Tag">Operation to perform.</param>
         /// <param name="Request">Request data.</param>
         /// <returns>string returned in response.</returns>
-        public virtual string Post(string Tag, JSONObject Request) {
+        public virtual string Post(string Tag, JsonObject Request) {
 
             var Buffer = new MemoryStream();
             var JSONWriter = new JSONWriter(Buffer);
@@ -274,7 +274,7 @@ namespace Goedel.Protocol {
         public override Stream Post(MemoryStream Data) {
 
             var DataText = Data.GetUTF8();
-            var JSONReader = new JSONReader(DataText);
+            var JSONReader = new JsonReader(DataText);
 
             var result = Host.Dispatch(this, JSONReader);
             return new MemoryStream(result.GetBytes());

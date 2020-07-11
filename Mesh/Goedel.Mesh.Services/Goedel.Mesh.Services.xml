@@ -58,9 +58,9 @@
             Dictionary mapping tags to factory methods
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServiceProtocol.Deserialize(Goedel.Protocol.JSONReader,Goedel.Protocol.JSONObject@)">
+        <member name="M:Goedel.Mesh.Services.ServiceProtocol.Deserialize(Goedel.Protocol.JsonReader,Goedel.Protocol.JsonObject@)">
             <summary>
-            Construct an instance from the specified tagged JSONReader stream.
+            Construct an instance from the specified tagged JsonReader stream.
             </summary>
             <param name="jsonReader">Input stream</param>
             <param name="result">The created object</param>
@@ -156,7 +156,7 @@
             Interface object to dispatch requests to.
             </summary>	
         </member>
-        <member name="M:Goedel.Mesh.Services.MeshPresenceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JSONReader)">
+        <member name="M:Goedel.Mesh.Services.MeshPresenceProvider.Dispatch(Goedel.Protocol.JpcSession,Goedel.Protocol.JsonReader)">
             <summary>
             Dispatch object request in specified authentication context.
             </summary>			
@@ -206,7 +206,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -214,7 +214,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Services.ThresholdSignRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -263,7 +263,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -271,7 +271,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Services.ThresholdSignResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -320,7 +320,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -328,7 +328,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Services.ThresholdAgreementRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
@@ -377,7 +377,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.FromJSON(Goedel.Protocol.JSONReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -385,7 +385,7 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.DeserializeToken(Goedel.Protocol.JSONReader,System.String)">
+        <member name="M:Goedel.Mesh.Services.ThresholdAgreementResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

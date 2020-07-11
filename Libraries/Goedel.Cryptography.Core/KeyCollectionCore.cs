@@ -110,7 +110,7 @@ namespace Goedel.Cryptography.Core {
             try {
 
                 fileName.OpenReadToEnd(out var data);
-                return Key.FromJSON(data.JSONReader(), true);
+                return Key.FromJson(data.JsonReader(), true);
                 }
             catch {
                 throw new NYI();
@@ -124,7 +124,7 @@ namespace Goedel.Cryptography.Core {
             try {
 
                 fileName.OpenReadToEnd(out var data);
-                var key = Key.FromJSON(data.JSONReader(), true);
+                var key = Key.FromJson(data.JsonReader(), true);
                 return key.GetKeyPair(key.Exportable ? KeySecurity.Exportable : KeySecurity.Bound, this);
                 }
             catch {

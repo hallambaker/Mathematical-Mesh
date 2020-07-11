@@ -35,13 +35,13 @@ namespace Goedel.Protocol {
     /// </summary>
     /// <param name="Data"></param>
     /// <returns></returns>
-    public delegate JSONReader JSONReaderFactoryDelegate(byte[] Data);
+    public delegate JsonReader JSONReaderFactoryDelegate(byte[] Data);
 
     /// <summary>
     /// JSON Reader base class. Note that this implementation uses a hand coded
     /// FSR rather than one generated with FSRGen. This should be fixed.
     /// </summary>
-    public partial class JSONReader : Reader {
+    public partial class JsonReader : Reader {
 
         #region // Tokenizer tables
 
@@ -328,7 +328,7 @@ namespace Goedel.Protocol {
         /// Delegate method for creating structured readers
         /// </summary>
         public static JSONReaderFactoryDelegate JSONReaderFactory => _JSONReaderFactoryByte;
-        static JSONReader _JSONReaderFactoryByte(byte[] Data) => new JSONReader(Data);
+        static JsonReader _JSONReaderFactoryByte(byte[] Data) => new JsonReader(Data);
 
 
         StringBuilder StringBuilder = new StringBuilder();
@@ -342,26 +342,26 @@ namespace Goedel.Protocol {
         /// Construct a JSONReader from a TextReader stream.
         /// </summary>
         /// <param name="Input">The stream to be read.</param>
-        public JSONReader(TextReader Input) => CharacterInput = new CharacterStreamTextReader(Input);
+        public JsonReader(TextReader Input) => CharacterInput = new CharacterStreamTextReader(Input);
 
         /// <summary>
         /// Construct a JSONReader from a string.
         /// </summary>
         /// <param name="Input">The string to be read.</param>
-        public JSONReader(string Input) => CharacterInput = new CharacterStreamStringReader(Input);
+        public JsonReader(string Input) => CharacterInput = new CharacterStreamStringReader(Input);
 
         /// <summary>
         /// Construct a JSONReader from a byte Stream.
         /// </summary>
         /// <param name="Input">The stream to be read.</param>
-        public JSONReader(Stream Input) => CharacterInput = (Input.CanSeek) ?
+        public JsonReader(Stream Input) => CharacterInput = (Input.CanSeek) ?
                 new CharacterStreamSeekReader(Input) : new CharacterStreamReader(Input);
 
         /// <summary>
         /// Construct a JSONReader from a byte array.
         /// </summary>
         /// <param name="Input">The data to be read.</param>
-        public JSONReader(byte[] Input) => CharacterInput = new CharacterStreamDataReader(Input);
+        public JsonReader(byte[] Input) => CharacterInput = new CharacterStreamDataReader(Input);
 
         /// <summary>
         /// If true, the last token returned was a non-terminal, i.e. chunked production.
@@ -802,12 +802,12 @@ namespace Goedel.Protocol {
         /// </summary>
         /// <param name="TagDictionary">Dictionary mapping tags to factory methods</param>
         /// <returns>The deserialized object.</returns>
-        public JSONObject ReadTaggedObject(
-                    Dictionary<string, JSONFactoryDelegate> TagDictionary) {
+        public JsonObject ReadTaggedObject(
+                    Dictionary<string, JsonFactoryDelegate> TagDictionary) {
 
             Assert.NotNull(TagDictionary, DictionaryInitialization.Throw);
 
-            JSONObject Out = null;
+            JsonObject Out = null;
             StartObject();
             if (EOF) {
                 return null;

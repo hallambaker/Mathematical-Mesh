@@ -112,7 +112,7 @@ namespace Goedel.Cryptography.Dare {
         ///<summary>The last frame in the container</summary>
         public virtual int FrameIndexLast => DareHeaderFinal.Index;
 
-
+        ///<summary>The key location instance.</summary>
         public IKeyLocate KeyLocate;
 
 
@@ -142,7 +142,7 @@ namespace Goedel.Cryptography.Dare {
                 if (frameHeader == null) {
                     return null;
                     }
-                containerHeader ??= DareHeader.FromJSON(frameHeader.JSONReader(), false);
+                containerHeader ??= DareHeader.FromJson(frameHeader.JsonReader(), false);
                 return containerHeader;
                 }
             }
@@ -175,10 +175,12 @@ namespace Goedel.Cryptography.Dare {
 
 
         #endregion
-
-        public Container(IKeyLocate keyLocate) {
-            KeyLocate = keyLocate;
-            }
+        /// <summary>
+        /// Default constructor, create a container using <paramref name="keyLocate"/> to perform
+        /// key lookups.
+        /// </summary>
+        /// <param name="keyLocate">Key location instance.</param>
+        public Container(IKeyLocate keyLocate = null) => KeyLocate = keyLocate;
 
 
         #region // IDisposable
@@ -270,15 +272,14 @@ namespace Goedel.Cryptography.Dare {
         /// filestreams will be disposed of automatically when the container is disposed.
         /// </summary>
         /// <param name="jbcdStream">The stream to use to access the container.</param>
-        /// <param name="keyCollection">The key collection to be used to resolve requests
-        /// for decryption keys. If unspecified, the default KeyCollection is used.</param>
+        /// <param name="keyLocate">The key collection to be used to resolve keys</param>
         /// <returns>The new container.</returns>
         public static Container Open(
                         JbcdStream jbcdStream,
-                        IKeyLocate keyCollection = null) {
+                        IKeyLocate keyLocate = null) {
 
 
-            var container = OpenExisting(jbcdStream, keyCollection);
+            var container = OpenExisting(jbcdStream, keyLocate);
             container.DisposeJBCDStream = jbcdStream;
 
             return container;
@@ -598,6 +599,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="fileName">Name of the container to create</param>
         /// <param name="envelopes">Envelopes to add</param>
         /// <param name="fileStatus">File status (used for concurrency locking)</param>
+        /// <param name="keyLocate">The key location collection to be used to resolve keys.</param>
         /// <returns>The created container</returns>
         public static Container MakeNewContainer(
                         string fileName,

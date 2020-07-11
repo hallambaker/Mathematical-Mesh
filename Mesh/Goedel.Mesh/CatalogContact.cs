@@ -12,71 +12,10 @@ namespace Goedel.Mesh {
     #region // The data classes CatalogContact, CatalogedContact
 
     /// <summary>
-    /// Describes credentials bound to a network address.
-    /// </summary>
-    public class NetworkProtocolEntry {
-
-        ///<summary>The contact from which the network protocol data was obtained.
-        ///This may be used to update the credential data periodically.</summary>
-        public CatalogedContact CatalogedContact { get; }
-
-        ///<summary>The network address entry.</summary>
-        public NetworkAddress NetworkAddress { get; }
-
-
-        ///<summary>The encryption key to use for this contact.</summary>
-        public CryptoKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
-             SetKeys(ref meshKeyEncryption);
-
-        CryptoKey meshKeyEncryption;
-
-        ///<summary>The signature root of trust to use for this contact.</summary>
-        public CryptoKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
-             SetKeys(ref meshKeyAdministrator);
-        CryptoKey meshKeyAdministrator;
-        
-        ///<summary>The expiry time for the derived keys.</summary>
-        public DateTime? Expire { get; private set; }
-
-
-        /// <summary>
-        /// The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
-        /// from <paramref name="catalogedContact"/>.
-        /// </summary>
-        /// <param name="catalogedContact">The cataloged contact.</param>
-        /// <param name="networkAddress">The network address entry.</param>
-        public NetworkProtocolEntry(CatalogedContact catalogedContact, NetworkAddress networkAddress) {
-            CatalogedContact = catalogedContact;
-            NetworkAddress = networkAddress;
-            }
-
-        CryptoKey SetKeys(ref CryptoKey keyPair) {
-            if (NetworkAddress.EnvelopedProfileAccount != null) {
-                var meshItem = MeshItem.Decode(NetworkAddress.EnvelopedProfileAccount);
-
-                switch (meshItem) {
-                    case ProfileAccount profileAccount:
-                        meshKeyEncryption = profileAccount.KeyEncryption.CryptoKey;
-                        meshKeyAdministrator = profileAccount.KeyOfflineSignature.CryptoKey;
-                        break;
-                    case ProfileGroup profileGroup:
-                        meshKeyEncryption = profileGroup.KeyEncryption.CryptoKey;
-                        meshKeyAdministrator = profileGroup.KeyOfflineSignature.CryptoKey;
-                        break;
-
-                    }
-                }
-            return keyPair;
-            }
-
-
-        }
-
-    /// <summary>
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
 
-    public class CatalogContact : Catalog {
+    public class CatalogContact : Catalog<CatalogedContact> {
 
 
 
@@ -93,8 +32,6 @@ namespace Goedel.Mesh {
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
-        ///<summary>Enumerate the catalog as CatalogedContact instances.</summary>
-        public AsCatalogEntryContact AsCatalogEntryContact => new AsCatalogEntryContact(this);
 
 
         //public CatalogedContact LocateByID(string Key) => Locate(Key) as CatalogedContact;
@@ -166,8 +103,6 @@ namespace Goedel.Mesh {
                     }
 
                 }
-
-
             var cataloged = new CatalogedContact(contact, self);
             New(cataloged);
             return (cataloged, true);
@@ -199,10 +134,6 @@ namespace Goedel.Mesh {
             return Add(contact);
             }
 
-
-
-        //=>
-        //    Add(contact.DareEnvelope ?? DareEnvelope.Encode(contact.GetBytes(true)), self);
 
         /// <summary>
         /// Add the contact data specified in the file <paramref name="fileName"/>. If 
@@ -305,7 +236,6 @@ namespace Goedel.Mesh {
             switch (Contact) {
                 case ContactPerson contactPerson: {
                     builder.AppendLine($"  Person {contactPerson.Id}");
-
                     break;
                     }
                 case ContactOrganization contactOrganization: {
@@ -329,7 +259,8 @@ namespace Goedel.Mesh {
 
 
         }
-
+    #endregion
+    #region // Contact and sub classes
 
     public partial class Contact {
 
@@ -404,28 +335,6 @@ namespace Goedel.Mesh {
 
             List<CryptographicCapability> keyList = null;
 
-            //switch (profile) {
-            //    case ProfileAccount profileAccount: {
-            //        keyList = new List<CryptographicCapability>() {
-            //            new CapabilityDecryption () {
-            //                KeyData = profileAccount.KeyEncryption },
-            //            new CapabilityAdministrator () {
-            //                KeyData = profileAccount.KeyOfflineSignature },
-            //            };
-            //        break;
-            //        }
-            //    case ProfileGroup profileGroup: {
-            //        keyList = new List<CryptographicCapability>() {
-            //            new CapabilityDecryption () {
-            //                KeyData = profileGroup.KeyEncryption },
-            //            new CapabilityAdministrator () {
-            //                KeyData = profileGroup.KeyOfflineSignature },
-
-            //            };
-            //        break;
-            //        }
-            //    }
-
             EnvelopedProfileAccount = profile.DareEnvelope;
             Address = address;
             Protocols = new List<NetworkProtocol>() {
@@ -434,9 +343,7 @@ namespace Goedel.Mesh {
                     Capabilities = keyList
                     }
                 };
-
             }
-
 
         }
 
@@ -487,73 +394,66 @@ namespace Goedel.Mesh {
             }
         }
 
-
-    #endregion
-
-    #region // Enumerators and associated classes
-
     /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedContact"/> over a persistence
-    /// store.
+    /// Describes credentials bound to a network address.
     /// </summary>
-    public class EnumeratorCatalogEntryContact : IEnumerator<CatalogedContact> {
-        IEnumerator<StoreEntry> baseEnumerator;
+    public class NetworkProtocolEntry {
 
-        ///<summary>The current item in the enumeration.</summary>
-        public CatalogedContact Current => baseEnumerator.Current.JsonObject as CatalogedContact;
-        object IEnumerator.Current => Current;
+        ///<summary>The contact from which the network protocol data was obtained.
+        ///This may be used to update the credential data periodically.</summary>
+        public CatalogedContact CatalogedContact { get; }
+
+        ///<summary>The network address entry.</summary>
+        public NetworkAddress NetworkAddress { get; }
+
+
+        ///<summary>The encryption key to use for this contact.</summary>
+        public CryptoKey MeshKeyEncryption => Expire.Expired(meshKeyEncryption) ??
+             SetKeys(ref meshKeyEncryption);
+
+        CryptoKey meshKeyEncryption;
+
+        ///<summary>The signature root of trust to use for this contact.</summary>
+        public CryptoKey MeshKeyAdministrator => Expire.Expired(meshKeyAdministrator) ??
+             SetKeys(ref meshKeyAdministrator);
+        CryptoKey meshKeyAdministrator;
+
+        ///<summary>The expiry time for the derived keys.</summary>
+        public DateTime? Expire { get; private set; }
+
 
         /// <summary>
-        /// Disposal method.
+        /// The constructor, creates a new entry for <paramref name="networkAddress"/> obtained
+        /// from <paramref name="catalogedContact"/>.
         /// </summary>
-        public void Dispose() => baseEnumerator.Dispose();
+        /// <param name="catalogedContact">The cataloged contact.</param>
+        /// <param name="networkAddress">The network address entry.</param>
+        public NetworkProtocolEntry(CatalogedContact catalogedContact, NetworkAddress networkAddress) {
+            CatalogedContact = catalogedContact;
+            NetworkAddress = networkAddress;
+            }
 
-        /// <summary>
-        /// Move to the next item in the enumeration.
-        /// </summary>
-        /// <returns><see langword="true"/> if there was a next item to return, otherwise,
-        /// <see langword="false"/>.</returns>
-        public bool MoveNext() => baseEnumerator.MoveNext();
+        CryptoKey SetKeys(ref CryptoKey keyPair) {
+            if (NetworkAddress.EnvelopedProfileAccount != null) {
+                var meshItem = MeshItem.Decode(NetworkAddress.EnvelopedProfileAccount);
 
-        /// <summary>
-        /// Restart the enumeration.
-        /// </summary>
-        public void Reset() => throw new NotImplementedException();
+                switch (meshItem) {
+                    case ProfileAccount profileAccount:
+                    meshKeyEncryption = profileAccount.KeyEncryption.CryptoKey;
+                    meshKeyAdministrator = profileAccount.KeyOfflineSignature.CryptoKey;
+                    break;
+                    case ProfileGroup profileGroup:
+                    meshKeyEncryption = profileGroup.KeyEncryption.CryptoKey;
+                    meshKeyAdministrator = profileGroup.KeyOfflineSignature.CryptoKey;
+                    break;
 
-        /// <summary>
-        /// Construct enumerator from <see cref="PersistenceStore"/>,
-        /// <paramref name="persistenceStore"/>.
-        /// </summary>
-        /// <param name="persistenceStore">The persistence store to enumerate.</param>
+                    }
+                }
+            return keyPair;
+            }
 
-        public EnumeratorCatalogEntryContact(PersistenceStore persistenceStore) =>
-            baseEnumerator = persistenceStore.GetEnumerator();
+
         }
-
-    /// <summary>
-    /// Enumerator class for sequences of <see cref="CatalogedContact"/> over a Catalog
-    /// </summary>
-    public class AsCatalogEntryContact : IEnumerable<CatalogedContact> {
-        CatalogContact catalog;
-
-        /// <summary>
-        /// Construct enumerator from <see cref="CatalogContact"/>,
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to enumerate.</param>
-        public AsCatalogEntryContact(CatalogContact catalog) => this.catalog = catalog;
-
-        /// <summary>
-        /// Return an enumerator for the catalog.
-        /// </summary>
-        /// <returns>The enumerator.</returns>
-        public IEnumerator<CatalogedContact> GetEnumerator() =>
-                    new EnumeratorCatalogEntryContact(catalog.PersistenceStore);
-
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator1();
-        private IEnumerator GetEnumerator1() => this.GetEnumerator();
-        }
-
     #endregion
 
 

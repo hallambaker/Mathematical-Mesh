@@ -877,7 +877,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The last frame header</returns>
         public DareHeader ReadFrameHeader() {
             ReadFrame(out var HeaderData);
-            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJson(HeaderData.JsonReader(), false);
             }
 
 
@@ -888,7 +888,7 @@ namespace Goedel.Cryptography.Dare {
         public DareHeader ReadFirstFrameHeader() {
             Begin();
             ReadFrame(out var HeaderData);
-            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJson(HeaderData.JsonReader(), false);
             }
 
         /// <summary>
@@ -902,7 +902,7 @@ namespace Goedel.Cryptography.Dare {
 
             var HeaderText = HeaderData.ToUTF8();
 
-            return DareHeader.FromJSON(HeaderData.JSONReader(), false);
+            return DareHeader.FromJson(HeaderData.JsonReader(), false);
             }
 
         /// <summary>
@@ -916,12 +916,12 @@ namespace Goedel.Cryptography.Dare {
                 }
             var message = new DareEnvelope() { Body = FrameData };
             if (headerData != null) {
-                message.Header = DareHeader.FromJSON(headerData.JSONReader(), false);
+                message.Header = DareHeader.FromJson(headerData.JsonReader(), false);
                 }
             if (trailerData != null) {
                 //JSONReader.Trace = true;
                 //Console.WriteLine(trailerData.ToUTF8());
-                message.Trailer = DareTrailer.FromJSON(trailerData.JSONReader(), false);
+                message.Trailer = DareTrailer.FromJson(trailerData.JsonReader(), false);
                 }
             return message;
             }

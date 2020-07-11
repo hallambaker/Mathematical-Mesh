@@ -35,9 +35,9 @@ namespace Goedel.Mesh {
         /// <returns>The DevicePreconfiguration instance created from the file data.</returns>
         public static DevicePreconfiguration FromFile(string filename) {
             using var inputStream = filename.OpenFileRead();
-            using var reader = new JSONReader(inputStream);
+            using var reader = new JsonReader(inputStream);
 
-            return FromJSON(reader, tagged: true);
+            return FromJson(reader, tagged: true);
 
             }
 

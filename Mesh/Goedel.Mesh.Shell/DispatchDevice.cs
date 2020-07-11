@@ -100,7 +100,7 @@ namespace Goedel.Mesh.Shell {
             var completed = new Dictionary<string, Message>();
 
             foreach (var message in inbound.Select(1, true)) {
-                var meshMessage = Message.FromJSON(message.GetBodyReader());
+                var meshMessage = Message.FromJson(message.GetBodyReader());
                 if (!completed.ContainsKey(meshMessage.MessageID)) {
                     switch (meshMessage) {
                         case MessageComplete meshMessageComplete: {

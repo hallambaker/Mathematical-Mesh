@@ -36,7 +36,7 @@ namespace Goedel.XUnit {
     ///
     /// Classes to be used to test serialization an deserialization.
     /// </summary>
-    public abstract partial class TestSchema : global::Goedel.Protocol.JSONObject {
+    public abstract partial class TestSchema : global::Goedel.Protocol.JsonObject {
 
         /// <summary>
         /// Tag identifying this class
@@ -51,8 +51,8 @@ namespace Goedel.XUnit {
         /// <summary>
         /// Dictionary mapping tags to factory methods
         /// </summary>
-        public static Dictionary<string, JSONFactoryDelegate> _TagDictionary =
-                new Dictionary<string, JSONFactoryDelegate>() {
+        public static Dictionary<string, JsonFactoryDelegate> _TagDictionary =
+                new Dictionary<string, JsonFactoryDelegate>() {
 
             {"MultiInstance", MultiInstance._Factory},
             {"MultiArray", MultiArray._Factory},
@@ -63,7 +63,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">Input stream</param>
         /// <param name="Out">The created object</param>
-        public static void Deserialize(JSONReader JSONReader, out JSONObject Out) =>
+        public static void Deserialize(JsonReader JSONReader, out JsonObject Out) =>
             Out = JSONReader.ReadTaggedObject(_TagDictionary);
 
         }
@@ -125,7 +125,7 @@ namespace Goedel.XUnit {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject _Factory() => new MultiInstance();
+        public static new JsonObject _Factory() => new MultiInstance();
 
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Goedel.XUnit {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MultiInstance FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new MultiInstance FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -206,7 +206,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken(JsonReader JSONReader, string Tag) {
 
             switch (Tag) {
                 case "FieldBoolean": {
@@ -277,7 +277,7 @@ namespace Goedel.XUnit {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject _Factory() => new MultiArray();
+        public static new JsonObject _Factory() => new MultiArray();
 
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Goedel.XUnit {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MultiArray FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new MultiArray FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -394,7 +394,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken(JsonReader JSONReader, string Tag) {
 
             switch (Tag) {
                 case "ArrayBoolean": {
@@ -497,7 +497,7 @@ namespace Goedel.XUnit {
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-        public static new JSONObject _Factory() => new MultiStruct();
+        public static new JsonObject _Factory() => new MultiStruct();
 
 
         /// <summary>
@@ -587,7 +587,7 @@ namespace Goedel.XUnit {
         /// <param name="JSONReader">The input stream</param>
 		/// <param name="Tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new MultiStruct FromJSON(JSONReader JSONReader, bool Tagged = true) {
+        public static new MultiStruct FromJson(JsonReader JSONReader, bool Tagged = true) {
             if (JSONReader == null) {
                 return null;
                 }
@@ -605,7 +605,7 @@ namespace Goedel.XUnit {
         /// </summary>
         /// <param name="JSONReader">The input stream</param>
         /// <param name="Tag">The tag</param>
-		public override void DeserializeToken(JSONReader JSONReader, string Tag) {
+		public override void DeserializeToken(JsonReader JSONReader, string Tag) {
 
             switch (Tag) {
                 case "FieldMultiInstance": {
@@ -630,7 +630,7 @@ namespace Goedel.XUnit {
                     break;
                     }
                 case "TFieldMultiInstance": {
-                    TFieldMultiInstance = MultiInstance.FromJSON(JSONReader, true);  // A tagged structure
+                    TFieldMultiInstance = MultiInstance.FromJson(JSONReader, true);  // A tagged structure
                     break;
                     }
                 case "TArrayMultiInstance": {
@@ -638,7 +638,7 @@ namespace Goedel.XUnit {
                     bool _Going = JSONReader.StartArray();
                     TArrayMultiInstance = new List<MultiInstance>();
                     while (_Going) {
-                        var _Item = MultiInstance.FromJSON(JSONReader, true); // a tagged structure
+                        var _Item = MultiInstance.FromJson(JSONReader, true); // a tagged structure
                         TArrayMultiInstance.Add(_Item);
                         _Going = JSONReader.NextArray();
                         }
