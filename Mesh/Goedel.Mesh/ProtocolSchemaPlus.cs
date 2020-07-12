@@ -45,9 +45,10 @@ namespace Goedel.Mesh {
 
             StatusCode = 400;
             StatusDescriptionCode = "Error occurred";
+
             switch (exception) {
                 case ObjectIdentifierNotUnique e: {
-                    StatusDescriptionCode = "Account already registered.";
+                    StatusDescriptionCode = "MeshAccountAlreadyRegistered";
                     StatusExtended = 1;
                     return;
                     }

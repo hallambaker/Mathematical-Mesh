@@ -98,7 +98,7 @@ namespace Goedel.Protocol {
                 return ContentTask.Result;
                 }
             catch {
-                throw new ConnectionFail(new ExceptionData() { String = URI });
+                throw new ConnectionFail(args: URI) ;
                 }
             }
 

@@ -17,10 +17,7 @@ Namespace Goedel.Protocol
 				|Message exceeds permitted size limit
 
 	Exception ConnectionFail
-		Object ExceptionData "Connection to host [{0}] Failed."
-			String
-
-		Console "Connection to host failed."
+		Console "Connection to host [{0}] Failed."
 		Description
 			|Could not reach the specified host
 

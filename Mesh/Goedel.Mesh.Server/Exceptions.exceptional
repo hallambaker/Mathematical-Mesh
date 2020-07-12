@@ -1,4 +1,68 @@
 ﻿
 Namespace Goedel.Mesh.Server
 
+	Exception MeshServerException
+        Console "Unknown error occured."
+		Description
+			|Generic Mesh Service Error
 
+
+		Exception MeshServerResponse
+			Console "Mesh message response exception"
+			Description
+				|Generic Mesh Service Error
+
+			Exception MeshResponseNotFound
+				Console "The responseId was not found"
+				Description
+					|The responseId was not found
+
+			Exception MeshResponseRefused
+				Console "The respondent refused to accept the request"
+				Description
+					|The respondent replied that they refused to accept the request
+
+			Exception MeshResponseExpired
+				Console "The request message expired before the respondent replied"
+				Description
+					|The request message expired before the respondent replied
+
+
+		Exception MeshRequestSize
+			Console "The service request message is larger than permitted by the service policy"
+			Description
+				|The service request message is larger than permitted by the service policy
+
+		Exception MeshUnknownAccount
+			Console "The specified account is unknown"
+
+		Exception MeshAccountAlreadyRegistered
+			Console "The specified account is already registered"
+
+		Exception MeshRedirect
+			Console "The specified account has been transfered to another service"
+
+
+		Exception MeshMessageControl
+			Console "Mesh message control exception"
+
+			Exception MeshServiceBlockedSender
+				Console "The request was ignored because the sending account is blocked by the service"
+
+			Exception MeshServiceBlockedService
+				Console "The request was ignored because the requesting service is blocked by the service"
+
+			Exception MeshRecipientBlockedSender
+				Console "The request was ignored because the sending account is blocked by the recipient"
+
+			Exception MeshRecipientBlockedService
+				Console "The request was ignored because the requesting service is blocked by the recipient"
+
+			Exception MeshMessageInsufficientPrivilege
+				Console "The request was refused because the sender has insufficient privileges"
+
+			Exception MeshMessageInvalid
+				Console "The request was refused because it was invalid"
+			
+			Exception MeshMessageUnsupported
+				Console "The request was refused because the message type is not supported"

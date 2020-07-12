@@ -281,7 +281,7 @@
 				Brief "Length of PIN to generate (default is 8 characters)"
 				Default "8"
 			Option Expire "expire" String
-				Default "1d"
+				Default "1"
 			Include AccountOptions
 			Include Reporting
 

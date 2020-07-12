@@ -891,8 +891,30 @@
 		Struct Reference References
 			Multiple
 
+
+	Structure MessageError
+		Inherits Message
+		String ErrorCode
+
+
 	Structure MessageComplete
 		Inherits Message
+
+	Structure MessagePinValidated
+		Inherits Message
+		Struct DareEnvelope AuthenticatedData
+			Description
+				|Enveloped data that is authenticated by means of the PIN
+		Binary ClientNonce
+			Description
+				|
+		String PinUDF
+			Description
+				|Fingerprint of the PIN value used to authenticate the request.
+		Binary PinWitness
+			Description
+				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+
 
 	Structure MessagePIN
 		String Account
@@ -913,23 +935,10 @@
 	Structure RequestConnection
 		Description
 			|Connection request message. This message contains the information
-		Inherits Message
+		Inherits MessagePinValidated
 		String AccountAddress
 			Description
 				|
-		Struct DareEnvelope EnvelopedProfileDevice
-			Description
-				|Device profile of the device making the request.
-		Binary ClientNonce
-			Description
-				|
-		String PinUDF
-			Description
-				|Fingerprint of the PIN value used to authenticate the request.
-		Binary PinWitness
-			Description
-				|Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
-
 
 	Structure AcknowledgeConnection
 		Description
@@ -965,7 +974,6 @@
 		Inherits Message
 		Boolean Reply
 		String Subject
-		String PinUDF
 		String PIN
 			Description
 				|One time authentication code.
@@ -974,11 +982,9 @@
 				|The contact data.
 	
 	Structure ReplyContact
-		Inherits RequestContact
-		Binary Nonce
-		Binary Witness
-			Description
-				|Witness value over contact that was presented.
+		Inherits MessagePinValidated
+		String Subject
+
 
 	Structure GroupInvitation
 		Inherits Message

@@ -140,6 +140,454 @@
             </summary>
             <returns>The list of container status entries.</returns>
         </member>
+        <member name="T:Goedel.Mesh.Server.MeshServerException">
+            <summary>
+            Generic Mesh Service Error
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServerException.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServerException.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerException.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerException.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshServerResponse">
+            <summary>
+            Generic Mesh Service Error
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServerResponse.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServerResponse.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerResponse.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerResponse.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshResponseNotFound">
+            <summary>
+            The responseId was not found
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshResponseNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshResponseNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseNotFound.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshResponseRefused">
+            <summary>
+            The respondent replied that they refused to accept the request
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshResponseRefused.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshResponseRefused.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseRefused.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseRefused.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshResponseExpired">
+            <summary>
+            The request message expired before the respondent replied
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshResponseExpired.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshResponseExpired.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseExpired.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseExpired.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshRequestSize">
+            <summary>
+            The service request message is larger than permitted by the service policy
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshRequestSize.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshRequestSize.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRequestSize.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRequestSize.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshUnknownAccount">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshUnknownAccount.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshUnknownAccount.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshUnknownAccount.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshUnknownAccount.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshAccountAlreadyRegistered">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshRedirect">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshRedirect.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshRedirect.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRedirect.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRedirect.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshMessageControl">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMessageControl.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMessageControl.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageControl.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageControl.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshServiceBlockedSender">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedSender.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedSender.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedSender.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshServiceBlockedService">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedService.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshServiceBlockedService.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedService.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedService.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshRecipientBlockedSender">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedSender.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedSender.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedSender.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshRecipientBlockedService">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedService.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedService.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedService.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedService.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshMessageInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMessageInvalid.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMessageInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInvalid.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Server.MeshMessageUnsupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Server.MeshMessageUnsupported.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Server.MeshMessageUnsupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageUnsupported.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageUnsupported.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Server.CatalogItem">
              <summary>
             

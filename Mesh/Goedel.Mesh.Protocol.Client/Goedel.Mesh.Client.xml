@@ -1466,28 +1466,22 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Internal.#ctor">
-            <summary>
-            Construct instance for exception "An internal error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.Internal.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An internal error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.Internal.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.Internal.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.Internal.Throw">
             <summary>
@@ -1499,28 +1493,22 @@
             No mesh account could be found.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor">
-            <summary>
-            Construct instance for exception "An error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.AccountNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.AccountNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.AccountNotFound.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.AccountNotFound.Throw">
             <summary>
@@ -1532,25 +1520,51 @@
             No mesh profile could be found.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor">
-            <summary>
-            Construct instance for exception "An error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.MeshNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.MeshNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.MeshNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.ConnectionStillPending">
+            <summary>
+            The action cannot be performed because connection of this device to the account is still pending.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ConnectionStillPending.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ConnectionStillPending.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionStillPending.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -1560,28 +1574,22 @@
             The action requested can only be performed by an administrator account
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor">
-            <summary>
-            Construct instance for exception "An error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.NotAdministrator.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.NotAdministrator.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.NotAdministrator.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.NotAdministrator.Throw">
             <summary>
@@ -1593,28 +1601,22 @@
             The attempt to synchronize with the service failed.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor">
-            <summary>
-            Construct instance for exception "An error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.SyncFailed.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.SyncFailed.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.SyncFailed.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.SyncFailed.Throw">
             <summary>
@@ -1626,28 +1628,22 @@
             Error occurred in Gateway
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Gateway.#ctor">
-            <summary>
-            Construct instance for exception "Error occurred in Gateway"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.Gateway.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Error occurred in Gateway"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.Gateway.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.Gateway.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.Gateway.Throw">
             <summary>
@@ -1659,23 +1655,22 @@
             No Portal account specified
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor">
-            <summary>
-            Construct instance for exception "No Portal account specified"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.NoPortalAccount.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "No Portal account specified"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.NoPortalAccount.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.NoPortalAccount.Throw">
             <summary>
@@ -1687,23 +1682,22 @@
             Could not connect to portal
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor">
-            <summary>
-            Construct instance for exception "Could not connect to portal"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.PortalConnectFail.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Could not connect to portal"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.PortalConnectFail.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.PortalConnectFail.Throw">
             <summary>
@@ -1715,23 +1709,22 @@
             Portal refused profile publication request
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor">
-            <summary>
-            Construct instance for exception "Portal refused profile publication request"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.PublicationRequestRefused.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Portal refused profile publication request"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Throw">
             <summary>
@@ -1743,28 +1736,22 @@
             The connection request did not complete
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor">
-            <summary>
-            Construct instance for exception "Connection did not complete"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.ConnectionException.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Connection did not complete"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.ConnectionException.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Client.ConnectionException.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionException.Throw">
             <summary>
@@ -1776,23 +1763,22 @@
             The connection request was refused
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor">
-            <summary>
-            Construct instance for exception "The connection request was refused"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.ConnectionRefused.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The connection request was refused"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.ConnectionRefused.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionRefused.Throw">
             <summary>
@@ -1804,23 +1790,22 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor">
-            <summary>
-            Construct instance for exception "The connection request is still pending"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.ConnectionPending.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The connection request is still pending"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.ConnectionPending.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionPending.Throw">
             <summary>
@@ -1832,23 +1817,22 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor">
-            <summary>
-            Construct instance for exception "The connection request is still pending"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.ConnectionExpired.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The connection request is still pending"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.ConnectionExpired.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionExpired.Throw">
             <summary>
@@ -1860,23 +1844,22 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor">
-            <summary>
-            Construct instance for exception "The connection request is still pending"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The connection request is still pending"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Throw">
             <summary>
@@ -1888,23 +1871,22 @@
             The request was refused because the pin was invalid
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor">
-            <summary>
-            Construct instance for exception "The request was refused because the pin was invalid"
-            </summary>		
+        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The request was refused because the pin was invalid"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
             <summary>

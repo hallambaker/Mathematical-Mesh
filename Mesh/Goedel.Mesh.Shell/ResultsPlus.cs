@@ -281,13 +281,13 @@ namespace Goedel.Mesh.Shell {
                         }
                     case ReplyContact replyContact: {
                         ToBuilder(builder, message, $"    Contact Reply:");
-                        builder.AppendLine($"        Witness: {replyContact.Witness}->{replyContact.PinUDF}");
-                        builder.AppendLine($"        Nonce: {replyContact.Nonce}");
+                        builder.AppendLine($"        Witness: {replyContact.PinWitness}->{replyContact.PinUDF}");
+                        builder.AppendLine($"        Nonce: {replyContact.ClientNonce}");
                         break;
                         }
                     case RequestContact requestContact: {
                         ToBuilder(builder, message, $"    Contact Request:");
-                        builder.AppendLine($"        PIN: {requestContact.PIN}->{requestContact.PinUDF}");
+                        builder.AppendLine($"        PIN: {requestContact.PIN}");
                         break;
                         }
                     case GroupInvitation groupInvitation: {

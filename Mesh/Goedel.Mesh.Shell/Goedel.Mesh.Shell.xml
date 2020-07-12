@@ -822,28 +822,22 @@
             Generic error in Mesh Shell library
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor">
-            <summary>
-            Construct instance for exception "Unknown error occured."
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.MeshShellException.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Unknown error occured."
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.MeshShellException.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Shell.MeshShellException.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.MeshShellException.Throw">
             <summary>
@@ -855,23 +849,22 @@
             The calculated fingerprint did not match the expected value.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor">
-            <summary>
-            Construct instance for exception "The calculated fingerprint did not match the expected value."
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The calculated fingerprint did not match the expected value."
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Throw">
             <summary>
@@ -883,23 +876,22 @@
             Account not valid
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor">
-            <summary>
-            Construct instance for exception "Profile not found"
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.AccountNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Profile not found"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.AccountNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.AccountNotFound.Throw">
             <summary>
@@ -911,23 +903,22 @@
             Account not valid
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor">
-            <summary>
-            Construct instance for exception "No profile defined."
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "No profile defined."
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.ProfileNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.ProfileNotFound.Throw">
             <summary>
@@ -939,23 +930,22 @@
             The directory could not be found
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor">
-            <summary>
-            Construct instance for exception "The directory could not be found"
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The directory could not be found"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.Throw">
             <summary>
@@ -967,23 +957,22 @@
             The directory could not be found
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor">
-            <summary>
-            Construct instance for exception "The file could not be found"
-            </summary>		
+        <member name="P:Goedel.Mesh.Shell.FileNotFound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The file could not be found"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Shell.FileNotFound.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Shell.FileNotFound.Throw">
             <summary>

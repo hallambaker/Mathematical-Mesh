@@ -165,14 +165,19 @@ namespace Goedel.Mesh.Server {
             using var accountHandle = GetAccountVerified(account, jpcSession);
 
             // pull the request off SpoolLocal
-            var message = accountHandle.GetLocal(completeRequest.ResponseID);
+            var envelope = accountHandle.GetLocal(completeRequest.ResponseID);
 
-            var response = new CompleteResponse() {
-                SignedResponse = message
+            if (envelope == null) {
+                return new CompleteResponse() {
+                    StatusCode = 400,
+                    StatusDescriptionCode = "MeshResponseNotFound",
+                    StatusExtended = 2
+                    };
+                }
 
+            return new CompleteResponse() {
+                SignedResponse = envelope
                 };
-            return response;
-
             }
 
 

@@ -118,6 +118,26 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="In">String to be escaped</param>
         /// <returns>The escaped string</returns>
+        public static string CEscape(this string In) {
+            var Result = new StringBuilder();
+            foreach (char c in In) {
+                switch (c) {
+                    case '\n': Result.Append("\n"); break;
+                    case '\r': Result.Append("\r"); break;
+                    case '\t': Result.Append("\t"); break;
+                    case '\\': Result.Append("\\"); break;
+                    case '\'': Result.Append("\'"); break;
+                    case '\"': Result.Append("\""); break;
+                    default: Result.Append(c); break;
+                    }
+                }
+            return Result.ToString();
+            }
+        /// <summary>
+        /// Escape text using XML character entity sequences &amp;lt;, &amp;gt; and &amp;amp;
+        /// </summary>
+        /// <param name="In">String to be escaped</param>
+        /// <returns>The escaped string</returns>
         public static string XMLEscape(this string In) {
             var Result = new StringBuilder();
 

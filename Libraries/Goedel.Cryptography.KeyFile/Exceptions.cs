@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 using Goedel.FSR;
 
@@ -10,47 +11,43 @@ namespace Goedel.Cryptography.KeyFile {
     /// <summary>
     /// Exception occurred parsing or encoding a key file.
     /// </summary>
-    [Serializable]
-	public class KeyFileException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class KeyFileException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Key could not be ready";
 
 		/// <summary>
-        /// Construct instance for exception "Key could not be ready"
-        /// </summary>		
-		public KeyFileException () : base ("Key could not be ready") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Key could not be ready"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public KeyFileException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public KeyFileException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public KeyFileException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new KeyFileException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new KeyFileException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new KeyFileException(reason as string);
 				}
 			else {
 				return new KeyFileException();
@@ -64,43 +61,43 @@ namespace Goedel.Cryptography.KeyFile {
     /// provider. This may be because the key algorithm is 
     /// not supported or the key parameters were found to be invalid.
     /// </summary>
-    [Serializable]
-	public class NoProviderSpecified : KeyFileException {
+    [global::System.Serializable]
+	public partial class NoProviderSpecified : KeyFileException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "No provider specified";
 
 		/// <summary>
-        /// Construct instance for exception "No provider specified"
-        /// </summary>		
-		public NoProviderSpecified () : base ("No provider specified") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "No provider specified"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public NoProviderSpecified (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NoProviderSpecified (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public NoProviderSpecified  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NoProviderSpecified(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new NoProviderSpecified(reason as string);
 				}
 			else {
 				return new NoProviderSpecified();
@@ -113,43 +110,43 @@ namespace Goedel.Cryptography.KeyFile {
     /// An attempt was made to perform a private key operation
     /// and the private key parameters could not be found.
     /// </summary>
-    [Serializable]
-	public class PrivateKeyNotAvailable : KeyFileException {
+    [global::System.Serializable]
+	public partial class PrivateKeyNotAvailable : KeyFileException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The specified private key could not be found";
 
 		/// <summary>
-        /// Construct instance for exception "The specified private key could not be found"
-        /// </summary>		
-		public PrivateKeyNotAvailable () : base ("The specified private key could not be found") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The specified private key could not be found"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public PrivateKeyNotAvailable (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public PrivateKeyNotAvailable (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public PrivateKeyNotAvailable  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new PrivateKeyNotAvailable(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new PrivateKeyNotAvailable(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new PrivateKeyNotAvailable(reason as string);
 				}
 			else {
 				return new PrivateKeyNotAvailable();
@@ -162,43 +159,43 @@ namespace Goedel.Cryptography.KeyFile {
     /// An attempt to read a file failed because data was
     /// missing or corrupted.
     /// </summary>
-    [Serializable]
-	public class UnexpectedEnd : KeyFileException {
+    [global::System.Serializable]
+	public partial class UnexpectedEnd : KeyFileException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "File read error, file was incomplete";
 
 		/// <summary>
-        /// Construct instance for exception "File read error, file was incomplete"
-        /// </summary>		
-		public UnexpectedEnd () : base ("File read error, file was incomplete") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "File read error, file was incomplete"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public UnexpectedEnd (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public UnexpectedEnd (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public UnexpectedEnd  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new UnexpectedEnd(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new UnexpectedEnd(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new UnexpectedEnd(reason as string);
 				}
 			else {
 				return new UnexpectedEnd();
@@ -210,29 +207,23 @@ namespace Goedel.Cryptography.KeyFile {
     /// <summary>
     /// An unidentifier parse error occurred.
     /// </summary>
-    [Serializable]
-	public class ParseError : KeyFileException {
+    [global::System.Serializable]
+	public partial class ParseError : KeyFileException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "An error occurred";
 
 		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-		public ParseError () : base ("An error occurred") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "An error occurred"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ParseError (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParseError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ParseError  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
@@ -258,18 +249,24 @@ namespace Goedel.Cryptography.KeyFile {
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new ParseError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ParseError(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new ParseError(reason as string);
 				}
-			else if (Reason as LexReader != null) {
-				return new ParseError(Reason as LexReader);
+			else if (reason as LexReader != null) {
+				return new ParseError(reason as LexReader);
 				}
 			else {
 				return new ParseError();

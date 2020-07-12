@@ -3502,7 +3502,7 @@ namespace Goedel.Mesh.Shell {
 					},
 				new DescribeEntryOption () {
 					Identifier = "Expire", 
-					Default = "1d", // null if null
+					Default = "1", // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
 					Key = "expire"

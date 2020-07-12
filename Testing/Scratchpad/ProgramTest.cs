@@ -22,32 +22,20 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
             // ** Fast access to simple tests for regression fixing.
-            TestService.Test().MeshCatalogAccount();
+            //TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestProfileConnect();
 
 
             // ***** Currently failing tests
 
+            // **Tests needing (mostly) a bit of redesign.
 
-            // ** Finish off the group stuff
-            //ShellTests.Test().TestMessageGroup();
-
-            // ** Sure this has worked in the past.
-            ShellTests.Test().TestMessageConfirmationAccept();
-            //ShellTests.Test().TestMessageConfirmationReject();
-
-
-
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileContact();
 
             // ** Just need some testing on the PIN expiry/reuse stuff.
-            //ShellTests.Test().TestProfileConnectDynamicQR();
-            //ShellTests.Test().TestProfileConnectPinExpired();
-            //ShellTests.Test().TestProfileConnectPinInvalid();
             //ShellTests.Test().TestProfileConnectPinReused();
-
-            // ** The signature interface
-            //ShellTests.Test().TestFileSign();
-            //ShellTests.Test().TestFileSignEncrypt();
+            //ShellTests.Test().TestProfileConnectDynamicQR();
 
             // ** The catalog/archive interfaces
             //ShellTests.Test().TestContainerArchive();
@@ -58,12 +46,15 @@ namespace Scratchpad {
             //ShellTests.Test().TestEscrowAccountService();
             //ShellTests.Test().TestEscrowMeshOnly();
 
+            // ** The signature interface
+            //ShellTests.Test().TestFileSign();
+            //ShellTests.Test().TestFileSignEncrypt();
 
 
             // **** Needs a lot of design work
+
             // ** Application related shell commands
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileContact();
+
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
 
@@ -86,6 +77,18 @@ namespace Scratchpad {
 
             // ** Is the service capability encrypted?
 
+            // ** are messages encrypted to the recipient only?
+
+
+
+            // **** Tests recently solved
+
+            //ShellTests.Test().TestMessageGroup();
+            //ShellTests.Test().TestMessageConfirmationAccept();
+            //ShellTests.Test().TestMessageConfirmationReject();
+            //ShellTests.Test().TestProfileConnectPinExpired();
+            //ShellTests.Test().TestProfileConnectPinInvalid();
+            //ShellTests.Test().TestMessageContactBusinessCardExchange();
 
             }
 

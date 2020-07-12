@@ -141,16 +141,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>The message (if found), otherwise null.</returns>
         public MessagePIN GetMessagePIN(string PinUDF) {
             var pinCreate = GetSpoolLocal().CheckPIN(PinUDF);
-
-            // check PIN
-            if (pinCreate == null || pinCreate.Closed) {
-                "Should collect up errors for optional reporting".TaskValidate();
-                "Should check on expiry".TaskValidate();
-                throw new NYI();
-                //return InvalidPIN();
-                }
-
-            return pinCreate.Message as MessagePIN;
+            return pinCreate?.Message as MessagePIN;
             }
 
         #endregion

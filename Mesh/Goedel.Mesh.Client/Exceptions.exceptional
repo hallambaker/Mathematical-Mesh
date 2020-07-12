@@ -8,6 +8,7 @@ Namespace Goedel.Mesh.Client
 
 
 	Exception AccountNotFound
+		Console "The Mesh account [{0}] was not found."
 		Description
 			|No mesh account could be found.
 
@@ -15,6 +16,9 @@ Namespace Goedel.Mesh.Client
 			Description
 				|No mesh profile could be found.
 
+	Exception ConnectionStillPending
+		Description
+			|The action cannot be performed because connection of this device to the account is still pending.
 
 	Exception NotAdministrator
 		Description

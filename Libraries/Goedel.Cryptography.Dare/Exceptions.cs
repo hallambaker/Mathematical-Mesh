@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 
 
@@ -10,47 +11,43 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to access a container type that is not supported by the
     /// class.
     /// </summary>
-    [Serializable]
-	public class InvalidContainerTypeException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class InvalidContainerTypeException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "This class does not support the specified container type.";
 
 		/// <summary>
-        /// Construct instance for exception "This class does not support the specified container type."
-        /// </summary>		
-		public InvalidContainerTypeException () : base ("This class does not support the specified container type.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "This class does not support the specified container type."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public InvalidContainerTypeException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidContainerTypeException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidContainerTypeException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new InvalidContainerTypeException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidContainerTypeException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidContainerTypeException(reason as string);
 				}
 			else {
 				return new InvalidContainerTypeException();
@@ -63,47 +60,43 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to create a frame that is larger than the maximum frame size allowed by
     /// the application
     /// </summary>
-    [Serializable]
-	public class FrameTooLargeException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class FrameTooLargeException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The frame was too large for this implementation to handle";
 
 		/// <summary>
-        /// Construct instance for exception "The frame was too large for this implementation to handle"
-        /// </summary>		
-		public FrameTooLargeException () : base ("The frame was too large for this implementation to handle") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The frame was too large for this implementation to handle"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public FrameTooLargeException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FrameTooLargeException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public FrameTooLargeException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new FrameTooLargeException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new FrameTooLargeException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new FrameTooLargeException(reason as string);
 				}
 			else {
 				return new FrameTooLargeException();
@@ -116,47 +109,43 @@ namespace Goedel.Cryptography.Dare {
     /// An attempt was made to create a new container file in a mode that did not
     /// allow creation of a new file.
     /// </summary>
-    [Serializable]
-	public class InvalidFileModeException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class InvalidFileModeException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The file mode is invalid for creating a new file";
 
 		/// <summary>
-        /// Construct instance for exception "The file mode is invalid for creating a new file"
-        /// </summary>		
-		public InvalidFileModeException () : base ("The file mode is invalid for creating a new file") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The file mode is invalid for creating a new file"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public InvalidFileModeException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidFileModeException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidFileModeException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new InvalidFileModeException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidFileModeException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidFileModeException(reason as string);
 				}
 			else {
 				return new InvalidFileModeException();
@@ -168,47 +157,43 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// The file format was found to be invalid or otherwise corrupt.
     /// </summary>
-    [Serializable]
-	public class InvalidFileFormatException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class InvalidFileFormatException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "An error was encountered in reading the container file";
 
 		/// <summary>
-        /// Construct instance for exception "An error was encountered in reading the container file"
-        /// </summary>		
-		public InvalidFileFormatException () : base ("An error was encountered in reading the container file") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "An error was encountered in reading the container file"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public InvalidFileFormatException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public InvalidFileFormatException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidFileFormatException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new InvalidFileFormatException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new InvalidFileFormatException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidFileFormatException(reason as string);
 				}
 			else {
 				return new InvalidFileFormatException();
@@ -220,47 +205,43 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// An attempt was made to create an object with an existing object identifier
     /// </summary>
-    [Serializable]
-	public class ObjectIdentifierNotUnique : global::System.Exception {
+    [global::System.Serializable]
+	public partial class ObjectIdentifierNotUnique : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "An attempt was made to create an object with an existing object identifier";
 
 		/// <summary>
-        /// Construct instance for exception "An attempt was made to create an object with an existing object identifier"
-        /// </summary>		
-		public ObjectIdentifierNotUnique () : base ("An attempt was made to create an object with an existing object identifier") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "An attempt was made to create an object with an existing object identifier"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ObjectIdentifierNotUnique (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ObjectIdentifierNotUnique (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ObjectIdentifierNotUnique  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new ObjectIdentifierNotUnique(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ObjectIdentifierNotUnique(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new ObjectIdentifierNotUnique(reason as string);
 				}
 			else {
 				return new ObjectIdentifierNotUnique();
@@ -272,47 +253,43 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// Access was refused
     /// </summary>
-    [Serializable]
-	public class AccessRefused : global::System.Exception {
+    [global::System.Serializable]
+	public partial class AccessRefused : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Access was refused";
 
 		/// <summary>
-        /// Construct instance for exception "Access was refused"
-        /// </summary>		
-		public AccessRefused () : base ("Access was refused") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Access was refused"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public AccessRefused (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public AccessRefused (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public AccessRefused  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new AccessRefused(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new AccessRefused(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new AccessRefused(reason as string);
 				}
 			else {
 				return new AccessRefused();
@@ -324,47 +301,43 @@ namespace Goedel.Cryptography.Dare {
     /// <summary>
     /// A data record could not be read because it was incomplete.
     /// </summary>
-    [Serializable]
-	public class DataRecordTruncated : global::System.Exception {
+    [global::System.Serializable]
+	public partial class DataRecordTruncated : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "A data record could not be read because it was incomplete.";
 
 		/// <summary>
-        /// Construct instance for exception "A data record could not be read because it was incomplete."
-        /// </summary>		
-		public DataRecordTruncated () : base ("A data record could not be read because it was incomplete.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "A data record could not be read because it was incomplete."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public DataRecordTruncated (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public DataRecordTruncated (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public DataRecordTruncated  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new DataRecordTruncated(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new DataRecordTruncated(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new DataRecordTruncated(reason as string);
 				}
 			else {
 				return new DataRecordTruncated();

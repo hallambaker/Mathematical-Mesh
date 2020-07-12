@@ -278,8 +278,9 @@ namespace Goedel.Mesh.Shell {
             // ToDo: enable specification of multiple recipients in COMMAND
             if (Options.Encrypt != null) {
                 if (Options.Encrypt.Value != null) {
-                    recipients = new List<string>();
-                    recipients.Add(Options.Encrypt.Value);
+                    recipients = new List<string> {
+                        Options.Encrypt.Value
+                        };
                     }
 
                 }

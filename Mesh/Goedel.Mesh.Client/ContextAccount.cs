@@ -482,11 +482,12 @@ namespace Goedel.Mesh.Client {
         /// <param name="read">If true, the message has already been read.</param>
         /// <returns>The message value (if unread).</returns>
         public Message GetPendingMessageByID(string messageID, out bool read) {
-            foreach (var message in GetSpoolInbound().Select(1, true)) {
-                var contentMeta = message.Header.ContentMeta;
+            foreach (var envelope in GetSpoolInbound().Select(1, true)) {
+                var contentMeta = envelope.Header.ContentMeta;
+                var meshMessage = Message.Decode(envelope);
 
-
-                var meshMessage = Message.FromJson(message.GetBodyReader());
+                // Message.FromJson(envelope.GetBodyReader());
+                //meshMessage.DareEnvelope = envelope;
                 //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
 
                 if (meshMessage.MessageID == messageID) {
@@ -852,20 +853,20 @@ namespace Goedel.Mesh.Client {
                         bool authorize = false) {
 
             // check response pin here 
-            var messagePIN = GetMessagePIN(replyContact.PinUDF);
-            var pinWitness = MessagePIN.GetPinWitness(messagePIN.SaltedPIN, AccountAddress,
-                        replyContact.Self, replyContact.Nonce);
+            var messagePin = GetMessagePIN(replyContact.PinUDF);
 
-            if (!pinWitness.IsEqualTo(replyContact.Witness)) {
-                "Should collect up errors for optional reporting".TaskValidate();
-                return InvalidPIN();
-                }
-            if (!(messagePIN.Automatic| authorize)) {
-                return null;
+            var result = MessagePIN.ValidatePin(messagePin,
+                    AccountAddress, 
+                    replyContact.AuthenticatedData,
+                    replyContact.ClientNonce,
+                    replyContact.PinWitness);
+
+            if (!(result is MessagePIN)) {
+                return result;
                 }
 
             if (accept) {
-                GetCatalogContact().Add(replyContact.Self);
+                GetCatalogContact().Add(replyContact.AuthenticatedData);
                 }
 
             return null;
@@ -879,18 +880,23 @@ namespace Goedel.Mesh.Client {
             var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
 
             // get the pin value here
-            var messagePIN = GetMessagePIN(messageConnectionRequest.PinUDF);
+            var messagePin = GetMessagePIN(messageConnectionRequest.PinUDF);
 
-            var pinWitness = MessagePIN.GetPinWitness(messagePIN.SaltedPIN, AccountAddress,
-                messageConnectionRequest.ProfileDevice.UDF, messageConnectionRequest.ClientNonce);
-
-            if (!pinWitness.IsEqualTo(messageConnectionRequest.PinWitness)) {
-                "Should collect up errors for optional reporting".TaskValidate();
-                return InvalidPIN();
+            var result = MessagePIN.ValidatePin(messagePin,
+                    AccountAddress, 
+                    messageConnectionRequest.AuthenticatedData,
+                    messageConnectionRequest.ClientNonce,
+                    messageConnectionRequest.PinWitness);
+            
+            if (!(result is MessagePIN)) {
+                return result;
                 }
 
             return Process(acknowledgeConnection, true);
             }
+
+
+
 
 
         /// <summary>
@@ -922,7 +928,7 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        IProcessResult InvalidPIN() => throw new NYI();
+
 
 
         /// <summary>
@@ -1029,9 +1035,9 @@ namespace Goedel.Mesh.Client {
             var message = new ReplyContact() {
                 Recipient = recipient,
                 Subject = recipient,
-                Self = contactSelf,
-                Nonce = nonce,
-                Witness = witness,
+                AuthenticatedData = contactSelf,
+                ClientNonce = nonce,
+                PinWitness = witness,
                 PinUDF =pinUdf
                 };
 

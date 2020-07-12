@@ -1,5 +1,6 @@
 ﻿using Goedel.Protocol;
 using Goedel.Utilities;
+using System;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -107,7 +108,11 @@ namespace Goedel.Mesh.Shell {
         /// <returns>The result of the operation.</returns>
         public override ShellResult AccountGetPIN(AccountGetPIN Options) {
             using var contextAccount = GetContextAccount(Options);
-            var messageConnectionPIN = contextAccount.GetPIN(Constants.MessagePINActionDevice);
+
+            var expire = TimeSpan.Parse(Options.Expire.Value);
+
+            var messageConnectionPIN = contextAccount.GetPIN(Constants.MessagePINActionDevice,
+                        validity: expire.Ticks);
 
             var result = new ResultPIN() {
                 MessagePIN = messageConnectionPIN

@@ -189,6 +189,41 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
+        /// Validate a message request against a pin value;
+        /// </summary>
+        /// <param name="messagePin">The message describing the PIN</param>
+        /// <param name="accountAddress">Account to which the PIN is bound.</param>
+        /// <param name="envelope">The envelope to authenticate.</param>
+        /// <param name="nonce">Client nonce value.</param>
+        /// <param name="witness">The witness value being tested.</param>
+        /// <returns></returns>
+        public static IProcessResult ValidatePin(
+                    MessagePIN messagePin,
+                    string accountAddress,
+                    DareEnvelope envelope,
+                    byte[] nonce,
+                    byte[] witness) {
+
+            if (messagePin == null || messagePin.Closed == true)  {
+                return new InvalidPIN();
+                }
+            if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
+                return new ExpiredPIN();
+                }
+            var pinWitness = MessagePIN.GetPinWitness(
+                        messagePin.SaltedPIN, 
+                        accountAddress,
+                        envelope,
+                        nonce);
+            if (!pinWitness.IsEqualTo(witness)) {
+                return new InvalidPIN();
+                }
+
+            return messagePin;
+            }
+
+
+        /// <summary>
         /// Get the 
         /// </summary>
         /// <returns></returns>
@@ -212,20 +247,20 @@ namespace Goedel.Mesh {
 
 
 
-        /// <summary>
-        /// Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
-        /// </summary>
-        /// <param name="pin">The salted one time code</param>
-        /// <param name="accountAddress">The account address of the issuer of the PIN</param>
-        /// <param name="deviceUDF">The data being witnessed.</param>
-        /// <param name="clientNonce">Nonce value to bind to the exchange.</param>
-        /// <returns>The binary witness value.</returns>
-        public static byte[] GetPinWitness(
-                    string pin,
-                    string accountAddress,
-                    string deviceUDF,
-                    byte[] clientNonce) => UDF.PinWitness(pin, accountAddress.ToUTF8(),
-                        clientNonce, deviceUDF.ToUTF8());
+        ///// <summary>
+        ///// Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
+        ///// </summary>
+        ///// <param name="pin">The salted one time code</param>
+        ///// <param name="accountAddress">The account address of the issuer of the PIN</param>
+        ///// <param name="deviceUDF">The data being witnessed.</param>
+        ///// <param name="clientNonce">Nonce value to bind to the exchange.</param>
+        ///// <returns>The binary witness value.</returns>
+        //static byte[] GetPinWitness(
+        //            string pin,
+        //            string accountAddress,
+        //            string deviceUDF,
+        //            byte[] clientNonce) => UDF.PinWitness(pin, accountAddress.ToUTF8(),
+        //                clientNonce, deviceUDF.ToUTF8());
 
         /// <summary>
         /// Witness value calculated as KDF (envelope + AccountAddress+ClientNonce, pin)
@@ -294,14 +329,15 @@ namespace Goedel.Mesh {
             string pin=null,
             byte[] clientNonce = null) {
             AccountAddress = accountAddress;
-            EnvelopedProfileDevice = profileDevice.DareEnvelope;
+            AuthenticatedData = profileDevice.DareEnvelope;
             ClientNonce = clientNonce ?? CryptoCatalog.GetBits(128);
 
             if (pin != null) {
                 var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionDevice);
 
                 PinUDF = MessagePIN.GetPinUDF(saltedPin, accountAddress);
-                PinWitness = MessagePIN.GetPinWitness(saltedPin, accountAddress, profileDevice.UDF, ClientNonce);
+                PinWitness = MessagePIN.GetPinWitness(
+                        saltedPin, accountAddress, profileDevice.DareEnvelope, ClientNonce);
                 }
             }
 
@@ -317,7 +353,7 @@ namespace Goedel.Mesh {
 
         ///<summary>Convenience accessor for the inner <see cref="ProfileDevice"/></summary>
         public ProfileDevice ProfileDevice => profileDevice ??
-            ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
+            ProfileDevice.Decode(AuthenticatedData).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
 

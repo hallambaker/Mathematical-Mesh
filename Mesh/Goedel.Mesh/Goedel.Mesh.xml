@@ -3118,28 +3118,22 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Internal.#ctor">
-            <summary>
-            Construct instance for exception "An internal error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Internal.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Internal.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An internal error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Internal.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Internal.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Internal.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Internal.Throw">
             <summary>
@@ -3151,23 +3145,22 @@
             The profile presented was invalid.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidProfile.#ctor">
-            <summary>
-            Construct instance for exception "The profile is invalid"
-            </summary>		
+        <member name="P:Goedel.Mesh.InvalidProfile.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidProfile.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.InvalidProfile.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The profile is invalid"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.InvalidProfile.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.InvalidProfile.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.InvalidProfile.Throw">
             <summary>
@@ -3179,23 +3172,22 @@
             The requestor is not authorized for the specified operation
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthorized.#ctor">
-            <summary>
-            Construct instance for exception "The requestor is not authorized for the specified operation"
-            </summary>		
+        <member name="P:Goedel.Mesh.NotAuthorized.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthorized.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.NotAuthorized.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The requestor is not authorized for the specified operation"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthorized.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.NotAuthorized.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.NotAuthorized.Throw">
             <summary>
@@ -3207,23 +3199,22 @@
             The request is not authenticated  for the specified operation
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthenticated.#ctor">
-            <summary>
-            Construct instance for exception "The request is not authenticated for the specified operation"
-            </summary>		
+        <member name="P:Goedel.Mesh.NotAuthenticated.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthenticated.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.NotAuthenticated.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The request is not authenticated for the specified operation"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.NotAuthenticated.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.NotAuthenticated.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.NotAuthenticated.Throw">
             <summary>
@@ -3235,23 +3226,22 @@
             Mesh Messages MUST specify a valid message ID.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidMessageID.#ctor">
-            <summary>
-            Construct instance for exception "Mesh Messages MUST specify a valid message ID"
-            </summary>		
+        <member name="P:Goedel.Mesh.InvalidMessageID.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidMessageID.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.InvalidMessageID.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "Mesh Messages MUST specify a valid message ID"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.InvalidMessageID.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.InvalidMessageID.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.InvalidMessageID.Throw">
             <summary>
@@ -3263,23 +3253,22 @@
             The specified connection URI was invalid
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidUri.#ctor">
-            <summary>
-            Construct instance for exception "The specified connection URI was invalid"
-            </summary>		
+        <member name="P:Goedel.Mesh.InvalidUri.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.InvalidUri.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.InvalidUri.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "The specified connection URI was invalid"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.InvalidUri.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.InvalidUri.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.InvalidUri.Throw">
             <summary>
@@ -3748,6 +3737,12 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
+        <member name="P:Goedel.Mesh.Message.Success">
+            <summary>Always false for an error result.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Message.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
         <member name="M:Goedel.Mesh.Message.GetResponseID">
             <summary>
             Return the identifier for a response to this message.
@@ -3886,6 +3881,17 @@
             <param name="action">The action to which the pin code is bound.</param>
             <returns>UDF presentation of the salted PIN.</returns>
         </member>
+        <member name="M:Goedel.Mesh.MessagePIN.ValidatePin(Goedel.Mesh.MessagePIN,System.String,Goedel.Cryptography.Dare.DareEnvelope,System.Byte[],System.Byte[])">
+            <summary>
+            Validate a message request against a pin value;
+            </summary>
+            <param name="messagePin">The message describing the PIN</param>
+            <param name="accountAddress">Account to which the PIN is bound.</param>
+            <param name="envelope">The envelope to authenticate.</param>
+            <param name="nonce">Client nonce value.</param>
+            <param name="witness">The witness value being tested.</param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.MessagePIN.GetURI">
             <summary>
             Get the 
@@ -3899,16 +3905,6 @@
             <param name="pin">The salted one time code</param>
             <param name="accountAddress">The account address of the issuer of the PIN</param>
             <returns>The PIN Code identifier.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MessagePIN.GetPinWitness(System.String,System.String,System.String,System.Byte[])">
-            <summary>
-            Witness value calculated as KDF (Device.UDF + AccountAddress+ClientNonce, pin)
-            </summary>
-            <param name="pin">The salted one time code</param>
-            <param name="accountAddress">The account address of the issuer of the PIN</param>
-            <param name="deviceUDF">The data being witnessed.</param>
-            <param name="clientNonce">Nonce value to bind to the exchange.</param>
-            <returns>The binary witness value.</returns>
         </member>
         <member name="M:Goedel.Mesh.MessagePIN.GetPinWitness(System.String,System.String,Goedel.Cryptography.Dare.DareEnvelope,System.Byte[])">
             <summary>
@@ -4132,26 +4128,6 @@
         <member name="P:Goedel.Mesh.RequestConnection.AccountAddress">
              <summary>
             
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.RequestConnection.EnvelopedProfileDevice">
-             <summary>
-            Device profile of the device making the request.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.RequestConnection.ClientNonce">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.RequestConnection.PinUDF">
-             <summary>
-            Fingerprint of the PIN value used to authenticate the request.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.RequestConnection.PinWitness">
-             <summary>
-            Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
              </summary>
         </member>
         <member name="P:Goedel.Mesh.RequestConnection._Tag">
@@ -4577,6 +4553,53 @@
             <summary>
             Mesh Protocol and Profile Definition.
             </summary>
+        </member>
+        <member name="T:Goedel.Mesh.IProcessResult">
+            <summary>
+            Interface for returning the result of processing a message result
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.IProcessResult.GetResponseID">
+            <summary>
+            Returns the response identifier.
+            </summary>
+            <returns>The response ID.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.IProcessResult.Success">
+            <summary>If true, the operation succeeded</summary>
+        </member>
+        <member name="P:Goedel.Mesh.IProcessResult.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
+        <member name="T:Goedel.Mesh.ProcessResultError">
+            <summary>
+            Base class for error results.
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResultError.GetResponseID">
+            <summary>
+            Returns the response identifier.
+            </summary>
+            <returns>The response ID.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultError.Success">
+            <summary>Always false for an error result.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResultError.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
+        <member name="T:Goedel.Mesh.InvalidPIN">
+            <summary>Invalid PIN result.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.InvalidPIN.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
+        <member name="T:Goedel.Mesh.ExpiredPIN">
+            <summary>Expired PIN result. Note that this is different from an Invalid PIN as 
+            the user might decide to accept the PIN manually.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ExpiredPIN.ErrorReport">
+            <summary>The error report code</summary>
         </member>
         <member name="T:Goedel.Mesh.Assertion">
              <summary>
@@ -11232,6 +11255,146 @@
             <param name="filename">The file to read.</param>
             <returns>The DevicePreconfiguration instance created from the file data.</returns>
         </member>
+        <member name="T:Goedel.Mesh.MessageError">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError.ErrorCode">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessageError.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessageError._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessageError.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessageError.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessageError.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.MessageError.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError.Success">
+            <summary>Always false for an error result.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessageError.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
+        <member name="T:Goedel.Mesh.MessagePinValidated">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated.AuthenticatedData">
+             <summary>
+            Enveloped data that is authenticated by means of the PIN
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated.ClientNonce">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated.PinUDF">
+             <summary>
+            Fingerprint of the PIN value used to authenticate the request.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated.PinWitness">
+             <summary>
+            Witness value calculated as KDF (Device.UDF + AccountAddress, ClientNonce)
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.MessagePinValidated._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.MessagePinValidated.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.MessagePinValidated.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
         <member name="T:Goedel.Mesh.RequestContact">
             <summary>
             </summary>
@@ -11241,10 +11404,6 @@
             </summary>
         </member>
         <member name="P:Goedel.Mesh.RequestContact.Subject">
-            <summary>
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.RequestContact.PinUDF">
             <summary>
             </summary>
         </member>
@@ -11313,14 +11472,9 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.ReplyContact.Nonce">
+        <member name="P:Goedel.Mesh.ReplyContact.Subject">
             <summary>
             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ReplyContact.Witness">
-             <summary>
-            Witness value over contact that was presented.
-             </summary>
         </member>
         <member name="P:Goedel.Mesh.ReplyContact._Tag">
             <summary>
@@ -11613,18 +11767,6 @@
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.IProcessResult">
-            <summary>
-            Placeholder interface for returning the result of processing a message result
-            Will revisit late.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.IProcessResult.GetResponseID">
-            <summary>
-            Returns the response identifier.
-            </summary>
-            <returns></returns>
         </member>
         <member name="T:Goedel.Mesh.SpoolEntry">
             <summary>Message entry in spool catalog</summary>

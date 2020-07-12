@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 
 
@@ -9,47 +10,43 @@ namespace Goedel.Test {
     /// <summary>
     /// An comparison check on the produced result failed
     /// </summary>
-    [Serializable]
-	public class Compare : global::System.Exception {
+    [global::System.Serializable]
+	public partial class Compare : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "An comparison check on the produced result failed";
 
 		/// <summary>
-        /// Construct instance for exception "An comparison check on the produced result failed"
-        /// </summary>		
-		public Compare () : base ("An comparison check on the produced result failed") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "An comparison check on the produced result failed"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public Compare (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public Compare (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public Compare  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new Compare(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new Compare(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new Compare(reason as string);
 				}
 			else {
 				return new Compare();

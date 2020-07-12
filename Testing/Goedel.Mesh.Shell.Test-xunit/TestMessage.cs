@@ -50,16 +50,9 @@ namespace Goedel.XUnit {
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
             ValidContact(deviceB, AccountB, AccountA);
 
-            // accept the contact request.
+            // process the contact request. It is accepted automatically
 
             var result6 = deviceA.Dispatch($"account sync /auto");
-            //var result6 = ProcessMessage(deviceA, true, 1, 0);
-            ValidContact(deviceA, AccountA);
-
-            
-            var messageId = resultfetch.Message.MessageID;
-
-            var result7 = ProcessMessage(deviceA, true, messageId);
             ValidContact(deviceA, AccountA, AccountB);
             }
 
@@ -88,7 +81,8 @@ namespace Goedel.XUnit {
             // reject the contact request.
 
 
-            // ToDo: At this point, this SHOULD fail because we haven't distinguished business card from in person connect.
+            // ToDo: At this point, this SHOULD fail because we haven't distinguished 
+            // business card from in person connect.
             var result6 = ProcessMessage(deviceA, false, messageId);
             ValidContact(deviceA, AccountA);
 

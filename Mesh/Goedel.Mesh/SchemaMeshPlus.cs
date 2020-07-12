@@ -7,18 +7,6 @@ using System;
 using System.Text;
 namespace Goedel.Mesh {
 
-    /// <summary>
-    /// Placeholder interface for returning the result of processing a message result
-    /// Will revisit late.
-    /// </summary>
-    public interface IProcessResult {
-
-        /// <summary>
-        /// Returns the response identifier.
-        /// </summary>
-        /// <returns></returns>
-        public string GetResponseID();
-        }
 
 
     public partial class MeshItem {
@@ -166,6 +154,14 @@ namespace Goedel.Mesh {
 
     public partial class Message : IProcessResult {
 
+
+        ///<summary>Always false for an error result.</summary>
+        public virtual bool Success => true;
+
+        ///<summary>The error report code</summary>
+        public virtual string ErrorReport => null;
+
+
         /// <summary>
         /// Return the identifier for a response to this message.
         /// </summary>
@@ -194,5 +190,12 @@ namespace Goedel.Mesh {
                 }
             }
 
+        }
+    public partial class MessageError {
+        ///<summary>Always false for an error result.</summary>
+        public override bool Success => false;
+
+        ///<summary>The error report code</summary>
+        public override string ErrorReport => ErrorCode;
         }
     }

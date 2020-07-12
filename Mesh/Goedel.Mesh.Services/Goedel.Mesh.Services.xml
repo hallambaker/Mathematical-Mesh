@@ -9,28 +9,22 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor">
-            <summary>
-            Construct instance for exception "An internal error occurred"
-            </summary>		
+        <member name="P:Goedel.Mesh.Services.ServicesTBS.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String)">
+        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
-            Construct instance for exception "An internal error occurred"
+            Construct instance for exception
             </summary>		
-            <param name="Description">Description of the error</param>	
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="M:Goedel.Mesh.Services.ServicesTBS.#ctor(System.String,System.Exception)">
+        <member name="F:Goedel.Mesh.Services.ServicesTBS.ThrowNew">
             <summary>
-            Construct instance for exception 		/// containing an inner exception.
-            </summary>		
-            <param name="Description">Description of the error</param>	
-            <param name="Inner">Inner Exception</param>	
-        </member>
-        <member name="F:Goedel.Mesh.Services.ServicesTBS.UserData">
-            <summary>
-            User data associated with the exception.
-            </summary>	
+            The public fatory delegate
+            </summary>
         </member>
         <member name="F:Goedel.Mesh.Services.ServicesTBS.Throw">
             <summary>

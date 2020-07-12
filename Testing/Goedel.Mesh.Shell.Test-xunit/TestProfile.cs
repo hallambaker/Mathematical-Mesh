@@ -1,6 +1,8 @@
 ﻿using Goedel.Mesh;
+using Goedel.Test;
 using Goedel.Mesh.Shell;
 using Goedel.Utilities;
+using System.Threading;
 
 using Xunit;
 
@@ -93,13 +95,49 @@ namespace Goedel.XUnit {
             }
 
 
+        [Fact]
+        public void TestProfileConnectPinExpired() {
+            var accountA = "alice@example.com";
+
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+
+            device1.Dispatch($"mesh create /service={accountA}");
+
+            var result = device1.Dispatch($"account pin /expire 0") as ResultPIN;
+            Thread.Sleep(1000); // make sure that the PIN expires
+
+            var pin = result.MessagePIN.PIN;
+            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device1.Dispatch($"account sync /auto");
+
+            // The connection MUST be rejected as the PIN has expired.
+            device2.Dispatch($"device complete", fail: true);
+            device2.Dispatch($"account sync", fail: true);
+            }
 
 
         [Fact]
-        public void TestProfileConnectPinExpired() => throw new NYI();
+        public void TestProfileConnectPinInvalid() {
+            var accountA = "alice@example.com";
 
-        [Fact]
-        public void TestProfileConnectPinInvalid() => throw new NYI();
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+
+            device1.Dispatch($"mesh create /service={accountA}");
+
+            var result = device1.Dispatch($"account pin") as ResultPIN;
+
+            var pin = result.MessagePIN.PIN.CorruptedPIN();
+
+
+            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device1.Dispatch($"account sync /auto");
+
+            // The connection MUST be rejected as the PIN has expired.
+            device2.Dispatch($"device complete", fail: true);
+            device2.Dispatch($"account sync", fail: true);
+            }
 
         [Fact]
         public void TestProfileConnectPinReused() => throw new NYI();

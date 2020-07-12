@@ -56,6 +56,11 @@ namespace Goedel.XUnit {
         public void TestProfileContact() {
             var account = "alice@example.com";
 
+            // rewrite this test so that we create three accounts, export the contact self values
+            // then test import into the catalog from the file.
+
+
+
             var contact1UDF = UDF.Nonce(125);
             var contact2UDF = UDF.Nonce(125);
             var contact3UDF = UDF.Nonce(125);

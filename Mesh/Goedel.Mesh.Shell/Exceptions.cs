@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 
 
@@ -9,47 +10,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Generic error in Mesh Shell library
     /// </summary>
-    [Serializable]
-	public class MeshShellException : global::System.Exception {
+    [global::System.Serializable]
+	public partial class MeshShellException : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Unknown error occured.";
 
 		/// <summary>
-        /// Construct instance for exception "Unknown error occured."
-        /// </summary>		
-		public MeshShellException () : base ("Unknown error occured.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Unknown error occured."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public MeshShellException (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public MeshShellException (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public MeshShellException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new MeshShellException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new MeshShellException(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new MeshShellException(reason as string);
 				}
 			else {
 				return new MeshShellException();
@@ -61,43 +58,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// The calculated fingerprint did not match the expected value.
     /// </summary>
-    [Serializable]
-	public class DidNotMatchExpectedValue : MeshShellException {
+    [global::System.Serializable]
+	public partial class DidNotMatchExpectedValue : MeshShellException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The calculated fingerprint did not match the expected value.";
 
 		/// <summary>
-        /// Construct instance for exception "The calculated fingerprint did not match the expected value."
-        /// </summary>		
-		public DidNotMatchExpectedValue () : base ("The calculated fingerprint did not match the expected value.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The calculated fingerprint did not match the expected value."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public DidNotMatchExpectedValue (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public DidNotMatchExpectedValue (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public DidNotMatchExpectedValue  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new DidNotMatchExpectedValue(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new DidNotMatchExpectedValue(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new DidNotMatchExpectedValue(reason as string);
 				}
 			else {
 				return new DidNotMatchExpectedValue();
@@ -109,43 +106,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Account not valid
     /// </summary>
-    [Serializable]
-	public class AccountNotFound : MeshShellException {
+    [global::System.Serializable]
+	public partial class AccountNotFound : MeshShellException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Profile not found";
 
 		/// <summary>
-        /// Construct instance for exception "Profile not found"
-        /// </summary>		
-		public AccountNotFound () : base ("Profile not found") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Profile not found"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public AccountNotFound (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public AccountNotFound (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public AccountNotFound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new AccountNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new AccountNotFound(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new AccountNotFound(reason as string);
 				}
 			else {
 				return new AccountNotFound();
@@ -157,43 +154,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// Account not valid
     /// </summary>
-    [Serializable]
-	public class ProfileNotFound : MeshShellException {
+    [global::System.Serializable]
+	public partial class ProfileNotFound : MeshShellException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "No profile defined.";
 
 		/// <summary>
-        /// Construct instance for exception "No profile defined."
-        /// </summary>		
-		public ProfileNotFound () : base ("No profile defined.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "No profile defined."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ProfileNotFound (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ProfileNotFound (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ProfileNotFound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new ProfileNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ProfileNotFound(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new ProfileNotFound(reason as string);
 				}
 			else {
 				return new ProfileNotFound();
@@ -205,43 +202,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// The directory could not be found
     /// </summary>
-    [Serializable]
-	public class DirectoryNotFound : MeshShellException {
+    [global::System.Serializable]
+	public partial class DirectoryNotFound : MeshShellException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The directory could not be found";
 
 		/// <summary>
-        /// Construct instance for exception "The directory could not be found"
-        /// </summary>		
-		public DirectoryNotFound () : base ("The directory could not be found") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The directory could not be found"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public DirectoryNotFound (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public DirectoryNotFound (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public DirectoryNotFound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new DirectoryNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new DirectoryNotFound(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new DirectoryNotFound(reason as string);
 				}
 			else {
 				return new DirectoryNotFound();
@@ -253,43 +250,43 @@ namespace Goedel.Mesh.Shell {
     /// <summary>
     /// The directory could not be found
     /// </summary>
-    [Serializable]
-	public class FileNotFound : MeshShellException {
+    [global::System.Serializable]
+	public partial class FileNotFound : MeshShellException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The file could not be found";
 
 		/// <summary>
-        /// Construct instance for exception "The file could not be found"
-        /// </summary>		
-		public FileNotFound () : base ("The file could not be found") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The file could not be found"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public FileNotFound (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileNotFound (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public FileNotFound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new FileNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new FileNotFound(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new FileNotFound(reason as string);
 				}
 			else {
 				return new FileNotFound();

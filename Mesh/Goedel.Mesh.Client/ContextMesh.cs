@@ -131,6 +131,9 @@ namespace Goedel.Mesh.Client {
         public ContextAccount GetContextAccount(
                 string localName = null,
                 string accountName = null) {
+            CatalogedDevice.AssertNotNull(ConnectionStillPending.Throw);
+
+
             var account = CatalogedDevice.GetAccount(localName, accountName);
             return account == null ? null : new ContextAccount(this, account);
             }
