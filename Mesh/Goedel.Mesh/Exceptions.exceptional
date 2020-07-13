@@ -27,8 +27,18 @@ Namespace Goedel.Mesh
 			Description
 				|Mesh Messages MUST specify a valid message ID.
 
+		Exception InvalidMessage
+			Console "The Message was invalid."
 
 		Exception InvalidUri
 			Console "The specified connection URI was invalid"
 			Description
 				|The specified connection URI was invalid
+
+		Exception InvalidDate
+			Console "The specified date was invalid."
+
+	Exception KeyRecoveryFailed
+		Console "The attempt to perform threshold key recovery failed"
+	Exception KeyActivationFailed
+		Console "The attempt to perform threshold key activation failed"

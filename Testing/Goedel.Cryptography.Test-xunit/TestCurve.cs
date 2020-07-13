@@ -1,6 +1,7 @@
 ﻿
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
+using Goedel.Test;
 
 using Xunit;
 namespace Goedel.XUnit {
@@ -79,7 +80,7 @@ namespace Goedel.XUnit {
             var Private = new CurveEdwards25519Private(Test.SecretKey);
             var Public = Private.Public;
 
-            Public.Encoding.AssertEqual(Test.PublicKey);
+            Public.Encoding.TestEqual(Test.PublicKey);
 
             }
 
@@ -88,7 +89,7 @@ namespace Goedel.XUnit {
             var Private = new CurveEdwards448Private(Test.SecretKey);
             var Public = Private.Public;
 
-            Public.Encoding.AssertEqual(Test.PublicKey);
+            Public.Encoding.TestEqual(Test.PublicKey);
 
             }
 

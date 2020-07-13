@@ -4,7 +4,7 @@ Namespace Goedel.Test.Core
 
 
 
-	Exception Compare
+	Exception TestCore
         Console "An comparison check on the produced result failed"
 		Description
 			|An comparison check on the produced result failed

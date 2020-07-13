@@ -19,20 +19,16 @@ MSBuildThisFileDirectory =
 
 LinkFiles = \
     Goedel.Utilities.dll\
+    Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.dll\
-    Goedel.Protocol.dll\
-    Goedel.Mesh.dll
+    Goedel.Test.Core.dll\
+    Goedel.Test.dll\
+    Goedel.Mesh.Core.dll\
+    Goedel.Mesh.dll\
+    Goedel.Utilities.Test-xunit.dll
 
-ToolTargets = \
-	Exceptions.cs\
-	ServiceSchema.cs
-Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
-ServiceSchema.cs : ServiceSchema.Protocol 
-	protogen ServiceSchema.Protocol  /cs  ServiceSchema.cs
-
+ToolTargets = 
 
 
 prebuildRecurse : 
@@ -49,5 +45,5 @@ postbuild : postbuildRecurse
 
 
 postbuildwindows : 
-	powershell publishtarget Goedel.Mesh.Services.dll
+	powershell publishtarget Goedel.Mesh.Store.Test-xunit.dll
 

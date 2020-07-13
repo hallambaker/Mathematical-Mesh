@@ -4,6 +4,7 @@ using Goedel.Utilities;
 using System.Collections.Generic;
 using Xunit;
 using Goedel.Mesh.Test;
+using Goedel.Test;
 
 #pragma warning disable IDE0059
 namespace Goedel.XUnit {
@@ -50,9 +51,16 @@ namespace Goedel.XUnit {
             var resultfetch = deviceB.Dispatch($"contact exchange {uri}") as ResultEntrySent;
             ValidContact(deviceB, AccountB, AccountA);
 
-            // process the contact request. It is accepted automatically
+            // process the contact request. It is not processed automatically because
+            // this pin is markes as not automatic
 
             var result6 = deviceA.Dispatch($"account sync /auto");
+            ValidContact(deviceA, AccountA);
+
+            var messageId = resultfetch.Message.MessageID;
+
+            // reject the contact request.
+            var result7 = ProcessMessage(deviceA, true, messageId);
             ValidContact(deviceA, AccountA, AccountB);
             }
 
@@ -79,14 +87,10 @@ namespace Goedel.XUnit {
             var messageId = resultfetch.Message.MessageID;
 
             // reject the contact request.
-
-
-            // ToDo: At this point, this SHOULD fail because we haven't distinguished 
-            // business card from in person connect.
             var result6 = ProcessMessage(deviceA, false, messageId);
             ValidContact(deviceA, AccountA);
 
-            // Even explicit accept has no effect
+            // Explicit reject has no effect
             var result7 = deviceA.Dispatch($"account sync /auto");
             ValidContact(deviceA, AccountA);
             }
@@ -148,7 +152,7 @@ namespace Goedel.XUnit {
 
             // check there are no pending messages.
             var resultmp1 = device.Dispatch("message pending") as ResultPending;
-            (resultmp1.Messages.Count == 0).AssertTrue();
+            (resultmp1.Messages.Count == 0).TestTrue();
 
             return result;
             }
@@ -157,7 +161,7 @@ namespace Goedel.XUnit {
         Result ProcessMessage(TestCLI device, bool accept, int length, int index) {
             var resultPending = device.Dispatch("message pending") as ResultPending;
             // check there is exactly one pending message.
-            (resultPending.Messages.Count == length).AssertTrue();
+            (resultPending.Messages.Count == length).TestTrue();
 
             // extract message id
             var messageId = resultPending.Messages[0].MessageID;
@@ -176,7 +180,7 @@ namespace Goedel.XUnit {
         /// <returns>Result of processing</returns>
         Result ProcessMessage(TestCLI device, bool accept, string messageId) {
             var message = GetMessage(device, messageId);
-            message.AssertNotNull();
+            message.TestNotNull();
 
             var response = accept ? "accept" : "reject";
             return device.Dispatch($"message {response} {messageId}");
@@ -243,9 +247,9 @@ namespace Goedel.XUnit {
                     }
                 }
 
-            (dictionary.Count == accountAddress.Length).AssertTrue();
+            (dictionary.Count == accountAddress.Length).TestTrue();
             foreach (var address in accountAddress) {
-                dictionary.ContainsKey (address).AssertTrue();
+                dictionary.ContainsKey (address).TestTrue();
                 }
 
             return true;
@@ -264,7 +268,7 @@ namespace Goedel.XUnit {
 
             var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
 
-            resultResponse.Accept.AssertTrue();
+            resultResponse.Accept.TestTrue();
             }
 
         [Fact]
@@ -278,7 +282,7 @@ namespace Goedel.XUnit {
             var responseId = resultRequest.Message.GetResponseID();
             var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
 
-            resultResponse.Accept.AssertFalse();
+            resultResponse.Accept.TestFalse();
 
             }
 

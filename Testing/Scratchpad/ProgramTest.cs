@@ -23,7 +23,7 @@ namespace Scratchpad {
 
             // ** Fast access to simple tests for regression fixing.
             //TestService.Test().MeshCatalogAccount();
-            //ShellTests.Test().TestProfileConnect();
+            ShellTests.Test().TestMessageContactInPerson();
 
 
             // ***** Currently failing tests
@@ -88,7 +88,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestMessageConfirmationReject();
             //ShellTests.Test().TestProfileConnectPinExpired();
             //ShellTests.Test().TestProfileConnectPinInvalid();
-            //ShellTests.Test().TestMessageContactBusinessCardExchange();
+            ShellTests.Test().TestMessageContactBusinessCardExchange();
 
             }
 

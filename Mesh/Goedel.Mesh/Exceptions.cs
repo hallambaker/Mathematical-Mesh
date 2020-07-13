@@ -248,6 +248,53 @@ namespace Goedel.Mesh {
 
 
     /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InvalidMessage : Internal {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The Message was invalid.";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidMessage  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new InvalidMessage(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidMessage(reason as string);
+				}
+			else {
+				return new InvalidMessage();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// The specified connection URI was invalid
     /// </summary>
     [global::System.Serializable]
@@ -290,6 +337,147 @@ namespace Goedel.Mesh {
 				}
 			else {
 				return new InvalidUri();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InvalidDate : Internal {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The specified date was invalid.";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidDate  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new InvalidDate(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidDate(reason as string);
+				}
+			else {
+				return new InvalidDate();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class KeyRecoveryFailed : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The attempt to perform threshold key recovery failed";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public KeyRecoveryFailed  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new KeyRecoveryFailed(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new KeyRecoveryFailed(reason as string);
+				}
+			else {
+				return new KeyRecoveryFailed();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class KeyActivationFailed : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The attempt to perform threshold key activation failed";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public KeyActivationFailed  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new KeyActivationFailed(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new KeyActivationFailed(reason as string);
+				}
+			else {
+				return new KeyActivationFailed();
 				}
             }
         }

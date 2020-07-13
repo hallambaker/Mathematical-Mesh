@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Goedel.Cryptography.Algorithms;
 using System.Reflection;
 using System.Diagnostics;
-
+using Goedel.Test;
 using Xunit;
 
 #pragma warning disable IDE0059
@@ -167,15 +167,15 @@ namespace Goedel.XUnit {
             var key1a = key1 as KeyPairAdvanced;
 
             CheckEqual(key1a.IKeyAdvancedPrivate, key2.IKeyAdvancedPrivate);
-            key1a.KeyIdentifier.AssertEqual(key2.KeyIdentifier);
+            key1a.KeyIdentifier.TestEqual(key2.KeyIdentifier);
             }
         static void CheckEqual(IKeyAdvancedPrivate key1, IKeyAdvancedPrivate key2) {
-            key1.GetType().AssertEqual(key2.GetType());
+            key1.GetType().TestEqual(key2.GetType());
 
             var key1e = key1 as IKeyPrivateECDH;
             var domain = GetDomainParameters(key1e.CurveJose);
 
-            key1.Private.Mod(domain.Q).AssertEqual(key2.Private.Mod(domain.Q));
+            key1.Private.Mod(domain.Q).TestEqual(key2.Private.Mod(domain.Q));
             }
 
 

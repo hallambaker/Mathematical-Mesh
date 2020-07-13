@@ -44,6 +44,13 @@ namespace Goedel.Mesh {
         public abstract string ErrorReport { get; }
         }
 
+
+    ///<summary>Invalid PIN result.</summary>
+    public class PINNotAutomatic : ProcessResultError {
+        ///<summary>The error report code</summary>
+        public override string ErrorReport => "NotAutomatic";
+        }
+
     ///<summary>Invalid PIN result.</summary>
     public class InvalidPIN : ProcessResultError {
         ///<summary>The error report code</summary>

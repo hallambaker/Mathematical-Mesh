@@ -48,31 +48,31 @@ namespace Goedel.XUnit {
             var spool = new Spool(directory, file, keyCollection: KeyCollection);
 
 
-            CheckEntry(directory, file, spool, id).AssertNull();
+            CheckEntry(directory, file, spool, id).TestNull();
 
             // add element
             var entry1 = spool.Add(MakeMessage(id, signingKey));
 
             var entry = CheckEntry(directory, file, spool, id);
-            entry.AssertNotNull();
-            entry.Open.AssertTrue();
-            entry.Closed.AssertFalse();
+            entry.TestNotNull();
+            entry.Open.TestTrue();
+            entry.Closed.TestFalse();
 
             // mark element closed
             SetStatus(spool, id, MessageStatus.Closed, signingKey);
 
             var entry2 = CheckEntry(directory, file, spool, id);
-            entry2.AssertNotNull();
-            entry2.Closed.AssertTrue();
-            entry2.Open.AssertFalse();
+            entry2.TestNotNull();
+            entry2.Closed.TestTrue();
+            entry2.Open.TestFalse();
 
             // mark element open (again)
             SetStatus(spool, id, MessageStatus.Open, signingKey);
 
             var entry3 = CheckEntry(directory, file, spool, id);
-            entry3.AssertNotNull();
-            entry3.Open.AssertTrue();
-            entry3.Closed.AssertFalse();
+            entry3.TestNotNull();
+            entry3.Open.TestTrue();
+            entry3.Closed.TestFalse();
 
             }
 
@@ -117,12 +117,12 @@ namespace Goedel.XUnit {
             var spoolEntry2 = spool.GetByMessageId(id);
 
             if (spoolEntry == null) {
-                (spoolEntry2 == null).AssertTrue();
+                (spoolEntry2 == null).TestTrue();
 
                 }
             else {
-                (spoolEntry2 != null).AssertTrue();
-                (spoolEntry.MessageStatus == spoolEntry2.MessageStatus).AssertTrue();
+                (spoolEntry2 != null).TestTrue();
+                (spoolEntry.MessageStatus == spoolEntry2.MessageStatus).TestTrue();
                 }
 
 

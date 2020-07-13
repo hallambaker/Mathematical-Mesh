@@ -7,6 +7,13 @@ Namespace Goedel.Mesh.Client
 			|An internal assertion check failed.
 
 
+
+	Exception AccountNotBound
+		Console "The Mesh account is not bound to a service."
+
+	Exception InvalidServiceResponse
+		Console "The Mesh account is not bound to a service."
+
 	Exception AccountNotFound
 		Console "The Mesh account [{0}] was not found."
 		Description

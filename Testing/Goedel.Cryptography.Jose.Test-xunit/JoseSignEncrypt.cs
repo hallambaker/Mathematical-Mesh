@@ -5,7 +5,7 @@ using Goedel.Cryptography.Jose;
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
-
+using Goedel.Test;
 using Xunit;
 
 #pragma warning disable IDE0059
@@ -32,7 +32,7 @@ namespace Goedel.XUnit {
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Ephemeral);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;
-            key.KeyIdentifier.AssertEqual(key2.KeyIdentifier);
+            key.KeyIdentifier.TestEqual(key2.KeyIdentifier);
 
             Xunit.Assert.Throws<NotExportable>(() => Key.GetPrivate(key));
 
@@ -52,11 +52,11 @@ namespace Goedel.XUnit {
             var key = KeyPair.Factory(cryptoAlgorithmID, keySecurity: KeySecurity.Exportable);
             var jsonPublic = Key.GetPublic(key);
             var key2 = jsonPublic.KeyPair;
-            key.KeyIdentifier.AssertEqual(key2.KeyIdentifier);
+            key.KeyIdentifier.TestEqual(key2.KeyIdentifier);
 
             var jsonPrivate = Key.GetPrivate(key);
             var key3 = jsonPrivate.KeyPair;
-            key.KeyIdentifier.AssertEqual(key3.KeyIdentifier);
+            key.KeyIdentifier.TestEqual(key3.KeyIdentifier);
             }
 
         [Fact]

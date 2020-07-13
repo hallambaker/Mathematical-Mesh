@@ -59,14 +59,14 @@ namespace Goedel.XUnit {
 
             Dispatch($"dare decode {result1.Filename}");
             var file2UDF = GetFileUDF(filename);
-            file1UDF.AssertEqual(file2UDF);
+            file1UDF.TestEqual(file2UDF);
 
             if (corrupt) {
                 result1.Filename.CorruptDareMessage();
                 }
 
             var resultVerify = Dispatch($"dare verify {result1.Filename}") as ResultFile;
-            corrupt.AssertEqual(!resultVerify.Verified);
+            corrupt.TestEqual(!resultVerify.Verified);
 
             return true;
             }

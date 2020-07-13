@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Utilities;
+using Goedel.Test;
 
 using System.Collections.Generic;
 
@@ -74,8 +75,8 @@ namespace Goedel.XUnit {
             var Wrapped = KeyWrap.Wrap(KEK, Key);
             var Unwrapped = KeyWrap.Unwrap(KEK, Wrapped);
 
-            Wrapped.AssertEqual(Ciphertext);
-            Unwrapped.AssertEqual(Key);
+            Wrapped.TestEqual(Ciphertext);
+            Unwrapped.TestEqual(Key);
             }
 
 

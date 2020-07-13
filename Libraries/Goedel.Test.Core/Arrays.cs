@@ -14,11 +14,11 @@ namespace Goedel.Test.Core {
         public static long SecondsInCE(this DateTime? time) =>
                     time == null ? -1 : SecondsInCE((DateTime)time);
 
-        public static bool IsEqualTo(this DateTime first, DateTime second) =>
-            first.SecondsInCE() == second.SecondsInCE();
+        //public static bool IsEqualTo(this DateTime first, DateTime second) =>
+        //    first.SecondsInCE() == second.SecondsInCE();
 
-        public static bool IsEqualTo(this DateTime? first, DateTime? second) =>
-                    first.SecondsInCE() == second.SecondsInCE();
+        //public static bool IsEqualTo(this DateTime? first, DateTime? second) =>
+        //            first.SecondsInCE() == second.SecondsInCE();
 
         public static int[] Shuffle(int length) {
             var result = new int[length];
@@ -48,32 +48,32 @@ namespace Goedel.Test.Core {
             }
         }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    public static class MakeConstant {
+    ///// <summary>
+    ///// 
+    ///// </summary>
+    //public static class MakeConstant {
 
-        public static byte[] FillConstant(int length, int value) {
-            var result = new byte[length];
-            for (var i = 0; i < length; i++) {
-                result[i] = (byte)value;
-                }
-            return result;
-
-
-            }
-
-        public static byte[] FillCount(int length, int offset = 0) {
-            var result = new byte[length];
-            for (var i = 0; i < length; i++) {
-                result[i] = (byte)(offset + i);
-                }
-            return result;
+    //    public static byte[] FillConstant(int length, int value) {
+    //        var result = new byte[length];
+    //        for (var i = 0; i < length; i++) {
+    //            result[i] = (byte)value;
+    //            }
+    //        return result;
 
 
-            }
+    //        }
+
+    //    public static byte[] FillCount(int length, int offset = 0) {
+    //        var result = new byte[length];
+    //        for (var i = 0; i < length; i++) {
+    //            result[i] = (byte)(offset + i);
+    //            }
+    //        return result;
 
 
-        }
+    //        }
+
+
+    //    }
 
     }

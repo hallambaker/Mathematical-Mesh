@@ -94,7 +94,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="pkixKey">DH Public Key.</param>
         public PrivateKeyECDH(IKeyPrivateECDH pkixKey) {
-            Assert.AssertNotNull(pkixKey, NotExportable.Throw);
+            Assert.AssertNotNull(pkixKey, NotExportable.ThrowNew);
 
             Private = pkixKey.Data;
             PKIXParametersPrivate = pkixKey;

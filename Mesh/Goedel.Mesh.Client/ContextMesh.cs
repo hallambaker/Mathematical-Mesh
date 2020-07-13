@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshHost">The Mesh Host</param>
         /// <param name="catalogedMachine">The cataloged Mesh record.</param>
         public ContextMesh(MeshHost meshHost, CatalogedMachine catalogedMachine) {
-            Assert.AssertNotNull(catalogedMachine, NYI.Throw);
+            Assert.AssertNotNull(catalogedMachine, NYI.ThrowNew);
 
             MeshHost = meshHost;
             CatalogedMachine = catalogedMachine;
@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Client {
 
             if (CatalogedDevice != null) {
                 var activationKey = ActivationDevice.ActivationKey;
-                activationKey.AssertNotNull(Internal.Throw);
+                activationKey.AssertNotNull(Internal.ThrowNew);
 
                 keySignature = DeviceKeySeed.ActivatePrivate(
                     activationKey, MeshKeyType.DeviceSign, KeyCollection);
@@ -94,12 +94,15 @@ namespace Goedel.Mesh.Client {
 
 
 
-                (keySignature.KeyIdentifier).AssertEqual(ConnectionDevice.KeySignature.UDF);
+                (keySignature.KeyIdentifier).AssertEqual(ConnectionDevice.KeySignature.UDF,
+                        KeyActivationFailed.ThrowNew);
 
 
                 // These are failing because the underlying combination schemes are failing.
-                (keyEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.KeyEncryption.UDF);
-                (keyAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.KeyAuthentication.UDF);
+                (keyEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.KeyEncryption.UDF,
+                        KeyActivationFailed.ThrowNew);
+                (keyAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.KeyAuthentication.UDF,
+                        KeyActivationFailed.ThrowNew);
 
                 }
             }
@@ -131,7 +134,7 @@ namespace Goedel.Mesh.Client {
         public ContextAccount GetContextAccount(
                 string localName = null,
                 string accountName = null) {
-            CatalogedDevice.AssertNotNull(ConnectionStillPending.Throw);
+            CatalogedDevice.AssertNotNull(ConnectionStillPending.ThrowNew);
 
 
             var account = CatalogedDevice.GetAccount(localName, accountName);

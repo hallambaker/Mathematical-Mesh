@@ -54,7 +54,7 @@ namespace Goedel.Mesh.Client {
                 }
 
             var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessageClaim, KeyCollection) as MessageClaim;
-            messageClaim.AssertNotNull(); // should never be null
+            messageClaim.AssertNotNull(InvalidServiceResponse.ThrowNew); // should never be null
 
 
             // Verify request.ServiceAuthenticate & request.AccountAddress

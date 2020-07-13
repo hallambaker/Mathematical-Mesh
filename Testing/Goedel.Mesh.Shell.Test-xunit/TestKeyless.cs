@@ -51,14 +51,14 @@ namespace Goedel.XUnit {
                 if (test.SHA2 != null) {
                     var result = TestCommitmentInt(test.Data, test.Key);
                     Console.WriteLine(result);
-                    result.Digest.AssertEqual(test.SHA2);
+                    result.Digest.TestEqual(test.SHA2);
                     var result2 = TestCommitmentInt(test.Data, test.Key, "sha2");
-                    result.Digest.AssertEqual(result2.Digest);
+                    result.Digest.TestEqual(result2.Digest);
                     }
                 if (test.SHA3 != null) {
                     var result = TestCommitmentInt(test.Data, test.Key, "sha3");
                     Console.WriteLine(result);
-                    result.Digest.AssertEqual(test.SHA3);
+                    result.Digest.TestEqual(test.SHA3);
                     }
                 }
             }
@@ -71,7 +71,7 @@ namespace Goedel.XUnit {
                 foreach (var alg in algs) {
                     var result1 = TestCommitmentInt(test.Data, alg: alg);
                     var result2 = TestCommitmentInt(test.Data, result1.Key, alg: alg);
-                    result1.Digest.AssertEqual(result2.Digest);
+                    result1.Digest.TestEqual(result2.Digest);
                     }
                 }
             }
@@ -82,7 +82,7 @@ namespace Goedel.XUnit {
             var keyClause = key == null ? "" : $" /key {key}";
             var algClause = alg == null ? "" : $" /alg {alg}";
             var result = testCLI.Dispatch($"hash mac {filename}{keyClause}{algClause}") as ResultDigest;
-            result.AssertNotNull();
+            result.TestNotNull();
             return result;
 
             }
@@ -110,10 +110,10 @@ namespace Goedel.XUnit {
                 var result = testCLI.Dispatch($"key nonce{bitsClause}") as ResultKey; ;
                 var random = result.Key;
                 var randomData = UDF.Nonce(random);
-                randomData.Length.AssertEqual(bits / 8);
+                randomData.Length.TestEqual(bits / 8);
 
-                random.Length.AssertEqual(length);
-                results.Contains(random).AssertFalse();
+                random.Length.TestEqual(length);
+                results.Contains(random).TestFalse();
                 results.Add(random);
                 }
             }
@@ -138,9 +138,9 @@ namespace Goedel.XUnit {
                 var result = testCLI.Dispatch($"key secret{bitsClause}") as ResultKey; ;
                 var random = result.Key;
                 var randomData = UDF.SymmetricKey(random);
-                randomData.Length.AssertEqual(bits / 8);
-                random.Length.AssertEqual(length);
-                results.Contains(random).AssertFalse();
+                randomData.Length.TestEqual(bits / 8);
+                random.Length.TestEqual(length);
+                results.Contains(random).TestFalse();
                 results.Add(random);
                 }
             }
@@ -177,13 +177,13 @@ namespace Goedel.XUnit {
             foreach (var test in UDFTests) {
                 if (test.SHA2 != null) {
                     var result = TestUDFInt(test.Data, test.ContentType);
-                    result.AssertEqual(test.SHA2);
+                    result.TestEqual(test.SHA2);
                     var result2 = TestUDFInt(test.Data, test.ContentType, "sha2");
-                    result.AssertEqual(result2);
+                    result.TestEqual(result2);
                     }
                 if (test.SHA3 != null) {
                     var result = TestUDFInt(test.Data, test.ContentType, "sha3");
-                    result.AssertEqual(test.SHA3);
+                    result.TestEqual(test.SHA3);
                     }
                 }
 
@@ -214,7 +214,7 @@ namespace Goedel.XUnit {
             var contentClause = contentType == null ? "" : $" /cty {contentType}";
             var algClause = alg == null ? "" : $" /alg {alg}";
             var result = testCLI.Dispatch($"hash udf {filename}{contentClause}{algClause}") as ResultDigest;
-            result.AssertNotNull();
+            result.TestNotNull();
             return result.Digest;
 
             }
@@ -236,13 +236,13 @@ namespace Goedel.XUnit {
             foreach (var test in DigestTests) {
                 if (test.SHA2 != null) {
                     var result = TestDigestInt(test.Data);
-                    result.AssertEqual(test.SHA2.ToUpper());
+                    result.TestEqual(test.SHA2.ToUpper());
                     var result2 = TestDigestInt(test.Data, "sha2");
-                    result.AssertEqual(result2);
+                    result.TestEqual(result2);
                     }
                 if (test.SHA3 != null) {
                     var result = TestDigestInt(test.Data, "sha3");
-                    result.AssertEqual(test.SHA3.ToUpper());
+                    result.TestEqual(test.SHA3.ToUpper());
                     }
                 }
             }
@@ -252,7 +252,7 @@ namespace Goedel.XUnit {
             var filename = content.ToFileUnique();
             var algClause = alg == null ? "" : $" /alg {alg}";
             var result = testCLI.Dispatch($"hash digest {filename}{algClause}") as ResultDigest;
-            result.AssertNotNull();
+            result.TestNotNull();
             return result.Digest;
 
             }

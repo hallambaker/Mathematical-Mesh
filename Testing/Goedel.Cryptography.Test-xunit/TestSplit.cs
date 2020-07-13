@@ -29,14 +29,14 @@ namespace Goedel.XUnit {
             var udf = secret.UDFKey;
 
             var secret2 = new SharedSecret(secret.Key);
-            secret2.UDFKey.AssertEqual(udf);
+            secret2.UDFKey.TestEqual(udf);
 
             var key = UDF.SymmetricKey(udf);
-            key.AssertEqual(secret.Key);
+            key.TestEqual(secret.Key);
 
             var secret3 = new SharedSecret(udf);
-            secret3.Key.AssertEqual(secret.Key);
-            secret3.UDFKey.AssertEqual(udf);
+            secret3.Key.TestEqual(secret.Key);
+            secret3.UDFKey.TestEqual(udf);
             }
 
         [Theory]
@@ -54,20 +54,20 @@ namespace Goedel.XUnit {
             var index = 1;
 
             var keyShare = new KeyShareSymmetric(index, data);
-            data.AssertEqual(keyShare.Data);
-            (keyShare.Value >= 0).AssertTrue();
+            data.TestEqual(keyShare.Data);
+            (keyShare.Value >= 0).TestTrue();
 
             var udf = keyShare.UDFKey;
             var keyShare2 = new KeyShareSymmetric(udf);
 
-            keyShare2.Key.AssertEqual(keyShare.Key);
-            keyShare2.UDFKey.AssertEqual(udf);
-            keyShare2.Value.AssertEqual(keyShare.Value);
+            keyShare2.Key.TestEqual(keyShare.Key);
+            keyShare2.UDFKey.TestEqual(udf);
+            keyShare2.Value.TestEqual(keyShare.Value);
 
             var keyShare3 = new KeyShareSymmetric(index, keyShare.Value, data.Length);
-            keyShare3.Key.AssertEqual(keyShare.Key);
-            keyShare3.UDFKey.AssertEqual(udf);
-            keyShare3.Value.AssertEqual(keyShare.Value);
+            keyShare3.Key.TestEqual(keyShare.Key);
+            keyShare3.UDFKey.TestEqual(udf);
+            keyShare3.Value.TestEqual(keyShare.Value);
             }
 
 
@@ -112,8 +112,8 @@ namespace Goedel.XUnit {
 
                 var exponent = BigInteger.Pow(2, i);
                 var prime = SharedSecret.GetPrime(i, out _, out _);
-                prime.IsProbablePrime(256).AssertTrue();
-                (prime > exponent).AssertTrue();
+                prime.IsProbablePrime(256).TestTrue();
+                (prime > exponent).TestTrue();
 
                 //Console.WriteLine($"Check {i} {prime}");
                 }
@@ -126,10 +126,10 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestBigIntconversion() {
             var bigtest1 = (new byte[] { 1, 0, 0, 0 }).BigIntegerBigEndian();
-            (bigtest1 == new BigInteger(0x01000000)).AssertTrue();
+            (bigtest1 == new BigInteger(0x01000000)).TestTrue();
 
             bigtest1 = (new byte[] { 0, 0, 0, 1 }).BigIntegerBigEndian();
-            (bigtest1 == new BigInteger(0x00000001)).AssertTrue();
+            (bigtest1 == new BigInteger(0x00000001)).TestTrue();
 
             }
 

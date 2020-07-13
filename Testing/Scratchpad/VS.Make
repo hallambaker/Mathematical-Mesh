@@ -31,6 +31,7 @@ LinkFiles = \
     Goedel.Cryptography.Test-xunit.dll\
     Goedel.Mesh.Protocol.Test-xunit.dll\
     Goedel.Mesh.Shell.Test-xunit.dll\
+    Goedel.Mesh.Store.Test-xunit.dll\
     Goedel.Mesh.Test-xunit.dll\
     Goedel.Protocol.Test-xunit.dll\
     Goedel.Utilities.Test-xunit.dll\

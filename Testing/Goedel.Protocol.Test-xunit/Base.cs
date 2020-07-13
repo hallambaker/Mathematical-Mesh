@@ -1,5 +1,6 @@
 ﻿using Goedel.Protocol;
 using Goedel.Test.Core;
+using Goedel.Test;
 using Goedel.Utilities;
 
 using System;
@@ -180,9 +181,11 @@ namespace Goedel.XUnit {
         #region // Equality tests
 
         void CheckEqual(MultiInstance First, MultiInstance Second) {
-            Utilities.Assert.True(First.FieldBoolean == Second.FieldBoolean, Goedel.Test.Core.Compare.Throw, "Boolean failed");
+            Utilities.Assert.True(First.FieldBoolean == Second.FieldBoolean, Compare.Throw, "Boolean failed");
             Utilities.Assert.True(First.FieldInteger == Second.FieldInteger, Compare.Throw, "Integer failed");
-            Utilities.Assert.True(First.FieldDateTime.IsEqualTo(Second.FieldDateTime), Compare.Throw, "DateTime failed");
+
+            Utilities.Assert.AssertTrue(First.FieldDateTime.IsEqualTo(Second.FieldDateTime), Compare.ThrowNew);
+
             Utilities.Assert.True(First.FieldString == Second.FieldString, Compare.Throw, "String failed");
             Utilities.Assert.True(First.FieldBinary.IsEqualTo(Second.FieldBinary), Compare.Throw, "Binary failed");
             }
@@ -207,8 +210,8 @@ namespace Goedel.XUnit {
             Utilities.Assert.True(First.ArrayDateTime.Count == Second.ArrayDateTime.Count,
              Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayDateTime.Count; i++) {
-                Utilities.Assert.True(First.ArrayDateTime[i].IsEqualTo(Second.ArrayDateTime[i]),
-                         Compare.Throw, "Boolean Array");
+                First.ArrayDateTime[i].AssertEqual(Second.ArrayDateTime[i],
+                         Compare.ThrowNew);
                 }
 
             Utilities.Assert.True(First.ArrayString.Count == Second.ArrayString.Count,

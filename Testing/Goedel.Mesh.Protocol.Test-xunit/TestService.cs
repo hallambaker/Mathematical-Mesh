@@ -2,6 +2,7 @@ using Goedel.Cryptography;
 using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Protocol;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 using Goedel.IO;
@@ -82,7 +83,7 @@ namespace Goedel.XUnit {
 
             var request = new HelloRequest();
             var response = meshClient.Hello(request, null);
-            response.Success().AssertTrue();
+            response.Success().TestTrue();
             }
 
 
@@ -403,7 +404,7 @@ namespace Goedel.XUnit {
 
             // this should now succeed
             var decrypt2 = contextAccountAlice.DareDecode(envelope, verify: true);
-            decrypt2.IsEqualTo(plaintext).AssertTrue();
+            decrypt2.IsEqualTo(plaintext).TestTrue();
 
             Xunit.Assert.Throws<NoAvailableDecryptionKey>(() =>
               contextAccountBob.DareDecode(envelope, verify: true));
@@ -412,13 +413,13 @@ namespace Goedel.XUnit {
             contextGroup.Add(AccountBob);
 
             var decrypt3 = contextAccountAlice.DareDecode(envelope, verify: true);
-            decrypt3.IsEqualTo(plaintext).AssertTrue();
+            decrypt3.IsEqualTo(plaintext).TestTrue();
 
             // Create a member entry fo Bob
             contextGroup.Delete(AccountBob);
 
             var decrypt4 = contextAccountAlice.DareDecode(envelope, verify: true);
-            decrypt4.IsEqualTo(plaintext).AssertTrue();
+            decrypt4.IsEqualTo(plaintext).TestTrue();
 
             }
 
@@ -428,37 +429,37 @@ namespace Goedel.XUnit {
 
             Verify(first.ActivationAccount, second.ActivationAccount);
             Verify(first.ProfileAccount, second.ProfileAccount);
-            (first.StoresDirectory == second.StoresDirectory).AssertTrue();
-            (first.KeySignatureUDF == second.KeySignatureUDF).AssertTrue();
-            (first.KeyEncryptionUDF == second.KeyEncryptionUDF).AssertTrue();
-            (first.KeyAuthenticationUDF == second.KeyAuthenticationUDF).AssertTrue();
+            (first.StoresDirectory == second.StoresDirectory).TestTrue();
+            (first.KeySignatureUDF == second.KeySignatureUDF).TestTrue();
+            (first.KeyEncryptionUDF == second.KeyEncryptionUDF).TestTrue();
+            (first.KeyAuthenticationUDF == second.KeyAuthenticationUDF).TestTrue();
             return true;
             }
 
         bool Verify(ActivationAccount first, ActivationAccount second) {
             //Verify(first.ConnectionAccount, second.ConnectionAccount);
-            (first.AccountUDF == second.AccountUDF).AssertTrue();
+            (first.AccountUDF == second.AccountUDF).TestTrue();
             return true;
             }
 
         bool Verify(ProfileAccount first, ProfileAccount second) {
-            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
-            (first.MeshProfileUDF == second.MeshProfileUDF).AssertTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
+            (first.MeshProfileUDF == second.MeshProfileUDF).TestTrue();
             return true;
             }
 
         public bool Verify(ConnectionAccount first, ConnectionAccount second) {
-            (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
-            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
-            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
+            (first.KeySignature.UDF == second.KeySignature.UDF).TestTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
+            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).TestTrue();
             return true;
             }
 
 
         public bool Verify(ConnectionDevice first, ConnectionDevice second) {
-            (first.KeySignature.UDF == second.KeySignature.UDF).AssertTrue();
-            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).AssertTrue();
-            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).AssertTrue();
+            (first.KeySignature.UDF == second.KeySignature.UDF).TestTrue();
+            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
+            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).TestTrue();
             return true;
             }
 

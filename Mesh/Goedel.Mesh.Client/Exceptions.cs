@@ -56,6 +56,100 @@ namespace Goedel.Mesh.Client {
 
 
     /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class AccountNotBound : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The Mesh account is not bound to a service.";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public AccountNotBound  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new AccountNotBound(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new AccountNotBound(reason as string);
+				}
+			else {
+				return new AccountNotBound();
+				}
+            }
+        }
+
+
+    /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InvalidServiceResponse : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The Mesh account is not bound to a service.";
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidServiceResponse  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+			}
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new InvalidServiceResponse(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new InvalidServiceResponse(reason as string);
+				}
+			else {
+				return new InvalidServiceResponse();
+				}
+            }
+        }
+
+
+    /// <summary>
     /// No mesh account could be found.
     /// </summary>
     [global::System.Serializable]

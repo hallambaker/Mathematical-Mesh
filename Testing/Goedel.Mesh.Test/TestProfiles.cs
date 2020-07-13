@@ -3,6 +3,7 @@ using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
 using Goedel.Test.Core;
 using Goedel.Utilities;
+using Goedel.Test;
 
 using System.Collections.Generic;
 
@@ -206,21 +207,21 @@ namespace Goedel.Mesh.Test {
                 sorted.Add(entry._PrimaryKey, entry);
                 }
             foreach (var entry in catalog) {
-                sorted.TryGetValue(entry._PrimaryKey, out var test).AssertTrue();
+                sorted.TryGetValue(entry._PrimaryKey, out var test).TestTrue();
                 CheckCatalogEntry(entry, test);
-                sorted.Remove(entry._PrimaryKey).AssertTrue();
+                sorted.Remove(entry._PrimaryKey).TestTrue();
                 }
-            sorted.Count.AssertEqual(0);
+            sorted.Count.TestEqual(0);
 
             }
 
 
         void CheckCatalogEntry(CatalogedEntry Test1, CatalogedEntry Test2) {
             if (Test1 == null) {
-                Test2.AssertNull();
+                Test2.TestNull();
                 }
             else {
-                Test1.ToString().AssertEqual(Test2.ToString());
+                Test1.ToString().TestEqual(Test2.ToString());
                 }
             }
 

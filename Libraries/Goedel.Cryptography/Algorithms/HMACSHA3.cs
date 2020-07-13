@@ -51,7 +51,7 @@ namespace Goedel.Cryptography.Algorithms {
 		public HMACSHA3(byte[] key, int hashBitLength = 512) {
 			Contract.Requires(key != null);
 
-			key.AssertNotNull(NullKeyValue.Throw);
+			key.AssertNotNull(NullKeyValue.ThrowNew);
 			base.HashName = "SHA3Managed";
 
 			base.BlockSizeValue = hashBitLength switch {

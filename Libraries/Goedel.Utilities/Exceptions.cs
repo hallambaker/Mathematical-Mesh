@@ -1,5 +1,6 @@
-﻿using System;
-using Goedel.Utilities;
+﻿
+//using System;
+//using Goedel.Utilities;
 
 
 
@@ -9,47 +10,43 @@ namespace Goedel.Utilities {
     /// <summary>
     /// This feature has not been implemented
     /// </summary>
-    [Serializable]
-	public class NYI : global::System.Exception {
+    [global::System.Serializable]
+	public partial class NYI : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The feature has not been implemented";
 
 		/// <summary>
-        /// Construct instance for exception "The feature has not been implemented"
-        /// </summary>		
-		public NYI () : base ("The feature has not been implemented") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The feature has not been implemented"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public NYI (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public NYI (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public NYI  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new NYI(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new NYI(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new NYI(reason as string);
 				}
 			else {
 				return new NYI();
@@ -61,47 +58,43 @@ namespace Goedel.Utilities {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    [Serializable]
-	public class AssertionFail : global::System.Exception {
+    [global::System.Serializable]
+	public partial class AssertionFail : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Assertion check failed";
 
 		/// <summary>
-        /// Construct instance for exception "Assertion check failed"
-        /// </summary>		
-		public AssertionFail () : base ("Assertion check failed") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Assertion check failed"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public AssertionFail (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public AssertionFail (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public AssertionFail  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new AssertionFail(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new AssertionFail(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new AssertionFail(reason as string);
 				}
 			else {
 				return new AssertionFail();
@@ -113,47 +106,43 @@ namespace Goedel.Utilities {
     /// <summary>
     /// An internal assertion check failed.
     /// </summary>
-    [Serializable]
-	public class Internal : global::System.Exception {
+    [global::System.Serializable]
+	public partial class Internal : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "An internal error occurred";
 
 		/// <summary>
-        /// Construct instance for exception "An internal error occurred"
-        /// </summary>		
-		public Internal () : base ("An internal error occurred") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "An internal error occurred"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public Internal (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public Internal (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public Internal  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new Internal(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new Internal(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new Internal(reason as string);
 				}
 			else {
 				return new Internal();
@@ -165,35 +154,25 @@ namespace Goedel.Utilities {
     /// <summary>
     /// The file could not be read.
     /// </summary>
-    [Serializable]
-	public class FileReadError : global::System.Exception {
+    [global::System.Serializable]
+	public partial class FileReadError : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "The file could not be read";
 
 		/// <summary>
-        /// Construct instance for exception "The file could not be read"
-        /// </summary>		
-		public FileReadError () : base ("The file could not be read") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "The file could not be read"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public FileReadError (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public FileReadError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public FileReadError  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
-		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -217,18 +196,24 @@ namespace Goedel.Utilities {
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new FileReadError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new FileReadError(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new FileReadError(reason as string);
 				}
-			else if (Reason as ExceptionData != null) {
-				return new FileReadError(Reason as ExceptionData);
+			else if (reason as ExceptionData != null) {
+				return new FileReadError(reason as ExceptionData);
 				}
 			else {
 				return new FileReadError();
@@ -241,47 +226,43 @@ namespace Goedel.Utilities {
     /// A call was made to a routine that has not yet been made
     /// 64 bit clean with a value that exceeds the Int32 limits.
     /// </summary>
-    [Serializable]
-	public class Not64Bit : global::System.Exception {
+    [global::System.Serializable]
+	public partial class Not64Bit : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Item too large";
 
 		/// <summary>
-        /// Construct instance for exception "Item too large"
-        /// </summary>		
-		public Not64Bit () : base ("Item too large") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Item too large"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public Not64Bit (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public Not64Bit (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public Not64Bit  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new Not64Bit(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new Not64Bit(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new Not64Bit(reason as string);
 				}
 			else {
 				return new Not64Bit();
@@ -292,35 +273,25 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    [Serializable]
-	public class EnvironmentVariableRequired : global::System.Exception {
+    [global::System.Serializable]
+	public partial class EnvironmentVariableRequired : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "A required environment variable is undefined.";
 
 		/// <summary>
-        /// Construct instance for exception "A required environment variable is undefined."
-        /// </summary>		
-		public EnvironmentVariableRequired () : base ("A required environment variable is undefined.") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "A required environment variable is undefined."
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public EnvironmentVariableRequired (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public EnvironmentVariableRequired (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public EnvironmentVariableRequired  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
-		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
 
 		/// <summary>
         /// Construct instance for exception using a userdata parameter of
@@ -344,18 +315,24 @@ namespace Goedel.Utilities {
 
 
 
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+
+        static System.Exception _ThrowNew(object reasons) => new EnvironmentVariableRequired(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new EnvironmentVariableRequired(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new EnvironmentVariableRequired(reason as string);
 				}
-			else if (Reason as ExceptionData != null) {
-				return new EnvironmentVariableRequired(Reason as ExceptionData);
+			else if (reason as ExceptionData != null) {
+				return new EnvironmentVariableRequired(reason as ExceptionData);
 				}
 			else {
 				return new EnvironmentVariableRequired();
@@ -366,47 +343,43 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    [Serializable]
-	public class ExpectedSuccess : global::System.Exception {
+    [global::System.Serializable]
+	public partial class ExpectedSuccess : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Service request failed when it should have succeded";
 
 		/// <summary>
-        /// Construct instance for exception "Service request failed when it should have succeded"
-        /// </summary>		
-		public ExpectedSuccess () : base ("Service request failed when it should have succeded") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Service request failed when it should have succeded"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ExpectedSuccess (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ExpectedSuccess (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ExpectedSuccess  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new ExpectedSuccess(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ExpectedSuccess(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new ExpectedSuccess(reason as string);
 				}
 			else {
 				return new ExpectedSuccess();
@@ -417,47 +390,43 @@ namespace Goedel.Utilities {
 
     /// <summary>
     /// </summary>
-    [Serializable]
-	public class ExpectedError : global::System.Exception {
+    [global::System.Serializable]
+	public partial class ExpectedError : global::Goedel.Utilities.GoedelException {
+
+
+		///<summary>The message template in the current locale.</summary>
+		public static new string MessageTemplate => "Service request succeeded when it should have returned an error";
 
 		/// <summary>
-        /// Construct instance for exception "Service request succeeded when it should have returned an error"
-        /// </summary>		
-		public ExpectedError () : base ("Service request succeeded when it should have returned an error") {
-			}
-        
-		/// <summary>
-        /// Construct instance for exception "Service request succeeded when it should have returned an error"
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		public ExpectedError (string Description) : base (Description) {
-			}
-
-		/// <summary>
-        /// Construct instance for exception 		/// containing an inner exception.
-        /// </summary>		
-        /// <param name="Description">Description of the error</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ExpectedError (string Description, System.Exception Inner) : 
-				base (Description, Inner) {
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public ExpectedError  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
 			}
 
+
+
+
 		/// <summary>
-        /// User data associated with the exception.
-        /// </summary>	
-		public object UserData;
+        /// The public fatory delegate
+        /// </summary>
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
 
-
-
+        static System.Exception _ThrowNew(object reasons) => new ExpectedError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object Reason) {
-			if (Reason as string != null) {
-				return new ExpectedError(Reason as string);
+        static System.Exception _Throw(object reason) {
+			if (reason as string != null) {
+				return new ExpectedError(reason as string);
 				}
 			else {
 				return new ExpectedError();

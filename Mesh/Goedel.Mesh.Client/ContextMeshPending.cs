@@ -170,7 +170,8 @@ namespace Goedel.Mesh.Client {
 
             // Check the return result here!
 
-            respondConnection.Result.AssertEqual(Constants.TransactionResultAccept);
+            respondConnection.Result.AssertEqual(Constants.TransactionResultAccept,
+                    ConnectionException.ThrowNew);
 
             var catalogedEntry = respondConnection.CatalogedDevice;
             var profileMaster = catalogedEntry.ProfileMesh;

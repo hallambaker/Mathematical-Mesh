@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Xunit;
 using Goedel.Cryptography.Jose;
 using Goedel.Mesh;
+using Goedel.Test;
 
 #pragma warning disable IDE0059
 
@@ -151,8 +152,8 @@ namespace Goedel.XUnit {
             var t2 = c12priv.Public.Public;
 
 
-            t1.U.AssertEqual(t2.U);
-            t1.V.AssertEqual(t2.V);
+            t1.U.TestEqual(t2.U);
+            t1.V.TestEqual(t2.V);
             }
 
 
@@ -176,7 +177,7 @@ namespace Goedel.XUnit {
             Console.WriteLine($"{UdfAlgorithmIdentifier}:  {udf} -> {keypair.KeyIdentifier}");
 
 
-            (keypair.KeyIdentifier == ResultUDF).AssertTrue();
+            (keypair.KeyIdentifier == ResultUDF).TestTrue();
             }
 
 
@@ -189,8 +190,8 @@ namespace Goedel.XUnit {
         public bool Test(KeyUses keyUses, KeyPair privateKey, KeyPair publicKey = null) {
             publicKey ??= privateKey.KeyPairPublic();
 
-            (keyUses == publicKey.KeyUses).AssertTrue(Reason: "Missmateched Key use");
-            (keyUses == privateKey.KeyUses).AssertTrue(Reason: "Missmateched Key use");
+            (keyUses == publicKey.KeyUses).TestTrue();
+            (keyUses == privateKey.KeyUses).TestTrue();
 
             return keyUses switch
                 {
@@ -212,7 +213,7 @@ namespace Goedel.XUnit {
 
             var result = publicKey.Verify(message, signature);
 
-            result.AssertTrue(Reason: "Failed to verify signature under public key");
+            result.TestTrue();
             return result;
             }
 
@@ -225,7 +226,7 @@ namespace Goedel.XUnit {
             // check the signature with the public
 
             var decrypt = privateKey.Decrypt(exchange, ephemeral);
-            decrypt.AssertEqual(plaintext, Reason: "Decrypted value does not equal encrypted");
+            decrypt.TestEqual(plaintext);
 
             return true;
 
@@ -282,9 +283,9 @@ namespace Goedel.XUnit {
             Console.WriteLine($" ResultEncrypt = \"{publicEncrypt.KeyIdentifier}\",");
             Console.WriteLine($" ResultAuthenticate = \"{publicAuthenticate.KeyIdentifier}\"");
 
-            (privateSign.KeyIdentifier == ResultSign).AssertTrue();
-            (publicEncrypt.KeyIdentifier == ResultEncrypt).AssertTrue();
-            (publicAuthenticate.KeyIdentifier == ResultAuthenticate).AssertTrue();
+            (privateSign.KeyIdentifier == ResultSign).TestTrue();
+            (publicEncrypt.KeyIdentifier == ResultEncrypt).TestTrue();
+            (publicAuthenticate.KeyIdentifier == ResultAuthenticate).TestTrue();
 
             }
 

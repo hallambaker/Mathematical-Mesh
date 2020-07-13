@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using Goedel.Mesh.Shell;
 using Goedel.Utilities;
+using Goedel.Test;
 
 #pragma warning disable IDE0059
 
@@ -162,7 +163,7 @@ namespace Goedel.XUnit {
 
             var AliceDevice2Sync = testCLIAlice2.ExampleNoCatch($"device complete");
             var MalletDevice2Sync = testCLIMallet1.Example($"device complete");
-            MalletDevice2Sync[0].Result.Success.AssertEqual(false);
+            MalletDevice2Sync[0].Result.Success.TestFalse();
 
 
             }

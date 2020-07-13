@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol.Debug\Goedel.Protocol.Debug.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Protocol\Goedel.Protocol.csproj" />
     <ProjectReference Include="..\..\Libraries\Goedel.Test.Core\Goedel.Test.Core.csproj" />
+    <ProjectReference Include="..\..\Libraries\Goedel.Test\Goedel.Test.csproj" />
   </ItemGroup>
 
 </Project>

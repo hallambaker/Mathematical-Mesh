@@ -22,8 +22,8 @@ LinkFiles = \
     Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.dll\
     Goedel.Test.Core.dll\
-    Goedel.Mesh.Core.dll\
     Goedel.Mesh.Client.dll\
+    Goedel.Mesh.Core.dll\
     Goedel.Mesh.Server.dll\
     Goedel.Mesh.dll
 

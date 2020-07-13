@@ -2,6 +2,40 @@
 Namespace Goedel.Test
 
 
+	Exception TestFailed
+        Console "A test check failed."
+		Description
+			|An test validation check failed.
+
+		Exception TestExpectedNotNull
+			Console "The test expected non-null value"
+			Description
+				|An test validation check failed.
+
+		Exception TestExpectedNull
+			Console "The test expected null value"
+			Description
+				|An test validation check failed.
+
+		Exception TestExpectedTrue
+			Console "The test expected true value"
+			Description
+				|An test validation check failed.
+
+		Exception TestExpectedFalse
+			Console "The test expected false value"
+			Description
+				|An test validation check failed.
+
+		Exception TestExpectedEqual
+			Console "The test expected values would be equal"
+			Description
+				|An test validation check failed.
+
+		Exception TestExpectedArraysEqual
+			Console "The test expected arrays would be equal"
+			Description
+				|An test validation check failed.
 
 
 	Exception Compare

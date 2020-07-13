@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Test.Core;
+using Goedel.Test;
 using Goedel.Utilities;
 
 using System.Collections.Generic;
@@ -124,7 +125,7 @@ namespace Goedel.XUnit {
 
             var Result = Provider.ProcessData(Message.ToBytes());
 
-            Result.AssertEqual(Digest);
+            Result.TestEqual(Digest);
             }
 
 
@@ -135,7 +136,7 @@ namespace Goedel.XUnit {
             Encoder.Complete();
             var Result = Encoder.Integrity;
 
-            Result.AssertEqual(Digest);
+            Result.TestEqual(Digest);
             }
 
         }

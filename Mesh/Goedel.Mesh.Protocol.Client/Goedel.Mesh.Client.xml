@@ -1488,6 +1488,58 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Client.AccountNotBound">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.AccountNotBound.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.AccountNotBound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotBound.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotBound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.InvalidServiceResponse">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.InvalidServiceResponse.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.InvalidServiceResponse.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Client.AccountNotFound">
             <summary>
             No mesh account could be found.

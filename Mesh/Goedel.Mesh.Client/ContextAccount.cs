@@ -81,9 +81,12 @@ namespace Goedel.Mesh.Client {
             KeyDeviceEncryption = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceEncrypt);
             KeyDeviceAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
-            KeySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF);
-            KeyDeviceEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF);
-            KeyDeviceAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF);
+            KeySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF,
+                KeyActivationFailed.ThrowNew);
+            KeyDeviceEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF,
+                KeyActivationFailed.ThrowNew);
+            KeyDeviceAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF,
+                KeyActivationFailed.ThrowNew);
 
             KeyCollection.Add(KeyDeviceEncryption);
 
@@ -296,7 +299,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The account service address.</returns>
         public override string GetAccountAddress() {
-            ProfileAccount.AccountAddresses.AssertNotNull();
+            ProfileAccount.AccountAddresses.AssertNotNull(AccountNotBound.ThrowNew);
             (ProfileAccount.AccountAddresses.Count > 0).AssertTrue();
 
             return ProfileAccount.AccountAddresses[0];
@@ -794,7 +797,7 @@ namespace Goedel.Mesh.Client {
                         break;
                         }
                     case ReplyContact replyContact: {
-                        results.Add(ProcessAutomatic(replyContact));
+                        results.Add(ProcessAutomatic(replyContact, false));
                         break;
                         }
                     case GroupInvitation groupInvitation: {
@@ -849,25 +852,27 @@ namespace Goedel.Mesh.Client {
         /// <param name="accept">Accept the requested action.</param>
         /// <param name="authorize">If true, the action is explicitly authorized.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept=true,
+        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept = true,
                         bool authorize = false) {
 
             // check response pin here 
             var messagePin = GetMessagePIN(replyContact.PinUDF);
 
             var result = MessagePIN.ValidatePin(messagePin,
-                    AccountAddress, 
+                    AccountAddress,
                     replyContact.AuthenticatedData,
                     replyContact.ClientNonce,
                     replyContact.PinWitness);
+
+            if (!(messagePin.Automatic | accept)) {
+                return new PINNotAutomatic();
+                }
 
             if (!(result is MessagePIN)) {
                 return result;
                 }
 
-            if (accept) {
-                GetCatalogContact().Add(replyContact.AuthenticatedData);
-                }
+            GetCatalogContact().Add(replyContact.AuthenticatedData);
 
             return null;
             }

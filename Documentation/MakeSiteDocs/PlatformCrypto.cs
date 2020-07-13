@@ -73,7 +73,7 @@ namespace ExampleGenerator {
 
             var prime = BigInteger.Pow(2, 32) + 15;
             var result = Shared.CombineNT(KeyShares, DomainParameters.Curve25519.Q, 3);
-            (result == 1234).AssertTrue();
+            (result == 1234).TestTrue();
             }
 
         }
@@ -164,12 +164,12 @@ namespace ExampleGenerator {
             var publicRab = publicRa.Add(publicRb);
             var publicRba = publicRb.Add(publicRa);
 
-            (publicRab == publicRba).AssertTrue();
-            (publicRab == publicR).AssertTrue();
+            (publicRab == publicRba).TestTrue();
+            (publicRab == publicR).TestTrue();
 
             // Check that S = Sa + Sb Mod Q 
             var SSab = (SSa + SSb).Mod(DomainParameters.Curve25519.Q);
-            (S == SSab).AssertTrue();
+            (S == SSab).TestTrue();
 
             var privateKey1 = (Edwards1.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
             var privateKey2 = (Edwards2.IKeyAdvancedPrivate as CurveEdwardsPrivate).Private;
@@ -184,7 +184,7 @@ namespace ExampleGenerator {
 
             // check the (adjusted) private key shares equal the master key.
             var privateKey12 = (privateKey1+ privateKey2).Mod(Modulus);
-            (privateKey.Mod(Modulus) == privateKey12).AssertTrue();
+            (privateKey.Mod(Modulus) == privateKey12).TestTrue();
 
             // Check that public key A + B = Aggregate;
             var publicKey1 = (Edwards1.IKeyAdvancedPublic as CurveEdwardsPublic).PublicKey as CurveEdwards25519;
@@ -194,18 +194,18 @@ namespace ExampleGenerator {
             if (La == 1) {
                 // If doing unanimous Check the public components add up.
                 var publicKey12 = publicKey1.Add(publicKey2);
-                (PublicSignatureKey == publicKey12).AssertTrue();
+                (PublicSignatureKey == publicKey12).TestTrue();
 
 
                 // Check the value of the first threshold contribution is correct
                 var SBa = CurveEdwards25519.Base.Multiply(SSa);
                 var kA1 = publicKey1.Multiply(K);
                 var RkA1 = publicRa.Add(kA1);
-                (SBa == RkA1).AssertTrue();
+                (SBa == RkA1).TestTrue();
                 }
 
             // Verify that S.B = R + S.A;
-            PublicSignatureKey.Verify(K, S, publicR).AssertTrue();
+            PublicSignatureKey.Verify(K, S, publicR).TestTrue();
 
             }
 
@@ -282,7 +282,7 @@ namespace ExampleGenerator {
 
             var keyShares = EdwardsAggregate.Split(3, 2, out var polynomial);
 
-            (keyShares[0].Prime == Modulus).AssertTrue();
+            (keyShares[0].Prime == Modulus).TestTrue();
 
 
             A0 = polynomial[0];
@@ -300,20 +300,20 @@ namespace ExampleGenerator {
             Xc = keyShares[2].Index;
             Yc = keyShares[2].Value;
 
-            (Xa == 1).AssertTrue();
-            (Xb == 2).AssertTrue();
-            (Xc == 3).AssertTrue();
+            (Xa == 1).TestTrue();
+            (Xb == 2).TestTrue();
+            (Xc == 3).TestTrue();
 
 
             // check the calculation of Fa
             var checkfa = (A0 + (Xa * A1)).Mod(Modulus);
-            (checkfa == Ya).AssertTrue();
+            (checkfa == Ya).TestTrue();
 
             var checkfb = (A0 + (Xb * A1)).Mod(Modulus);
-            (checkfb == Yb).AssertTrue();
+            (checkfb == Yb).TestTrue();
 
             var checkfc = (A0 + (Xc * A1)).Mod(Modulus);
-            (checkfc == Yc).AssertTrue();
+            (checkfc == Yc).TestTrue();
 
 
             // create the recovery shares for the first and third shares
@@ -342,7 +342,7 @@ namespace ExampleGenerator {
             var litestinv = (l1den * l1deninv).Mod(Modulus);
             //Console.WriteLine($" litestinv = {litestinv}");
 
-            (l1test == La).AssertTrue();
+            (l1test == La).TestTrue();
 
             // check calculation of the lagrange point Lc - x = 3
             var l2num = (-1)% Modulus;
@@ -350,7 +350,7 @@ namespace ExampleGenerator {
             var l2deninv = ModInverse(l2den, Modulus);
             var l2test = (l2num * l2deninv).Mod(Modulus);
 
-            (l2test == Lc).AssertTrue();
+            (l2test == Lc).TestTrue();
 
 
 
@@ -360,7 +360,7 @@ namespace ExampleGenerator {
 
             // check the (adjusted) private key shares equal the master key.
             var Sac = (Sa + Sc).Mod(Modulus);
-            (A0.Mod(Modulus) == Sac).AssertTrue();
+            (A0.Mod(Modulus) == Sac).TestTrue();
 
 
             Edwards1 = KeyPairECDH.KeyPairFactory(cryptoAlgorithmID, Ya) as KeyPairEdwards;
@@ -864,7 +864,7 @@ namespace ExampleGenerator {
             var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
             plaintextStream.CopyTo(output);
             decrypt = output.ToArray();
-            decrypt.IsEqualTo(plaintext).AssertTrue();
+            decrypt.IsEqualTo(plaintext).TestTrue();
 
             }
 

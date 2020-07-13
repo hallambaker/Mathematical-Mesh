@@ -322,7 +322,7 @@ namespace Goedel.Mesh {
         /// <param name="catalogEntry">The entry to add.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void New(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
-            encryptionKey.AssertNull(); // for later use
+            encryptionKey.AssertNull(NYI.ThrowNew); // for later use
 
             var catalogUpdate = new CatalogUpdate(this, CatalogAction.New, catalogEntry);
             Transact(this, new List<CatalogUpdate> { catalogUpdate });
@@ -335,7 +335,7 @@ namespace Goedel.Mesh {
         /// <param name="catalogEntry">The entry to update.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void Update(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
-            encryptionKey.AssertNull(); // for later use
+            encryptionKey.AssertNull(NYI.ThrowNew); // for later use
 
 
             var catalogUpdate = new CatalogUpdate(this, CatalogAction.Update, catalogEntry);

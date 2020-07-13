@@ -187,18 +187,18 @@ namespace Goedel.Mesh.Client {
                     ProfileDevice profileDevice, 
                     ActivationDevice activationDevice) {
 
-            profileMesh.AssertNotNull(Internal.Throw);
-            profileMesh.DareEnvelope.AssertNotNull(Internal.Throw);
-            profileDevice.AssertNotNull(Internal.Throw);
-            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+            profileMesh.AssertNotNull(Internal.ThrowNew);
+            profileMesh.DareEnvelope.AssertNotNull(Internal.ThrowNew);
+            profileDevice.AssertNotNull(Internal.ThrowNew);
+            profileDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
 
-            activationDevice.AssertNotNull(Internal.Throw);
+            activationDevice.AssertNotNull(Internal.ThrowNew);
             activationDevice.Package(keyAdministratorSignature);
-            activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+            activationDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
 
             var connectionDevice = activationDevice.ConnectionDevice;
-            connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
+            connectionDevice.AssertNotNull(Internal.ThrowNew);
+            connectionDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
 
             // Wrap the connectionDevice and activationDevice in envelopes
 

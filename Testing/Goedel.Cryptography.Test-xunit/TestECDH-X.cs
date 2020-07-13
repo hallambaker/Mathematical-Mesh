@@ -2,7 +2,7 @@
 using Goedel.Cryptography.Dare;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
-
+using Goedel.Test;
 using System.Numerics;
 
 using Xunit;
@@ -61,10 +61,10 @@ namespace Goedel.XUnit {
 
             keypair.KeyIdentifier.Equals(decoding.KeyIdentifier);
 
-            keypair.PublicKey.Public.AssertEqual(decoding.PublicKey.Public);
-            keypair.PublicKey.Public.U.AssertEqual(decoding.PublicKey.Public.U);
-            keypair.PublicKey.Public.V.AssertEqual(decoding.PublicKey.Public.V);
-            keypair.PublicKey.Public.Odd.AssertEqual(decoding.PublicKey.Public.Odd);
+            keypair.PublicKey.Public.TestEqual(decoding.PublicKey.Public);
+            keypair.PublicKey.Public.U.TestEqual(decoding.PublicKey.Public.U);
+            keypair.PublicKey.Public.V.TestEqual(decoding.PublicKey.Public.V);
+            keypair.PublicKey.Public.Odd.TestEqual(decoding.PublicKey.Public.Odd);
 
             return true;
             }
@@ -79,10 +79,10 @@ namespace Goedel.XUnit {
                         "606362").DecimalToBigInteger();
 
             // check Curve 25519 base point has the correct V
-            (CurveX25519.Base.GetV(true) == v25519).AssertTrue();
+            (CurveX25519.Base.GetV(true) == v25519).TestTrue();
 
             // check Curve 448 base point has the correct V
-            (CurveX448.Base.GetV(false) == v448).AssertTrue();
+            (CurveX448.Base.GetV(false) == v448).TestTrue();
             }
 
 
@@ -102,12 +102,12 @@ namespace Goedel.XUnit {
             var inputPoint = new CurveX25519(inputCoordinateU);
             var outputPoint = new CurveX25519(outputCoordinateU);
 
-            (decodedScalar == inputScalarInteger).AssertTrue();
-            (inputCoordinateUInteger == inputPoint.U).AssertTrue();
+            (decodedScalar == inputScalarInteger).TestTrue();
+            (inputCoordinateUInteger == inputPoint.U).TestTrue();
 
             var output = inputPoint.ScalarMultiply(decodedScalar);
 
-            (output == outputPoint.U).AssertTrue();
+            (output == outputPoint.U).TestTrue();
             }
 
         [Fact]
@@ -128,12 +128,12 @@ namespace Goedel.XUnit {
             var inputPoint = new CurveX25519(inputCoordinateU);
             var outputPoint = new CurveX25519(outputCoordinateU);
 
-            (decodedScalar == inputScalarInteger).AssertTrue();
-            (inputCoordinateUInteger == inputPoint.U).AssertTrue();
+            (decodedScalar == inputScalarInteger).TestTrue();
+            (inputCoordinateUInteger == inputPoint.U).TestTrue();
 
             var output = inputPoint.ScalarMultiply(decodedScalar);
 
-            (output == outputPoint.U).AssertTrue();
+            (output == outputPoint.U).TestTrue();
 
             }
 
@@ -151,10 +151,10 @@ namespace Goedel.XUnit {
             for (var i = 1; i <= 1000; i++) {
                 Test22519(ref k, ref u);
                 if (i == 1) {
-                    Utilities.Assert.AssertEqual(k, iter1e0);
+                    k.TestEqual( iter1e0);
                     }
                 if (i == 1000) {
-                    Utilities.Assert.AssertEqual(k, iter1e3);
+                    k.TestEqual(iter1e3);
                     }
                 }
             }
@@ -192,12 +192,12 @@ namespace Goedel.XUnit {
             var inputPoint = new CurveX448(inputCoordinateU);
             var outputPoint = new CurveX448(outputCoordinateU);
 
-            (decodedScalar == inputScalarInteger).AssertTrue();
-            (inputCoordinateUInteger == inputPoint.U).AssertTrue();
+            (decodedScalar == inputScalarInteger).TestTrue();
+            (inputCoordinateUInteger == inputPoint.U).TestTrue();
 
             var output = inputPoint.ScalarMultiply(decodedScalar);
 
-            (output == outputPoint.U).AssertTrue();
+            (output == outputPoint.U).TestTrue();
             }
 
         [Fact]
@@ -222,12 +222,12 @@ namespace Goedel.XUnit {
             var inputPoint = new CurveX448(inputCoordinateU);
             var outputPoint = new CurveX448(outputCoordinateU);
 
-            (decodedScalar == inputScalarInteger).AssertTrue();
-            (inputCoordinateUInteger == inputPoint.U).AssertTrue();
+            (decodedScalar == inputScalarInteger).TestTrue();
+            (inputCoordinateUInteger == inputPoint.U).TestTrue();
 
             var output = inputPoint.ScalarMultiply(decodedScalar);
 
-            (output == outputPoint.U).AssertTrue();
+            (output == outputPoint.U).TestTrue();
 
             }
 
@@ -249,10 +249,10 @@ namespace Goedel.XUnit {
             for (var i = 1; i <= 1000; i++) {
                 Test448(ref k, ref u);
                 if (i == 1) {
-                    Utilities.Assert.AssertEqual(k, iter1e0);
+                    k.TestEqual(iter1e0);
                     }
                 if (i == 1000) {
-                    Utilities.Assert.AssertEqual(k, iter1e3);
+                    k.TestEqual(iter1e3);
                     }
                 }
             }
@@ -291,16 +291,16 @@ namespace Goedel.XUnit {
             var checkA = CurveX25519.Base.Multiply(scalarA);
             var checkB = CurveX25519.Base.Multiply(scalarB);
 
-            (checkA == pointA).AssertTrue();
-            (checkB == pointB).AssertTrue();
+            (checkA == pointA).TestTrue();
+            (checkB == pointB).TestTrue();
 
             var agreeAB = pointA.Multiply(scalarB);
             var agreeBA = pointB.Multiply(scalarA);
 
 
-            (agreeAB == agreeBA).AssertTrue(String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeAB.Encode(), String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeBA.Encode(), String: "Unexpected agreement value");
+            (agreeAB == agreeBA).TestTrue();
+            k.TestEqual(agreeAB.Encode());
+            k.TestEqual(agreeBA.Encode());
 
             // test using key pairs
 
@@ -332,16 +332,16 @@ namespace Goedel.XUnit {
             var checkA = CurveX448.Base.Multiply(scalarA);
             var checkB = CurveX448.Base.Multiply(scalarB);
 
-            (checkA == pointA).AssertTrue();
-            (checkB == pointB).AssertTrue();
+            (checkA == pointA).TestTrue();
+            (checkB == pointB).TestTrue();
 
             var agreeAB = pointA.Multiply(scalarB);
             var agreeBA = pointB.Multiply(scalarA);
 
 
-            (agreeAB == agreeBA).AssertTrue(String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeAB.Encode(), String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeBA.Encode(), String: "Unexpected agreement value");
+            (agreeAB == agreeBA).TestTrue();
+            k.TestEqual(agreeAB.Encode());
+            k.TestEqual(agreeBA.Encode());
 
             }
 
@@ -369,9 +369,9 @@ namespace Goedel.XUnit {
             var agreeBA = scalarA.Agreement(pointB);
 
 
-            (agreeAB == agreeBA).AssertTrue(String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeAB.Encode(), String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeBA.Encode(), String: "Unexpected agreement value");
+            agreeAB.TestEqual(agreeBA);
+            k.TestEqual(agreeAB.Encode());
+            k.TestEqual(agreeBA.Encode());
             }
 
 
@@ -402,9 +402,9 @@ namespace Goedel.XUnit {
             var agreeBA = scalarA.Agreement(pointB);
 
 
-            (agreeAB == agreeBA).AssertTrue(String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeAB.Encode(), String: "Unexpected agreement value");
-            Utilities.Assert.AssertEqual(k, agreeBA.Encode(), String: "Unexpected agreement value");
+            agreeAB.TestEqual(agreeBA);
+            k.TestEqual(agreeAB.Encode());
+            k.TestEqual(agreeBA.Encode());
             }
 
 
@@ -430,21 +430,21 @@ namespace Goedel.XUnit {
             
             var u1 = point.Recover(xq1, zq1);
             var u2 = point.Recover(xq2, zq2);
-            (u1 == u2).AssertTrue();
-            (q1.U == u2).AssertTrue();
+            (u1 == u2).TestTrue();
+            (q1.U == u2).TestTrue();
 
             var v0 = point.GetV(u0, true);
             var s = new CurveX448(u0, v0);
             var s1 = s.Add(point);
 
-            (s1.U == u1).AssertTrue();
+            (s1.U == u1).TestTrue();
 
             var v1a = point.GetV(u1, true);
             var v1b = point.GetV(u1, false);
 
 
             var v1 = point.GetV(u1, !s1.V.IsEven);
-            (s1.V == v1).AssertTrue();
+            (s1.V == v1).TestTrue();
 
 
             var p1 = point.Multiply(part);
@@ -460,8 +460,8 @@ namespace Goedel.XUnit {
             var p3test = point.Multiply(total);
             CheckCurve(p3test);
 
-            (p3.U == p3test.U).AssertTrue();
-            (p3.V == p3test.V).AssertTrue();
+            (p3.U == p3test.U).TestTrue();
+            (p3.V == p3test.V).TestTrue();
             }
 
         [Theory]
@@ -484,21 +484,21 @@ namespace Goedel.XUnit {
 
             var u1 = point.Recover(xq1, zq1);
             var u2 = point.Recover(xq2, zq2);
-            (u1 == u2).AssertTrue();
-            (q1.U == u2).AssertTrue();
+            (u1 == u2).TestTrue();
+            (q1.U == u2).TestTrue();
 
             var v0 = point.GetV(u0, true);
             var s = new CurveX448(u0, v0);
             var s1 = s.Add(point);
 
-            (s1.U == u1).AssertTrue();
+            (s1.U == u1).TestTrue();
 
             var v1a = point.GetV(u1, true);
             var v1b = point.GetV(u1, false);
 
 
             var v1 = point.GetV(u1, !s1.V.IsEven);
-            (s1.V == v1).AssertTrue();
+            (s1.V == v1).TestTrue();
 
 
             var p1 = point.MultiplySigned(part);
@@ -514,8 +514,8 @@ namespace Goedel.XUnit {
             var p3test = point.MultiplySigned(total);
             CheckCurve(p3test);
 
-            (p3.U == p3test.U).AssertTrue();
-            (p3.V == p3test.V).AssertTrue();
+            (p3.U == p3test.U).TestTrue();
+            (p3.V == p3test.V).TestTrue();
             }
 
 
@@ -523,7 +523,7 @@ namespace Goedel.XUnit {
             bool? odd = ((curve.V) & 1) == 1;
             var vtest = curve.GetV(odd);
 
-            (curve.V == vtest).AssertTrue();
+            (curve.V == vtest).TestTrue();
             }
 
         /// <summary></summary>
@@ -539,7 +539,7 @@ namespace Goedel.XUnit {
                 var AgreeAB = KeyA.Agreement(KeyB.Public);
                 var AgreeBA = KeyB.Agreement(KeyA.Public);
 
-                (AgreeAB == AgreeBA).AssertTrue();
+                (AgreeAB == AgreeBA).TestTrue();
                 }
             }
 
@@ -556,7 +556,7 @@ namespace Goedel.XUnit {
                 var AgreeAB = KeyA.Agreement(KeyB.Public);
                 var AgreeBA = KeyB.Agreement(KeyA.Public);
 
-                (AgreeAB == AgreeBA).AssertTrue();
+                (AgreeAB == AgreeBA).TestTrue();
                 }
             }
 
@@ -569,7 +569,7 @@ namespace Goedel.XUnit {
         [InlineData(100)]
         public void X25519AgreeRecryption(int count) {
             for (int i = 0; i < count; i++) {
-                TryX25519AgreeRecryption().AssertTrue();
+                TryX25519AgreeRecryption().TestTrue();
                 }
             }
 

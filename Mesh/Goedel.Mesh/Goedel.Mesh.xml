@@ -3248,6 +3248,32 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.InvalidMessage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.InvalidMessage.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.InvalidMessage.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidMessage.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidMessage.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.InvalidUri">
             <summary>
             The specified connection URI was invalid
@@ -3271,6 +3297,84 @@
             </summary>
         </member>
         <member name="F:Goedel.Mesh.InvalidUri.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.InvalidDate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.InvalidDate.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.InvalidDate.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidDate.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidDate.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.KeyRecoveryFailed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyRecoveryFailed.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyRecoveryFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.KeyRecoveryFailed.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.KeyRecoveryFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.KeyActivationFailed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.KeyActivationFailed.MessageTemplate">
+            <summary>The message template in the current locale.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.KeyActivationFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.KeyActivationFailed.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.KeyActivationFailed.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -4586,6 +4690,12 @@
             <summary>Always false for an error result.</summary>
         </member>
         <member name="P:Goedel.Mesh.ProcessResultError.ErrorReport">
+            <summary>The error report code</summary>
+        </member>
+        <member name="T:Goedel.Mesh.PINNotAutomatic">
+            <summary>Invalid PIN result.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.PINNotAutomatic.ErrorReport">
             <summary>The error report code</summary>
         </member>
         <member name="T:Goedel.Mesh.InvalidPIN">

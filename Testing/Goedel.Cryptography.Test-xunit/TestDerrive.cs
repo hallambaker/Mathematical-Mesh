@@ -1,7 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Test.Core;
 using Goedel.Utilities;
-
+using Goedel.Test;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -123,8 +123,8 @@ namespace Goedel.XUnit {
 
             Debug.WriteLine("PRK = {0}", KDF.PRK.ToStringBase16());
 
-            KDF.PRK.AssertEqual(Result_PRK);
-            OKM.AssertEqual(Result_OKM);
+            KDF.PRK.TestEqual(Result_PRK);
+            OKM.TestEqual(Result_OKM);
             }
 
 
