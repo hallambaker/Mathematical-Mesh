@@ -4,24 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Protocol {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				Dechunking.ThrowNew,
-				UnknownOperation.ThrowNew,
-				MessageTooBig.ThrowNew,
-				ConnectionFail.ThrowNew,
-				CannotCreateAbstract.ThrowNew,
-				UnknownTag.ThrowNew,
-				TagRequired.ThrowNew,
-				InvalidInput.ThrowNew,
-				BadPartLength.ThrowNew,
-				StreamMarkerError.ThrowNew,
-				DictionaryInitialization.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -63,7 +49,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Dechunking(args:reasons) ;
 		
@@ -115,7 +101,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UnknownOperation(args:reasons) ;
 		
@@ -167,7 +153,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MessageTooBig(args:reasons) ;
 		
@@ -219,7 +205,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionFail(args:reasons) ;
 		
@@ -271,7 +257,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new CannotCreateAbstract(args:reasons) ;
 		
@@ -323,7 +309,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UnknownTag(args:reasons) ;
 		
@@ -375,7 +361,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TagRequired(args:reasons) ;
 		
@@ -427,7 +413,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidInput(args:reasons) ;
 		
@@ -479,7 +465,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new BadPartLength(args:reasons) ;
 		
@@ -531,7 +517,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new StreamMarkerError(args:reasons) ;
 		
@@ -582,7 +568,7 @@ namespace Goedel.Protocol {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new DictionaryInitialization(args:reasons) ;
 		

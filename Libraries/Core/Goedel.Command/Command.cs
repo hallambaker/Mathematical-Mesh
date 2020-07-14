@@ -80,7 +80,7 @@ namespace Goedel.Command {
                         }
                     case CommandLex.Token.Flag: {
                         var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue;
-                        Assert.AssertNotNull(Entry, UnknownOption.ThrowNew);
+                        Assert.AssertNotNull(Entry, UnknownOption.Throw);
                         var Data = Options._Data[Entry.Index];
                         if ((i + 1 < Args.Length) && !IsFlagged(Args[i + 1])) {
                             i++;
@@ -98,7 +98,7 @@ namespace Goedel.Command {
                         }
                     case CommandLex.Token.FlagValue: {
                         var Entry = Match(Describe.Entries, CommandLex.Flag) as DescribeEntryValue; ;
-                        Assert.AssertNotNull(Entry, UnknownOption.ThrowNew);
+                        Assert.AssertNotNull(Entry, UnknownOption.Throw);
 
                         SetValue(Options._Data[Entry.Index], CommandLex.Value);
 
@@ -179,15 +179,15 @@ namespace Goedel.Command {
             // as the input.
 
             if (Args.Length == 0) {
-                Assert.AssertNotNull(DefaultCommand, UnknownCommand.ThrowNew);
+                Assert.AssertNotNull(DefaultCommand, UnknownCommand.Throw);
                 DefaultCommand.HandleDelegate(Dispatch, Args, Index);
                 return;
                 }
 
-            Assert.AssertTrue(Index < Args.Length, UnknownCommand.ThrowNew);
+            Assert.AssertTrue(Index < Args.Length, UnknownCommand.Throw);
 
             var Arg = Args[Index];
-            Assert.AssertTrue(Arg.Length > 0, UnknownCommand.ThrowNew); // Should never happen.
+            Assert.AssertTrue(Arg.Length > 0, UnknownCommand.Throw); // Should never happen.
             var Flagged = IsFlagged(Arg);
             var Command = Flagged ? Arg.Substring(1).ToLower() : Arg.ToLower();
 
@@ -197,7 +197,7 @@ namespace Goedel.Command {
                 }
 
             // NYI: no, it could be a default command and an option.
-            Assert.AssertTrue(Entries.TryGetValue(Command, out var DescribeCommand), UnknownCommand.ThrowNew);
+            Assert.AssertTrue(Entries.TryGetValue(Command, out var DescribeCommand), UnknownCommand.Throw);
             if (DescribeCommand is DescribeCommandEntry) {
                 var DescribeCommandEntry = DescribeCommand as DescribeCommandEntry;
                 DescribeCommandEntry.HandleDelegate(Dispatch, Args, Index + 1);

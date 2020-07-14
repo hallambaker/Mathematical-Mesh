@@ -1,4 +1,8 @@
 ﻿
-
-Namespace $safeprojectname$  
+Namespace Goedel.FSR
     
+
+	Exception FsrException
+		Console "An exception occurred in the FSR library"
+		Description
+			|Base class for Finite State Recognizer exceptions.

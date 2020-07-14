@@ -4,49 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Cryptography {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				CryptographicException.ThrowNew,
-				InternalCryptographicException.ThrowNew,
-				MismatchedCurves.ThrowNew,
-				CatalogNotInitialized.ThrowNew,
-				PlatformNotInitialized.ThrowNew,
-				OperationNotSupported.ThrowNew,
-				NoAvailableDecryptionKey.ThrowNew,
-				ImplementationLimit.ThrowNew,
-				InvalidQuorum.ThrowNew,
-				InsufficientShares.ThrowNew,
-				QuorumExceedsShares.ThrowNew,
-				QuorumInsufficient.ThrowNew,
-				SharesInsufficient.ThrowNew,
-				QuorumExceeded.ThrowNew,
-				QuorumDegreeExceeded.ThrowNew,
-				MismatchedShares.ThrowNew,
-				InsufficientResults.ThrowNew,
-				FingerprintMatchFailed.ThrowNew,
-				CipherModeNotSupported.ThrowNew,
-				CryptographicOperationNotSupported.ThrowNew,
-				KeyTypeMismatch.ThrowNew,
-				NoProviderSpecified.ThrowNew,
-				NullKeyValue.ThrowNew,
-				NullParameter.ThrowNew,
-				KeySizeNotSupported.ThrowNew,
-				InitializationFailed.ThrowNew,
-				InsufficientKeySize.ThrowNew,
-				InvalidKeyPairType.ThrowNew,
-				RecryptionShareLimitExceeded.ThrowNew,
-				InvalidOperation.ThrowNew,
-				InvalidAlgorithm.ThrowNew,
-				InvalidPoint.ThrowNew,
-				PrivateKeyNotFound.ThrowNew,
-				UnwrapFailed.ThrowNew,
-				UnknownNamedParameters.ThrowNew,
-				NotExportable.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -88,7 +49,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new CryptographicException(args:reasons) ;
 		
@@ -140,7 +101,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InternalCryptographicException(args:reasons) ;
 		
@@ -192,7 +153,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MismatchedCurves(args:reasons) ;
 		
@@ -244,7 +205,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new CatalogNotInitialized(args:reasons) ;
 		
@@ -296,7 +257,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new PlatformNotInitialized(args:reasons) ;
 		
@@ -348,7 +309,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new OperationNotSupported(args:reasons) ;
 		
@@ -400,7 +361,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NoAvailableDecryptionKey(args:reasons) ;
 		
@@ -453,7 +414,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ImplementationLimit(args:reasons) ;
 		
@@ -505,7 +466,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidQuorum(args:reasons) ;
 		
@@ -558,7 +519,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InsufficientShares(args:reasons) ;
 		
@@ -611,7 +572,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new QuorumExceedsShares(args:reasons) ;
 		
@@ -663,7 +624,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new QuorumInsufficient(args:reasons) ;
 		
@@ -715,7 +676,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new SharesInsufficient(args:reasons) ;
 		
@@ -768,7 +729,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new QuorumExceeded(args:reasons) ;
 		
@@ -821,7 +782,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new QuorumDegreeExceeded(args:reasons) ;
 		
@@ -873,7 +834,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MismatchedShares(args:reasons) ;
 		
@@ -925,7 +886,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InsufficientResults(args:reasons) ;
 		
@@ -978,7 +939,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new FingerprintMatchFailed(args:reasons) ;
 		
@@ -1031,7 +992,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new CipherModeNotSupported(args:reasons) ;
 		
@@ -1084,7 +1045,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new CryptographicOperationNotSupported(args:reasons) ;
 		
@@ -1136,7 +1097,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new KeyTypeMismatch(args:reasons) ;
 		
@@ -1190,7 +1151,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
@@ -1242,7 +1203,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NullKeyValue(args:reasons) ;
 		
@@ -1294,7 +1255,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NullParameter(args:reasons) ;
 		
@@ -1346,7 +1307,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new KeySizeNotSupported(args:reasons) ;
 		
@@ -1399,7 +1360,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InitializationFailed(args:reasons) ;
 		
@@ -1451,7 +1412,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InsufficientKeySize(args:reasons) ;
 		
@@ -1503,7 +1464,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidKeyPairType(args:reasons) ;
 		
@@ -1555,7 +1516,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new RecryptionShareLimitExceeded(args:reasons) ;
 		
@@ -1607,7 +1568,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidOperation(args:reasons) ;
 		
@@ -1659,7 +1620,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidAlgorithm(args:reasons) ;
 		
@@ -1710,7 +1671,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidPoint(args:reasons) ;
 		
@@ -1762,7 +1723,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new PrivateKeyNotFound(args:reasons) ;
 		
@@ -1814,7 +1775,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UnwrapFailed(args:reasons) ;
 		
@@ -1866,7 +1827,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UnknownNamedParameters(args:reasons) ;
 		
@@ -1918,7 +1879,7 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NotExportable(args:reasons) ;
 		

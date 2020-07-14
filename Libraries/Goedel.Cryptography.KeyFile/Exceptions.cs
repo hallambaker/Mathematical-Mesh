@@ -5,18 +5,10 @@
 using Goedel.FSR;
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Cryptography.KeyFile {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				KeyFileException.ThrowNew,
-				NoProviderSpecified.ThrowNew,
-				PrivateKeyNotAvailable.ThrowNew,
-				UnexpectedEnd.ThrowNew,
-				ParseError.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -58,7 +50,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new KeyFileException(args:reasons) ;
 		
@@ -112,7 +104,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
@@ -165,7 +157,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new PrivateKeyNotAvailable(args:reasons) ;
 		
@@ -218,7 +210,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UnexpectedEnd(args:reasons) ;
 		
@@ -270,7 +262,7 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ParseError(args:reasons) ;
 		

@@ -40,7 +40,7 @@ namespace Goedel.Utilities {
                 byte[] buffer,
                 long offset,
                 long count) {
-            Assert.AssertTrue(offset <= Int32.MaxValue & count <= Int32.MaxValue, Not64Bit.ThrowNew);
+            Assert.AssertTrue(offset <= Int32.MaxValue & count <= Int32.MaxValue, Not64Bit.Throw);
             return Stream.Read(buffer, (int)offset, (int)count);
             }
 
@@ -60,7 +60,7 @@ namespace Goedel.Utilities {
             byte[] buffer,
             long offset,
             long count) {
-            Assert.AssertTrue(offset <= Int32.MaxValue & count <= Int32.MaxValue, Not64Bit.ThrowNew);
+            Assert.AssertTrue(offset <= Int32.MaxValue & count <= Int32.MaxValue, Not64Bit.Throw);
             Stream.Write(buffer, (int)offset, (int)count);
             }
 

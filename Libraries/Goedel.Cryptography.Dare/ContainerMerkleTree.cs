@@ -186,10 +186,12 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> headers) {
             int index = 1;
             foreach (var header in headers) {
-                Assert.NotNull(header.ContainerInfo);
+                Assert.AssertNotNull(header.ContainerInfo,
+                        ContainerDataCorrupt.Throw);
 
                 Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);
-                Assert.NotNull(header.PayloadDigest);
+                Assert.AssertNotNull(header.PayloadDigest,
+                        ContainerDataCorrupt.Throw);
 
                 index++;
                 }

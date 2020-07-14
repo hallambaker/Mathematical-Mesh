@@ -4,33 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Mesh.Client {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				Internal.ThrowNew,
-				AccountNotBound.ThrowNew,
-				InvalidServiceResponse.ThrowNew,
-				AccountNotFound.ThrowNew,
-				MeshNotFound.ThrowNew,
-				ConnectionStillPending.ThrowNew,
-				NotAdministrator.ThrowNew,
-				SyncFailed.ThrowNew,
-				Gateway.ThrowNew,
-				NoPortalAccount.ThrowNew,
-				PortalConnectFail.ThrowNew,
-				PublicationRequestRefused.ThrowNew,
-				ConnectionException.ThrowNew,
-				ConnectionRefused.ThrowNew,
-				ConnectionPending.ThrowNew,
-				ConnectionExpired.ThrowNew,
-				ConnectionAccountUnknown.ThrowNew,
-				RefusedPINInvalid.ThrowNew,
-				MessageIdNotFound.ThrowNew,
-				InvalidRecoverySecret.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -72,7 +49,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Internal(args:reasons) ;
 		
@@ -123,7 +100,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new AccountNotBound(args:reasons) ;
 		
@@ -174,7 +151,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidServiceResponse(args:reasons) ;
 		
@@ -226,7 +203,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new AccountNotFound(args:reasons) ;
 		
@@ -276,7 +253,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MeshNotFound(args:reasons) ;
 		
@@ -326,7 +303,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionStillPending(args:reasons) ;
 		
@@ -376,7 +353,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NotAdministrator(args:reasons) ;
 		
@@ -426,7 +403,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new SyncFailed(args:reasons) ;
 		
@@ -478,7 +455,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Gateway(args:reasons) ;
 		
@@ -530,7 +507,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NoPortalAccount(args:reasons) ;
 		
@@ -582,7 +559,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new PortalConnectFail(args:reasons) ;
 		
@@ -634,7 +611,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new PublicationRequestRefused(args:reasons) ;
 		
@@ -686,7 +663,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionException(args:reasons) ;
 		
@@ -738,7 +715,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionRefused(args:reasons) ;
 		
@@ -790,7 +767,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionPending(args:reasons) ;
 		
@@ -842,7 +819,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionExpired(args:reasons) ;
 		
@@ -894,7 +871,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ConnectionAccountUnknown(args:reasons) ;
 		
@@ -946,7 +923,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new RefusedPINInvalid(args:reasons) ;
 		
@@ -997,7 +974,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MessageIdNotFound(args:reasons) ;
 		
@@ -1048,7 +1025,7 @@ namespace Goedel.Mesh.Client {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidRecoverySecret(args:reasons) ;
 		

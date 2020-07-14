@@ -838,10 +838,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.MeshShellException.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.MeshShellException._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.MeshShellException.Throw">
             <summary>
@@ -869,10 +870,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Throw">
             <summary>
@@ -900,10 +902,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.AccountNotFound.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.AccountNotFound._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.AccountNotFound.Throw">
             <summary>
@@ -931,10 +934,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ProfileNotFound.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.ProfileNotFound._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.ProfileNotFound.Throw">
             <summary>
@@ -962,10 +966,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.DirectoryNotFound._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.Throw">
             <summary>
@@ -993,10 +998,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.FileNotFound.ThrowNew">
+        <member name="M:Goedel.Mesh.Shell.FileNotFound._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Shell.FileNotFound.Throw">
             <summary>

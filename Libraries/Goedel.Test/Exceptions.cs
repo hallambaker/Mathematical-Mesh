@@ -4,21 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Test {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				TestFailed.ThrowNew,
-				TestExpectedNotNull.ThrowNew,
-				TestExpectedNull.ThrowNew,
-				TestExpectedTrue.ThrowNew,
-				TestExpectedFalse.ThrowNew,
-				TestExpectedEqual.ThrowNew,
-				TestExpectedArraysEqual.ThrowNew,
-				Compare.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -60,7 +49,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestFailed(args:reasons) ;
 		
@@ -112,7 +101,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedNotNull(args:reasons) ;
 		
@@ -164,7 +153,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedNull(args:reasons) ;
 		
@@ -216,7 +205,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedTrue(args:reasons) ;
 		
@@ -268,7 +257,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedFalse(args:reasons) ;
 		
@@ -320,7 +309,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedEqual(args:reasons) ;
 		
@@ -372,7 +361,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TestExpectedArraysEqual(args:reasons) ;
 		
@@ -424,7 +413,7 @@ namespace Goedel.Test {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Compare(args:reasons) ;
 		

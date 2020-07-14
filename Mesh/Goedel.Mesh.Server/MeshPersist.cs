@@ -263,7 +263,7 @@ namespace Goedel.Mesh.Server {
 
 
             using var accountEntry = GetAccountVerified(account, jpcSession);
-            Assert.NotNull(accountEntry);
+            accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
             if (selfs != null) {
                 foreach (var self in selfs) {
                     accountEntry.Post(self);
@@ -552,7 +552,8 @@ namespace Goedel.Mesh.Server {
         /// <returns></returns>
         AccountHandleVerified GetAccountVerified(VerifiedAccount verifiedAccount, JpcSession jpcSession) {
             var accountEntry = GetAccountLocked(verifiedAccount.AccountAddress);
-            Assert.NotNull(accountEntry);
+            
+            accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
 
             //using (var catalogDevice = new CatalogDevice(accountEntry.Directory, create:false)) {
             //    if (catalogDevice?.ContainerPersistence != null) {
@@ -602,7 +603,7 @@ namespace Goedel.Mesh.Server {
                 lock (Container) {
                     var containerEntry = Container.Get(account) as StoreEntry;
                     result = containerEntry?.JsonObject as AccountEntry;
-                    Assert.NotNull(result);
+                    result.AssertNotNull(MeshUnknownAccount.Throw);
 
                     System.Threading.Monitor.Enter(result, ref locked);
                     return result;

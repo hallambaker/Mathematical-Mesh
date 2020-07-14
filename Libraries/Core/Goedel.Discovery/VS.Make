@@ -20,15 +20,17 @@ MSBuildThisFileDirectory =
 LinkFiles = \
     Goedel.Utilities.dll
 
-ToolTargets = 
+ToolTargets = \
+	Exceptions.cs
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
 
 
 prebuildRecurse : 
-	cd ..\..\Goedel.Discovery && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Goedel.Discovery && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

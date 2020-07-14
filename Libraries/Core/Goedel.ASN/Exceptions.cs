@@ -4,7 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.ASN {
+
+
 
 
     /// <summary>
@@ -13,9 +16,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class ASNDecodingException : global::Goedel.Utilities.GoedelException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "An ASN.1 Decoding exception occurred";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"An ASN.1 Decoding exception occurred"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -26,8 +38,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ASNDecodingException  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -35,23 +49,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ASNDecodingException(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ASNDecodingException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ASNDecodingException(reason as string);
-				}
-			else {
-				return new ASNDecodingException();
-				}
-            }
+
         }
 
 
@@ -61,9 +68,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class Implementation : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Implementation restriction";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Implementation restriction"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -74,8 +90,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public Implementation  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -83,23 +101,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new Implementation(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new Implementation(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new Implementation(reason as string);
-				}
-			else {
-				return new Implementation();
-				}
-            }
+
         }
 
 
@@ -109,9 +120,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class InvalidLength : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Length invalid";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Length invalid"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -122,8 +142,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidLength  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -131,23 +153,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidLength(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidLength(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidLength(reason as string);
-				}
-			else {
-				return new InvalidLength();
-				}
-            }
+
         }
 
 
@@ -157,9 +172,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class IndefiniteLengthInvalid : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Indefinite length not valid";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Indefinite length not valid"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -170,8 +194,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public IndefiniteLengthInvalid  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -179,23 +205,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new IndefiniteLengthInvalid(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new IndefiniteLengthInvalid(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new IndefiniteLengthInvalid(reason as string);
-				}
-			else {
-				return new IndefiniteLengthInvalid();
-				}
-            }
+
         }
 
 
@@ -205,9 +224,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class LengthExceedsInput : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Length exceeds data input";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Length exceeds data input"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -218,8 +246,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public LengthExceedsInput  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -227,23 +257,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new LengthExceedsInput(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new LengthExceedsInput(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new LengthExceedsInput(reason as string);
-				}
-			else {
-				return new LengthExceedsInput();
-				}
-            }
+
         }
 
 
@@ -252,9 +275,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class LengthExceedsStructure : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Length exceeds current structure";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Length exceeds current structure"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -265,8 +297,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public LengthExceedsStructure  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -274,23 +308,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new LengthExceedsStructure(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new LengthExceedsStructure(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new LengthExceedsStructure(reason as string);
-				}
-			else {
-				return new LengthExceedsStructure();
-				}
-            }
+
         }
 
 
@@ -299,9 +326,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class UnExpectedData : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Unexpected Data";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Unexpected Data"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -312,8 +348,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnExpectedData  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -321,23 +359,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnExpectedData(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnExpectedData(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnExpectedData(reason as string);
-				}
-			else {
-				return new UnExpectedData();
-				}
-            }
+
         }
 
 
@@ -346,9 +377,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class ExpectedSequence : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Expected Sequence";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Expected Sequence"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -359,8 +399,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ExpectedSequence  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -368,23 +410,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ExpectedSequence(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ExpectedSequence(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ExpectedSequence(reason as string);
-				}
-			else {
-				return new ExpectedSequence();
-				}
-            }
+
         }
 
 
@@ -393,9 +428,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class ExpectedInteger : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Expected Integer";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Expected Integer"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -406,8 +450,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ExpectedInteger  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -415,23 +461,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ExpectedInteger(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ExpectedInteger(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ExpectedInteger(reason as string);
-				}
-			else {
-				return new ExpectedInteger();
-				}
-            }
+
         }
 
 
@@ -440,9 +479,18 @@ namespace Goedel.ASN {
     [global::System.Serializable]
 	public partial class IntegerOverflow : ASNDecodingException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Integer too large";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Integer too large"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -453,8 +501,10 @@ namespace Goedel.ASN {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public IntegerOverflow  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -462,23 +512,16 @@ namespace Goedel.ASN {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new IntegerOverflow(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new IntegerOverflow(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new IntegerOverflow(reason as string);
-				}
-			else {
-				return new IntegerOverflow();
-				}
-            }
+
         }
 
 

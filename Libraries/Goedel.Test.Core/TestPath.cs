@@ -82,7 +82,7 @@ namespace Goedel.Test.Core {
             TestRoot = Environment.GetEnvironmentVariable(TestPath);
 
 
-            TestRoot.AssertNotNull( EnvironmentVariableRequired.ThrowNew, TestPath);
+            TestRoot.AssertNotNull( EnvironmentVariableRequired.Throw, TestPath);
 
             Directory.CreateDirectory(WorkingDirectory);
             Directory.SetCurrentDirectory(WorkingDirectory);

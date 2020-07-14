@@ -3,7 +3,8 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Company>ThresholdMode.Com</Company>
+    <Company>ThresholdSecrets.Com</Company>
+    <Configurations>Debug;Release;Focus</Configurations>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.Cryptography</Product>
     <Description>Cryptographic support libraries.</Description>

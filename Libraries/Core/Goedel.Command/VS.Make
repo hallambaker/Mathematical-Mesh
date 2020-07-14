@@ -22,15 +22,25 @@ LinkFiles = \
     Goedel.Registry.dll\
     Goedel.Utilities.dll
 
-ToolTargets = 
+ToolTargets = \
+	Exceptions.cs\
+	CommandSplit.cs\
+	CommandLex.cs
+Exceptions.cs : Exceptions.exceptional 
+	exceptional Exceptions.exceptional  /cs  Exceptions.cs
+
+CommandSplit.cs : CommandSplit.fsm 
+	fsrgen CommandSplit.fsm  /cs  CommandSplit.cs
+
+CommandLex.cs : CommandLex.fsm 
+	fsrgen CommandLex.fsm  /cs  CommandLex.cs
+
 
 
 prebuildRecurse : 
-	cd ..\..\Goedel.Command && nmake /c /f VS.make prebuild 
 
 
 postbuildRecurse :
-	cd ..\..\Goedel.Command && nmake /c /f VS.make postbuild 
 
 # Non shared project, nothing to do
 prebuild : prebuildRecurse $(ToolTargets)

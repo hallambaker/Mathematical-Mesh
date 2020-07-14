@@ -3134,10 +3134,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Internal.ThrowNew">
+        <member name="M:Goedel.Mesh.Internal._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Internal.Throw">
             <summary>
@@ -3165,10 +3166,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidProfile.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidProfile._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidProfile.Throw">
             <summary>
@@ -3196,10 +3198,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.NotAuthorized.ThrowNew">
+        <member name="M:Goedel.Mesh.NotAuthorized._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.NotAuthorized.Throw">
             <summary>
@@ -3227,10 +3230,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.NotAuthenticated.ThrowNew">
+        <member name="M:Goedel.Mesh.NotAuthenticated._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.NotAuthenticated.Throw">
             <summary>
@@ -3258,10 +3262,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidMessageID.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidMessageID._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidMessageID.Throw">
             <summary>
@@ -3288,10 +3293,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidMessage.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidMessage._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidMessage.Throw">
             <summary>
@@ -3319,10 +3325,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidUri.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidUri._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidUri.Throw">
             <summary>
@@ -3349,10 +3356,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidDate.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidDate._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidDate.Throw">
             <summary>
@@ -3379,10 +3387,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.KeyRecoveryFailed.ThrowNew">
+        <member name="M:Goedel.Mesh.KeyRecoveryFailed._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.KeyRecoveryFailed.Throw">
             <summary>
@@ -3409,10 +3418,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.KeyActivationFailed.ThrowNew">
+        <member name="M:Goedel.Mesh.KeyActivationFailed._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.KeyActivationFailed.Throw">
             <summary>
@@ -3439,10 +3449,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.InvalidUriMethod.ThrowNew">
+        <member name="M:Goedel.Mesh.InvalidUriMethod._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.InvalidUriMethod.Throw">
             <summary>
@@ -3469,10 +3480,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.ServerOperationFailed.ThrowNew">
+        <member name="M:Goedel.Mesh.ServerOperationFailed._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.ServerOperationFailed.Throw">
             <summary>
@@ -3499,10 +3511,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.ServerResponseInvalid.ThrowNew">
+        <member name="M:Goedel.Mesh.ServerResponseInvalid._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.ServerResponseInvalid.Throw">
             <summary>
@@ -6776,7 +6789,7 @@
             Default constructor
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.MeshResponse.AssertSuccess(Goedel.Utilities.ThrowNewDelegate)">
+        <member name="M:Goedel.Mesh.MeshResponse.AssertSuccess(Goedel.Utilities.ThrowDelegate)">
             <summary>
             Convenience method testing that the response succeeded and throwing the 
             exception <paramref name="throwDelegate"/> or <see cref="T:Goedel.Mesh.ServerOperationFailed"/>

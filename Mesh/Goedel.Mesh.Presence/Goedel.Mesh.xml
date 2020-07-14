@@ -25,10 +25,11 @@
             <param name="inner">Inner Exception</param>	
             <param name="args">Optional list of parameterized arguments.</param>
         </member>
-        <member name="F:Goedel.Mesh.Presence.PresenceTBS.ThrowNew">
+        <member name="M:Goedel.Mesh.Presence.PresenceTBS._Throw(System.Object)">
             <summary>
             The public fatory delegate
             </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Presence.PresenceTBS.Throw">
             <summary>

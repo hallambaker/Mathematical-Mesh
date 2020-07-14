@@ -25,13 +25,10 @@ LinkFiles = \
     Goedel.Cryptography.Core.dll\
     Goedel.Cryptography.Dare.dll\
     Goedel.Cryptography.Jose.dll\
-    Goedel.Cryptography.dll
+    Goedel.Cryptography.dll\
+    Goedel.Test.dll
 
-ToolTargets = \
-	Exceptions.cs
-Exceptions.cs : Exceptions.exceptional 
-	exceptional Exceptions.exceptional  /cs  Exceptions.cs
-
+ToolTargets = 
 
 
 prebuildRecurse : 

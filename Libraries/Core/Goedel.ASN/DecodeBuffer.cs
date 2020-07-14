@@ -86,7 +86,7 @@ namespace Goedel.ASN {
                 var Byte3 = Read();
                 var Byte4 = Read();
 
-                Assert.AssertFalse(Byte4 >= 0x80, InvalidLength.ThrowNew);
+                Assert.AssertFalse(Byte4 >= 0x80, InvalidLength.Throw);
                 return (Byte1 << 24) | (Byte2 << 16) | (Byte3 << 8) | Byte4;
                 }
 
@@ -96,9 +96,9 @@ namespace Goedel.ASN {
         int ReadCheckedLength(bool Indefinite) {
             var Length = ReadLength();
 
-            Assert.AssertFalse(!Indefinite & Length < 0, IndefiniteLengthInvalid.ThrowNew);
-            Assert.AssertFalse(ReadPointer + Length > Input.Length, LengthExceedsInput.ThrowNew);
-            Assert.AssertFalse(ReadPointer + Length > ReadLimit, LengthExceedsStructure.ThrowNew);
+            Assert.AssertFalse(!Indefinite & Length < 0, IndefiniteLengthInvalid.Throw);
+            Assert.AssertFalse(ReadPointer + Length > Input.Length, LengthExceedsInput.Throw);
+            Assert.AssertFalse(ReadPointer + Length > ReadLimit, LengthExceedsStructure.Throw);
 
             return Length;
             }
@@ -109,7 +109,7 @@ namespace Goedel.ASN {
         public virtual void Decode__Sequence_Start() {
             var Identifier = Read();
             Assert.AssertFalse(Identifier != Constants.Sequence + (int)TagMode.Constructed,
-                        ExpectedSequence.ThrowNew);
+                        ExpectedSequence.Throw);
 
             var Length = ReadCheckedLength(false);
 
@@ -128,7 +128,7 @@ namespace Goedel.ASN {
         /// Decode the end of a sequence
         /// </summary>
         public virtual void Decode__Sequence_End() {
-            Assert.AssertFalse(ReadPointer != ReadLimit, UnExpectedData.ThrowNew);
+            Assert.AssertFalse(ReadPointer != ReadLimit, UnExpectedData.Throw);
             Stack.RemoveAt(Stack.Count - 1);
 
             if (Stack.Count > 0) {
@@ -147,14 +147,14 @@ namespace Goedel.ASN {
         /// <returns>The value read</returns>
         public virtual int Decode__Integer(int Flags, int Code) {
             var Identifier = Read();
-            Assert.AssertFalse(Identifier != Constants.Integer, ExpectedInteger.ThrowNew);
+            Assert.AssertFalse(Identifier != Constants.Integer, ExpectedInteger.Throw);
 
             var Length = ReadCheckedLength(false);
-            Assert.AssertFalse(Length < 1, InvalidLength.ThrowNew);
-            Assert.AssertFalse(Length > 4, IntegerOverflow.ThrowNew);
+            Assert.AssertFalse(Length < 1, InvalidLength.Throw);
+            Assert.AssertFalse(Length > 4, IntegerOverflow.Throw);
 
             var Byte0 = Read();
-            Assert.AssertFalse(Byte0 >= 0x80, Implementation.ThrowNew);
+            Assert.AssertFalse(Byte0 >= 0x80, Implementation.Throw);
             if (Length == 1) {
                 return Byte0;
                 }
@@ -185,13 +185,13 @@ namespace Goedel.ASN {
         /// <returns>Big integer decoded to buffer with MSB in index 0 </returns>
         public virtual byte[] Decode__BigInteger(int Flags, int Code) {
             var Identifier = Read();
-            Assert.AssertFalse(Identifier != Constants.Integer, ExpectedInteger.ThrowNew);
+            Assert.AssertFalse(Identifier != Constants.Integer, ExpectedInteger.Throw);
 
             var Length = ReadCheckedLength(false);
-            Assert.AssertFalse(Length < 1, InvalidLength.ThrowNew);
+            Assert.AssertFalse(Length < 1, InvalidLength.Throw);
 
             var Byte0 = Read();
-            Assert.AssertFalse(Byte0 >= 0x80, Implementation.ThrowNew);
+            Assert.AssertFalse(Byte0 >= 0x80, Implementation.Throw);
 
             byte[] Result;
 

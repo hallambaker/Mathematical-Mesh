@@ -6,7 +6,7 @@
     <RootNamespace>Goedel.ASN</RootNamespace>
     <Configurations>Debug;Release;Focus</Configurations>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <Company>ThresholdMode.Com</Company>
+    <Company>ThresholdSecrets.Com</Company>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
     <Product>Goedel.ASN</Product>
     <Description>ASN1 parsing library.</Description>
@@ -33,9 +33,19 @@
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
+  
+  <ItemGroup>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+      
   <ItemGroup>
     <None Update="Exceptions.exceptional">
-      <Generator></Generator>
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
     </None>
   </ItemGroup>
 

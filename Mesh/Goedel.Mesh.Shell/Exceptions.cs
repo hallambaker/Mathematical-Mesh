@@ -4,19 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Mesh.Shell {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				MeshShellException.ThrowNew,
-				DidNotMatchExpectedValue.ThrowNew,
-				AccountNotFound.ThrowNew,
-				ProfileNotFound.ThrowNew,
-				DirectoryNotFound.ThrowNew,
-				FileNotFound.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -58,7 +49,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new MeshShellException(args:reasons) ;
 		
@@ -110,7 +101,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new DidNotMatchExpectedValue(args:reasons) ;
 		
@@ -162,7 +153,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new AccountNotFound(args:reasons) ;
 		
@@ -214,7 +205,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ProfileNotFound(args:reasons) ;
 		
@@ -266,7 +257,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new DirectoryNotFound(args:reasons) ;
 		
@@ -318,7 +309,7 @@ namespace Goedel.Mesh.Shell {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new FileNotFound(args:reasons) ;
 		

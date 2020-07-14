@@ -52,6 +52,12 @@ namespace Goedel.XUnit {
                 Locator = groupName
                 };
 
+
+            // This is probably failing because it should!!!
+            // The API has been changed so the key this is trying to fish out is no longer available
+            // need to add Alice to the group or set up way to get the group decryption key directly
+
+
             // The service decryption key
             var keyService = keyGroup.GenerateRecryptionKey(keyAliceDevice);
 

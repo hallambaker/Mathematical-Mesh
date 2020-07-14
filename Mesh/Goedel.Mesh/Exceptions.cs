@@ -4,26 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Mesh {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				Internal.ThrowNew,
-				InvalidProfile.ThrowNew,
-				NotAuthorized.ThrowNew,
-				NotAuthenticated.ThrowNew,
-				InvalidMessageID.ThrowNew,
-				InvalidMessage.ThrowNew,
-				InvalidUri.ThrowNew,
-				InvalidDate.ThrowNew,
-				KeyRecoveryFailed.ThrowNew,
-				KeyActivationFailed.ThrowNew,
-				InvalidUriMethod.ThrowNew,
-				ServerOperationFailed.ThrowNew,
-				ServerResponseInvalid.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -65,7 +49,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Internal(args:reasons) ;
 		
@@ -117,7 +101,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidProfile(args:reasons) ;
 		
@@ -169,7 +153,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NotAuthorized(args:reasons) ;
 		
@@ -221,7 +205,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NotAuthenticated(args:reasons) ;
 		
@@ -273,7 +257,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidMessageID(args:reasons) ;
 		
@@ -324,7 +308,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidMessage(args:reasons) ;
 		
@@ -376,7 +360,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidUri(args:reasons) ;
 		
@@ -427,7 +411,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidDate(args:reasons) ;
 		
@@ -478,7 +462,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new KeyRecoveryFailed(args:reasons) ;
 		
@@ -529,7 +513,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new KeyActivationFailed(args:reasons) ;
 		
@@ -580,7 +564,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidUriMethod(args:reasons) ;
 		
@@ -631,7 +615,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ServerOperationFailed(args:reasons) ;
 		
@@ -682,7 +666,7 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ServerResponseInvalid(args:reasons) ;
 		

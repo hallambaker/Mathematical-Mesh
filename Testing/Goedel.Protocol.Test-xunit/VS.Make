@@ -21,7 +21,8 @@ LinkFiles = \
     Goedel.Utilities.dll\
     Goedel.Protocol.Debug.dll\
     Goedel.Protocol.dll\
-    Goedel.Test.Core.dll
+    Goedel.Test.Core.dll\
+    Goedel.Test.dll
 
 ToolTargets = 
 

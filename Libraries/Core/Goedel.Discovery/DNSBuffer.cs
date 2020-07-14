@@ -117,14 +117,14 @@ namespace Goedel.Discovery {
         // Check to see if there is space in the buffer, resize if possible otherwise throw 
         // exception
         void CheckSpaceWrite(int bytes) {
-            Assert.AssertFalse((Pointer + bytes) > Buffer.MaxLength, BufferWriteOverflow.ThrowNew);
+            Assert.AssertFalse((Pointer + bytes) > Buffer.MaxLength, BufferWriteOverflow.Throw);
 
             if ((Pointer + bytes) > Buffer.Length) {
                 Array.Resize(ref Buffer.Buffer, Buffer.MaxLength);
                 }
             }
 
-        void CheckSpaceRead(int bytes) => Assert.AssertFalse(Pointer + bytes > MaxRead, BufferReadOverflow.ThrowNew);
+        void CheckSpaceRead(int bytes) => Assert.AssertFalse(Pointer + bytes > MaxRead, BufferReadOverflow.Throw);
 
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Goedel.Discovery {
         /// <param name="data">Data to write</param>
         public void WriteIPv4(IPAddress data) {
             byte[] bytes = data.GetAddressBytes();
-            Assert.AssertTrue(bytes.Length == 4, InvalidIPv4.ThrowNew);
+            Assert.AssertTrue(bytes.Length == 4, InvalidIPv4.Throw);
             WriteData(bytes);
             }
 
@@ -192,7 +192,7 @@ namespace Goedel.Discovery {
         /// <param name="data">Data to write</param>
         public void WriteIPv6(IPAddress data) {
             byte[] bytes = data.GetAddressBytes();
-            Assert.AssertTrue(bytes.Length == 16, InvalidIPv6.ThrowNew);
+            Assert.AssertTrue(bytes.Length == 16, InvalidIPv6.Throw);
             WriteData(bytes);
             }
 
@@ -276,7 +276,7 @@ namespace Goedel.Discovery {
                 //Console.WriteLine ("   {0:d3} {1:s}", i, n);
                 if (n == '.') {
                     if (label != 0) { //Ignore zero length labels
-                        Assert.AssertFalse(label > 63, LabelTooLong.ThrowNew);
+                        Assert.AssertFalse(label > 63, LabelTooLong.Throw);
                         Buffer.Buffer[offset] = (byte)label;
                         offset = Pointer;
                         WriteByte(0);
@@ -304,7 +304,7 @@ namespace Goedel.Discovery {
         /// <param name="Tag">Data to write</param>
         public void WriteTag(String Tag) {
             CheckSpaceWrite(Tag.Length);
-            Assert.AssertFalse(Tag.Length > 255, TagTooLong.ThrowNew);
+            Assert.AssertFalse(Tag.Length > 255, TagTooLong.Throw);
             foreach (char c in Tag) {
                 Write((byte)(c & 0x7f));
                 }

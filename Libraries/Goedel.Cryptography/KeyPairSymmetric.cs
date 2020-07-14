@@ -182,7 +182,7 @@ namespace Goedel.Cryptography {
                 CryptoAlgorithmId algorithmSign,
                 CryptoAlgorithmId algorithmDigest) {
 
-            algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.ThrowNew); // NYI: Algorithm agility.
+            algorithmDigest.AssertEqual(CryptoAlgorithmId.SHA_2_512, Internal.Throw); // NYI: Algorithm agility.
 
             bits = bits.Minimum(UDF.MinimumBits);
             signingKey = KeyPair.Factory(algorithmSign, keySecurity);

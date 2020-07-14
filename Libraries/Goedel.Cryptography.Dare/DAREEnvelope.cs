@@ -385,7 +385,8 @@ namespace Goedel.Cryptography.Dare {
         public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
             Assert.AssertTrue(jsonReader.StartArray(), EnvelopeDataCorrupt.Throw);
             var header = DareHeader.FromJson(jsonReader, false);
-            Assert.NotNull(header);
+            Assert.AssertNotNull(header,
+                        EnvelopeDataCorrupt.Throw);
             Assert.AssertTrue(jsonReader.NextArray(), EnvelopeDataCorrupt.Throw);
             return new DareEnvelope() {
                 Header = header

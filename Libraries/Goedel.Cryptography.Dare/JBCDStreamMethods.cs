@@ -248,7 +248,7 @@ namespace Goedel.Cryptography.Dare {
                     WriteTag(UFrame, 0);
                     }
 
-                Assert.AssertTrue(PositionWrite == Check + FrameLength, Internal.ThrowNew);
+                Assert.AssertTrue(PositionWrite == Check + FrameLength, Internal.Throw);
 
                 WriteTagReverse(BFrame, FrameLength);
 
@@ -301,7 +301,7 @@ namespace Goedel.Cryptography.Dare {
                 WriteFrame(FrameHeader);
                 }
 
-            Assert.AssertTrue(PositionWrite == check + HL, Internal.ThrowNew);
+            Assert.AssertTrue(PositionWrite == check + HL, Internal.Throw);
 
             // here write out the binary marker for the frame data.
             WriteTag(UFrame, FrameDataLength);
@@ -321,7 +321,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             check += frameLength;
-            Assert.AssertTrue(PositionWrite == check, Internal.ThrowNew);
+            Assert.AssertTrue(PositionWrite == check, Internal.Throw);
 
             WriteTagReverse(BFrame, frameLength);
             StreamWrite.Flush(); // Force output of data

@@ -4,7 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Command {
+
+
 
 
     /// <summary>
@@ -13,9 +16,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class ParserException : global::Goedel.Utilities.GoedelException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The user command could not be parsed";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The user command could not be parsed"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -26,8 +38,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ParserException  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -35,23 +49,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ParserException(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ParserException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ParserException(reason as string);
-				}
-			else {
-				return new ParserException();
-				}
-            }
+
         }
 
 
@@ -61,9 +68,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class FileReadError : ParserException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The file [{0}] could not be read";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The file [{0}] could not be read"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -74,8 +90,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public FileReadError  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -83,23 +101,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new FileReadError(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new FileReadError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new FileReadError(reason as string);
-				}
-			else {
-				return new FileReadError();
-				}
-            }
+
         }
 
 
@@ -109,9 +120,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class UnknownCommand : ParserException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The command {0} is not known.";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The command {0} is not known."
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -122,8 +142,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnknownCommand  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -131,23 +153,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnknownCommand(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnknownCommand(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnknownCommand(reason as string);
-				}
-			else {
-				return new UnknownCommand();
-				}
-            }
+
         }
 
 
@@ -157,9 +172,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class UnknownOption : ParserException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The option {0} is not known.";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The option {0} is not known."
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -170,8 +194,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnknownOption  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -179,23 +205,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnknownOption(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnknownOption(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnknownOption(reason as string);
-				}
-			else {
-				return new UnknownOption();
-				}
-            }
+
         }
 
 
@@ -205,9 +224,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class NoCommand : ParserException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "No command specified";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No command specified"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -218,8 +246,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NoCommand  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -227,23 +257,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NoCommand(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NoCommand(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NoCommand(reason as string);
-				}
-			else {
-				return new NoCommand();
-				}
-            }
+
         }
 
 
@@ -253,9 +276,18 @@ namespace Goedel.Command {
     [global::System.Serializable]
 	public partial class InvalidOption : ParserException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The option value was incorrectly formatted";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The option value was incorrectly formatted"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -266,8 +298,10 @@ namespace Goedel.Command {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidOption  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -275,23 +309,16 @@ namespace Goedel.Command {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidOption(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidOption(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidOption(reason as string);
-				}
-			else {
-				return new InvalidOption();
-				}
-            }
+
         }
 
 

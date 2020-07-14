@@ -34,27 +34,41 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="CommandLex.cs">
-      <DependentUpon>CommandLex.fsm</DependentUpon>
+    <Compile Update="Exceptions.cs">
+      <DependentUpon>Exceptions.exceptional</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+
     <Compile Update="CommandSplit.cs">
       <DependentUpon>CommandSplit.fsm</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+
+    <Compile Update="CommandLex.cs">
+      <DependentUpon>CommandLex.fsm</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CommandLex.fsm">
-      <LastGenOutput>CommandLex.cs</LastGenOutput>
-      <Generator>fsrcs</Generator>
+    <None Update="Exceptions.exceptional">
+      <LastGenOutput>Exceptions.cs</LastGenOutput>
+      <Generator>exceptional</Generator>
     </None>
+
     <None Update="CommandSplit.fsm">
       <LastGenOutput>CommandSplit.cs</LastGenOutput>
       <Generator>fsrcs</Generator>
     </None>
+    <None Update="CommandLex.fsm">
+      <LastGenOutput>CommandLex.cs</LastGenOutput>
+      <Generator>fsrcs</Generator>
+    </None>
+
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

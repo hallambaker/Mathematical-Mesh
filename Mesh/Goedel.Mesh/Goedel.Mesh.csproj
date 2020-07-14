@@ -29,11 +29,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="SchemaMesh.cs">
-      <DependentUpon>SchemaMesh.protocol</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="ProtocolSchema.cs">
       <DependentUpon>ProtocolSchema.protocol</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -50,8 +45,7 @@
       <Generator>Protogen</Generator>
     </None>
     <None Update="SchemaMesh.g3l">
-      <LastGenOutput>SchemaMesh.cs</LastGenOutput>
-      <Generator>Protogen</Generator>
+      <Generator></Generator>
     </None>
     <None Update="SchemaMesh.protocol">
       <LastGenOutput>SchemaMesh.cs</LastGenOutput>

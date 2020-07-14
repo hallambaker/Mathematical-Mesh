@@ -285,11 +285,11 @@ namespace Goedel.Mesh.Server {
             jpcSession ??= JpcSession;
             try {
                 if (request.Message!= null) {
-                    Assert.AssertTrue(request.Message.Count == 1, NYI.ThrowNew); // Hack: Support multiple messages in one post
+                    Assert.AssertTrue(request.Message.Count == 1, NYI.Throw); // Hack: Support multiple messages in one post
                     Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, request.Accounts, request.Message[0]);
                     }
                 if (request.Self != null) {
-                    Assert.AssertTrue(request.Self.Count == 1, NYI.ThrowNew); // Hack: Support multiple messages in one post
+                    Assert.AssertTrue(request.Self.Count == 1, NYI.Throw); // Hack: Support multiple messages in one post
                     Mesh.MessagePost(jpcSession, jpcSession.VerifiedAccount, null, request.Self[0]);
                     }
                 return new PostResponse();

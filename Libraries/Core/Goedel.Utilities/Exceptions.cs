@@ -4,21 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Utilities {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				NYI.ThrowNew,
-				AssertionFail.ThrowNew,
-				Internal.ThrowNew,
-				FileReadError.ThrowNew,
-				Not64Bit.ThrowNew,
-				EnvironmentVariableRequired.ThrowNew,
-				ExpectedSuccess.ThrowNew,
-				ExpectedError.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -60,7 +49,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new NYI(args:reasons) ;
 		
@@ -112,7 +101,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new AssertionFail(args:reasons) ;
 		
@@ -164,7 +153,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Internal(args:reasons) ;
 		
@@ -216,7 +205,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new FileReadError(args:reasons) ;
 		
@@ -269,7 +258,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new Not64Bit(args:reasons) ;
 		
@@ -320,7 +309,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new EnvironmentVariableRequired(args:reasons) ;
 		
@@ -371,7 +360,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ExpectedSuccess(args:reasons) ;
 		
@@ -422,7 +411,7 @@ namespace Goedel.Utilities {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ExpectedError(args:reasons) ;
 		

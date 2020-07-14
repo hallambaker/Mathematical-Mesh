@@ -4,28 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Cryptography.Dare {
 
-	partial class AllExeptions {
-		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
-			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
-				null,
-				StreamDataCorrupt.ThrowNew,
-				ContainerDataCorrupt.ThrowNew,
-				EnvelopeDataCorrupt.ThrowNew,
-				InvalidContainerTypeException.ThrowNew,
-				FrameTooLargeException.ThrowNew,
-				InvalidFileModeException.ThrowNew,
-				InvalidFileFormatException.ThrowNew,
-				ObjectIdentifierNotUnique.ThrowNew,
-				AccessRefused.ThrowNew,
-				DataRecordTruncated.ThrowNew,
-				ArchiveEntryMissingFileName.ThrowNew,
-				EntryNotFound.ThrowNew,
-				EntryAlreadyExists.ThrowNew,
-				UndefinedStoreAction.ThrowNew,
-				TaggingNotSupported.ThrowNew				};
-		}
+
 
 
     /// <summary>
@@ -66,7 +48,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new StreamDataCorrupt(args:reasons) ;
 		
@@ -117,7 +99,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ContainerDataCorrupt(args:reasons) ;
 		
@@ -168,7 +150,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new EnvelopeDataCorrupt(args:reasons) ;
 		
@@ -221,7 +203,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidContainerTypeException(args:reasons) ;
 		
@@ -274,7 +256,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new FrameTooLargeException(args:reasons) ;
 		
@@ -327,7 +309,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidFileModeException(args:reasons) ;
 		
@@ -379,7 +361,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new InvalidFileFormatException(args:reasons) ;
 		
@@ -431,7 +413,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ObjectIdentifierNotUnique(args:reasons) ;
 		
@@ -483,7 +465,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new AccessRefused(args:reasons) ;
 		
@@ -535,7 +517,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new DataRecordTruncated(args:reasons) ;
 		
@@ -586,7 +568,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new ArchiveEntryMissingFileName(args:reasons) ;
 		
@@ -637,7 +619,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new EntryNotFound(args:reasons) ;
 		
@@ -688,7 +670,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new EntryAlreadyExists(args:reasons) ;
 		
@@ -739,7 +721,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new UndefinedStoreAction(args:reasons) ;
 		
@@ -790,7 +772,7 @@ namespace Goedel.Cryptography.Dare {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
         static System.Exception _Throw(object reasons) => new TaggingNotSupported(args:reasons) ;
 		

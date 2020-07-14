@@ -65,8 +65,8 @@ namespace Goedel.Mesh {
         /// otherwise with the response instance as the parameter.
         /// </summary>
         /// <param name="throwDelegate">Delegate that throws the required exception.</param>
-        public void AssertSuccess(ThrowNewDelegate throwDelegate = null) =>
-            Success().AssertTrue(throwDelegate ?? ServerOperationFailed.ThrowNew, this);
+        public void AssertSuccess(ThrowDelegate throwDelegate = null) =>
+            Success().AssertTrue(throwDelegate ?? ServerOperationFailed.Throw, this);
 
 
         /// <summary>

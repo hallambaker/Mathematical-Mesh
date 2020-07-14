@@ -19,9 +19,9 @@ namespace Goedel.Test {
         /// <param name="Reason">Reason data for filling throw template</param>
         /// <param name="Int">Integer default parameter</param>
         /// <param name="String">String default parameter</param>
-        public static void TestNotNull(this object test, ThrowNewDelegate throwDelegate = null,
+        public static void TestNotNull(this object test, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertNotNull(test, throwDelegate ?? TestExpectedNotNull.ThrowNew, args);
+            Assert.AssertNotNull(test, throwDelegate ?? TestExpectedNotNull.Throw, args);
 
         /// <summary>Throw an exception if <paramref name="test"/> is not null. 
         /// </summary>
@@ -29,9 +29,9 @@ namespace Goedel.Test {
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void TestNull(this object test, ThrowNewDelegate throwDelegate = null,
+        public static void TestNull(this object test, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertNull(test, throwDelegate ?? TestExpectedNull.ThrowNew, args);
+            Assert.AssertNull(test, throwDelegate ?? TestExpectedNull.Throw, args);
 
         /// <summary>Throw an exception if <paramref name="condition"/> is true. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -40,9 +40,9 @@ namespace Goedel.Test {
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void TestFalse(this bool condition, ThrowNewDelegate throwDelegate = null,
+        public static void TestFalse(this bool condition, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertFalse(condition, throwDelegate ?? TestExpectedFalse.ThrowNew, args);
+            Assert.AssertFalse(condition, throwDelegate ?? TestExpectedFalse.Throw, args);
 
         /// <summary>Throw an exception if <paramref name="condition"/> is false. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -51,9 +51,9 @@ namespace Goedel.Test {
         /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void TestTrue(this bool condition, ThrowNewDelegate throwDelegate = null,
+        public static void TestTrue(this bool condition, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertTrue(condition, throwDelegate ?? TestExpectedTrue.ThrowNew, args);
+            Assert.AssertTrue(condition, throwDelegate ?? TestExpectedTrue.Throw, args);
 
         /// <summary>Test to see if two arrays are equal.
         /// </summary>
@@ -63,9 +63,9 @@ namespace Goedel.Test {
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
-        public static void TestEqual(this byte[] test1, byte[] test2, ThrowNewDelegate throwDelegate = null,
+        public static void TestEqual(this byte[] test1, byte[] test2, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedArraysEqual.ThrowNew, args);
+            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedArraysEqual.Throw, args);
 
         /// <summary>Test to see if two values are equal.
         /// </summary>
@@ -75,9 +75,9 @@ namespace Goedel.Test {
         /// Condition is true</param>
         /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
 
-        public static void TestEqual<T>(this T test1, T test2, ThrowNewDelegate throwDelegate = null,
+        public static void TestEqual<T>(this T test1, T test2, ThrowDelegate throwDelegate = null,
                     params object[] args) =>
-            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.ThrowNew, args);
+            Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.Throw, args);
 
 
         }    

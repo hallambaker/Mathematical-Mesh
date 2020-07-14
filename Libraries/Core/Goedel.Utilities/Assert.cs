@@ -100,12 +100,12 @@ namespace Goedel.Utilities {
     /// <returns>The exception to throw</returns>
     public delegate System.Exception ThrowDelegate(object[] reasons = null);
 
-    /// <summary>
-    /// Delegate that will be thrown as an exception if a condition is met
-    /// </summary>
-    /// <param name="reasons">The reasons for raising the exception.</param>
-    /// <returns>The exception to throw</returns>
-    public delegate System.Exception ThrowNewDelegate(object[] reasons = null);
+    ///// <summary>
+    ///// Delegate that will be thrown as an exception if a condition is met
+    ///// </summary>
+    ///// <param name="reasons">The reasons for raising the exception.</param>
+    ///// <returns>The exception to throw</returns>
+    //public delegate System.Exception ThrowNewDelegate(object[] reasons = null);
 
 
     /// <summary>
@@ -194,102 +194,6 @@ namespace Goedel.Utilities {
             return Value;
             }
 
-
-
-        /// <summary>Throw an exception if <paramref name="condition"/> is true. 
-        /// (test, NYIException.Throw, "test was false").AssertTrue();
-        /// </summary>
-        /// <param name="condition">The condition</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void AssertFalse(this bool condition, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (condition) {
-                throw throwDelegate(args);
-                }
-            }
-
-        /// <summary>Throw an exception if <paramref name="condition"/> is false. 
-        /// (test, NYIException.Throw, "test was false").AssertTrue();
-        /// </summary>
-        /// <param name="condition">The condition</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void AssertTrue(this bool condition, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (!condition) {
-                throw throwDelegate(args);
-                }
-            }
-
-        /// <summary>Throw an exception if <paramref name="test"/> is not null. 
-        /// </summary>
-        /// <param name="test">The object to test to see if it is null</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void AssertNull(this object test, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (test != null) {
-                throw throwDelegate(args);
-                }
-            }
-
-        /// <summary>Throw an exception if <paramref name="test"/> is null. 
-        /// </summary>
-        /// <param name="test">The object to test to see if it is null</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-        public static void AssertNotNull(this object test, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (test == null) {
-                throw throwDelegate(args);
-                }
-            }
-
-
-        /// <summary>Test to see if two arrays are equal.
-        /// </summary>
-        /// <param name="test1">First test value</param>
-        /// <param name="test2">Second test value</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-
-        public static void AssertEqual(this byte[] test1, byte[] test2, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (!ArrayUtilities.IsEqualTo(test1, test2)) {
-                throw throwDelegate(args);
-                }
-            }
-
-
-        /// <summary>Test to see if two values are equal.
-        /// </summary>
-        /// <param name="test1">First test value</param>
-        /// <param name="test2">Second test value</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
-
-        public static void AssertEqual<T>(this T test1, T test2, ThrowNewDelegate throwDelegate,
-                    params object[] args) {
-            if (!test1.Equals(test2)) {
-                throw throwDelegate(args);
-                }
-            }
-
-
-
-
-        //** Deprecated tests
-
-
-
-        //*****************
 
         /// <summary>Throw an exception if <paramref name="condition"/> is true. 
         /// (test, NYIException.Throw, "test was false").AssertTrue();
@@ -380,27 +284,21 @@ namespace Goedel.Utilities {
 
         //*****************
 
-
-
-
-
-
-
-        /// <summary>Throw an exception if the specified condition is true. 
-        ///Assert.False (test, NYIException.Throw, "test was true")
-        /// </summary>
-        /// <param name="condition">The condition</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="Reason">Reason data for filling throw template</param>
-        /// <param name="Int">Integer default parameter</param>
-        /// <param name="String">String default parameter</param>
-        public static void False(bool condition, ThrowDelegate throwDelegate,
-                    object Reason = null, string String = null, int Int = -1) {
-            if (condition) {
-                throw throwDelegate();
-                }
-            }
+        ///// <summary>Throw an exception if the specified condition is true. 
+        /////Assert.False (test, NYIException.Throw, "test was true")
+        ///// </summary>
+        ///// <param name="condition">The condition</param>
+        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        ///// Condition is true</param>
+        ///// <param name="Reason">Reason data for filling throw template</param>
+        ///// <param name="Int">Integer default parameter</param>
+        ///// <param name="String">String default parameter</param>
+        //public static void False(bool condition, ThrowDelegate throwDelegate,
+        //            object Reason = null, string String = null, int Int = -1) {
+        //    if (condition) {
+        //        throw throwDelegate();
+        //        }
+        //    }
 
         ///// <summary>Throw an exception if the specified condition is false. 
         /////Assert.True (test, NYIException.Throw, "test was false")
@@ -435,21 +333,21 @@ namespace Goedel.Utilities {
         //        }
         //    }
 
-        /// <summary>Throw an exception if the specified condition is false. 
-        ///Assert.True (test, NYIException.Throw, "test was false")
-        /// </summary>
-        /// <param name="condition">The condition</param>
-        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        /// Condition is true</param>
-        /// <param name="Reason">Reason data for filling throw template</param>
-        /// <param name="Int">Integer default parameter</param>
-        /// <param name="String">String default parameter</param>
-        public static void NotNull(object condition, ThrowDelegate throwDelegate = null,
-                    object Reason = null, string String = null, int Int = -1) {
-            if (condition == null) {
-                throw throwDelegate();
-                }
-            }
+        ///// <summary>Throw an exception if the specified condition is false. 
+        /////Assert.True (test, NYIException.Throw, "test was false")
+        ///// </summary>
+        ///// <param name="condition">The condition</param>
+        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        ///// Condition is true</param>
+        ///// <param name="Reason">Reason data for filling throw template</param>
+        ///// <param name="Int">Integer default parameter</param>
+        ///// <param name="String">String default parameter</param>
+        //public static void NotNull(object condition, ThrowDelegate throwDelegate = null,
+        //            object Reason = null, string String = null, int Int = -1) {
+        //    if (condition == null) {
+        //        throw throwDelegate();
+        //        }
+        //    }
         // ** Task declarations.
 
         /// <summary>

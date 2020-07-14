@@ -152,7 +152,7 @@ namespace Goedel.XUnit {
 
             var NewSigner = KeyPairBaseDH.KeyPairPublicFactory(PublicPKIX);
 
-            Utilities.Assert.NotNull(NewSigner);
+            NewSigner.TestNotNull();
             }
 
 

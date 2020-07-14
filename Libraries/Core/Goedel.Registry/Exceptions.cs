@@ -4,7 +4,10 @@
 
 
 
+#pragma warning disable IDE1006 // Naming Styles
 namespace Goedel.Registry {
+
+
 
 
     /// <summary>
@@ -22,6 +25,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"The user command could not be parsed"
 				};
 
@@ -45,23 +49,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ParserException(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ParserException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ParserException(reason as string);
-				}
-			else {
-				return new ParserException();
-				}
-            }
+
         }
 
 
@@ -80,6 +77,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"The file {0} could not be read"
 				};
 
@@ -103,23 +101,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new FileReadError(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new FileReadError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new FileReadError(reason as string);
-				}
-			else {
-				return new FileReadError();
-				}
-            }
+
         }
 
 
@@ -138,7 +129,9 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
-				"The command {0} is not known.",
+
+				"The command {0} is not known."
+,
 				"Unknown command"
 				};
 
@@ -162,23 +155,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnknownCommand(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnknownCommand(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnknownCommand(reason as string);
-				}
-			else {
-				return new UnknownCommand();
-				}
-            }
+
         }
 
 
@@ -197,7 +183,9 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
-				"The option {0} is not known.",
+
+				"The option {0} is not known."
+,
 				"Unknown option"
 				};
 
@@ -221,23 +209,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnknownOption(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnknownOption(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnknownOption(reason as string);
-				}
-			else {
-				return new UnknownOption();
-				}
-            }
+
         }
 
 
@@ -256,6 +237,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"No command specified"
 				};
 
@@ -279,23 +261,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NoCommand(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NoCommand(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NoCommand(reason as string);
-				}
-			else {
-				return new NoCommand();
-				}
-            }
+
         }
 
 
@@ -314,6 +289,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"The schema could not be parsed"
 				};
 
@@ -337,23 +313,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new SchemaParse(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new SchemaParse(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new SchemaParse(reason as string);
-				}
-			else {
-				return new SchemaParse();
-				}
-            }
+
         }
 
 
@@ -372,6 +341,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Expected reserved word, token {0} was not found"
 				};
 
@@ -395,23 +365,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NotFoundReserved(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NotFoundReserved(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NotFoundReserved(reason as string);
-				}
-			else {
-				return new NotFoundReserved();
-				}
-            }
+
         }
 
 
@@ -430,6 +393,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"An internal parser error occurred"
 				};
 
@@ -453,23 +417,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InternalError(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InternalError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InternalError(reason as string);
-				}
-			else {
-				return new InternalError();
-				}
-            }
+
         }
 
 
@@ -488,6 +445,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"An invalid token was encountered"
 				};
 
@@ -511,23 +469,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidToken(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidToken(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidToken(reason as string);
-				}
-			else {
-				return new InvalidToken();
-				}
-            }
+
         }
 
 
@@ -546,6 +497,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Start token expected"
 				};
 
@@ -569,23 +521,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ExpectedStart(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ExpectedStart(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ExpectedStart(reason as string);
-				}
-			else {
-				return new ExpectedStart();
-				}
-            }
+
         }
 
 
@@ -604,6 +549,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Parser Error Expected [Class]"
 				};
 
@@ -627,23 +573,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ExpectedClass(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ExpectedClass(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ExpectedClass(reason as string);
-				}
-			else {
-				return new ExpectedClass();
-				}
-            }
+
         }
 
 
@@ -662,6 +601,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Parser Error Expected [Class]"
 				};
 
@@ -685,23 +625,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new Expected(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new Expected(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new Expected(reason as string);
-				}
-			else {
-				return new Expected();
-				}
-            }
+
         }
 
 
@@ -720,6 +653,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Too Many Closing Braces"
 				};
 
@@ -743,23 +677,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new TooManyClose(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new TooManyClose(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new TooManyClose(reason as string);
-				}
-			else {
-				return new TooManyClose();
-				}
-            }
+
         }
 
 
@@ -778,6 +705,7 @@ namespace Goedel.Registry {
 		///<summary></summary>
 		public static new System.Collections.Generic.List<string> Templates = 
 				new System.Collections.Generic.List<string> {
+
 				"Unreachable code reached"
 				};
 
@@ -801,23 +729,16 @@ namespace Goedel.Registry {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        /// public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnreachableCode(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnreachableCode(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnreachableCode(reason as string);
-				}
-			else {
-				return new UnreachableCode();
-				}
-            }
+
         }
 
 

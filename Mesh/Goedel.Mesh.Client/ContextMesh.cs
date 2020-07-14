@@ -63,7 +63,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshHost">The Mesh Host</param>
         /// <param name="catalogedMachine">The cataloged Mesh record.</param>
         public ContextMesh(MeshHost meshHost, CatalogedMachine catalogedMachine) {
-            Assert.AssertNotNull(catalogedMachine, NYI.ThrowNew);
+            Assert.AssertNotNull(catalogedMachine, NYI.Throw);
 
             MeshHost = meshHost;
             CatalogedMachine = catalogedMachine;
