@@ -188,7 +188,7 @@ namespace Goedel.Cryptography.Dare {
             foreach (var header in headers) {
                 Assert.NotNull(header.ContainerInfo);
 
-                Assert.True(header.ContainerInfo.Index == index);
+                Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);
                 Assert.NotNull(header.PayloadDigest);
 
                 index++;

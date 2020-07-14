@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="Public">The public signature verification key.</param>
         /// <returns>True if verification succeeds, otherwise false.</returns>
         public bool Verify(string UDF, KeyPair Public) {
-            Assert.True(UDF == Public.KeyIdentifier, FingerprintMatchFailed.Throw);
+            Assert.AssertTrue(UDF == Public.KeyIdentifier, FingerprintMatchFailed.Throw);
             return Verify(Public);
             }
 

@@ -186,7 +186,7 @@ namespace Goedel.Cryptography {
         /// <param name="Ceiling">Number of bits to get</param>
         /// <returns>Random data</returns>
         public static BigInteger GetRandomBigInteger(BigInteger Ceiling) {
-            Assert.True(Ceiling > 0, CryptographicException.Throw);
+            Assert.AssertTrue(Ceiling > 0, CryptographicException.Throw);
 
             // Generate extra bits to avoid a biased sample.
             var Bits = 16 + 8 * (Ceiling.ToByteArray().Length);

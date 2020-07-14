@@ -65,7 +65,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Public">Optional public value</param>
         public DiffeHellmanPublic(DHDomain dhDomain, BigInteger? Public = null) {
             Contract.Requires(dhDomain != null);
-            dhDomain.AssertNotNull(NullParameter.ThrowNew);
+            dhDomain.AssertNotNull(NullParameter.Throw);
 
             this.DHDomain = dhDomain;
             Modulus = dhDomain.BigIntegerP;
@@ -81,7 +81,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="baseKey">The key pair to copy.</param>
         public DiffeHellmanPublic(DiffeHellmanPublic baseKey) {
             Contract.Requires(baseKey != null);
-            baseKey.AssertNotNull(NullParameter.ThrowNew);
+            baseKey.AssertNotNull(NullParameter.Throw);
 
             DHDomain = baseKey.DHDomain;
             Modulus = baseKey.Modulus;
@@ -96,10 +96,10 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="pkixParameters">The key parameters</param>
         public DiffeHellmanPublic(PKIXPublicKeyDH pkixParameters) {
             Contract.Requires(pkixParameters != null);
-            pkixParameters.AssertNotNull(NullParameter.ThrowNew);
+            pkixParameters.AssertNotNull(NullParameter.Throw);
 
             DHDomain = pkixParameters.Domain;
-            Assert.NotNull(DHDomain, UnknownNamedParameters.Throw);
+            Assert.AssertNotNull(DHDomain, UnknownNamedParameters.Throw);
 
             Modulus = DHDomain.BigIntegerP;
             Generator = DHDomain.BigIntegerG;
@@ -116,11 +116,11 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="key">The key to verify</param>
         public void Verify(DiffeHellmanPublic key) {
             Contract.Requires(key != null);
-            key.AssertNotNull(NullParameter.ThrowNew);
+            key.AssertNotNull(NullParameter.Throw);
 
 
-            Assert.True(key.Modulus == Modulus, CryptographicException.Throw);
-            Assert.True(key.Generator == Generator, CryptographicException.Throw);
+            Assert.AssertTrue(key.Modulus == Modulus, CryptographicException.Throw);
+            Assert.AssertTrue(key.Generator == Generator, CryptographicException.Throw);
             }
 
 
@@ -154,9 +154,9 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The key agreement value ZZ</returns>
         public BigInteger Agreement(BigInteger[] carry) {
             Contract.Requires(carry != null);
-            carry.AssertNotNull(NullParameter.ThrowNew);
+            carry.AssertNotNull(NullParameter.Throw);
 
-            Assert.True(carry.Length >= 1, InsufficientResults.Throw);
+            Assert.AssertTrue(carry.Length >= 1, InsufficientResults.Throw);
 
             var Accumulator = carry[0];
             for (var i = 1; i < carry.Length; i++) {
@@ -176,7 +176,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The composite key</returns>
         public DiffeHellmanPublic Combine(DiffeHellmanPublic contribution) {
             Contract.Requires(contribution != null);
-            contribution.AssertNotNull(NullParameter.ThrowNew);
+            contribution.AssertNotNull(NullParameter.Throw);
 
             var NewPublic = (Public * contribution.Public) % Modulus;
             return new DiffeHellmanPublic(DHDomain, NewPublic);
@@ -362,7 +362,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>Array shares.</returns>
         public IKeyAdvancedPrivate CompleteRecryptionKeySet(IEnumerable<KeyPair> shares) {
             Contract.Requires(shares != null);
-            shares.AssertNotNull(NullParameter.ThrowNew);
+            shares.AssertNotNull(NullParameter.Throw);
 
 
             BigInteger accumulator = 0;
@@ -393,7 +393,7 @@ namespace Goedel.Cryptography.Algorithms {
                     KeySecurity keySecurity = KeySecurity.Bound,
                     KeyUses keyUses = KeyUses.Any) {
             Contract.Requires(contribution != null);
-            contribution.AssertNotNull(NullParameter.ThrowNew);
+            contribution.AssertNotNull(NullParameter.Throw);
 
 
             var newPrivate = (Private + contribution.Private) % Modulus;

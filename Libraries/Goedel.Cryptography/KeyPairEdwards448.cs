@@ -189,7 +189,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyCollection"></param>
         public override void Persist(keyCollection keyCollection) {
-            Assert.True(PersistPending);
+            Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd448(encodedPrivateKey, PKIXPublicKeyECDH) { };
             keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
             }
@@ -202,7 +202,7 @@ namespace Goedel.Cryptography {
         /// <param name="carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
         ResultECDH Agreement(KeyPairEd448 publicKey, CurveEdwards448Result carry = null) {
-            Assert.True(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
+            Assert.AssertTrue(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
 
             CurveEdwards448 Agreement;
             if (carry == null) {
@@ -244,7 +244,7 @@ namespace Goedel.Cryptography {
             KeyAgreementResult partial = null, byte[] salt = null) {
 
             var KeyPairEd448 = ephemeral as KeyPairEd448;
-            Assert.NotNull(KeyPairEd448, KeyTypeMismatch.Throw);
+            Assert.AssertNotNull(KeyPairEd448, KeyTypeMismatch.Throw);
 
             var Agreementx = Agreement(KeyPairEd448, partial as CurveEdwards448Result);
             return Agreementx.Decrypt(encryptedKey, ephemeral, partial, salt);
@@ -264,7 +264,7 @@ namespace Goedel.Cryptography {
                 byte[] data,
                 CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
-            Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
+            Assert.AssertTrue((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
             algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
             if (algorithmID == CryptoAlgorithmId.Ed448ph) {
@@ -304,7 +304,7 @@ namespace Goedel.Cryptography {
             byte[] signature,
             CryptoAlgorithmId algorithmID = CryptoAlgorithmId.Default,
                 byte[] context = null) {
-            Assert.True((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
+            Assert.AssertTrue((KeyUses & KeyUses.Sign) != 0, CryptographicOperationNotSupported.Throw);
 
             algorithmID = algorithmID == CryptoAlgorithmId.Default ? CryptoAlgorithmId : algorithmID;
             if (algorithmID == CryptoAlgorithmId.Ed448ph) {

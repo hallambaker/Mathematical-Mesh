@@ -5,7 +5,7 @@ using Goedel.Mesh;
 using Goedel.Mesh.Client;
 using Goedel.Utilities;
 using Goedel.IO;
-
+using Goedel.Test;
 using System;
 using System.Collections.Generic;
 
@@ -174,7 +174,7 @@ namespace Goedel.Test.Core {
 
             Console.WriteLine($"Stream {stream.Length}");
 
-            (stream.Length > checkLength).AssertTrue();
+            (stream.Length > checkLength).TestTrue();
             checkLength = stream.Length;
 
             return;

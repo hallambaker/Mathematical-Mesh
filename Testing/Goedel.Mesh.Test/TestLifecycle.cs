@@ -1,6 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.PKIX;
 using Goedel.Utilities;
+using Goedel.Test;
 
 using System.Threading;
 
@@ -28,7 +29,7 @@ namespace Goedel.Mesh.Test {
             KeyPair.Encrypt(Key, out var Exchange, out var Ephemeral);
             var Result = KeyPair.Decrypt(Exchange, Ephemeral);
 
-            Assert.True(Key.IsEqualTo(Result));
+            Key.IsEqualTo(Result).TestTrue();
 
             }
 
@@ -98,11 +99,11 @@ namespace Goedel.Mesh.Test {
             IPKIXPrivateKey Private = null;
             try {
                 Private = keyPair.PKIXPrivateKey;
-                Assert.True(Succeed);
+                Succeed.TestTrue();
                 }
             catch (NotExportable) {
-                Assert.False(Succeed);
-                Assert.Null(Private);
+                Succeed.TestFalse();
+                Private.TestNull();
                 }
 
             }
@@ -117,7 +118,7 @@ namespace Goedel.Mesh.Test {
 
             var key = keyCollection.LocatePrivateKeyPair(UDF);
             if (!persisted) {
-                Assert.Null(key);
+                key.TestNull();
                 return;
                 }
             TestExport(key as KeyPair, exportable);

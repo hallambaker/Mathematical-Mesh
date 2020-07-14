@@ -198,7 +198,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyCollection"></param>
         public override void Persist(keyCollection keyCollection) {
-            Assert.True(PersistPending);
+            Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyX448() { Data = encodedPrivateKey };
             keyCollection.Persist(KeyIdentifier, pkix, keyType.IsExportable());
             }
@@ -211,7 +211,7 @@ namespace Goedel.Cryptography {
         /// <param name="Carry">Carried result to add in to the agreement (for recryption)</param>
         /// <returns>The key agreement value ZZ</returns>
         ResultECDH Agreement(KeyPairX448 Public, CurveX448Result Carry = null) {
-            Assert.True(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
+            Assert.AssertTrue(KeyUses.HasFlag(KeyUses.Encrypt), CryptographicOperationNotSupported.Throw);
 
             CurveX448 Agreement;
             if (Carry == null) {
@@ -252,7 +252,7 @@ namespace Goedel.Cryptography {
             KeyAgreementResult Partial = null, byte[] Salt = null) {
 
             var keyPairX448 = Ephemeral as KeyPairX448;
-            Assert.NotNull(keyPairX448, KeyTypeMismatch.Throw);
+            Assert.AssertNotNull(keyPairX448, KeyTypeMismatch.Throw);
 
             var Agreementx = Agreement(keyPairX448, Partial as CurveX448Result);
             return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);

@@ -134,14 +134,14 @@ namespace Goedel.Protocol {
 
         /// <summary>Create a restore point in the stream.</summary>
         public void Mark() {
-            Assert.True(MarkedPosition < 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition < 0, StreamMarkerError.Throw);
             MarkedPosition = Position;
             }
 
         /// <summary>Return the stream to the position that the reader was at the last time
         /// Mark() was called.</summary>
         public void Restore() {
-            Assert.True(MarkedPosition >= 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition >= 0, StreamMarkerError.Throw);
             Position = MarkedPosition;
             EOF = false;
             MarkedPosition = -1;
@@ -376,14 +376,14 @@ namespace Goedel.Protocol {
 
         /// <summary>Create a restore point in the stream.</summary>
         public virtual void Mark() {
-            Assert.True(MarkedPosition < 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition < 0, StreamMarkerError.Throw);
             MarkedPosition = Input.Position;
             }
 
         /// <summary>Return the stream to the position that the reader was at the last time
         /// Mark() was called.</summary>
         public virtual void Restore() {
-            Assert.True(MarkedPosition >= 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition >= 0, StreamMarkerError.Throw);
             Input.Position = MarkedPosition;
             EOF = false;
             MarkedPosition = -1;
@@ -423,14 +423,14 @@ namespace Goedel.Protocol {
         int MarkedPosition = -1;
         /// <summary>Create a restore point in the stream.</summary>
         public virtual void Mark() {
-            Assert.True(MarkedPosition < 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition < 0, StreamMarkerError.Throw);
             MarkedPosition = Position;
             }
 
         /// <summary>Return the stream to the position that the reader was at the last time
         /// Mark() was called.</summary>
         public virtual void Restore() {
-            Assert.True(MarkedPosition >= 0, StreamMarkerError.Throw);
+            Assert.AssertTrue(MarkedPosition >= 0, StreamMarkerError.Throw);
             Position = MarkedPosition;
             MarkedPosition = -1;
             EOF = false;

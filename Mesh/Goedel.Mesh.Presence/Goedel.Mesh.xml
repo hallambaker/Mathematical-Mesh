@@ -9,8 +9,12 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Presence.PresenceTBS.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Presence.PresenceTBS.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Presence.PresenceTBS.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Presence.PresenceTBS.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

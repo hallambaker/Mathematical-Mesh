@@ -115,9 +115,7 @@ namespace Goedel.Mesh {
             if (PublicParameters != null) {
                 return PublicParameters.GetKeyPair(keySecurity);
                 }
-            Assert.Fail(NYI.Throw, "No key parameters specified");
-
-            return null;
+            throw new CryptographicException();
             }
 
         /// <summary>

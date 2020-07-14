@@ -455,7 +455,7 @@ namespace Goedel.Cryptography.Dare {
                         List<byte[]> dataSequences = null
                         ) {
 
-            Assert.True(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
+            Assert.AssertTrue(fileStatus == FileStatus.New | fileStatus == FileStatus.Overwrite,
                 InvalidFileModeException.Throw);
 
             var jbcdStream = new JbcdStream(filename, fileStatus);

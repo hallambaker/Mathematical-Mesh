@@ -79,5 +79,63 @@ namespace Goedel.Test {
                     params object[] args) =>
             Assert.AssertEqual(test1, test2, throwDelegate ?? TestExpectedEqual.ThrowNew, args);
 
-        }
+
+        }    
     }
+
+// Move the deprecated tests here!
+
+//namespace Goedel.Utilities {
+
+
+
+
+
+
+
+//    public static class AssertTest1 {
+
+//        /// <summary>Throw an exception if the specified condition is true. 
+//        ///Assert.False (test, NYIException.Throw, "test was true")
+//        /// </summary>
+//        /// <param name="condition">The condition</param>
+//        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+//        /// Condition is true</param>
+//        /// <param name="Reason">Reason data for filling throw template</param>
+//        /// <param name="Int">Integer default parameter</param>
+//        /// <param name="String">String default parameter</param>
+//        public static void False(bool condition, ThrowDelegate throwDelegate = null,
+//                    object Reason = null, string String = null, int Int = -1) {
+//            if (condition) {
+//                Fail(throwDelegate, Reason, String, Int);
+//                }
+//            }
+
+
+
+//        /// <summary>Throw an exception if the specified object is not null. 
+//        /// </summary>
+//        /// <param name="test">The condition</param>
+//        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+//        /// Condition is true</param>
+//        /// <param name="Reason">Reason data for filling throw template</param>
+//        /// <param name="Int">Integer default parameter</param>
+//        /// <param name="String">String default parameter</param>
+//        public static void Null(object test, ThrowDelegate throwDelegate = null,
+//                object Reason = null, string String = null, int Int = -1) => Assert.True(test == null, throwDelegate, Reason, String, Int);
+
+
+//        /// <summary>Throw an exception if the specified object is not null. 
+//        /// </summary>
+//        /// <param name="test">The condition</param>
+//        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+//        /// Condition is true</param>
+//        /// <param name="Reason">Reason data for filling throw template</param>
+//        /// <param name="Int">Integer default parameter</param>
+//        /// <param name="String">String default parameter</param>
+//        public static void NotNull(this object test, ThrowDelegate throwDelegate = null,
+//                    object Reason = null, string String = null, int Int = -1) => Assert.True(test != null, throwDelegate, Reason, String, Int);
+
+
+//        }
+//    }

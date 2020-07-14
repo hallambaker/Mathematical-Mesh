@@ -45,5 +45,6 @@
       <Generator>exceptional</Generator>
     </None>
     <None Include="$(MSBuildThisFileDirectory)Parse.md" />
+    <None Include="$(MSBuildThisFileDirectory)VS.Make" />
   </ItemGroup>
 </Project>

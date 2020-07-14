@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             var file = Options.File.Value;
 
-            false.AssertTrue(String: "Need to merge in the self contact info and label with a name.");
+            "Need to merge in the self contact info and label with a name.".TaskFunctionality(true);
 
             using var catalog = contextAccount.GetCatalogContact();
             var entry = catalog.AddFromFile(file, self: true);

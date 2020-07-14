@@ -145,8 +145,12 @@
             Generic Mesh Service Error
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshServerException.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshServerException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerException.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServerException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -172,8 +176,12 @@
             Generic Mesh Service Error
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshServerResponse.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshServerResponse.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServerResponse.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServerResponse.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -199,8 +207,12 @@
             The responseId was not found
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshResponseNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshResponseNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -226,8 +238,12 @@
             The respondent replied that they refused to accept the request
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshResponseRefused.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshResponseRefused.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseRefused.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -253,8 +269,12 @@
             The request message expired before the respondent replied
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshResponseExpired.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshResponseExpired.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshResponseExpired.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshResponseExpired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -280,8 +300,12 @@
             The service request message is larger than permitted by the service policy
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshRequestSize.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshRequestSize.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRequestSize.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRequestSize.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -306,8 +330,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshUnknownAccount.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshUnknownAccount.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshUnknownAccount.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshUnknownAccount.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -332,8 +360,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshAccountAlreadyRegistered.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -358,8 +390,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshRedirect.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshRedirect.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRedirect.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRedirect.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -384,8 +420,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshMessageControl.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshMessageControl.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageControl.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageControl.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -410,8 +450,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedSender.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedSender.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedSender.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -436,8 +480,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedService.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshServiceBlockedService.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshServiceBlockedService.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshServiceBlockedService.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -462,8 +510,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedSender.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedSender.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedSender.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedSender.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -488,8 +540,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedService.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshRecipientBlockedService.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshRecipientBlockedService.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshRecipientBlockedService.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -514,8 +570,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageInsufficientPrivilege.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -540,8 +600,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshMessageInvalid.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshMessageInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageInvalid.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -566,8 +630,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.MeshMessageUnsupported.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Server.MeshMessageUnsupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Server.MeshMessageUnsupported.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshMessageUnsupported.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

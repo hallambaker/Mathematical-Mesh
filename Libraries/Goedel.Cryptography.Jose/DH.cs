@@ -75,7 +75,7 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="pkixKey">DH Public Key.</param>
         public PrivateKeyDH(PKIXPrivateKeyDH pkixKey) {
-            Assert.AssertNotNull(pkixKey, NotExportable.ThrowNew);
+            Assert.AssertNotNull(pkixKey, NotExportable.Throw);
 
             Kid = pkixKey.UDF();
             Domain = pkixKey.Domain.UDFData;

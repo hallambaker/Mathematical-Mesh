@@ -95,3 +95,9 @@ Namespace Goedel.Mesh.Client
 			Description
 				|The request was refused because the pin was invalid
 
+		Exception MessageIdNotFound
+			Console "The specified message could not be found."
+
+
+		Exception InvalidRecoverySecret
+			Console "The specified recovery secret was not valid."

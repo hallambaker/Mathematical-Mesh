@@ -407,7 +407,8 @@ namespace Goedel.Cryptography.Dare {
                 if (ContainerDataReader.HasPayload) {
 
                     var FilePath = ContainerDataReader?.Header?.ContentMeta?.Paths;
-                    Assert.True(FilePath != null && FilePath.Count > 0);
+                    Assert.AssertTrue(FilePath != null && FilePath.Count > 0,
+                        ArchiveEntryMissingFileName.Throw);
 
                     var OutputFile = Path.Combine(OutputDirectory, FilePath[0]);
 

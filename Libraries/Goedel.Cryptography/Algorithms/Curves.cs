@@ -105,7 +105,7 @@ namespace Goedel.Cryptography.Algorithms {
             var v = v2.Sqrt(Prime, SqrtMinus1, odd);
 
             // check the value is correct
-            ((v * v).Mod(Prime) == v2).AssertTrue();
+            ((v * v).Mod(Prime) == v2).AssertTrue(InternalCryptographicException.Throw);
             return v;
             }
 
@@ -402,7 +402,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the addition.</returns>
         public (BigInteger, BigInteger) Add(CurveMontgomery point1, CurveMontgomery point2) {
 
-            (point1.Prime == point2.Prime).AssertTrue();
+            (point1.Prime == point2.Prime).AssertTrue(MismatchedCurves.Throw);
 
             var u1 = point1.U;
             var v1 = point1.V;
@@ -424,7 +424,7 @@ namespace Goedel.Cryptography.Algorithms {
             var u3 = (DD - A - u1 - u2).Mod(Prime);
             var v3 = (((u1 + u1 + u2 + A) * B * CINV) - DDD - v1).Mod(Prime);
             
-            CheckCurve(u3, v3).AssertTrue();
+            CheckCurve(u3, v3).AssertTrue(InternalCryptographicException.Throw);
 
             return (u3, v3);
             }
@@ -601,7 +601,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="X0">If true X is odd, otherwise, X is even.</param>
         /// <returns>The X coordinate.</returns>
         public virtual BigInteger RecoverX(bool X0) {
-            Assert.True(Y < Prime, InvalidOperation.Throw);
+            Assert.AssertTrue(Y < Prime, InvalidOperation.Throw);
             var x2 = (Y * Y - 1) * (CurveConstantD * Y * Y + 1).ModularInverse(Prime);
             return x2.Sqrt(Prime, SqrtMinus1, X0);
             }

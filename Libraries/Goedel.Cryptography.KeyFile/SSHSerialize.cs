@@ -83,7 +83,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <returns>The decoded length.</returns>
         public uint DecodeLength() {
-            Assert.False(Remain < 4, UnexpectedEnd.Throw);
+            Assert.AssertFalse(Remain < 4, UnexpectedEnd.Throw);
 
             var Byte0 = Data[Pointer++];
             var Byte1 = Data[Pointer++];

@@ -278,8 +278,8 @@ namespace Goedel.XUnit {
             var Encrypted = Provider.Encrypt(Plaintext, Key, IV);
             var Decrypted = Provider.Decrypt(Ciphertext, Key, IV);
 
-            Utilities.Assert.True(Encrypted.IsEqualTo(Ciphertext));
-            Utilities.Assert.True(Decrypted.IsEqualTo(Plaintext));
+            Encrypted.IsEqualTo(Ciphertext).TestTrue();
+            Decrypted.IsEqualTo(Plaintext).TestTrue();
             }
 
         /// <summary>Test buffered (non streamed) mode with randomly generated Key, IV.</summary>
@@ -294,8 +294,8 @@ namespace Goedel.XUnit {
             Decryptor.Complete();
 
 
-            Utilities.Assert.True(Encryptor.OutputData.IsEqualTo(Ciphertext));
-            Utilities.Assert.True(Decryptor.OutputData.IsEqualTo(Plaintext));
+            Encryptor.OutputData.IsEqualTo(Ciphertext).TestTrue();
+            Decryptor.OutputData.IsEqualTo(Plaintext).TestTrue();
             }
 
 

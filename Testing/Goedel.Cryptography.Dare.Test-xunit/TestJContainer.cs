@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -254,7 +255,7 @@ namespace Goedel.XUnit {
                         Headers.Add(ContainerDataReader.Header);
                         var FrameData = ContainerDataReader.GetBody(XContainer);
 
-                        Utilities.Assert.True(FrameData.IsEqualTo(Test));
+                        (FrameData.IsEqualTo(Test)).TestTrue();
                         }
                     }
 
@@ -268,7 +269,7 @@ namespace Goedel.XUnit {
                             cryptoParameters: CryptoParameters)) {
                     for (Record = MoveStep; Record < Records; Record += MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        Utilities.Assert.True(ContainerDataReader.Header.ContainerInfo.Index == Record);
+                        (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;
                         }
 
                     }
@@ -278,7 +279,7 @@ namespace Goedel.XUnit {
                             cryptoParameters: CryptoParameters)) {
                     for (Record = Records; Record > 0; Record -= MoveStep) {
                         var ContainerDataReader = XContainer.GetContainerFrameIndex(Record);
-                        Utilities.Assert.True(ContainerDataReader.Header.ContainerInfo.Index == Record);
+                        (ContainerDataReader.Header.ContainerInfo.Index == Record).TestTrue(); ;
                         }
                     }
                 }

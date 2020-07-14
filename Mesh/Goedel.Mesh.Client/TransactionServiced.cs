@@ -73,7 +73,7 @@ namespace Goedel.Mesh.Client {
                     Updates = new List<ContainerUpdate> { containerUpdate }
                     };
                 var uploadResponse = MeshClient.Upload(uploadRequest);
-                uploadResponse.Success().AssertTrue(SyncFailed.Throw);
+                uploadResponse.AssertSuccess();
                 }
             catalog.Commit(envelopes, updates);
             }

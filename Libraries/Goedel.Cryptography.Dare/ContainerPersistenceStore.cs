@@ -244,7 +244,7 @@ namespace Goedel.Cryptography.Dare {
                     break;
                     }
                 default: {
-                    throw new NYI();
+                    throw new UndefinedStoreAction(contentMeta.Event);
                     }
                 }
             }
@@ -255,7 +255,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
         protected virtual void MemoryCommitNew(StoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
-            Assert.False(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
+            Assert.AssertFalse(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), EntryAlreadyExists.Throw);
             ObjectIndex.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
             KeyValueIndexAdd(containerStoreEntry);
@@ -280,7 +280,7 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="containerStoreEntry">The container store entry representing the transaction</param>
         protected virtual void MemoryCommitDelete(StoreEntry containerStoreEntry) {
             // Check to make sure the object does not already exist
-            Assert.True(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), NYI.Throw);
+            Assert.AssertTrue(ObjectIndex.ContainsKey(containerStoreEntry.UniqueID), EntryNotFound.Throw);
             ObjectIndex.Remove(containerStoreEntry.UniqueID);
             DeletedObjects.Add(containerStoreEntry.UniqueID, containerStoreEntry);
 
@@ -371,7 +371,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Precondition UniqueID does not exist
             var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out var Previous);
-            Assert.False(Exists, ObjectIdentifierNotUnique.Throw);
+            Assert.AssertFalse(Exists, ObjectIdentifierNotUnique.Throw);
 
             // Create new container
             var contentInfo = new ContentMeta() {
@@ -397,7 +397,7 @@ namespace Goedel.Cryptography.Dare {
                     bool create = true, Transaction transaction = null) {
             // Precondition UniqueID does not exist
             var Exists = ObjectIndex.TryGetValue(jsonObject._PrimaryKey, out previous);
-            Assert.True(Exists | create, NYI.Throw);
+            Assert.AssertTrue(Exists | create, EntryNotFound.Throw);
 
             // Create new container
             var contentInfo = new ContentMeta() {

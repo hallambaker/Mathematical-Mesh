@@ -1466,8 +1466,12 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.Internal.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Internal.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1492,8 +1496,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.AccountNotBound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.AccountNotBound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotBound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotBound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1518,8 +1526,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.InvalidServiceResponse.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.InvalidServiceResponse.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidServiceResponse.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.InvalidServiceResponse.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1545,8 +1557,12 @@
             No mesh account could be found.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.AccountNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.AccountNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.AccountNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1572,8 +1588,12 @@
             No mesh profile could be found.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.MeshNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.MeshNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.MeshNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1599,8 +1619,12 @@
             The action cannot be performed because connection of this device to the account is still pending.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionStillPending.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionStillPending.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionStillPending.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionStillPending.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1626,8 +1650,12 @@
             The action requested can only be performed by an administrator account
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.NotAdministrator.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.NotAdministrator.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.NotAdministrator.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.NotAdministrator.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1653,8 +1681,12 @@
             The attempt to synchronize with the service failed.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.SyncFailed.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.SyncFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.SyncFailed.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.SyncFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1680,8 +1712,12 @@
             Error occurred in Gateway
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.Gateway.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.Gateway.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.Gateway.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.Gateway.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1707,8 +1743,12 @@
             No Portal account specified
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.NoPortalAccount.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.NoPortalAccount.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.NoPortalAccount.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.NoPortalAccount.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1734,8 +1774,12 @@
             Could not connect to portal
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.PortalConnectFail.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.PortalConnectFail.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.PortalConnectFail.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PortalConnectFail.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1761,8 +1805,12 @@
             Portal refused profile publication request
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.PublicationRequestRefused.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.PublicationRequestRefused.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.PublicationRequestRefused.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.PublicationRequestRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1788,8 +1836,12 @@
             The connection request did not complete
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionException.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionException.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1815,8 +1867,12 @@
             The connection request was refused
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionRefused.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionRefused.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionRefused.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionRefused.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1842,8 +1898,12 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionPending.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionPending.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionPending.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionPending.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1869,8 +1929,12 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionExpired.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionExpired.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionExpired.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionExpired.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1896,8 +1960,12 @@
             The connection request is still pending
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.ConnectionAccountUnknown.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ConnectionAccountUnknown.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ConnectionAccountUnknown.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1923,8 +1991,12 @@
             The request was refused because the pin was invalid
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Client.RefusedPINInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Client.RefusedPINInvalid.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -1941,6 +2013,66 @@
             </summary>
         </member>
         <member name="F:Goedel.Mesh.Client.RefusedPINInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.MessageIdNotFound">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.MessageIdNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.MessageIdNotFound.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.MessageIdNotFound.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Client.MessageIdNotFound.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.MessageIdNotFound.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.InvalidRecoverySecret">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.InvalidRecoverySecret.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.InvalidRecoverySecret.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.InvalidRecoverySecret.Throw">
             <summary>
             The public fatory delegate
             </summary>

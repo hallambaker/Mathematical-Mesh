@@ -196,7 +196,7 @@ namespace Goedel.XUnit {
             Debug.WriteLine("Data = {0}", Data.ToStringBase16());
             Debug.WriteLine("Result = {0}", Result.ToStringBase16());
 
-            Utilities.Assert.True(Result.IsEqualTo(Expected));
+            Result.IsEqualTo(Expected).TestTrue();
             }
         }
     }

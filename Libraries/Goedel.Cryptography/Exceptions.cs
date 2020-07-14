@@ -6,6 +6,48 @@
 
 namespace Goedel.Cryptography {
 
+	partial class AllExeptions {
+		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
+			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
+				null,
+				CryptographicException.ThrowNew,
+				InternalCryptographicException.ThrowNew,
+				MismatchedCurves.ThrowNew,
+				CatalogNotInitialized.ThrowNew,
+				PlatformNotInitialized.ThrowNew,
+				OperationNotSupported.ThrowNew,
+				NoAvailableDecryptionKey.ThrowNew,
+				ImplementationLimit.ThrowNew,
+				InvalidQuorum.ThrowNew,
+				InsufficientShares.ThrowNew,
+				QuorumExceedsShares.ThrowNew,
+				QuorumInsufficient.ThrowNew,
+				SharesInsufficient.ThrowNew,
+				QuorumExceeded.ThrowNew,
+				QuorumDegreeExceeded.ThrowNew,
+				MismatchedShares.ThrowNew,
+				InsufficientResults.ThrowNew,
+				FingerprintMatchFailed.ThrowNew,
+				CipherModeNotSupported.ThrowNew,
+				CryptographicOperationNotSupported.ThrowNew,
+				KeyTypeMismatch.ThrowNew,
+				NoProviderSpecified.ThrowNew,
+				NullKeyValue.ThrowNew,
+				NullParameter.ThrowNew,
+				KeySizeNotSupported.ThrowNew,
+				InitializationFailed.ThrowNew,
+				InsufficientKeySize.ThrowNew,
+				InvalidKeyPairType.ThrowNew,
+				RecryptionShareLimitExceeded.ThrowNew,
+				InvalidOperation.ThrowNew,
+				InvalidAlgorithm.ThrowNew,
+				InvalidPoint.ThrowNew,
+				PrivateKeyNotFound.ThrowNew,
+				UnwrapFailed.ThrowNew,
+				UnknownNamedParameters.ThrowNew,
+				NotExportable.ThrowNew				};
+		}
+
 
     /// <summary>
     /// Base class for cryptographic exceptions.
@@ -13,9 +55,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class CryptographicException : global::Goedel.Utilities.GoedelException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "A cryptographic exception occurred..";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"A cryptographic exception occurred.."
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -26,8 +77,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public CryptographicException  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -35,23 +88,120 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new CryptographicException(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new CryptographicException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new CryptographicException(reason as string);
-				}
-			else {
-				return new CryptographicException();
-				}
-            }
+
+        }
+
+
+    /// <summary>
+    /// An internal assertion check failed."
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InternalCryptographicException : CryptographicException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"An internal assertion check failed"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InternalCryptographicException  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new InternalCryptographicException(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
+        }
+
+
+    /// <summary>
+    /// An internal assertion check failed."
+    /// </summary>
+    [global::System.Serializable]
+	public partial class MismatchedCurves : CryptographicException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Points are on different curves"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public MismatchedCurves  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new MismatchedCurves(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
         }
 
 
@@ -61,9 +211,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class CatalogNotInitialized : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The operation requires cryptographic catalog initialization";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The operation requires cryptographic catalog initialization"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -74,8 +233,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public CatalogNotInitialized  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -83,23 +244,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new CatalogNotInitialized(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new CatalogNotInitialized(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new CatalogNotInitialized(reason as string);
-				}
-			else {
-				return new CatalogNotInitialized();
-				}
-            }
+
         }
 
 
@@ -109,9 +263,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class PlatformNotInitialized : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The operation requires platform initialization";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The operation requires platform initialization"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -122,8 +285,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public PlatformNotInitialized  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -131,23 +296,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new PlatformNotInitialized(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new PlatformNotInitialized(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new PlatformNotInitialized(reason as string);
-				}
-			else {
-				return new PlatformNotInitialized();
-				}
-            }
+
         }
 
 
@@ -157,9 +315,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class OperationNotSupported : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The requested cryptographic operation is not supported";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The requested cryptographic operation is not supported"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -170,8 +337,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public OperationNotSupported  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -179,23 +348,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new OperationNotSupported(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new OperationNotSupported(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new OperationNotSupported(reason as string);
-				}
-			else {
-				return new OperationNotSupported();
-				}
-            }
+
         }
 
 
@@ -205,9 +367,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class NoAvailableDecryptionKey : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "No decryption key is available";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No decryption key is available"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -218,8 +389,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NoAvailableDecryptionKey  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -227,23 +400,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NoAvailableDecryptionKey(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NoAvailableDecryptionKey(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NoAvailableDecryptionKey(reason as string);
-				}
-			else {
-				return new NoAvailableDecryptionKey();
-				}
-            }
+
         }
 
 
@@ -254,9 +420,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class ImplementationLimit : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Some implementation limit hit";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Some implementation limit hit"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -267,8 +442,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ImplementationLimit  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -276,23 +453,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ImplementationLimit(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ImplementationLimit(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ImplementationLimit(reason as string);
-				}
-			else {
-				return new ImplementationLimit();
-				}
-            }
+
         }
 
 
@@ -302,9 +472,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InvalidQuorum : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Quorum parameters invalid";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Quorum parameters invalid"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -315,8 +494,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidQuorum  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -324,23 +505,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidQuorum(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidQuorum(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidQuorum(reason as string);
-				}
-			else {
-				return new InvalidQuorum();
-				}
-            }
+
         }
 
 
@@ -351,9 +525,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InsufficientShares : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Not enough shares to recover key";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Not enough shares to recover key"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -364,8 +547,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InsufficientShares  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -373,23 +558,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InsufficientShares(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InsufficientShares(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InsufficientShares(reason as string);
-				}
-			else {
-				return new InsufficientShares();
-				}
-            }
+
         }
 
 
@@ -400,9 +578,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class QuorumExceedsShares : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Quorum can't exceed shares";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Quorum can't exceed shares"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -413,8 +600,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public QuorumExceedsShares  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -422,23 +611,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new QuorumExceedsShares(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new QuorumExceedsShares(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new QuorumExceedsShares(reason as string);
-				}
-			else {
-				return new QuorumExceedsShares();
-				}
-            }
+
         }
 
 
@@ -448,9 +630,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class QuorumInsufficient : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Quorum must be at least 2";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Quorum must be at least 2"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -461,8 +652,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public QuorumInsufficient  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -470,23 +663,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new QuorumInsufficient(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new QuorumInsufficient(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new QuorumInsufficient(reason as string);
-				}
-			else {
-				return new QuorumInsufficient();
-				}
-            }
+
         }
 
 
@@ -496,9 +682,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class SharesInsufficient : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Shares must be at least 2";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Shares must be at least 2"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -509,8 +704,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public SharesInsufficient  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -518,23 +715,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new SharesInsufficient(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new SharesInsufficient(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new SharesInsufficient(reason as string);
-				}
-			else {
-				return new SharesInsufficient();
-				}
-            }
+
         }
 
 
@@ -545,9 +735,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class QuorumExceeded : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Too many shares specified";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Too many shares specified"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -558,8 +757,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public QuorumExceeded  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -567,23 +768,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new QuorumExceeded(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new QuorumExceeded(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new QuorumExceeded(reason as string);
-				}
-			else {
-				return new QuorumExceeded();
-				}
-            }
+
         }
 
 
@@ -594,9 +788,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class QuorumDegreeExceeded : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Degree too high";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Degree too high"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -607,8 +810,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public QuorumDegreeExceeded  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -616,23 +821,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new QuorumDegreeExceeded(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new QuorumDegreeExceeded(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new QuorumDegreeExceeded(reason as string);
-				}
-			else {
-				return new QuorumDegreeExceeded();
-				}
-            }
+
         }
 
 
@@ -642,9 +840,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class MismatchedShares : InvalidQuorum {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Keys must have same threshold";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Keys must have same threshold"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -655,8 +862,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public MismatchedShares  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -664,23 +873,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new MismatchedShares(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new MismatchedShares(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new MismatchedShares(reason as string);
-				}
-			else {
-				return new MismatchedShares();
-				}
-            }
+
         }
 
 
@@ -690,9 +892,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InsufficientResults : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "There must be at least one result";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"There must be at least one result"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -703,8 +914,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InsufficientResults  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -712,23 +925,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InsufficientResults(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InsufficientResults(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InsufficientResults(reason as string);
-				}
-			else {
-				return new InsufficientResults();
-				}
-            }
+
         }
 
 
@@ -739,9 +945,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class FingerprintMatchFailed : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Data did not match expected fingerprint value";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Data did not match expected fingerprint value"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -752,8 +967,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public FingerprintMatchFailed  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -761,23 +978,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new FingerprintMatchFailed(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new FingerprintMatchFailed(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new FingerprintMatchFailed(reason as string);
-				}
-			else {
-				return new FingerprintMatchFailed();
-				}
-            }
+
         }
 
 
@@ -788,9 +998,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class CipherModeNotSupported : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The requested cipher mode is not supported by the provider";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The requested cipher mode is not supported by the provider"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -801,8 +1020,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public CipherModeNotSupported  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -810,23 +1031,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new CipherModeNotSupported(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new CipherModeNotSupported(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new CipherModeNotSupported(reason as string);
-				}
-			else {
-				return new CipherModeNotSupported();
-				}
-            }
+
         }
 
 
@@ -837,9 +1051,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class CryptographicOperationNotSupported : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The requested cryptographic operation is not supported by the provider";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The requested cryptographic operation is not supported by the provider"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -850,8 +1073,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public CryptographicOperationNotSupported  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -859,23 +1084,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new CryptographicOperationNotSupported(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new CryptographicOperationNotSupported(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new CryptographicOperationNotSupported(reason as string);
-				}
-			else {
-				return new CryptographicOperationNotSupported();
-				}
-            }
+
         }
 
 
@@ -885,9 +1103,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class KeyTypeMismatch : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The encryption key type does not match the recryption key type";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The encryption key type does not match the recryption key type"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -898,8 +1125,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public KeyTypeMismatch  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -907,23 +1136,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new KeyTypeMismatch(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new KeyTypeMismatch(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new KeyTypeMismatch(reason as string);
-				}
-			else {
-				return new KeyTypeMismatch();
-				}
-            }
+
         }
 
 
@@ -935,9 +1157,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class NoProviderSpecified : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "No provider specified";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No provider specified"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -948,8 +1179,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NoProviderSpecified  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -957,23 +1190,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NoProviderSpecified(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NoProviderSpecified(reason as string);
-				}
-			else {
-				return new NoProviderSpecified();
-				}
-            }
+
         }
 
 
@@ -983,9 +1209,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class NullKeyValue : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The key value must not be null";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The key value must not be null"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -996,8 +1231,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NullKeyValue  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1005,23 +1242,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NullKeyValue(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NullKeyValue(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NullKeyValue(reason as string);
-				}
-			else {
-				return new NullKeyValue();
-				}
-            }
+
         }
 
 
@@ -1031,9 +1261,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class NullParameter : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The parameter value must not be null";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The parameter value must not be null"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1044,8 +1283,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NullParameter  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1053,23 +1294,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NullParameter(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NullParameter(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NullParameter(reason as string);
-				}
-			else {
-				return new NullParameter();
-				}
-            }
+
         }
 
 
@@ -1079,9 +1313,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class KeySizeNotSupported : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The requested key size is not supported";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The requested key size is not supported"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1092,8 +1335,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public KeySizeNotSupported  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1101,23 +1346,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new KeySizeNotSupported(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new KeySizeNotSupported(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new KeySizeNotSupported(reason as string);
-				}
-			else {
-				return new KeySizeNotSupported();
-				}
-            }
+
         }
 
 
@@ -1128,9 +1366,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InitializationFailed : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Initialization of the cryptographic support library failed.";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Initialization of the cryptographic support library failed."
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1141,8 +1388,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InitializationFailed  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1150,23 +1399,68 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InitializationFailed(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InitializationFailed(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InitializationFailed(reason as string);
-				}
-			else {
-				return new InitializationFailed();
-				}
-            }
+
+        }
+
+
+    /// <summary>
+    /// The specified key size presents an insufficient work factor
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InsufficientKeySize : CryptographicException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The specified key size presents an insufficient work factor"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InsufficientKeySize  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new InsufficientKeySize(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
         }
 
 
@@ -1176,9 +1470,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InvalidKeyPairType : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The keypair presented was not of the expected type";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The keypair presented was not of the expected type"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1189,8 +1492,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidKeyPairType  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1198,23 +1503,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidKeyPairType(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidKeyPairType(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidKeyPairType(reason as string);
-				}
-			else {
-				return new InvalidKeyPairType();
-				}
-            }
+
         }
 
 
@@ -1224,9 +1522,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class RecryptionShareLimitExceeded : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The number of recryption shares requested exceeds the implementation limit";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The number of recryption shares requested exceeds the implementation limit"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1237,8 +1544,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public RecryptionShareLimitExceeded  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1246,23 +1555,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new RecryptionShareLimitExceeded(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new RecryptionShareLimitExceeded(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new RecryptionShareLimitExceeded(reason as string);
-				}
-			else {
-				return new RecryptionShareLimitExceeded();
-				}
-            }
+
         }
 
 
@@ -1272,9 +1574,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InvalidOperation : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The cryptographic provider does not support the requested operation";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The cryptographic provider does not support the requested operation"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1285,8 +1596,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidOperation  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1294,23 +1607,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidOperation(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidOperation(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidOperation(reason as string);
-				}
-			else {
-				return new InvalidOperation();
-				}
-            }
+
         }
 
 
@@ -1320,9 +1626,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class InvalidAlgorithm : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The specified algorithm is not valid for the operation attempted";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The specified algorithm is not valid for the operation attempted"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1333,8 +1648,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public InvalidAlgorithm  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1342,23 +1659,67 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new InvalidAlgorithm(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new InvalidAlgorithm(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new InvalidAlgorithm(reason as string);
-				}
-			else {
-				return new InvalidAlgorithm();
-				}
-            }
+
+        }
+
+
+    /// <summary>
+    /// </summary>
+    [global::System.Serializable]
+	public partial class InvalidPoint : CryptographicException {
+
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
+
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The specified point is not valid for the curve"
+				};
+
+		/// <summary>
+		/// Construct instance for exception
+		/// </summary>		
+		/// <param name="description">Description of the error, may be used to override the 
+		/// generated message.</param>	
+		/// <param name="inner">Inner Exception</param>	
+		/// <param name="args">Optional list of parameterized arguments.</param>
+		public InvalidPoint  (string description=null, System.Exception inner=null,
+			params object[] args) : 
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
+			}
+
+
+
+
+
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+
+        static System.Exception _Throw(object reasons) => new InvalidPoint(args:reasons) ;
+		
+		/// <summary>
+        /// The public fatory delegate
+        /// </summary>
+        public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
+
+
         }
 
 
@@ -1368,9 +1729,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class PrivateKeyNotFound : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The operation requested requires a private key that could not be found";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The operation requested requires a private key that could not be found"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1381,8 +1751,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public PrivateKeyNotFound  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1390,23 +1762,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new PrivateKeyNotFound(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new PrivateKeyNotFound(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new PrivateKeyNotFound(reason as string);
-				}
-			else {
-				return new PrivateKeyNotFound();
-				}
-            }
+
         }
 
 
@@ -1416,9 +1781,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class UnwrapFailed : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The key unwrap operation returned an invalid value.";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The key unwrap operation returned an invalid value."
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1429,8 +1803,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnwrapFailed  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1438,23 +1814,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnwrapFailed(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnwrapFailed(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnwrapFailed(reason as string);
-				}
-			else {
-				return new UnwrapFailed();
-				}
-            }
+
         }
 
 
@@ -1464,9 +1833,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class UnknownNamedParameters : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The named parameters specified in an operation are not known";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The named parameters specified in an operation are not known"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1477,8 +1855,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnknownNamedParameters  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1486,23 +1866,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnknownNamedParameters(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnknownNamedParameters(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnknownNamedParameters(reason as string);
-				}
-			else {
-				return new UnknownNamedParameters();
-				}
-            }
+
         }
 
 
@@ -1512,9 +1885,18 @@ namespace Goedel.Cryptography {
     [global::System.Serializable]
 	public partial class NotExportable : CryptographicException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The cryptographic provider does not permit export of the private key parameters";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The cryptographic provider does not permit export of the private key parameters"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -1525,8 +1907,10 @@ namespace Goedel.Cryptography {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NotExportable  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -1534,23 +1918,16 @@ namespace Goedel.Cryptography {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NotExportable(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NotExportable(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NotExportable(reason as string);
-				}
-			else {
-				return new NotExportable();
-				}
-            }
+
         }
 
 

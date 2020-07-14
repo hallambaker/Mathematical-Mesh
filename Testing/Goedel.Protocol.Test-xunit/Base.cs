@@ -181,50 +181,50 @@ namespace Goedel.XUnit {
         #region // Equality tests
 
         void CheckEqual(MultiInstance First, MultiInstance Second) {
-            Utilities.Assert.True(First.FieldBoolean == Second.FieldBoolean, Compare.Throw, "Boolean failed");
-            Utilities.Assert.True(First.FieldInteger == Second.FieldInteger, Compare.Throw, "Integer failed");
+            Utilities.Assert.AssertTrue(First.FieldBoolean == Second.FieldBoolean, Compare.Throw, "Boolean failed");
+            Utilities.Assert.AssertTrue(First.FieldInteger == Second.FieldInteger, Compare.Throw, "Integer failed");
 
-            Utilities.Assert.AssertTrue(First.FieldDateTime.IsEqualTo(Second.FieldDateTime), Compare.ThrowNew);
+            Utilities.Assert.AssertTrue(First.FieldDateTime.IsEqualTo(Second.FieldDateTime), Compare.Throw);
 
-            Utilities.Assert.True(First.FieldString == Second.FieldString, Compare.Throw, "String failed");
-            Utilities.Assert.True(First.FieldBinary.IsEqualTo(Second.FieldBinary), Compare.Throw, "Binary failed");
+            Utilities.Assert.AssertTrue(First.FieldString == Second.FieldString, Compare.Throw, "String failed");
+            Utilities.Assert.AssertTrue(First.FieldBinary.IsEqualTo(Second.FieldBinary), Compare.Throw, "Binary failed");
             }
 
         void CheckEqual(MultiArray First, MultiArray Second) {
             CheckEqual(First as MultiInstance, Second);
 
-            Utilities.Assert.True(First.ArrayBoolean.Count == Second.ArrayBoolean.Count,
+            Utilities.Assert.AssertTrue(First.ArrayBoolean.Count == Second.ArrayBoolean.Count,
                          Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayBoolean.Count; i++) {
-                Utilities.Assert.True(First.ArrayBoolean[i] == Second.ArrayBoolean[i],
+                Utilities.Assert.AssertTrue(First.ArrayBoolean[i] == Second.ArrayBoolean[i],
                          Compare.Throw, "Boolean Array");
                 }
 
-            Utilities.Assert.True(First.ArrayInteger.Count == Second.ArrayInteger.Count,
+            Utilities.Assert.AssertTrue(First.ArrayInteger.Count == Second.ArrayInteger.Count,
              Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayInteger.Count; i++) {
-                Utilities.Assert.True(First.ArrayInteger[i] == Second.ArrayInteger[i],
+                Utilities.Assert.AssertTrue(First.ArrayInteger[i] == Second.ArrayInteger[i],
                          Compare.Throw, "Boolean Array");
                 }
 
-            Utilities.Assert.True(First.ArrayDateTime.Count == Second.ArrayDateTime.Count,
+            Utilities.Assert.AssertTrue(First.ArrayDateTime.Count == Second.ArrayDateTime.Count,
              Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayDateTime.Count; i++) {
                 First.ArrayDateTime[i].AssertEqual(Second.ArrayDateTime[i],
-                         Compare.ThrowNew);
+                         Compare.Throw);
                 }
 
-            Utilities.Assert.True(First.ArrayString.Count == Second.ArrayString.Count,
+            Utilities.Assert.AssertTrue(First.ArrayString.Count == Second.ArrayString.Count,
              Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayString.Count; i++) {
-                Utilities.Assert.True(First.ArrayString[i] == Second.ArrayString[i],
+                Utilities.Assert.AssertTrue(First.ArrayString[i] == Second.ArrayString[i],
                          Compare.Throw, "Boolean Array");
                 }
 
-            Utilities.Assert.True(First.ArrayBinary.Count == Second.ArrayBinary.Count,
+            Utilities.Assert.AssertTrue(First.ArrayBinary.Count == Second.ArrayBinary.Count,
              Compare.Throw, "Boolean Array Length");
             for (var i = 0; i < First.ArrayBinary.Count; i++) {
-                Utilities.Assert.True(First.ArrayBinary[i].IsEqualTo(Second.ArrayBinary[i]),
+                Utilities.Assert.AssertTrue(First.ArrayBinary[i].IsEqualTo(Second.ArrayBinary[i]),
                          Compare.Throw, "Boolean Array");
                 }
             }

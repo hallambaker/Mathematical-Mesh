@@ -206,7 +206,7 @@ namespace Goedel.Mesh {
                     long maxTicks = -1,
                     DateTime? notBefore = null,
                     DateTime? notOnOrAfter = null) {
-            dateTime.AssertNotNull(InvalidDate.ThrowNew);
+            dateTime.AssertNotNull(InvalidDate.Throw);
 
             var dateTime1 = (DateTime)dateTime;
 
@@ -379,7 +379,7 @@ namespace Goedel.Mesh {
                 }
             else if (envelope.Header.ContentMeta.MessageType == MessageComplete.__Tag) {
                 var message = spoolEntry.Message;
-                message.AssertNotNull(InvalidMessage.ThrowNew);  // Hack - need to collect up the errors 
+                message.AssertNotNull(InvalidMessage.Throw);  // Hack - need to collect up the errors 
                 foreach (var reference in message.References) {
                     // Do we already have an entry?
                     var envelopeID = reference.EnvelopeID;

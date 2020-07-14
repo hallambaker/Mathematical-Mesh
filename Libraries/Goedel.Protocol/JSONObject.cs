@@ -284,13 +284,13 @@ namespace Goedel.Protocol {
 
 
         /// <summary>
-        /// Deserialize a tagged stream. This method should never be called.
+        /// Deserialize a tagged stream.
         /// </summary>
         /// <param name="input">The input stream</param>
         /// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
         public static JsonObject FromJson(JsonReader input, bool tagged) {
-            tagged.AssertTrue(Internal.Throw);
+            tagged.AssertTrue(TagRequired.Throw);
             return input.ReadTaggedObject(TagDictionary);
             }
 

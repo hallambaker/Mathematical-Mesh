@@ -49,7 +49,7 @@ namespace Goedel.Mesh {
         public static (string, string) ParseConnectUri(string uriAddress) {
             try {
                 var uri = new Uri(uriAddress);
-                (uri.Scheme == Constants.MeshConnectURI).AssertTrue();
+                (uri.Scheme == Constants.MeshConnectURI).AssertTrue(InvalidUriMethod.Throw);
                 var pin = uri.LocalPath.Substring(1);
                 var accountAddress = $"{uri.UserInfo}@{uri.Authority}";
 

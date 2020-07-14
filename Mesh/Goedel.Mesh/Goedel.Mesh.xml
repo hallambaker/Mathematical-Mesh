@@ -3118,8 +3118,12 @@
             An internal assertion check failed.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Internal.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Internal.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Internal.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Internal.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3145,8 +3149,12 @@
             The profile presented was invalid.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidProfile.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.InvalidProfile.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidProfile.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.InvalidProfile.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3172,8 +3180,12 @@
             The requestor is not authorized for the specified operation
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.NotAuthorized.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.NotAuthorized.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.NotAuthorized.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.NotAuthorized.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3199,8 +3211,12 @@
             The request is not authenticated  for the specified operation
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.NotAuthenticated.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.NotAuthenticated.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.NotAuthenticated.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.NotAuthenticated.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3226,8 +3242,12 @@
             Mesh Messages MUST specify a valid message ID.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidMessageID.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.InvalidMessageID.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidMessageID.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.InvalidMessageID.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3252,8 +3272,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidMessage.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.InvalidMessage.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidMessage.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.InvalidMessage.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3279,8 +3303,12 @@
             The specified connection URI was invalid
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidUri.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.InvalidUri.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidUri.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.InvalidUri.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3305,8 +3333,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidDate.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.InvalidDate.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidDate.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.InvalidDate.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3331,8 +3363,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.KeyRecoveryFailed.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.KeyRecoveryFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.KeyRecoveryFailed.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.KeyRecoveryFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3357,8 +3393,12 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.KeyActivationFailed.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.KeyActivationFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.KeyActivationFailed.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.KeyActivationFailed.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -3375,6 +3415,96 @@
             </summary>
         </member>
         <member name="F:Goedel.Mesh.KeyActivationFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.InvalidUriMethod">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.InvalidUriMethod.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidUriMethod.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.InvalidUriMethod.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidUriMethod.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.InvalidUriMethod.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ServerOperationFailed">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServerOperationFailed.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServerOperationFailed.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServerOperationFailed.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.ServerOperationFailed.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServerOperationFailed.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.ServerResponseInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ServerResponseInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServerResponseInvalid.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.ServerResponseInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="F:Goedel.Mesh.ServerResponseInvalid.ThrowNew">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ServerResponseInvalid.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -6645,6 +6775,14 @@
             <summary>
             Default constructor
             </summary>
+        </member>
+        <member name="M:Goedel.Mesh.MeshResponse.AssertSuccess(Goedel.Utilities.ThrowNewDelegate)">
+            <summary>
+            Convenience method testing that the response succeeded and throwing the 
+            exception <paramref name="throwDelegate"/> or <see cref="T:Goedel.Mesh.ServerOperationFailed"/>
+            otherwise with the response instance as the parameter.
+            </summary>
+            <param name="throwDelegate">Delegate that throws the required exception.</param>
         </member>
         <member name="M:Goedel.Mesh.MeshResponse.DeepCopy">
             <summary>

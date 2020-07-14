@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Core;
 using Goedel.Cryptography.Dare;
 using Goedel.Protocol;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -26,8 +27,8 @@ namespace Goedel.XUnit {
             var plaintext = Platform.GetRandomBytes(1000);
             var testEnvironmentCommon = new TestEnvironmentCommon();
 
-            var groupName = "GroupW@example.com";
-            var userName = "Alice@example.com";
+            var groupName = "groupW@example.com";
+            var userName = "alice@example.com";
 
             var machineAdmin = new MeshMachineTest(testEnvironmentCommon, "admin");
             var machineMember = new MeshMachineTest(testEnvironmentCommon, "admin");
@@ -296,7 +297,7 @@ contentMeta: contentInfo, dataSequences: DataSequences);
                     decrypt: CryptoParameters.Encrypt, keyCollection: CryptoParameters.KeyLocate);
             CheckDecodeResult(Message, DataSequences, ContentType);
 
-            Utilities.Assert.True(Plaintext.IsEqualTo(Message.Body));
+            Plaintext.IsEqualTo(Message.Body).TestTrue();
             }
 
         static void CheckDecode(
@@ -314,7 +315,7 @@ contentMeta: contentInfo, dataSequences: DataSequences);
             var decoder = cryptoStack.GetDecoder(input, out var plaintextStream);
             plaintextStream.CopyTo(output);
             decrypt = output.ToArray();
-            decrypt.IsEqualTo(plaintext).AssertTrue();
+            decrypt.IsEqualTo(plaintext).TestTrue();
 
             }
 
@@ -325,14 +326,14 @@ contentMeta: contentInfo, dataSequences: DataSequences);
             List<byte[]> DataSequences = null,
             string ContentType = null) {
 
-            Utilities.Assert.True(ContentType == Message.Header.ContentType);
+            (ContentType == Message.Header.ContentType).TestTrue(); ;
             if (DataSequences == null) {
                 }
             else {
-                Utilities.Assert.True(DataSequences.Count == Message.DataSequences);
+                (DataSequences.Count == Message.DataSequences).TestTrue(); ;
                 for (var i = 0; i < DataSequences.Count; i++) {
                     var MEDSS = Message.DataSequence(i);
-                    Utilities.Assert.True(DataSequences[i].IsEqualTo(MEDSS));
+                    (DataSequences[i].IsEqualTo(MEDSS)).TestTrue(); ;
                     }
                 }
             }

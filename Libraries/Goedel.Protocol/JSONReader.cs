@@ -805,7 +805,7 @@ namespace Goedel.Protocol {
         public JsonObject ReadTaggedObject(
                     Dictionary<string, JsonFactoryDelegate> TagDictionary) {
 
-            Assert.NotNull(TagDictionary, DictionaryInitialization.Throw);
+            Assert.AssertNotNull(TagDictionary, DictionaryInitialization.Throw);
 
             JsonObject Out = null;
             StartObject();
@@ -815,7 +815,7 @@ namespace Goedel.Protocol {
 
             var Token = ReadToken();
 
-            Assert.True(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
+            Assert.AssertTrue(TagDictionary.TryGetValue(Token, out var Delegate), UnknownTag.Throw);
             Out = Delegate();
             Out.Deserialize(this);
             EndObject();

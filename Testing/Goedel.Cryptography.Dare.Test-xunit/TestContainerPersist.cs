@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.IO;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -56,7 +57,7 @@ namespace Goedel.XUnit {
             using var TestStore = new TestItemContainerPersistenceStore(
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
             // retrieve by master key -fail
-            Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+            AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
             }
 
 
@@ -65,23 +66,23 @@ namespace Goedel.XUnit {
             using var TestStore = new TestItemContainerPersistenceStore(
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite);
             // retrieve by master key -fail
-            Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
-            (TestStore.Container.FrameCount == 1).AssertTrue();
+            AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
+            (TestStore.Container.FrameCount == 1).TestTrue();
 
 
             TestStore.New(AccountAlice);
 
-            (TestStore.Container.FrameCount == 2).AssertTrue();
+            (TestStore.Container.FrameCount == 2).TestTrue();
 
 
-            Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-            Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+            AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
+            AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
             var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-            Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
             var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-            Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
+            AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
             }
 
 
@@ -90,73 +91,74 @@ namespace Goedel.XUnit {
             using (var TestStore = new TestItemContainerPersistenceStore(
             FileTest, "application/test", "A testy store", FileStatus: FileStatus.Overwrite)) {
                 // retrieve by master key -fail
-                Utilities.Assert.False(TestStore.Contains(AccountIDAlice));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDAlice));
                 TestStore.New(AccountAlice);
 
-                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
                 var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
                 var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
                 }
 
             //Check we can read record back when opening the file in create or use existing mode
             using (var TestStore = new TestItemContainerPersistenceStore(
                     FileTest, "application/test", "A testy store", FileStatus: FileStatus.Append)) {
-                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
                 var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
 
                 var AccountTest2 = TestStore.GetUserProfileUDF(AccountAlice.UserProfileUDF);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest2));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest2));
 
                 }
 
             //Check we can read record back when opening the file in create or use existing mode
             using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
-                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
                 var AccountTest = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTest));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTest));
                 }
 
             //Check we can read record back when opening the file in create or use existing mode
             using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
                 // retrieve by master key -fail
-                Utilities.Assert.False(TestStore.Contains(AccountIDBob));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDBob));
                 TestStore.New(AccountBob);
 
-                Utilities.Assert.True(TestStore.Contains(AccountIDBob));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDBob));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
                 var AccountTestA = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTestA));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTestA));
 
                 var AccountTestB = TestStore.GetAccountID(AccountIDBob);
-                Utilities.Assert.True(CheckEqual(AccountBob, AccountTestB));
+                AssertTest.TestTrue(CheckEqual(AccountBob, AccountTestB));
                 }
 
             // Check we can delete an entry
             using (var TestStore = new TestItemContainerPersistenceStore(FileTest)) {
                 // retrieve by master key -fail
-                Utilities.Assert.True(TestStore.Contains(AccountIDBob));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDBob));
                 TestStore.Delete(AccountIDBob);
 
-                Utilities.Assert.True(TestStore.Contains(AccountIDAlice));
-                Utilities.Assert.False(TestStore.Contains(AccountIDBob));
-                Utilities.Assert.False(TestStore.Contains(AccountIDInvalid));
+                AssertTest.TestTrue(TestStore.Contains(AccountIDAlice));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDBob));
+                AssertTest.TestFalse(TestStore.Contains(AccountIDInvalid));
 
                 var AccountTestA = TestStore.GetAccountID(AccountIDAlice);
-                Utilities.Assert.True(CheckEqual(AccountAlice, AccountTestA));
+                AssertTest.TestTrue(CheckEqual(AccountAlice, AccountTestA));
 
                 var AccountTestB = TestStore.GetAccountID(AccountIDBob);
-                Utilities.Assert.Null(AccountTestB);
+
+                AccountTestB.TestNull();
                 }
 
 

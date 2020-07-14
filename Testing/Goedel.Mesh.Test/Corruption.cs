@@ -2,7 +2,7 @@
 using Goedel.IO;
 using Goedel.Protocol;
 using Goedel.Utilities;
-
+using Goedel.Test;
 using System.IO;
 
 namespace Goedel.Mesh.Test {
@@ -14,10 +14,10 @@ namespace Goedel.Mesh.Test {
             using var inputStream = filename.OpenFileReadWrite();
             var jsonReader = new JsonBcdReader(inputStream);
 
-            Assert.True(jsonReader.StartArray());
+            (jsonReader.StartArray()).TestTrue();
             var Header = DareHeader.FromJson(jsonReader, false);
-            Assert.NotNull(Header);
-            Assert.True(jsonReader.NextArray());
+            Header.TestNotNull();
+            (jsonReader.NextArray()).TestTrue();
 
             jsonReader.PeekToken();
 

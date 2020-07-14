@@ -183,7 +183,7 @@ namespace Goedel.Cryptography {
 
             var result = new byte[length / 8];
 
-            Assert.True(length < (255 * (size / 8)), ImplementationLimit.Throw);
+            Assert.AssertTrue(length < (255 * (size / 8)), ImplementationLimit.Throw);
 
             byte index = 1;
 

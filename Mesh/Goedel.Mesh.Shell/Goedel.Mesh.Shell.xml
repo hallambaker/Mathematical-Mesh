@@ -822,8 +822,12 @@
             Generic error in Mesh Shell library
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.MeshShellException.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.MeshShellException.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.MeshShellException.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.MeshShellException.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -849,8 +853,12 @@
             The calculated fingerprint did not match the expected value.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.DidNotMatchExpectedValue.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.DidNotMatchExpectedValue.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.DidNotMatchExpectedValue.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -876,8 +884,12 @@
             Account not valid
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.AccountNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.AccountNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.AccountNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.AccountNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -903,8 +915,12 @@
             Account not valid
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.ProfileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ProfileNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ProfileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -930,8 +946,12 @@
             The directory could not be found
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.DirectoryNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.DirectoryNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.DirectoryNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>
@@ -957,8 +977,12 @@
             The directory could not be found
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.FileNotFound.MessageTemplate">
-            <summary>The message template in the current locale.</summary>
+        <member name="P:Goedel.Mesh.Shell.FileNotFound.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.FileNotFound.Templates">
+            <summary></summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.FileNotFound.#ctor(System.String,System.Exception,System.Object[])">
             <summary>

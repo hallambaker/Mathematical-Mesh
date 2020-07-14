@@ -2,6 +2,7 @@ using Goedel.Mesh.Client;
 using Goedel.Mesh.Server;
 using Goedel.Mesh.Shell;
 using Goedel.Protocol;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -192,14 +193,14 @@ namespace Goedel.Mesh.Test {
             if (!fail) {
                 Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
                 var result = Shell.ShellResult as Result;
-                result.Success.AssertTrue();
+                result.Success.TestTrue();
                 return result;
                 }
             else {
                 try {
                     Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
                     var result = Shell.ShellResult as Result;
-                    result.Success.AssertFalse();
+                    result.Success.TestFalse();
                     return result;
                     }
                 catch {
@@ -223,9 +224,9 @@ namespace Goedel.Mesh.Test {
             var result = Dispatch($"password get {site}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedCredential;
 
-            (site == entry.Service).AssertTrue();
-            (username == entry.Username).AssertTrue();
-            (password == entry.Password).AssertTrue();
+            (site == entry.Service).TestTrue();
+            (username == entry.Username).TestTrue();
+            (password == entry.Password).TestTrue();
             return true;
             }
 
@@ -241,7 +242,7 @@ namespace Goedel.Mesh.Test {
             var result = Dispatch($"contact get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedContact;
 
-            (key == entry.Key).AssertTrue();
+            (key == entry.Key).TestTrue();
             return true;
             }
 
@@ -254,9 +255,9 @@ namespace Goedel.Mesh.Test {
             var result = Dispatch($"bookmark get {path}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedBookmark;
 
-            (uri == entry.Uri).AssertTrue();
-            (title == entry.Title).AssertTrue();
-            (path == entry.Path).AssertTrue();
+            (uri == entry.Uri).TestTrue();
+            (title == entry.Title).TestTrue();
+            (path == entry.Path).TestTrue();
             return true;
             }
 
@@ -272,7 +273,7 @@ namespace Goedel.Mesh.Test {
             var result = Dispatch($"calendar get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedTask;
 
-            (key == entry.Key).AssertTrue();
+            (key == entry.Key).TestTrue();
             return true;
             }
 
@@ -285,8 +286,8 @@ namespace Goedel.Mesh.Test {
             var result = Dispatch($"network get {key}") as ResultEntry;
             var entry = result.CatalogEntry as CatalogedNetwork;
 
-            (key == entry.Service).AssertTrue();
-            (password == entry.Password).AssertTrue();
+            (key == entry.Service).TestTrue();
+            (password == entry.Password).TestTrue();
             return true;
             }
 

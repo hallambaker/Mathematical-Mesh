@@ -204,7 +204,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The byte read or -1.</returns>
         /// <exception cref="InvalidFileFormatException">The record data read from disk was invalid</exception>
         public virtual int ReadByteReverse() {
-            Assert.True(PositionRead > 0, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(PositionRead > 0, InvalidFileFormatException.Throw);
             Seek(-1, SeekOrigin.Current);
             var Value = ReadByte();
             Seek(-1, SeekOrigin.Current);

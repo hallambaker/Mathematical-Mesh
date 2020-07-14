@@ -69,7 +69,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override IPKIXPrivateKey PKIXPrivateKey {
             get {
-                Assert.NotNull(PKIXPrivateKeyECDH, NotExportable.Throw);
+                Assert.AssertNotNull(PKIXPrivateKeyECDH, NotExportable.Throw);
                 return PKIXPrivateKeyECDH;
                 }
             }
@@ -221,7 +221,7 @@ namespace Goedel.Cryptography {
                         break;
                     }
                 }
-            Assert.NotNull(keyPair, NoProviderSpecified.Throw);
+            Assert.AssertNotNull(keyPair, NoProviderSpecified.Throw);
 
             return keyPair;
             }

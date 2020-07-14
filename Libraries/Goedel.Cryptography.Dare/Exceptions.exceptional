@@ -2,6 +2,14 @@
 
 Namespace Goedel.Cryptography.Dare
     
+	Exception StreamDataCorrupt
+        Console "The JBCD stream data is corrupted."
+
+	Exception ContainerDataCorrupt
+        Console "The container data is corrupted."
+
+	Exception EnvelopeDataCorrupt
+        Console "The envelope data is corrupted."
 
 	Exception InvalidContainerTypeException
         Console "This class does not support the specified container type."
@@ -42,3 +50,18 @@ Namespace Goedel.Cryptography.Dare
 		Console "A data record could not be read because it was incomplete."
 		Description
 			|A data record could not be read because it was incomplete.
+
+	Exception ArchiveEntryMissingFileName
+        Console "The archive entry could not be unpacked, file name missing."
+
+	Exception EntryNotFound
+        Console "The entry could not be found in the store."
+
+	Exception EntryAlreadyExists
+        Console "The entry already exists in the store."
+
+	Exception UndefinedStoreAction
+        Console "The action {0} is not defined for this store."
+
+	Exception TaggingNotSupported
+        Console "Decoding of tagged data not supported for this data type."

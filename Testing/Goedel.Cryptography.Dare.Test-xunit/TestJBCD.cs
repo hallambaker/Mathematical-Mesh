@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography.Dare;
 using Goedel.IO;
+using Goedel.Test;
 using Goedel.Test.Core;
 using Goedel.Utilities;
 
@@ -49,8 +50,8 @@ namespace Goedel.XUnit {
 
                     JBCDStream.ReadFrame(out var Header, out var Data, out var FrameTrailer);
 
-                    Utilities.Assert.True(Header.IsEqualTo(Test1));
-                    Utilities.Assert.True(Data.IsEqualTo(Test2));
+                    Header.IsEqualTo(Test1).TestTrue();
+                    Data.IsEqualTo(Test2).TestTrue();
                     }
 
                 }

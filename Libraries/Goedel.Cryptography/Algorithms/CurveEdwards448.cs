@@ -78,7 +78,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="X0">If true X is odd, otherwise, X is even.</param>
         /// <returns>The X coordinate value.</returns>
         public override BigInteger RecoverX(bool X0) {
-            Assert.True(Y < Prime, InvalidOperation.Throw);
+            Assert.AssertTrue(Y < Prime, InvalidOperation.Throw);
             //var x2 = ((Y * Y - 1) * (CurveConstrantD * Y * Y - 1)).Mod (p);
             var yy = (Y * Y - 1).Mod(Prime);
             var zz = (CurveConstantD * Y * Y - 1).Mod(Prime);
@@ -103,7 +103,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the multiplication</returns>
         public CurveEdwards448 Multiply(BigInteger S) {
             var Q = Neutral.Copy();
-            Assert.NotNull(Q, InvalidOperation.Throw);
+            Assert.AssertNotNull(Q, InvalidOperation.Throw);
             var BitIndex = new BitIndex(S, Bits, Up: true);
 
             var P = Copy();
@@ -155,7 +155,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Z3"></param>
         /// <returns>The result of the addition.</returns>
         static void Add(CurveEdwards448 P1, CurveEdwards448 P2, out BigInteger X3, out BigInteger Y3, out BigInteger Z3) {
-            Assert.NotNull(P2, NYI.Throw);
+            Assert.AssertNotNull(P2, InvalidPoint.Throw);
 
             var A = P1.Z * P2.Z;
             var B = A * A;
@@ -341,8 +341,8 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
         public bool VerifySignature(byte[] Public, byte[] Message, byte[] Signature, byte[] Context = null) {
-            Assert.True(Public.Length == 57, InvalidOperation.Throw);
-            Assert.True(Signature.Length == 114, InvalidOperation.Throw);
+            Assert.AssertTrue(Public.Length == 57, InvalidOperation.Throw);
+            Assert.AssertTrue(Signature.Length == 114, InvalidOperation.Throw);
 
             //var A = Decode(Public);
 
@@ -465,7 +465,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="Carry">The partial recryption results.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveEdwards448 Agreement(CurveEdwards448[] Carry) {
-            Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
+            Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = CurveEdwards448.Neutral;
             foreach (var Part in Carry) {

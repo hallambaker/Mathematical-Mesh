@@ -27,8 +27,6 @@
     <DocumentationFile>bin\Release\netstandard2.0\Goedel.Utilities.xml</DocumentationFile>
   </PropertyGroup>
 
-  <Import Project="..\..\Goedel.Utilities\Goedel.Utilities.projitems" Label="Shared" />
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>

@@ -357,7 +357,7 @@ namespace Goedel.Cryptography.Dare {
         /// <returns>The created object.</returns>		
         public static DareEnvelope FromJSON(JsonBcdReader jsonReader, bool tagged = true,
                 bool decrypt = false, IKeyLocate keyCollection = null) {
-            Assert.False(tagged, NYI.Throw);
+            Assert.AssertFalse(tagged, TaggingNotSupported.Throw);
 
 
             // DecodeHeader checks for start of array
@@ -383,10 +383,10 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="jsonReader">The stream from which data is to be read.</param>
         /// <returns>The DareEnvelope instance.</returns>
         public static DareEnvelope DecodeHeader(JsonBcdReader jsonReader) {
-            Assert.True(jsonReader.StartArray());
+            Assert.AssertTrue(jsonReader.StartArray(), EnvelopeDataCorrupt.Throw);
             var header = DareHeader.FromJson(jsonReader, false);
             Assert.NotNull(header);
-            Assert.True(jsonReader.NextArray());
+            Assert.AssertTrue(jsonReader.NextArray(), EnvelopeDataCorrupt.Throw);
             return new DareEnvelope() {
                 Header = header
                 };

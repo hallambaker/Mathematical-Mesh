@@ -80,7 +80,9 @@ namespace Goedel.Test.Core {
             Cryptography.Cryptography.Initialize(); // initialize the cryptographic support libraries.
 
             TestRoot = Environment.GetEnvironmentVariable(TestPath);
-            Assert.NotNull(TestRoot, EnvironmentVariableRequired.Throw, ExceptionData.Box(String: TestPath));
+
+
+            TestRoot.AssertNotNull( EnvironmentVariableRequired.ThrowNew, TestPath);
 
             Directory.CreateDirectory(WorkingDirectory);
             Directory.SetCurrentDirectory(WorkingDirectory);

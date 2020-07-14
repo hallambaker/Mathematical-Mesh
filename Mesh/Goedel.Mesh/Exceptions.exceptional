@@ -42,3 +42,13 @@ Namespace Goedel.Mesh
 		Console "The attempt to perform threshold key recovery failed"
 	Exception KeyActivationFailed
 		Console "The attempt to perform threshold key activation failed"
+
+
+	Exception InvalidUriMethod
+		Console "The specified URI method is invalid"
+
+	Exception ServerOperationFailed
+		Console "Essential server operation failed."
+
+	Exception ServerResponseInvalid
+		Console "The server returned an invalid response."

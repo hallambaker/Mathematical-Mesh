@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The result of the multiplication</returns>
         CurveEdwards25519 Multiply(BigInteger S, CurveEdwards25519 Neutral) {
             var Q = Neutral.Copy();
-            Assert.NotNull(Q, InvalidOperation.Throw);
+            Assert.AssertNotNull(Q, InvalidOperation.Throw);
             var BitIndex = new BitIndex(S, Bits, Up: true);
 
             var P = Copy();
@@ -153,8 +153,8 @@ namespace Goedel.Cryptography.Algorithms {
 
             var P = DomainParameters.Curve25519.P;
 
-            Assert.NotNull(P1, NYI.Throw);
-            Assert.NotNull(P2, NYI.Throw);
+            Assert.AssertNotNull(P1, InvalidPoint.Throw);
+            Assert.AssertNotNull(P2, InvalidPoint.Throw);
 
             var A = ((P1.Y - P1.X) * (P2.Y - P2.X)).Mod(P);
             var B = ((P1.Y + P1.X) * (P2.Y + P2.X)).Mod(P);
@@ -371,7 +371,7 @@ namespace Goedel.Cryptography.Algorithms {
             // 3. Check the group equation[8][S] B = [8] R + [8] [k] A'.  It's
             //    sufficient, but not required, to instead check[S]B = R + [k] A'.
 
-            Assert.True(Signature.Length == 64, InvalidOperation.Throw);
+            Assert.AssertTrue(Signature.Length == 64, InvalidOperation.Throw);
 
             var Rs = Signature.Duplicate(0, 32);
             var R = Decode(Rs);
@@ -480,7 +480,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <param name="carry">The partial recryption results.</param>
         /// <returns>The key agreement value ZZ</returns>
         public CurveEdwards25519 Agreement(CurveEdwards25519[] carry) {
-            Assert.True(carry.Length >= 1, InsufficientResults.Throw);
+            Assert.AssertTrue(carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = CurveEdwards25519.Neutral;
             foreach (var Part in carry) {
@@ -516,16 +516,16 @@ namespace Goedel.Cryptography.Algorithms {
         /// <remarks>This method does not prehash the message data since if
         /// prehashing is desired, it is because the data needs to be hashed
         /// before being presented.</remarks>
-        /// <param name="public">The public key</param>
+        /// <param name="publicKey">The public key</param>
         /// <param name="message">The message data.</param>
         /// <param name="signature">The encoded signature data.</param>
         /// <param name="context">Context value, if used.</param>
         /// <returns>True if signature verification succeeded, otherwise false.</returns>
-        public static bool Verify(byte[] @public, byte[] message, byte[] signature, byte[] context = null) {
-            Assert.True(@public.Length == 32, InvalidOperation.Throw);
-            Assert.True(signature.Length == 64, InvalidOperation.Throw);
+        public static bool Verify(byte[] publicKey, byte[] message, byte[] signature, byte[] context = null) {
+            Assert.AssertTrue(publicKey.Length == 32, InvalidOperation.Throw);
+            Assert.AssertTrue(signature.Length == 64, InvalidOperation.Throw);
 
-            var A = CurveEdwards25519.Decode(@public);
+            var A = CurveEdwards25519.Decode(publicKey);
 
             return A.VerifySignature(message, signature, context);
             }

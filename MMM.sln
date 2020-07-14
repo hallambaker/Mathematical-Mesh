@@ -31,8 +31,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.ASN-Shared", "Librar
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.IO-Shared", "Libraries\Goedel.IO\Goedel.IO-Shared.shproj", "{9FA5A13A-56EC-4DEC-A3EE-5963F76C44E5}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Registry-Shared", "Libraries\Goedel.Registry\Goedel.Registry-Shared.shproj", "{9E9408AD-AA85-4365-A553-062F9DC98822}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Goedel.Utilities-Shared", "Libraries\Goedel.Utilities\Goedel.Utilities-Shared.shproj", "{415214FC-4792-4519-A93F-315F2EA97CFF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Goedel.ASN", "Libraries\Core\Goedel.ASN\Goedel.ASN.csproj", "{8C3FAAAA-4187-4368-8C10-4F3F7C31AB51}"
@@ -173,10 +171,8 @@ Global
 		Libraries\Goedel.FSR\Goedel.FSR.projitems*{8774e85c-f054-4235-a02c-d180ba05e316}*SharedItemsImports = 13
 		Libraries\Goedel.ASN\Goedel.ASN.projitems*{8c3faaaa-4187-4368-8c10-4f3f7c31ab51}*SharedItemsImports = 5
 		Libraries\Goedel.Command\Goedel.Command.projitems*{92374241-b365-4366-8c08-6db92b0460b7}*SharedItemsImports = 5
-		Libraries\Goedel.Registry\Goedel.Registry.projitems*{9e9408ad-aa85-4365-a553-062f9dc98822}*SharedItemsImports = 13
 		Libraries\Goedel.IO\Goedel.IO.projitems*{9fa5a13a-56ec-4dec-a3ee-5963f76c44e5}*SharedItemsImports = 13
 		Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{c67e9a8e-c56d-43d8-9cbd-4fd3f5e3956a}*SharedItemsImports = 5
-		Libraries\Goedel.Registry\Goedel.Registry.projitems*{c6ab7fed-46c8-43f1-ba55-790921adfdd5}*SharedItemsImports = 5
 		Libraries\Goedel.Discovery\Goedel.Discovery.projitems*{e0560a9e-5a6c-464d-8114-10e9889882b3}*SharedItemsImports = 13
 		Libraries\Goedel.IO\Goedel.IO.projitems*{e9341173-6212-4a7a-8a59-21fd11c32360}*SharedItemsImports = 5
 		Libraries\Goedel.ASN\Goedel.ASN.projitems*{f1d1ee3e-82b7-4410-902a-c334d1d2ac47}*SharedItemsImports = 13
@@ -1927,7 +1923,6 @@ Global
 		{98F612E7-C4C4-44D3-8D0E-B7A961E2BBAB} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 		{F1D1EE3E-82B7-4410-902A-C334D1D2AC47} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 		{9FA5A13A-56EC-4DEC-A3EE-5963F76C44E5} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
-		{9E9408AD-AA85-4365-A553-062F9DC98822} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 		{415214FC-4792-4519-A93F-315F2EA97CFF} = {3ACD6B64-8887-4B9C-AABC-7A170E8F9EF1}
 		{8C3FAAAA-4187-4368-8C10-4F3F7C31AB51} = {98F612E7-C4C4-44D3-8D0E-B7A961E2BBAB}
 		{92374241-B365-4366-8C08-6DB92B0460B7} = {98F612E7-C4C4-44D3-8D0E-B7A961E2BBAB}

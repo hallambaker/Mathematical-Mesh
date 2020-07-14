@@ -369,7 +369,7 @@ namespace Goedel.Cryptography {
         /// <param name="index">The number of 32 bit blocks required.</param>
         /// <returns>The prime number.</returns>
         public static BigInteger GetPrime(int bits, out BigInteger exponent, out int index) {
-            Assert.True(bits > 0 & bits <= 512, KeySizeNotSupported.Throw);
+            Assert.AssertTrue(bits > 0 & bits <= 512, KeySizeNotSupported.Throw);
 
             index = (bits + 31) / 32;
             exponent = BigInteger.Pow(2, 32 * index);
@@ -402,11 +402,11 @@ namespace Goedel.Cryptography {
         /// <param name="polynomial">The polynomial co-efficients generated.</param>
         /// <returns>The key shares created.</returns>
         public KeyShareSymmetric[] Split(int n, int k, out BigInteger[] polynomial) {
-            Assert.False(k > n, QuorumExceedsShares.Throw);
-            Assert.False(k < 1, QuorumInsufficient.Throw);
-            Assert.False(n < 1, SharesInsufficient.Throw);
-            Assert.False(n > 15, QuorumExceeded.Throw);
-            Assert.False(k > 15, QuorumDegreeExceeded.Throw);
+            Assert.AssertFalse(k > n, QuorumExceedsShares.Throw);
+            Assert.AssertFalse(k < 1, QuorumInsufficient.Throw);
+            Assert.AssertFalse(n < 1, SharesInsufficient.Throw);
+            Assert.AssertFalse(n > 15, QuorumExceeded.Throw);
+            Assert.AssertFalse(k > 15, QuorumDegreeExceeded.Throw);
 
             var keyShares = new KeyShareSymmetric[n];
 
@@ -431,7 +431,7 @@ namespace Goedel.Cryptography {
 
             var threshold = Shares[0].Threshold;
             foreach (var Share in Shares) {
-                Assert.True(Share.Threshold == threshold, MismatchedShares.Throw);
+                Assert.AssertTrue(Share.Threshold == threshold, MismatchedShares.Throw);
                 }
             return CombineNK(Shares);
             }
@@ -439,7 +439,7 @@ namespace Goedel.Cryptography {
 
         static byte[] CombineNK(KeyShareSymmetric[] shares) {
             var threshold = shares[0].Threshold;
-            Assert.False(shares.Length < threshold, InsufficientShares.Throw);
+            Assert.AssertFalse(shares.Length < threshold, InsufficientShares.Throw);
 
             var secretBits = shares[0].KeyBits - 8;
             var modulus = GetPrime(secretBits, out var secretMax, out var shareChunks);
@@ -561,7 +561,7 @@ namespace Goedel.Cryptography {
         /// <param name="text">The secret value in text form.</param>
         public KeyShareSymmetric(string text) {
             var buffer = UDF.Parse(text, out var code);
-            Assert.True(code == (byte)UdfTypeIdentifier.ShamirSecret);
+            Assert.AssertTrue(code == (byte)UdfTypeIdentifier.ShamirSecret, KeyTypeMismatch.Throw);
             Key = buffer;
             }
 

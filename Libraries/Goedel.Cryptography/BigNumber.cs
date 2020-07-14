@@ -64,7 +64,7 @@ namespace Goedel.Cryptography {
             if (downBit < 0) {
                 downByte--;
                 downBit = 7;
-                Assert.True(downByte >= 0, InvalidOperation.Throw);
+                Assert.AssertTrue(downByte >= 0, InvalidOperation.Throw);
 
                 dataDown = bitField[downByte];
                 }
@@ -80,7 +80,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns>True iff the next bit to be read is 1.</returns>
         public bool Up() {
-            Assert.True(upByte < length, InvalidOperation.Throw);
+            Assert.AssertTrue(upByte < length, InvalidOperation.Throw);
 
             if (upBit > 7) {
                 upByte++;
@@ -320,7 +320,7 @@ namespace Goedel.Cryptography {
             if (((x * x - x2) % p) != 0) {
                 var RM1 = SqrtMinus1 ?? p.SqrtMinus1();
                 x = (x * RM1) % p;
-                Assert.True((((x * x - x2) % p) == 0), InvalidOperation.Throw);
+                Assert.AssertTrue((((x * x - x2) % p) == 0), InvalidOperation.Throw);
                 }
             return x;
             }

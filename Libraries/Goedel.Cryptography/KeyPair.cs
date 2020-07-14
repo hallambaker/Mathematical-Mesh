@@ -216,7 +216,7 @@ namespace Goedel.Cryptography {
         public static void Register(KeyPair keyPair,
             KeySecurity keySecurity,
             IKeyLocate keyCollection) {
-            Assert.NotNull(keyPair, NoProviderSpecified.Throw);
+            Assert.AssertNotNull(keyPair, NoProviderSpecified.Throw);
             keyPair.KeySecurity = keySecurity;
 
             if (keySecurity != KeySecurity.Ephemeral) {

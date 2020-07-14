@@ -29,10 +29,14 @@
     <DocumentationFile>bin\Release\netstandard2.0\Goedel.ASN.xml</DocumentationFile>
   </PropertyGroup>
 
-  <Import Project="..\..\Goedel.ASN\Goedel.ASN.projitems" Label="Shared" />
-
   <ItemGroup>
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Exceptions.exceptional">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

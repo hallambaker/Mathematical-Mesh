@@ -196,7 +196,7 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection"></param>
         public override void Persist(
                 keyCollection keyCollection) {
-            Assert.True(PersistPending);
+            Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = PKIXPrivateKeyECDH ?? new PKIXPrivateKeyEd25519(EncodedPrivateKey, PKIXPublicKeyECDH) { };
             keyCollection.Persist(KeyIdentifier, pkix, KeyType.IsExportable());
             }
@@ -250,7 +250,7 @@ namespace Goedel.Cryptography {
                 byte[] salt = null) {
 
             var KeyPairEd25519 = ephemeral as KeyPairEd25519;
-            Assert.NotNull(KeyPairEd25519, KeyTypeMismatch.Throw);
+            Assert.AssertNotNull(KeyPairEd25519, KeyTypeMismatch.Throw);
 
             var Agreementx = Agreement(KeyPairEd25519, partial as CurveEdwards25519Result);
 

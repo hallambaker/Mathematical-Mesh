@@ -481,7 +481,7 @@ namespace Goedel.Mesh.Server {
 
             var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
 
-            identifier.AssertNotNull(InvalidMessageID.ThrowNew);
+            identifier.AssertNotNull(InvalidMessageID.Throw);
 
             using var accountEntry = GetAccountVerified(account, jpcSession);
             dareMessage.Header.ContentMeta = dareMessage.Header.ContentMeta ?? new ContentMeta();
@@ -508,7 +508,7 @@ namespace Goedel.Mesh.Server {
             jpcSession.Future();
 
             var identifier = dareMessage.Header?.ContentMeta?.UniqueID;
-            identifier.AssertNotNull(InvalidMessageID.ThrowNew);
+            identifier.AssertNotNull(InvalidMessageID.Throw);
 
             var senderService = senderAccount.AccountAddress.GetService();
 

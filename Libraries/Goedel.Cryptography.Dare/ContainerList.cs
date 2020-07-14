@@ -244,10 +244,11 @@ namespace Goedel.Cryptography.Dare {
                 PositionRead = Position;
                 }
             else {
-                Assert.True(index > FrameLowUnknown & index < FrameHighUnknown);
+                Assert.AssertTrue(index > FrameLowUnknown & index < FrameHighUnknown, ContainerDataCorrupt.Throw);
 
                 if (index - FrameLowUnknown <= FrameHighUnknown - index) {
-                    Assert.True(FrameIndexToPositionDictionary.TryGetValue(FrameLowUnknown, out Position));
+                    Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(
+                        FrameLowUnknown, out Position), ContainerDataCorrupt.Throw);
                     PositionRead = Position;
                     var Last = PositionRead;
                     Next();
@@ -261,7 +262,9 @@ namespace Goedel.Cryptography.Dare {
                     }
 
                 else {
-                    Assert.True(FrameIndexToPositionDictionary.TryGetValue(FrameHighUnknown, out Position));
+                    Assert.AssertTrue(
+                        FrameIndexToPositionDictionary.TryGetValue(FrameHighUnknown, out Position), 
+                        ContainerDataCorrupt.Throw);
                     PositionRead = Position;
 
                     Previous();
@@ -290,13 +293,14 @@ namespace Goedel.Cryptography.Dare {
             foreach (var Header in headers) {
                 Assert.NotNull(Header.ContainerInfo);
 
-                Assert.True(Header.ContainerInfo.Index == Index);
+                Assert.AssertTrue(Header.ContainerInfo.Index == Index, 
+                        ContainerDataCorrupt.Throw);
 
                 if (ContainerHeaderFirst.ContainerInfo.ContainerType == Label) {
-                    Assert.Null(Header.PayloadDigest);
+                    Assert.AssertNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 else {
-                    Assert.NotNull(Header.PayloadDigest);
+                    Assert.AssertNotNull(Header.PayloadDigest, ContainerDataCorrupt.Throw);
                     }
                 Index++;
                 }

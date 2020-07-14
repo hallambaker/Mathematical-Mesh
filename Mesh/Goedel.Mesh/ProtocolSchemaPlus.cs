@@ -59,6 +59,15 @@ namespace Goedel.Mesh {
 
             }
 
+        /// <summary>
+        /// Convenience method testing that the response succeeded and throwing the 
+        /// exception <paramref name="throwDelegate"/> or <see cref="ServerOperationFailed"/>
+        /// otherwise with the response instance as the parameter.
+        /// </summary>
+        /// <param name="throwDelegate">Delegate that throws the required exception.</param>
+        public void AssertSuccess(ThrowNewDelegate throwDelegate = null) =>
+            Success().AssertTrue(throwDelegate ?? ServerOperationFailed.ThrowNew, this);
+
 
         /// <summary>
         /// Performs a deep recursive copy of the structure.

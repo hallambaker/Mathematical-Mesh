@@ -128,7 +128,7 @@ namespace Goedel.Cryptography.Dare {
 
                 (keySize, blockSize) = EncryptID.GetKeySize();
 
-                (keySize >= 128).AssertTrue(NYI.Throw, "Key size insufficient");
+                (keySize >= 128).AssertTrue(InsufficientKeySize.Throw, "Key size insufficient");
 
                 MasterSecret = Platform.GetRandomBits(keySize);
 
@@ -575,11 +575,13 @@ namespace Goedel.Cryptography.Dare {
 
             var Buffer = new byte[Length * 2];
             if (first != null) {
-                Assert.True(Length == first.Length);
+                Assert.AssertTrue(Length == first.Length,
+                        CryptographicException.Throw);
                 Array.Copy(first, Buffer, Length);
                 }
             if (second != null) {
-                Assert.True(Length == second.Length);
+                Assert.AssertTrue(Length == second.Length,
+                        CryptographicException.Throw);
                 Array.Copy(second, 0, Buffer, Length, Length);
                 }
 

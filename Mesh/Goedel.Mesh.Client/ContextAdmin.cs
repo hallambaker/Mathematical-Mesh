@@ -187,18 +187,18 @@ namespace Goedel.Mesh.Client {
                     ProfileDevice profileDevice, 
                     ActivationDevice activationDevice) {
 
-            profileMesh.AssertNotNull(Internal.ThrowNew);
-            profileMesh.DareEnvelope.AssertNotNull(Internal.ThrowNew);
-            profileDevice.AssertNotNull(Internal.ThrowNew);
-            profileDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
+            profileMesh.AssertNotNull(Internal.Throw);
+            profileMesh.DareEnvelope.AssertNotNull(Internal.Throw);
+            profileDevice.AssertNotNull(Internal.Throw);
+            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            activationDevice.AssertNotNull(Internal.ThrowNew);
+            activationDevice.AssertNotNull(Internal.Throw);
             activationDevice.Package(keyAdministratorSignature);
-            activationDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
+            activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             var connectionDevice = activationDevice.ConnectionDevice;
-            connectionDevice.AssertNotNull(Internal.ThrowNew);
-            connectionDevice.DareEnvelope.AssertNotNull(Internal.ThrowNew);
+            connectionDevice.AssertNotNull(Internal.Throw);
+            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             // Wrap the connectionDevice and activationDevice in envelopes
 
@@ -322,9 +322,11 @@ namespace Goedel.Mesh.Client {
             int start;
             for (start = 0; (start < secretBytes.Length) && secretBytes[start] == 0; start++) {
                 }
-            (secretBytes[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue();
+            (secretBytes[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(
+                        InvalidRecoverySecret.Throw);
             var algorithm = secretBytes[start++]* 0x100 + secretBytes[start++];
-            (algorithm == (int)UdfAlgorithmIdentifier.MeshProfileMaster).AssertTrue();
+            (algorithm == (int)UdfAlgorithmIdentifier.MeshProfileMaster).AssertTrue(
+                        InvalidRecoverySecret.Throw);
 
             var length = secretBytes.Length - start;
             var masterSecret = new byte[length];

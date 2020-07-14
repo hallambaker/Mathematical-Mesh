@@ -7,6 +7,17 @@ using Goedel.FSR;
 
 namespace Goedel.Cryptography.KeyFile {
 
+	partial class AllExeptions {
+		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
+			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
+				null,
+				KeyFileException.ThrowNew,
+				NoProviderSpecified.ThrowNew,
+				PrivateKeyNotAvailable.ThrowNew,
+				UnexpectedEnd.ThrowNew,
+				ParseError.ThrowNew				};
+		}
+
 
     /// <summary>
     /// Exception occurred parsing or encoding a key file.
@@ -14,9 +25,18 @@ namespace Goedel.Cryptography.KeyFile {
     [global::System.Serializable]
 	public partial class KeyFileException : global::Goedel.Utilities.GoedelException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "Key could not be ready";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"Key could not be ready"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -27,8 +47,10 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public KeyFileException  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -36,23 +58,16 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new KeyFileException(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new KeyFileException(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new KeyFileException(reason as string);
-				}
-			else {
-				return new KeyFileException();
-				}
-            }
+
         }
 
 
@@ -64,9 +79,18 @@ namespace Goedel.Cryptography.KeyFile {
     [global::System.Serializable]
 	public partial class NoProviderSpecified : KeyFileException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "No provider specified";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"No provider specified"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -77,8 +101,10 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public NoProviderSpecified  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -86,23 +112,16 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new NoProviderSpecified(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new NoProviderSpecified(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new NoProviderSpecified(reason as string);
-				}
-			else {
-				return new NoProviderSpecified();
-				}
-            }
+
         }
 
 
@@ -113,9 +132,18 @@ namespace Goedel.Cryptography.KeyFile {
     [global::System.Serializable]
 	public partial class PrivateKeyNotAvailable : KeyFileException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "The specified private key could not be found";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The specified private key could not be found"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -126,8 +154,10 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public PrivateKeyNotAvailable  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -135,23 +165,16 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new PrivateKeyNotAvailable(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new PrivateKeyNotAvailable(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new PrivateKeyNotAvailable(reason as string);
-				}
-			else {
-				return new PrivateKeyNotAvailable();
-				}
-            }
+
         }
 
 
@@ -162,9 +185,18 @@ namespace Goedel.Cryptography.KeyFile {
     [global::System.Serializable]
 	public partial class UnexpectedEnd : KeyFileException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "File read error, file was incomplete";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"File read error, file was incomplete"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -175,8 +207,10 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public UnexpectedEnd  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -184,23 +218,16 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new UnexpectedEnd(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new UnexpectedEnd(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new UnexpectedEnd(reason as string);
-				}
-			else {
-				return new UnexpectedEnd();
-				}
-            }
+
         }
 
 
@@ -210,9 +237,18 @@ namespace Goedel.Cryptography.KeyFile {
     [global::System.Serializable]
 	public partial class ParseError : KeyFileException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "An error occurred";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"The file {0} could not be read"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -223,55 +259,27 @@ namespace Goedel.Cryptography.KeyFile {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ParseError  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
 
 
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type LexReader and the format string "The file {0} could not be read"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		public ParseError (LexReader Object) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					)) => UserData = Object;
-
-
-		/// <summary>
-        /// Construct instance for exception using a userdata parameter of
-		/// type LexReader and the format string "The file {0} could not be read"
-        /// </summary>		
-        /// <param name="Object">User data</param>	
-		/// <param name="Inner">Inner Exception</param>	
-		public ParseError (LexReader Object, System.Exception Inner) : 
-				base (global::System.String.Format ("The file {0} could not be read",
-					Object.FilePath					), Inner) => UserData = Object;
 
 
 
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ParseError(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ParseError(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static new global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ParseError(reason as string);
-				}
-			else if (reason as LexReader != null) {
-				return new ParseError(reason as LexReader);
-				}
-			else {
-				return new ParseError();
-				}
-            }
+
         }
 
 

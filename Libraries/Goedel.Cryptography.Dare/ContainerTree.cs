@@ -136,7 +136,7 @@ namespace Goedel.Cryptography.Dare {
 
 
                 // This is failing because the container index is set to 2 when it should be 1.
-                Assert.True(index == containerInfo.Index);
+                Assert.AssertTrue(index == containerInfo.Index, ContainerDataCorrupt.Throw);
                 treePosition = containerInfo.TreePosition;
                 }
             if (containerInfo.Index != 1) {
@@ -190,7 +190,7 @@ namespace Goedel.Cryptography.Dare {
 
             //Obtain the position of the very last record in the file, this must be known.
             var Record = FrameCount - 1;
-            Assert.True(FrameIndexToPositionDictionary.TryGetValue(Record, out Position));
+            Assert.AssertTrue(FrameIndexToPositionDictionary.TryGetValue(Record, out Position), ContainerDataCorrupt.Throw);
             // Bug: this is failing because the position dictionary is not being updated.
             // check that commit frame is being properly called on deferred writes.
             // Also check every operation on the device catalog
@@ -224,7 +224,7 @@ namespace Goedel.Cryptography.Dare {
                         nextPosition = JBCDStream.PositionRead;
 
                         frameHeader = JBCDStream.ReadFrameHeader();
-                        Assert.True(frameHeader.ContainerInfo.Index == nextRecord);
+                        Assert.AssertTrue(frameHeader.ContainerInfo.Index == nextRecord, ContainerDataCorrupt.Throw);
 
                         found = false;
                         }
@@ -326,8 +326,10 @@ namespace Goedel.Cryptography.Dare {
         public override void CheckContainer(List<DareHeader> headers) {
             var index = 1;
             foreach (var Header in headers) {
-                Assert.True(Header.ContainerInfo.Index == index);
-                Assert.NotNull(Header.PayloadDigest);
+                Assert.AssertTrue(Header.ContainerInfo.Index == index,
+                        ContainerDataCorrupt.Throw);
+                Assert.AssertNotNull(Header.PayloadDigest,
+                        ContainerDataCorrupt.Throw);
 
                 index++;
                 }
@@ -345,7 +347,7 @@ namespace Goedel.Cryptography.Dare {
             // Check the first frame
             JBCDStream.PositionRead = 0;
             var header = JBCDStream.ReadFirstFrameHeader();
-            Assert.True(header.ContainerInfo.Index == 0);
+            Assert.AssertTrue(header.ContainerInfo.Index == 0, ContainerDataCorrupt.Throw);
             headerDictionary.Add(0, header);
 
             // Check subsequent frames
@@ -355,11 +357,13 @@ namespace Goedel.Cryptography.Dare {
                 header = JBCDStream.ReadFrameHeader();
                 headerDictionary.Add(Position, header);
 
-                Assert.True(header.ContainerInfo.Index == index);
+                Assert.AssertTrue(header.ContainerInfo.Index == index, ContainerDataCorrupt.Throw);
                 if (index > 1) {
                     var Previous = PreviousFrame(index);
-                    Assert.True(headerDictionary.TryGetValue(header.ContainerInfo.TreePosition, out var PreviousHeader));
-                    Assert.True(PreviousHeader.ContainerInfo.Index == Previous);
+                    Assert.AssertTrue(headerDictionary.TryGetValue(header.ContainerInfo.TreePosition, out var PreviousHeader), 
+                        ContainerDataCorrupt.Throw);
+                    Assert.AssertTrue(PreviousHeader.ContainerInfo.Index == Previous, 
+                        ContainerDataCorrupt.Throw);
                     }
 
 

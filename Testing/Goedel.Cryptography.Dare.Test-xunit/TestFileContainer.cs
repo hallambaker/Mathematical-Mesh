@@ -1,7 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
 using Goedel.IO;
-using Goedel.Test.Core;
+using Goedel.Test;
 using Goedel.Utilities;
 
 using System;
@@ -154,7 +154,7 @@ namespace Goedel.XUnit {
                         out var ReadData, out var ContentMetaOut);
 
             // Check for equality
-            Utilities.Assert.True(ReadData.IsEqualTo(TestData));
+            ReadData.IsEqualTo(TestData).TestTrue();
             }
 
 
@@ -186,7 +186,7 @@ namespace Goedel.XUnit {
             for (var i = 0; i < Entries; i++) {
 
                 Reader.Read(CryptoParameters?.KeyLocate, out var ReadData, out var ContentMeta, Index: i + 1);
-                Utilities.Assert.True(ReadData.IsEqualTo(TestData[i]));
+                ReadData.IsEqualTo(TestData[i]).TestTrue(); 
                 }
             }
 

@@ -145,7 +145,7 @@ namespace Goedel.Cryptography {
             //Console.WriteLine(R.Encode().ToStringBase16FormatHex());
 
             if (validate) {
-                PublicKey.Verify(K, S, R).AssertTrue();
+                PublicKey.Verify(K, S, R).AssertTrue(InternalCryptographicException.Throw);
                 }
             return S;
             }

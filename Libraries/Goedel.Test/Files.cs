@@ -25,7 +25,7 @@ namespace Goedel.Test {
 
             using var FileStream1 = File1.OpenFileRead();
             using var FileStream2 = File2.OpenFileRead();
-            Assert.True(FileStreamEquals(FileStream1, FileStream2));
+            FileStreamEquals(FileStream1, FileStream2).TestTrue();
             }
 
         public static void CheckDirectroriesEqual(this string Directory1, string Directory2) {
@@ -45,15 +45,15 @@ namespace Goedel.Test {
             var Sub1 = DirInfo1.GetDirectories();
             var Sub2 = DirInfo2.GetDirectories();
 
-            Assert.True(Files1.Length == Files2.Length);
-            Assert.True(Sub1.Length == Sub2.Length);
+            (Files1.Length == Files2.Length).TestTrue();
+            (Sub1.Length == Sub2.Length).TestTrue();
 
             //Check the files in the directories
             foreach (var File in Files1) {
                 FileDictionary.Add(File.Name, File);
                 }
             foreach (var File2 in Files2) {
-                Assert.True(FileDictionary.TryGetValue(File2.Name, out var File1));
+                FileDictionary.TryGetValue(File2.Name, out var File1).TestTrue();
                 CheckFilesEqual(File1.FullName, File2.FullName);
                 FileDictionary.Remove(File1.Name);
                 }
@@ -63,7 +63,7 @@ namespace Goedel.Test {
                 DirectoryDictionary.Add(File.Name, File);
                 }
             foreach (var File2 in Sub2) {
-                Assert.True(DirectoryDictionary.TryGetValue(File2.Name, out var File1));
+                DirectoryDictionary.TryGetValue(File2.Name, out var File1).TestTrue();
                 CheckDirectroriesEqual(File1.FullName, File2.FullName);
                 FileDictionary.Remove(File1.Name);
                 }

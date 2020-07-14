@@ -1,4 +1,5 @@
 ﻿using Goedel.Cryptography.Algorithms;
+using Goedel.Test;
 
 using System.Numerics;
 
@@ -19,7 +20,7 @@ namespace Goedel.XUnit {
             var AgreeAB = KeyA.Agreement(KeyB.DiffeHellmanPublic);
             var AgreeBA = KeyB.Agreement(KeyA.DiffeHellmanPublic);
 
-            Utilities.Assert.True(AgreeAB == AgreeBA);
+            (AgreeAB == AgreeBA).TestTrue();
             }
 
 
@@ -33,7 +34,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyA.Agreement(Result.EphemeralPublicValue);
 
-            Utilities.Assert.True(AgreeAB == Result.Agreement);
+            (AgreeAB == Result.Agreement).TestTrue();
             }
 
 
@@ -54,7 +55,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyAPublic.Agreement(Carry);
 
-            Utilities.Assert.True(AgreeAB == Result.Agreement);
+            (AgreeAB == Result.Agreement).TestTrue();
             }
 
 

@@ -2,6 +2,7 @@
 using Goedel.Cryptography.Algorithms;
 using Goedel.Mesh.Test;
 using Goedel.Test.Core;
+using Goedel.Test;
 
 using System.Numerics;
 
@@ -58,8 +59,8 @@ namespace Goedel.XUnit {
             var AliceKey = AlicePrivate.Agreement(BobPublic);
             var BobKey = BobPrivate.Agreement(AlicePublic);
 
-            Utilities.Assert.True(AliceKey.Equals(BobKey));
-            Utilities.Assert.True(BobKey.Equals(AliceKey));
+            (AliceKey.Equals(BobKey)).TestTrue();
+            (BobKey.Equals(AliceKey)).TestTrue();
 
             }
 
@@ -72,7 +73,7 @@ namespace Goedel.XUnit {
 
             var BobAgreement = BobPrivate.Agreement(AliceKey);
 
-            Utilities.Assert.True(BobAgreement.Equals(AliceAgree.Agreement));
+            BobAgreement.Equals(AliceAgree.Agreement).TestTrue(); 
             }
 
         [Fact]
@@ -87,7 +88,7 @@ namespace Goedel.XUnit {
             var ServerRecrypt = BobRecryption.Agreement(AlicePublic);
             var BobAgreeW = BobDecryption.Agreement(AlicePublic, ServerRecrypt);
 
-            Utilities.Assert.True(AliceAgreeW == BobAgreeW);
+            (AliceAgreeW == BobAgreeW).TestTrue();
 
             }
 
@@ -127,7 +128,7 @@ namespace Goedel.XUnit {
             // Combine them
             var BobAgreeW = GroupKeyPublic.Agreement(Recrypts);
 
-            Utilities.Assert.True(AliceAgreeW == BobAgreeW);
+            (AliceAgreeW == BobAgreeW).TestTrue(); 
             }
 
 

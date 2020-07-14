@@ -32,6 +32,11 @@ Namespace Goedel.Protocol
 		Description
 			|An unknown tag was encountered.
 
+	Exception TagRequired
+		Console "Cannot deserialize untagged abstract data."
+		Description
+			|Attempt to deserialize untagged data to unknown type.
+	
 	Exception InvalidInput
 		Console "Deserialzer encountered invalid input"
 		Description

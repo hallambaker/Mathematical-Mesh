@@ -82,11 +82,11 @@ namespace Goedel.Mesh.Client {
             KeyDeviceAuthentication = ContextMesh.ActivateKey(activationKey, MeshKeyType.DeviceAuthenticate);
 
             KeySignature.KeyIdentifier.AssertEqual(ConnectionAccount.KeySignature.UDF,
-                KeyActivationFailed.ThrowNew);
+                KeyActivationFailed.Throw);
             KeyDeviceEncryption.KeyIdentifier.AssertEqual(ConnectionAccount.KeyEncryption.UDF,
-                KeyActivationFailed.ThrowNew);
+                KeyActivationFailed.Throw);
             KeyDeviceAuthentication.KeyIdentifier.AssertEqual(ConnectionAccount.KeyAuthentication.UDF,
-                KeyActivationFailed.ThrowNew);
+                KeyActivationFailed.Throw);
 
             KeyCollection.Add(KeyDeviceEncryption);
 
@@ -299,8 +299,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The account service address.</returns>
         public override string GetAccountAddress() {
-            ProfileAccount.AccountAddresses.AssertNotNull(AccountNotBound.ThrowNew);
-            (ProfileAccount.AccountAddresses.Count > 0).AssertTrue();
+            ProfileAccount.AccountAddresses.AssertNotNull(AccountNotBound.Throw);
+            (ProfileAccount.AccountAddresses.Count > 0).AssertTrue(AccountNotBound.Throw);
 
             return ProfileAccount.AccountAddresses[0];
             }
@@ -550,7 +550,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
-            createResponse.Success().AssertTrue();
+            createResponse.AssertSuccess();
 
             var capabilityAdmin = new CapabilitySign() {
                 Id = UDF.Nonce(),
@@ -950,7 +950,7 @@ namespace Goedel.Mesh.Client {
             // Hack: should be able to accept, reject specific requests, not just
             // the last one.
             var message = GetPendingMessageByID(messageId, out var found);
-            found.AssertTrue(String: "No message of that ID");
+            found.AssertTrue(MessageIdNotFound.Throw);
 
             return Process(message, accept, reciprocate);
 
@@ -1110,7 +1110,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var publishResponse = MeshClient.Publish(publishRequest);
-            publishResponse.Success().AssertTrue();
+            publishResponse.AssertSuccess();
 
             // Register the pin
             var messageConnectionPIN = new MessagePIN(pin, automatic, expire, AccountAddress, "Contact");

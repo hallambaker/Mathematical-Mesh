@@ -149,7 +149,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override IPKIXPrivateKey PKIXPrivateKey {
             get {
-                Assert.NotNull(PKIXPrivateKeyDH, NotExportable.Throw);
+                Assert.AssertNotNull(PKIXPrivateKeyDH, NotExportable.Throw);
                 return PKIXPrivateKeyDH;
                 }
             }
@@ -251,7 +251,7 @@ namespace Goedel.Cryptography {
         ///<summary>Persist the private key to the specified collection.</summary>
         /// <param name="keyCollection">The key collection that key are to be persisted to </param>
         public override void Persist(keyCollection keyCollection) {
-            Assert.True(PersistPending);
+            Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = new PKIXPrivateKeyDH() {
                 Domain = DHDomain,
                 Private = PrivateKey.Private.ToByteArray(),
@@ -333,7 +333,7 @@ namespace Goedel.Cryptography {
         /// <returns>The new keypair that contains only the public values.</returns>
         public override KeyPair KeyPairPublic() {
             var result = new KeyPairDH(new DiffeHellmanPublic(PublicKey));
-            Assert.True(result.PublicOnly);
+            Assert.AssertTrue(result.PublicOnly, CryptographicException.Throw);
             return result;
             }
 
@@ -386,7 +386,7 @@ namespace Goedel.Cryptography {
                     byte[] Salt = null) {
 
             var DHPublic = Ephemeral as KeyPairDH;
-            Assert.NotNull(DHPublic, KeyTypeMismatch.Throw);
+            Assert.AssertNotNull(DHPublic, KeyTypeMismatch.Throw);
 
             var Agreementx = Agreement(DHPublic, Partial as ResultDiffieHellman);
             return Agreementx.Decrypt(EncryptedKey, Ephemeral, Partial, Salt);

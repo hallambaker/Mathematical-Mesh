@@ -27,7 +27,6 @@ Namespace Goedel.Cryptography.KeyFile
 				|missing or corrupted.
 
 		Exception ParseError
-			Object LexReader "The file {0} could not be read"
-				FilePath
+			Console "The file {0} could not be read"
 			Description
 				|An unidentifier parse error occurred.

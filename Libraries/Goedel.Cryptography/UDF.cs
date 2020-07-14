@@ -320,7 +320,7 @@ namespace Goedel.Cryptography {
         /// <returns>The compression level, 3 if there are 50 leading zeros, 2 if there
         /// are 40 leading zeros, 1 if there are 20 and 0 otherwise.</returns>
         public static int GetCompression(byte[] buffer) {
-            Assert.True(buffer.Length == 64);
+            Assert.AssertTrue(buffer.Length == 64, CryptographicException.Throw);
 
             // Check for less than 20 trailing zeros
             if (buffer[63] != 0 | buffer[62] != 0 | ((buffer[61] & 0b0000_1111) != 0)) {
@@ -677,7 +677,7 @@ namespace Goedel.Cryptography {
             var result = Parse(udf, out var code);
             (code == (byte)UdfTypeIdentifier.Encryption |
                 code == (byte)UdfTypeIdentifier.EncryptionSignature
-                ).AssertTrue();
+                ).AssertTrue(OperationNotSupported.Throw);
 
             return result;
             }
@@ -943,7 +943,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="test">Expected value</param>
         /// <param name="value">Comparison value.</param>
-        public static void Validate(string test, string value) => Assert.False(test !=
+        public static void Validate(string test, string value) => Assert.AssertFalse(test !=
             value, FingerprintMatchFailed.Throw);
 
         /// <summary>Convert address and fingerprint value to Strong Internet Name.</summary>
@@ -1180,7 +1180,7 @@ namespace Goedel.Cryptography {
                     KeyUses keyUses = KeyUses.Any) {
 
             var binaryData = Parse(udf, out var code);
-            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue();
+            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
 
             var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
             var salt = KeySpecifier(algorithm);
@@ -1223,7 +1223,7 @@ namespace Goedel.Cryptography {
                     string saltSuffix=null) {
 
             var binaryData = Parse(udf, out var code);
-            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue();
+            (code == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(OperationNotSupported.Throw);
 
             var algorithm = (UdfAlgorithmIdentifier)(256 * binaryData[0] + binaryData[1]);
             var salt = saltSuffix == null ? KeySpecifier(algorithm) :

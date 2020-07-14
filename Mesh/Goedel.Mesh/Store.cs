@@ -111,7 +111,7 @@ namespace Goedel.Mesh {
         /// <param name="keyLocate">The key location context.</param>
         public static void Append(string directory, 
                 IKeyLocate keyLocate, List<DareEnvelope> envelopes, string containerName = null) {
-            envelopes.AssertNotNull(Internal.ThrowNew);
+            envelopes.AssertNotNull(Internal.Throw);
             if (envelopes.Count == 0) {
                 return;
                 }

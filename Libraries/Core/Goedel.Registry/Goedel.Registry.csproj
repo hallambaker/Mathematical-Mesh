@@ -31,8 +31,6 @@
     <ProjectReference Include="..\Goedel.Utilities\Goedel.Utilities.csproj" />
   </ItemGroup>
 
-  <Import Project="..\..\Goedel.Registry\Goedel.Registry.projitems" Label="Shared" />
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="VSPreBuild" />
   </Target>

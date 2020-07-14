@@ -249,7 +249,7 @@ namespace Goedel.Cryptography.Algorithms {
         /// <returns>The key agreement parameters, the public key value and the
         /// key agreement.</returns>
         public CurveX448 Agreement(CurveX448[] Carry) {
-            Assert.True(Carry.Length >= 1, InsufficientResults.Throw);
+            Assert.AssertTrue(Carry.Length >= 1, InsufficientResults.Throw);
 
             var Total = Carry[0];
             for (var i = 1; i < Carry.Length; i++) {

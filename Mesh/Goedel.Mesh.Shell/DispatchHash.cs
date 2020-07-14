@@ -30,7 +30,7 @@ namespace Goedel.Mesh.Shell {
                     };
                 }
 
-            Assert.True(expect.CompareUDF(digest), DidNotMatchExpectedValue.Throw);
+            Assert.AssertTrue(expect.CompareUDF(digest), DidNotMatchExpectedValue.Throw);
 
             return new ResultDigest() {
                 Success = true,
@@ -83,7 +83,7 @@ namespace Goedel.Mesh.Shell {
                     };
                 }
 
-            Assert.True(expect.CompareUDF(digest), DidNotMatchExpectedValue.Throw);
+            Assert.AssertTrue(expect.CompareUDF(digest), DidNotMatchExpectedValue.Throw);
 
             return new ResultDigest() {
                 Success = true,

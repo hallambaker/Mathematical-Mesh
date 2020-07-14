@@ -8,6 +8,16 @@ Namespace Goedel.Cryptography
 			|Base class for cryptographic exceptions.
 		
 
+		Exception InternalCryptographicException
+			Console "An internal assertion check failed"
+			Description
+				|An internal assertion check failed."
+
+		Exception MismatchedCurves
+			Console "Points are on different curves"
+			Description
+				|An internal assertion check failed."
+
 		Exception CatalogNotInitialized
 			Console "The operation requires cryptographic catalog initialization"
 			Description
@@ -135,6 +145,12 @@ Namespace Goedel.Cryptography
 				|Initialization of the cryptographic support library failed.
 				|This is a fatal error that cannot be recovered from.
 
+
+		Exception InsufficientKeySize
+			Console "The specified key size presents an insufficient work factor"
+			Description
+				|The specified key size presents an insufficient work factor
+
 		Exception InvalidKeyPairType
 			Console "The keypair presented was not of the expected type"
 			Description
@@ -155,7 +171,11 @@ Namespace Goedel.Cryptography
 			Console "The specified algorithm is not valid for the operation attempted"
 			Description
 				|The specified algorithm is not valid for the operation attempted
+		
+		Exception InvalidPoint
+			Console "The specified point is not valid for the curve"
 
+		
 		Exception PrivateKeyNotFound
 			Console "The operation requested requires a private key that could not be found"
 			Description

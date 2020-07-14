@@ -72,7 +72,7 @@ namespace Goedel.XUnit {
             var Data = JWE2.Decrypt(EncrypterKeyPair);
             var Text = Data.ToUTF8();
 
-            Utilities.Assert.True(TestString == Text);
+            (TestString == Text).TestTrue();
             }
 
 
@@ -89,7 +89,7 @@ namespace Goedel.XUnit {
             var Data = JWE2.Decrypt(Key);
             var Text = Data.ToUTF8();
 
-            Utilities.Assert.True(TestString == Text);
+            (TestString == Text).TestTrue();
             }
 
 
@@ -105,11 +105,11 @@ namespace Goedel.XUnit {
             var JWS2 = JoseWebSignature.FromJson(JWSText.JsonReader(), false);
 
             var Verify1 = JWS2.Verify(SignerKeyPair);
-            Utilities.Assert.True(Verify1);
+            Verify1.TestTrue();
 
             JWS2.Payload = TestStringBad.ToBytes();
             var Verify2 = JWS2.Verify(SignerKeyPair);
-            Utilities.Assert.False(Verify2);
+            Verify2.TestFalse();
             }
 
 
@@ -131,8 +131,8 @@ namespace Goedel.XUnit {
 
             var Verify1 = JWES2.Verify(SignerKeyPair);
 
-            Utilities.Assert.True(TestString == Text);
-            Utilities.Assert.True(Verify1);
+            (TestString == Text).TestTrue();
+            Verify1.TestTrue();
 
             // Test: Check for a bad signature.
             }

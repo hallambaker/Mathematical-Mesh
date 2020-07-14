@@ -59,7 +59,7 @@ namespace Goedel.Protocol {
             if (Length < 0) {
                 return ReadChunked(Stream);
                 }
-            Assert.False(Length > int.MaxValue, MessageTooBig.Throw);
+            Assert.AssertFalse(Length > int.MaxValue, MessageTooBig.Throw);
 
 
 

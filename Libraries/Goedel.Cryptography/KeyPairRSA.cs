@@ -45,7 +45,7 @@ namespace Goedel.Cryptography {
         ///<summary>The private key parameters represented in PKIX form</summary>
         public override IPKIXPrivateKey PKIXPrivateKey {
             get {
-                Assert.NotNull(PKIXPrivateKeyRSA, NotExportable.Throw);
+                Assert.AssertNotNull(PKIXPrivateKeyRSA, NotExportable.Throw);
                 return PKIXPrivateKeyRSA;
                 }
             }
@@ -182,7 +182,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="keyCollection">Key Collection the key is to be persisted to.</param>
         public override void Persist(keyCollection keyCollection) {
-            Assert.True(PersistPending);
+            Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var privateParameters = Provider.ExportParameters(true);
             var pkix = privateParameters.RSAPrivateKey();
             keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
@@ -194,7 +194,7 @@ namespace Goedel.Cryptography {
         /// <returns></returns>
         public override KeyPair KeyPairPublic() {
             var Result = new KeyPairRSA(Provider.ExportParameters(false));
-            Assert.True(Result.PublicOnly);
+            Assert.AssertTrue(Result.PublicOnly, CryptographicException.Throw);
             return Result;
             }
 

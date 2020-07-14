@@ -69,7 +69,8 @@ namespace Goedel.Cryptography.Dare {
         /// <param name="Code">Base code.</param>
         /// <returns>The number of bytes required.</returns>
         public static int CodeSpace(int Code) {
-            Assert.True(Code >= UFrame & Code <= (BFrame + Length64));
+            Assert.AssertTrue(Code >= UFrame & Code <= (BFrame + Length64),
+                StreamDataCorrupt.Throw);
 
             return CodeSpaces[Code - UFrame];
 
@@ -178,7 +179,7 @@ namespace Goedel.Cryptography.Dare {
                 long Offset = 0, long Length = -1, bool Bidirectional = false) {
             Length = Length == -1 ? FrameData.LongLength : Length;
 
-            Assert.True(Length <= Int32.MaxValue, FrameTooLargeException.Throw);
+            Assert.AssertTrue(Length <= Int32.MaxValue, FrameTooLargeException.Throw);
 
             if (Bidirectional) {
                 WriteTag(BFrame, Length);
@@ -247,7 +248,7 @@ namespace Goedel.Cryptography.Dare {
                     WriteTag(UFrame, 0);
                     }
 
-                Assert.True(PositionWrite == Check + FrameLength, Internal.Throw);
+                Assert.AssertTrue(PositionWrite == Check + FrameLength, Internal.ThrowNew);
 
                 WriteTagReverse(BFrame, FrameLength);
 
@@ -300,7 +301,7 @@ namespace Goedel.Cryptography.Dare {
                 WriteFrame(FrameHeader);
                 }
 
-            Assert.True(PositionWrite == check + HL, Internal.Throw);
+            Assert.AssertTrue(PositionWrite == check + HL, Internal.ThrowNew);
 
             // here write out the binary marker for the frame data.
             WriteTag(UFrame, FrameDataLength);
@@ -320,7 +321,7 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             check += frameLength;
-            Assert.True(PositionWrite == check, Internal.Throw);
+            Assert.AssertTrue(PositionWrite == check, Internal.ThrowNew);
 
             WriteTagReverse(BFrame, frameLength);
             StreamWrite.Flush(); // Force output of data
@@ -351,7 +352,7 @@ namespace Goedel.Cryptography.Dare {
             Length = 0;
             for (var i = 0; i < LengthLength; i++) {
                 var Value = ReadByte();
-                Assert.False(Value < 0, InvalidFileFormatException.Throw);
+                Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
                 Length = (Length << 8) + Value;
                 }
             return true;
@@ -371,11 +372,11 @@ namespace Goedel.Cryptography.Dare {
             long Length = 0;
             for (var i = 0; i < LengthCount; i++) {
                 var Value = (long)ReadByte();
-                Assert.False(Value < 0, InvalidFileFormatException.Throw);
+                Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
                 Length += (Value >> 8 * i);
                 }
             var CheckTag = ReadByte();
-            Assert.True(CheckTag == Code, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(CheckTag == Code, InvalidFileFormatException.Throw);
             return Length == LengthIn;
             }
 
@@ -391,7 +392,7 @@ namespace Goedel.Cryptography.Dare {
 
             for (var i = 0; i < LengthLength; i++) {
                 var Value = ReadByteReverse();
-                Assert.False(Value < 0, InvalidFileFormatException.Throw);
+                Assert.AssertFalse(Value < 0, InvalidFileFormatException.Throw);
                 Length = (Length << 8) + Value;
                 }
             return true;
@@ -454,11 +455,11 @@ namespace Goedel.Cryptography.Dare {
                 }
 
             MaxLength -= CodeSpace(Code);
-            Assert.True(Length <= MaxLength, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(Length <= MaxLength, InvalidFileFormatException.Throw);
             if (Length > 0) {
                 Data = new byte[Length];
                 var Bytes = Read(Data, 0, (int)Length);
-                Assert.True(Bytes == Length, InvalidFileFormatException.Throw);
+                Assert.AssertTrue(Bytes == Length, InvalidFileFormatException.Throw);
                 MaxLength -= Length;
                 }
             else {
@@ -542,7 +543,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Sanity check
             var ThePosition = PositionRead;
-            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;
@@ -673,7 +674,7 @@ namespace Goedel.Cryptography.Dare {
                 Offset += (int)Length;
                 Length = StreamRead.Read(Result, Offset, framerRecordLength - Offset);
                 }
-            Assert.True(Length == 0, DataRecordTruncated.Throw);
+            Assert.AssertTrue(Length == 0, DataRecordTruncated.Throw);
 
             return Result;
             }
@@ -740,7 +741,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Sanity check
             var ThePosition = PositionRead;
-            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;
@@ -809,7 +810,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Sanity check
             var ThePosition = PositionRead;
-            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;
@@ -838,7 +839,7 @@ namespace Goedel.Cryptography.Dare {
 
             // Sanity check
             var ThePosition = PositionRead;
-            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;
@@ -861,7 +862,7 @@ namespace Goedel.Cryptography.Dare {
                 }
             // Sanity check
             var ThePosition = PositionRead;
-            Assert.True(ThePosition >= Length, InvalidFileFormatException.Throw);
+            Assert.AssertTrue(ThePosition >= Length, InvalidFileFormatException.Throw);
 
             // Make sure we return to the same position.
             long Start = ThePosition - Length - TagSpace(Code) - 1;

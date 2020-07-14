@@ -6,6 +6,13 @@
 
 namespace Goedel.Mesh.Services {
 
+	partial class AllExeptions {
+		System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> All = 
+			new System.Collections.Generic.List<global::Goedel.Utilities.ThrowNewDelegate> () {
+				null,
+				ServicesTBS.ThrowNew				};
+		}
+
 
     /// <summary>
     /// An internal assertion check failed.
@@ -13,9 +20,18 @@ namespace Goedel.Mesh.Services {
     [global::System.Serializable]
 	public partial class ServicesTBS : global::Goedel.Utilities.GoedelException {
 
+        ///<summary>The exception formatting delegate. May be overriden 
+		///locally or globally to implement different exception formatting.</summary>
+		public static new global::Goedel.Utilities.ExceptionFormatDelegate ExceptionFormatDelegate { get; set; } =
+				global::Goedel.Utilities.GoedelException.ExceptionFormatDelegate;
 
-		///<summary>The message template in the current locale.</summary>
-		public static new string MessageTemplate => "An internal error occurred";
+
+		///<summary></summary>
+		public static new System.Collections.Generic.List<string> Templates = 
+				new System.Collections.Generic.List<string> {
+
+				"An internal error occurred"
+				};
 
 		/// <summary>
 		/// Construct instance for exception
@@ -26,8 +42,10 @@ namespace Goedel.Mesh.Services {
 		/// <param name="args">Optional list of parameterized arguments.</param>
 		public ServicesTBS  (string description=null, System.Exception inner=null,
 			params object[] args) : 
-				base (description ?? global::System.String.Format(MessageTemplate, args), inner) {
+				base (ExceptionFormatDelegate(description, Templates,
+					null, args), inner) {
 			}
+
 
 
 
@@ -35,23 +53,16 @@ namespace Goedel.Mesh.Services {
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
-        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _ThrowNew;
+        public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
 
-        static System.Exception _ThrowNew(object reasons) => new ServicesTBS(args:reasons) ;
+        static System.Exception _Throw(object reasons) => new ServicesTBS(args:reasons) ;
 		
 		/// <summary>
         /// The public fatory delegate
         /// </summary>
         public static global::Goedel.Utilities.ThrowDelegate Throw = _Throw;
 
-        static System.Exception _Throw(object reason) {
-			if (reason as string != null) {
-				return new ServicesTBS(reason as string);
-				}
-			else {
-				return new ServicesTBS();
-				}
-            }
+
         }
 
 

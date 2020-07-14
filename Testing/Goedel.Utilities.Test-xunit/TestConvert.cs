@@ -242,12 +242,12 @@ namespace Goedel.XUnit {
 
 
         void CheckTrim(string Value, string Result, string Reason = null) =>
-            Value.AssertEqual(Result.Trim(), Compare.ThrowNew,  Reason);
+            Value.AssertEqual(Result.Trim(), Compare.Throw,  Reason);
 
 
 
         void CheckExact(string Value, string Result, string Reason = null) =>
-            Value.AssertEqual(Result, Compare.ThrowNew, Reason);
+            Value.AssertEqual(Result, Compare.Throw, Reason);
 
         }
     }

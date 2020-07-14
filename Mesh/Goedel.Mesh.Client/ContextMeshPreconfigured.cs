@@ -54,13 +54,14 @@ namespace Goedel.Mesh.Client {
                 }
 
             var messageClaim = MeshItem.Decode(claimResponse.EnvelopedMessageClaim, KeyCollection) as MessageClaim;
-            messageClaim.AssertNotNull(InvalidServiceResponse.ThrowNew); // should never be null
+            messageClaim.AssertNotNull(InvalidServiceResponse.Throw); // should never be null
 
 
             // Verify request.ServiceAuthenticate & request.AccountAddress
             // Verify request.DeviceAuthenticate & request.AccountAddress
-            messageClaim.Verify(CatalogedPreconfigured.ServiceAuthenticator,
-                    CatalogedPreconfigured.DeviceAuthenticator).AssertTrue();
+            messageClaim.Verify(
+                    CatalogedPreconfigured.ServiceAuthenticator,
+                    CatalogedPreconfigured.DeviceAuthenticator).AssertTrue(RefusedPINInvalid.Throw);
 
             Console.WriteLine($"Have been claimed by {messageClaim.Sender}");
 

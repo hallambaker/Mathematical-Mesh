@@ -120,7 +120,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="key">The UDF or name to resolve.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
         public ContextMesh LocateMesh(string key) {
-            key.AssertNotNull(MeshNotFound.ThrowNew);
+            key.AssertNotNull(MeshNotFound.Throw);
 
 
             if (DictionaryUDFContextMesh.TryGetValue(key, out var context)) {

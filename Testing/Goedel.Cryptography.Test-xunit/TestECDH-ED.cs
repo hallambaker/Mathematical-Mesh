@@ -1,7 +1,7 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
 using Goedel.Utilities;
-
+using Goedel.Test;
 using System.Numerics;
 
 using Xunit;
@@ -18,49 +18,49 @@ namespace Goedel.XUnit {
             var KeyAPublic = KeyA.Public;
             var KeyAPrivate = KeyA.Private;
             var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards25519.Q);
-            (Curve1.Y0 == 1).AssertTrue();
+            (Curve1.Y0 == 1).TestTrue();
 
             var Base = CurveEdwards25519.Base.Copy();
             var Neutral = CurveEdwards25519.Neutral.Copy();
             var KeyACurve = KeyAPublic.Public.Copy();
 
             var Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards25519.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards25519.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards25519.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards25519.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards25519.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards25519.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             var Pub3 = Base.Multiply(KeyAPrivate - 1);
             Pub3.Accumulate(CurveEdwards25519.Base);
-            (Base.Y == CurveEdwards25519.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards25519.Neutral.Y).AssertTrue();
-            (KeyACurve.Y0 == KeyAPublic.Public.Y0).AssertTrue();
-            (Pub2.Y0 == Pub3.Y0).AssertTrue();
+            (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards25519.Neutral.Y).TestTrue();
+            (KeyACurve.Y0 == KeyAPublic.Public.Y0).TestTrue();
+            (Pub2.Y0 == Pub3.Y0).TestTrue();
 
             var KeyB = new CurveEdwards25519Private();
             var KeyBPublic = KeyB.Public;
             var KeyBPrivate = KeyB.Private;
 
             Pub2 = KeyBPublic.Public.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards25519.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards25519.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards25519.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             Pub3 = KeyBPublic.Public.Multiply(KeyAPrivate - 1);
             Pub3.Accumulate(KeyBPublic.Public);
-            (Base.Y == CurveEdwards25519.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards25519.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
-            (Pub2.Y0 == Pub3.Y0).AssertTrue();
+            (Base.Y == CurveEdwards25519.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards25519.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
+            (Pub2.Y0 == Pub3.Y0).TestTrue();
 
             var AgreeAB = KeyA.Agreement(KeyB.Public);
             var AgreeBA = KeyB.Agreement(KeyA.Public);
 
-            (AgreeAB.Y0 == AgreeBA.Y0).AssertTrue();
+            (AgreeAB.Y0 == AgreeBA.Y0).TestTrue();
 
             }
 
@@ -83,7 +83,7 @@ namespace Goedel.XUnit {
 
             var PublicBytes = Public.Encoding.ToStringBase16();
 
-            (PublicBytes == PublicKey.ToStringBase16()).AssertTrue();
+            (PublicBytes == PublicKey.ToStringBase16()).TestTrue();
             }
 
         [Fact]
@@ -95,7 +95,7 @@ namespace Goedel.XUnit {
             var AgreeAB = KeyA.Agreement(KeyB.Public);
             var AgreeBA = KeyB.Agreement(KeyA.Public);
 
-            (AgreeAB.Y0 == AgreeBA.Y0).AssertTrue();
+            (AgreeAB.Y0 == AgreeBA.Y0).TestTrue();
             }
 
 
@@ -109,7 +109,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyA.Agreement(Result.Public);
 
-            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).AssertTrue();
+            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).TestTrue();
             }
 
 
@@ -130,7 +130,7 @@ namespace Goedel.XUnit {
 
             var AgreeAB = KeyAPublic.Agreement(Carry);
 
-            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).AssertTrue();
+            (AgreeAB.Y0 == Result.AgreementEd25519.Y0).TestTrue();
             }
 
 
@@ -183,7 +183,7 @@ namespace Goedel.XUnit {
 
             var PublicBytes = Public.Encoding.ToStringBase16();
 
-            (PublicBytes == PublicKey.ToStringBase16()).AssertTrue();
+            (PublicBytes == PublicKey.ToStringBase16()).TestTrue();
             }
 
         /// <summary></summary>
@@ -198,49 +198,49 @@ namespace Goedel.XUnit {
             var KeyAPublic = KeyA.Public;
             var KeyAPrivate = KeyA.Private;
             var Curve1 = KeyAPublic.Public.Multiply(CurveEdwards448.Q);
-            (Curve1.Y0 == 1).AssertTrue();
+            (Curve1.Y0 == 1).TestTrue();
 
             var Base = CurveEdwards448.Base.Copy();
             var Neutral = CurveEdwards448.Neutral.Copy();
             var KeyACurve = KeyAPublic.Public.Copy();
 
             var Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards448.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             Pub2 = Base.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards448.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             var Pub3 = Base.Multiply(KeyAPrivate - 1);
             Pub3.Accumulate(CurveEdwards448.Base);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
-            (KeyACurve.Y0 == KeyAPublic.Public.Y0).AssertTrue();
-            (Pub2.Y0 == Pub3.Y0).AssertTrue();
+            (Base.Y == CurveEdwards448.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).TestTrue();
+            (KeyACurve.Y0 == KeyAPublic.Public.Y0).TestTrue();
+            (Pub2.Y0 == Pub3.Y0).TestTrue();
 
             var KeyB = new CurveEdwards448Private();
             var KeyBPublic = KeyB.Public;
             var KeyBPrivate = KeyB.Private;
 
             Pub2 = KeyBPublic.Public.Multiply(KeyAPrivate);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
+            (Base.Y == CurveEdwards448.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
 
             Pub3 = KeyBPublic.Public.Multiply(KeyAPrivate - 1);
             Pub3.Accumulate(KeyBPublic.Public);
-            (Base.Y == CurveEdwards448.Base.Y).AssertTrue();
-            (Neutral.Y == CurveEdwards448.Neutral.Y).AssertTrue();
-            (KeyACurve.Y == KeyAPublic.Public.Y).AssertTrue();
-            (Pub2.Y0 == Pub3.Y0).AssertTrue();
+            (Base.Y == CurveEdwards448.Base.Y).TestTrue();
+            (Neutral.Y == CurveEdwards448.Neutral.Y).TestTrue();
+            (KeyACurve.Y == KeyAPublic.Public.Y).TestTrue();
+            (Pub2.Y0 == Pub3.Y0).TestTrue();
 
             var AgreeAB = KeyA.Agreement(KeyB.Public);
             var AgreeBA = KeyB.Agreement(KeyA.Public);
 
-            (AgreeAB.Y0 == AgreeBA.Y0).AssertTrue();
+            (AgreeAB.Y0 == AgreeBA.Y0).TestTrue();
 
             }
 

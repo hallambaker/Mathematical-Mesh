@@ -113,7 +113,7 @@ namespace Goedel.Cryptography {
         public CryptoProviderEncryption CryptoProviderEncryption(int KeySize = 0) {
             KeySize = KeySize == 0 ? this.KeySize : KeySize;
 
-            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Encryption,
+            Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Encryption,
                     CryptographicException.Throw);
             return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
                 CryptoProviderEncryption;
@@ -127,7 +127,7 @@ namespace Goedel.Cryptography {
         /// <returns>An authentication provider.</returns>
         public CryptoProviderAuthentication CryptoProviderAuthentication(int KeySize = 0) {
             KeySize = KeySize == 0 ? this.KeySize : KeySize;
-            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.MAC,
+            Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.MAC,
                     CryptographicException.Throw);
             return CryptoProviderFactory(KeySize, CryptoAlgorithmId.NULL) as
                 CryptoProviderAuthentication;
@@ -140,7 +140,7 @@ namespace Goedel.Cryptography {
         /// <returns>An authentication provider.</returns>
         public CryptoProviderDigest CryptoProviderDigest(int OutputSize = 0) {
             OutputSize = OutputSize == 0 ? this.KeySize : OutputSize;
-            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
+            Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
             return CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as
                 CryptoProviderDigest;
@@ -154,10 +154,10 @@ namespace Goedel.Cryptography {
         /// /// <param name="Key">The key to apply</param>
         /// <returns>Result of digest operation.</returns>
         public byte[] Process(byte[] Buffer, byte[] Key = null) {
-            Assert.True(AlgorithmClass == CryptoAlgorithmClasses.Digest,
+            Assert.AssertTrue(AlgorithmClass == CryptoAlgorithmClasses.Digest,
                     CryptographicException.Throw);
             var Provider = CryptoProviderFactory(0, CryptoAlgorithmId.NULL) as CryptoProviderDigest;
-            Assert.NotNull(Provider, CryptographicException.Throw);
+            Assert.AssertNotNull(Provider, CryptographicException.Throw);
             var Result = Provider.Process(Buffer, Key);
             return Result.Integrity;
             }

@@ -187,7 +187,7 @@ namespace Goedel.Cryptography {
             //        P[i] = R[i]
             //Else
             //    Return an error
-            Assert.True(R[0].Verify(0xA6), UnwrapFailed.Throw);
+            Assert.AssertTrue(R[0].Verify(0xA6), UnwrapFailed.Throw);
             //TraceX.WriteLine("Sentry {0}", R[0].ToString());
 
             var Result = Block.ToByte(R, 1);

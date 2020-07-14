@@ -1,6 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Algorithms;
-using Goedel.Utilities;
+using Goedel.Test;
 
 using System.Numerics;
 
@@ -28,15 +28,15 @@ namespace Goedel.XUnit {
             var X4 = (new byte[] { 0x00, 0x01, 0xD1, 0xA9, 0x4A, 0x20, 0x00 }).BigIntegerBigEndian();
             var X5 = (new byte[] { 0x01, 0xD1, 0xA9, 0x4A, 0x20, 0x00 }).BigIntegerBigEndian();
 
-            (M1 == M2).AssertTrue();
-            (M1 == M3).AssertTrue();
-            (M1 == M4).AssertTrue();
-            (M1 == M4).AssertTrue();
+            (M1 == M2).TestTrue();
+            (M1 == M3).TestTrue();
+            (M1 == M4).TestTrue();
+            (M1 == M4).TestTrue();
 
-            (X1 == X2).AssertTrue();
-            (X1 == X3).AssertTrue();
-            (X1 == X4).AssertTrue();
-            (X1 == X4).AssertTrue();
+            (X1 == X2).TestTrue();
+            (X1 == X3).TestTrue();
+            (X1 == X4).TestTrue();
+            (X1 == X4).TestTrue();
             }
 
         [Fact]
@@ -44,15 +44,15 @@ namespace Goedel.XUnit {
 
             var BitIndex = new BitIndex(new BigInteger(0x80), 8, Up: false);
 
-            (BitIndex.Down()).AssertTrue();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
+            (BitIndex.Down()).TestTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
 
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
             }
 
 
@@ -62,15 +62,15 @@ namespace Goedel.XUnit {
             var BitIndex = new BitIndex(new BigInteger(0x80), 8, Up: true);
 
 
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
 
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertTrue();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestTrue();
             }
 
 
@@ -79,15 +79,15 @@ namespace Goedel.XUnit {
         public void TestBitField2() {
             var BitIndex = new BitIndex(new BigInteger(0x81), 8);
 
-            (BitIndex.Down()).AssertTrue();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
+            (BitIndex.Down()).TestTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
 
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestTrue();
             }
 
         [Fact]
@@ -95,15 +95,15 @@ namespace Goedel.XUnit {
             Xunit.Assert.Throws<InvalidOperation>(() => {
                 var BitIndex = new BitIndex(new BigInteger(0x81), 8);
 
-                (BitIndex.Down()).AssertTrue();
-                (BitIndex.Down()).AssertFalse();
-                (BitIndex.Down()).AssertFalse();
-                (BitIndex.Down()).AssertFalse();
+                (BitIndex.Down()).TestTrue();
+                (BitIndex.Down()).TestFalse();
+                (BitIndex.Down()).TestFalse();
+                (BitIndex.Down()).TestFalse();
 
-                (BitIndex.Down()).AssertFalse();
-                (BitIndex.Down()).AssertFalse();
-                (BitIndex.Down()).AssertFalse();
-                (BitIndex.Down()).AssertTrue();
+                (BitIndex.Down()).TestFalse();
+                (BitIndex.Down()).TestFalse();
+                (BitIndex.Down()).TestFalse();
+                (BitIndex.Down()).TestTrue();
                 BitIndex.Down();
             });
 
@@ -111,25 +111,25 @@ namespace Goedel.XUnit {
         public void TestBitField4() {
             var BitIndex = new BitIndex(new BigInteger(0x8118), 16);
 
-            (BitIndex.Down()).AssertTrue();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
+            (BitIndex.Down()).TestTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
 
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestTrue();
 
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestTrue();
 
-            (BitIndex.Down()).AssertTrue();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
-            (BitIndex.Down()).AssertFalse();
+            (BitIndex.Down()).TestTrue();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
+            (BitIndex.Down()).TestFalse();
             }
 
 
@@ -139,25 +139,25 @@ namespace Goedel.XUnit {
             var BitIndex = new BitIndex(new BigInteger(0x0180), 16, Up: true);
 
 
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
 
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertTrue();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestTrue();
 
-            (BitIndex.Up()).AssertTrue();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
+            (BitIndex.Up()).TestTrue();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
 
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
-            (BitIndex.Up()).AssertFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
+            (BitIndex.Up()).TestFalse();
 
 
             }
@@ -173,16 +173,16 @@ namespace Goedel.XUnit {
             var By = "46316835694926478169428394003475163141307993866256225615783033603165251855960".DecimalToBigInteger();
             var p = "57896044618658097711785492504343953926634992332820282019728792003956564819949".DecimalToBigInteger();
 
-            (Curve25519.D == D).AssertTrue();
-            (Curve25519.By == By).AssertTrue();
-            (Curve25519.P == p).AssertTrue();
+            (Curve25519.D == D).TestTrue();
+            (Curve25519.By == By).TestTrue();
+            (Curve25519.P == p).TestTrue();
 
             var M1M = (-1).Mod(Curve25519.P);
             var M1 = Curve25519.P - 1;
             var RM1S = (Curve25519.SqrtMinus1 * Curve25519.SqrtMinus1).Mod(Curve25519.P);
 
-            (M1 == RM1S).AssertTrue();
-            (M1 == M1M).AssertTrue();
+            (M1 == RM1S).TestTrue();
+            (M1 == M1M).TestTrue();
 
 
             var Neutral = CurveEdwards25519.Neutral;
@@ -190,8 +190,8 @@ namespace Goedel.XUnit {
             var BaseX = ("15112221349535400772501151409588531511454012693041857206046113283949847762202").DecimalToBigInteger();
             var BaseY = ("46316835694926478169428394003475163141307993866256225615783033603165251855960").DecimalToBigInteger();
 
-            (BaseX == CurveEdwards25519.Base.X).AssertTrue();
-            (BaseY == CurveEdwards25519.Base.Y).AssertTrue();
+            (BaseX == CurveEdwards25519.Base.X).TestTrue();
+            (BaseY == CurveEdwards25519.Base.Y).TestTrue();
 
             var Curve448 = DomainParameters.Curve448;
 
@@ -208,12 +208,12 @@ namespace Goedel.XUnit {
             var Dp = D2.Sqrt(Curve25519.P, Curve25519.SqrtMinus1, false);
             var Dn = D2.Sqrt(Curve25519.P, Curve25519.SqrtMinus1, true);
 
-            (Dp.IsEven).AssertTrue();
-            (Dn.IsEven).AssertFalse();
-            (D2 == (Da * Da).Mod(Curve25519.P)).AssertTrue();
-            (D2 == (Db * Db).Mod(Curve25519.P)).AssertTrue();
-            (D2 == (Dp * Dp).Mod(Curve25519.P)).AssertTrue();
-            (D2 == (Dn * Dn).Mod(Curve25519.P)).AssertTrue();
+            (Dp.IsEven).TestTrue();
+            (Dn.IsEven).TestFalse();
+            (D2 == (Da * Da).Mod(Curve25519.P)).TestTrue();
+            (D2 == (Db * Db).Mod(Curve25519.P)).TestTrue();
+            (D2 == (Dp * Dp).Mod(Curve25519.P)).TestTrue();
+            (D2 == (Dn * Dn).Mod(Curve25519.P)).TestTrue();
 
             }
 

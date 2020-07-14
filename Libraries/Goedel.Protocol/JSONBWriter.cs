@@ -307,7 +307,7 @@ namespace Goedel.Protocol {
             Length = Length < 0 ? Data.Length : Length;
 
             PartLength -= Length;
-            Assert.True(PartLength >= 0, BadPartLength.Throw);
+            Assert.AssertTrue(PartLength >= 0, BadPartLength.Throw);
             Output.Write(Data, (int)First, (int)Length);
             }
 

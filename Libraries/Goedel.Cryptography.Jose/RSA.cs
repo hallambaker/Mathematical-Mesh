@@ -75,7 +75,7 @@ namespace Goedel.Cryptography.Jose {
         public PrivateKeyRSA(KeyPairBaseRSA KeyPair) {
             Kid = KeyPair.KeyIdentifier;
             var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
-            Assert.AssertNotNull(RSAPrivateKey, NotExportable.ThrowNew);
+            Assert.AssertNotNull(RSAPrivateKey, NotExportable.Throw);
 
 
             N = RSAPrivateKey.Modulus;
