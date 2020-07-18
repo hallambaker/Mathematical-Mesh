@@ -210,7 +210,9 @@ namespace Goedel.IO {
         /// </summary>
         /// <param name="filename">The file name</param>
         /// <returns>A file stream</returns>
-        public static FileStream OpenFileReadShared(this string filename) => new FileStream(filename, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
+        public static FileStream OpenFileReadShared(this string filename) => 
+            new FileStream(filename, System.IO.FileMode.Open, 
+                System.IO.FileAccess.Read, System.IO.FileShare.ReadWrite);
 
         /// <summary>
         /// Create a text reader on a file stream.

@@ -348,6 +348,7 @@ namespace Goedel.Mesh.Shell {
 				{"dynamic", _ContactDynamic._DescribeCommand },
 				{"fetch", _ContactFetch._DescribeCommand },
 				{"exchange", _ContactExchange._DescribeCommand },
+				{"export", _ContactExport._DescribeCommand },
 				{"add", _ContactAdd._DescribeCommand },
 				{"delete", _ContactDelete._DescribeCommand },
 				{"get", _ContactGet._DescribeCommand },
@@ -1137,6 +1138,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.ContactExchange (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_ContactExport (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			ContactExport		Options = new ContactExport ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.ContactExport (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -11034,6 +11045,151 @@ namespace Goedel.Mesh.Shell {
     public partial class ContactExchange : _ContactExchange {
         } // class ContactExchange
 
+    public class _ContactExport : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new NewFile (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[1] as NewFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "export",
+			Brief =  "Export contact entry from catalog",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactExport,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactExport : _ContactExport {
+        } // class ContactExport
+
     public class _ContactAdd : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
@@ -11050,7 +11206,7 @@ namespace Goedel.Mesh.Shell {
 
 
 
-		/// <summary>Field accessor for option [file]</summary>
+		/// <summary>Field accessor for parameter []</summary>
 		public virtual ExistingFile File {
 			get => _Data[0] as ExistingFile;
 			set => _Data[0]  = value;
@@ -11112,12 +11268,12 @@ namespace Goedel.Mesh.Shell {
 			HandleDelegate =  CommandLineInterpreter.Handle_ContactAdd,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
+				new DescribeEntryParameter () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
-					Key = "file"
+					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
@@ -17562,6 +17718,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult ContactExchange ( ContactExchange Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult ContactExport ( ContactExport Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

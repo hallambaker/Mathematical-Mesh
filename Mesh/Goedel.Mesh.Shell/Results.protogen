@@ -32,7 +32,7 @@
 
 	Structure ResultDump
 		Inherits		Result
-		Struct CatalogedEntry CatalogedEntries
+		TStruct CatalogedEntry CatalogedEntries
 			Multiple
 
 	Structure ResultList
@@ -119,10 +119,10 @@
 
 	Structure ResultEntry
 		Inherits		Result
-		Struct CatalogedEntry CatalogEntry
+		TStruct CatalogedEntry CatalogEntry
 	Structure ResultEntrySent
 		Inherits		Result
-		Struct CatalogedEntry CatalogEntry
+		TStruct CatalogedEntry CatalogEntry
 		Struct Message Message
 	Structure ResultMail
 		Inherits		ResultEntry

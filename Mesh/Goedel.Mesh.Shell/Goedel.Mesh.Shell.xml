@@ -164,6 +164,13 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.ContactExport(Goedel.Mesh.Shell.ContactExport)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.ContactAdd(Goedel.Mesh.Shell.ContactAdd)">
             <summary>
             Dispatch method
@@ -2438,8 +2445,29 @@
         <member name="P:Goedel.Mesh.Shell._ContactExchange.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Identifier">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._ContactExport.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.File">
-            <summary>Field accessor for option [file]</summary>
+            <summary>Field accessor for parameter []</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._ContactAdd.AccountAddress">
             <summary>Field accessor for option [account]</summary>

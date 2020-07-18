@@ -685,10 +685,17 @@
 			Include AccountOptions
 			Include Reporting
 
+		Command ContactExport "export"
+			Brief "Export contact entry from catalog"
+			Parameter Identifier "id" String
+				Brief "Contact entry identifier"
+			Parameter File "file" NewFile
+			Include AccountOptions
+			Include Reporting
 
 		Command ContactAdd "add"
 			Brief "Add contact entry from file"
-			Option File "file" ExistingFile
+			Parameter File "file" ExistingFile
 			Include AccountOptions
 			Include Reporting
 

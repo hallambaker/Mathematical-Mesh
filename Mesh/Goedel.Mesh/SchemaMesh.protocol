@@ -680,6 +680,7 @@
 	Section 2 "Catalog Entries"
 
 	Structure CatalogedEntry
+		Abstract
 		Description
 			|Base class for cataloged Mesh data.
 		String Labels

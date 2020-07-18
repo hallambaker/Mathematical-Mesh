@@ -52,3 +52,6 @@ Namespace Goedel.Mesh
 
 	Exception ServerResponseInvalid
 		Console "The server returned an invalid response."
+	
+	Exception InvalidFormat
+		Console "The format {0} is not supported for the specified output."

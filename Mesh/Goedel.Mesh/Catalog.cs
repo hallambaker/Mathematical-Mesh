@@ -1,11 +1,13 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Protocol;
 using Goedel.Utilities;
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
+using System.Text.Json;
 
 namespace Goedel.Mesh {
     /// <summary>
@@ -19,6 +21,7 @@ namespace Goedel.Mesh {
         ///<summary>Delete an entry.</summary>
         Delete
         }
+
 
     /// <summary>
     /// Interface to catalog functionality.
@@ -100,7 +103,7 @@ namespace Goedel.Mesh {
     /// <summary>
     /// Base class for catalogs.
     /// </summary>
-    public class Catalog<T> : Store, IEnumerable<CatalogedEntry>, ICatalog 
+    public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>, ICatalog 
                 where T : CatalogedEntry {
 
         ///<summary>Class exposing the Mesh Client locate interface.</summary>
@@ -359,7 +362,102 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="key">Unique identifier of the device to return.</param>
         /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
-        public T Get(string key) => Locate(key) as T;
+        public virtual T Get(string key) => Locate(key) as T;
+
+
+
+
+        /// <summary>
+        /// Add the catalog entry data speficied in the file <paramref name="fileName"/>. If 
+        /// <paramref name="merge"/> is true, merge this contact information.
+        /// </summary>
+        /// <param name="fileName">The file to fetch the contact data from.</param>
+        /// <param name="format">The file format to write the output in.</param>
+        /// <param name="localName">Short name for the contact to distinguish it from
+        /// others.</param>
+        /// <param name="merge">Add this data to the existing contact.</param>
+        /// <returns></returns>
+        public T AddFromStream(
+                    Stream stream,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
+                    bool merge = true,
+                    string localName = null) {
+            if (ReadFromStream(stream, format).NotNull(out var entry)) {
+                UpdateEntry(entry);
+                return entry;
+                }
+            throw new NYI();
+            }
+
+
+        public virtual T ReadFromStream(
+                    Stream stream,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Unknown) {
+            switch (format) {
+                case CatalogedEntryFormat.Unknown:
+                case CatalogedEntryFormat.Default: {
+                    using var reader = new JsonBcdReader(stream);
+                    var result = CatalogedEntry.FromJson(reader, true);
+                    return result as T;
+                    }
+                }
+
+
+
+            // here do the dare format
+
+            // here do the json format
+
+            // format is not supported
+
+
+            throw new NYI();
+            }
+
+        public virtual List<T> ReadListFromFile(
+            string fileName,
+            CatalogedEntryFormat format = CatalogedEntryFormat.Unknown) {
+
+            // here do the dare format
+
+            // here do the json format
+
+            // format is not supported
+
+
+            throw new NYI();
+            }
+
+
+
+
+        /// <summary>
+        /// Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
+        /// <paramref name="merge"/> is true, merge this contact information.
+        /// </summary>
+        /// <param name="stream">The stream to write the entry data to.</param>
+        /// <param name="format">The file format to write the output in.</param>
+        /// <returns></returns>
+        public virtual void WriteToStream(
+                    Stream stream,
+                    T data,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Default) =>
+            data.WriteToStream(stream, format);
+
+        /// <summary>
+        /// Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
+        /// <paramref name="merge"/> is true, merge this contact information.
+        /// </summary>
+        /// <param name="stream">The stream to write the entry data to.</param>
+        /// <param name="format">The file format to write the output in.</param>
+        /// <returns></returns>
+        public virtual void WriteToStream(
+                    Stream stream,
+                    List<T> data,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
+            throw new NYI();
+            }
+
 
         /// <summary>
         /// Locate the entry with key <paramref name="key"/>.
@@ -390,16 +488,7 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class CatalogedEntry {
 
-        /// <summary>
-        /// Describe the entry, appending the output to <paramref name="builder"/>.
-        /// </summary>
-        /// <param name="builder">The output stream.</param>
-        /// <param name="detail">If true, provide a detailed description.</param>
-        public virtual void Describe(StringBuilder builder, bool detail = false) => builder.AppendLine(_Tag);
-
-        }
 
     #endregion
 

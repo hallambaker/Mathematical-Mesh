@@ -154,6 +154,29 @@ namespace Goedel.Utilities {
     /// </summary>
     public static class Assert {
 
+        /// <summary>
+        /// Syntactic sugar to allow compact tests on the return value of a function.
+        /// Returns true is <paramref name="test"/> is not null, otherwise false.
+        /// The value <paramref name="result"/> is set equal to the value of 
+        /// <paramref name="test"/> in either case.
+        /// </summary>
+        /// <example>
+        /// This sample shows how to call the <see cref="NotNull"/> method.
+        /// <code>
+        /// if (base.Get(key).NotNull (out var result)) {
+        ///     return result;
+        ///     }
+        /// </code>
+        /// </example>
+        /// <typeparam name="T">The type of the argument.</typeparam>
+        /// <param name="test">The test value.</param>
+        /// <param name="result">Returns the value <paramref name="test"/>.</param>
+        /// <returns>True if the value <paramref name="test"/> is not null,
+        /// otherwise false.</returns>
+        public static bool NotNull<T> (this T test, out T result) where T : class  {
+            result = test;
+            return test != null;
+            }
 
         /// <summary>
         /// Provides a means of optionally expiring a value specified by <paramref name="value"/>.
@@ -169,7 +192,7 @@ namespace Goedel.Utilities {
         /// is not null and is strictly less than the current time in which case the value 
         /// <code>null</code> is returned. 
         ///</returns>
-        public static T Expired<T>(this DateTime? expiry, T value) {
+                public static T Expired<T>(this DateTime? expiry, T value) {
             if (expiry == null) {
                 return value;
                 }

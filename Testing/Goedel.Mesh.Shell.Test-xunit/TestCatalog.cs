@@ -54,52 +54,58 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileContact() {
-            var account = "alice@example.com";
+
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
+
+            var fileA = $"Contact-{AccountA}.mcf";
+            var fileB = $"Contact-{AccountB}.mcf";
+            var fileC = $"Contact-{AccountC}.mcf";
 
             // rewrite this test so that we create three accounts, export the contact self values
             // then test import into the catalog from the file.
 
+            // create the accounts
+            device1.Dispatch($"mesh create /service={AccountA}");
+            device2.Dispatch($"mesh create /service={AccountB}");
+            device3.Dispatch($"mesh create /service={AccountC}");
+
+            // Check each account has exactly the right set of contacts (i.e. self):
+            ValidContact(device1, AccountA);
+            ValidContact(device2, AccountB);
+            ValidContact(device3, AccountC);
 
 
-            var contact1UDF = UDF.Nonce(125);
-            var contact2UDF = UDF.Nonce(125);
-            var contact3UDF = UDF.Nonce(125);
-
-            var contact1 = $"bob@@example.com.mm--{contact1UDF}";
-            var contact2 = $"carol@@example.com.mm--{contact2UDF}";
-            var contact3 = $"bob2@@example.com.mm--{contact3UDF}";
-
-            CreateAccount(account);
-
-            // Check that looking for a non existent entry fails
-            // This makes sure that we don't end up picking up stale results from prior tests etc.
-            FailContactResult(contact1);
+            // export the contact data to a file
+            device1.Dispatch($"contact export {AccountA} {fileA}");
+            device2.Dispatch($"contact export {AccountB} {fileB}");
+            device3.Dispatch($"contact export {AccountC} {fileC}");
 
             // Add a single entry and check that it is correctly registered.
-            var contactID1 = GetContactKey(Dispatch($"contact add {contact1}"));
-            CheckContactResult(contactID1, contactID1);
-
-
+            var contactID1 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
+            ValidContact(device1, AccountA, AccountB);
+            ValidContact(device2, AccountB);
+            ValidContact(device3, AccountC);
 
             // Add a second entry, check that the first and second are correctly registered,
-            var contactID2 = GetContactKey(Dispatch($"contact add {contact2}"));
-            CheckContactResult(contactID1, contact1);
-            CheckContactResult(contactID2, contact2);
+            var contactID2 = GetContactKey(device1.Dispatch($"contact add {fileC}"));
+            ValidContact(device1, AccountA, AccountB, AccountC);
+            ValidContact(device2, AccountB);
+            ValidContact(device3, AccountC);
+
 
             // Delete the second entry, check that only the first is still there.
-            Dispatch($"contact delete {contactID2}");
-            CheckContactResult(contactID1, contact1);
+            device1.Dispatch($"contact delete {AccountB}");
+            ValidContact(device1, AccountA, AccountC);
+            ValidContact(device2, AccountB);
+            ValidContact(device3, AccountC);
 
-            FailContactResult(contactID1);
-            // Update the first entry, check that it is correctly updated.
-            var contactID3 = GetContactKey(Dispatch($"contact add {contact3}"));
-            CheckContactResult(contactID3, contact3);
-
-            FailContactResult(contact2);
-            // Re-add the second entry, check that it is correctly registered.
-            var contactID14 = GetContactKey(Dispatch($"contact add {contact2}"));
-            CheckContactResult(contactID14, contact2);
-            CheckContactResult(contactID3, contact3);
+            // Add it back and check
+            var contactID3 = GetContactKey(device1.Dispatch($"contact add {fileB}"));
+            ValidContact(device1, AccountA, AccountB, AccountC);
+            ValidContact(device2, AccountB);
+            ValidContact(device3, AccountC);
             }
 
 

@@ -1,6 +1,7 @@
 ﻿using Goedel.Utilities;
 using System.Collections.Generic;
 using System;
+using Goedel.IO;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -97,6 +98,30 @@ namespace Goedel.Mesh.Shell {
 
             }
 
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult ContactExport(ContactExport Options) {
+            using var contextAccount = GetContextAccount(Options);
+            var file = Options.File.Value;
+            var contactId = Options.Identifier.Value;
+
+            using var catalog = contextAccount.GetCatalogContact();
+
+            var entry = catalog.Get(contactId);
+
+            var fileStream = file.OpenFileNew();
+            catalog.WriteToStream(fileStream, entry);
+
+            return new ResultEntry() {
+                Success = true,
+                CatalogEntry = entry
+                };
+            }
+
         /// <summary>
         /// Dispatch method
         /// </summary>
@@ -143,7 +168,7 @@ namespace Goedel.Mesh.Shell {
             var identifier = Options.Identifier.Value;
 
             using (var catalog = contextAccount.GetCatalogContact()) {
-                var result = catalog.Locate(identifier);
+                var result = catalog.Get(identifier);
 
                 catalog.Delete(result);
                 }

@@ -6757,7 +6757,7 @@ namespace Goedel.Mesh {
 	///
 	/// Base class for cataloged Mesh data.
 	/// </summary>
-	public partial class CatalogedEntry : MeshItem {
+	abstract public partial class CatalogedEntry : MeshItem {
         /// <summary>
         ///The set of labels describing the entry
         /// </summary>
@@ -6775,10 +6775,10 @@ namespace Goedel.Mesh {
 		public new const string __Tag = "CatalogedEntry";
 
 		/// <summary>
-        /// Factory method
+        /// Factory method. Throws exception as this is an abstract class.
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new CatalogedEntry();
+		public static new JsonObject _Factory () => throw new CannotCreateAbstract();
 
 
         /// <summary>
@@ -6837,10 +6837,7 @@ namespace Goedel.Mesh {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
 				return Out as CatalogedEntry;
 				}
-		    var Result = new CatalogedEntry ();
-			Result.Deserialize (jsonReader);
-			Result.PostDecode();
-			return Result;
+			throw new CannotCreateAbstract();
 			}
 
         /// <summary>

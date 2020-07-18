@@ -11,6 +11,7 @@ namespace Goedel.XUnit {
     public partial class ShellTests {
         string AccountA => "alice@example.com";
         string AccountB => "bob@example.com";
+        string AccountC => "carol@example.com";
         string AccountQ => "quartermaster@example.com";
         string DeviceQName => "DeviceQ";
         string DeviceAdminName => "DeviceAdmin";

@@ -23,19 +23,19 @@ namespace Scratchpad {
 
             // ** Fast access to simple tests for regression fixing.
             //TestService.Test().MeshCatalogAccount();
-            ShellTests.Test().TestMessageContactInPerson();
+            //ShellTests.Test().TestMessageContactInPerson();
 
 
             // ***** Currently failing tests
 
             // **Tests needing (mostly) a bit of redesign.
 
-            //ShellTests.Test().TestProfileMail();
+
             //ShellTests.Test().TestProfileContact();
 
             // ** Just need some testing on the PIN expiry/reuse stuff.
-            //ShellTests.Test().TestProfileConnectPinReused();
-            //ShellTests.Test().TestProfileConnectDynamicQR();
+            ShellTests.Test().TestProfileConnectPinReused();
+            ShellTests.Test().TestProfileConnectDynamicQR();
 
             // ** The catalog/archive interfaces
             //ShellTests.Test().TestContainerArchive();
@@ -55,6 +55,7 @@ namespace Scratchpad {
 
             // ** Application related shell commands
 
+            //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
 
@@ -88,7 +89,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestMessageConfirmationReject();
             //ShellTests.Test().TestProfileConnectPinExpired();
             //ShellTests.Test().TestProfileConnectPinInvalid();
-            ShellTests.Test().TestMessageContactBusinessCardExchange();
+            //ShellTests.Test().TestMessageContactBusinessCardExchange();
 
             }
 

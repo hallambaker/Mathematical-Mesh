@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.IO;
 using Goedel.Utilities;
 
 using System;
@@ -135,6 +136,16 @@ namespace Goedel.Mesh {
             }
 
 
+        public override CatalogedContact Get(string key) {
+            if (base.Get(key).NotNull (out var result)) {
+                return result;
+                }
+            if (DictionaryByNetworkAddress.TryGetValue(key, out var networkEntry)) {
+                return networkEntry.CatalogedContact;
+                }
+            return null;
+            }
+
         /// <summary>
         /// Add the contact data specified in the file <paramref name="fileName"/>. If 
         /// <paramref name="self"/> is true, register this as the self contact. If
@@ -147,10 +158,21 @@ namespace Goedel.Mesh {
         /// <param name="merge">Add this data to the existing contact.</param>
         /// <returns></returns>
         public CatalogedContact AddFromFile(
-                    string fileName, bool self = false, bool merge = true, string localName = null) {
-            throw new NYI();
+                    string fileName,
+                    bool self,
+                    CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
+                    bool merge = true,
+                    string localName = null) {
+            using var stream = fileName.OpenFileReadShared();
+            var contact = ReadFromStream(stream, format);
+
+            Add(contact.Contact, self);
+
+            return contact;
 
             }
+
+
 
         /// <summary>
         /// Return the network entry for the address <paramref name="networkAddress"/>

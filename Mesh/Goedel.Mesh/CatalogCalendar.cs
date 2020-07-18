@@ -4,6 +4,7 @@ using Goedel.Cryptography.Dare;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh {
 
@@ -72,6 +73,7 @@ namespace Goedel.Mesh {
         /// <param name="task">The task to create.</param>
         public CatalogedTask(Task task) : this() => EnvelopedTask = DareEnvelope.Encode(task.GetBytes(tag: true),
                     contentType: "application/mmm");
+
         }
     #endregion
 

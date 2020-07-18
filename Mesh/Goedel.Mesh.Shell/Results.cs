@@ -707,12 +707,11 @@ namespace Goedel.Mesh.Shell {
 				bool _firstarray = true;
 				foreach (var _index in CatalogedEntries) {
 					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
+                    _writer.WriteObjectEnd();
 					}
 				_writer.WriteArrayEnd ();
 				}
@@ -755,10 +754,7 @@ namespace Goedel.Mesh.Shell {
 					bool _Going = jsonReader.StartArray ();
 					CatalogedEntries = new List <CatalogedEntry> ();
 					while (_Going) {
-						// an untagged structure.
-						var _Item = new  CatalogedEntry ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new CatalogedEntry (jsonReader);
+						var _Item = CatalogedEntry.FromJson (jsonReader, true); // a tagged structure
 						CatalogedEntries.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
@@ -2606,7 +2602,15 @@ namespace Goedel.Mesh.Shell {
 			if (CatalogEntry != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("CatalogEntry", 1);
-					CatalogEntry.Serialize (_writer, false);
+					// expand this to a tagged structure
+					//CatalogEntry.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(CatalogEntry._Tag, 1);
+						bool firstinner = true;
+						CatalogEntry.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -2642,10 +2646,7 @@ namespace Goedel.Mesh.Shell {
 			
 			switch (tag) {
 				case "CatalogEntry" : {
-					// An untagged structure
-					CatalogEntry = new CatalogedEntry ();
-					CatalogEntry.Deserialize (jsonReader);
- 
+					CatalogEntry = CatalogedEntry.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				default : {
@@ -2717,7 +2718,15 @@ namespace Goedel.Mesh.Shell {
 			if (CatalogEntry != null) {
 				_writer.WriteObjectSeparator (ref _first);
 				_writer.WriteToken ("CatalogEntry", 1);
-					CatalogEntry.Serialize (_writer, false);
+					// expand this to a tagged structure
+					//CatalogEntry.Serialize (_writer, false);
+					{
+						_writer.WriteObjectStart();
+						_writer.WriteToken(CatalogEntry._Tag, 1);
+						bool firstinner = true;
+						CatalogEntry.Serialize (_writer, true, ref firstinner);
+						_writer.WriteObjectEnd();
+						}
 				}
 			if (Message != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -2758,10 +2767,7 @@ namespace Goedel.Mesh.Shell {
 			
 			switch (tag) {
 				case "CatalogEntry" : {
-					// An untagged structure
-					CatalogEntry = new CatalogedEntry ();
-					CatalogEntry.Deserialize (jsonReader);
- 
+					CatalogEntry = CatalogedEntry.FromJson (jsonReader, true) ;  // A tagged structure
 					break;
 					}
 				case "Message" : {
