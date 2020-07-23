@@ -22,7 +22,7 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
             // ** Fast access to simple tests for regression fixing.
-            //TestService.Test().MeshCatalogAccount();
+            TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestMessageContactInPerson();
 
 
@@ -34,11 +34,10 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileContact();
 
             // ** Just need some testing on the PIN expiry/reuse stuff.
-            ShellTests.Test().TestProfileConnectPinReused();
-            ShellTests.Test().TestProfileConnectDynamicQR();
+            //ShellTests.Test().TestProfileConnectPinReused();
+            //ShellTests.Test().TestProfileConnectDynamicQR();
 
             // ** The catalog/archive interfaces
-            //ShellTests.Test().TestContainerArchive();
             //ShellTests.Test().TestContainerCatalogBase();
             //ShellTests.Test().TestContainerCatalogEncrypt();
 

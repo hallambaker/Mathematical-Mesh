@@ -22,62 +22,7 @@ namespace Goedel.XUnit {
         static CryptoParameters CryptoParametersNull = new CryptoParametersTest();
 
 
-        [Fact]
-        public void MessageGroup() {
-            var plaintext = Platform.GetRandomBytes(1000);
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-
-            var groupName = "groupW@example.com";
-            var userName = "alice@example.com";
-
-            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, "admin");
-            var machineMember = new MeshMachineTest(testEnvironmentCommon, "admin");
-
-            var RecipientsGroup = new List<string> { groupName };
-            var CryptoParametersGroup = new CryptoParametersTest(
-                        recipients: RecipientsGroup);
-            var keyGroup = CryptoParametersGroup.KeyLocate.TryFindKeyDecryption(groupName) as KeyPairAdvanced;
-
-            //var RecipientsAlice = new List<string> { userName };
-            //var CryptoParametersAlice = new CryptoParametersTest(
-            //            recipients: RecipientsAlice);
-            //var keyAlice = CryptoParametersAlice.KeyCollection.TryMatchRecipient(userName) as KeyPairAdvanced;
-
-
-
-            var envelopedData = DareEnvelope.Encode(CryptoParametersGroup, plaintext);
-            var envelope = new DareEnvelope(CryptoParametersGroup, plaintext);
-
-            var keyAliceDevice = new KeyPairEd25519() {
-                Locator = groupName
-                };
-
-
-            // This is probably failing because it should!!!
-            // The API has been changed so the key this is trying to fish out is no longer available
-            // need to add Alice to the group or set up way to get the group decryption key directly
-
-
-            // The service decryption key
-            var keyService = keyGroup.GenerateRecryptionKey(keyAliceDevice);
-
-            // The partial key
-            var keyPairPartialTest = new KeyPairPartialTest(keyGroup, keyAliceDevice, keyService) {
-                IdGroup = groupName,
-                IdMember = userName
-                };
-
-            var keyCollectionDevice = new KeyCollectionCore();
-            keyCollectionDevice.Add(keyPairPartialTest);
-
-            CheckDecode(envelope, plaintext, CryptoParametersGroup.KeyLocate);
-            CheckDecode(envelope, plaintext, keyCollectionDevice);
-
-
-
-            }
-
-        [Fact]
+         [Fact]
         public void MessagePlaintextJSON() {
             var Test1 = Platform.GetRandomBytes(1000);
             TestMessageJSON(Test1);

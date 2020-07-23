@@ -5,7 +5,7 @@ using Goedel.Utilities;
 
 namespace Goedel.XUnit {
     public partial class ShellTests {
-        string ServiceName = "example.com";
+        string ServiceName { get; set; } = "example.com";
         TestCLI DefaultDevice => defaultDevice ?? GetTestCLI().CacheValue(out defaultDevice);
         TestCLI defaultDevice;
 

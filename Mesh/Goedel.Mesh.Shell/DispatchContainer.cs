@@ -36,6 +36,8 @@ namespace Goedel.Mesh.Shell {
 
             var CryptoParameters = new CryptoParameters();
 
+            // should create an archive class as a subset of store.
+
             using (var Writer = new FileContainerWriter(
                     outputFile, CryptoParameters, true, fileStatus: FileStatus.Overwrite)) {
 
@@ -47,7 +49,10 @@ namespace Goedel.Mesh.Shell {
                         Writer.Add(fileInfo, path: fileInfo.Name);
                         }
                     }
-                Writer.AddIndex(); // Hack: is not currently indexed.
+                // Hack: is not currently indexed.
+                // Need to design a proper index!
+
+                Writer.AddIndex(); 
                 }
 
             return new ResultFile() {

@@ -1,6 +1,8 @@
 ﻿
 Namespace Goedel.Test
 
+	Exception TestNotImplemented
+        Console "The test has not yet been implemented."
 
 	Exception TestFailed
         Console "A test check failed."

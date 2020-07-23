@@ -112,18 +112,6 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        [Fact]
-        public void TestContainerArchive() {
-            var inputDir = @"..\CommonData";
-            var output = @"CommonData.darch";
-            var outputDir = @"CommonData";
-
-
-            outputDir.DirectoryDelete();
-            Dispatch($"container archive {inputDir} /out {output}");
-            Dispatch($"container extract {output} {outputDir}");
-
-            }
 
         }
     }
