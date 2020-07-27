@@ -34,6 +34,13 @@
 			Default "false"
 			Brief "Report output in JSON format"
 
+
+	OptionSet LogOptions
+		Option Log "log" ExistingFile
+			Brief "Write transaction report to DARE Container Log."
+		Option Admin "admin" String
+			Brief "Identifier of administrator authorized to read the log."
+
 	OptionSet AccountOptions
 		Option AccountAddress "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
@@ -179,18 +186,23 @@
 			Include Reporting
 			Include DeviceProfileInfo
 			Include CryptoOptions
-
+		
 		Command MeshEscrow "escrow"
 			Return ResultEscrow
 			Brief "Create a set of key escrow shares"
 			Include CryptoOptions
 			Include MasterProfileInfo
 			Include Reporting
-			Parameter File "file" NewFile
 			Option Quorum "quorum" Integer
 				Default "2"
 			Option Shares "shares" Integer
 				Default "3"
+
+		Command MeshPurge "purge"
+			Return ResultMachine
+			Brief "Purge the Mesh recovery key from this device"
+			Include MasterProfileInfo
+			Include Reporting
 
 		Command MeshRecover "recover"
 			Return ResultMasterCreate
@@ -286,14 +298,13 @@
 			Include Reporting
 
 		Command AccountInvite "invite"
-			Brief "Create an invitation Uri"
+			Brief "Create a device invitation Uri"
 
 			Include AccountOptions
 			Include Reporting
 
 		Command AccountPublish "publish"
 			Brief "Create a new device profile and register the corresponding URI."
-
 			Include AccountOptions
 			Include Reporting
 
@@ -301,7 +312,6 @@
 			Brief "Connect by means of a connection uri"
 			Parameter Uri "uri" String
 				Brief "The device location URI"			
-			
 			Include AccountOptions
 			Include Reporting
 
@@ -781,7 +791,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command CalendarDump "dump"
+		Command CalendarDump "list"
 			Brief "List calendar entries"
 			Include AccountOptions
 			Include Reporting
@@ -816,7 +826,7 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command NetworkDump "dump"
+		Command NetworkDump "list"
 			Brief "List network entries"
 			Include AccountOptions
 			Include Reporting
@@ -956,23 +966,25 @@
 			Include Reporting
 			Parameter Input "in" ExistingFile
 				Brief "Encrypted File"
-			Option SymmetrictKey "key" String
+			Option SymmetricKey "key" String
 				Brief "Specifies the value of the master key"	
 
 		Command DareEARL "earl"
 			Brief "Create an Encrypted Authenticated Resource Locator (EARL)"
 			Return ResultFile
 			Parameter Input "in" ExistingFile
-				Brief "File or directory to encrypt"
-			Option Output "out" ExistingFile
+				Brief "File to encode"
+			Parameter Domain "domain" String
+				Brief "Domain of the EARL service."	
+			Option Directory "dir" ExistingFile
 				Brief "Directory to write encrypted output."
-			Option Log "log" ExistingFile
-				Brief "Write transaction report to DARE Container Log."
-			Option New "new" ExistingFile
+				Default ".earl"
+
+			
+			Option New "new" Flag
 				Brief "Only convert file if not listed in DARE Container Log."
-			Option Subdirectories "sub" Flag
-				Brief "Process subdirectories recursively."
 			Include CryptoOptions
+			Include LogOptions
 			Include AccountOptions
 			Include Reporting
 

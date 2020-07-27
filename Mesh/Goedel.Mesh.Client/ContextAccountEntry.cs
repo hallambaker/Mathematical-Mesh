@@ -535,7 +535,8 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="signingKey">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public CryptoKey TryFindKeySignature(string signingKey) => throw new NYI();
+        public virtual CryptoKey TryFindKeySignature(string signingKey) => 
+                    KeyCollection.TryFindKeySignature(signingKey);
 
         /// <summary>
         /// Add a keypair to the collection.

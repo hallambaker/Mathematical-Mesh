@@ -32,3 +32,9 @@
 			Console "The file could not be found"
 			Description
 				|The directory could not be found
+
+		Exception CommandNotImplemented
+			Console "The command [{0}] is not yet implemented"
+
+		Exception OptionNotImplemented
+			Console "The option [{1}] on command [{0}] is not yet implemented"

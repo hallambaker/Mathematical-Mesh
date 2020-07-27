@@ -8,15 +8,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileSSHPrivate() {
-            var accountA = "alice@example.com";
-
-            var device1 = GetTestCLI("Device1");
-            var device2 = GetTestCLI("Device2");
-            var device3 = GetTestCLI("Device3");
-
-            device1.Dispatch($"profile master {accountA} /new ");
-
-            device1.Connect(device2, accountA);
+            CreateAlice(out var device1, out var device2);
 
             device1.Dispatch($"profile ssh create");
             device1.Dispatch($"profile ssh private");
@@ -27,7 +19,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"profile ssh public");
             device2.Dispatch($"profile ssh show auth");
 
-            device1.Connect(device3, accountA);
+            var device3 = GetConnectedCLI(device1, "Device3", AccountA);
 
             device3.Dispatch($"profile ssh private");
             device3.Dispatch($"profile ssh public");
@@ -40,23 +32,16 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileSSHPublic() {
-            var accountA = "alice@example.com";
             var knownHosts = "known_hosts";
 
-            var device1 = GetTestCLI("Device1");
-            var device2 = GetTestCLI("Device2");
-            var device3 = GetTestCLI("Device3");
-
-            device1.Dispatch($"profile master {accountA} /new ");
-
-            device1.Connect(device2, accountA);
+            CreateAlice(out var device1, out var device2);
 
             device1.Dispatch($"profile ssh add known {knownHosts}");
 
             device1.Dispatch($"profile ssh show known");
             device2.Dispatch($"profile ssh show known");
 
-            device1.Connect(device3, accountA);
+            var device3 = GetConnectedCLI(device1, "Device3", AccountA);
 
             device1.Dispatch($"profile ssh show known");
             device2.Dispatch($"profile ssh show known");

@@ -2,6 +2,7 @@ setlocal
 cd %~dp0
 set Root=../../..
 set DocSource=../Word
+set DocSource=O:\Documents\Mesh
 
 echo Generate schemas etc.
 cd Generated 
@@ -48,7 +49,6 @@ rfctool %DocSource%\hallambaker-jsonbcd.docx /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-developer.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-mesh-platform.docx  /auto /cache=bib.xml
 rfctool %DocSource%\hallambaker-web-service-discovery.docx /auto /cache=bib.xml
-
 
 exit /b 0
 

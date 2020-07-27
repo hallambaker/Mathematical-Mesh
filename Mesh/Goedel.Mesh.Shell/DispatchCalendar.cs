@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 
 using System.Collections.Generic;
 
@@ -69,6 +70,7 @@ namespace Goedel.Mesh.Shell {
 
             using var catalog = contextAccount.GetCatalogCalendar();
             var result = catalog.Locate(identifier);
+            result.AssertNotNull(EntryNotFound.Throw, identifier);
             catalog.Delete(result);
 
             return new ResultEntry() {

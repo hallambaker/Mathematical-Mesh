@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+using Goedel.Cryptography.Dare;
+using Goedel.Utilities;
+
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
@@ -39,6 +42,7 @@ namespace Goedel.Mesh.Shell {
             var key = CatalogedNetwork.PrimaryKey(null, identifier);
             using var catalog = contextAccount.GetCatalogNetwork();
             var result = catalog.Locate(key);
+            result.AssertNotNull(EntryNotFound.Throw, key);
             catalog.Delete(result);
 
             return new ResultEntry() {

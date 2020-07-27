@@ -8,9 +8,14 @@
 contact    Manage contact catalogs connected to an account
     add   Add contact entry from file
     delete   Delete contact entry
+    dynamic   Create dynamic contact retrieval URI
+    exchange   Request contact from URI presenting own contact
+    export   Export contact entry from catalog
+    fetch   Request contact from URI without presenting own contact
     get   Lookup contact entry
     list   List contact entries
-    self   Add contact entry for self
+    self   Update contact entry for self
+    static   Create static contact retrieval URI
 <over>
 </div>
 ~~~~
@@ -22,8 +27,7 @@ contact    Manage contact catalogs connected to an account
 <div="helptext">
 <over>
 add   Add contact entry from file
-    /email   <Unspecified>
-    /file   <Unspecified>
+       <Unspecified>
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -31,7 +35,26 @@ add   Add contact entry from file
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\email'.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "Could not find file 'C:\\Users\\hallam\\Test\\WorkingDirectory\\email'."}}
+</div>
+~~~~
+
 
 # contact delete
 
@@ -47,7 +70,26 @@ delete   Delete contact entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The entry could not be found in the store."}}
+</div>
+~~~~
+
 
 # contact get
 
@@ -64,7 +106,25 @@ get   Lookup contact entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com
+<rsp>Empty
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com /json
+<rsp>{
+  "ResultEntry": {
+    "Success": false}}
+</div>
+~~~~
+
 
 # contact list
 
@@ -79,5 +139,23 @@ list   List contact entries
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultDump:
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact list /json
+<rsp>{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": []}}
+</div>
+~~~~
+
 

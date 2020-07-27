@@ -8,26 +8,52 @@ a entries describing how to access particular networks.
 
 The `network add` command adds a network entry to a catalog:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1
+<rsp>{Username}@{Service} = [{Password}]<cmd>Alice> network add NetworkEntry2.json NetID2
+<rsp>{Username}@{Service} = [{Password}]</div>
+~~~~
 
 
 ## Finding networks
 
 The `network get`  command retreives a network entry by label:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2
+<rsp>Empty
+</div>
+~~~~
 
 ## Deleting networks
 
 Network entries may be deleted using the  `network delete` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2
+<rsp>ERROR - The entry could not be found in the store.
+<cmd>Alice> network list
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
+~~~~
 
 ## Listing networks
 
 A complete list of networks is obtained using the  `network list` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network list
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
+~~~~
 
 ## Adding devices
 

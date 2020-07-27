@@ -31,7 +31,30 @@ add   Add password entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password
+<rsp>alice1@ftp.example.com = [password]
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> password add ftp.example.com alice1 password /json
+<rsp>{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedCredential": {
+        "Service": "ftp.example.com",
+        "Username": "alice1",
+        "Password": "password"}}}}
+</div>
+~~~~
+
 
 # password get
 
@@ -47,7 +70,24 @@ get   Lookup password entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> password delete www.example.com
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> password delete www.example.com /json
+<rsp>{
+  "Result": {
+    "Success": true}}
+</div>
+~~~~
+
 
 # password delete
 
@@ -63,7 +103,25 @@ delete   Delete password entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # password list
 
@@ -79,6 +137,37 @@ list   List password entries
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> password list
+<rsp>CatalogedCredential
+
+CatalogedCredential
+
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultDump:
+
+~~~~
+<div="terminal">
+<cmd>Alice> password list /json
+<rsp>{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedCredential": {
+          "Service": "ftp.example.com",
+          "Username": "alice1",
+          "Password": "password"}},
+      {
+        "CatalogedCredential": {
+          "Service": "www.example.com",
+          "Username": "alice@example.com",
+          "Password": "newpassword"}}]}}
+</div>
+~~~~
+
 
 

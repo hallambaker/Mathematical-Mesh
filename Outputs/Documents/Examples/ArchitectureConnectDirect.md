@@ -4,8 +4,9 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Witness value = M4J5-YPNB-2O3U-35FZ-PC6G-SP6R-4LBD
-   Personal Mesh = MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW
+<rsp>   Device UDF = MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+   Witness value = XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+   Personal Mesh = MBU4-C4AJ-TGTO-AETP-LQDC-R3L6-VMX7
 </div>
 ~~~~
 
@@ -17,8 +18,22 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp><cmd>Alice> device accept NCGP-WWTX-4HDR-YR2I-N5DO-TYBJ-C4X7
-<rsp></div>
+<rsp>MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Connection Request::
+        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        To:  From: 
+        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Connection Request::
+        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        To:  From: 
+        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+<cmd>Alice> device accept CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+<rsp>Result: Accept
+Added device: MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+</div>
 ~~~~
 
 The new device will now synchronize automatically in response to any Mesh commands. For example, 
@@ -28,6 +43,6 @@ listing the password catalog:
 ~~~~
 <div="terminal">
 <cmd>Alice2> password list
-<rsp>ERROR - Object reference not set to an instance of an object.
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~

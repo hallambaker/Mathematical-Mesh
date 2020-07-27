@@ -11,26 +11,56 @@ implemented and a placeholder format is implemented instead.
 
 The `password add` command adds a calendar entry to a catalog:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> calendar add CalendarEntry1.json CalID1
+<rsp>{
+  "Title": "CalendarEntry1.json",
+  "Key": "NCGI-VTFE-QH72-OAR5-ZYFC-7GZ5-ADVS"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
+<rsp>{
+  "Title": "CalendarEntry2.json",
+  "Key": "NC36-RU25-CG52-33XG-BPY2-4PLT-57GQ"}</div>
+~~~~
 
 
 ## Finding calendars
 
 The `password get`  command retreives a calendar entry by label:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> calendar get CalID1
+<rsp>Empty
+</div>
+~~~~
 
 ## Deleting calendars
 
 Calendar entries may be deleted using the  `calendar delete` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> calendar delete CalID1
+<rsp>ERROR - The entry could not be found in the store.
+<cmd>Alice> calendar list
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
+~~~~
 
 ## Listing calendars
 
 A complete list of calendars is obtained using the  `calendar list` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> calendar list
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
+~~~~
 
 ## Adding devices
 

@@ -18,10 +18,7 @@ namespace Goedel.Mesh.Shell {
             var outputFile = Path.ChangeExtension(inputFile, ".dare");
             var contentType = options.ContentType.Value ?? MimeMapping.GetMimeMapping(inputFile) ?? "";
 
-            var keyLocate = GetKeyCollection (options);
-            // we are getting the wrong one here. we want the encryption recipients from the contacts file.
-
-
+            var keyLocate = GetKeyCollection(options);
 
             var cryptoParameters = GetCryptoParameters(keyLocate, options);
 
@@ -64,7 +61,9 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareVerify(DareVerify options) {
             var inputFile = options.Input.Value;
-            var result = DareEnvelope.Verify(inputFile);
+            var keyLocate = GetKeyCollection(options);
+
+            var result = DareEnvelope.Verify(inputFile, keyLocate);
 
             return new ResultFile() {
                 Filename = inputFile,
@@ -73,20 +72,33 @@ namespace Goedel.Mesh.Shell {
             }
 
         /// <summary>
-        /// Dispatch method
+        /// Dispatch method for the 
         /// </summary>
         /// <param name="options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DareEARL(DareEARL options) {
             var inputFile = options.Input.Value;
-            throw new NYI();
-            //var result = DareEnvelope.Verify(inputFile);
+            var outputDirectory = options.Directory.Value;
+            var domain = options.Domain.Value;
+            var log = options.Log.Value;
+            var recipient = options.Admin.Value;
 
-            //return new ResultFile() {
-            //    Filename = inputFile,
-            //    Verified = result
-            //    };
+            using var keyLocate = GetContextAccount(options);
+
+            var result = EARL.Encode(inputFile, out var outputFile, domain,
+                outputDirectory, log, recipient);
+
+
+            return new ResultFileEARL() {
+                Source = inputFile,
+                Created = outputFile,
+                URI = result
+                };
             }
+
+
+
+
 
         }
     }

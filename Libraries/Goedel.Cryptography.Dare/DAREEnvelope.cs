@@ -590,6 +590,8 @@ contentMeta, cloaked, dataSequences, chunk);
                 IKeyLocate keyCollection = null) {
             using var inputStream = inputFile.OpenFileRead();
             return Verify(inputStream, keyCollection);
+
+
             }
 
         /// <summary>
@@ -600,6 +602,10 @@ contentMeta, cloaked, dataSequences, chunk);
         public static bool Verify(
                 Stream inputStream,
                 IKeyLocate keyCollection = null) {
+
+            // Hack: This routine should return a result structure showing how the data is signed and by whom
+            //[i.e. include the algorithm, digest method, scope, etc.
+
 
             //keyCollection ??= KeyCollection.Default;
 
@@ -615,7 +621,6 @@ contentMeta, cloaked, dataSequences, chunk);
 
             return true; // Hack: perform the actual check here and return a boolean.
             }
-
 
         #endregion
 

@@ -450,6 +450,10 @@ namespace ExampleGenerator {
         public List<ExampleResult> DareEarl;
         public List<ExampleResult> DareEARLLog;
         public List<ExampleResult> DareEARLLogNew;
+
+
+        public string EARLDomain => "example.net";
+
         public void DoCommandsDare() {
 
             DarePlaintext = testCLIAlice1.Example($"dare encode {TestFile1}");
@@ -468,7 +472,7 @@ namespace ExampleGenerator {
             DareDecodeSymmetric = testCLIAlice1.Example($"dare decode {TestFile1}.symmetric.dare /encrypt={Secret1}");
             DareDecodePrivate = testCLIAlice1.Example($"dare decode {TestFile1}.mesh.dare");
 
-            DareEarl = testCLIAlice1.Example($"dare earl {TestFile1}");
+            DareEarl = testCLIAlice1.Example($"dare earl {TestFile1} {EARLDomain}");
             DareEARLLog = testCLIAlice1.Example($"dare container create {DareLogEarl} /encrypt={AliceService1}",
                                                     $"dare earl {TestFile1} /log={DareLogEarl}");
             DareEARLLogNew = testCLIAlice1.Example($"dare earl {TestFile1} /new={DareLogEarl}");

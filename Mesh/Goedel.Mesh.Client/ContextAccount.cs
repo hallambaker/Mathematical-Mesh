@@ -388,6 +388,24 @@ namespace Goedel.Mesh.Client {
             return GetCatalogContact().GetByAccountEncrypt(keyId);
             }
 
+
+        /// <summary>
+        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="keyId">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public override CryptoKey TryFindKeySignature(string keyId) {
+            if (keyId == AccountAddress) {
+                return KeySignature;
+                }
+            if (base.TryFindKeySignature(keyId).NotNull (out var key)) {
+                return key;
+                }
+            return null;
+            }
+
+
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>

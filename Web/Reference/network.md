@@ -31,7 +31,28 @@ add   Add calendar entry from file
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1
+<rsp>{Username}@{Service} = [{Password}]</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network add NetworkEntry1.json NetID1 /json
+<rsp>{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedNetwork": {
+        "Service": "NetworkEntry1.json",
+        "Password": "NetID1"}}}}
+</div>
+~~~~
+
 
 # network delete
 
@@ -47,7 +68,26 @@ delete   Delete calendar entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network delete NetID2 /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The entry could not be found in the store."}}
+</div>
+~~~~
+
 
 # network get
 
@@ -63,7 +103,25 @@ get   Lookup calendar entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2
+<rsp>Empty
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network get NetID2 /json
+<rsp>{
+  "ResultEntry": {
+    "Success": false}}
+</div>
+~~~~
+
 
 # network dump
 
@@ -78,5 +136,24 @@ dump   List network entries
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> network list
+<rsp>ERROR - The command System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> network list /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The command System.Object[] is not known."}}
+</div>
+~~~~
+
 

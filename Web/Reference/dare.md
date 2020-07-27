@@ -69,7 +69,26 @@ file name is the input file name with the additional extension `.dare`.
 
 
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "Unspecified error"}}
+</div>
+~~~~
+
 
 
 # dare decode
@@ -98,7 +117,26 @@ The `/out` option may be used to specify the output file name. Otherwise the out
 file name is the input file name stripped of the extension `.dare` if present or
 with the extension `.undare` otherwise.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The option System.Object[] is not known."}}
+</div>
+~~~~
+
 
 # dare verify
 
@@ -122,7 +160,26 @@ currently active key collection and reports success or failure.
 The active key collection may be overriden using the `/mesh` option.
 
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The option System.Object[] is not known."}}
+</div>
+~~~~
+
 
 # dare earl
 
@@ -130,12 +187,13 @@ The active key collection may be overriden using the `/mesh` option.
 <div="helptext">
 <over>
 earl   Create an Encrypted Authenticated Resource Locator (EARL)
-       File or directory to encrypt
-    /out   Directory to write encrypted output.
-    /log   Write transaction report to DARE Container Log.
+       File to encode
+       Domain of the EARL service.
+    /dir   Directory to write encrypted output.
     /new   Only convert file if not listed in DARE Container Log.
-    /sub   Process subdirectories recursively.
     /alg   List of algorithm specifiers
+    /log   Write transaction report to DARE Container Log.
+    /admin   Identifier of administrator authorized to read the log.
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -163,5 +221,24 @@ the container using the active key collection.
 
 The active key collection may be overriden using the `/mesh` option.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt example.net
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt example.net /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "Unspecified error"}}
+</div>
+~~~~
+
 

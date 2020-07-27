@@ -6,8 +6,10 @@
 <cmd>Alice> password add www.example.com alice@example.com newpassword
 <rsp>alice@example.com@www.example.com = [newpassword]
 <cmd>Alice> password list
-<rsp>alice1@ftp.example.com = [password]
-alice@example.com@www.example.com = [newpassword]
+<rsp>CatalogedCredential
+
+CatalogedCredential
+
 <cmd>Alice> password add ftp.example.com alice1 newpassword
 <rsp>alice1@ftp.example.com = [newpassword]
 <cmd>Alice> password get ftp.example.com

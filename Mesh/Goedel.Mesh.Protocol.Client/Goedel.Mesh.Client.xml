@@ -590,6 +590,14 @@
             <param name="keyId">The identifier to resolve.</param>
             <returns>The identifier.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeySignature(System.String)">
+            <summary>
+            Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="keyId">The identifier to resolve.</param>
+            <returns>The identifier.</returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyDecryption(System.String)">
             <summary>
             Attempt to obtain a recipient with identifier <paramref name="keyId"/>.

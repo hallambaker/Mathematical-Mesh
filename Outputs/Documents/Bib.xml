@@ -636,3 +636,64 @@
 <date year='2007'/>
 </front>
 </reference>
+<!-- draft-hallambaker-mesh-architecture Added Mon, 27 Jul 2020 10:05:13 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-architecture.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-architecture'>
+<front>
+<title>Mathematical Mesh 3.0 Part I: Architecture Guide</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='March' day='9' year='2020' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that makes computers easier to use by making them more secure.  The Mesh provides a set of protocol and cryptographic building blocks that enable encrypted data stored in the cloud to be accessed, managed and exchanged between users with the same or better ease of use than traditional approaches which leave the data vulnerable to attack.  This document provides an overview of the Mesh data structures, protocols and examples of its use.  [Note to Readers]  Discussion of this draft takes place on the MATHMESH mailing list (mathmesh@ietf.org), which is archived at https://mailarchive.ietf.org/arch/search/?email_list=mathmesh.  This document is also available online at http://mathmesh.com/Documents/draft-hallambaker-mesh- architecture.html.</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-architecture-13' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-architecture-13.txt' />
+</reference>
+
+<!-- draft-hallambaker-mesh-developer Added Mon, 27 Jul 2020 10:05:13 GMT -->
+<!-- Source: https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.hallambaker-mesh-developer.xml -->
+
+
+<reference anchor='I-D.hallambaker-mesh-developer'>
+<front>
+<title>Mathematical Mesh: Reference Implementation</title>
+
+<author initials='P' surname='Hallam-Baker' fullname='Phillip Hallam-Baker'>
+    <organization />
+</author>
+
+<date month='October' day='23' year='2019' />
+
+<abstract><t>The Mathematical Mesh 'The Mesh' is an end-to-end secure infrastructure that facilitates the exchange of configuration and credential data between multiple user devices.  This document describes the Mesh reference code and how to install, run and make use of it in applications.  It does not form a part of the Mesh specifications and is not normative.  This document is also available online at http://mathmesh.com/Documents/draft-hallambaker-mesh-developer.html [1] .</t></abstract>
+
+</front>
+
+<seriesInfo name='Internet-Draft' value='draft-hallambaker-mesh-developer-09' />
+<format type='TXT'
+        target='http://www.ietf.org/internet-drafts/draft-hallambaker-mesh-developer-09.txt' />
+</reference>
+
+<!-- RFC6892 Added Mon, 27 Jul 2020 10:05:13 GMT -->
+<!-- Source: http://xml.resource.org/public/rfc/bibxml/reference.RFC.6892.xml -->
+
+
+<reference  anchor='RFC6892' target='https://www.rfc-editor.org/info/rfc6892'>
+<front>
+<title>The 'describes' Link Relation Type</title>
+<author initials='E.' surname='Wilde' fullname='E. Wilde'><organization /></author>
+<date year='2013' month='March' />
+<abstract><t>This specification defines the 'describes' link relation type that allows resource representations to indicate that they are describing another resource.  In contexts where applications want to associate described resources and description resources, and want to build services based on these associations, the 'describes' link relation type provides the opposite direction of the 'describedby' link relation type, which already is a registered link relation type.</t></abstract>
+</front>
+<seriesInfo name='RFC' value='6892'/>
+<seriesInfo name='DOI' value='10.17487/RFC6892'/>
+</reference>
+

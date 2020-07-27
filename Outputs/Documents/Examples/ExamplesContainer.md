@@ -36,8 +36,8 @@ Frame 0
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "List"}}
+    "ContainerType": "List",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -68,8 +68,8 @@ Frame 0
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "Chain"}}
+    "ContainerType": "Chain",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -133,8 +133,8 @@ Frame 0
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "Merkle"}}
+    "ContainerType": "Merkle",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -247,7 +247,7 @@ The signing key parameters are:
 {
   "PrivateKeyECDH":{
     "crv":"Ed25519",
-    "Private":"P7ZGsbYzQAT47Ht6QgYlMnun7rbYhyuWZFnmmbvRMGI"}}
+    "Private":"tWS6EyvT3r1xTk3zzv-6Ek4v5FntEq_uB4cC9gn4_MY"}}
 ~~~~
 
 The container headers and trailers are:
@@ -259,8 +259,8 @@ Frame 0
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "Merkle"}}
+    "ContainerType": "Merkle",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -308,19 +308,20 @@ Frame 0
 ~~~~
 {
   "enc": "A256CBC",
-  "Salt": "fcHcotFCsQli4KDqrTAi5Q",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "mZK5G7GpPyUduKKAz4FcbA",
   "recipients": [{
-      "kid": "MAUC-ZTKR-N3D5-TZCI-K6IR-5Q5C-VKU2",
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
       "epk": {
         "PublicKeyECDH": {
           "crv": "Ed25519",
-          "Public": "PVUAJYFQFVgLzO49lkZCL7pe5qj-6s3T7MHx92AZ8ng"}},
-      "wmk": "3ExPlpasWGqw-_z7EGIJM8-rWZgNwt8_bd9inlE-ZWYB5Ef7sY68sQ"}],
+          "Public": "uxpnx3YY5dSJ4_OnEQbyuTDqvXGctJIVCIaNr4drKUk"}},
+      "wmk": "Dywrqtijd4UBfMoUb3ispnnE0jOKc-R2wpj2oVRCYq8kJl2awrKQGw"}],
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "List"}}
+    "ContainerType": "List",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -330,7 +331,8 @@ Frame 1
 ~~~~
 {
   "enc": "A256CBC",
-  "Salt": "lmMrQYd-BjfKfhskOHZliw",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "pfVBV9TTZNwDdLX_xrElXw",
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "Index": 1}}
@@ -343,7 +345,8 @@ Frame 2
 ~~~~
 {
   "enc": "A256CBC",
-  "Salt": "2zLKKKsoKkMeTB8lbPXH-g",
+  "kid": "EBQL-FP4Q-VW6U-OIXJ-T2XF-KVR2-IBEY",
+  "Salt": "GCBNz5X8M8QFKDANMYz77g",
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "Index": 2}}
@@ -357,19 +360,19 @@ Here are the container bytes. Note that the content is now encrypted and has exp
 JSON-B framing (5 bytes).
 
 ~~~~
-f5 01 e5 
-f1 01 ce 
+f5 02 14 
+f1 01 fd 
 f0 10 
 f0 00 
-e5 01 f5 
-f5 01 b0 
-f0 7b 
+14 02 f5 
+f5 01 df 
+f0 aa 
 f1 01 30 
-b0 01 f5 
-f5 01 b0 
-f0 7b 
+df 01 f5 
+f5 01 df 
+f0 aa 
 f1 01 30 
-b0 01 f5 
+df 01 f5 
 
 
 ~~~~
@@ -385,8 +388,8 @@ Frame 0
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "DataEncoding": "JSON",
-    "Index": 0,
-    "ContainerType": "List"}}
+    "ContainerType": "List",
+    "Index": 0}}
 
 [Empty trailer]
 ~~~~
@@ -396,14 +399,15 @@ Frame 1
 ~~~~
 {
   "enc": "A256CBC",
-  "Salt": "47z0KQHD-eDI7aUcPUsovA",
+  "kid": "EBQM-SELQ-Y22B-CDPW-FNCJ-FLB6-SGGH",
+  "Salt": "j14twaGXh43vUKNLMJVxgQ",
   "recipients": [{
-      "kid": "MAUC-ZTKR-N3D5-TZCI-K6IR-5Q5C-VKU2",
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
       "epk": {
         "PublicKeyECDH": {
           "crv": "Ed25519",
-          "Public": "T8Mkrlmefhjx1OBtoirTQfX60UYX6FPjEBFnA1ow6Yo"}},
-      "wmk": "92XvuomsbaG-TWHLe9xrwLzvJS7Dn5bkU5s5RqRSHbfnhNoN-0Cn0Q"}],
+          "Public": "eHz0G-dzVzdP1HPxdOgthCWVlJOJBmpMloaPZ6aq4BI"}},
+      "wmk": "2_WjXkSyyLNV0Y8vjE_Im32avwKoa4AT8qHGYsgYhMEY6nxTyz5kmQ"}],
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "Index": 1}}
@@ -416,14 +420,15 @@ Frame 2
 ~~~~
 {
   "enc": "A256CBC",
-  "Salt": "ALTV-PlxDTV28RkhJ4wt8g",
+  "kid": "EBQM-HQ6B-RN74-WCLJ-ZZRC-TKTJ-6D7H",
+  "Salt": "0syPXTpbZ9VICdazMCwyJg",
   "recipients": [{
-      "kid": "MAUC-ZTKR-N3D5-TZCI-K6IR-5Q5C-VKU2",
+      "kid": "MAZQ-4ASQ-M4GB-2AH6-JYBJ-G7ME-3GP3",
       "epk": {
         "PublicKeyECDH": {
           "crv": "Ed25519",
-          "Public": "0gk_OnQKjLCYET-jv0rW963PsNGkXMfULPDZZ4TXCMk"}},
-      "wmk": "vVxGQX3n0lJZ5Z1q1PYkax6tiJs8mWji0DYB4_Pj3_YNSKexnKCLnQ"}],
+          "Public": "OFPZyvMl2_uUJRjsYUmflnhReptUo3N0NnYviBAlZsg"}},
+      "wmk": "0zm3VI4ReK6uRaAnQlxxHRb2O16J_A2paV9SNwHEhq2ZNUQiLq8z9Q"}],
   "ContentMetaData": "e30",
   "ContainerInfo": {
     "Index": 2}}

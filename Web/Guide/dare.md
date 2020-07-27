@@ -8,7 +8,13 @@ DARE messages.
 
 The `dare encode` command is used to encode files as DARE Messages:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
 
@@ -17,19 +23,37 @@ suppressed using the `/nohash` flag.
 
 The data contents may be encrypted and authenticated under a specified symmetric key:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 Specifying a directory instead of a file causes all the files in the directory to be 
 encoded:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestDir1 /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 Files may also be signed using the user's Mesh signature key and/or encrypted for one
 or more recipients. In this example, Alice creates a message intended for Bob.
 Alice signs the message with her private signature key and encrypts it under Bob's
 public encryption key.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 
 ## Verifying a DARE message.
@@ -37,42 +61,90 @@ public encryption key.
 The `dare verify` command is used to verify the signature and 
 digest values on a DARE Message without decoding the message body:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.dare
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 The command to verify a signed message is identical:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.mesh.dare
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 Messages that are encrypted and authenticated under a specified symmetric key 
 may be verified at the plaintext level if the key is known or the ciphertext 
 level otherwise.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
 
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 ## Decoding a DARE message to a file.
 
 The `dare decode` command is used to decode and verify DARE Messages:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.dare
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 To decode a message encrypted under a symmetric key, we must specify the key:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - The option System.Object[] is not known.
+</div>
+~~~~
 
 If the message is encrypted under our private encryption key, the tool will locate
 the necessary decryption key(s) automatically:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode TestFile1.txt.mesh.dare
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 
 ## Creating an EARL.
 
 The `dare earl` command is used to create an EARL:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt example.net
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 A new secret is generated with the specified number of bits, this is then used
 to generate the key identifier and encrypt the input file to a file with the
@@ -81,10 +153,24 @@ name of the key identifier.
 The `/log` option causes the filename, encryption key and other details of
 the transaction to be written to a DARE Container Log.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare container create EarlLog.dlog /encrypt=alice@example.com
+<rsp>ERROR - The command System.Object[] is not known.
+<cmd>Alice> dare earl TestFile1.txt /log=EarlLog.dlog
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 The `/new` option causes the file to be encoded if and only if it has not 
 been processed already.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt /new=EarlLog.dlog
+<rsp>ERROR - Flag value not recognizedEarlLog.dlog
+</div>
+~~~~
 

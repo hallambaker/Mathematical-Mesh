@@ -3,6 +3,8 @@
 // naming to avoid collisions with user written code.
 #pragma warning disable IDE1006
 
+using System.IO;
+
 namespace Goedel.Command {
     /// <summary>Base class for Command line parser types. This could do with
     /// some decrufting to remove implementation artifacts.</summary>
@@ -239,6 +241,22 @@ namespace Goedel.Command {
                 }
             return null;
             }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public string DefaultFrom(string input) {
+            if (!ByDefault) {
+                return Value;
+                }
+            return Path.ChangeExtension(input, Value);
+
+            }
+
+
+
         }
 
     /// <summary>

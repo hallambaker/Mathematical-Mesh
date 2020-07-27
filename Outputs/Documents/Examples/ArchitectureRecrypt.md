@@ -6,21 +6,22 @@ her closest friends:
 <div="terminal">
 <cmd>Alice> group create groupw@example.com
 <rsp>{
+  "Key": "groupw@example.com",
   "Profile": {
     "KeyOfflineSignature": {
-      "UDF": "MCJ5-HMK2-SUBS-MOCG-J5IS-S2GT-IY7D",
+      "UDF": "MC7M-VCLK-M42M-AUE6-L5QT-2Z4G-QNDW",
       "PublicParameters": {
         "PublicKeyECDH": {
           "crv": "Ed448",
-          "Public": "bNfUzYfsJJthhioeCukz03BQ9wJWD-2i_0GoDznzdhqEu8eE9iVo
-  VAJDOF2gDnMxvkfnBsJk55GA"}}},
+          "Public": "sERuuOQfOYYFTGLhPbH1NOrF2RT1hXCIveZc1Zk9NfSg45csI30V
+  GEXAXZweDMfRfPFIkIEqovOA"}}},
     "KeyEncryption": {
-      "UDF": "MC25-LCSY-DUTQ-YBUL-XXCI-RLIZ-JHIL",
+      "UDF": "MAWX-U6RL-AMTZ-3TXN-KM7D-OOIC-YWFH",
       "PublicParameters": {
         "PublicKeyECDH": {
-          "crv": "Ed448",
-          "Public": "sx8WWkgH6k4u8RchFZitCRTvncvWje1xog-cyx4kka9kwmFwlDTi
-  t2JXFFalq-LJ-RQlu9eIuP-A"}}}}}</div>
+          "crv": "X448",
+          "Public": "SW9tWFmDEfLS4KzdhojHHK2bK8uQ7D9s3K5lpnKBs8VebgKmsAr1
+  orx4zpZxB-NaQCyZHUCMSpGA"}}}}}</div>
 ~~~~
 
 Bob encrypts a test file but he can't decrypt it because he isn't in the group:
@@ -29,7 +30,7 @@ Bob encrypts a test file but he can't decrypt it because he isn't in the group:
 ~~~~
 <div="terminal">
 <cmd>Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupw@example.com
-<rsp>ERROR - The command  is not known.
+<rsp>ERROR - The command System.Object[] is not known.
 <cmd>Bob> dare decode  TestFile1-group.dare
 <rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
 </div>
@@ -63,7 +64,7 @@ Removing Bob from the group immediately withdraws his access.
 ~~~~
 <div="terminal">
 <cmd>Alice> group delete groupw@example.com bob@example.com
-<rsp>ERROR - The feature has not been implemented
+<rsp>ERROR - The entry could not be found in the store.
 </div>
 ~~~~
 

@@ -8,6 +8,18 @@ using System;
 
 namespace Scratchpad {
 
+    // Some unit tests are passing because the following are not being checked
+
+    // Encryption of catalogs (especially password!)
+    // Presence of signatures
+    // Who signed
+    // Validity of signatures
+
+    // Profile path math.
+
+
+
+
 
     partial class Program {
         static void Main() {
@@ -22,32 +34,26 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
             // ** Fast access to simple tests for regression fixing.
-            TestService.Test().MeshCatalogAccount();
+            //TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestMessageContactInPerson();
 
 
             // ***** Currently failing tests
 
-            // **Tests needing (mostly) a bit of redesign.
-
-
-            //ShellTests.Test().TestProfileContact();
 
             // ** Just need some testing on the PIN expiry/reuse stuff.
+
+            //****The PIN is not being marked as used.
             //ShellTests.Test().TestProfileConnectPinReused();
+
+            //****This is failing because the PIN code is not type Encryption or EncryptSignature
+            // This is required for EARLs.
             //ShellTests.Test().TestProfileConnectDynamicQR();
 
-            // ** The catalog/archive interfaces
-            //ShellTests.Test().TestContainerCatalogBase();
-            //ShellTests.Test().TestContainerCatalogEncrypt();
 
-            // ** The whole Escrow thing
-            //ShellTests.Test().TestEscrowAccountService();
-            //ShellTests.Test().TestEscrowMeshOnly();
 
-            // ** The signature interface
-            //ShellTests.Test().TestFileSign();
-            //ShellTests.Test().TestFileSignEncrypt();
+            //ShellTests.Test().TestAccountDelete();
+
 
 
             // **** Needs a lot of design work
@@ -62,6 +68,11 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectAuth();
             //ShellTests.Test().TestProfileConnectAuthAdmin();
             //ShellTests.Test().TestProfileConnectAuthAll();
+
+            // ** The whole Escrow thing
+            //ShellTests.Test().TestEscrowAccountService();
+            //ShellTests.Test().TestEscrowMeshOnly();
+
 
 
 
@@ -89,7 +100,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectPinExpired();
             //ShellTests.Test().TestProfileConnectPinInvalid();
             //ShellTests.Test().TestMessageContactBusinessCardExchange();
-
+            //ShellTests.Test().TestProfileContact();
             }
 
 

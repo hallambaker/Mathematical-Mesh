@@ -6,7 +6,7 @@ To begin the process we generate a new random key and combine it with the servic
 to create an EARL:
 
 ~~~~
-udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
+udf://example.com/ECWP-WH46-6W3Q-53IM-VPVO-B5DJ-GLZG-TB
 ~~~~
 
 Next a device profile is created and preregistered on with the Mesh Service that will
@@ -17,8 +17,8 @@ be performed offline in bulk.
 
 ~~~~
 <div="terminal">
-<cmd>Alice4> device pre devices@example.com /key=udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice4> device pre devices@example.com /key=udf://example.com/ECWP-WH46-6W3Q-53IM-VPVO-B5DJ-GLZG-TB
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 
@@ -30,7 +30,7 @@ other times as agreed with the Mesh Service Provider:
 ~~~~
 <div="terminal">
 <cmd>Alice4> account sync
-<rsp>ERROR - Object reference not set to an instance of an object.
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~
 
@@ -43,8 +43,8 @@ complete the process:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> device earl udf://example.com/ECQ4-KEU2-LRMG-UUUP-FGJ2-SZTP-WF4V-XE
-<rsp>ERROR - Object reference not set to an instance of an object.
+<cmd>Alice> device earl udf://example.com/ECWP-WH46-6W3Q-53IM-VPVO-B5DJ-GLZG-TB
+<rsp>ERROR - The command System.Object[] is not known.
 </div>
 ~~~~
 
@@ -55,6 +55,6 @@ Connection Assertion:
 ~~~~
 <div="terminal">
 <cmd>Alice4> account sync
-<rsp>ERROR - Object reference not set to an instance of an object.
+<rsp>ERROR - Unspecified error
 </div>
 ~~~~

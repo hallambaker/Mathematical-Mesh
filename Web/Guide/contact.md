@@ -16,7 +16,13 @@ interfaces rather than a tool designed for daily use.
 The `contact add` command adds a contact entry to a catalog from
 a file. 
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact add email carol@example.com
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\email'.
+</div>
+~~~~
 
 The file carol-contact.json contains Carol's contact information in
 JSON format:
@@ -28,31 +34,60 @@ JSON format:
 The `/self` option is used to mark the contact as being the user's own contact
 details:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact self email alice@example.com
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Contacts may also be added by accepting contact request messages using the 
 `message accept` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
+~~~~
 
 ## Finding contacts
 
 The `contact get` command retreives a contact by the contact's 
 email address or label:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact get carol@example.com
+<rsp>Empty
+</div>
+~~~~
 
 ## Listing contacts
 
 A complete list of contacts is obtained using the  `contact list` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp></div>
+~~~~
 
 ## Deleting contacts
 
 Contact entries may be deleted using the  `contact delete` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact delete carol@example.com
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
 
 
 

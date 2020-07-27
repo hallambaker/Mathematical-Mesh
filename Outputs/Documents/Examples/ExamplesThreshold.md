@@ -135,6 +135,8 @@ V: 54753162898272906571014663105068504862933211451412536233939310264761134803271
 Encoded Public
   F7 2E 68 4B  64 DC 2E 24  61 B9 28 14  2E 1D D9 41
   6A 29 4F A2  5F F1 AF 07  24 6C 9B 8A  9E C0 E5 58
+  E6 8C ED BE  DD C3 34 11  59 B6 DC 64  03 1A 1E BC
+  D4 B7 88 21  60 DA 8A 15
 ~~~~
 
 Note that in this case, the unsigned representation of the key is used as
@@ -431,6 +433,8 @@ X448KeyA (X448)
     Encoded Public
   06 FE 38 7A  1B 1E 99 D4  89 00 07 B9  88 6F 97 01
   BD 88 BB 9D  A9 31 30 CC  47 E6 2F 9C  44 35 AF A4
+  6C B8 3B EE  89 C0 99 6B  E4 7C 75 33  94 85 BC B8
+  54 36 AF D9  C0 17 1C 13
 ~~~~
 
 To create n key shares we first create n-1 key pairs in the normal fashion. Since 
@@ -484,6 +488,8 @@ X448KeyE (X448)
     Encoded Public
   EB 34 D3 9E  92 3E 82 CC  E6 EC 77 9F  3D 11 83 3C
   B6 5B 5C 04  E8 1F D6 E1  07 C0 62 FE  F8 F6 34 BB
+  D7 3D EC 20  0B 70 82 A6  38 FC 23 24  AD 98 86 35
+  4C 99 AD 4D  0E C4 95 93
 ~~~~
 
 The key agreement result is given by multiplying the public key of the encryption 
@@ -499,6 +505,8 @@ The u-coordinate is encoded in the usual fashion (i.e. without specifying the si
 
   19 ED 3F 7A  63 6D AA 9A  3E 05 29 DE  CC BA C7 F1
   E0 A7 FA C0  C4 70 E0 E1  A5 FC DA 0A  B0 52 EC 8A
+  36 9B 35 6D  BE FE 0A 95  22 A3 1F 8A  C0 89 0F 19
+  9A 01 8C CB  17 84 FF 91  00
 ~~~~
 
 The first decryption contribution is generated from the secret scalar of the first key
@@ -527,6 +535,8 @@ v coordinate:
 
   EB 34 D3 9E  92 3E 82 CC  E6 EC 77 9F  3D 11 83 3C
   B6 5B 5C 04  E8 1F D6 E1  07 C0 62 FE  F8 F6 34 BB
+  D7 3D EC 20  0B 70 82 A6  38 FC 23 24  AD 98 86 35
+  4C 99 AD 4D  0E C4 95 93
 ~~~~
 
 The second decryption contribution is generated from the secret scalar of the second key
@@ -541,6 +551,8 @@ v 330423749590904913599918273731429932445442646219893531795513631728240167193898
 
   EB 34 D3 9E  92 3E 82 CC  E6 EC 77 9F  3D 11 83 3C
   B6 5B 5C 04  E8 1F D6 E1  07 C0 62 FE  F8 F6 34 BB
+  D7 3D EC 20  0B 70 82 A6  38 FC 23 24  AD 98 86 35
+  4C 99 AD 4D  0E C4 95 93
 ~~~~
 
 To obtain the key agreement value, we add the two decryption contributions:

@@ -55,7 +55,9 @@ MAC(&<key>, &<Content-ID> + ‘:’ + H(&<Data>)) =
 
 The prefixed Binary Data Sequence is thus
   00 4C C3 7F  D3 F9 9E 52  CF 07 90 74  53 84 65 95
-  BC 1A
+  BC 1A 2B A5  D1 68 9D 05  6D 06 C5 CA  BF 17 CB E0
+  49 95 39 57  08 79 C4 E5  49 D3 3A 59  A3 32 05 45
+  A6 30 26 25  AE 8A F4 47  C6 1F B5 33  7F AD 69 A6
 ~~~~
 
 The 125 bit fingerprint value is ABGM-G76T-7GPF-FTYH-SB2F-HBDF-SW6B

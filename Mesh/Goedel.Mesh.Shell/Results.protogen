@@ -29,6 +29,13 @@
 		Integer			TotalBytes
 		Boolean			Verified
 
+	Structure ResultFileEARL
+		Inherits		Result
+		String			Source
+		String			Created
+		String			URI
+
+
 
 	Structure ResultDump
 		Inherits		Result

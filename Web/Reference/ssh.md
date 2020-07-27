@@ -30,7 +30,25 @@ create   Generate a new SSH public keypair for the current machine and add to th
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh private
 
@@ -48,7 +66,25 @@ private   Extract the private key for this device
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh public
 
@@ -65,7 +101,25 @@ public   Extract the public key for this device
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh host
 
@@ -81,7 +135,25 @@ host   Add one or more hosts to the known_hosts file
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh host
 
@@ -98,7 +170,25 @@ host   Add one or more hosts to the known_hosts file
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh client
 
@@ -115,7 +205,25 @@ client   Add one or more keys to the authorized_keys file
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh host
 
@@ -131,7 +239,25 @@ host   List the known SSH sites (aka known hosts)
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 # ssh client
 
@@ -147,6 +273,24 @@ client   List the authorized device keys (aka authorized_keys)
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list
+<rsp></div>
+~~~~
+
+Specifying the /json option returns a result of type ResultMachine:
+
+~~~~
+<div="terminal">
+<cmd>Alice> mesh list /json
+<rsp>{
+  "ResultMachine": {
+    "Success": true,
+    "CatalogedMachines": []}}
+</div>
+~~~~
+
 
 

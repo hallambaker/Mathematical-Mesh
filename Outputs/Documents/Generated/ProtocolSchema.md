@@ -199,7 +199,7 @@ size of payload that MAY be sent in an initial Post request.
 <dt>Response:  CreateResponse
 </dl>
 
-Request creation of a new service account.
+Request creation of a new service account or group.
 
 Attempt 
 
@@ -212,7 +212,7 @@ Request binding of an account to a service address.
 </dl>
 
 <dl>
-<dt>ServiceID: String (Optional)
+<dt>AccountAddress: String (Optional)
 <dd>The service account to bind to.
 <dt>SignedProfileMesh: DareEnvelope (Optional)
 <dd>The persistent profile that will be used to validate changes to the
@@ -280,7 +280,7 @@ Reports the success or failure of a Delete transaction.
 </dl>
 
 <dl>
-<dt>ServiceID: String (Optional)
+<dt>AccountAddress: String (Optional)
 <dt>ResponseID: String (Optional)
 </dl>
 ###Message: CompleteResponse
@@ -430,6 +430,40 @@ values for an entry are 'Accept', 'Reject' and 'Conflict'.
 that apply to the redacted entries as a group. Thus the total payloads
 of all the messages must not exceed the specified value.	
 </dl>
+##Transaction: Publish
+
+<dl>
+<dt>Request:  PublishRequest
+<dt>Response:  PublishResponse
+</dl>
+
+Request to post to a spool from an external party. The request and response
+messages are extensions of the corresponding messages for the Upload transaction.
+It is expected that additional fields will be added as the need arises.
+
+###Message: PublishRequest
+
+<dl>
+<dt>Inherits:  MeshRequest
+</dl>
+
+
+
+<dl>
+<dt>Publications: CatalogedPublication [0..Many]
+<dd>The entries to be published. These may contain the full data
+or just the identifier, length and fingerprint.
+</dl>
+###Message: PublishResponse
+
+<dl>
+<dt>Inherits:  MeshResponse
+</dl>
+
+
+
+[No fields]
+
 ##Transaction: Post
 
 <dl>
@@ -504,3 +538,179 @@ Request information necessary to begin making a connection request.
 <dt>EnvelopedAccountAssertion: DareEnvelope (Optional)
 <dd>The current account assertion
 </dl>
+##Transaction: Claim
+
+<dl>
+<dt>Request:  ClaimRequest
+<dt>Response:  ClaimResponse
+</dl>
+
+Claim a publication
+
+###Message: ClaimRequest
+
+<dl>
+<dt>Inherits:  MeshRequest
+</dl>
+
+<dl>
+<dt>EnvelopedMessageClaim: DareEnvelope (Optional)
+<dd>The claim message
+</dl>
+###Message: ClaimResponse
+
+<dl>
+<dt>Inherits:  MeshResponse
+</dl>
+
+<dl>
+<dt>CatalogedPublication: CatalogedPublication (Optional)
+<dd>The encrypted device profile
+</dl>
+##Transaction: PollClaim
+
+<dl>
+<dt>Request:  PollClaimRequest
+<dt>Response:  PollClaimResponse
+</dl>
+
+Check party making claim
+
+###Message: PollClaimRequest
+
+<dl>
+<dt>Inherits:  MeshRequest
+</dl>
+
+<dl>
+<dt>PublicationId: String (Optional)
+<dd>The envelope identifier formed from the PublicationId.
+<dt>TargetAccountAddress: String (Optional)
+<dd>Account to which the claim is directed
+</dl>
+###Message: PollClaimResponse
+
+<dl>
+<dt>Inherits:  MeshResponse
+</dl>
+
+<dl>
+<dt>EnvelopedMessageClaim: DareEnvelope (Optional)
+<dd>The claim message
+</dl>
+##Transaction: CreateGroup
+
+<dl>
+<dt>Request:  CreateGroupRequest
+<dt>Response:  CreateGroupResponse
+</dl>
+
+Check party making claim
+
+###Message: CreateGroupRequest
+
+<dl>
+<dt>Inherits:  MeshRequest
+</dl>
+
+<dl>
+<dt>AccountAddress: String (Optional)
+<dd>The service account to bind to.
+<dt>SignedProfileGroup: DareEnvelope (Optional)
+<dd>The persistent profile that will be used to validate changes to the
+account assertion.
+</dl>
+###Message: CreateGroupResponse
+
+<dl>
+<dt>Inherits:  CreateResponse
+</dl>
+
+[No fields]
+
+###Structure: CryptographicOperation
+
+<dl>
+<dt>KeyId: String (Optional)
+<dd>The key identifier			
+<dt>KeyCoefficient: Binary (Optional)
+<dd>Lagrange coefficient multiplier to be applied to the private key
+</dl>
+###Structure: CryptographicOperationSign
+
+<dl>
+<dt>Inherits:  CryptographicOperation
+</dl>
+
+<dl>
+<dt>Data: Binary (Optional)
+<dd>The data to sign
+<dt>PartialR: Binary (Optional)
+<dd>Contribution to the R offset.
+</dl>
+###Structure: CryptographicOperationKeyAgreement
+
+<dl>
+<dt>Inherits:  CryptographicOperation
+</dl>
+
+[No fields]
+
+###Structure: CryptographicOperationGenerate
+
+<dl>
+<dt>Inherits:  CryptographicOperation
+</dl>
+
+[No fields]
+
+###Structure: CryptographicOperationShare
+
+<dl>
+<dt>Inherits:  CryptographicOperation
+</dl>
+
+<dl>
+<dt>Threshold: Integer (Optional)
+<dt>Shares: Integer (Optional)
+</dl>
+###Structure: CryptographicResult
+
+<dl>
+<dt>Error: String (Optional)
+</dl>
+###Structure: CryptographicResultKeyAgreement
+
+<dl>
+<dt>Inherits:  CryptographicResult
+</dl>
+
+[No fields]
+
+##Transaction: Operate
+
+<dl>
+<dt>Request:  OperateRequest
+<dt>Response:  OperateResponse
+</dl>
+
+Perform a set of cryptographic operations
+
+###Message: OperateRequest
+
+<dl>
+<dt>Inherits:  MeshRequest
+</dl>
+
+<dl>
+<dt>AccountAddress: String (Optional)
+<dd>The service account the capability is bound to
+</dl>
+###Message: OperateResponse
+
+<dl>
+<dt>Inherits:  MeshResponse
+</dl>
+
+[No fields]
+

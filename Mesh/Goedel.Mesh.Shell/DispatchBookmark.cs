@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 
 namespace Goedel.Mesh.Shell {
     public partial class Shell {
@@ -42,7 +44,7 @@ namespace Goedel.Mesh.Shell {
 
             using var catalog = contextAccount.GetCatalogBookmark();
             var result = catalog.Locate(uri);
-
+            result.AssertNotNull(EntryNotFound.Throw, uri);
             catalog.Delete(result);
 
             return new Result() {
@@ -62,6 +64,8 @@ namespace Goedel.Mesh.Shell {
             var identifier = Options.Identifier.Value;
 
             var result = catalog.Locate(identifier);
+
+            //result.AssertNotNull(EntryNotFound.Throw);
 
             return new ResultEntry() {
                 Success = result != null,

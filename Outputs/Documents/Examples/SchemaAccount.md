@@ -6,30 +6,62 @@ profile and the encryption key to be used by the account.
 {
   "ProfileAccount":{
     "KeyOfflineSignature":{
-      "UDF":"MBAL-44YZ-X4GX-USBL-JAMU-AW32-SLBQ",
+      "UDF":"MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"-RCUxnQIbCoHgNRVQO5LIDDUPCror2q-OLh1FNS3AVyBrwO
-  3BedNc7nXrNCMrOTaf1MFe0ZMGqYA"}}},
+          "Public":"5ixlJNeYHpUdZsLkRPudVgyPF84EjbsdET3EVrdU4glgvD2
+  PLYYpcKfZsAgW8S-GEUgeKsDwbeQA"}}},
     "KeysOnlineSignature":[{
-        "UDF":"MADE-J3SE-LOAM-7F64-SJZK-BONE-DRPC",
+        "UDF":"MDO7-B3Y6-JXCO-JPAI-R25D-6KTB-P3MN",
         "PublicParameters":{
           "PublicKeyECDH":{
             "crv":"Ed448",
-            "Public":"woAm5_XiUkEt06kUikTuxbvB7OuMasIN49S364bJjsJ6Y
-  S3gvC3Qxx3qAFAaXFN84fci2YNvIiyA"}}}
+            "Public":"PZuU3TEdBqnhyaO5_3hpZ_NUoAhPbr2jf8Iun_Hi8DnAf
+  j2DKmyaA_e9ZCEPd6fGt99upwYjDvEA"}}}
       ],
-    "ServiceIDs":["alice@example.com"
+    "AccountAddresses":["alice@example.com"
       ],
-    "MeshProfileUDF":"MDKD-XTUR-GFP4-QD52-STNB-Q7GS-MEWW",
+    "MeshProfileUDF":"MBU4-C4AJ-TGTO-AETP-LQDC-R3L6-VMX7",
     "KeyEncryption":{
-      "UDF":"MBLR-JASW-IDOQ-DVHQ-QF2N-YPYU-ER46",
+      "UDF":"MCU5-RLU6-LFUW-7DRQ-M3Q4-M7JC-GTZL",
       "PublicParameters":{
         "PublicKeyECDH":{
-          "crv":"Ed448",
-          "Public":"ugz98gp4_s8ntbCo0vZq_ZIeObWnR5mif4brZ9KaW9wKQac
-  KD_-eCqGARh8CgK0MQkAjiuWlo6wA"}}}}}
+          "crv":"X448",
+          "Public":"0cSlf3hBecbfcb8K3kHb95bI9Tykt4TSUB7bAUSgs_r3W2V
+  4I08KO1BkQTqhwSE0YVrTzRhRjr6A"}}},
+    "KeyAuthentication":{
+      "UDF":"MBZB-C42B-BU3D-M2JZ-YOKU-ZDYV-OS7M",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"N55NmzjX04YG8l1k5qW0B898LOtM8IqbKofT-rLcM27PWDR
+  m0Q_qYWfOZGSzhzszBgV8i2mIZZaA"}}},
+    "EnvelopedProfileService":[{
+        "dig":"SHA2"},
+      "ewogICJQcm9maWxlU2VydmljZSI6IHsKICAgICJLZXlPZmZsaW5lU2lnbmF0
+  dXJlIjogewogICAgICAiVURGIjogIk1BWFotSVBHNy1WSEFPLVdRVVQtQ0JUTC1IT
+  FMyLVNLT1ciLAogICAgICAiUHVibGljUGFyYW1ldGVycyI6IHsKICAgICAgICAiUH
+  VibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYiOiAiRWQ0NDgiLAogICAgICA
+  gICAgIlB1YmxpYyI6ICJiY2paaUQzQmdQcThOSEE4VFFzbEpRbzBzOE14R1o0VWRP
+  UV8zcGZBWGhmUkdLdDh3aVhlCiAgZTl6MzZ4V0JxVGVKRkhhd09uTWNPcmlBIn19f
+  SwKICAgICJLZXlFbmNyeXB0aW9uIjogewogICAgICAiVURGIjogIk1EM0gtM09LRi
+  1LTDM0LU02Q0YtSkVHVS1BMkVNLUNUWVUiLAogICAgICAiUHVibGljUGFyYW1ldGV
+  ycyI6IHsKICAgICAgICAiUHVibGljS2V5RUNESCI6IHsKICAgICAgICAgICJjcnYi
+  OiAiWDQ0OCIsCiAgICAgICAgICAiUHVibGljIjogInBJcjlQeTVrWm52QU9paTZ0R
+  EdRejc1ZFVCNTNpQkIxM0ZKQXZzSDJNdHlJU2RQWFZ3TWMKICBrU3FOTGl5TzBpUT
+  JaanE5QkRXVmpmOEEifX19fX0",
+      {
+        "signatures":[{
+            "alg":"SHA2",
+            "kid":"MAXZ-IPG7-VHAO-WQUT-CBTL-HLS2-SKOW",
+            "signature":"Q8tU8qUnPvpxEqpZd_TWkvIN8_1YtRCkxGqSk2Exad
+  _4PlWzrAzG_cX9VT5UmOaJ6cmi-lM8hF8Am-OgRNkxGkb1y_OYtaKBXnUeBGHG3jt
+  nplUvx3VlWReJn0VqYMiTfcAQ5PKNujHbf4iCso6PSAcA"}
+          ],
+        "PayloadDigest":"tWH90O5uV-b6VvIjiwiClRkJ6D2C64GZLXqZk5pAhx
+  tQWwqcCzKM3f7s6slOuJ6fZ267uDg6QQ2UF55_vjsiSA"}
+      ]}}
 ~~~~
 
 Each device using the account requires an activation record:
@@ -37,30 +69,49 @@ Each device using the account requires an activation record:
 ~~~~
 {
   "ActivationAccount":{
-    "AccountUDF":"MBAL-44YZ-X4GX-USBL-JAMU-AW32-SLBQ",
-    "KeyEncryption":{
-      "UDF":"MADT-PLZ5-ALNB-J6TB-KNXB-DDHW-RGCQ",
-      "BaseUDF":"MAH7-OPP6-AQ2T-DNUR-TP53-G44K-O6IQ",
-      "Overlay":{
+    "EnvelopedConnection":[{
+        "dig":"SHA2"},
+      "ewogICJDb25uZWN0aW9uQWNjb3VudCI6IHsKICAgICJLZXlTaWduYXR1cmUi
+  OiB7CiAgICAgICJVREYiOiAiTURCWi1USlY1LVFOSlUtU0VaNS1PS1I1LUpMQkUtN
+  EVZRCIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaW
+  NLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJFZDQ0OCIsCiAgICAgICAgICA
+  iUHVibGljIjogImxpX3hIdzRiVmxDVzN6TkhVQTJlYVBJSE5FZmt5MjhsZS1mdTBO
+  OWY2VldOaXhabVRjR3YKICB1WHBRYmNfRjZ6eHRPQl92bEZBMUdva0EifX19LAogI
+  CAgIktleUVuY3J5cHRpb24iOiB7CiAgICAgICJVREYiOiAiTURYRC02WEdPLVREUk
+  4tVkZNNi1TTTNRLUQyRE0tUTVFMyIsCiAgICAgICJQdWJsaWNQYXJhbWV0ZXJzIjo
+  gewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjogewogICAgICAgICAgImNydiI6ICJY
+  NDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiNXdhYk9qMkN0UzlOMGVTRjd2M25QY
+  0VZQVl6LUV3eE5xd3BncjdieHlXajNDMUl1ZExaUQogIFlmS1Zod1djc1k0QVZiRE
+  9pV0tEanRhQSJ9fX0sCiAgICAiS2V5QXV0aGVudGljYXRpb24iOiB7CiAgICAgICJ
+  VREYiOiAiTUREQy1SUDVILVlQQjctUktJNS1EVEdYLU5ZM1QtQzRTTiIsCiAgICAg
+  ICJQdWJsaWNQYXJhbWV0ZXJzIjogewogICAgICAgICJQdWJsaWNLZXlFQ0RIIjoge
+  wogICAgICAgICAgImNydiI6ICJYNDQ4IiwKICAgICAgICAgICJQdWJsaWMiOiAiYW
+  NPT0ZxcW5YNWFyOU84WU5aMjVRSlB3clBIYjNMNFhXZjZVTzVyYUpFSlkweHhRcGp
+  4agogIFJGX0tEQ1J5ajU2dlBkNUhSd2hlekY2QSJ9fX19fQ",
+      {
+        "signatures":[{
+            "alg":"SHA2",
+            "kid":"MDO7-B3Y6-JXCO-JPAI-R25D-6KTB-P3MN",
+            "signature":"ExlTqa3EfBvc1kTMENe3cuBOr_vLRS9Zojxy6ECnrU
+  HJUjzYfYRtNxJxC1P2yINv27DmcemaOc2ASaf_lcYghpgsobEt9rEukJbOCYFxHRi
+  CemViFG0Rt7yaULNL_EP8u7DR2r-epRPzBLq1p8NAxgAA"}
+          ],
+        "PayloadDigest":"AmH_ihj4Ws2uaagCbxDUdBZDoM9rQ6OFz8wmCtilVI
+  FU7aEf9anV1D9hn18R-uP9ufZJv4bD9cWuqgtceS2s-A"}
+      ],
+    "ActivationKey":"ZAAQ-LIHT-35Y5-CJVY-WSXT-MJHE-GP3T-QXKS-D7MV-BGKV-SYZ5-L3EF-6SST-JUFR",
+    "AccountUDF":"MCXI-75JG-RVBH-NK5X-IUWM-G2BE-JML6",
+    "KeyAccountEncryption":{
+      "UDF":"MCU5-RLU6-LFUW-7DRQ-M3Q4-M7JC-GTZL",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"0cSlf3hBecbfcb8K3kHb95bI9Tykt4TSUB7bAUSgs_r3W2V
+  4I08KO1BkQTqhwSE0YVrTzRhRjr6A"}},
+      "PrivateParameters":{
         "PrivateKeyECDH":{
-          "crv":"Ed448",
-          "Private":"BzL6hi_YBuOYH9owIoCJK5--TwY819Xjw0sPmAIIQhAuEB
-  3Wu0zRdqR-cWuWqpVjjPsCK8oTrrU"}}},
-    "KeyAuthentication":{
-      "UDF":"MB7V-YK4C-N2ZO-7RRH-CFP5-BQBU-XCWG",
-      "BaseUDF":"MAFD-XLJC-JZI5-WFTH-MLCE-SJCZ-LDHF",
-      "Overlay":{
-        "PrivateKeyECDH":{
-          "crv":"Ed448",
-          "Private":"0nyl4GdTsHWGOXjfELcGzBaIglu2fJMgYxnnLv_br6pyFS
-  9Xd_GxFvDisjfpz0zYZYB9U7Qmyzs"}}},
-    "KeySignature":{
-      "UDF":"MBVN-67EX-MPEE-CDVB-DKG4-74VF-FMWY",
-      "BaseUDF":"MBEB-2PHZ-ETBR-YULL-H2E6-KP4L-YIJ2",
-      "Overlay":{
-        "PrivateKeyECDH":{
-          "crv":"Ed448",
-          "Private":"nRSQgjAvXB05s2Z4DmRGsrFKjxPl_lwq_B6IxHhUoAUYCw
-  Msrvv2G5eT47i6EwB6ENedNjOl0BA"}}}}}
+          "crv":"X448",
+          "Private":"mPBmRVhWEaIGq0q63yJ2qyMHAJgzxRpKpCIAA-kTwVU_Jk
+  919Hr72AypVDANNtsLaEB3UoKLYXE"}}}}}
 ~~~~
 

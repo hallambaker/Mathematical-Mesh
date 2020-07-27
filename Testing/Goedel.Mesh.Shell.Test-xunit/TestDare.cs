@@ -32,6 +32,9 @@ namespace Goedel.XUnit {
             CreateAccount(account);
 
             TestFile("Hello world", sign: account);
+
+            "Need to test file gest signed".TaskTest();
+            "Need to test signature is actually valid".TaskTest();
             }
 
         [Fact]
@@ -68,47 +71,6 @@ namespace Goedel.XUnit {
             var resultVerify = Dispatch($"dare verify {result1.Filename}") as ResultFile;
             corrupt.TestEqual(!resultVerify.Verified);
 
-            return true;
-            }
-
-        [Fact]
-        public void TestContainerCatalogBase() {
-            var filename = Files.GetFilenameUnique();
-
-            Dispatch($"container create {filename}");
-            TestContainerCatalog(filename);
-
-            }
-
-        [Fact]
-        public void TestContainerCatalogEncrypt() {
-            var filename = Files.GetFilenameUnique();
-            var account = "alice@example.com";
-            CreateAccount(account);
-
-            Dispatch($"container create {filename} /encrypt {account}");
-            TestContainerCatalog(filename);
-            }
-
-        bool TestContainerCatalog(string filename) {
-
-
-            var filename1 = "Test data 1".ToFileUnique();
-            var filename2 = "Test data 2".ToFileUnique();
-            var filename3 = "Test data 3".ToFileUnique();
-            var filename4 = "Test data 4".ToFileUnique();
-            var key1 = "key1";
-            var key2 = "key2";
-            // create catalog
-
-
-            Dispatch($"container append {filename} {filename1} /key {key1}");
-            Dispatch($"container append {filename} {filename2} /key {key2}");
-            Dispatch($"container delete {filename} /key {key1}");
-            Dispatch($"container append {filename} {filename3} /key {key1}");
-            Dispatch($"container append {filename} {filename4} /key {key2}");
-
-            // TBS: write code to check the output
             return true;
             }
 

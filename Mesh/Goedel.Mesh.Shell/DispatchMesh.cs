@@ -65,6 +65,19 @@ namespace Goedel.Mesh.Shell {
 
             }
 
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult MeshPurge(MeshPurge Options) {
+            var contextMesh = GetContextMeshAdmin(Options);
+
+            throw new NYI();
+            }
+
+
         void AddIfPresent(List<string> Keys, String Parameter) {
             if (Parameter.Value != null) {
                 Keys.Add(Parameter.Value);

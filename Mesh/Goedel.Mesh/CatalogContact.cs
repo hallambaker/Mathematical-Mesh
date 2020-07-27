@@ -198,6 +198,7 @@ namespace Goedel.Mesh {
             return catalogedContact.MeshKeyEncryption;
             }
 
+
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>

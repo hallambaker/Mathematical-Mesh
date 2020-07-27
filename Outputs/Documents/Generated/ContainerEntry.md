@@ -10,17 +10,18 @@ TBS stuff
 
 ###Structure: ContainerInfo
 
+Information that describes container information
+
 <dl>
 <dt>DataEncoding: String (Optional)
 <dd>Specifies the data encoding for the header section of for the following frames.
 This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
-Information that describes container information
-
+<dt>ContainerType: String (Optional)
+<dd>Specifies the container type for the following records.
+This value is ONLY valid in Frame 0 which MUST have a header encoded in JSON.
 <dt>Index: Integer (Optional)
 <dd>The record index within the file. This MUST be unique and 
 satisfy any additional requirements determined by the ContainerType.
-<dt>ContainerType: String (Optional)
-<dd>Specifies the container type for the following records.
 <dt>IsMeta: Boolean (Optional)
 <dd>If true, the current frame is a meta frame and does not contain a payload.
 <dd>Note: Meta frames MAY be present in any container. Applications MUST

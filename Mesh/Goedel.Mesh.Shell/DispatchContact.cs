@@ -1,4 +1,5 @@
 ﻿using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 using System.Collections.Generic;
 using System;
 using Goedel.IO;
@@ -169,7 +170,7 @@ namespace Goedel.Mesh.Shell {
 
             using (var catalog = contextAccount.GetCatalogContact()) {
                 var result = catalog.Get(identifier);
-
+                result.AssertNotNull(EntryNotFound.Throw, identifier);
                 catalog.Delete(result);
                 }
 

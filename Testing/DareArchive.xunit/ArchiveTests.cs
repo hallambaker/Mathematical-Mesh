@@ -49,8 +49,7 @@ namespace MeshStore.xunit {
             }
 
 
-        [Fact]
-        public void TestContainerArchiveExtractAll() => throw new TestNotImplemented();
+
 
         [Fact]
         public void TestContainerArchiveExtractFirst() => throw new TestNotImplemented();

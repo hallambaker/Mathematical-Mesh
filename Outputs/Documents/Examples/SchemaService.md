@@ -5,12 +5,19 @@ The service profile
 {
   "ProfileService":{
     "KeyOfflineSignature":{
-      "UDF":"MBNT-WOL7-R4N6-WNQ6-DZGH-NARU-QXGS",
+      "UDF":"MAXZ-IPG7-VHAO-WQUT-CBTL-HLS2-SKOW",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"BhgtGiNotAevK1g2p9KweCrbGkIDc_ec4gfdRX5jhKOibLv
-  9xrjSp1kCq0_Dg2bKyLNEKPrGhzOA"}}}}}
+          "Public":"bcjZiD3BgPq8NHA8TQslJQo0s8MxGZ4UdOQ_3pfAXhfRGKt
+  8wiXee9z36xWBqTeJFHawOnMcOriA"}}},
+    "KeyEncryption":{
+      "UDF":"MD3H-3OKF-KL34-M6CF-JEGU-A2EM-CTYU",
+      "PublicParameters":{
+        "PublicKeyECDH":{
+          "crv":"X448",
+          "Public":"pIr9Py5kZnvAOii6tDGQz75dUB53iBB13FJAvsH2MtyISdP
+  XVwMckSqNLiyO0iQ2Zjq9BDWVjf8A"}}}}}
 ~~~~
 
 The host also has a profile
@@ -19,19 +26,19 @@ The host also has a profile
 {
   "ProfileHost":{
     "KeyOfflineSignature":{
-      "UDF":"MB2O-MYIT-SVZM-AP5P-N7XS-XPHN-CNYA",
+      "UDF":"MB3Z-K5HL-EKAB-6M5J-3PKY-BIYB-JYK5",
       "PublicParameters":{
         "PublicKeyECDH":{
           "crv":"Ed448",
-          "Public":"im4yAJoPvSOfdQG8COwEP8fd925etJv8CYzMdPrNJmc3-sZ
-  n-PkqdguJmTppRz2en2nKSGBLoYYA"}}},
+          "Public":"gjioWzUbYj6LLCb44dkaL8I5p91ipNHhrNMQtVQIlP6ix72
+  fUZqXDZANgJK3i9u8DcHMxiWHljQA"}}},
     "KeyAuthentication":{
-      "UDF":"MA3V-CDJE-MDNX-N2BS-IRYE-3O3D-PH2G",
+      "UDF":"MCX7-6PCD-WPHH-VF4L-VQ5X-ISIH-TVM3",
       "PublicParameters":{
         "PublicKeyECDH":{
-          "crv":"Ed448",
-          "Public":"LLWoqY1A4tmNUHpgAq7Rcq7tZFlT0xliklcYwqnrBhjUkU_
-  hij0jHICWh2kthCazkLJwqdUeBgcA"}}}}}
+          "crv":"X448",
+          "Public":"OlebIP4cz-8EVWNeDPULOkj2es7vu7AP_NLJ51k1H0XoStQ
+  kEikPC_o3qBVblUHvRM0nPEBlctgA"}}}}}
 ~~~~
 
 And there should be a connection of the host to the service but this isn't implemented yet:

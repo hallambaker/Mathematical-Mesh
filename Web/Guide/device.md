@@ -10,7 +10,15 @@ The `device request` command is used on the new device
 to request connection to the user's profile. Alice need only specify 
 the mesh service account alice@example.com to which connection is requested:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice2> device request alice@example.com
+<rsp>   Device UDF = MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+   Witness value = XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+   Personal Mesh = MBU4-C4AJ-TGTO-AETP-LQDC-R3L6-VMX7
+</div>
+~~~~
 
 In this case there is no existing device profile and so a new profile is
 created and used to create a registration request which is posted to the user's 
@@ -25,34 +33,84 @@ complete the connection process.
 The `device pending` command gives a list of pending connection
 messages.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device pending
+<rsp>MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Connection Request::
+        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        To:  From: 
+        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Connection Request::
+        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        To:  From: 
+        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+</div>
+~~~~
 
 Alice sees the request that she posted and approves it with the connect
 `device accept` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device accept CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+<rsp>Result: Accept
+Added device: MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+</div>
+~~~~
 
 There is a second request (from Mallet) that Alice doesn't recognize. Alice rejects this
 request:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device reject XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+<rsp>Result: Reject
+</div>
+~~~~
 
 The connection process is completed by synchronizing the new device. At this point,
 all the applications that were available to the first device are available to the
 second:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice2> device complete
+<rsp>ERROR - The connection request is still pending
+<cmd>Alice2> account sync
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 ##Managing connected devices
 
 The `device list` command gives a list of devices in the device 
 catalog:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device list
+<rsp></div>
+~~~~
 
 The `device delete` command removes a device from the catalog:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device delete CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+<rsp>ERROR - The feature has not been implemented
+<cmd>Alice> device list
+<rsp></div>
+~~~~
 
 
 ## Requesting a connection using a PIN
@@ -67,17 +125,46 @@ Connection requests may be authenticated by means of a PIN created on an
 administration device. The `device pin` command generates
 a new PIN code:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> account pin
+<rsp>PIN=ADDA-NJ7O-ZQS3-4KR6-N7OA-CEZR-FRUR (Expires=2020-07-28T09:45:24Z)
+</div>
+~~~~
 
 The pin code can now be used to authenticate the connection request:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice3> device request alice@example.com /pin=ADDA-NJ7O-ZQS3-4KR6-N7OA-CEZR-FRUR
+<rsp>ERROR - The requested cryptographic operation is not supported
+</div>
+~~~~
 
 Since the PIN code that was issued was set to be self-authorizing, the device
 is connected automatically when the user synchronizes their account from an 
 administrator device:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> device pending
+<rsp>MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Connection Request::
+        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        To:  From: 
+        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Connection Request::
+        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        To:  From: 
+        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+</div>
+~~~~
 
 
 ### Requesting a connection using an EARL
@@ -111,12 +198,10 @@ connection to a user account, the device requests connection to a special purpos
 account established for the purpose of providing a hailing account for enabling
 this type of device connection.
 
-**Missing Example***
 
 The device can attempt to complete the connection whenever it is provided with power 
 and network connectivity using the `profile sync` command.
 
-**Missing Example***
 
 The key specified in the '/earl' option is used to create a UDF EARL specifying a 
 location from which a device description document may be obtained. Note that 
@@ -131,13 +216,11 @@ smart phone camera.
 A QR code or other scanning application can use the meshman tool to resolve the EARL 
 and retrieve the data using the `device earl` command:
 
-**Missing Example***
 
 The tool performs the tasks of resolving the EARL, decrypting the discovery record
 and posting a connection response to both the hailing account and the profile account.
 The next time the device polls the hailing account, it retrieves the connection data:
 
-**Missing Example***
 
 Once connected to an account, a device does not attempt to poll the hailing account. 
 Further attempts to make a connection are thus ignored unless the device is 

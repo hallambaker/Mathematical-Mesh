@@ -14,23 +14,47 @@ presentation aids application debugging and audit.
 
 The `key nonce` command is used to generate a new random nonce value:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key nonce
+<rsp>NBCE-RT2L-XDDT-LW2I-4CKE-46XU-LC7Q
+</div>
+~~~~
 
 The Base32 presentation of a nonce value will always begin with the letter N.
 
 By default, a 128 bit nonce is generated but nonces of any length may be
 generated using the `/bits` option:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key nonce /bits=256
+<rsp>NAV5-BQSI-FXKU-ULXW-65X3-2YEY-B6CW-4YSH-25LF-MCRX-XIXH-X27D-QKXG-C
+</div>
+~~~~
 
 Secrets are generated in the same way using the command `key secret`:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key secret
+<rsp>EBXH-Q2QX-UQZV-JY3B-4KBS-DJH3-IZ6Q
+</div>
+~~~~
 
 The Base32 presentation of a secret value will always begin with the letter E.
 Again, any output length can be requested up to the platform limit:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key secret /bits=256
+<rsp>ECVV-GJWN-O6FS-MTA7-NF3V-55XO-A5FC-XKX6-AG7U-3BZQ-YSTL-FB2T-V5H7-E
+</div>
+~~~~
 
 ## Generating EARL values
 
@@ -43,11 +67,24 @@ on the Web Service under a label that is the Content Digest of the secret.
 EARLs may be generated using the `key earl` command to generate
 a new secret/digest pair which are then used to process the content data:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key earl
+<rsp>ECZT-ZW7N-2SIH-YCHX-DIJR-33H2-TKJ4-JA
+MCAO-HLRT-WAWB-HQKY-RU7S-HNHC-INQT-Z2Y3-WAV4-33FG-MW2U-YU35-VPFR-AGTZ
+</div>
+~~~~
 
 Alternatively, the `dare earl` command may be used to perform both operations:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare earl TestFile1.txt example.net
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 ## Sharing and recovering secrets
 
@@ -58,19 +95,48 @@ The `key share` command creates a secret and splits it into the specified
 number of shares with the specified quorum for recovery. By default, a 128
 bit secret is created and three shares are created with a quorum of two:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key share
+<rsp>EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+MC7J-KNZH-SD7Z-GJMU-IZAB-KLBI-USUB-GQEX-B4AA-MTTL-KMJN-LQXM-PFDE
+SAQC-UDCJ-FGXA-XSML-WBOV-T2TB-U24G-C
+SAQX-LVE5-3BLW-2VIS-UQ73-FPQL-F4X6-I
+SARM-DHHS-Q4AM-5YEZ-TARA-XENU-W6TW-O
+</div>
+~~~~
 
 The first UDF output is the secret key, followed by the key identifier 
 two shares. The different outputs are easily distinguished by their first 
 letter. As with every meshman command, the `/json` option may be used to 
 obtain the result as a JSON structure:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key share /json
+<rsp>{
+  "ResultKey": {
+    "Success": true,
+    "Key": "EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ",
+    "Identifier": "MC7J-KNZH-SD7Z-GJMU-IZAB-KLBI-USUB-GQEX-B4AA-MTTL-KMJN-LQXM-PFDE",
+    "Shares": ["SAQC-UDCJ-FGXA-XSML-WBOV-T2TB-U24G-C",
+      "SAQX-LVE5-3BLW-2VIS-UQ73-FPQL-F4X6-I",
+      "SARM-DHHS-Q4AM-5YEZ-TARA-XENU-W6TW-O"]}}
+</div>
+~~~~
 
 The original secret may be recovered from a sufficient number of shares to
 meet the quorum using the `key recover`:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key recover SAQC-UDCJ-FGXA-XSML-WBOV-T2TB-U24G-C SARM-DHHS-Q4AM-5YEZ-TARA-XENU-W6TW-O
+<rsp>EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+</div>
+~~~~
 
 As with secret generation, larger or smaller secrets may be created but due
 to a limitation in the implementation of the key sharing algorithm, the secret 
@@ -80,12 +146,30 @@ the nearest multiple of 32 bits.
 For example, we can create a 192 bit secret and share it five ways with a quorum
 of three:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key share /quorum=3 /shares=5
+<rsp>EBGG-ZJ6E-5ELT-AFKK-4MQL-4ZDO-WRKQ
+MCVQ-6NNM-3P6H-CHVX-VTTJ-ROY4-OUDQ-4QJ4-M46L-AOPR-JXJN-UN2P-DAP4
+SAYN-QSZJ-F5GN-43UU-RX6L-OA3L-VVEE-2
+SAYW-IA3N-AO7B-VQAJ-RQY2-G3UN-T522-2
+SAZO-7FLT-II6M-YJDU-IWA6-L76K-IU6N-W
+SAZX-WAJ3-5LEP-FG6U-XHWX-5NZB-T2OX-C
+SA2A-MRWG-7VRI-4JRK-5F2G-3FET-VOL2-E
+</div>
+~~~~
 
 It is also possible to share a specified secret. This allows a secret to be 
 shared multiple times creating independent key sets. If we re-share the secret
 created earlier to create three shares with a quorum of two, the shares will
 be different:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> key share EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<rsp>ERROR - Attempted to divide by zero.
+</div>
+~~~~
 

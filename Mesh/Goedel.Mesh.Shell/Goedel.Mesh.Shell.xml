@@ -278,7 +278,7 @@
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DareEARL(Goedel.Mesh.Shell.DareEARL)">
             <summary>
-            Dispatch method
+            Dispatch method for the 
             </summary>
             <param name="options">The command line options.</param>
             <returns>Mesh result instance</returns>
@@ -469,6 +469,13 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.MailList(Goedel.Mesh.Shell.MailList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.SMIMEPrivate(Goedel.Mesh.Shell.SMIMEPrivate)">
             <summary>
             Dispatch method
@@ -505,6 +512,13 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.MeshEscrow(Goedel.Mesh.Shell.MeshEscrow)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.MeshPurge(Goedel.Mesh.Shell.MeshPurge)">
             <summary>
             Dispatch method
             </summary>
@@ -1016,6 +1030,68 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.CommandNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.CommandNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.CommandNotImplemented.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.CommandNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.CommandNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Shell.CommandNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.OptionNotImplemented">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.OptionNotImplemented.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.OptionNotImplemented.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.OptionNotImplemented.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.OptionNotImplemented._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Shell.OptionNotImplemented.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="F:Goedel.Mesh.Shell.EnumReporting.eJson">
             <summary>Case "json": Report output in JSON format</summary>
         </member>
@@ -1131,14 +1207,26 @@
         <member name="P:Goedel.Mesh.Shell._MeshEscrow.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._MeshEscrow.Quorum">
             <summary>Field accessor for option [quorum]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MeshEscrow.Shares">
             <summary>Field accessor for option [shares]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MeshPurge.MasterUDF">
+            <summary>Field accessor for option [mudf]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MeshPurge.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MeshPurge.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MeshPurge.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._MeshPurge.Json">
+            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._MeshRecover.MasterUDF">
             <summary>Field accessor for option [mudf]</summary>
@@ -3072,26 +3160,29 @@
         <member name="P:Goedel.Mesh.Shell._DareVerify.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareVerify.SymmetrictKey">
+        <member name="P:Goedel.Mesh.Shell._DareVerify.SymmetricKey">
             <summary>Field accessor for option [key]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.Input">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.Output">
-            <summary>Field accessor for option [out]</summary>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.Domain">
+            <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.Log">
-            <summary>Field accessor for option [log]</summary>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.Directory">
+            <summary>Field accessor for option [dir]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.New">
             <summary>Field accessor for option [new]</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._DareEARL.Subdirectories">
-            <summary>Field accessor for option [sub]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.Algorithms">
             <summary>Field accessor for option [alg]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.Log">
+            <summary>Field accessor for option [log]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._DareEARL.Admin">
+            <summary>Field accessor for option [admin]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DareEARL.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -3716,6 +3807,73 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultFile.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultFileEARL">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL.Source">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL.Created">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL.URI">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultFileEARL._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultFileEARL.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFileEARL._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultFileEARL.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

@@ -187,13 +187,47 @@ namespace Goedel.XUnit {
             }
 
 
-        bool ValidContact(Mesh.Test.TestCLI device, params string[] accountAddress) {
+        bool ValidContact(TestCLI device, params string[] accountAddress) {
             var resultDump = device.Dispatch("contact list") as ResultDump;
             return ValidContact(resultDump.CatalogedEntries, accountAddress);
             }
 
 
-        bool CreateAliceBob(out TestCLI deviceA, out Mesh.Test.TestCLI deviceB) {
+        bool CreateAlice(out TestCLI device1, out TestCLI device2) {
+            GetTestCLI("Device1");
+
+
+            device1 = CreateMasterDevice("Device1A", AccountA);
+            device2 = GetConnectedCLI(device1, "Device2A", AccountA);
+
+            return true;
+            }
+
+        TestCLI CreateMasterDevice(string name, string account) {
+            var device1 = GetTestCLI(name);
+            device1.Dispatch($"mesh create /service={account}");
+
+            return device1;
+            }
+
+
+        public TestCLI GetConnectedCLI(TestCLI deviceAdmin, string name, string account) {
+            var device = GetTestCLI(name);
+            deviceAdmin.Connect(device, account);
+            return device;
+            }
+
+
+        bool CreateAlice(out TestCLI device1, out TestCLI device2, out TestCLI device3) {
+            device3 = GetTestCLI("Device3");
+
+            CreateAlice(out device1, out device2);
+            device1.Connect(device3, AccountA);
+
+            return true;
+            }
+
+        bool CreateAliceBob(out TestCLI deviceA, out TestCLI deviceB) {
 
             deviceA = GetTestCLI("MachineAlice");
             deviceB = GetTestCLI("DeviceBobName");

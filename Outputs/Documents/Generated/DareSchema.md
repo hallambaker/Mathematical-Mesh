@@ -76,6 +76,8 @@ placed in a header instead, the message header inherits from the trailer.
 <dt>DigestAlgorithm: String (Optional)
 <dd>Digest Algorithm. If specified, tells decoder that the digest algorithm is used to
 construct a signature over the message payload.
+<dt>KeyIdentifier: String (Optional)
+<dd>Master key identifier.
 <dt>Salt: Binary (Optional)
 <dd>Salt value used to derrive cryptographic parameters for the content data.
 <dt>Malt: Binary (Optional)
@@ -96,7 +98,7 @@ header.
 <dd>If present, the Annotations field contains a sequence of Encrypted Data 
 Segments encrypted under the message Master Key. The interpretation of these fields 
 is application specific.
-<dt>Signers: DareSigner [0..Many]
+<dt>Signers: DareSignature [0..Many]
 <dd>A list of 'presignature'
 <dt>Recipients: DareRecipient [0..Many]
 <dd>A list of recipient key exchange information blocks.
@@ -108,6 +110,8 @@ plaintext content metadata and forms one of the inputs to the envelope digest va
 <dt>ContainerIndex: ContainerIndex (Optional)
 <dd>An index of records in the current container up to but not including
 this one.
+<dt>Received: DateTime (Optional)
+<dd>Date on which the envelope was received.
 </dl>
 ###Structure: ContentMeta
 
@@ -132,6 +136,8 @@ this one.
 <dd>Initial creation date.
 <dt>Modified: DateTime (Optional)
 <dd>Date of last modification.
+<dt>Expire: DateTime (Optional)
+<dd>Date at which the associated transaction will expire
 <dt>First: Integer (Optional)
 <dd>Frame number of the first object instance value.
 <dt>Previous: Integer (Optional)
@@ -143,7 +149,7 @@ DARE Message uses the same fields as JWE and JWS but with different
 structure. In particular, DARE messages MAY have multiple recipients
 and multiple signers.
 
-###Structure: DareSigner
+###Structure: DareSignature
 
 The signature value
 
@@ -159,24 +165,6 @@ to the message body allows the body to be processed in streaming mode.
 <dd>PKIX certificate of signer.
 <dt>Path: X509Certificate (Optional)
 <dd>PKIX certificates that establish a trust path for the signer.
-</dl>
-###Structure: X509Certificate
-
-<dl>
-<dt>X5u: String (Optional)
-<dd>URL identifying an X.509 public key certificate
-<dt>X5: Binary (Optional)
-<dd>An X.509 public key certificate
-</dl>
-###Structure: DareSignature
-
-<dl>
-<dt>Inherits:  DareSigner
-</dl>
-
-The signature value
-
-<dl>
 <dt>Manifest: Binary (Optional)
 <dd>The data description that was signed.
 <dt>SignatureValue: Binary (Optional)
@@ -185,6 +173,14 @@ The signature value
 <dd>The signature witness value used on an encrypted message to demonstrate that 
 the signature was authorized by a party with actual knowledge of the encryption 
 key used to encrypt the message.
+</dl>
+###Structure: X509Certificate
+
+<dl>
+<dt>X5u: String (Optional)
+<dd>URL identifying an X.509 public key certificate
+<dt>X5: Binary (Optional)
+<dd>An X.509 public key certificate
 </dl>
 ###Structure: DareRecipient
 

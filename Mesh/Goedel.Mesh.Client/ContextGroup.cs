@@ -260,6 +260,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>The member catalog entry.</returns>
         public void Delete(string memberAddress) {
             var member = Locate(memberAddress);
+            member.AssertNotNull(EntryNotFound.Throw, memberAddress);
             Delete(member);
             }
 

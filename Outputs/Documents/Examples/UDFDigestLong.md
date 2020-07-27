@@ -35,7 +35,9 @@ H(&<Content-ID> + ‘:’ + H(&<Data>)) =
 
 The prefixed Binary Data Sequence is thus
   60 C6 AF B7  C0 FE BE 04  E5 AE 94 E3  7B AA 5F 1A
-  40 5B
+  40 5B A3 CE  CC 97 4D 55  C0 9E 61 E4  B0 EF 9C AE
+  F9 EB 83 BB  9D 5F 0F 39  F6 5F AA 06  DC 67 2A 67
+  71 4F FF 8F  83 C4 55 38  36 38 AE 42  7A 82 9C 85
 ~~~~
 
 The 125 bit fingerprint value is MDDK-7N6A-727A-JZNO-STRX-XKS7-DJAF
@@ -79,7 +81,9 @@ H(&<Content-ID> + ‘:’ + H(&<Data>)) =
 
 The prefixed Binary Data Sequence is thus
   50 8A 86 8A  06 1C 54 6E  7E 3F 75 5F  39 88 F9 FD
-  2F 8E
+  2F 8E C8 45  93 1B 80 A8  2F 29 16 7B  A3 BE 21 1F
+  8A 75 61 88  A1 D5 7F 07  D5 9D 68 A4  2D 17 F4 4D
+  23 F9 E4 0B  B2 1A 8D B9  F5 8D FC EC  BD 01 F4 37
 ~~~~
 
 The 125 bit fingerprint value is KCFI-NCQG-DRKG-47R7-OVPT-TCHZ-7UXY
@@ -121,7 +125,9 @@ H(&<Content-ID> + ‘:’ + H(&<Data>)) =
 
 The prefixed Binary Data Sequence is thus
   61 8E 14 D9  19 4E D6 02  12 C3 30 A7  BB 5F C7 17
-  6D AE
+  6D AE 9A 56  7C A8 2A 23  1F 96 75 ED  53 10 EC E8
+  F2 60 14 24  D0 C8 BC 55  3D C0 70 F7  5E 86 38 1A
+  0B CB 55 9C  B2 87 81 27  FF 3C EC E2  F0 90 A0 00
 ~~~~
 
 The 125 bit fingerprint value is MGHB-JWIZ-J3LA-EEWD-GCT3-WX6H-C5W2

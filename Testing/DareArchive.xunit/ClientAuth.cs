@@ -12,7 +12,12 @@ using Xunit;
 namespace MeshStore.xunit {
     public partial class Phase2Tests {
 
-    
+        [Fact]
+        public void TestContainerClientAuthValid() => throw new TestNotImplemented();
+        [Fact]
+        public void TestContainerClientAuthInvalid() => throw new TestNotImplemented();
 
+        [Fact]
+        public void TestContainerClientAuthCorrupted() => throw new TestNotImplemented();
         }
     }

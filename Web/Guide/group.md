@@ -48,7 +48,28 @@ restrictions of this form do not appear to be frequently realized in practice.
 
 Recryption groups are created using the `group create` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> group create groupw@example.com
+<rsp>{
+  "Key": "groupw@example.com",
+  "Profile": {
+    "KeyOfflineSignature": {
+      "UDF": "MC7M-VCLK-M42M-AUE6-L5QT-2Z4G-QNDW",
+      "PublicParameters": {
+        "PublicKeyECDH": {
+          "crv": "Ed448",
+          "Public": "sERuuOQfOYYFTGLhPbH1NOrF2RT1hXCIveZc1Zk9NfSg45csI30V
+  GEXAXZweDMfRfPFIkIEqovOA"}}},
+    "KeyEncryption": {
+      "UDF": "MAWX-U6RL-AMTZ-3TXN-KM7D-OOIC-YWFH",
+      "PublicParameters": {
+        "PublicKeyECDH": {
+          "crv": "X448",
+          "Public": "SW9tWFmDEfLS4KzdhojHHK2bK8uQ7D9s3K5lpnKBs8VebgKmsAr1
+  orx4zpZxB-NaQCyZHUCMSpGA"}}}}}</div>
+~~~~
 
 This command creates the group groupw@example.com. Since Alice created the
 account she is the administrator.
@@ -56,12 +77,26 @@ account she is the administrator.
 At this point, the group has no members. Bob can encrypt a file under the group
 public key but he is unable to read it:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> dare encodeTestFile1.txt /out=TestFile1-group.dare /encrypt=groupw@example.com
+<rsp>ERROR - The command System.Object[] is not known.
+<cmd>Bob> dare decode  TestFile1-group.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+</div>
+~~~~
 
 Since Alice is the group administrator, she can decrypt the file using her 
 administrator key:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode  TestFile1-group.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+</div>
+~~~~
 
 
 ## Adding users
@@ -70,17 +105,34 @@ The `group add` command is used to add users to the group:
 
 Alice adds Bob as a member of the group:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> group add groupw@example.com bob@example.com
+<rsp>ERROR - Object reference not set to an instance of an object.
+</div>
+~~~~
 
 Bob can now decrypt the file.
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode  TestFile1-group.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+</div>
+~~~~
 
 ## Reporting users
 
 The `connect ` command returns a list of group members:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> group list groupw@example.com
+<rsp></div>
+~~~~
 
 The group currently has one administrator and one member.
 
@@ -88,10 +140,22 @@ The group currently has one administrator and one member.
 
 Users may be removed from a recryption group using the `group delete` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> group delete groupw@example.com bob@example.com
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
 
 Bob is no longer a member of the group and his decryption request now fails:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> dare decode  TestFile1-group.dare
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1-group.dare'.
+</div>
+~~~~
 
 

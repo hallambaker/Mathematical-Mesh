@@ -116,33 +116,33 @@ namespace ExampleGenerator {
 
             GitHub = true;
 
-            //PlatformUDF();
-            //PlatformCrypto();
-            //PlatformDare();
+            PlatformUDF();
+            PlatformCrypto();
+            PlatformDare();
 
-            //LayerDevice();
-            //LayerAccount();
-            //LayerService();
-            //LayerMessage();
+            LayerDevice();
+            LayerAccount();
+            LayerService();
+            LayerMessage();
 
 
             Directory.SetCurrentDirectory(outputPath);
             var CreateExamples = new CreateExamples();
             WebDocs(this);
 
-            Directory.SetCurrentDirectory("../Publish/Documents");
+            Directory.SetCurrentDirectory("..\\Outputs\\Documents");
             GitHub = false;
 
 
 
-            //MakeUDFExamples(this);
+            MakeUDFExamples(this);
 
-            //MakeArchitectureExamples(this);
+            MakeArchitectureExamples(this);
 
 
-            //MakeDareExamples(this);
-            //MakeSchemaExamples(this);
-            //MakeProtocolExamples(this);
+            MakeDareExamples(this);
+            MakeSchemaExamples(this);
+            MakeProtocolExamples(this);
 
 
             MakeCryptographyExamples(this);
@@ -151,7 +151,7 @@ namespace ExampleGenerator {
 
             }
 
-        public bool All = false;
+        public bool All = true;
 
 
         public void MakeClean() {

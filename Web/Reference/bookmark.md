@@ -32,7 +32,32 @@ add   Add bookmark
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com"
+<rsp>{
+  "Uri": "http://example.com/",
+  "Title": "\"Example",
+  "Path": "Folder1/1"}</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark add Folder1/1 http://example.com/ "Example Dot Com" /json
+<rsp>{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.com/",
+        "Title": "\"Example",
+        "Path": "Folder1/1"}}}}
+</div>
+~~~~
+
 
 # network delete
 
@@ -49,7 +74,26 @@ delete   Delete bookmark entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2
+<rsp>ERROR - The entry could not be found in the store.
+</div>
+~~~~
+
+Specifying the /json option returns a result of type Result:
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark delete BookmarkPath2 /json
+<rsp>{
+  "Result": {
+    "Success": false,
+    "Reason": "The entry could not be found in the store."}}
+</div>
+~~~~
+
 
 # network get
 
@@ -65,7 +109,32 @@ get   Lookup bookmark entry
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2
+<rsp>{
+  "Uri": "http://example.net/Bananas",
+  "Title": "\"Banana",
+  "Path": "Folder1/2"}</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultEntry:
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark get Folder1/2 /json
+<rsp>{
+  "ResultEntry": {
+    "Success": true,
+    "CatalogEntry": {
+      "CatalogedBookmark": {
+        "Uri": "http://example.net/Bananas",
+        "Title": "\"Banana",
+        "Path": "Folder1/2"}}}}
+</div>
+~~~~
+
 
 # network list
 
@@ -80,5 +149,43 @@ list   List bookmark entries
 <over>
 </div>
 ~~~~
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark list
+<rsp>CatalogedBookmark
+
+CatalogedBookmark
+
+CatalogedBookmark
+
+</div>
+~~~~
+
+Specifying the /json option returns a result of type ResultDump:
+
+~~~~
+<div="terminal">
+<cmd>Alice> bookmark list /json
+<rsp>{
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/",
+          "Title": "\"Example",
+          "Path": "Folder1/1"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.net/Bananas",
+          "Title": "\"Banana",
+          "Path": "Folder1/2"}},
+      {
+        "CatalogedBookmark": {
+          "Uri": "http://example.com/Fred",
+          "Title": "\"The",
+          "Path": "Folder1/1a"}}]}}
+</div>
+~~~~
+
 

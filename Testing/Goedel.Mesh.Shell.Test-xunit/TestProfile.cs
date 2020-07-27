@@ -141,8 +141,35 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void TestProfileConnectPinReused() => throw new NYI();
+        public void TestProfileConnectPinReused() {
+            var accountA = "alice@example.com";
 
+            var device1 = GetTestCLI("Device1");
+            var device2 = GetTestCLI("Device2");
+            var device3 = GetTestCLI("Device3");
+
+            device1.Dispatch($"mesh create /service={accountA}");
+
+            var result = device1.Dispatch($"account pin") as ResultPIN;
+
+
+            var pin = result.MessagePIN.PIN;
+            device2.Dispatch($"device request {accountA} /pin {pin}");
+            device1.Dispatch($"account sync /auto");
+
+            // This connection MUST be accepted.
+            device2.Dispatch($"device complete", fail: true);
+            device2.Dispatch($"account sync", fail: true);
+
+            // The connection MUST be rejected as the PIN was already used.
+            device3.Dispatch($"device request {accountA} /pin {pin}");
+            device1.Dispatch($"account sync /auto");
+
+            // The connection MUST be rejected as the PIN has expired.
+            device3.Dispatch($"device complete", fail: true);
+            device3.Dispatch($"account sync", fail: true);
+
+            }
 
         /// <summary>
         /// Test connection by means of a dynamic QR code displayed on an
@@ -206,16 +233,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectAuth() {
-            var accountA = "alice@example.com";
-            var deviceName1 = "Device1";
-            var deviceName2 = "Device2";
+            CreateAlice(out var device1, out var device2);
 
-
-            var device1 = GetTestCLI(deviceName1);
-            var device2 = GetTestCLI(deviceName2);
-            device1.Dispatch($"profile create {accountA} ");
-
-            device1.Connect(device2, accountA);
             device1.Dispatch($"device auth deviceName2 /bookmark");
             device2.Dispatch($"bookmark list");
 
@@ -226,7 +245,7 @@ namespace Goedel.XUnit {
             device2.Dispatch($"contact list");
 
             device1.Dispatch($"device auth deviceName2 /confirm");
-            device2.Dispatch($"confirm pending");
+            device2.Dispatch($"message pending");
 
             device1.Dispatch($"device auth deviceName2 /mail");
             device2.Dispatch($"mail list");
@@ -243,15 +262,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectAuthAll() {
-            var accountA = "alice@example.com";
-            var deviceName1 = "Device1";
-            var deviceName2 = "Device2";
+            CreateAlice(out var device1, out var device2);
 
-            var device1 = GetTestCLI(deviceName1);
-            var device2 = GetTestCLI(deviceName2);
-            device1.Dispatch($"profile create {accountA} ");
-
-            device1.Connect(device2, accountA);
             device1.Dispatch($"device auth deviceName2 /all");
             device2.Dispatch($"bookmark list");
             device2.Dispatch($"calendar list");
@@ -265,15 +277,8 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void TestProfileConnectAuthAdmin() {
-            var accountA = "alice@example.com";
-            var deviceName1 = "Device1";
-            var deviceName2 = "Device2";
+            CreateAlice(out var device1, out var device2);
 
-            var device1 = GetTestCLI(deviceName1);
-            var device2 = GetTestCLI(deviceName2);
-            device1.Dispatch($"profile create {accountA} ");
-
-            device1.Connect(device2, accountA);
             device1.Dispatch($"device auth deviceName2 /admin");
             }
 

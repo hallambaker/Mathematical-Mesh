@@ -200,8 +200,13 @@ namespace Goedel.Mesh.Test {
                 try {
                     Dispatcher(Entries, DefaultCommand, Shell, Args, 0);
                     var result = Shell.ShellResult as Result;
-                    result.Success.TestFalse();
+                    if (result.Success) {
+                        throw new TestExpectedFalse();
+                        }
                     return result;
+                    }
+                catch (TestExpectedFalse) {
+                    throw new TestExpectedFalse();
                     }
                 catch {
                     return Shell.ShellResult as Result;

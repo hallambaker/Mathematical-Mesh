@@ -27,24 +27,73 @@ perform access control on inbound messages.
 Having created a Mesh profile, Bob asks Alice to add him to her contacts catalog
 using the `message contact` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> message contact alice@example.com
+<rsp></div>
+~~~~
 
 Alice reviews her pending messages using the `message pending` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message pending
+<rsp>MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        Contact Request::
+        MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        To: alice@example.com From: bob@example.com
+        PIN: ECFX-4MRD-ALZE-QDW2-242H-5LXI-OM7N
+MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Connection Request::
+        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        To:  From: 
+        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Connection Request::
+        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        To:  From: 
+        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+</div>
+~~~~
 
 Alice sees the request from Bob and accepts it with the `message accept` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
+~~~~
 
 Bob's contact information has been added to Alice's address book:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> contact list
+<rsp>Entry<CatalogedContact>: MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
+  Person MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
+  Anchor MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
+  Address alice@example.com
+
+</div>
+~~~~
 
 Bob can find out if Alice has accepted his contact request using the 
 `message status` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 Alice has accepted Bob's request and added him to her contacts list. She has also sent
 Bob a contact request which for the sake of convenience, is accepted automatically.
@@ -52,11 +101,22 @@ Bob a contact request which for the sake of convenience, is accepted automatical
 Alice isn't required to accept contact requests. She rejects the request from Mallet 
 using the `message reject` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
+~~~~
 
 For good measure, she decides to block further requests:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message block mallet@example.com
+<rsp></div>
+~~~~
 
 The Mesh Confirmation protocol allows a message sender to ask the recipient a short
 question. If the user chooses to respond, the sender receives back a non-repudiable 
@@ -84,35 +144,97 @@ is a significant sum, Bob needs an authorization for the purchase. He sends Alic
 a confirmation request `Purchase equipment for $6,000?` using the  
 `message confirm` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> message confirm alice@example.com "Purchase equipment for $6,000?"
+<rsp></div>
+~~~~
 
 Alice reviews her pending messages using the using the `message pending` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message pending
+<rsp>MessageID: NCQE-3QRC-EDZA-COVP-MMMH-PS5Q-FXWI
+        Confirmation Request::
+        MessageID: NCQE-3QRC-EDZA-COVP-MMMH-PS5Q-FXWI
+        To: alice@example.com From: bob@example.com
+        Text: "Purchase
+MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        Contact Request::
+        MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        To: alice@example.com From: bob@example.com
+        PIN: ECFX-4MRD-ALZE-QDW2-242H-5LXI-OM7N
+MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Connection Request::
+        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        To:  From: 
+        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Connection Request::
+        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        To:  From: 
+        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
+        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+</div>
+~~~~
 
 Alice she accepts Bob's request using the `message pending` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message accept tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
+~~~~
 
 Bob receives Alice's approval using the `message status` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 In a full workflow system, Bob might include the response from Alice in a message to
 the accounts department asking them to place the order.
 
 Alice can also reject requests using the `message reject` command:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Alice> message reject tbs
+<rsp>ERROR - The specified message could not be found.
+</div>
+~~~~
 
 Bob receives a reply telling him the request was rejected:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Bob> message status tbs
+<rsp>ERROR - The feature has not been implemented
+</div>
+~~~~
 
 As with all Mesh messages, confirmation requests are subject to access control.
 When Mallet attempts to make a request of Alice, it is rejected because Alice
 hasn't accepted his credentials or authorized him to send confirmation requests:
 
-**Missing Example***
+
+~~~~
+<div="terminal">
+<cmd>Mallet> message confirm alice@example.com "Purchase equipment for $6,000?"
+<rsp>ERROR - Unspecified error
+</div>
+~~~~
 
 

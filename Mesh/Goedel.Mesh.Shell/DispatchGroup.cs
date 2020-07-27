@@ -1,4 +1,5 @@
 ﻿using Goedel.Utilities;
+using Goedel.Cryptography.Dare;
 
 using System.Collections.Generic;
 
@@ -71,6 +72,7 @@ namespace Goedel.Mesh.Shell {
             using var contextAccount = GetContextAccount(Options);
             using var contextGroup = contextAccount.GetContextGroup(groupID);
             var member = contextGroup.Locate(memberID);
+            member.AssertNotNull(EntryNotFound.Throw, memberID);
             contextGroup.Delete(member);
 
             var result = new ResultEntry() {
