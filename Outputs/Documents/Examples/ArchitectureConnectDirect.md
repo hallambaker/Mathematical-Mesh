@@ -4,9 +4,9 @@ The connection request is initiated on the device being connected:
 ~~~~
 <div="terminal">
 <cmd>Alice2> device request alice@example.com
-<rsp>   Device UDF = MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
-   Witness value = XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
-   Personal Mesh = MBU4-C4AJ-TGTO-AETP-LQDC-R3L6-VMX7
+<rsp>   Device UDF = MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
+   Witness value = 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+   Personal Mesh = MCOZ-GIZ3-34VQ-GQ6J-FCS7-BJIU-JCOY
 </div>
 ~~~~
 
@@ -18,21 +18,21 @@ accepts it:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+<rsp>MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         Connection Request::
-        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         To:  From: 
-        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
-        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
-MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         Connection Request::
-        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         To:  From: 
-        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
-        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
-<cmd>Alice> device accept CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
+        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
+<cmd>Alice> device accept 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
 <rsp>Result: Accept
-Added device: MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
+Added device: MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
 </div>
 ~~~~
 

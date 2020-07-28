@@ -39,19 +39,19 @@ create   Create recryption group
   "Key": "groupw@example.com",
   "Profile": {
     "KeyOfflineSignature": {
-      "UDF": "MC7M-VCLK-M42M-AUE6-L5QT-2Z4G-QNDW",
+      "UDF": "MDJM-V7WN-CTDQ-3LFZ-VPGW-R6UC-N5BG",
       "PublicParameters": {
         "PublicKeyECDH": {
           "crv": "Ed448",
-          "Public": "sERuuOQfOYYFTGLhPbH1NOrF2RT1hXCIveZc1Zk9NfSg45csI30V
-  GEXAXZweDMfRfPFIkIEqovOA"}}},
+          "Public": "_4bw7qHu4vvDAfQtX-N7mEI84zwmCvqADVbM2XghLfRbMI1rltRx
+  1buHl6HQAQhWKUvZ3OHPNi-A"}}},
     "KeyEncryption": {
-      "UDF": "MAWX-U6RL-AMTZ-3TXN-KM7D-OOIC-YWFH",
+      "UDF": "MDF3-CQX5-LUNL-COHG-UP75-UFAG-UNZ3",
       "PublicParameters": {
         "PublicKeyECDH": {
           "crv": "X448",
-          "Public": "SW9tWFmDEfLS4KzdhojHHK2bK8uQ7D9s3K5lpnKBs8VebgKmsAr1
-  orx4zpZxB-NaQCyZHUCMSpGA"}}}}}</div>
+          "Public": "72HkuTKQn3Jc2Afp_kpDGlohhpb2zsSwBl_dRbACmXDrbMkCNmqq
+  oUokJ3Rry7tJeywR7bvSrdoA"}}}}}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -67,19 +67,19 @@ Specifying the /json option returns a result of type ResultEntry:
         "Key": "groupw@example.com",
         "Profile": {
           "KeyOfflineSignature": {
-            "UDF": "MC7M-VCLK-M42M-AUE6-L5QT-2Z4G-QNDW",
+            "UDF": "MDJM-V7WN-CTDQ-3LFZ-VPGW-R6UC-N5BG",
             "PublicParameters": {
               "PublicKeyECDH": {
                 "crv": "Ed448",
-                "Public": "sERuuOQfOYYFTGLhPbH1NOrF2RT1hXCIveZc1Zk9NfSg45csI30V
-  GEXAXZweDMfRfPFIkIEqovOA"}}},
+                "Public": "_4bw7qHu4vvDAfQtX-N7mEI84zwmCvqADVbM2XghLfRbMI1rltRx
+  1buHl6HQAQhWKUvZ3OHPNi-A"}}},
           "KeyEncryption": {
-            "UDF": "MAWX-U6RL-AMTZ-3TXN-KM7D-OOIC-YWFH",
+            "UDF": "MDF3-CQX5-LUNL-COHG-UP75-UFAG-UNZ3",
             "PublicParameters": {
               "PublicKeyECDH": {
                 "crv": "X448",
-                "Public": "SW9tWFmDEfLS4KzdhojHHK2bK8uQ7D9s3K5lpnKBs8VebgKmsAr1
-  orx4zpZxB-NaQCyZHUCMSpGA"}}}}}}}}
+                "Public": "72HkuTKQn3Jc2Afp_kpDGlohhpb2zsSwBl_dRbACmXDrbMkCNmqq
+  oUokJ3Rry7tJeywR7bvSrdoA"}}}}}}}}
 </div>
 ~~~~
 

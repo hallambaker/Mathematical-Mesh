@@ -8,9 +8,9 @@
 network    Manage network profile settings
     add   Add calendar entry from file
     delete   Delete calendar entry
-    dump   List network entries
     get   Lookup calendar entry
     import   Add calendar entry from file
+    list   List network entries
 <over>
 </div>
 ~~~~
@@ -123,12 +123,12 @@ Specifying the /json option returns a result of type ResultEntry:
 ~~~~
 
 
-# network dump
+# network list
 
 ~~~~
 <div="helptext">
 <over>
-dump   List network entries
+list   List network entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -140,19 +140,29 @@ dump   List network entries
 ~~~~
 <div="terminal">
 <cmd>Alice> network list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedNetwork
+
+CatalogedNetwork
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> network list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry1.json",
+          "Password": "NetID1"}},
+      {
+        "CatalogedNetwork": {
+          "Service": "NetworkEntry2.json",
+          "Password": "NetID2"}}]}}
 </div>
 ~~~~
 

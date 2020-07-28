@@ -1,37 +1,37 @@
 # meshman Reference Manual
 
 <dl>
-<dt><a href="account.md">account</a>
+<dt><a href="account.html">account</a>
 <dd>Account creation and management commands.
-<dt><a href="bookmark.md">bookmark</a>
+<dt><a href="bookmark.html">bookmark</a>
 <dd>Manage bookmark catalogs connected to an account
-<dt><a href="calendar.md">calendar</a>
+<dt><a href="calendar.html">calendar</a>
 <dd>Manage calendar catalogs connected to an account
-<dt><a href="contact.md">contact</a>
+<dt><a href="contact.html">contact</a>
 <dd>Manage contact catalogs connected to an account
-<dt><a href="container.md">container</a>
+<dt><a href="container.html">container</a>
 <dd>DARE container commands
-<dt><a href="dare.md">dare</a>
+<dt><a href="dare.html">dare</a>
 <dd>DARE Message encryption and decryption commands
-<dt><a href="device.md">device</a>
+<dt><a href="device.html">device</a>
 <dd>Device management commands.
-<dt><a href="group.md">group</a>
+<dt><a href="group.html">group</a>
 <dd>Group management commands
-<dt><a href="hash.md">hash</a>
+<dt><a href="hash.html">hash</a>
 <dd>Content Digest and Message Authentication Code operations on files
-<dt><a href="key.md">key</a>
+<dt><a href="key.html">key</a>
 <dd>Key operations.
-<dt><a href="mail.md">mail</a>
+<dt><a href="mail.html">mail</a>
 <dd>Manage mail profiles connected to a personal profile
-<dt><a href="mesh.md">mesh</a>
+<dt><a href="mesh.html">mesh</a>
 <dd>Commands for creating and managing a personal Mesh
-<dt><a href="message.md">message</a>
+<dt><a href="message.html">message</a>
 <dd>Contact and confirmation message options
-<dt><a href="network.md">network</a>
+<dt><a href="network.html">network</a>
 <dd>Manage network profile settings
-<dt><a href="password.md">password</a>
+<dt><a href="password.html">password</a>
 <dd>Manage password catalogs connected to an account
-<dt><a href="ssh.md">ssh</a>
+<dt><a href="ssh.html">ssh</a>
 <dd>Manage SSH profiles connected to a personal profile
 </dl>
 

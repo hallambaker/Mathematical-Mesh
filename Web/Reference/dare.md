@@ -72,20 +72,20 @@ file name is the input file name with the additional extension `.dare`.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
-<rsp>ERROR - Unspecified error
-</div>
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<rsp></div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultFile:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "Unspecified error"}}
+  "ResultFile": {
+    "Success": true,
+    "Filename": "TestFile1.dare",
+    "TotalBytes": 14}}
 </div>
 ~~~~
 
@@ -120,7 +120,7 @@ with the extension `.undare` otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -129,7 +129,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
 <rsp>{
   "Result": {
     "Success": false,
@@ -163,7 +163,7 @@ The active key collection may be overriden using the `/mesh` option.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -172,7 +172,7 @@ Specifying the /json option returns a result of type Result:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ /json
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ /json
 <rsp>{
   "Result": {
     "Success": false,

@@ -39,7 +39,10 @@ Network entries may be deleted using the  `network delete` command:
 <cmd>Alice> network delete NetID2
 <rsp>ERROR - The entry could not be found in the store.
 <cmd>Alice> network list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedNetwork
+
+CatalogedNetwork
+
 </div>
 ~~~~
 
@@ -51,7 +54,10 @@ A complete list of networks is obtained using the  `network list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> network list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedNetwork
+
+CatalogedNetwork
+
 </div>
 ~~~~
 

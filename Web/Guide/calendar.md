@@ -17,10 +17,10 @@ The `password add` command adds a calendar entry to a catalog:
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCGI-VTFE-QH72-OAR5-ZYFC-7GZ5-ADVS"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
+  "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}<cmd>Alice> calendar add CalendarEntry2.json CalID2
 <rsp>{
   "Title": "CalendarEntry2.json",
-  "Key": "NC36-RU25-CG52-33XG-BPY2-4PLT-57GQ"}</div>
+  "Key": "NCBV-NRGL-BFXG-U7OF-3IBS-VAWY-TOS7"}</div>
 ~~~~
 
 
@@ -46,7 +46,10 @@ Calendar entries may be deleted using the  `calendar delete` command:
 <cmd>Alice> calendar delete CalID1
 <rsp>ERROR - The entry could not be found in the store.
 <cmd>Alice> calendar list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
@@ -58,7 +61,10 @@ A complete list of calendars is obtained using the  `calendar list` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 

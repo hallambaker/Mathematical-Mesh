@@ -8,9 +8,9 @@
 network    Manage network profile settings
     add   Add calendar entry from file
     delete   Delete calendar entry
-    dump   List network entries
     get   Lookup calendar entry
     import   Add calendar entry from file
+    list   List network entries
 <over>
 </div>
 ~~~~

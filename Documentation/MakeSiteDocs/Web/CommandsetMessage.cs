@@ -21,7 +21,6 @@ namespace ExampleGenerator {
 		public void _WebMessage(CreateExamples Examples) {
 
 				 MakeTitle ("Message");
-				_Output.Write ("# Using the Message Command Set\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `message` command set contains commands that send, receive and respond to \n{0}", _Indent);
 				_Output.Write ("Mesh transactional messages. Currently, two Mesh messaging applications are defined:\n{0}", _Indent);

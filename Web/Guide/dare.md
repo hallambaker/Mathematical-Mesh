@@ -12,8 +12,7 @@ The `dare encode` command is used to encode files as DARE Messages:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare encode TestFile1.txt
-<rsp>ERROR - Unspecified error
-</div>
+<rsp></div>
 ~~~~
 
 In this case, the file `TestFile1.txt` contains the text `"This is a test"`.
@@ -26,9 +25,8 @@ The data contents may be encrypted and authenticated under a specified symmetric
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
-<rsp>ERROR - Unspecified error
-</div>
+<cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.symmetric.dare /key=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<rsp></div>
 ~~~~
 
 Specifying a directory instead of a file causes all the files in the directory to be 
@@ -37,8 +35,8 @@ encoded:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare encode TestDir1 /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
-<rsp>ERROR - Unspecified error
+<cmd>Alice> dare encode TestDir1 /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
+<rsp>ERROR - No decryption key is available
 </div>
 ~~~~
 
@@ -51,8 +49,7 @@ public encryption key.
 ~~~~
 <div="terminal">
 <cmd>Alice> dare encode TestFile1.txt /out=TestFile1.txt.mesh.dare/encrypt=bob@example.com /sign=alice@example.com
-<rsp>ERROR - Unspecified error
-</div>
+<rsp></div>
 ~~~~
 
 
@@ -65,7 +62,7 @@ digest values on a DARE Message without decoding the message body:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.dare
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 </div>
 ~~~~
 
@@ -75,7 +72,7 @@ The command to verify a signed message is identical:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.mesh.dare
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 </div>
 ~~~~
 
@@ -86,7 +83,7 @@ level otherwise.
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<cmd>Alice> dare verify TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -96,7 +93,7 @@ level otherwise.
 ~~~~
 <div="terminal">
 <cmd>Alice> dare verify TestFile1.txt.symmetric.dare
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.symmetric.dare'.
 </div>
 ~~~~
 
@@ -108,7 +105,7 @@ The `dare decode` command is used to decode and verify DARE Messages:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare decode TestFile1.txt.dare
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.dare'.
 </div>
 ~~~~
 
@@ -117,7 +114,7 @@ To decode a message encrypted under a symmetric key, we must specify the key:
 
 ~~~~
 <div="terminal">
-<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDPE-H5D3-ASVD-4BF4-PMAR-NOA6-IEIQ
+<cmd>Alice> dare decode TestFile1.txt.symmetric.dare /encrypt=EDVG-TQUJ-NBT5-3QPP-OOR7-ECTH-GAOQ
 <rsp>ERROR - The option System.Object[] is not known.
 </div>
 ~~~~
@@ -129,7 +126,7 @@ the necessary decryption key(s) automatically:
 ~~~~
 <div="terminal">
 <cmd>Alice> dare decode TestFile1.txt.mesh.dare
-<rsp>ERROR - Unspecified error
+<rsp>ERROR - Could not find file 'C:\Users\hallam\Test\WorkingDirectory\TestFile1.txt.mesh.dare'.
 </div>
 ~~~~
 

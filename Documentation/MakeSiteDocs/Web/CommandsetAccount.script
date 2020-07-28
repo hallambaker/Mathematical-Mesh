@@ -6,7 +6,7 @@
 
 
 
-#xfile CreateExamples WebAccount "Guide/profile.md" CreateExamples Examples
+#xfile CreateExamples WebAccount "Guide/account.md" CreateExamples Examples
 #% MakeTitle ("account");
 
 The account command set contains commands used to create and manage

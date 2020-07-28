@@ -4,7 +4,7 @@ The PIN connection mechanism begins with the issue of the PIN:
 ~~~~
 <div="terminal">
 <cmd>Alice> account pin
-<rsp>PIN=ADDA-NJ7O-ZQS3-4KR6-N7OA-CEZR-FRUR (Expires=2020-07-28T09:45:24Z)
+<rsp>PIN=ABR4-YOVV-74YV-FW3W-G4MB-H4YZ-QEFP (Expires=2020-07-29T15:49:05Z)
 </div>
 ~~~~
 
@@ -13,7 +13,7 @@ The PIN code is transmitted out of band to the device being connected:
 
 ~~~~
 <div="terminal">
-<cmd>Alice3> device request alice@example.com /pin=ADDA-NJ7O-ZQS3-4KR6-N7OA-CEZR-FRUR
+<cmd>Alice3> device request alice@example.com /pin=ABR4-YOVV-74YV-FW3W-G4MB-H4YZ-QEFP
 <rsp>ERROR - The requested cryptographic operation is not supported
 </div>
 ~~~~
@@ -26,18 +26,18 @@ the connection assertion:
 ~~~~
 <div="terminal">
 <cmd>Alice> device pending
-<rsp>MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+<rsp>MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         Connection Request::
-        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         To:  From: 
-        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
-        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
-MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         Connection Request::
-        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         To:  From: 
-        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
-        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
+        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
 </div>
 ~~~~
 

@@ -18,6 +18,8 @@ namespace ExampleGenerator {
 		// WebDocs
 		//
 		public void WebDocs (CreateExamples Index) {
+			 WebAccount (Index);
+			 AccountReference (Index);
 			 Web (Index);
 			 UserGuide (Index);
 			 Reference (Index);
@@ -157,7 +159,7 @@ namespace ExampleGenerator {
 				_Output.Write ("<dl>\n{0}", _Indent);
 				foreach  (var entry in CommandLineInterpreter.Entries) {
 					if (  (entry.Value is DescribeCommandSet) ) {
-						_Output.Write ("<dt><a href=\"{1}.md\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
+						_Output.Write ("<dt><a href=\"{1}.html\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
 						_Output.Write ("<dd>{1}\n{0}", _Indent, entry.Value.Brief);
 						}
 					}
@@ -181,7 +183,7 @@ namespace ExampleGenerator {
 				_Output.Write ("<dl>\n{0}", _Indent);
 				foreach  (var entry in CommandLineInterpreter.Entries) {
 					if (  (entry.Value is DescribeCommandSet) ) {
-						_Output.Write ("<dt><a href=\"{1}.md\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
+						_Output.Write ("<dt><a href=\"{1}.html\">{2}</a>\n{0}", _Indent, entry.Key, entry.Key);
 						_Output.Write ("<dd>{1}\n{0}", _Indent, entry.Value.Brief);
 						}
 					}

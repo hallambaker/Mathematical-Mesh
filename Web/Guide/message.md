@@ -1,6 +1,5 @@
 <title>Message
 # Using the Message Command Set
-# Using the Message Command Set
 
 The `message` command set contains commands that send, receive and respond to 
 Mesh transactional messages. Currently, two Mesh messaging applications are defined:
@@ -40,23 +39,23 @@ Alice reviews her pending messages using the `message pending` command:
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+<rsp>MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
         Contact Request::
-        MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
         To: alice@example.com From: bob@example.com
-        PIN: ECFX-4MRD-ALZE-QDW2-242H-5LXI-OM7N
-MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        PIN: ECAW-VTSJ-FYOI-TAQ6-U2JH-4JM3-UDEF
+MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         Connection Request::
-        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         To:  From: 
-        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
-        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
-MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         Connection Request::
-        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         To:  From: 
-        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
-        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
+        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
 </div>
 ~~~~
 
@@ -76,9 +75,9 @@ Bob's contact information has been added to Alice's address book:
 ~~~~
 <div="terminal">
 <cmd>Alice> contact list
-<rsp>Entry<CatalogedContact>: MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
-  Person MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
-  Anchor MDWA-A3BV-DQ6V-F3MA-L3RW-GITX-JAPX
+<rsp>Entry<CatalogedContact>: MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
+  Person MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
+  Anchor MBEA-67YL-KUQ7-LFXL-BDVK-WA6H-SV7Q
   Address alice@example.com
 
 </div>
@@ -157,28 +156,28 @@ Alice reviews her pending messages using the using the `message pending` command
 ~~~~
 <div="terminal">
 <cmd>Alice> message pending
-<rsp>MessageID: NCQE-3QRC-EDZA-COVP-MMMH-PS5Q-FXWI
+<rsp>MessageID: NBA6-OH3N-VXAK-MLLK-BU2B-SLJ7-MHOM
         Confirmation Request::
-        MessageID: NCQE-3QRC-EDZA-COVP-MMMH-PS5Q-FXWI
+        MessageID: NBA6-OH3N-VXAK-MLLK-BU2B-SLJ7-MHOM
         To: alice@example.com From: bob@example.com
         Text: "Purchase
-MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
         Contact Request::
-        MessageID: NAKQ-VJU5-XERR-C3C2-YBFL-HZXN-TWGD
+        MessageID: NDU7-QGJX-ICCX-UGCO-4CW2-5DLV-64YH
         To: alice@example.com From: bob@example.com
-        PIN: ECFX-4MRD-ALZE-QDW2-242H-5LXI-OM7N
-MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        PIN: ECAW-VTSJ-FYOI-TAQ6-U2JH-4JM3-UDEF
+MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         Connection Request::
-        MessageID: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
+        MessageID: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
         To:  From: 
-        Device:  MD7W-S6XF-V4EL-7QEO-MUPK-B5JL-MLPY
-        Witness: CIGO-WAFU-OAYI-PF7E-5L4H-DOG2-SY3Z
-MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MDTJ-IEIN-4ST6-ZC3G-OUSP-PBNM-PHYK
+        Witness: 4WQE-EGTC-VKQR-4X4I-3GNM-HOBD-J2RV
+MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         Connection Request::
-        MessageID: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        MessageID: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
         To:  From: 
-        Device:  MC6T-FX77-ABC5-BVJ5-U3C4-MYCH-PQVR
-        Witness: XP3F-7HEO-OYBH-SKCJ-EO7P-Q54P-6HED
+        Device:  MBKR-2YPO-UOPU-2QTE-2YXK-J55K-QBWQ
+        Witness: 2CHS-6OLF-5NF2-XECX-EZON-A2XD-GDMM
 </div>
 ~~~~
 

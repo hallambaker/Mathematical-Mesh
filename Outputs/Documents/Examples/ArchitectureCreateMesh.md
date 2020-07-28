@@ -2,7 +2,7 @@
 ~~~~
 <div="terminal">
 <cmd>Alice> mesh create
-<rsp>Device Profile UDF=MB25-BJYV-2I3W-JHRQ-Z4KF-BPMC-BYUG
-Personal Profile UDF=MBU4-C4AJ-TGTO-AETP-LQDC-R3L6-VMX7
+<rsp>Device Profile UDF=MC7B-CDOG-VA7F-TCBO-4JCY-QC6F-2F5A
+Personal Profile UDF=MCOZ-GIZ3-34VQ-GQ6J-FCS7-BJIU-JCOY
 </div>
 ~~~~

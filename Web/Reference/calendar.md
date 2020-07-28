@@ -8,9 +8,9 @@
 calendar    Manage calendar catalogs connected to an account
     add   Add calendar entry
     delete   Delete calendar entry
-    dump   List calendar entries
     get   Lookup calendar entry
     import   Add calendar entry from file
+    list   List calendar entries
 <over>
 </div>
 ~~~~
@@ -37,7 +37,7 @@ add   Add calendar entry
 <cmd>Alice> calendar add CalendarEntry1.json CalID1
 <rsp>{
   "Title": "CalendarEntry1.json",
-  "Key": "NCGI-VTFE-QH72-OAR5-ZYFC-7GZ5-ADVS"}</div>
+  "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}</div>
 ~~~~
 
 Specifying the /json option returns a result of type ResultEntry:
@@ -51,7 +51,7 @@ Specifying the /json option returns a result of type ResultEntry:
     "CatalogEntry": {
       "CatalogedTask": {
         "Title": "CalendarEntry1.json",
-        "Key": "NCGI-VTFE-QH72-OAR5-ZYFC-7GZ5-ADVS"}}}}
+        "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}}}}
 </div>
 ~~~~
 
@@ -125,12 +125,12 @@ Specifying the /json option returns a result of type ResultEntry:
 ~~~~
 
 
-# calendar dump
+# calendar list
 
 ~~~~
 <div="helptext">
 <over>
-dump   List calendar entries
+list   List calendar entries
     /account   Account identifier (e.g. alice@example.com) or profile fingerprint
     /verbose   Verbose reports (default)
     /report   Report output (default)
@@ -142,19 +142,29 @@ dump   List calendar entries
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar list
-<rsp>ERROR - The command System.Object[] is not known.
+<rsp>CatalogedTask
+
+CatalogedTask
+
 </div>
 ~~~~
 
-Specifying the /json option returns a result of type Result:
+Specifying the /json option returns a result of type ResultDump:
 
 ~~~~
 <div="terminal">
 <cmd>Alice> calendar list /json
 <rsp>{
-  "Result": {
-    "Success": false,
-    "Reason": "The command System.Object[] is not known."}}
+  "ResultDump": {
+    "Success": true,
+    "CatalogedEntries": [{
+        "CatalogedTask": {
+          "Title": "CalendarEntry1.json",
+          "Key": "NAJ7-J4HW-SHOJ-LW5C-QEXR-WFMX-KDCR"}},
+      {
+        "CatalogedTask": {
+          "Title": "CalendarEntry2.json",
+          "Key": "NCBV-NRGL-BFXG-U7OF-3IBS-VAWY-TOS7"}}]}}
 </div>
 ~~~~
 

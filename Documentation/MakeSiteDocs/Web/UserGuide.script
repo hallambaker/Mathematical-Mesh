@@ -9,6 +9,8 @@
 
 
 #method WebDocs CreateExamples Index
+#% WebAccount (Index);
+#% AccountReference (Index);
 #% Web (Index);
 #% UserGuide (Index);
 #% Reference (Index);
@@ -121,7 +123,7 @@ Synchronous
 <dl>
 #foreach (var entry in CommandLineInterpreter.Entries)
 #if (entry.Value is DescribeCommandSet)
-<dt><a href="#{entry.Key}.md">#{entry.Key}</a>
+<dt><a href="#{entry.Key}.html">#{entry.Key}</a>
 <dd>#{entry.Value.Brief}
 #end if
 #end foreach
@@ -138,7 +140,7 @@ Synchronous
 <dl>
 #foreach (var entry in CommandLineInterpreter.Entries)
 #if (entry.Value is DescribeCommandSet)
-<dt><a href="#{entry.Key}.md">#{entry.Key}</a>
+<dt><a href="#{entry.Key}.html">#{entry.Key}</a>
 <dd>#{entry.Value.Brief}
 #end if
 #end foreach
