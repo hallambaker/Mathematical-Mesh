@@ -176,14 +176,14 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] masterSecret = null,
+                byte[] meshSecret = null,
                 bool? persist = null) {
 
             localName.Future();
 
             var context = ContextMeshAdmin.CreateMesh(
                     this, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
-                    masterSecret, persist: persist);
+                    meshSecret, persist: persist);
 
             Register(context);
             //Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");

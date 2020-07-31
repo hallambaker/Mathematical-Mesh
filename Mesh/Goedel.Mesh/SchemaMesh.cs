@@ -73,6 +73,7 @@ namespace Goedel.Mesh {
 			{"ProfileDevice", ProfileDevice._Factory},
 			{"ActivationDevice", ActivationDevice._Factory},
 			{"ConnectionDevice", ConnectionDevice._Factory},
+			{"CatalogedEscrow", CatalogedEscrow._Factory},
 			{"CatalogedDevice", CatalogedDevice._Factory},
 			{"CatalogedPublication", CatalogedPublication._Factory},
 			{"ProfileAccount", ProfileAccount._Factory},
@@ -2224,6 +2225,116 @@ namespace Goedel.Mesh {
 					// An untagged structure
 					KeyAuthentication = new KeyData ();
 					KeyAuthentication.Deserialize (jsonReader);
+ 
+					break;
+					}
+				default : {
+					base.DeserializeToken(jsonReader, tag);
+					break;
+					}
+				}
+			// check up that all the required elements are present
+			}
+
+
+		}
+
+	/// <summary>
+	///
+	/// Escrow records for recovery of Mesh accounts
+	/// </summary>
+	public partial class CatalogedEscrow : CatalogedEntry {
+        /// <summary>
+        ///The encrypted escrow record
+        /// </summary>
+
+		public virtual DareEnvelope						EnvelopedEscrowRecord  {get; set;}
+		
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public override string _Tag => __Tag;
+
+		/// <summary>
+        /// Tag identifying this class
+        /// </summary>
+		public new const string __Tag = "CatalogedEscrow";
+
+		/// <summary>
+        /// Factory method
+        /// </summary>
+        /// <returns>Object of this type</returns>
+		public static new JsonObject _Factory () => new CatalogedEscrow();
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// </summary>
+        /// <param name="writer">Output stream</param>
+        /// <param name="wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="first">If true, item is the first entry in a list.</param>
+		public override void Serialize (Writer writer, bool wrap, ref bool first) =>
+			SerializeX (writer, wrap, ref first);
+
+
+        /// <summary>
+        /// Serialize this object to the specified output stream.
+        /// Unlike the Serlialize() method, this method is not inherited from the
+        /// parent class allowing a specific version of the method to be called.
+        /// </summary>
+        /// <param name="_writer">Output stream</param>
+        /// <param name="_wrap">If true, output is wrapped with object
+        /// start and end sequences '{ ... }'.</param>
+        /// <param name="_first">If true, item is the first entry in a list.</param>
+		public new void SerializeX (Writer _writer, bool _wrap, ref bool _first) {
+			PreEncode();
+			if (_wrap) {
+				_writer.WriteObjectStart ();
+				}
+			((CatalogedEntry)this).SerializeX(_writer, false, ref _first);
+			if (EnvelopedEscrowRecord != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("EnvelopedEscrowRecord", 1);
+					EnvelopedEscrowRecord.Serialize (_writer, false);
+				}
+			if (_wrap) {
+				_writer.WriteObjectEnd ();
+				}
+			}
+
+        /// <summary>
+        /// Deserialize a tagged stream
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+        /// <returns>The created object.</returns>		
+        public static new CatalogedEscrow FromJson (JsonReader jsonReader, bool tagged=true) {
+			if (jsonReader == null) {
+				return null;
+				}
+			if (tagged) {
+				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
+				return Out as CatalogedEscrow;
+				}
+		    var Result = new CatalogedEscrow ();
+			Result.Deserialize (jsonReader);
+			Result.PostDecode();
+			return Result;
+			}
+
+        /// <summary>
+        /// Having read a tag, process the corresponding value data.
+        /// </summary>
+        /// <param name="jsonReader">The input stream</param>
+        /// <param name="tag">The tag</param>
+		public override void DeserializeToken (JsonReader jsonReader, string tag) {
+			
+			switch (tag) {
+				case "EnvelopedEscrowRecord" : {
+					// An untagged structure
+					EnvelopedEscrowRecord = new DareEnvelope ();
+					EnvelopedEscrowRecord.Deserialize (jsonReader);
  
 					break;
 					}

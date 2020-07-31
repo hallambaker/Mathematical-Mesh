@@ -91,6 +91,9 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MeshRecover(MeshRecover Options) {
+            
+            // ToDo: this is going to need refactoring so that the localname and account tabs are filled.
+
 
             var recoverShares = new List<string>();
             AddIfPresent(recoverShares, Options.Share1);
@@ -105,7 +108,10 @@ namespace Goedel.Mesh.Shell {
             var secret = new SharedSecret(recoverShares);
 
 
-            var contextMesh = ContextMeshAdmin.RecoverMesh(MeshHost, secret.Key);
+            var (algorithm, meshSecret) = secret.ParseKey();
+            algorithm.AssertEqual(UdfAlgorithmIdentifier.MeshProfileMaster, InvalidRecoverySecret.Throw);
+            var contextMesh = MeshHost.CreateMesh("main", meshSecret: meshSecret);
+
 
             "recover subordinate accounts, etc.".TaskFunctionality();
             return new ResultRecover() {

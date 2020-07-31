@@ -48,15 +48,15 @@ namespace Goedel.Cryptography.Core {
                     }
 
                 case PlatformID.Win32S:
-                    break;
+                break;
                 case PlatformID.Win32Windows:
-                    break;
+                break;
                 case PlatformID.WinCE:
-                    break;
+                break;
                 case PlatformID.Xbox:
-                    break;
+                break;
                 default:
-                    break;
+                break;
                 }
 
 
@@ -102,6 +102,18 @@ namespace Goedel.Cryptography.Core {
 
 
             }
+
+        public void ErasePrivateKey(string udf) {
+            var fileName = Path.Combine(DirectoryKeys, udf);
+
+            try {
+                File.Delete(fileName);
+                }
+            catch {
+                throw new KeyErasureFailed();
+                }
+            }
+
 
         public override IJson LocatePrivateKey(string udf) {
 

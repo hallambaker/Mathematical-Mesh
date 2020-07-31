@@ -449,6 +449,30 @@ namespace Goedel.Cryptography {
             return accum.ToByteArrayBigEndian(shareChunks * 4);
             }
 
+        /// <summary>
+        /// Parse the property <see cref="Key"/> as a binary UDF value and return the
+        /// values.
+        /// </summary>
+        /// <returns>The UDF type, algorithm and data sections</returns>
+        public (UdfAlgorithmIdentifier, byte[]) ParseKey() {
+            int start;
+            for (start = 0; (start < Key.Length) && Key[start] == 0; start++) {
+                }
+            (Key[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(
+                        InvalidRecoveredData.Throw);
+
+
+            var udfAlgorithm = (UdfAlgorithmIdentifier)(Key[start++] * 0x100 + Key[start++]);
+
+            var length = Key.Length - start;
+            var masterSecret = new byte[length];
+            Buffer.BlockCopy(Key, start, masterSecret, 0, length);
+
+            return (udfAlgorithm, masterSecret);
+            }
+
+
+
         }
 
 

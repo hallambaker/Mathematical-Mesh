@@ -244,6 +244,15 @@
 			Description
 				|The authentication key for use of the device under the profile
 
+
+	Structure CatalogedEscrow
+		Inherits CatalogedEntry
+		Description
+			|Escrow records for recovery of Mesh accounts
+		Struct DareEnvelope EnvelopedEscrowRecord
+			Description
+				|The encrypted escrow record
+	
 	Structure CatalogedDevice
 		Inherits CatalogedEntry
 		Description

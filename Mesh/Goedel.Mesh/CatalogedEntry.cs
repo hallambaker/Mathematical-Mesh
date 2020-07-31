@@ -89,7 +89,6 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Add the catalog entry to the stream <paramref name="stream"/> in the
         /// format specified by <paramref name="format"/>.
-        /// <paramref name="merge"/> is true, merge this contact information.
         /// </summary>
         /// <param name="stream">The stream to write the data to.</param>
         /// <param name="format">The file format to write the output in.</param>

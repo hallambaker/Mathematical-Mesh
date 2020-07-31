@@ -36,6 +36,16 @@ namespace Goedel.Mesh {
             }
 
 
+        public ProfileAccount(
+            IKeyCollection meshHost,
+            PrivateKeyUDF secretSeedMaster,
+            string serviceAddress,
+            bool? persist = null
+            ) {
+            throw new NYI();
+            }
+
+
         /// <summary>
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
         /// seed.

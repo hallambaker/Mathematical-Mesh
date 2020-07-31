@@ -1,14 +1,50 @@
 ﻿# ToDo
 
-We need a thorough overhaul of the mechanisms managing catalogs. In particular we should merge the 
-persistence stuff into the catalog class.
+Rework ContextMesh / ContextAccount
 
-The core issue here is that we need a mechanism that allows us to look up contacts by email address
-or other id.
-
-So this requires something of an audit of the whole naming mechanisms.
+One Context class, no subclasses.
 
 
+## Catalog settings
 
+
+
+
+## Genesis
+
+<dl>
+<dt>Mesh Secret
+<dd>Create secret shares
+<dd>Recover escrowed data records
+</dl>
+
+
+## Meta
+
+<dl>
+<dt>
+<dd>
+</dl>
+
+## Admin
+
+<dl>
+<dt>
+<dd>
+</dl>
+
+## Messaging
+
+<dl>
+<dt>
+<dd>
+</dl>
+
+## Hub
+
+<dl>
+<dt>
+<dd>
+</dl>
 
 

@@ -212,9 +212,6 @@ namespace Goedel.Mesh.Client {
                 DeviceUDF = profileDevice.UDF
                 };
 
-
-
-
             return catalogEntryDevice;
             }
 
@@ -297,7 +294,7 @@ namespace Goedel.Mesh.Client {
         /// Recover a Mesh Profile from the recovery key value.
         /// </summary>
         /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-        /// <param name="secretBytes">The recovered UDF key derrivation seed. This may have leading
+        /// <param name="Key">The recovered UDF key derrivation seed. This may have leading
         /// zeros.</param>
         /// <param name="profileDevice">The device profile to bind to.</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
@@ -306,7 +303,7 @@ namespace Goedel.Mesh.Client {
         /// <returns>An administration context instance for the recovered profile.</returns>
         public static ContextMeshAdmin RecoverMesh(
                 MeshHost meshHost,
-                byte[] secretBytes,
+                byte[] Key,
                 ProfileDevice profileDevice = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
@@ -320,20 +317,20 @@ namespace Goedel.Mesh.Client {
             // the key type, etc.
 
             int start;
-            for (start = 0; (start < secretBytes.Length) && secretBytes[start] == 0; start++) {
+            for (start = 0; (start < Key.Length) && Key[start] == 0; start++) {
                 }
-            (secretBytes[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(
+            (Key[start++] == (byte)UdfTypeIdentifier.DerivedKey).AssertTrue(
                         InvalidRecoverySecret.Throw);
-            var algorithm = secretBytes[start++]* 0x100 + secretBytes[start++];
+            var algorithm = Key[start++]* 0x100 + Key[start++];
             (algorithm == (int)UdfAlgorithmIdentifier.MeshProfileMaster).AssertTrue(
                         InvalidRecoverySecret.Throw);
 
-            var length = secretBytes.Length - start;
-            var masterSecret = new byte[length];
-            Buffer.BlockCopy(secretBytes, start, masterSecret, 0, length);
+            var length = Key.Length - start;
+            var meshSecret = new byte[length];
+            Buffer.BlockCopy(Key, start, meshSecret, 0, length);
             //Console.WriteLine(masterSecret.ToStringBase16FormatHex());
             return meshHost.CreateMesh("main", algorithmSign, algorithmEncrypt, algorithmAuthenticate,
-                masterSecret);
+                meshSecret);
             }
 
         #endregion

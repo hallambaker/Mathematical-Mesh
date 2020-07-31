@@ -135,7 +135,11 @@ namespace Goedel.Mesh {
             return Add(contact);
             }
 
-
+        /// <summary>
+        /// Return the contact with identifier <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">specifies the identifier to return.</param>
+        /// <returns>The contact, if found. Otherwise null.</returns>
         public override CatalogedContact Get(string key) {
             if (base.Get(key).NotNull (out var result)) {
                 return result;
@@ -156,6 +160,7 @@ namespace Goedel.Mesh {
         /// <param name="localName">Short name for the contact to distinguish it from
         /// others.</param>
         /// <param name="merge">Add this data to the existing contact.</param>
+        /// <param name="format">The format the input is written in.</param>
         /// <returns></returns>
         public CatalogedContact AddFromFile(
                     string fileName,
@@ -163,6 +168,10 @@ namespace Goedel.Mesh {
                     CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                     bool merge = true,
                     string localName = null) {
+            merge.Future();
+            localName.Future();
+
+
             using var stream = fileName.OpenFileReadShared();
             var contact = ReadFromStream(stream, format);
 

@@ -787,33 +787,47 @@
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.AddFromStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
-            Add the catalog entry data speficied in the file <paramref name="fileName"/>. If 
+            Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 
             <paramref name="merge"/> is true, merge this contact information.
             </summary>
-            <param name="fileName">The file to fetch the contact data from.</param>
+            <param name="stream">The stream to fetch the contact data from.</param>
             <param name="format">The file format to write the output in.</param>
             <param name="localName">Short name for the contact to distinguish it from
             others.</param>
             <param name="merge">Add this data to the existing contact.</param>
-            <returns></returns>
+            <returns>The catalog entry</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.ReadFromStream(System.IO.Stream,Goedel.Mesh.CatalogedEntryFormat)">
+            <summary>
+            
+            </summary>
+            <param name="stream">The stream to fetch the contact data from.</param>
+            <param name="format">The file format to write the output in.</param>
+            <returns>The catalog entry</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Catalog`1.ReadListFromFile(System.String,Goedel.Mesh.CatalogedEntryFormat)">
+            <summary>
+            Read list of catalog entries from the file <paramref name="fileName"/> in format <paramref name="format"/>.
+            </summary>
+            <param name="fileName">The file to read from.</param>
+            <param name="format">The file format</param>
+            <returns>The list of entries read from the file.</returns>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.WriteToStream(System.IO.Stream,`0,Goedel.Mesh.CatalogedEntryFormat)">
             <summary>
-            Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
-            <paramref name="merge"/> is true, merge this contact information.
+            Write the catalog entry data speficied in the file <paramref name="stream"/>.
             </summary>
             <param name="stream">The stream to write the entry data to.</param>
             <param name="format">The file format to write the output in.</param>
-            <returns></returns>
+            <param name="data">The data to write.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.WriteToStream(System.IO.Stream,System.Collections.Generic.List{`0},Goedel.Mesh.CatalogedEntryFormat)">
             <summary>
-            Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
-            <paramref name="merge"/> is true, merge this contact information.
+            Write the catalog entry data speficied in the file <paramref name="stream"/>.
             </summary>
             <param name="stream">The stream to write the entry data to.</param>
             <param name="format">The file format to write the output in.</param>
-            <returns></returns>
+            <param name="data">The list of entries to write.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.Locate(System.String)">
             <summary>
@@ -1515,6 +1529,13 @@
             <param name="envelope">The contact to add.</param>
             <returns>The CatalogedContact entry.</returns>
         </member>
+        <member name="M:Goedel.Mesh.CatalogContact.Get(System.String)">
+            <summary>
+            Return the contact with identifier <paramref name="key"/>.
+            </summary>
+            <param name="key">specifies the identifier to return.</param>
+            <returns>The contact, if found. Otherwise null.</returns>
+        </member>
         <member name="M:Goedel.Mesh.CatalogContact.AddFromFile(System.String,System.Boolean,Goedel.Mesh.CatalogedEntryFormat,System.Boolean,System.String)">
             <summary>
             Add the contact data specified in the file <paramref name="fileName"/>. If 
@@ -1526,6 +1547,7 @@
             <param name="localName">Short name for the contact to distinguish it from
             others.</param>
             <param name="merge">Add this data to the existing contact.</param>
+            <param name="format">The format the input is written in.</param>
             <returns></returns>
         </member>
         <member name="M:Goedel.Mesh.CatalogContact.GetNetworkEntry(System.String)">
@@ -2215,6 +2237,10 @@
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileMesh"/>
             to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileMesh"/> value.</summary>
         </member>
+        <member name="P:Goedel.Mesh.CatalogedDevice.ProfileAccount">
+            <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileMesh"/>
+            to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileMesh"/> value.</summary>
+        </member>
         <member name="P:Goedel.Mesh.CatalogedDevice.ProfileDevice">
             <summary>Cached convenience accessor that unpacks the value of <see cref="P:Goedel.Mesh.CatalogedDevice.EnvelopedProfileDevice"/>
             to return the <see cref="P:Goedel.Mesh.CatalogedDevice.ProfileDevice"/> value.</summary>
@@ -2426,7 +2452,6 @@
             <summary>
             Add the catalog entry to the stream <paramref name="stream"/> in the
             format specified by <paramref name="format"/>.
-            <paramref name="merge"/> is true, merge this contact information.
             </summary>
             <param name="stream">The stream to write the data to.</param>
             <param name="format">The file format to write the output in.</param>
@@ -3343,6 +3368,37 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.NoMeshSecret">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.NoMeshSecret.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.NoMeshSecret.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.NoMeshSecret.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.NoMeshSecret._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.NoMeshSecret.Throw">
             <summary>
             The public fatory delegate
             </summary>
@@ -10355,6 +10411,68 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.Permission.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.CatalogedEscrow">
+             <summary>
+            
+             Escrow records for recovery of Mesh accounts
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedEscrow.EnvelopedEscrowRecord">
+             <summary>
+            The encrypted escrow record
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.CatalogedEscrow._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.CatalogedEscrow.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedEscrow._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedEscrow.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedEscrow.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedEscrow.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.CatalogedEscrow.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

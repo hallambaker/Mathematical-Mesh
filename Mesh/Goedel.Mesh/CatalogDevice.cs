@@ -82,6 +82,15 @@ namespace Goedel.Mesh {
             ProfileMesh.Decode(EnvelopedProfileMesh).CacheValue(out profileMesh);
         ProfileMesh profileMesh;
 
+
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileMesh"/>
+        ///to return the <see cref="ProfileMesh"/> value.</summary>
+        public ProfileAccount ProfileAccount => profileAccount ??
+            ProfileAccount.Decode(EnvelopedProfileMesh).CacheValue(out profileAccount);
+        ProfileAccount profileAccount;
+
+
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
         ///to return the <see cref="ProfileDevice"/> value.</summary>
         public ProfileDevice ProfileDevice => profileDevice ??

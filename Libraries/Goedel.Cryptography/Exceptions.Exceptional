@@ -161,7 +161,10 @@ Namespace Goedel.Cryptography
 			Description
 				|An attempt was made to create more recryption shares than the implementation supports.
 
-
+		Exception InvalidRecoveredData
+			Console "The recovered data was invalid"
+		Exception KeyErasureFailed
+			Console "The private key could not be removed from the key store."
 		Exception InvalidOperation
 			Console "The cryptographic provider does not support the requested operation"
 			Description

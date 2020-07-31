@@ -39,6 +39,15 @@ namespace Goedel.Cryptography.Dare {
 
 
         /// <summary>
+        /// Attempt to erase the private key with fingerprint <paramref name="udf"/> from the
+        /// associated persistence store.
+        /// </summary>
+        /// <param name="udf"></param>
+        /// <returns>True if the key was found, otherwise false.</returns>
+        void ErasePrivateKey(string udf);
+
+
+        /// <summary>
         /// Locate the private key with fingerprint <paramref name="udf"/> and return
         /// the corresponding JSON description.
         /// </summary>

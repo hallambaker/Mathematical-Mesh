@@ -1199,7 +1199,7 @@
             Recover a Mesh Profile from the recovery key value.
             </summary>
             <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-            <param name="secretBytes">The recovered UDF key derrivation seed. This may have leading
+            <param name="Key">The recovered UDF key derrivation seed. This may have leading
             zeros.</param>
             <param name="profileDevice">The device profile to bind to.</param>
             <param name="algorithmSign">The signature algorithm.</param>
@@ -1468,6 +1468,420 @@
             <param name="meshHost">The Mesh host to be written to.</param>
             <param name="devicePreconfiguration">The preconfiguration data.</param>
             <returns>Context for the preconfigured device.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Client.ContextNew">
+            <summary>
+            Context for interacting with a Mesh Account
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.MeshHost">
+            <summary>The Mesh host</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.CatalogedMachine">
+            <summary>The Device Entry in the CatalogHost</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ProfileDevice">
+            <summary>The device profile</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ContextMesh">
+            <summary>The enclosing mesh context.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.AccountEntry">
+            <summary>The account entry</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ConnectionAccount">
+            <summary>Convenience accessor for the account connection</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.Connection">
+            <summary>Convenience accessor for the connection.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.CatalogedDevice">
+            <summary>The cataloged device</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ProfileAccount">
+            <summary>The master profile</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ConnectionDevice">
+            <summary>The connection device</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextNew.ActivationDevice">
+            <summary>The device activation</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.DeviceKeySeed">
+            <summary>The device key generation seed</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.MeshSecretSeed">
+            <summary>The device key generation seed</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.HasPrivilegeMakeAdministrator">
+            <summary>This context has the make device an adminitrator capability.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.HasPrivilegeAddDevice">
+            <summary>This context has the add device capability.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.ContextNew.HasPrivilegeMessaging">
+            <summary>This context has the messaging capability.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
+            <summary>
+            Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextNew"/> instance for the catalog entry 
+            <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
+            </summary>
+            <param name="catalogedMachine">Description of the device profile.</param>
+            <param name="meshHost">The Mesh host to add the admin context to.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateMesh(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Nullable{System.Boolean})">
+            <summary>
+            Create a new personal mesh and return an administration context for it.
+            </summary>
+            <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
+            <param name="profileDevice">The device profile.</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmAuthenticate">The authentication algorithm.</param>
+            <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
+            <param name="deviceSecret">Specifies a seed from which to generate the ProfileDevice</param>
+            <param name="persist">If <see langword="true"/> persist the secret seed value to
+            <paramref name="meshHost"/>.</param>
+            <returns>An administration context instance for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateMesh(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileAccount,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a new personal mesh.
+            </summary>
+            <param name="meshHost">The machine context that the mesh is going to be created on.</param>
+            <param name="profileDevice">The device profile.</param>
+            <param name="profileMaster">The mesh profile.</param>
+            <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
+            <returns>An administration context instance for the created profile.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetMeshSecret">
+            <summary>
+            Get the MeshSecret.
+            </summary>
+            <returns>The Mesh secret bytes.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.EraseMeshSecret">
+            <summary>
+            Erase the Mesh Secret from the persistence store of this machine.
+            </summary>
+            <returns>True if the key was found, otherwise false.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.Escrow(System.Int32,System.Int32)">
+            <summary>
+            Create an escrow set for the master key.
+            </summary>
+            <param name="shares">Number of shares to create</param>
+            <param name="threshold">Number of shares required to recreate the quorum</param>
+            <returns>The encrypted escrow entry and the key shares.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.UpdateDevices(Goedel.Mesh.ProfileAccount)">
+            <summary>
+            Update all the devices connected to the account to incorporate values from
+            <paramref name="account"/>.
+            </summary>
+            <param name="account">The modified account profile.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateCataloguedDevice(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
+            </summary>
+            <param name="profileDevice">Profile of the device to be added.</param>
+            <returns>The CatalogedDevice entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateCataloguedDevice(Goedel.Mesh.ProfileAccount,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice)">
+            <summary>
+            Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
+            and activation <paramref name="activationDevice"/>.
+            </summary>
+            <param name="profileAccount">The mesh profile.</param>
+            <param name="profileDevice">Profile of the device to be added.</param>
+            <param name="activationDevice">The device key overlay.</param>
+            <returns>The CatalogedDevice entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.AddDevice(Goedel.Mesh.ProfileDevice)">
+            <summary>
+            Add a device to the account and the underlying Mesh.
+            </summary>
+            <param name="profileDevice">Profile of the device to add.</param>
+            <returns>The catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.SetContactSelf(Goedel.Mesh.Contact,System.String)">
+            <summary>
+            Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
+            </summary>
+            <param name="contact">The contact parameters.</param>
+            <param name="localname">Short name to apply to the signed contact info</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateContact(System.Boolean,System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
+            <summary>
+            Get the default (i.e. minimum contact info). This has a single network 
+            address entry for this mesh and mesh account. 
+            </summary>
+            <returns>The default contact.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetAccountAddress">
+            <summary>
+            Get the primary account address bound to this profile. This is a bit of a hack right
+            now as the code doesn't really support the 'multiple services per account' model yet.
+            </summary>
+            <returns>The account service address.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCapability(Goedel.Mesh.CatalogedApplication)">
+            <summary>
+            Return the first cryptographic capability granted to this particular device
+            for the application <paramref name="catalogedApplication"/>.
+            </summary>
+            <param name="catalogedApplication">The application to return the capability from.</param>
+            <returns>The first cryptographic capability this device has been granted if found,
+            otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCapability(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
+            data is decoded and the enclosed capability returned. Otherwise, null is returned.
+            </summary>
+            <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
+            <returns>The first cryptographic capability this device has been granted if found,
+            otherwise null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.MakeStore(System.String)">
+            <summary>
+            Create a new instance bound to the specified core within this account context.
+            </summary>
+            <param name="name">The name of the store to bind.</param>
+            <returns>The store instance.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogApplication">
+            <summary>Returns the application catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogDevice">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogContact">
+            <summary>Returns the contacts catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogCredential">
+            <summary>Returns the credential catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogBookmark">
+            <summary>Returns the bookmark catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogCalendar">
+            <summary>Returns the calendar catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetCatalogNetwork">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetSpoolInbound">
+            <summary>Returns the inbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetSpoolOutbound">
+            <summary>Returns the outbound spool for the account</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.TryFindKeyEncryption(System.String)">
+            <summary>
+            Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="keyId">The identifier to resolve.</param>
+            <returns>The identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.TryFindKeySignature(System.String)">
+            <summary>
+            Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+            an account identifier or strong account identifier.
+            </summary>
+            <param name="keyId">The identifier to resolve.</param>
+            <returns>The identifier.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.TryFindKeyDecryption(System.String)">
+            <summary>
+            Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
+            </summary>
+            <param name="keyId">The key identifier to match.</param>
+            <returns>The key pair if found.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetPendingMessage(System.String)">
+            <summary>
+            Search the inbound spool and return the last message of type <paramref name="tag"/>.
+            This is obviously a placeholder for something more comprehensive.
+            </summary>
+            <param name="tag">Message selector.</param>
+            <returns>The message found.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetPendingMessageByID(System.String,System.Boolean@)">
+            <summary>
+            Return the last message with messageID <paramref name="messageID"/>. If the message
+            has been read, the value <paramref name="read"/> is true.
+            </summary>
+            <param name="messageID">The message to locate.</param>
+            <param name="read">If true, the message has already been read.</param>
+            <returns>The message value (if unread).</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateGroup(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+            <summary>
+            Create a threshold encryption group.
+            </summary>
+            <param name="groupName">Name of the group to create.</param>
+            <param name="algorithmEncrypt">The encryption algorithm</param>
+            <param name="algorithmSign">The signature algorithm.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetContextGroup(System.String)">
+            <summary>
+            Get a managment context for the group <paramref name="groupAddress"/>.
+            </summary>
+            <param name="groupAddress">The group to return the management context for.</param>
+            <returns>The created management context.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
+            <summary>
+            Create an EARL for a device, publish the result to the Mesh service and return 
+            the device profile <paramref name="profileDevice"/>, secret seed value 
+            <paramref name="secretSeed"/>, connection URI 
+            <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
+            </summary>
+            <param name="secretSeed">The computed secret seed value.</param>
+            <param name="profileDevice">The computed device profile</param>
+            <param name="pin">The computed PIN code.</param>
+            <param name="connectURI">The connection URI to be used for pickup.</param>
+            <param name="algorithmEncrypt">The encryption algorithm.</param>
+            <param name="algorithmSign">The signature algorithm</param>
+            <param name="algorithmAuthenticate">The signature algorithm</param>
+            <param name="secret">The master secret.</param>
+            <param name="bits">The size of key to generate in bits/</param>
+            <returns>Response from the server.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.Connect(System.String)">
+            <summary>
+            Attempt device connection by means of the static URI <paramref name="uri"/>.
+            </summary>
+            <param name="uri">The connection URI</param>
+            <returns>The </returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ClaimPublication(System.String,System.String@)">
+            <summary>
+            Claim the document published at the EARL <paramref name="uri"/>.
+            </summary>
+            <param name="uri">The EARL to resolve</param>
+            <param name="responseId">The response from the service.</param>
+            <returns>The recovered envelope.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ProcessAutomatics">
+            <summary>
+            Process automatic actions.
+            </summary>
+            <returns>The results of the automatic processing attempted.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ProcessAutomatic(Goedel.Mesh.GroupInvitation,System.Boolean,System.Boolean)">
+            <summary>
+            Perform automatic processing of the message <paramref name="groupInvitation"/>.
+            </summary>
+            <param name="groupInvitation">Reply to contact request to be processed.</param>
+            <param name="accept">Accept the requested action.</param>
+            <param name="authorize">If true, the action is explicitly authorized.</param>
+            <returns>The result of requesting the connection.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ProcessAutomatic(Goedel.Mesh.ReplyContact,System.Boolean,System.Boolean)">
+            <summary>
+            Perform automatic processing of the message <paramref name="replyContact"/>.
+            </summary>
+            <param name="replyContact">Reply to contact request to be processed.</param>
+            <param name="accept">Accept the requested action.</param>
+            <param name="authorize">If true, the action is explicitly authorized.</param>
+            <returns>The result of requesting the connection.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ProcessAutomatic(Goedel.Mesh.AcknowledgeConnection)">
+            <summary>
+            Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
+            </summary>
+            <param name="acknowledgeConnection">Connection request to be processed.</param>
+            <returns>The result of requesting the connection.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.Process(Goedel.Mesh.AcknowledgeConnection,System.Boolean)">
+            <summary>
+            Accept or reject a connection request.
+            </summary>
+            <param name="request">The request to accept or reject.</param>
+            <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.Process(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Generalized processing loop for messages
+            </summary>
+            <param name="messageId">Identifier of the message to process.</param>
+            <param name="accept">If true, accept the request, otherwise reject it.</param>
+            <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
+            contact information in response to an initial contact request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.Process(Goedel.Mesh.Message,System.Boolean,System.Boolean)">
+            <summary>
+            Generalized processing loop for messages
+            </summary>
+            <param name="meshMessage">The message to process.</param>
+            <param name="accept">If true, accept the request, otherwise reject it.</param>
+            <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
+            contact information in response to an initial contact request.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ContactReply(Goedel.Mesh.RequestContact,System.String)">
+            <summary>
+            Make a contact reply.
+            </summary>
+            <param name="requestContact">The contact request.</param>
+            <param name="localname">Local name to be used to identify the contact recorded in
+            the catalog.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.GetSelf(System.String)">
+            <summary>
+            Get the user's own contact. There is only ever one contact entry but there MAY
+            be multiple envelopes 
+            </summary>
+            <param name="localName">Local name for the contact</param>
+            <returns></returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ContactUri(System.Boolean,System.Nullable{System.DateTime},System.String)">
+            <summary>
+            Construct a contact fetch URI.
+            </summary>
+            <param name="localName">Local name for the contact</param>
+            <param name="expire">Expiry time for the corresponding PIN</param>
+            <param name="automatic">If true, presentation of the pin code is sufficient
+            to authenticate and authorize the action.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ContactRequest(System.String,System.String)">
+            <summary>
+            Construct a contact request.
+            </summary>
+            <param name="recipientAddress">The contact to request.</param>
+            <param name="localName">Local name for the contact</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ContactExchange(System.String,System.Boolean,Goedel.Mesh.Message@,System.String)">
+            <summary>
+            Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
+            is true, send own contact data.
+            </summary>
+            <param name="uri">The URI to resolve.</param>
+            <param name="reciprocate">If true send own contact data.</param>
+            <param name="localname">Local name for the contact to send in exchange</param>
+            <param name="message">The reciprocation message (if sent), otherwise null.</param>
+            <returns>The cataloged contact information.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ConfirmationRequest(System.String,System.String)">
+            <summary>
+            Construct a confirmation request.
+            </summary>
+            <param name="accountAddress">The contact to request.</param>
+            <param name="messageText">The message text to send.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextNew.ConfirmationResponse(Goedel.Mesh.RequestConfirmation,System.Boolean)">
+            <summary>
+            Make a contact reply.
+            </summary>
+            <param name="requestConfirmation">The request received.</param>
+            <param name="response">If true, accept the confirmation request, otherwise reject.</param>
         </member>
         <member name="T:Goedel.Mesh.Client.Internal">
             <summary>

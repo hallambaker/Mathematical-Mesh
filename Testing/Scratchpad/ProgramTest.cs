@@ -38,6 +38,11 @@ namespace Scratchpad {
             //ShellTests.Test().TestMessageContactInPerson();
 
 
+
+
+            TestService.Test().MeshMessageContact();
+
+
             // ***** Currently failing tests
 
 

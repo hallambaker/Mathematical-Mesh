@@ -368,20 +368,23 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Add the catalog entry data speficied in the file <paramref name="fileName"/>. If 
+        /// Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 
         /// <paramref name="merge"/> is true, merge this contact information.
         /// </summary>
-        /// <param name="fileName">The file to fetch the contact data from.</param>
+        /// <param name="stream">The stream to fetch the contact data from.</param>
         /// <param name="format">The file format to write the output in.</param>
         /// <param name="localName">Short name for the contact to distinguish it from
         /// others.</param>
         /// <param name="merge">Add this data to the existing contact.</param>
-        /// <returns></returns>
+        /// <returns>The catalog entry</returns>
         public T AddFromStream(
                     Stream stream,
                     CatalogedEntryFormat format = CatalogedEntryFormat.Unknown,
                     bool merge = true,
                     string localName = null) {
+            merge.Future();
+            localName.Future();
+
             if (ReadFromStream(stream, format).NotNull(out var entry)) {
                 UpdateEntry(entry);
                 return entry;
@@ -389,7 +392,12 @@ namespace Goedel.Mesh {
             throw new NYI();
             }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stream">The stream to fetch the contact data from.</param>
+        /// <param name="format">The file format to write the output in.</param>
+        /// <returns>The catalog entry</returns>
         public virtual T ReadFromStream(
                     Stream stream,
                     CatalogedEntryFormat format = CatalogedEntryFormat.Unknown) {
@@ -414,9 +422,17 @@ namespace Goedel.Mesh {
             throw new NYI();
             }
 
+        /// <summary>
+        /// Read list of catalog entries from the file <paramref name="fileName"/> in format <paramref name="format"/>.
+        /// </summary>
+        /// <param name="fileName">The file to read from.</param>
+        /// <param name="format">The file format</param>
+        /// <returns>The list of entries read from the file.</returns>
         public virtual List<T> ReadListFromFile(
             string fileName,
             CatalogedEntryFormat format = CatalogedEntryFormat.Unknown) {
+            fileName.Future();
+            format.Future();
 
             // here do the dare format
 
@@ -432,12 +448,11 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
-        /// <paramref name="merge"/> is true, merge this contact information.
+        /// Write the catalog entry data speficied in the file <paramref name="stream"/>.
         /// </summary>
         /// <param name="stream">The stream to write the entry data to.</param>
         /// <param name="format">The file format to write the output in.</param>
-        /// <returns></returns>
+        /// <param name="data">The data to write.</param>
         public virtual void WriteToStream(
                     Stream stream,
                     T data,
@@ -445,16 +460,19 @@ namespace Goedel.Mesh {
             data.WriteToStream(stream, format);
 
         /// <summary>
-        /// Write the catalog entry data speficied in the file <paramref name="stream"/>. If 
-        /// <paramref name="merge"/> is true, merge this contact information.
+        /// Write the catalog entry data speficied in the file <paramref name="stream"/>.
         /// </summary>
         /// <param name="stream">The stream to write the entry data to.</param>
         /// <param name="format">The file format to write the output in.</param>
-        /// <returns></returns>
+        /// <param name="data">The list of entries to write.</param>
         public virtual void WriteToStream(
                     Stream stream,
                     List<T> data,
                     CatalogedEntryFormat format = CatalogedEntryFormat.Default) {
+            stream.Future();
+            data.Future();
+            format.Future();
+
             throw new NYI();
             }
 
