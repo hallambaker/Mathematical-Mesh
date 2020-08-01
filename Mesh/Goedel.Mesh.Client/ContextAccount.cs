@@ -1,1405 +1,654 @@
 ﻿using Goedel.Cryptography;
-using Goedel.Cryptography.Jose;
 using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
-using Goedel.Mesh;
+
 using System;
 using System.Collections.Generic;
-using System.IO;
-using Goedel.Protocol;
 
 namespace Goedel.Mesh.Client {
 
-    /// <summary>
-    /// Context for interacting with a Mesh Account
-    /// </summary>
-    public partial class ContextAccount : ContextAccountEntry {
+    ///<summary>Track the synchronization status of an upload or download operation.</summary>
+    public class SyncStatus {
 
-        #region // Public properties
+        ///<summary>The local store</summary>
+        public Store Store;
+
+        ///<summary>The last index at the remote store</summary>
+        public long Index;
+
+        ///<summary>The apex digest value at the remote store</summary>
+        public string Digest;
+
+        /// <summary>
+        /// Report the synchronization status of a Mesh store.
+        /// </summary>
+        /// <param name="store">The store reported on.</param>
+        public SyncStatus(Store store) {
+            Store = store;
+            Index = -1;
+            Digest = null;
+            }
+        }
+
+    /// <summary>
+    /// Base class from which Contexts for Accounts and Groups are derrived. These are
+    /// separate contexts but share functions and thus code.
+    /// </summary>
+    public abstract class ContextAccount : Disposable, IKeyLocate, IMeshClient {
+
+        #region // Properties
+
         ///<summary>The Mesh host</summary>
         public MeshHost MeshHost { get; }
 
         ///<summary>The Device Entry in the CatalogHost</summary>
         public CatalogedMachine CatalogedMachine;
 
+        ///<summary>The account profile</summary>
+        public abstract Profile Profile{ get; }
+
         ///<summary>The device profile</summary>
         public ProfileDevice ProfileDevice => CatalogedMachine?.ProfileDevice;
 
 
-        /*
-         * These properties need to be smooshed together.
-         */
-        ///<summary>The enclosing mesh context.</summary>
-        public override ContextMesh ContextMesh => throw new NYI();
 
-        ///<summary>The account entry</summary>
-        public AccountEntry AccountEntry { get; private set; }
+        ///<summary>The Machine context.</summary>
+        protected IMeshMachineClient MeshMachine=> MeshHost.MeshMachine;
 
-        ///<summary>Convenience accessor for the account connection</summary>
-        ConnectionAccount ConnectionAccount => AccountEntry.ConnectionAccount;
+        ///<summary>The key collection for use with the context.</summary>
+        protected IKeyCollection KeyCollection => MeshMachine.KeyCollection;
 
-        ///<summary>Convenience accessor for the connection.</summary>
-        public override Connection Connection => ConnectionAccount;
+        ///<summary>The connection binding the calling context to the account.</summary>
+        public abstract Connection Connection { get; }
 
 
 
-        ///<summary>The cataloged device</summary>
-        public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
+        ///<summary>The member's device signature key</summary>
+        protected KeyPair KeySignature { get; set; }
 
-        ///<summary>The master profile</summary>
-        public ProfileAccount ProfileAccount => CatalogedDevice?.ProfileAccount;
+        ///<summary>The account encryption key </summary>
+        protected KeyPair KeyAccountEncryption { get; set; }
 
-        ///<summary>The connection device</summary>
-        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionDevice;
-
-        ///<summary>The device activation</summary>
-        public ActivationDevice ActivationDevice => CatalogedDevice?.GetActivationDevice(KeyCollection);
-
-        ///<summary>The device key generation seed</summary>
-        protected PrivateKeyUDF DeviceKeySeed;
-
-        ///<summary>The device key generation seed</summary>
-        protected PrivateKeyUDF MeshSecretSeed;
+        ///<summary>The authentication key used by this device to authenticate</summary>
+        protected KeyPair KeyDeviceAuthentication { get; set; }
 
 
+        ///<summary>Convenience accessor for the encryption key fingerprint.</summary>
+        public string KeyEncryptionUDF => KeyAccountEncryption.KeyIdentifier;
+        ///<summary>Convenience accessor for the signature key fingerprint.</summary>
+        public string KeySignatureUDF => KeySignature.KeyIdentifier;
+
+        ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
+        public string KeyAuthenticationUDF => KeyDeviceAuthentication.KeyIdentifier;
+
+        ///<summary>The directory containing the catalogs related to the account.</summary>
+        public virtual string StoresDirectory { get; set; }
+
+        ///<summary>Dictionary locating the stores connected to the context.</summary>
+        protected Dictionary<string, SyncStatus> DictionaryStores = new Dictionary<string, SyncStatus>();
+
+        ///<summary>The cryptographic parameters for reading/writing to account containers</summary>
+        protected CryptoParameters ContainerCryptoParameters;
 
 
-        ///<summary>This context has the make device an adminitrator capability.</summary>
-        public bool HasPrivilegeMakeAdministrator = false;
+        ///<summary>Returns the MeshClient and caches the result for future use.</summary>
+        public MeshService MeshClient => meshClient ?? GetMeshClient(AccountAddress).CacheValue(out meshClient);
+        MeshService meshClient;
 
-        ///<summary>This context has the add device capability.</summary>
-        public bool HasPrivilegeAddDevice = false;
-
-        ///<summary>This context has the messaging capability.</summary>
-        public bool HasPrivilegeMessaging = false;
+        ///<summary>The Account Address</summary>
+        public virtual string AccountAddress { get; protected set; }
 
 
-        KeyPair deviceDecrypt;
-        KeyPair keySignature;
-        KeyPair keyEncryption;
-        KeyPair keyAuthentication;
+        ///<summary>Returns the network catalog for the account</summary>
+        public CatalogCapability GetCatalogCapability() => GetStore(CatalogCapability.Label) as CatalogCapability;
 
+        ///<summary>Returns the local spool  for the account</summary>
+        public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
         #endregion
+
         #region // Constructors
 
         /// <summary>
-        /// Constructor, creates a <see cref="ContextAccount"/> instance for the catalog entry 
+        /// Constructor, creates a <see cref="ContextUser"/> instance for the catalog entry 
         /// <paramref name="catalogedMachine"/> on machine <paramref name="meshHost"/>.
         /// </summary>
         /// <param name="catalogedMachine">Description of the device profile.</param>
         /// <param name="meshHost">The Mesh host to add the admin context to.</param>
-        public ContextAccount(
+        public ContextAccount (
                 MeshHost meshHost,
                 CatalogedMachine catalogedMachine) {
 
             MeshHost = meshHost;
             CatalogedMachine = catalogedMachine;
-
-
-            // unpack the device key seed and add it to the key collection
-            // ToDo: Create a wrapper that allows the DeviceKeySeed to be a wrapper to an embedded device key
-            DeviceKeySeed ??= ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
-            deviceDecrypt = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
-            KeyCollection.Add(deviceDecrypt);
-
-            if (CatalogedDevice != null) {
-                var activationKey = ActivationDevice.ActivationKey;
-                activationKey.AssertNotNull(Internal.Throw);
-
-                keySignature = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceSign, KeyCollection);
-                keyEncryption = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceEncrypt, KeyCollection);
-                keyAuthentication = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceAuthenticate, KeyCollection);
-
-                (keySignature.KeyIdentifier).AssertEqual(ConnectionDevice.KeySignature.UDF,
-                        KeyActivationFailed.Throw);
-                (keyEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.KeyEncryption.UDF,
-                        KeyActivationFailed.Throw);
-                (keyAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.KeyAuthentication.UDF,
-                        KeyActivationFailed.Throw);
-                }
-
             }
 
         #endregion
-        #region // Account creation 
 
+        #region // PIN code generation and use
         /// <summary>
-        /// Create a new personal mesh and return an administration context for it.
+        /// Create a PIN value of length <paramref name="length"/> bits valid for 
+        /// <paramref name="validity"/> minutes.
         /// </summary>
-        /// <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
-        /// <param name="profileDevice">The device profile.</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
-        /// <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
-        /// <param name="deviceSecret">Specifies a seed from which to generate the ProfileDevice</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="meshHost"/>.</param>
-        /// <returns>An administration context instance for the created profile.</returns>
-        public static ContextAccount CreateMesh(
-                MeshHost meshHost,
-                string serviceAddress = null,
-                ProfileDevice profileDevice = null,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] masterSecret = null,
-                byte[] deviceSecret = null,
-                bool? persist = null) {
+        /// <param name="length">The size of the PIN value to create in bits.</param>
+        /// <param name="validity">The validity interval in minutes from the current 
+        /// date and time.</param>
+        /// <param name="action">The action to which this pin is bound.</param>
+        /// <param name="automatic">If true, presentation of the pin code is sufficient
+        /// to authenticate and authorize the action.</param>
+        /// <returns>A <see cref="MessagePIN"/> instance describing the created parameters.</returns>
+        public MessagePIN GetPIN(string action, bool automatic = true, 
+                            int length = 80, long validity = Constants.DayInTicks) {
+            var pin = UDF.SymmetricKey(length);
+            var expires = DateTime.Now.AddTicks(validity);
 
-            // Create the master profile.
-            var secretSeedMaster = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileMaster, algorithmEncrypt, algorithmSign,
-                algorithmAuthenticate, masterSecret);
-            persist ??= masterSecret == null;
-
-            var profileAccount = new ProfileAccount(meshHost.KeyCollection, secretSeedMaster, serviceAddress, persist == true);
-
-            profileDevice ??= new ProfileDevice(meshHost.KeyCollection,
-                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
-                deviceSecret, true);
-
-            return CreateMesh(meshHost, profileAccount, profileDevice, algorithmSign);
+            return RegisterPIN(pin, automatic, expires, AccountAddress, action);
             }
 
-
         /// <summary>
-        /// Create a new personal mesh.
+        /// Register the pin code <paramref name="pin"/> to the account <paramref name="accountAddress"/>
+        /// bound to the action <paramref name="action"/>.
         /// </summary>
-        /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-        /// <param name="profileDevice">The device profile.</param>
-        /// <param name="profileMaster">The mesh profile.</param>
-        /// <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
-        /// <returns>An administration context instance for the created profile.</returns>
-        public static ContextAccount CreateMesh(
-            MeshHost meshHost,
-            ProfileAccount profileMaster,
-            ProfileDevice profileDevice,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
+        /// <param name="pin">The PIN code</param>
+        /// <param name="automatic">If true, proof of knowledge of the pin is sufficient authorization.</param>
+        /// <param name="expires">Expiry time.</param>
+        /// <param name="accountAddress">The account to which the pin is bound.</param>
+        /// <param name="action">The action to which the pin is bound.</param>
+        /// <returns>The message registered on the Admin spool.</returns>
+        protected MessagePIN RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
+            var messageConnectionPIN = new MessagePIN(pin, automatic, expires, accountAddress, action);
 
-            //Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
-
-            // Add this device to the profile as an administrator device by adding the necessary activation.
-            var activationDevice = new ActivationDevice(profileDevice);
-            throw new NYI();
-
-
-            //var catalogedAdmin = AddAdministrator(meshHost, profileMaster, profileDevice, activationDevice, algorithmSign);
-
-            //// Create an administration context
-            //var contextMeshAdmin = new ContextMeshAdmin(meshHost, catalogedAdmin);
-
-
-            //// Use the administration context to create a connection for this device and add to the record
-            //var catalogedDevice = contextMeshAdmin.CreateCataloguedDevice(profileMaster, profileDevice, activationDevice);
-            //catalogedAdmin.CatalogedDevice = catalogedDevice;
-
-
-            //// Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
-            //meshHost.Register(catalogedAdmin, contextMeshAdmin);
-            //return contextMeshAdmin;
+            SendMessageAdmin(messageConnectionPIN);
+            return messageConnectionPIN;
             }
 
-
+        /// <summary>
+        /// Fetch the <see cref="MessagePIN"/> with the identifier <paramref name="PinUDF"/>.
+        /// </summary>
+        /// <param name="PinUDF">The identifier of the PIN</param>
+        /// <returns>The message (if found), otherwise null.</returns>
+        public MessagePIN GetMessagePIN(string PinUDF) {
+            var pinCreate = GetSpoolLocal().CheckPIN(PinUDF);
+            return pinCreate?.Message as MessagePIN;
+            }
 
         #endregion
-        #region // Operations requiring the Mesh Secret - Escrow, Erase.
+
+        #region // Account operations sync, send message
 
         /// <summary>
-        /// Get the MeshSecret.
+        /// Returns a Mesh service client for <paramref name="accountAddress"/>.
         /// </summary>
-        /// <returns>The Mesh secret bytes.</returns>
-        byte[] GetMeshSecret() {
-            // pull the master key
-            var mastersecret = KeyCollection.LocatePrivateKey(ProfileAccount.KeyOfflineSignature.UDF);
-            mastersecret.AssertNotNull(NoMeshSecret.Throw);
-            // convert to byte array;
-            return (mastersecret as PrivateKeyUDF).PrivateValue.FromBase32();
-            }
+        /// <param name="accountAddress">The account service identifier.</param>
+        /// <returns>The Mesh service client</returns>
+        public MeshService GetMeshClient(string accountAddress) =>
+                    MeshMachine.GetMeshClient(accountAddress, KeyDeviceAuthentication,
+                            Connection, Profile);
+
 
         /// <summary>
-        /// Erase the Mesh Secret from the persistence store of this machine.
+        /// Obtain the status of the remote store.
         /// </summary>
-        /// <returns>True if the key was found, otherwise false.</returns>
-        public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileAccount.KeyOfflineSignature.UDF);
-
-        /// <summary>
-        /// Create an escrow set for the master key.
-        /// </summary>
-        /// <param name="shares">Number of shares to create</param>
-        /// <param name="threshold">Number of shares required to recreate the quorum</param>
-        /// <returns>The encrypted escrow entry and the key shares.</returns>
-        public KeyShareSymmetric[] Escrow(int shares, int threshold) {
-            var mastersecretBytes = GetMeshSecret();
-            var secret = new SharedSecret(mastersecretBytes);
-            return secret.Split(shares, threshold);
-            }
-
-
-
-        #endregion
-        #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
-
-        KeyPair GetOfflineSignatureKey() {
-            throw new NYI();
-            }
-
-        public void GrantAdministrator(
-                CatalogedDevice targetDevice) {
-            throw new NYI();
-            }
-
-        public void SetService(
-                string accountAddress) {
-            AccountAddress = accountAddress;
-
-            var helloRequest = new HelloRequest();
-            var helloResponse = MeshClient.Hello(helloRequest);
-
-            // Add to assertion
-            ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
-            ProfileAccount.AccountAddresses.Add(accountAddress);
-            ProfileAccount.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
-
-            ContextMeshAdmin.Sign(ProfileAccount);
-
-
-            var createRequest = new CreateRequest() {
-                AccountAddress = accountAddress,
-                SignedAssertionAccount = ProfileAccount.DareEnvelope,
-                SignedProfileMesh = ContextMesh.ProfileMesh.DareEnvelope
+        /// <returns></returns>
+        public StatusResponse Status() {
+            var statusRequest = new StatusRequest() {
                 };
-
-            // Attempt to register with service in question
-            MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
-
-            // Generate a contact and self-sign
-            var contact = CreateContact();
-            SetContactSelf(contact);
-
-
-            // Update all the devices connected to this profile.
-            UpdateDevices(ProfileAccount);
-
-            GetCatalogCapability();
-            GetCatalogApplication();
-            GetCatalogContact();
-            GetCatalogDevice();
-            GetCatalogCredential();
-            GetCatalogBookmark();
-            GetCatalogCalendar();
-            GetCatalogNetwork();
-            SyncProgressUpload();
-
+            return MeshClient.Status(statusRequest);
             }
 
+
         /// <summary>
-        /// Update all the devices connected to the account to incorporate values from
-        /// <paramref name="account"/>.
+        /// Synchronize this device to the catalogs at the service. Since the authoritative copy of
+        /// the service is held at the service, this means only downloading updates at present.
         /// </summary>
-        /// <param name="account">The modified account profile.</param>
-        void UpdateDevices(ProfileAccount account) {
-            var catalog = GetCatalogDevice();
+        /// <returns>The number of items synchronized</returns>
+        public int Sync() {
+            int count = 0;
 
-            var updates = new List<CatalogedDevice>();
-            foreach (var device in catalog.AsCatalogedType) {
-                bool updated = false;
-                device.Accounts ??= new List<AccountEntry>();
+            var statusRequest = new StatusRequest() {
+                };
+            var status = MeshClient.Status(statusRequest);
 
-                foreach (var accountEntry in device.Accounts) {
-                    if (accountEntry.AccountUDF == account.UDF) {
-                        accountEntry.EnvelopedProfileAccount = account.DareEnvelope;
-                        updated = true;
-                        }
+            status.ContainerStatus.AssertNotNull(ServerResponseInvalid.Throw);
+
+
+            var constraintsSelects = new List<ConstraintsSelect>();
+
+            foreach (var container in status.ContainerStatus) {
+                var constraintsSelect = GetStoreStatus(container);
+                if (constraintsSelect != null) {
+                    constraintsSelects.Add(constraintsSelect);
                     }
-                if (!updated) {
-                    }
-                updates.Add(device);
+                }
 
+            if (constraintsSelects.Count == 0) {
+                return 0;
                 }
-            foreach (var device in updates) {
-                catalog.Update(device);
+
+            var downloadRequest = new DownloadRequest() {
+
+                Select = constraintsSelects
+                };
+
+            // what is it with the ranges here? make sure they are all correct.
+            // Then check that the remote versions are correct.
+
+            var download = MeshClient.Download(downloadRequest);
+
+            foreach (var update in download.Updates) {
+                count += UpdateStore(update);
                 }
-            ContextMesh.UpdateDevice();
+
+            // At this point we want to look at all the pending messages and see if there
+            // are any PIN authenticated auto-executing messages.
+            // TBS: If we have synchronized the catalogs, upload cached offline updates here.
+
+            return count;
             }
 
+        //public bool SyncProgress(int maxEnvelopes = -1) => SyncProgressUpload(maxEnvelopes);
+
+        /// <summary>
+        /// Synchronize the device to the store in increments of no more than <paramref name="maxEnvelopes"/>
+        /// at a time. This should really be changed to something more Async callback friendly. Hours in
+        /// a day... ??? Its midnight.
+        /// </summary>
+        /// <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
+        /// <returns>If true, the synchronization has completed.</returns>
+        public bool SyncProgressUpload(int maxEnvelopes = -1) {
+            bool complete = true;
+            var updates = new List<ContainerUpdate>();
+
+            //// Always do the devices first (if we are an admin device)
+            //if (SyncStatusDevice != null) {
+            //    maxEnvelopes -= AddUpload(updates, SyncStatusDevice, maxEnvelopes);
+            //    }
+
+            try {
+                // upload all the containers here
+
+                // This is not working right because it is uploading all the envelopes every time
+                // regardless of the remote store status.
+                foreach (var store in DictionaryStores) {
+                    maxEnvelopes -= AddUpload(updates, store.Value, maxEnvelopes);
+                    }
+                }
+            catch {
+                }
+
+
+            if (updates.Count > 0) {
+                var uploadRequest = new UploadRequest() {
+                    Updates = updates
+                    };
+                MeshClient.Upload(uploadRequest);
+                }
+
+            return complete;
+            }
+
+        int AddUpload(List<ContainerUpdate> containerUpdates, SyncStatus syncStatus, int maxEnvelopes = -1) {
+
+            //Console.WriteLine($"Initial sync of {syncStatus.Store.ContainerName}");
+
+            int uploads = 0;
+            if (maxEnvelopes == 0) {
+                return 0; // no more room left in this request.
+                }
+
+
+            if (syncStatus.Index <= syncStatus.Store.FrameCount) {
+                var container = syncStatus.Store.Container;
+                var envelopes = new List<DareEnvelope>();
+                var containerUpdate = new ContainerUpdate() {
+                    Container = syncStatus.Store.ContainerName,
+                    Envelopes = envelopes,
+                    Digest = container.Digest
+                    // put the digest value here
+                    };
+
+                var start = 1 + syncStatus.Index;
+                long last = (maxEnvelopes < 0) ? syncStatus.Store.FrameCount :
+                    Math.Min((start + maxEnvelopes), syncStatus.Store.FrameCount);
+
+                if (start == 0) {
+                    envelopes.Add(container.FrameZero);
+                    start++;
+                    }
+
+
+                for (var i = start; i < last; i++) {
+                    container.MoveToIndex(i);
+                    envelopes.Add(container.ReadDirect());
+                    }
+
+
+                containerUpdates.Add(containerUpdate);
+                }
+
+
+            return uploads;
+
+            }
+
+
+
+
+        /// <summary>
+        /// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
+        /// </summary>
+        /// <param name="meshMessage">The message to send.</param>
+        /// <param name="recipient">The recipient service ID.</param>
+        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
+        public void SendMessage(Message meshMessage, string recipient,
+                    CryptoKey encryptionKey=null) =>
+            SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
+
+
+        /// <summary>
+        /// Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
+        /// is not null, the message is to be posted to the outbound spool to be forwarded to the
+        /// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
+        /// collection.
+        /// </summary>
+        /// <param name="meshMessage">The message to post</param>
+        /// <param name="recipients">The recipients the message is to be sent to. If null, the
+        /// message is for local pickup.</param>
+        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
+        public void SendMessage(
+                    Message meshMessage,
+                    List<string> recipients = null,
+                    CryptoKey encryptionKey = null
+                    ) {
+            Connect();
+
+            meshMessage.Sender = AccountAddress;
+
+
+            var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
+
+            var postRequest = new PostRequest() {
+                Accounts = recipients,
+                Message = new List<DareEnvelope>() { envelope }
+                };
+
+
+            MeshClient.Post(postRequest);
+            }
+
+        /// <summary>
+        /// Send a message signed using the mesh administration key.
+        /// </summary>
+        /// <param name="meshMessage"></param>
+        public void SendMessageAdmin(Message meshMessage) {
+            Connect();
+
+            var message = meshMessage.Encode(KeySignature);
+
+            var postRequest = new PostRequest() {
+                Self = new List<DareEnvelope>() { message }
+                };
+
+
+            MeshClient.Post(postRequest);
+            }
+
+        void Connect() {
+            if (MeshClient != null) {
+                return;
+                }
+
+
+            AccountAddress = GetAccountAddress();
+
+            meshClient = GetMeshClient(AccountAddress);
+            }
+
+        ///<summary>Return the account address.</summary>
+        public abstract string GetAccountAddress();
 
         #endregion
-        #region // Operations requiring AdminSignatureKey - AddDevice, GrantPermission, GrantCapability
 
-        KeyPair GetAdminSignatureKey() {
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
-        /// </summary>
-        /// <param name="profileDevice">Profile of the device to be added.</param>
-        /// <returns>The CatalogedDevice entry.</returns>
-        public CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice) {
-            var activationDevice = new ActivationDevice(profileDevice);
-            var result = CreateCataloguedDevice(ProfileAccount, profileDevice, activationDevice);
-
-            return result;
-            }
-
-        /// <summary>
-        /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
-        /// and activation <paramref name="activationDevice"/>.
-        /// </summary>
-        /// <param name="profileAccount">The mesh profile.</param>
-        /// <param name="profileDevice">Profile of the device to be added.</param>
-        /// <param name="activationDevice">The device key overlay.</param>
-        /// <returns>The CatalogedDevice entry.</returns>
-        CatalogedDevice CreateCataloguedDevice(
-                    ProfileAccount profileAccount,
-                    ProfileDevice profileDevice,
-                    ActivationDevice activationDevice) {
-
-            var keyAdministratorSignature = GetAdminSignatureKey();
-
-            profileAccount.AssertNotNull(Internal.Throw);
-            profileAccount.DareEnvelope.AssertNotNull(Internal.Throw);
-            profileDevice.AssertNotNull(Internal.Throw);
-            profileDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            activationDevice.AssertNotNull(Internal.Throw);
-            activationDevice.Package(keyAdministratorSignature);
-            activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            var connectionDevice = activationDevice.ConnectionDevice;
-            connectionDevice.AssertNotNull(Internal.Throw);
-            connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
-
-            // Wrap the connectionDevice and activationDevice in envelopes
-
-
-            var catalogEntryDevice = new Mesh.CatalogedDevice() {
-                UDF = activationDevice.UDF,
-                EnvelopedProfileMesh = profileAccount.DareEnvelope,
-                EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedConnectionDevice = connectionDevice.DareEnvelope,
-                EnvelopedActivationDevice = activationDevice.DareEnvelope,
-                DeviceUDF = profileDevice.UDF
-                };
-
-            return catalogEntryDevice;
-            }
-
-        /// <summary>
-        /// Add a device to the account and the underlying Mesh.
-        /// </summary>
-        /// <param name="profileDevice">Profile of the device to add.</param>
-        /// <returns>The catalog entry.</returns>
-        public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
-            //var device = ContextMeshAdmin.CreateCataloguedDevice(profileDevice);
-
-            //var accountEncryptionKey = GetAccountEncryptionKey();
-            //// Connect the device to the Account
-            //ProfileAccount.ConnectDevice(KeyCollection, device, accountEncryptionKey, null);
-
-
-            ////Console.WriteLine(device.ToString());
-
-
-            //// Update the local and remote catalog.
-            //AddDevice(device);
-
-            //return device;
-
-            throw new NYI();
-            }
-
-
-
-
-
-        /// <summary>
-        /// Create a contact entry for self using the parameters specified in <paramref name="contact"/>.
-        /// </summary>
-        /// <param name="contact">The contact parameters.</param>
-        /// <param name="localname">Short name to apply to the signed contact info</param>
-        public CatalogedContact SetContactSelf(Contact contact, string localname = null) {
-            ContextMeshAdmin.Sign(contact);
-
-            contact.Sources ??= new List<TaggedSource>() { };
-            var tagged = new TaggedSource() {
-                LocalName = localname,
-                Validation = "Self",
-                EnvelopedSource = contact.DareEnvelope
-                };
-            contact.Sources.Add(tagged);
-
-            contact.Id = ProfileAccount.UDF;
-
-
-            var catalog = GetCatalogContact();
-
-            var (cataloged, success) = catalog.TryAdd(contact, true);
-
-            if (!success) {
-                cataloged.Contact = contact;
-                catalog.Update(cataloged);
-                }
-            return cataloged;
-            }
+        #region // Contact management
 
         /// <summary>
         /// Get the default (i.e. minimum contact info). This has a single network 
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public override Contact CreateContact(bool meshUDF = false,
-                    List<CryptographicCapability> capabilities = null) {
-
-            var address = new NetworkAddress(AccountAddress, ProfileAccount) {
-                Capabilities = capabilities
-                };
-
-            var anchorAccount = new Anchor() {
-                UDF = ProfileAccount.UDF,
-                Validation = "Self"
-                };
-            // ContextMesh.ProfileMesh.UDF 
-
-            var contact = new ContactPerson() {
-                Anchors = new List<Anchor>() { anchorAccount },
-                NetworkAddresses = new List<NetworkAddress>() { address }
-                };
-
-            if (meshUDF) {
-                var anchorMesh = new Anchor() {
-                    UDF = ContextMesh.ProfileMesh.UDF,
-                    Validation = "Self"
-                    };
-                contact.Anchors.Add(anchorMesh);
-                }
-            return contact;
-            }
+        public virtual Contact CreateContact(
+                List<CryptographicCapability> capabilities = null) => throw new NYI();
 
         #endregion
 
-        #region // General Operations 
+        #region // Store management
 
         /// <summary>
-        /// Get the primary account address bound to this profile. This is a bit of a hack right
-        /// now as the code doesn't really support the 'multiple services per account' model yet.
+        /// Return a <see cref="ConstraintsSelect"/> instance that requests synchronization to the
+        /// remote store whose status is described by <paramref name="statusRemote"/>.
         /// </summary>
-        /// <returns>The account service address.</returns>
-        public override string GetAccountAddress() {
-            ProfileAccount.AccountAddresses.AssertNotNull(AccountNotBound.Throw);
-            (ProfileAccount.AccountAddresses.Count > 0).AssertTrue(AccountNotBound.Throw);
+        /// <param name="statusRemote">Status of the remote store.</param>
+        /// <returns>The selection constraints.</returns>
+        public ConstraintsSelect GetStoreStatus(ContainerStatus statusRemote) {
+            if (DictionaryStores.TryGetValue(statusRemote.Container, out var syncStore)) {
+                var storeLocal = syncStore.Store;
 
-            return ProfileAccount.AccountAddresses[0];
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount
+                        };
+                }
+
+            else {
+                using var storeLocal = new Store(StoresDirectory, statusRemote.Container,
+                            decrypt: false, create: false);
+                //Console.WriteLine($"Container {statusRemote.Container}   Local {storeLocal.FrameCount} Remote {statusRemote.Index}");
+                return storeLocal.FrameCount >= statusRemote.Index ? null :
+                    new ConstraintsSelect() {
+                        Container = statusRemote.Container,
+                        IndexMax = statusRemote.Index,
+                        IndexMin = (int)storeLocal.FrameCount
+                        };
+                }
             }
 
         /// <summary>
-        /// Return the first cryptographic capability granted to this particular device
-        /// for the application <paramref name="catalogedApplication"/>.
+        /// Update the store according to the values <paramref name="containerUpdate"/>.
         /// </summary>
-        /// <param name="catalogedApplication">The application to return the capability from.</param>
-        /// <returns>The first cryptographic capability this device has been granted if found,
-        /// otherwise null.</returns>
-        public CryptographicCapability GetCapability(CatalogedApplication catalogedApplication) {
+        /// <param name="containerUpdate">The update to apply.</param>
+        /// <returns>The number of envelopes successfully added.</returns>
+        public int UpdateStore(ContainerUpdate containerUpdate) {
+            int count = 0;
+            if (DictionaryStores.TryGetValue(containerUpdate.Container, out var syncStore)) {
+                var store = syncStore.Store;
+                foreach (var entry in containerUpdate.Envelopes) {
+                    if (entry.Index == 0) {
+                        throw new NYI();
+                        }
 
-            foreach (var envelope in catalogedApplication.EnvelopedCapabilities) {
-                var capability = GetCapability(envelope);
-                if (capability != null) {
-                    return capability;
+                    count++;
+                    store.AppendDirect(entry);
                     }
+                return count;
                 }
-            return null;
+
+            else {
+                // we have zero envelopes being returned in this update.
+
+                Store.Append(StoresDirectory, this, containerUpdate.Envelopes, containerUpdate.Container);
+                return containerUpdate.Envelopes.Count;
+                }
+
             }
 
         /// <summary>
-        /// Attempt to decrypt <paramref name="envelopedCapability"/>. If successful, the content 
-        /// data is decoded and the enclosed capability returned. Otherwise, null is returned.
+        /// Return a <see cref="Store"/> instance for the store named <paramref name="name"/>. If the
+        /// parameter <paramref name="blind"/> is true, only the sequence header values are read.
         /// </summary>
-        /// <param name="envelopedCapability">The envelope to attempt to decrypt.</param>
-        /// <returns>The first cryptographic capability this device has been granted if found,
-        /// otherwise null.</returns>
-        public CryptographicCapability GetCapability(DareEnvelope envelopedCapability) {
-            envelopedCapability.Future();
+        /// <param name="name">The store to open.</param>
+        /// <param name="blind">If true, only the sequence header values are read</param>
+        /// <returns>The <see cref="Store"/> instance.</returns>
+        public Store GetStore(string name, bool blind = false) {
+            if (DictionaryStores.TryGetValue(name, out var syncStore)) {
+                if (!blind & (syncStore.Store is CatalogBlind)) {
+                    // if we have a blind store from a sync operation but need a populated one,
+                    // remake it.
+                    syncStore.Store.Dispose();
+                    syncStore.Store = MakeStore(name);
+                    }
+                return syncStore.Store;
+                }
 
-            throw new NYI();
+            //Console.WriteLine($"Open store {name} on {MeshMachine.DirectoryMesh}");
 
+            var store = blind ? new CatalogBlind(StoresDirectory, name) : MakeStore(name);
+            syncStore = new SyncStatus(store);
+
+            DictionaryStores.Add(name, syncStore);
+            return syncStore.Store;
             }
-        #endregion
-
-        #region // Store management and convenience accessors
 
         /// <summary>
         /// Create a new instance bound to the specified core within this account context.
         /// </summary>
         /// <param name="name">The name of the store to bind.</param>
         /// <returns>The store instance.</returns>
-        protected override Store MakeStore(string name) => name switch
+        protected virtual Store MakeStore(string name) => name switch
             {
-                SpoolInbound.Label => new SpoolInbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolOutbound.Label => new SpoolOutbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolLocal.Label => new SpoolLocal(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolArchive.Label => new SpoolArchive(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogCredential.Label => new CatalogCredential(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogContact.Label => new CatalogContact(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogCalendar.Label => new CatalogCalendar(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogBookmark.Label => new CatalogBookmark(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogNetwork.Label => new CatalogNetwork(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                _ => base.MakeStore(name),
+                CatalogCapability.Label => new CatalogCapability(StoresDirectory,
+                    name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient)),
+                _ => throw new NYI(),
                 };
+        #endregion
 
 
-        ///<summary>Returns the application catalog for the account</summary>
-        public CatalogApplication GetCatalogApplication() => GetStore(CatalogApplication.Label) as CatalogApplication;
 
-        ///<summary>Returns the contacts catalog for the account</summary>
-        public CatalogDevice GetCatalogDevice() => GetStore(CatalogDevice.Label) as CatalogDevice;
-
-        ///<summary>Returns the contacts catalog for the account</summary>
-        public CatalogContact GetCatalogContact() => GetStore(CatalogContact.Label) as CatalogContact;
-
-        ///<summary>Returns the credential catalog for the account</summary>
-        public CatalogCredential GetCatalogCredential() => GetStore(CatalogCredential.Label) as CatalogCredential;
-
-        ///<summary>Returns the bookmark catalog for the account</summary>
-        public CatalogBookmark GetCatalogBookmark() => GetStore(CatalogBookmark.Label) as CatalogBookmark;
-
-        ///<summary>Returns the calendar catalog for the account</summary>
-        public CatalogCalendar GetCatalogCalendar() => GetStore(CatalogCalendar.Label) as CatalogCalendar;
-
-        ///<summary>Returns the network catalog for the account</summary>
-        public CatalogNetwork GetCatalogNetwork() => GetStore(CatalogNetwork.Label) as CatalogNetwork;
-
-        ///<summary>Returns the inbound spool for the account</summary>
-        public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
-
-        ///<summary>Returns the outbound spool for the account</summary>
-        public SpoolOutbound GetSpoolOutbound() => GetStore(SpoolOutbound.Label) as SpoolOutbound;
+        #region Implement IKeyLocate
 
 
         /// <summary>
-        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
+        /// Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
         /// an account identifier or strong account identifier.
         /// </summary>
         /// <param name="keyId">The identifier to resolve.</param>
         /// <returns>The identifier.</returns>
-        public override CryptoKey TryFindKeyEncryption(string keyId) {
+        public virtual CryptoKey TryFindKeyEncryption(string keyId) =>
+                    KeyCollection.TryFindKeyEncryption(keyId);
 
-            var key = base.TryFindKeyEncryption(keyId);
-            if (key != null) {
-                return key;
-                }
-            return GetCatalogContact().GetByAccountEncrypt(keyId);
-            }
+
 
 
         /// <summary>
-        /// Resolve a public key by identifier. This may be a UDF fingerprint of the key,
-        /// an account identifier or strong account identifier.
+        /// Attempt to obtain a private key with identifier <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The identifier to resolve.</param>
-        /// <returns>The identifier.</returns>
-        public override CryptoKey TryFindKeySignature(string keyId) {
-            if (keyId == AccountAddress) {
-                return KeySignature;
-                }
-            if (base.TryFindKeySignature(keyId).NotNull(out var key)) {
-                return key;
-                }
-            return null;
-            }
-
+        /// <param name="keyId">The key identifier to match.</param>
+        /// <returns>The key pair if found.</returns>
+        public virtual CryptoKey LocatePrivateKeyPair(string keyId) => 
+                    KeyCollection.LocatePrivateKeyPair(keyId);
 
         /// <summary>
         /// Attempt to obtain a recipient with identifier <paramref name="keyId"/>.
         /// </summary>
         /// <param name="keyId">The key identifier to match.</param>
         /// <returns>The key pair if found.</returns>
-        public override IKeyDecrypt TryFindKeyDecryption(string keyId) {
-            var key = base.TryFindKeyDecryption(keyId);
-            if (key != null) {
-                return key;
-                }
+        public virtual IKeyDecrypt TryFindKeyDecryption(string keyId) =>
+                    KeyCollection.TryFindKeyDecryption(keyId);
 
-            var catalogCapability = GetCatalogCapability();
-            return catalogCapability.TryFindKeyDecryption(keyId);
-            }
+        /// <summary>
+        /// Resolve a private key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
+        /// </summary>
+        /// <param name="signingKey">The identifier to resolve.</param>
+        /// <returns>The identifier.</returns>
+        public virtual CryptoKey TryFindKeySignature(string signingKey) => 
+                    KeyCollection.TryFindKeySignature(signingKey);
+
+        /// <summary>
+        /// Add a keypair to the collection.
+        /// </summary>
+        /// <param name="keyPair">The key pair to add.</param>
+        public void Add(KeyPair keyPair) => KeyCollection.Add(keyPair);
+
+        /// <summary>
+        /// Persist a private key if permitted by the KeySecurity model of the key.
+        /// </summary>
+        /// <param name="keyPair">The key to persist.</param>
+        public void Persist(KeyPair keyPair) => KeyCollection.Persist(keyPair);
+
+
+        // Hack: This is just trying to resolve any known key. Should revise the implementation
         #endregion
-        #region // Message Handling - Get/Process pending.
-        /// <summary>
-        /// Search the inbound spool and return the last message of type <paramref name="tag"/>.
-        /// This is obviously a placeholder for something more comprehensive.
-        /// </summary>
-        /// <param name="tag">Message selector.</param>
-        /// <returns>The message found.</returns>
-        public Message GetPendingMessage(string tag) {
-            var completed = new Dictionary<string, Message>();
-
-            foreach (var message in GetSpoolInbound().Select(1, true)) {
-                var contentMeta = message.Header.ContentMeta;
-
-                if (!completed.ContainsKey(contentMeta.UniqueID)) {
-                    var meshMessage = Message.FromJson(message.GetBodyReader());
-                    //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-                    if (contentMeta.MessageType == tag) {
-                        return meshMessage;
-                        }
-                    switch (meshMessage) {
-                        case MessageComplete meshMessageComplete: {
-                            foreach (var reference in meshMessageComplete.References) {
-                                completed.Add(reference.MessageID, meshMessageComplete);
-                                // Hack: This should make actual use of the relationship
-                                //   (Accept, Reject, Read)
-                                }
-                            break;
-                            }
-
-                        default:
-                        break;
-                        }
-                    }
-                }
-            return null;
-            }
 
         /// <summary>
-        /// Return the last message with messageID <paramref name="messageID"/>. If the message
-        /// has been read, the value <paramref name="read"/> is true.
+        /// Resolve a public signature key by identifier. This may be a UDF fingerprint of the key,
+        /// an account identifier or strong account identifier.
         /// </summary>
-        /// <param name="messageID">The message to locate.</param>
-        /// <param name="read">If true, the message has already been read.</param>
-        /// <returns>The message value (if unread).</returns>
-        public Message GetPendingMessageByID(string messageID, out bool read) {
-            foreach (var envelope in GetSpoolInbound().Select(1, true)) {
-                var contentMeta = envelope.Header.ContentMeta;
-                var meshMessage = Message.Decode(envelope);
-
-                // Message.FromJson(envelope.GetBodyReader());
-                //meshMessage.DareEnvelope = envelope;
-                //Console.WriteLine($"Message {contentMeta?.MessageType} ID {meshMessage.MessageID}");
-
-                if (meshMessage.MessageID == messageID) {
-                    read = true;
-                    return meshMessage;
-                    }
-                switch (meshMessage) {
-                    case MessageComplete meshMessageComplete: {
-                        foreach (var reference in meshMessageComplete.References) {
-                            if (reference.MessageID == messageID) {
-                                read = true;
-                                return null;
-                                }
-                            }
-                        break;
-                        }
-
-                    default:
-                    break;
-                    }
-
-                }
-
-            read = false;
-            return null;
-            }
-
-        #endregion
-        #region // Group operations
-
-        /// <summary>
-        /// Create a threshold encryption group.
-        /// </summary>
-        /// <param name="groupName">Name of the group to create.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <returns></returns>
-
-        public ContextGroup CreateGroup(string groupName,
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
-
-            var meshKeyType = MeshKeyType.GroupProfile;
-            (var profileGroup, var secretSeed) = ProfileGroup.Generate(
-                        MeshMachine, algorithmSign, algorithmEncrypt);
-            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign,
-                        keySecurity: KeySecurity.Exportable);
-            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt,
-                        keySecurity: KeySecurity.Exportable);
-
-            // here we request creation of the group at the service.
-
-            var createRequest = new CreateGroupRequest() {
-                AccountAddress = groupName,
-                SignedProfileGroup = profileGroup.DareEnvelope
-                };
-
-            var createResponse = MeshClient.CreateGroup(createRequest, MeshClient.JpcSession);
-            createResponse.AssertSuccess();
-
-            var capabilityAdmin = new CapabilitySign() {
-                Id = UDF.Nonce(),
-                SubjectAddress = groupName,
-                SubjectId = keySign.KeyIdentifier,
-                KeyData = new KeyData(keySign, true),
-                };
-
-            var capabilityDecrypt = new CapabilityKeyGenerate() {
-                Id = UDF.Nonce(),
-                SubjectAddress = groupName,
-                SubjectId = keyEncrypt.KeyIdentifier,
-                KeyData = new KeyData(keyEncrypt, true)
-                };
-
-            GetCatalogCapability().Add(capabilityAdmin);
-            GetCatalogCapability().Add(capabilityDecrypt);
-
-
-
-            //var envelopedCapabilityAdmin = DareEnvelope.Encode(capabilityAdmin.GetBytes(), encryptionKey: KeyDeviceEncryption);
-            //var envelopedCapabilityDecrypt = DareEnvelope.Encode(capabilityDecrypt.GetBytes(), encryptionKey: KeyDeviceEncryption);
-
-
-
-            var catalogedGroup = new CatalogedGroup(profileGroup) {
-                Key = groupName
-                };
-            GetCatalogApplication().New(catalogedGroup);
-
-
-            //var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
-
-            //var contact = contextGroup.CreateContact();
-            //// Bug: Should also encrypt the relevant admin key to the admin encryption key.
-
-
-            //var contactCatalog = GetCatalogContact();
-            //contactCatalog.Add(contact);
-
-
-            //return contextGroup;
-
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Get a managment context for the group <paramref name="groupAddress"/>.
-        /// </summary>
-        /// <param name="groupAddress">The group to return the management context for.</param>
-        /// <returns>The created management context.</returns>
-        public ContextGroup GetContextGroup(string groupAddress) {
-
-            // read through the entries in CatalogApplication
-            var catalog = GetCatalogApplication();
-            var entry = catalog.LocateGroup(groupAddress);
-
-            //// construct the group context
-            //// We do not attempt to get admin privs here, we will do that if necessary.
-            //return new ContextGroup(this, entry);
-
+        /// <param name="cryptoKey">The key to validate.</param>
+        /// <returns>The identifier.</returns>
+        public virtual bool ValidateTrustAnchor(CryptoKey cryptoKey) {
             throw new NYI();
             }
 
 
+        #region Implement IDare
 
-        #endregion
-        #region // Device connection
-
-        /// <summary>
-        /// Create an EARL for a device, publish the result to the Mesh service and return 
-        /// the device profile <paramref name="profileDevice"/>, secret seed value 
-        /// <paramref name="secretSeed"/>, connection URI 
-        /// <paramref name="connectURI"/> and PIN <paramref name="pin"/>.
-        /// </summary>
-        /// <param name="secretSeed">The computed secret seed value.</param>
-        /// <param name="profileDevice">The computed device profile</param>
-        /// <param name="pin">The computed PIN code.</param>
-        /// <param name="connectURI">The connection URI to be used for pickup.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The signature algorithm</param>
-        /// <param name="algorithmAuthenticate">The signature algorithm</param>
-        /// <param name="secret">The master secret.</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
-        /// <returns>Response from the server.</returns>
-        public PublishResponse CreateDeviceEarl(
-                    out PrivateKeyUDF secretSeed,
-                    out ProfileDevice profileDevice,
-                    out string pin,
-                    out string connectURI,
-
-                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                    byte[] secret = null,
-                    int bits = 256
-                    ) {
-
-            // an invitation consists of a uri of the form:
-            // mmm://q@example.org/NQED-5C35-WSBQ-OBHW-ENBI-XOZF
-
-
-            secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice,
-                algorithmEncrypt,
-                algorithmSign,
-                algorithmAuthenticate,
-                secret,
-                bits);
-
-
-            pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
-
-            var key = new CryptoKeySymmetric(pin);
-
-            connectURI = MeshUri.ConnectUri(AccountAddress, pin);
-
-            // Create a device profile and encrypt under pin
-            profileDevice = new ProfileDevice(secretSeed);
-            var plaintext = profileDevice.DareEnvelope.GetBytes();
-
-            var encryptedProfileDevice = DareEnvelope.Encode(plaintext, encryptionKey: key);
-
-            var catalogedPublication = new CatalogedPublication(pin) {
-                EnvelopedData = encryptedProfileDevice,
-                };
-
-            var publishRequest = new PublishRequest() {
-                Publications = new List<CatalogedPublication>() { catalogedPublication }
-                };
-
-            var publishResponse = MeshClient.Publish(publishRequest);
-
-
-            return publishResponse;
-            }
+        // Bug: this is going to fail because information from the contact catalog is not available.
 
 
         /// <summary>
-        /// Attempt device connection by means of the static URI <paramref name="uri"/>.
+        /// Create a new DARE Envelope from the specified parameters.
         /// </summary>
-        /// <param name="uri">The connection URI</param>
-        /// <returns>The </returns>
-        public CatalogedDevice Connect(string uri) {
-
-            var envelopedProfileDevice = ClaimPublication(uri, out var responseId);
-
-            // Decode the Profile Device
-            var profileDevice = ProfileDevice.Decode(envelopedProfileDevice) as ProfileDevice;
-
-            // Approve the request
-            // Have to add in the Mesh profile here and Account Assertion
-
-            var cataloguedDevice = AddDevice(profileDevice);
-
-            //Console.WriteLine($"Accept connection ID is {responseId}");
-            var respondConnection = new RespondConnection() {
-                MessageID = responseId,
-                CatalogedDevice = cataloguedDevice,
-                Result = Constants.TransactionResultAccept
-                };
-
-            SendMessage(respondConnection);
-
-
-            // ContextMeshPending
-            return cataloguedDevice;
-            }
-        #endregion
-        #region // Claim publication
-        /// <summary>
-        /// Claim the document published at the EARL <paramref name="uri"/>.
-        /// </summary>
-        /// <param name="uri">The EARL to resolve</param>
-        /// <param name="responseId">The response from the service.</param>
-        /// <returns>The recovered envelope.</returns>
-        public DareEnvelope ClaimPublication(string uri, out string responseId) {
-            (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-
-            var key = new CryptoKeySymmetricSigner(pin);
-            var messageClaim = new MessageClaim(targetAccountAddress, AccountAddress, pin);
-
-            var envelopedMessageClaim = messageClaim.Encode(KeySignature);
-
-            // make claim request to service managing the device
-            var claimRequest = new ClaimRequest {
-                EnvelopedMessageClaim = envelopedMessageClaim
-                };
-
-            var claimResponse = MeshClient.Claim(claimRequest);
-
-            // The Dare envelope contains a DareEnvelope<ProfileDevice>
-            var encryptedEnvelope = claimResponse.CatalogedPublication.EnvelopedData;
-
-            // Verify: if the key is a encrypt/sign, need to verify here.
-            "If the key is a encrypt/sign, need to verify here.".TaskValidate();
-
-            var result = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
-
-            responseId = messageClaim.GetResponseID();
-
-            return result;
-            }
-        #endregion
-        #region // Processing
-
-        /// <summary>
-        /// Process automatic actions.
-        /// </summary>
-        /// <returns>The results of the automatic processing attempted.</returns>
-        public List<IProcessResult> ProcessAutomatics() {
-
-            var results = new List<IProcessResult>();
-
-            var spoolInbound = GetSpoolInbound();
-            foreach (var envelope in spoolInbound.GetMessages(MessageStatus.Open)) {
-                var meshMessage = envelope.Message;
-                switch (meshMessage) {
-                    case AcknowledgeConnection acknowledgeConnection: {
-                        if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
-                            results.Add(ProcessAutomatic(acknowledgeConnection));
-                            }
-
-                        break;
-                        }
-                    case ReplyContact replyContact: {
-                        results.Add(ProcessAutomatic(replyContact, false));
-                        break;
-                        }
-                    case GroupInvitation groupInvitation: {
-                        results.Add(ProcessAutomatic(groupInvitation));
-                        break;
-                        }
-                    }
-                }
-
-            return results;
-            }
-
-
-
-        /// <summary>
-        /// Perform automatic processing of the message <paramref name="groupInvitation"/>.
-        /// </summary>
-        /// <param name="groupInvitation">Reply to contact request to be processed.</param>
-        /// <param name="accept">Accept the requested action.</param>
-        /// <param name="authorize">If true, the action is explicitly authorized.</param>
-        /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(GroupInvitation groupInvitation, bool accept = true,
-                        bool authorize = false) {
-            accept.Future();
-            authorize.Future();
-
-            if (groupInvitation.Contact == null) {
-                return null; // invitation did not contain a credential
-                }
-
-            GetCatalogContact().Add(groupInvitation.Contact);
-            if (groupInvitation.Contact?.NetworkAddresses == null) {
-                return null; // invitation did not contain a credential
-                }
-
-            var catalogCapability = GetCatalogCapability();
-            foreach (var address in groupInvitation.Contact.NetworkAddresses) {
-                if (address.Capabilities != null) {
-                    foreach (var capability in address.Capabilities) {
-                        catalogCapability.Add(capability);
-                        }
-                    }
-                }
-
-
-
-            return null;
-            }
-
-        /// <summary>
-        /// Perform automatic processing of the message <paramref name="replyContact"/>.
-        /// </summary>
-        /// <param name="replyContact">Reply to contact request to be processed.</param>
-        /// <param name="accept">Accept the requested action.</param>
-        /// <param name="authorize">If true, the action is explicitly authorized.</param>
-        /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept = true,
-                        bool authorize = false) {
-            authorize.Future();
-
-            // check response pin here 
-            var messagePin = GetMessagePIN(replyContact.PinUDF);
-
-            var result = MessagePIN.ValidatePin(messagePin,
-                    AccountAddress,
-                    replyContact.AuthenticatedData,
-                    replyContact.ClientNonce,
-                    replyContact.PinWitness);
-
-            if (!(messagePin.Automatic | accept)) {
-                return new PINNotAutomatic();
-                }
-
-            if (!(result is MessagePIN)) {
-                return result;
-                }
-
-            GetCatalogContact().Add(replyContact.AuthenticatedData);
-
-            return null;
-            }
-        /// <summary>
-        /// Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
-        /// </summary>
-        /// <param name="acknowledgeConnection">Connection request to be processed.</param>
-        /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
-            var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
-
-            // get the pin value here
-            var messagePin = GetMessagePIN(messageConnectionRequest.PinUDF);
-
-            var result = MessagePIN.ValidatePin(messagePin,
-                    AccountAddress,
-                    messageConnectionRequest.AuthenticatedData,
-                    messageConnectionRequest.ClientNonce,
-                    messageConnectionRequest.PinWitness);
-
-            if (!(result is MessagePIN)) {
-                return result;
-                }
-
-            return Process(acknowledgeConnection, true);
-            }
-
-
-
-
-
-        /// <summary>
-        /// Accept or reject a connection request.
-        /// </summary>
-        /// <param name="request">The request to accept or reject.</param>
-        /// <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
-        IProcessResult Process(AcknowledgeConnection request, bool accept = true) {
-            var messageID = request.GetResponseID();
-            var respondConnection = new RespondConnection() {
-                MessageID = messageID
-                };
-
-            if (accept) {
-                // Connect the device to the Mesh
-                var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
-                respondConnection.CatalogedDevice = device;
-                respondConnection.Result = Constants.TransactionResultAccept;
-                }
-            else {
-                respondConnection.Result = Constants.TransactionResultReject;
-                }
-
-            //Console.WriteLine($"Accept connection ID is {messageID}");
-
-            SendMessage(respondConnection);
-
-            return respondConnection;
-            }
-
-
-
-
-
-        /// <summary>
-        /// Generalized processing loop for messages
-        /// </summary>
-        /// <param name="messageId">Identifier of the message to process.</param>
-        /// <param name="accept">If true, accept the request, otherwise reject it.</param>
-        /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
-        /// contact information in response to an initial contact request.</param>
+        /// <param name="plaintext">The payload plaintext. If specified, the plaintext will be used to
+        /// create the message body. Otherwise the body is specified by calls to the Process method.</param>
+        /// <param name="contentMeta">The content metadata</param>
+        /// <param name="cloaked">Data to be converted to an EDS and presented as a cloaked header.</param>
+        /// <param name="dataSequences">Data sequences to be converted to an EDS and presented 
+        /// as an EDSS header entry.</param>
+        /// <param name="recipients">If specified, encrypt the envelope with decryption blobs
+        /// for the specified recipients.</param>
+        /// <param name="sign">If true sign the envelope.</param>
         /// <returns></returns>
-        public IProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
+        public DareEnvelope DareEncode(
+                    byte[] plaintext,
+                    ContentMeta contentMeta = null,
+                    byte[] cloaked = null,
+                    List<byte[]> dataSequences = null,
+                    List<string> recipients = null,
+                    bool sign = false) {
+
+            KeyPair signingKey = sign ? KeySignature : null;
+            List<CryptoKey> encryptionKeys;
 
 
-            // Hack: should be able to accept, reject specific requests, not just
-            // the last one.
-            var message = GetPendingMessageByID(messageId, out var found);
-            found.AssertTrue(MessageIdNotFound.Throw);
+            // probably going to fail here unless we have a way to pull keys out of the contacts catalog 
+            // for the group.
+            if (recipients != null) {
+                encryptionKeys = new List<CryptoKey>();
+                foreach (var recipient in recipients) {
+                    var key = TryFindKeyEncryption(recipient);
+                    encryptionKeys.Add(key);
+                    }
+                }
 
-            return Process(message, accept, reciprocate);
+            var cryptoParameters = new CryptoParameters(keyCollection: this,
+                        signer: signingKey, recipients: recipients);
+            return new DareEnvelope(cryptoParameters, plaintext, contentMeta, cloaked, dataSequences);
 
             }
 
         /// <summary>
-        /// Generalized processing loop for messages
+        /// Decode a DARE envelope
         /// </summary>
-        /// <param name="meshMessage">The message to process.</param>
-        /// <param name="accept">If true, accept the request, otherwise reject it.</param>
-        /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
-        /// contact information in response to an initial contact request.</param>
-        /// <returns></returns>
-        public IProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true) {
-
-            reciprocate.Future();
-
-            switch (meshMessage) {
-                case AcknowledgeConnection connection: {
-                    return Process(connection, accept);
-                    }
-                case ReplyContact replyContact: {
-                    return ProcessAutomatic(replyContact, accept, true);
-                    }
-                case RequestContact requestContact: {
-                    return ContactReply(requestContact);
-
-                    }
-
-                case RequestConfirmation requestConfirmation: {
-                    return ConfirmationResponse(requestConfirmation, accept);
-
-                    }
-                case ResponseConfirmation responseConfirmation: {
-                    responseConfirmation.Future();
-                    break;
-                    }
-                case RequestTask requestTask: {
-                    requestTask.Future();
-                    break;
-                    }
-                case GroupInvitation groupInvitation: {
-                    groupInvitation.Future();
-                    break;
-                    }
-
-                default: throw new NYI();
-                }
-
-
-            return null;
-            }
-
-        /// <summary>
-        /// Make a contact reply.
-        /// </summary>
-        /// <param name="requestContact">The contact request.</param>
-        /// <param name="localname">Local name to be used to identify the contact recorded in
-        /// the catalog.</param>
-        public IProcessResult ContactReply(RequestContact requestContact, string localname = null) {
-
-            // Add the requestContact.Self contact to the catalog
-
-            if (requestContact.Self != null) {
-                var catalog = GetCatalogContact();
-                catalog.Add(requestContact.Self);
-                }
-
-            return SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
-
-            }
-
-        Message SendReplyContact(string recipient, string pin, string localname) {
-            // prepare the reply
-            var contactSelf = GetSelf(localname);
-
-            // calculate the witness value over contactSelf and PIN
-
-            var saltedPin = MessagePIN.SaltPIN(pin, Constants.MessagePINActionContact);
-
-            var nonce = CryptoCatalog.GetBits(128);
-
-            var witness = MessagePIN.GetPinWitness(saltedPin, recipient, contactSelf, nonce);
-            var pinUdf = MessagePIN.GetPinUDF(saltedPin, recipient);
-
-
-            var message = new ReplyContact() {
-                Recipient = recipient,
-                Subject = recipient,
-                AuthenticatedData = contactSelf,
-                ClientNonce = nonce,
-                PinWitness = witness,
-                PinUDF = pinUdf
-                };
-
-            // send it to the service
-            SendMessage(message, recipient);
-
-            return message;
-            }
+        /// <param name="envelope">The envelope to decode.</param>
+        /// <param name="verify">It true, verify the signature first.</param>
+        /// <returns>The plaintext payload data.</returns>
+        public byte[] DareDecode(
+                    DareEnvelope envelope,
+                    bool verify = false) => envelope.GetPlaintext(this);
+   
 
         #endregion
-        #region // ContactManagement
 
-        /// <summary>
-        /// Get the user's own contact. There is only ever one contact entry but there MAY
-        /// be multiple envelopes 
-        /// </summary>
-        /// <param name="localName">Local name for the contact</param>
-        /// <returns></returns>
-        public DareEnvelope GetSelf(string localName) {
-            var catalog = GetCatalogContact();
-            var entry = catalog.PersistenceStore.Get(ProfileAccount.UDF);
-
-            var self = entry.JsonObject as CatalogedContact;
-
-            foreach (var tagged in self.Contact.Sources) {
-                if (tagged.EnvelopedSource == null) {
-                    // skip entries that don't have an enveloped source.
-                    }
-                else if (localName == null || tagged.LocalName == localName) {
-                    return tagged.EnvelopedSource;
-                    }
-                }
-
-            throw new NYI();
-            }
-
-
-
-        /// <summary>
-        /// Construct a contact fetch URI.
-        /// </summary>
-        /// <param name="localName">Local name for the contact</param>
-        /// <param name="expire">Expiry time for the corresponding PIN</param>
-        /// <param name="automatic">If true, presentation of the pin code is sufficient
-        /// to authenticate and authorize the action.</param>
-        public string ContactUri(bool automatic, DateTime? expire, string localName = null) {
-            var envelope = GetSelf(localName);
-
-            var combinedKey = new CryptoKeySymmetricSigner();
-
-            var pin = combinedKey.SecretKey;
-
-            // Add a signature under the signature key.
-            var encryptedContact = DareEnvelope.Encode(envelope.GetBytes(),
-                    signingKey: combinedKey, encryptionKey: combinedKey);
-
-            // publish the enveloped contact to the service.
-            var catalogedPublication = new CatalogedPublication(pin) {
-                EnvelopedData = encryptedContact,
-                NotOnOrAfter = expire
-                };
-
-            var publishRequest = new PublishRequest() {
-                Publications = new List<CatalogedPublication>() { catalogedPublication },
-                };
-
-            var publishResponse = MeshClient.Publish(publishRequest);
-            publishResponse.AssertSuccess();
-
-            // Register the pin
-            var messageConnectionPIN = new MessagePIN(pin, automatic, expire, AccountAddress, "Contact");
-            SendMessageAdmin(messageConnectionPIN);
-            // Spec - maybe should enforce type check here.
-
-
-            // return the contact address
-            return MeshUri.ConnectUri(AccountAddress, pin);
-            }
-
-
-
-        /// <summary>
-        /// Construct a contact request.
-        /// </summary>
-        /// <param name="recipientAddress">The contact to request.</param>
-        /// <param name="localName">Local name for the contact</param>
-        public RequestContact ContactRequest(string recipientAddress, string localName = null) {
-            // prepare the contact request
-
-            var contactSelf = GetSelf(localName);
-            var pin = UDF.SymmetricKey();
-
-            var message = new RequestContact() {
-                Recipient = recipientAddress,
-                Subject = recipientAddress,
-                Self = contactSelf,
-                PIN = pin
-                };
-
-            RegisterPIN(pin, true, null, AccountAddress, "Contact");
-
-            SendMessage(message, recipientAddress);
-
-            // send it to the service
-
-            return message;
-            }
-
-
-        /// <summary>
-        /// Fetch contact data referenced by the URI <paramref name="uri"/>. If <paramref name="reciprocate"/>
-        /// is true, send own contact data.
-        /// </summary>
-        /// <param name="uri">The URI to resolve.</param>
-        /// <param name="reciprocate">If true send own contact data.</param>
-        /// <param name="localname">Local name for the contact to send in exchange</param>
-        /// <param name="message">The reciprocation message (if sent), otherwise null.</param>
-        /// <returns>The cataloged contact information.</returns>
-        public CatalogedContact ContactExchange(string uri, bool reciprocate, out Message message, string localname = null) {
-            // Fetch, verify and decrypt the corresponding data.
-
-            var envelope = ClaimPublication(uri, out var _);
-
-            // Add to the catalog
-            var catalog = GetCatalogContact();
-            var result = catalog.Add(envelope);
-
-            if (reciprocate) {
-                (var targetAccountAddress, var pin) = MeshUri.ParseConnectUri(uri);
-                message = SendReplyContact(targetAccountAddress, pin, localname) as Message;
-                }
-            else {
-                message = null;
-                }
-
-            return result;
-            }
-        #endregion
-        #region // Confirmation Processing
-
-        /// <summary>
-        /// Construct a confirmation request.
-        /// </summary>
-        /// <param name="accountAddress">The contact to request.</param>
-        /// <param name="messageText">The message text to send.</param>
-        public RequestConfirmation ConfirmationRequest(string accountAddress, string messageText) {
-            // prepare the contact request
-
-            var message = new RequestConfirmation() {
-                Recipient = accountAddress,
-                Text = messageText
-                };
-
-            SendMessage(message, accountAddress);
-
-            // send it to the service
-            return message;
-            }
-
-
-        /// <summary>
-        /// Make a contact reply.
-        /// </summary>
-        /// <param name="requestConfirmation">The request received.</param>
-        /// <param name="response">If true, accept the confirmation request, otherwise reject.</param>
-        public IProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
-            // prepare the contact request
-
-            var recipient = requestConfirmation.Sender;
-
-            var message = new ResponseConfirmation() {
-                MessageID = requestConfirmation.GetResponseID(),
-                Recipient = recipient,
-                Accept = response,
-                Request = requestConfirmation.DareEnvelope
-                };
-
-            SendMessage(message, recipient);
-
-            // send it to the service
-            return null;
-            }
-
-
-        #endregion
         }
-
-
     }

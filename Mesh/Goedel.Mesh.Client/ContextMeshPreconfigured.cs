@@ -11,11 +11,16 @@ namespace Goedel.Mesh.Client {
     /// <summary>
     /// Base context for interacting with a preconfigured device
     /// </summary>
-    public class ContextMeshPreconfigured : ContextMesh {
+    public class ContextMeshPreconfigured : ContextAccount {
 
         ///<summary>Convenience accessor for the pending context.</summary>
         public CatalogedPreconfigured CatalogedPreconfigured
                     => CatalogedMachine as CatalogedPreconfigured;
+
+
+        public override Profile Profile => throw new NotImplementedException();
+
+        public override Connection Connection => throw new NotImplementedException();
 
 
         /// <summary>
@@ -96,7 +101,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>If successfull returns an ContextAccountService instance to allow access
         /// to the connected account. Otherwise, a null value is returned.</returns>
-        public ContextAccount Complete() {
+        public ContextUser Complete() {
             var Pending = Poll();
             if (Pending != null) {
                 return Pending.Complete ();
@@ -146,6 +151,6 @@ namespace Goedel.Mesh.Client {
 
             }
 
-
+        public override string GetAccountAddress() => throw new NotImplementedException();
         }
     }

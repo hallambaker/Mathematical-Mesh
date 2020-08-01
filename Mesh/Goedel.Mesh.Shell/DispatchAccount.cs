@@ -37,12 +37,15 @@ namespace Goedel.Mesh.Shell {
             var accountID = Options.NewAccountID.Value;
 
             using var contextMesh = GetContextMeshAdmin(Options);
-            var contextAccount = contextMesh.CreateAccount(accountID);
-            return new ResultCreateAccount() {
-                Success = true,
-                ProfileAccount = contextAccount.ProfileAccount,
-                ActivationAccount = contextAccount.ActivationAccount
-                };
+
+            throw new NYI();
+
+            //var contextAccount = contextMesh.CreateAccount(accountID);
+            //return new ResultCreateAccount() {
+            //    Success = true,
+            //    ProfileAccount = contextAccount.ProfileAccount,
+            //    ActivationAccount = contextAccount.ActivationAccount
+            //    };
             }
 
 
@@ -90,14 +93,17 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountRegister(AccountRegister Options) {
             using var contextAccount = GetContextAccount(Options); //GetContextMeshAdmin(Options);
-            contextAccount.AddService(Options.NewAccountID.Value);
 
-            return new ResultRegisterService() {
-                Success = true,
-                AccountAddress = contextAccount.AccountAddress,
-                ActivationAccount = contextAccount.ActivationAccount,
-                ProfileAccount = contextAccount.ProfileAccount
-                };
+            throw new NYI();
+
+            //contextAccount.AddService(Options.NewAccountID.Value);
+
+            //return new ResultRegisterService() {
+            //    Success = true,
+            //    AccountAddress = contextAccount.AccountAddress,
+            //    ActivationAccount = contextAccount.ActivationAccount,
+            //    ProfileAccount = contextAccount.ProfileAccount
+            //    };
             }
 
         /// <summary>

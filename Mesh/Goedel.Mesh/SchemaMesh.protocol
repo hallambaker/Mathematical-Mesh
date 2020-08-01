@@ -185,20 +185,6 @@
 			|on the ProfileMesh class though.
 
 
-	Structure ProfileMesh
-		Inherits Profile
-		Description 
-			|Describes the long term parameters associated with a personal profile.
-		Struct KeyData KeysMasterEscrow
-			Multiple
-			Description
-				|A Personal Profile MAY contain one or more PMEK keys to enable escrow 
-				|of private keys used for stored data. 
-
-		Struct KeyData KeyEncryption
-			Description
-				|Key used to pass encrypted data to the device such as a
-				|DeviceUseEntry
 
 	Section 3 "Mesh Device Classes"
 		Description
@@ -306,25 +292,24 @@
 
 	Structure ProfileAccount
 		Inherits Profile
-		Description 
-			|Account assertion. This is signed by the service hosting the account.
-
 		String AccountAddresses
 			Multiple
 			Description
 				|Service address(es).
-		String MeshProfileUDF
-			Description
-				|Master profile of the account being registered.
 		Struct KeyData KeyEncryption
 			Description
-				|Key used to encrypt data under this profile
-		Struct KeyData KeyAuthentication
-			Description
-				|Key used to authenticate requests made by the device.
+				|Key currently used to encrypt data under this profile
 		Struct DareEnvelope EnvelopedProfileService
 			Description
 				|The service profile
+
+	Structure ProfileUser
+		Inherits ProfileAccount
+		Description 
+			|Account assertion. This is signed by the service hosting the account.
+		Struct KeyData KeyAuthentication
+			Description
+				|Key used to authenticate requests made by the device.
 
 
 	Structure ActivationAccount
@@ -384,18 +369,13 @@
 			|
 
 	Structure ProfileGroup
-		Inherits Profile
+		Inherits ProfileAccount
 		Description 
 			|Describes a group. Note that while a group is created by one person who
 			|becomes its first administrator, control of the group may pass to other
 			|administrators over time.
-		String AccountAddresses
-			Multiple
-			Description
-				|Service address(es).
-		Struct KeyData KeyEncryption
-			Description
-				|Key currently used to encrypt data under this profile
+
+
 
 	Structure ActivationGroup
 		Inherits Activation

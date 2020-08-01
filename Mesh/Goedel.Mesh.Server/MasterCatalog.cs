@@ -60,7 +60,7 @@ namespace Goedel.Mesh.Server {
 				new Dictionary<string, JsonFactoryDelegate> () {
 
 			{"AccountEntry", AccountEntry._Factory},
-			{"AccountPersonal", AccountPersonal._Factory},
+			{"AccountUser", AccountUser._Factory},
 			{"AccountGroup", AccountGroup._Factory}			};
 
 		/// <summary>
@@ -214,7 +214,7 @@ namespace Goedel.Mesh.Server {
 	///
 	/// Represents a Mesh Acco
 	/// </summary>
-	public partial class AccountPersonal : AccountEntry {
+	public partial class AccountUser : AccountEntry {
         /// <summary>
         ///The persistent profile that will be used to validate changes to the
         ///account assertion.
@@ -225,7 +225,7 @@ namespace Goedel.Mesh.Server {
         ///The signed assertion describing the account.
         /// </summary>
 
-		public virtual DareEnvelope						SignedAssertionAccount  {get; set;}
+		public virtual DareEnvelope						SignedProfileUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -235,13 +235,13 @@ namespace Goedel.Mesh.Server {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "AccountPersonal";
+		public new const string __Tag = "AccountUser";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new AccountPersonal();
+		public static new JsonObject _Factory () => new AccountUser();
 
 
         /// <summary>
@@ -275,10 +275,10 @@ namespace Goedel.Mesh.Server {
 				_writer.WriteToken ("SignedProfileMesh", 1);
 					SignedProfileMesh.Serialize (_writer, false);
 				}
-			if (SignedAssertionAccount != null) {
+			if (SignedProfileUser != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("SignedAssertionAccount", 1);
-					SignedAssertionAccount.Serialize (_writer, false);
+				_writer.WriteToken ("SignedProfileUser", 1);
+					SignedProfileUser.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -291,15 +291,15 @@ namespace Goedel.Mesh.Server {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new AccountPersonal FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new AccountUser FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as AccountPersonal;
+				return Out as AccountUser;
 				}
-		    var Result = new AccountPersonal ();
+		    var Result = new AccountUser ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -320,10 +320,10 @@ namespace Goedel.Mesh.Server {
  
 					break;
 					}
-				case "SignedAssertionAccount" : {
+				case "SignedProfileUser" : {
 					// An untagged structure
-					SignedAssertionAccount = new DareEnvelope ();
-					SignedAssertionAccount.Deserialize (jsonReader);
+					SignedProfileUser = new DareEnvelope ();
+					SignedProfileUser.Deserialize (jsonReader);
  
 					break;
 					}

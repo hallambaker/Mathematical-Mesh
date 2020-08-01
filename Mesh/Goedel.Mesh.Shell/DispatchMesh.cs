@@ -26,21 +26,21 @@ namespace Goedel.Mesh.Shell {
 
             var contextMesh = MeshHost.CreateMesh("main");
 
+            throw new NYI();
+            //if (account != null) {
+            //    var contextAccount = contextMesh.CreateAccount(service);
+            //    if (service != null) {
+            //        contextAccount.AddService(service);
+            //        }
+            //    }
 
-            if (account != null) {
-                var contextAccount = contextMesh.CreateAccount(service);
-                if (service != null) {
-                    contextAccount.AddService(service);
-                    }
-                }
-
-            return new ResultCreatePersonal() {
-                Success = true,
-                ProfileMesh = contextMesh.ProfileMesh,
-                CatalogedDevice = contextMesh.CatalogedDevice,
-                MeshUDF = contextMesh.ProfileMesh.UDF,
-                DeviceUDF = contextMesh.CatalogedDevice.UDF
-                };
+            //return new ResultCreatePersonal() {
+            //    Success = true,
+            //    ProfileMesh = contextMesh.ProfileMesh,
+            //    CatalogedDevice = contextMesh.CatalogedDevice,
+            //    MeshUDF = contextMesh.ProfileMesh.UDF,
+            //    DeviceUDF = contextMesh.CatalogedDevice.UDF
+            //    };
             }
 
 
@@ -112,15 +112,15 @@ namespace Goedel.Mesh.Shell {
             algorithm.AssertEqual(UdfAlgorithmIdentifier.MeshProfileMaster, InvalidRecoverySecret.Throw);
             var contextMesh = MeshHost.CreateMesh("main", meshSecret: meshSecret);
 
-
-            "recover subordinate accounts, etc.".TaskFunctionality();
-            return new ResultRecover() {
-                Success = true,
-                ProfileMesh = contextMesh.ProfileMesh,
-                CatalogedDevice = contextMesh.CatalogedDevice,
-                MeshUDF = contextMesh.ProfileMesh.UDF,
-                DeviceUDF = contextMesh.CatalogedDevice.UDF
-                };
+            throw new NYI();
+            //"recover subordinate accounts, etc.".TaskFunctionality();
+            //return new ResultRecover() {
+            //    Success = true,
+            //    ProfileMesh = contextMesh.ProfileMesh,
+            //    CatalogedDevice = contextMesh.CatalogedDevice,
+            //    MeshUDF = contextMesh.ProfileMesh.UDF,
+            //    DeviceUDF = contextMesh.CatalogedDevice.UDF
+            //    };
 
             }
 

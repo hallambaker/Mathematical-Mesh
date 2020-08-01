@@ -213,11 +213,7 @@
 		String AccountAddress
 			Description
 				|The service account to bind to.
-		Struct DareEnvelope SignedProfileMesh
-			Description
-				|The persistent profile that will be used to validate changes to the
-				|account assertion.
-		Struct DareEnvelope SignedAssertionAccount
+		Struct DareEnvelope SignedProfileAccount
 			Description
 				|The signed assertion describing the account.
 
@@ -281,9 +277,9 @@
 
 	Message StatusResponse
 		Inherits MeshResponse
-		Struct DareEnvelope EnvelopedProfileMaster
+		Struct DareEnvelope EnvelopedProfileAccount
 			Description
-				|The master profile that provides the root of trust for this Mesh
+				|The account profile providing the root of trust for this account.
 		Struct DareEnvelope EnvelopedCatalogEntryDevice
 			Description
 				|The catalog device entry

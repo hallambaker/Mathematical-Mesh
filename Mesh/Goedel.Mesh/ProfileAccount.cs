@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Goedel.Mesh {
-    public partial class ProfileAccount {
+    public partial class ProfileUser {
 
 
         ///<summary>The identifier of the default service.</summary>
@@ -32,11 +32,11 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Blank constructor for use by deserializers.
         /// </summary>
-        public ProfileAccount() {
+        public ProfileUser() {
             }
 
 
-        public ProfileAccount(
+        public ProfileUser(
             IKeyCollection meshHost,
             PrivateKeyUDF secretSeedMaster,
             string serviceAddress,
@@ -57,14 +57,13 @@ namespace Goedel.Mesh {
         /// <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
-        public ProfileAccount(
-                ProfileMesh profileMesh,
+        public ProfileUser(
                 IKeyCollection keyCollection,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
 
                 byte[] secret = null,
-                bool? persist = null) : this(profileMesh, keyCollection,
+                bool? persist = null) : this(keyCollection,
                     new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileAccount,
                         algorithmEncrypt, algorithmSign, secret:secret),
                     persist: (persist != null ? persist == true : secret == null)) { }
@@ -79,12 +78,10 @@ namespace Goedel.Mesh {
         /// <param name="secretSeed">The secret seed value.</param>
         /// <param name="persist">If <see langword="true"/> persist the secret seed value to
         /// <paramref name="keyCollection"/>.</param>
-        public ProfileAccount(
-                    ProfileMesh profileMesh,
+        public ProfileUser(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
                     bool persist = false) {
-            MeshProfileUDF = profileMesh.UDF;
             //SecretSeed = secretSeed;
 
             Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
@@ -182,12 +179,11 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
-            builder.AppendIndent(indent, $"Profile Account");
+            builder.AppendIndent(indent, $"Profile User");
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
             builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
-            builder.AppendIndent(indent, $"MeshProfileUDF:      {MeshProfileUDF}");
             if (KeysOnlineSignature != null) {
                 foreach (var online in KeysOnlineSignature) {
                     builder.AppendIndent(indent, $"KeysOnlineSignature: {online.UDF} ");
@@ -211,9 +207,9 @@ namespace Goedel.Mesh {
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ProfileAccount Decode(DareEnvelope envelope,
+        public static new ProfileUser Decode(DareEnvelope envelope,
                     IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ProfileAccount;
+                        MeshItem.Decode(envelope, keyCollection) as ProfileUser;
 
 
 

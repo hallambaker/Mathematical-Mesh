@@ -211,18 +211,21 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command options.</param>
         /// <returns>The administration context.</returns>
-        public virtual ContextMeshAdmin GetContextMeshAdmin(IMasterProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
+        public virtual ContextUser GetContextMeshAdmin(IMasterProfileInfo options) => 
+                    MeshHost.GetContextMesh(admin: true) as ContextUser;
 
         /// <summary>
         /// Obtain an account context for the options specified in <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The command options.</param>
         /// <returns>The account context.</returns>
-        public virtual ContextAccount GetContextAccount(IAccountOptions options) {
-            options.Future();
-            var contextMesh = MeshHost.GetContextMesh();
+        public virtual ContextUser GetContextAccount(IAccountOptions options) {
 
-            return contextMesh.GetContextAccount();
+            throw new NYI();
+            //options.Future();
+            //var contextMesh = MeshHost.GetContextMesh();
+
+            //return contextMesh.GetContextAccount();
             }
 
 
@@ -231,7 +234,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="options">The command options.</param>
         /// <returns>The device context.</returns>
-        public virtual ContextAccount GetContextDevice(IAccountOptions options) {
+        public virtual ContextUser GetContextDevice(IAccountOptions options) {
             options.Future();
             throw new NYI();
             //CatalogHost.GetContextDevice();

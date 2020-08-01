@@ -76,19 +76,13 @@ namespace Goedel.Mesh {
             ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
         ConnectionDevice connectionDevice = null;
 
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileMesh"/>
-        ///to return the <see cref="ProfileMesh"/> value.</summary>
-        public ProfileMesh ProfileMesh => profileMesh ??
-            ProfileMesh.Decode(EnvelopedProfileMesh).CacheValue(out profileMesh);
-        ProfileMesh profileMesh;
-
 
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileMesh"/>
-        ///to return the <see cref="ProfileMesh"/> value.</summary>
-        public ProfileAccount ProfileAccount => profileAccount ??
-            ProfileAccount.Decode(EnvelopedProfileMesh).CacheValue(out profileAccount);
-        ProfileAccount profileAccount;
+        ///to return the <see cref="ProfileAccount"/> value.</summary>
+        public ProfileUser ProfileAccount => profileAccount ??
+            ProfileUser.Decode(EnvelopedProfileMesh).CacheValue(out profileAccount);
+        ProfileUser profileAccount;
 
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
@@ -138,7 +132,7 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Mesh UDF {UDF}");
             DareEnvelope.Report(builder);
 
-            ProfileMesh.ToBuilder(builder, indent, "[Profile Mesh Missing]");
+            ProfileAccount.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
             ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
             GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
@@ -207,14 +201,14 @@ namespace Goedel.Mesh {
         public virtual bool Validate() {
 
             // Verify the master profile is correctly self signed.
-            ProfileMesh.Validate();
+            ProfileAccount.Validate();
 
             // Verify the device profile is correctly self signed.
             ProfileDevice.Validate();
 
             // Verify that the connection and activation entries are signed under the master profile
-            ProfileMesh.Verify(EnvelopedConnectionDevice);
-            ProfileMesh.Verify(EnvelopedActivationDevice);
+            ProfileAccount.Verify(EnvelopedConnectionDevice);
+            ProfileAccount.Verify(EnvelopedActivationDevice);
 
             // Verify that each connected account is correct.
             foreach (var account in Accounts) {

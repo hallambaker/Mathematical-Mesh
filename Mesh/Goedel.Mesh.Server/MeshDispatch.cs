@@ -139,7 +139,7 @@ namespace Goedel.Mesh.Server {
 
 
             try {
-                var accountEntry = new AccountPersonal(request);
+                var accountEntry = new AccountUser(request);
                 Mesh.AccountAdd(jpcSession, accountEntry);
                 return new CreateResponse();
                 }

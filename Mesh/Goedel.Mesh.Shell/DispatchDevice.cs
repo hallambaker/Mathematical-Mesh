@@ -76,12 +76,12 @@ namespace Goedel.Mesh.Shell {
             // here need to pull up an account context for the pending connection.
 
             var contextAccount = MeshHost.Complete(accountAddress);
+            throw new NYI();
+            //var result = new ResultConnect() {
+            //    CatalogedMachine = contextAccount.ContextMesh.CatalogedMachine
+            //    };
 
-            var result = new ResultConnect() {
-                CatalogedMachine = contextAccount.ContextMesh.CatalogedMachine
-                };
-
-            return result;
+            //return result;
             }
 
         /// <summary>

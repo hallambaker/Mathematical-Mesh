@@ -14,17 +14,19 @@ namespace Goedel.Mesh.Client {
     /// <summary>
     /// Context binding for a Group account
     /// </summary>
-    public class ContextGroup : ContextAccountEntry {
-
-        ///<summary>The enclosing mesh context.</summary>
-        public override ContextMesh ContextMesh => ContextAccount.ContextMesh;
+    public class ContextGroup : ContextAccount {
 
 
         ///<summary>The enclosing mesh context.</summary>
-        public ContextAccount ContextAccount;
+        public ContextUser ContextAccount;
 
         ///<summary>The catalogued group description.</summary>
         public CatalogedGroup CatalogedGroup;
+
+
+        ///<summary>The account profile</summary>
+        public override Profile Profile => ProfileGroup;
+
 
         ///<summary>The group profile.</summary>
         public ProfileGroup ProfileGroup => CatalogedGroup.Profile;
@@ -45,7 +47,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="contextAccount">The enclosing account context.</param>
         /// <param name="catalogedGroup">Description of the group to return the
         /// context for.</param>
-        public ContextGroup(ContextAccount contextAccount, CatalogedGroup catalogedGroup) {
+        public ContextGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) :
+                    base(contextAccount.MeshHost, null) { 
             CatalogedGroup = catalogedGroup;
             ContextAccount = contextAccount;
             AccountAddress = CatalogedGroup.Key;
@@ -58,7 +61,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="contextAccount">The enclosing account context.</param>
         /// <param name="catalogedGroup">Description of the group to create.</param>
         /// <returns>The group context.</returns>
-        public static ContextGroup CreateGroup(ContextAccount contextAccount, CatalogedGroup catalogedGroup) {
+        public static ContextGroup CreateGroup(ContextUser contextAccount, CatalogedGroup catalogedGroup) {
             var result = new ContextGroup(contextAccount, catalogedGroup);
 
             // Prepoulate the catalogs
@@ -141,7 +144,7 @@ namespace Goedel.Mesh.Client {
 
             var listCapability = new List<CryptographicCapability> { capabilityMember };
 
-            var contact = CreateContact(false, listCapability);
+            var contact = CreateContact(listCapability);
 
             var groupInvitation = new GroupInvitation() {
                 Sender = ContextAccount.AccountAddress,
@@ -205,7 +208,7 @@ namespace Goedel.Mesh.Client {
         /// address entry for this mesh and mesh account. 
         /// </summary>
         /// <returns>The default contact.</returns>
-        public override Contact CreateContact(bool meshUDF = false, 
+        public override Contact CreateContact(
                     List<CryptographicCapability> capabilities= null) {
 
 
@@ -223,15 +226,6 @@ namespace Goedel.Mesh.Client {
                 Anchors = new List<Anchor>() { anchorAccount },
                 NetworkAddresses = new List<NetworkAddress>() { address }
                 };
-
-            if (meshUDF) {
-                var anchorMesh = new Anchor() {
-                    UDF = ContextMesh.ProfileMesh.UDF,
-                    Validation = "Self"
-                    };
-                contact.Anchors.Add(anchorMesh);
-                }
-
 
             return contact;
             }

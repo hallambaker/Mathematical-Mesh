@@ -73,16 +73,15 @@ namespace Goedel.Mesh.Server {
     /// </summary>
     public class AccountHandleUnverified : AccountHandle {
 
-        ///<summary>Convenience accessor to the Account assertion.</summary>
-        public ProfileAccount AssertionAccount => AccountPersonal.AssertionAccount;
+
 
         /// <summary>
         /// The account description. This is only accessible through the account handle.
         /// </summary>
-        protected AccountPersonal AccountPersonal => AccountEntry as AccountPersonal;
+        protected AccountUser AccountUser => AccountEntry as AccountUser;
 
-        ///<summary>Convenience accessor to the Mesh Profile.</summary>
-        public ProfileMesh ProfileMesh => AccountPersonal?.ProfileMesh;
+        ///<summary>Convenience accessor to the Account assertion.</summary>
+        public ProfileUser ProfileUser => AccountUser.ProfileUser;
 
 
         /// <summary>
@@ -234,7 +233,7 @@ namespace Goedel.Mesh.Server {
                     break;
                     }
 
-                case Goedel.Mesh.Server.AccountPersonal _: {
+                case Goedel.Mesh.Server.AccountUser _: {
                     result.Add(GetStatusStore(CatalogCredential.Label));
                     result.Add(GetStatusStore(CatalogDevice.Label));
                     result.Add(GetStatusStore(CatalogContact.Label));

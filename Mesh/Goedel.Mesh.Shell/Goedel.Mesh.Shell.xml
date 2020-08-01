@@ -4274,10 +4274,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal.ProfileMesh">
-            <summary>
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell.ResultCreatePersonal._Tag">
             <summary>
             Tag identifying this class

@@ -13,7 +13,7 @@ namespace Goedel.Mesh.Client {
     /// Context for a pending Mesh connection request. Is deleted and replaced by a full context
     /// if accepted.
     /// </summary>
-    public class ContextMeshPending : ContextMesh {
+    public class ContextMeshPending : ContextAccount {
 
         ///<summary>Convenience accessor for the pending context.</summary>
         public CatalogedPending CatalogedPending => CatalogedMachine as CatalogedPending;
@@ -22,11 +22,20 @@ namespace Goedel.Mesh.Client {
         KeyPair keyEncryption;
         //KeyPair keySignature;
 
-        ///<summary>Convenience accessor for the Account Service ID</summary>
-        public string AccountAddress => CatalogedPending?.AccountAddress;
 
-        ///<summary>The Mesh Client.</summary>
-        public MeshService MeshClient;
+        ///<summary>The account profile</summary>
+        public override Profile Profile => throw new NYI();
+
+        ///<summary>The connection binding the calling context to the account.</summary>
+        public override Connection Connection => throw new NYI();
+
+
+        /////<summary>Convenience accessor for the Account Service ID</summary>
+        //public string AccountAddress => CatalogedPending?.AccountAddress;
+
+
+        ///<summary>The device key generation seed</summary>
+        protected PrivateKeyUDF DeviceKeySeed;
 
         /// <summary>
         /// Constructor.
@@ -140,12 +149,9 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>If successfull returns an ContextAccountService instance to allow access
         /// to the connected account. Otherwise, a null value is returned.</returns>
-        public ContextAccount Complete() {
+        public ContextUser Complete() {
 
             "The catalog contents are not currently encrypted as they should be".TaskFunctionality();
-
-
-            MeshClient ??= MeshMachine.GetMeshClient(AccountAddress, keyAuthentication, null);
 
             var completeRequest = new CompleteRequest() {
                 ResponseID = CatalogedPending.GetResponseID(),
@@ -173,29 +179,32 @@ namespace Goedel.Mesh.Client {
             respondConnection.Result.AssertEqual(Constants.TransactionResultAccept,
                     ConnectionException.Throw);
 
-            var catalogedEntry = respondConnection.CatalogedDevice;
-            var profileMaster = catalogedEntry.ProfileMesh;
 
-            // now create the host catalog entry
-            var catalogedStandard = new CatalogedStandard() {
-                ID = ProfileDevice.UDF,
-                CatalogedDevice = catalogedEntry,
-                EnvelopedProfileMaster = profileMaster.DareEnvelope
-                };
+            throw new NYI(); // fixin's needed below
 
-            // create the context mesh
-            var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
+            //var catalogedEntry = respondConnection.CatalogedDevice;
+            //var profileMaster = catalogedEntry.ProfileMesh;
 
-            MeshHost.Register(catalogedStandard, contextMesh);
+            //// now create the host catalog entry
+            //var catalogedStandard = new CatalogedStandard() {
+            //    ID = ProfileDevice.UDF,
+            //    CatalogedDevice = catalogedEntry,
+            //    EnvelopedProfileMaster = profileMaster.DareEnvelope
+            //    };
 
-            // now create the account context for the account we asked to connect to and initialize
-            var contextAccount = contextMesh.GetContextAccount(accountName: AccountAddress);
-            Directory.CreateDirectory(contextAccount.StoresDirectory);
-            contextAccount.Sync();
-            return contextAccount;
+            //// create the context mesh
+            //var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
+
+            //MeshHost.Register(catalogedStandard, contextMesh);
+
+            //// now create the account context for the account we asked to connect to and initialize
+            //var contextAccount = contextMesh.GetContextAccount(accountName: AccountAddress);
+            //Directory.CreateDirectory(contextAccount.StoresDirectory);
+            //contextAccount.Sync();
+            //return contextAccount;
             }
 
-
+        public override string GetAccountAddress() => throw new NotImplementedException();
         }
 
     }

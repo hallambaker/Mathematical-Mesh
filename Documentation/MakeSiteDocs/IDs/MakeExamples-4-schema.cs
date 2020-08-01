@@ -52,7 +52,10 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaMaster(CreateExamples Example) {
 
-				 Format(AliceProfiles?.ProfileMesh);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("[This is to be eliminated]\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 

@@ -6,9 +6,9 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="ProfileAccount"/> .</summary>
-        public ProfileAccount ProfileAccount => profileAccount ??
-            ProfileAccount.Decode(EnvelopedProfileAccount).CacheValue(out profileAccount);
-        ProfileAccount profileAccount = null;
+        public ProfileUser ProfileAccount => profileAccount ??
+            ProfileUser.Decode(EnvelopedProfileAccount).CacheValue(out profileAccount);
+        ProfileUser profileAccount = null;
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="ConnectionAccount"/> .</summary>

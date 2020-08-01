@@ -43,16 +43,13 @@
             Unverified account accessor, only has access to spools
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.AssertionAccount">
-            <summary>Convenience accessor to the Account assertion.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.AccountPersonal">
+        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.AccountUser">
             <summary>
             The account description. This is only accessible through the account handle.
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.ProfileMesh">
-            <summary>Convenience accessor to the Mesh Profile.</summary>
+        <member name="P:Goedel.Mesh.Server.AccountHandleUnverified.ProfileUser">
+            <summary>Convenience accessor to the Account assertion.</summary>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.#ctor(Goedel.Mesh.Server.AccountEntry)">
             <summary>
@@ -791,40 +788,40 @@
             </summary>
             <returns>True if the account entry is properly formatted.</returns>
         </member>
-        <member name="T:Goedel.Mesh.Server.AccountPersonal">
+        <member name="T:Goedel.Mesh.Server.AccountUser">
              <summary>
             
              Represents a Mesh Acco
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountPersonal.SignedProfileMesh">
+        <member name="P:Goedel.Mesh.Server.AccountUser.SignedProfileMesh">
              <summary>
             The persistent profile that will be used to validate changes to the
             account assertion.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountPersonal.SignedAssertionAccount">
+        <member name="P:Goedel.Mesh.Server.AccountUser.SignedProfileUser">
              <summary>
             The signed assertion describing the account.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountPersonal._Tag">
+        <member name="P:Goedel.Mesh.Server.AccountUser._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.Server.AccountPersonal.__Tag">
+        <member name="F:Goedel.Mesh.Server.AccountUser.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal._Factory">
+        <member name="M:Goedel.Mesh.Server.AccountUser._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -833,7 +830,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -844,7 +841,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -852,25 +849,22 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountPersonal.ProfileMesh">
-            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountPersonal.ProfileMesh"/></summary>
+        <member name="P:Goedel.Mesh.Server.AccountUser.ProfileUser">
+            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountUser.ProfileUser"/></summary>
         </member>
-        <member name="P:Goedel.Mesh.Server.AccountPersonal.AssertionAccount">
-            <summary>Cached convenience accessor for <see cref="P:Goedel.Mesh.Server.AccountPersonal.AssertionAccount"/></summary>
-        </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.#ctor">
+        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor">
             <summary>
             Default constructor for serialization.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountPersonal.#ctor(Goedel.Mesh.CreateRequest)">
+        <member name="M:Goedel.Mesh.Server.AccountUser.#ctor(Goedel.Mesh.CreateRequest)">
             <summary>
             Constructor creating an Account entry from the request <paramref name="request"/>.
             </summary>

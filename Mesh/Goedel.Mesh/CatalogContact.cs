@@ -470,7 +470,7 @@ namespace Goedel.Mesh {
                 var meshItem = MeshItem.Decode(NetworkAddress.EnvelopedProfileAccount);
 
                 switch (meshItem) {
-                    case ProfileAccount profileAccount:
+                    case ProfileUser profileAccount:
                     meshKeyEncryption = profileAccount.KeyEncryption.CryptoKey;
                     meshKeyAdministrator = profileAccount.KeyOfflineSignature.CryptoKey;
                     break;

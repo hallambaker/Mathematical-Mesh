@@ -58,53 +58,61 @@ namespace Goedel.Test.Core {
 
 
         // Convenience routines 
-        public ContextAccount GetContextAccount(string localName = null, string accountName = null) {
+        public ContextUser GetContextAccount(string localName = null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
             var contextMesh = machine.MeshHost.GetContextMesh(localName);
-            return contextMesh.GetContextAccount(localName, accountName);
+
+            throw new NYI();
+
+            //return contextMesh.GetContextAccount(localName, accountName);
             }
 
         public static MeshMachineTest GenerateMasterAccount(
                     TestEnvironmentCommon testEnvironmentCommon,
                     string machineName,
                     string localName,
-                    out ContextAccount contextAccount) {
+                    out ContextUser contextAccount) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
-            contextAccount = contextAdmin.CreateAccount(localName);
-            return result;
+
+            throw new NYI();
+            //var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
+            //contextAccount = contextAdmin.CreateAccount(localName);
+            //return result;
             }
 
         public static MeshMachineTest GenerateMasterAccount(
                     TestEnvironmentCommon testEnvironmentCommon,
                     string machineName,
                     string localName,
-                    out ContextAccount contextAccount,
+                    out ContextUser contextAccount,
                     string accountId) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
-
-            //Console.WriteLine("Created new Mesh");
-            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
-
-            contextAccount = contextAdmin.CreateAccount(localName);
-
-            //Console.WriteLine("Device Catalog");
+            throw new NYI();
 
 
-            var catalogDevice = contextAccount.GetCatalogDevice();
-            //Console.WriteLine(catalogDevice.Report());
+            //var contextAdmin = ContextMeshAdmin.CreateMesh(result.MeshHost);
 
-            //Console.WriteLine("Added Account");
-            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
-            contextAccount.AddService(accountId);
+            ////Console.WriteLine("Created new Mesh");
+            ////Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
 
-            //Console.WriteLine("Bound account to Service");
-            //Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+            //contextAccount = contextAdmin.CreateAccount(localName);
 
-            return result;
+            ////Console.WriteLine("Device Catalog");
+
+
+            //var catalogDevice = contextAccount.GetCatalogDevice();
+            ////Console.WriteLine(catalogDevice.Report());
+
+            ////Console.WriteLine("Added Account");
+            ////Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+            //contextAccount.AddService(accountId);
+
+            ////Console.WriteLine("Bound account to Service");
+            ////Console.WriteLine(contextAdmin.CatalogedDevice.ToString());
+
+            //return result;
             }
 
         public override string ToString() => $"TestMachine:{Name}";
@@ -121,10 +129,10 @@ namespace Goedel.Test.Core {
             return machine.MeshHost.Connect(accountId, PIN: PIN);
             }
 
-        public static ContextAccount Connect(
+        public static ContextUser Connect(
             TestEnvironmentCommon testEnvironmentCommon,
             string machineName,
-            ContextAccount contextAccountAdmin,
+            ContextUser contextAccountAdmin,
             string localName = null) {
 
             var PIN = contextAccountAdmin.GetPIN(Constants.MessagePINActionDevice);

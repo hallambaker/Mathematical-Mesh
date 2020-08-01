@@ -32,7 +32,11 @@
 #end method
 
 #zfile CreateExamples SchemaMaster "Examples\\SchemaMaster.md" Example
-#% Format(AliceProfiles?.ProfileMesh);
+#!% Format(AliceProfiles?.ProfileMesh);
+
+
+[This is to be eliminated]
+
 #end zfile
 
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example

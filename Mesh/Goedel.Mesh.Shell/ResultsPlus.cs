@@ -171,16 +171,6 @@ namespace Goedel.Mesh.Shell {
                 default:
                     break;
                 }
-
-
-
-            if (CatalogedMachine.EnvelopedProfileMaster != null) {
-
-                var profileMaster = ProfileMesh.Decode(CatalogedMachine.EnvelopedProfileMaster);
-                Builder.AppendLine($"   Personal Mesh = {profileMaster.UDF}");
-                }
-
-
             return Builder.ToString();
             }
         }
@@ -223,7 +213,7 @@ namespace Goedel.Mesh.Shell {
 
             if (StatusResponse != null) {
 
-                if (StatusResponse.EnvelopedProfileMaster != null) {
+                if (StatusResponse.EnvelopedProfileAccount != null) {
                     }
                 if (StatusResponse.EnvelopedCatalogEntryDevice != null) {
                     }
@@ -400,7 +390,7 @@ namespace Goedel.Mesh.Shell {
         public ActivationDevice PrivateDevice = null;
 
         ///<summary>The <see cref="AssertionAccount"/> instance.</summary>
-        public ProfileAccount AssertionAccount = null;
+        public ProfileUser AssertionAccount = null;
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.

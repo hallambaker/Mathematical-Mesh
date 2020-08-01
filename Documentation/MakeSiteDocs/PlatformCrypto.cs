@@ -700,7 +700,7 @@ namespace ExampleGenerator {
 
         //AdvancedRecryption
         public string AdvancedRecryptionGroupID = "recrypt@example.com";
-        public ProfileMesh AdvancedRecryptionGroup;
+        //public ProfileMesh AdvancedRecryptionGroup;
         public string AdvancedRecryptionMessagePlaintext;
         public DareEnvelope AdvancedRecryptionMessageEncrypted;
         public Assertion AdvancedRecryptionBobProfile;

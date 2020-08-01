@@ -117,7 +117,7 @@ namespace Goedel.Mesh.Server {
             using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
-            var MeshUDF = accountHandle.ProfileMesh.KeyOfflineSignature.CryptoKey.UDFBytes;
+            var MeshUDF = accountHandle.ProfileUser.KeyOfflineSignature.CryptoKey.UDFBytes;
             var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.CryptoKey.UDFBytes;
 
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
@@ -145,8 +145,7 @@ namespace Goedel.Mesh.Server {
 
             var connectResponse = new ConnectResponse() {
                 EnvelopedConnectionResponse = envelope,
-                EnvelopedProfileMaster = accountHandle.ProfileMesh.DareEnvelope,
-                EnvelopedAccountAssertion = accountHandle.AssertionAccount.DareEnvelope
+                EnvelopedAccountAssertion = accountHandle.ProfileUser.DareEnvelope
                 };
 
             return connectResponse;
@@ -198,7 +197,7 @@ namespace Goedel.Mesh.Server {
 
             var statusResponse = new StatusResponse() {
                 ContainerStatus = containerStatus,
-                EnvelopedProfileMaster = accountHandle.ProfileMesh?.DareEnvelope,
+                EnvelopedProfileAccount = accountHandle.ProfileUser?.DareEnvelope,
                 EnvelopedCatalogEntryDevice = null
                 };
 
@@ -641,32 +640,27 @@ namespace Goedel.Mesh.Server {
 
         }
 
-    public partial class AccountPersonal {
+    public partial class AccountUser {
 
-        ///<summary>Cached convenience accessor for <see cref="ProfileMesh"/></summary>
-        public ProfileMesh ProfileMesh => profileMesh ??
-                ProfileMesh.Decode(SignedProfileMesh).CacheValue(out profileMesh);
-        ProfileMesh profileMesh;
 
-        ///<summary>Cached convenience accessor for <see cref="AssertionAccount"/></summary>
-        public ProfileAccount AssertionAccount => assertionAccount ??
-            ProfileAccount.Decode(SignedAssertionAccount).CacheValue(out assertionAccount);
-        ProfileAccount assertionAccount;
+        ///<summary>Cached convenience accessor for <see cref="ProfileUser"/></summary>
+        public ProfileUser ProfileUser => profileUser ??
+            ProfileUser.Decode(SignedProfileUser).CacheValue(out profileUser);
+        ProfileUser profileUser;
 
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
-        public AccountPersonal() {
+        public AccountUser() {
             }
 
         /// <summary>
         /// Constructor creating an Account entry from the request <paramref name="request"/>.
         /// </summary>
         /// <param name="request">The account creation request.</param>
-        public AccountPersonal(CreateRequest request) {
+        public AccountUser(CreateRequest request) {
             AccountAddress = request.AccountAddress;
-            SignedProfileMesh = request.SignedProfileMesh;
-            SignedAssertionAccount = request.SignedAssertionAccount;
+            SignedProfileUser = request.SignedProfileAccount;
             Verify();
             Directory = AccountAddress;
             }

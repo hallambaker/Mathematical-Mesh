@@ -101,110 +101,114 @@ namespace Goedel.XUnit {
 
             machineAdmin.CheckHostCatalogExtended();
 
-            var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
-            // Failure at this point because the profile is not written out after creating the account.
+            throw new NYI();
 
-            machineAdmin.CheckHostCatalogExtended();
+            //var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
+            //// Failure at this point because the profile is not written out after creating the account.
 
-
-            // Perform some offline operations on the account catalogs
-            var contactCatalog = contextAccountAlice_1_a.GetCatalogContact();
-            contextAccountAlice_1_a.SetContactSelf(ContactAlice);
-
-            // Check we can read the data from a second context
-            var contextAccountAlice_1_b = machineAdmin.GetContextAccount();
+            //machineAdmin.CheckHostCatalogExtended();
 
 
-            // fails because the contextAccountAlice_1_b is null because the profile didn't get written out.
-            Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
+            //// Perform some offline operations on the account catalogs
+            //var contactCatalog = contextAccountAlice_1_a.GetCatalogContact();
+            //contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
-            // Check that we can read back from the data stored on disk.
-            var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
-            var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
+            //// Check we can read the data from a second context
+            //var contextAccountAlice_1_b = machineAdmin.GetContextAccount();
 
 
-            // ****  Multiple device tests
+            //// fails because the contextAccountAlice_1_b is null because the profile didn't get written out.
+            //Verify(contextAccountAlice_1_a, contextAccountAlice_1_b);
 
-            // Add a service
-            contextAccountAlice_1_a.AddService(AccountAlice);
+            //// Check that we can read back from the data stored on disk.
+            //var machineAdmin_3 = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            //var contextAccountAlice_1_c = machineAdmin_3.GetContextAccount();
 
-            // Connect a second device using the PIN connection mechanism
-            var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
-            machineAlice2.CheckHostCatalogExtended(); // initial
 
-            var boundPin = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
-            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: boundPin.PIN);
-            machineAlice2.CheckHostCatalogExtended(); // Connect pending
+            //// ****  Multiple device tests
 
-            // Still have to process of course to get the data
-            var sync = contextAccountAlice_1_a.Sync();
+            //// Add a service
+            //contextAccountAlice_1_a.AddService(AccountAlice);
+
+            //// Connect a second device using the PIN connection mechanism
+            //var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+            //machineAlice2.CheckHostCatalogExtended(); // initial
+
+            //var boundPin = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
+            //var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: boundPin.PIN);
+            //machineAlice2.CheckHostCatalogExtended(); // Connect pending
+
+            //// Still have to process of course to get the data
+            //var sync = contextAccountAlice_1_a.Sync();
             
 
-            var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            contextAccountAlice_1_a.Process(connectRequest);
+            //var connectRequest = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            //contextAccountAlice_1_a.Process(connectRequest);
 
-            contextAccountAlice_2.Complete();
-            machineAlice2.CheckHostCatalogExtended(); // Complete
-
-
-            // Do some catalog updates and check the results
-            var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();
-            catalogCredential.New(password1);
+            //contextAccountAlice_2.Complete();
+            //machineAlice2.CheckHostCatalogExtended(); // Complete
 
 
-            // Bug: This is failing because the get pending routine is not traversing containers correctly
+            //// Do some catalog updates and check the results
+            //var catalogCredential = contextAccountAlice_1_a.GetCatalogCredential();
+            //catalogCredential.New(password1);
 
-            //// Connect a third device by approving a request
-            //var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
-            //var contextAccount3 = machineAlice3.Connect(AccountAlice);
 
+            //// Bug: This is failing because the get pending routine is not traversing containers correctly
+
+            ////// Connect a third device by approving a request
+            ////var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
+            ////var contextAccount3 = machineAlice3.Connect(AccountAlice);
+
+            ////sync = contextAccountAlice_1_a.Sync();
+            ////var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            ////contextAccountAlice_1_a.Process(connectRequest3);
+
+            ////contextAccount3.Complete();
+
+
+            //// Do some catalog updates and check the results
+            //catalogCredential.New(password2);
+
+            //// Check message handling - introduce Bob
+            //var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
+            //    testEnvironmentCommon, DeviceBobAdmin, "main",
+            //    out var contextAccountBob,
+            //    AccountBob);
+
+            ////var contactCatalogBob = contextAccountBob.GetCatalogContact();
+            //contextAccountBob.SetContactSelf(ContactBob);
+
+            //// **** Contact testing
+            //contextAccountBob.ContactRequest(AccountAlice);
+
+            //// This is not syncing inbound spool as it should. Still only have two frames, not three!
             //sync = contextAccountAlice_1_a.Sync();
-            //var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            //contextAccountAlice_1_a.Process(connectRequest3);
+            //var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
+            //contextAccountAlice_1_a.Process(contactRequest);
 
-            //contextAccount3.Complete();
+            //throw new NYI();
 
+            ////// Get the response back
+            ////sync = contextAccountBob.Sync();
+            ////var contactResponseBob = contextAccountBob.GetPendingMessageContactReply();
 
-            // Do some catalog updates and check the results
-            catalogCredential.New(password2);
-
-            // Check message handling - introduce Bob
-            var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
-                testEnvironmentCommon, DeviceBobAdmin, "main",
-                out var contextAccountBob,
-                AccountBob);
-
-            //var contactCatalogBob = contextAccountBob.GetCatalogContact();
-            contextAccountBob.SetContactSelf(ContactBob);
-
-            // **** Contact testing
-            contextAccountBob.ContactRequest(AccountAlice);
-
-            // This is not syncing inbound spool as it should. Still only have two frames, not three!
-            sync = contextAccountAlice_1_a.Sync();
-            var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
-            contextAccountAlice_1_a.Process(contactRequest);
-
-            // Get the response back
-            sync = contextAccountBob.Sync();
-            var contactResponseBob = contextAccountBob.GetPendingMessageContactReply();
-
-            contextAccountBob.Process(contactResponseBob);
+            ////contextAccountBob.Process(contactResponseBob);
 
 
-            // **** Confirmation testing
+            ////// **** Confirmation testing
 
-            // Ask Alice to add our credential
-            contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
+            ////// Ask Alice to add our credential
+            ////contextAccountBob.ConfirmationRequest(AccountAlice, "Dinner tonight");
 
-            sync = contextAccountAlice_1_a.Sync();
-            var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
-            contextAccountAlice_1_a.Process(confirmRequest);
+            ////sync = contextAccountAlice_1_a.Sync();
+            ////var confirmRequest = contextAccountAlice_1_a.GetPendingMessageConfirmationRequest();
+            ////contextAccountAlice_1_a.Process(confirmRequest);
 
-            // Get the response back
-            sync = contextAccountBob.Sync();
-            var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
-            contextAccountAlice_1_a.Process(confirmResponseBob);
+            ////// Get the response back
+            ////sync = contextAccountBob.Sync();
+            ////var confirmResponseBob = contextAccountBob.GetPendingMessageConfirmationResponse();
+            ////contextAccountAlice_1_a.Process(confirmResponseBob);
             }
 
         /// <summary>
@@ -232,25 +236,28 @@ namespace Goedel.XUnit {
             // Admin Device
             contextAccountAlice.Sync();
 
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
 
-            Console.WriteLine();
-            Console.WriteLine("**** Accepted 2nd device");
-            Console.WriteLine(catalogDevice.Report());
-            // Device has been added but the device connection lacks the account information!
+            throw new NYI();
 
-            var catalogDevice2 = contextAccountAlice.GetCatalogDevice();
+            //var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            //contextAccountAlice.Process(connectRequest);
 
-            var contextAccount2 = contextAccount2Pending.Complete();
-            Console.WriteLine();
-            Console.WriteLine("**** Synchronized 2nd device");
-            Console.WriteLine(catalogDevice2.Report());
+            //Console.WriteLine();
+            //Console.WriteLine("**** Accepted 2nd device");
+            //Console.WriteLine(catalogDevice.Report());
+            //// Device has been added but the device connection lacks the account information!
 
-            contextAccount2.Sync();
-            Console.WriteLine();
-            Console.WriteLine("**** Synchronized 2nd device");
-            Console.WriteLine(catalogDevice2.Report());
+            //var catalogDevice2 = contextAccountAlice.GetCatalogDevice();
+
+            //var contextAccount2 = contextAccount2Pending.Complete();
+            //Console.WriteLine();
+            //Console.WriteLine("**** Synchronized 2nd device");
+            //Console.WriteLine(catalogDevice2.Report());
+
+            //contextAccount2.Sync();
+            //Console.WriteLine();
+            //Console.WriteLine("**** Synchronized 2nd device");
+            //Console.WriteLine(catalogDevice2.Report());
             }
 
         /// <summary>
@@ -266,14 +273,17 @@ namespace Goedel.XUnit {
             var contextAccount3Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
                     AccountAlice);
 
-            // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
 
-            // New Device
-            var contextAccount3 = contextAccount3Pending.Complete();
-            contextAccount3.Sync();
+            throw new NYI();
+
+            //// Admin Device
+            //contextAccountAlice.Sync();
+            //var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            //contextAccountAlice.Process(connectRequest);
+
+            //// New Device
+            //var contextAccount3 = contextAccount3Pending.Complete();
+            //contextAccount3.Sync();
             }
 
         [Fact]
@@ -322,14 +332,19 @@ namespace Goedel.XUnit {
             // Alice ---> Bob
             var sync = contextAccountAlice.Sync();
 
-            var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
-            contextAccountAlice.Process(fromBob);
+            throw new NYI();
 
-            // Bob
-            var syncBob = contextAccountBob.Sync();
+            //var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
+            //contextAccountAlice.Process(fromBob);
 
-            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
-            contextAccountBob.Process(fromAlice);
+            //// Bob
+            //var syncBob = contextAccountBob.Sync();
+
+
+
+
+            //var fromAlice = contextAccountBob.GetPendingMessageContactReply();
+            //contextAccountBob.Process(fromAlice);
             }
 
         [Fact]
@@ -344,28 +359,33 @@ namespace Goedel.XUnit {
             // Bob ---> Alice
             contextAccountBob.ConfirmationRequest(AccountAlice, "Open the pod bay doors");
 
-            // Alice ---> Bob
-            var sync = contextAccountAlice.Sync();
-            var fromBob = contextAccountAlice.GetPendingMessageConfirmationRequest();
-            contextAccountAlice.Process(fromBob);
+            throw new NYI();
 
-            // Bob
-            var syncBob = contextAccountBob.Sync();
-            var fromAlice = contextAccountBob.GetPendingMessageConfirmationResponse();
-            contextAccountAlice.Process(fromAlice);
+            //// Alice ---> Bob
+            //var sync = contextAccountAlice.Sync();
+            //var fromBob = contextAccountAlice.GetPendingMessageConfirmationRequest();
+            //contextAccountAlice.Process(fromBob);
+
+            //// Bob
+            //var syncBob = contextAccountBob.Sync();
+            //var fromAlice = contextAccountBob.GetPendingMessageConfirmationResponse();
+            //contextAccountAlice.Process(fromAlice);
             }
 
 
-        public bool Exchange(ContextAccount contextAccountAlice, ContextAccount contextAccountBob) {
+        public bool Exchange(ContextUser contextAccountAlice, ContextUser contextAccountBob) {
             contextAccountBob.ContactRequest(AccountAlice);
             var sync = contextAccountAlice.Sync();
 
-            var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
-            contextAccountAlice.Process(fromBob);
-            var syncBob = contextAccountBob.Sync();
 
-            var fromAlice = contextAccountBob.GetPendingMessageContactReply();
-            contextAccountBob.Process(fromAlice);
+            throw new NYI();
+
+            //var fromBob = contextAccountAlice.GetPendingMessageContactRequest();
+            //contextAccountAlice.Process(fromBob);
+            //var syncBob = contextAccountBob.Sync();
+
+            //var fromAlice = contextAccountBob.GetPendingMessageContactReply();
+            //contextAccountBob.Process(fromAlice);
 
             return true;
             }
@@ -424,10 +444,12 @@ namespace Goedel.XUnit {
             }
 
 
-        bool Verify(ContextAccount first, ContextAccount second) {
+        bool Verify(ContextUser first, ContextUser second) {
             //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
 
-            Verify(first.ActivationAccount, second.ActivationAccount);
+            throw new NYI();
+
+            //Verify(first.ActivationAccount, second.ActivationAccount);
             Verify(first.ProfileAccount, second.ProfileAccount);
             (first.StoresDirectory == second.StoresDirectory).TestTrue();
             (first.KeySignatureUDF == second.KeySignatureUDF).TestTrue();
@@ -442,10 +464,12 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(ProfileAccount first, ProfileAccount second) {
+        bool Verify(ProfileUser first, ProfileUser second) {
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
-            (first.MeshProfileUDF == second.MeshProfileUDF).TestTrue();
-            return true;
+
+            throw new NYI();
+            //(first.MeshProfileUDF == second.MeshProfileUDF).TestTrue();
+            //return true;
             }
 
         public bool Verify(ConnectionAccount first, ConnectionAccount second) {

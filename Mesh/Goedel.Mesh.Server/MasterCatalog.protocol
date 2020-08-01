@@ -26,7 +26,7 @@
 				|The profile status. Valid values are "Pending", "Connected", "Blocked"
 
 
-	Structure AccountPersonal
+	Structure AccountUser
 		Inherits AccountEntry
 		Description
 			|Represents a Mesh Acco
@@ -34,7 +34,7 @@
 			Description
 				|The persistent profile that will be used to validate changes to the
 				|account assertion.
-		Struct DareEnvelope SignedAssertionAccount
+		Struct DareEnvelope SignedProfileUser
 			Description
 				|The signed assertion describing the account.
 
