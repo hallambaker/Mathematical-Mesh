@@ -1651,11 +1651,11 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual ProfileAccount						ProfileAccount  {get; set;}
+		public virtual ProfileUser						ProfileUser  {get; set;}
         /// <summary>
         /// </summary>
 
-		public virtual ActivationAccount						ActivationAccount  {get; set;}
+		public virtual ActivationUser						ActivationUser  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -1700,15 +1700,15 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteObjectStart ();
 				}
 			((ResultCreateDevice)this).SerializeX(_writer, false, ref _first);
-			if (ProfileAccount != null) {
+			if (ProfileUser != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ProfileAccount", 1);
-					ProfileAccount.Serialize (_writer, false);
+				_writer.WriteToken ("ProfileUser", 1);
+					ProfileUser.Serialize (_writer, false);
 				}
-			if (ActivationAccount != null) {
+			if (ActivationUser != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ActivationAccount", 1);
-					ActivationAccount.Serialize (_writer, false);
+				_writer.WriteToken ("ActivationUser", 1);
+					ActivationUser.Serialize (_writer, false);
 				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
@@ -1743,17 +1743,17 @@ namespace Goedel.Mesh.Shell {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ProfileAccount" : {
+				case "ProfileUser" : {
 					// An untagged structure
-					ProfileAccount = new ProfileAccount ();
-					ProfileAccount.Deserialize (jsonReader);
+					ProfileUser = new ProfileUser ();
+					ProfileUser.Deserialize (jsonReader);
  
 					break;
 					}
-				case "ActivationAccount" : {
+				case "ActivationUser" : {
 					// An untagged structure
-					ActivationAccount = new ActivationAccount ();
-					ActivationAccount.Deserialize (jsonReader);
+					ActivationUser = new ActivationUser ();
+					ActivationUser.Deserialize (jsonReader);
  
 					break;
 					}

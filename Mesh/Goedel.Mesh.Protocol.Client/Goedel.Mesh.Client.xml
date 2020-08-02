@@ -62,7 +62,7 @@
             If true, this is the default for the profile type (master, account)
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine.EnvelopedProfileMaster">
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.EnvelopedProfileUser">
              <summary>
             The master profile that provides the root of trust for this Mesh
              </summary>
@@ -523,6 +523,9 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolLocal">
             <summary>Returns the local spool  for the account</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryStoreDelegates">
+            <summary>List of stores</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Constructor, creates a <see cref="T:Goedel.Mesh.Client.ContextUser"/> instance for the catalog entry 
@@ -659,6 +662,11 @@
             <param name="name">The name of the store to bind.</param>
             <returns>The store instance.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.MakeStores">
+            <summary>
+            Force generation of all stores.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.TryFindKeyEncryption(System.String)">
             <summary>
             Resolve a public encryption key by identifier. This may be a UDF fingerprint of the key,
@@ -758,6 +766,9 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryStoreDelegates">
+            <summary>Dictionarry used to create stores</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
             <summary>
             Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
@@ -776,13 +787,6 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.GetCatalogMember">
             <summary>Returns the network catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.MakeStore(System.String)">
-            <summary>
-            Create a new instance bound to the specified core within this account context.
-            </summary>
-            <param name="name">The name of the store to bind.</param>
-            <returns>The store instance.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.GetAccountAddress">
             <summary>Return the account address.</summary>
@@ -940,41 +944,23 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.Profile">
             <summary>The account profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.AccountEntry">
-            <summary>The account entry</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionAccount">
-            <summary>Convenience accessor for the account connection</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.Connection">
             <summary>Convenience accessor for the connection.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.CatalogedDevice">
             <summary>The cataloged device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ProfileAccount">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ProfileUser">
             <summary>The profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionDevice">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ConnectionUser">
             <summary>The connection device</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationDevice">
+        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationUser">
             <summary>The device activation</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextUser.DeviceKeySeed">
-            <summary>The device key generation seed</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
             <summary>The device key generation seed</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextUser.HasPrivilegeMakeAdministrator">
-            <summary>This context has the make device an adminitrator capability.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextUser.HasPrivilegeAddDevice">
-            <summary>This context has the add device capability.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Client.ContextUser.HasPrivilegeMessaging">
-            <summary>This context has the messaging capability.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -984,29 +970,16 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateMesh(Goedel.Mesh.Client.MeshHost,System.String,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateMesh(Goedel.Mesh.Client.MeshHost,Goedel.Cryptography.KeyPair,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
             <summary>
             Create a new personal mesh and return an administration context for it.
             </summary>
             <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
-            <param name="profileDevice">The device profile.</param>
+            <param name="localName">Optional local name to be associated with the account.</param>
             <param name="algorithmSign">The signature algorithm.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <param name="algorithmAuthenticate">The authentication algorithm.</param>
             <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
-            <param name="deviceSecret">Specifies a seed from which to generate the ProfileDevice</param>
-            <param name="persist">If <see langword="true"/> persist the secret seed value to
-            <paramref name="meshHost"/>.</param>
-            <returns>An administration context instance for the created profile.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateMesh(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Create a new personal mesh.
-            </summary>
-            <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-            <param name="profileDevice">The device profile.</param>
-            <param name="profileMaster">The mesh profile.</param>
-            <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
             <returns>An administration context instance for the created profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshSecret">
@@ -1015,11 +988,15 @@
             </summary>
             <returns>The Mesh secret bytes.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.PersistSeed">
+            <summary>
+            Persist the Mesh Secret to the persistence store of this machine.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.EraseMeshSecret">
             <summary>
             Erase the Mesh Secret from the persistence store of this machine.
             </summary>
-            <returns>True if the key was found, otherwise false.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Escrow(System.Int32,System.Int32)">
             <summary>
@@ -1029,21 +1006,14 @@
             <param name="threshold">Number of shares required to recreate the quorum</param>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.UpdateDevices(Goedel.Mesh.ProfileUser)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
             <summary>
-            Update all the devices connected to the account to incorporate values from
-            <paramref name="account"/>.
+            Set the initial Mesh Service. This MUST be called before devices are added to the 
+            personal mesh. This method does not support transfer of the Mesh Service.
             </summary>
-            <param name="account">The modified account profile.</param>
+            <param name="accountAddress">The account address</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileDevice)">
-            <summary>
-            Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
-            </summary>
-            <param name="profileDevice">Profile of the device to be added.</param>
-            <returns>The CatalogedDevice entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationDevice)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationUser)">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -1053,12 +1023,21 @@
             <param name="activationDevice">The device key overlay.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddDevice(Goedel.Mesh.ProfileDevice)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
             <summary>
-            Add a device to the account and the underlying Mesh.
+            Add a device to the account.
             </summary>
             <param name="profileDevice">Profile of the device to add.</param>
             <returns>The catalog entry.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Mesh.ActivationUser,Goedel.Cryptography.CryptoKey)">
+            <summary>
+            Generate a capability for the key <paramref name="keyPair"/> and grant access
+            to <paramref name="activationUser"/> if a threshold capability is created, 
+            add the service portion to the capabilities catalog.
+            </summary>
+            <param name="activationUser">Device to receive the capability.</param>
+            <param name="keyPair">Keypair from which the capability is to be derrived.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -1099,12 +1078,8 @@
             <returns>The first cryptographic capability this device has been granted if found,
             otherwise null.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.MakeStore(System.String)">
-            <summary>
-            Create a new instance bound to the specified core within this account context.
-            </summary>
-            <param name="name">The name of the store to bind.</param>
-            <returns>The store instance.</returns>
+        <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryStoreDelegates">
+            <summary>Dictionarry used to create stores</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogApplication">
             <summary>Returns the application catalog for the account</summary>
@@ -2058,11 +2033,18 @@
             </summary>
             <param name="profile">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
-            <summary>
-            Create a new Mesh master profile without account or service.
-            </summary>
-            <returns>Context for administering the Mesh</returns>
+        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],Goedel.Mesh.ProfileDevice)">
+             <summary>
+             Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
+             </summary>
+            <param name="accountAddress">Account address to bind to.</param>
+             <param name="localName">Local name for easy reference.</param>
+             <param name="algorithmSign">Signature algorithm.</param>
+             <param name="algorithmEncrypt">Encryption algorithm</param>
+             <param name="algorithmAuthenticate">Authentication algorithm</param>
+             <param name="secretSeed">Secret seed used to generate private keys.</param>
+             <param name="profileDevice">Specify the device profile.</param>
+             <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
             <summary>
@@ -2128,7 +2110,7 @@
         <member name="M:Goedel.Mesh.Client.PersistHost.#cctor">
             <summary>Static initiaialization to force the static initialization of MeshItem and CatalogItem.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.keyCollection,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.PersistHost.#ctor(System.String,System.String,System.String,System.Boolean,Goedel.IO.FileStatus,Goedel.Cryptography.Dare.ContainerType,Goedel.Protocol.DataEncoding,Goedel.Cryptography.Dare.CryptoParameters,Goedel.Cryptography.KeyCollection,System.Boolean)">
             <summary>
             Open or create a persistence store in specified mode with 
             the specified file name, content type and optional comment.

@@ -42,27 +42,11 @@
 #zfile CreateExamples SchemaDevice "Examples\\SchemaDevice.md" Example
 #% var catalogedDevice = AliceProfiles?.CatalogedDevice;
 #% var profileDevice = catalogedDevice?.ProfileDevice;
-#% var connectionDevice = catalogedDevice?.ConnectionDevice;
-#% ActivationDevice privateDevice = null ; //catalogedDevice?.ActivationDevice;
 
 Alice's Device Profile specifies keys for encryption, signature and exchange:
 
 #% Format(profileDevice);
 
-Since the Device Profile keys are ultimately under the control of the device and/or
-software provider, these are considered insufficiently trustworthy and the
-administration device creates key contributions to be added to the device keys
-to establish the key set to be used in the context of the user's personal Mesh:
-
-#% Format(privateDevice);
-
-The resulting key set is specified in the device connection:
-
-#% Format(connectionDevice);
-
-All the above are combined to form the CatalogedDevice entry:
-
-#% Format(catalogedDevice);
 
 #end zfile
 
@@ -70,17 +54,30 @@ All the above are combined to form the CatalogedDevice entry:
 
 #zfile CreateExamples SchemaAccount "Examples\\SchemaAccount.md" Example
 #% var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
-#% var profileAccount = resultCreateAccount.ProfileAccount;
-#% var activationAccount = resultCreateAccount.ActivationAccount;
+#% var profileUser = resultCreateAccount.ProfileUser;
+#% var activationUser = resultCreateAccount.ActivationUser;
+#% var catalogedDevice = AliceProfiles?.CatalogedDevice;
+#% var connectionUser = catalogedDevice?.ConnectionUser;
+
 
 The account profile specifies the online and offline signature keys used to maintain the
 profile and the encryption key to be used by the account.
 
-#% Format(profileAccount);
+#% Format(profileUser);
 
-Each device using the account requires an activation record:
+Each device connected to the account requires an activation record. This specifies the 
+key contribtions added to the manufacturer device profile keys:
 
-#% Format(activationAccount);
+#% Format(activationUser);
+
+The resulting key set is specified in the device connection:
+
+#% Format(connectionUser);
+
+All the above plus the ProfileDevice are combined to form the CatalogedDevice entry:
+
+#% Format(catalogedDevice);
+
 
 #end zfile
 
@@ -109,11 +106,13 @@ And there should be a connection of the host to the service but this isn't imple
 
 
 #zfile CreateExamples SchemaDevicePrivate "Examples\\SchemaDevicePrivate.md" Example
-#% Format(AliceProfiles?.AssertionAccount);
+
+*****************Remove
+
 #end zfile
 
 #zfile CreateExamples SchemaDeviceConnection "Examples\\SchemaDeviceConnection.md" Example
-#% Format(AliceProfiles?.AssertionAccount);
+*****************Remove
 #end zfile
 
 

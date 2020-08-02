@@ -1,5 +1,6 @@
 ﻿using Goedel.Cryptography;
 using Goedel.Cryptography.Dare;
+using Goedel.Cryptography.Standard;
 using Goedel.Utilities;
 
 using System;
@@ -104,6 +105,11 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Returns the local spool  for the account</summary>
         public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
+
+
+        ///<summary>List of stores</summary>
+        public abstract Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates { get; }
+
         #endregion
 
         #region // Constructors
@@ -514,12 +520,31 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="name">The name of the store to bind.</param>
         /// <returns>The store instance.</returns>
-        protected virtual Store MakeStore(string name) => name switch
-            {
-                CatalogCapability.Label => new CatalogCapability(StoresDirectory,
-                    name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient)),
-                _ => throw new NYI(),
-                };
+        protected Store MakeStore(string name) {
+
+            // special case this for now
+            switch (name) {
+                case CatalogCapability.Label : return new CatalogCapability(StoresDirectory,
+                        name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
+                }
+
+            if (DictionaryStoreDelegates.TryGetValue(name, out var factory)) {
+                return factory(StoresDirectory,
+                    name, ContainerCryptoParameters, KeyCollection);
+                }
+
+            throw new NYI();
+            }
+
+        /// <summary>
+        /// Force generation of all stores.
+        /// </summary>
+        protected void MakeStores() {
+            foreach (var entry in DictionaryStoreDelegates) {
+                GetStore(entry.Key, true);
+                }
+            }
+
         #endregion
 
 

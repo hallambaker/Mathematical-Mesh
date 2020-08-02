@@ -228,7 +228,7 @@ namespace Goedel.Cryptography.Dare {
             DigestID = digest;
             (keySize, blockSize) = encryptID.GetKeySize();
 
-            keyCollection ??= Cryptography.keyCollection.Default;
+            keyCollection ??= Cryptography.KeyCollection.Default;
 
             if (recipients != null & decrypt) {
                 MasterSecret = keyCollection.Decrypt(recipients, encryptID);

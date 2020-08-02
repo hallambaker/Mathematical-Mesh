@@ -149,30 +149,22 @@ namespace Goedel.Mesh {
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
-        /// <param name="cryptoParameters">The cryptographic parameters.</param>
-        /// <param name="keyCollection">The key collection to fetch keys from.</param>
-        public Spool(string directory, string storeName,
-            CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null) :
-                base(directory, storeName, cryptoParameters, keyCollection) {
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public Spool(
+                    string directory, 
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
 
             }
-
-        ///// <summary>
-        ///// Return the status of the spool.
-        ///// </summary>
-        ///// <param name="directory">The directory in which the spool is stored.</param>
-        ///// <param name="storeName">The store name.</param>
-        ///// <returns></returns>
-        //public static ContainerStatus Status(string directory, string storeName) {
-        //    using var store = new Spool(directory, storeName);
-        //    return new ContainerStatus() {
-        //        Index = (int)store.Container.FrameCount,
-        //        Container = storeName
-        //        };
-        //    }
 
         /// <summary>
         /// Add an envelope to the spool. All information provided in the ContainerInfo
@@ -223,57 +215,6 @@ namespace Goedel.Mesh {
             return true;
             }
 
-        ///// <summary>
-        ///// Check that the envelope <paramref name="dareEnvelope"/> is within the boundaries
-        ///// defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
-        ///// <paramref name="notOnOrAfter"/>.
-        ///// </summary>
-        ///// <param name="dareEnvelope">The envelope to test.</param>
-        ///// <param name="select">Message status selection mask.</param>
-        ///// <param name="maxTicks">If greater or equal to zero, return <code>false</code> if 
-        ///// the time the envelope was last modified is more than
-        ///// this number of ticks earlier than the current time.</param>
-        ///// <param name="notBefore">If not null, return <code>false</code> if the time the envelope was last modified
-        ///// is earlier than this time.</param>
-        ///// <param name="notOnOrAfter">If not null, return <code>false</code> if the time the envelope was last modified
-        ///// is later than or the same as this time.</param>
-        ///// <returns><code>true</code> unless one of the conditions defined by <paramref name="maxTicks"/>, 
-        ///// <paramref name="notBefore"/> or <paramref name="notOnOrAfter"/> </returns> is not
-        ///// met in which case return <code>false</code>.
-        //public bool CheckEnvelope(
-        //            DareEnvelope dareEnvelope,
-        //            MessageStatus select = MessageStatus.All,
-        //            long maxTicks = -1,
-        //            DateTime? notBefore = null,
-        //            DateTime? notOnOrAfter = null) {
-
-        //    if (dareEnvelope == null) {
-        //        return false;
-        //        }
-
-        //    var time = dareEnvelope.Header.ContentMeta.Modified;
-        //    var id = dareEnvelope.Header.ContentMeta.UniqueID;
-
-        //    if (!statusById.TryGetValue(id, out var messageStatus)) {
-        //        messageStatus = MessageStatus.Initial;
-        //        }
-
-        //    var expire = dareEnvelope.Header.ContentMeta.Expire;
-        //    if (expire != null && (expire < DateTime.Now)) {
-        //        messageStatus |= MessageStatus.Expired;
-        //        }
-        //    else {
-        //        messageStatus |= MessageStatus.Unexpired;
-        //        }
-
-        //    // check the selection criteria
-        //    if ((messageStatus & select) != select) {
-        //        return false;
-        //        }
-
-        //    return CheckTime(time, maxTicks, notBefore, notOnOrAfter);
-
-        //    }
 
         /// <summary>
         /// Retrieve a message by message ID. 
@@ -505,8 +446,6 @@ namespace Goedel.Mesh {
             checkMaxResults = maxResults >= 0;
 
             Reset();
-            //MoveNext();
-
             }
 
         /// <summary>
@@ -536,10 +475,8 @@ namespace Goedel.Mesh {
                     results++;
                     return true;
                     }
-
                 return false;
                 }
-
             }
 
         /// <summary>
@@ -559,24 +496,52 @@ namespace Goedel.Mesh {
     /// Class for the local spool
     /// </summary>
     public class SpoolLocal : Spool {
+        #region // Properties
 
         ///<summary>Canonical name for local spool</summary>
         public const string Label = "mmm_Local";
+        #endregion
+        #region // Factory methods and constructors
 
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
+        /// <param name="storeId">The store name.</param>
         /// <param name="cryptoParameters">The cryptographic parameters.</param>
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
-        public SpoolLocal(string directory, string storeName,
-            CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null) :
-                base(directory, storeName, cryptoParameters, keyCollection) {
-
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public SpoolLocal(
+                    string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
             }
+
+        #endregion
+        #region // Class methods
 
         /// <summary>
         /// Check the spool for a matching unexpired PIN identifier and return the plaintext of the
@@ -595,44 +560,88 @@ namespace Goedel.Mesh {
             "Should split the Local and Admin spools".TaskFunctionality();
             "Check for pin age etc, limit search".TaskFunctionality();
 
-
             return GetByMessageId(pinId);
-
             }
-
+        #endregion
         }
 
     /// <summary>
     /// Class for the inbound spool
     /// </summary>
     public class SpoolInbound: Spool {
-
+        #region // Properties
         ///<summary>Canonical name for inbound spool</summary>
         public const string Label = "mmm_Inbound";
+        #endregion
+        #region // Factory methods and constructors
 
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
+        /// <param name="storeId">The store name.</param>
         /// <param name="cryptoParameters">The cryptographic parameters.</param>
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
-        public SpoolInbound(string directory, string storeName,
-            CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null) :
-                base(directory, storeName, cryptoParameters, keyCollection) {
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public SpoolInbound(
+                    string directory, 
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
 
             }
+
+        #endregion
         }
 
     /// <summary>
     /// Class for the outbound spool
     /// </summary>
     public class SpoolOutbound : Spool {
-
+        #region // Properties
         ///<summary>Canonical name for outbound spool</summary>
         public const string Label = "mmm_Outbound";
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new SpoolOutbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
 
         /// <summary>
@@ -642,36 +651,66 @@ namespace Goedel.Mesh {
         /// <param name="storeName">The store name.</param>
         /// <param name="cryptoParameters">The cryptographic parameters.</param>
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
         public SpoolOutbound(string directory, string storeName,
             CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null) :
-                base(directory, storeName, cryptoParameters, keyCollection) {
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+                base(directory, storeName, cryptoParameters, keyCollection, decrypt, create) {
 
             }
+        #endregion
         }
 
     /// <summary>
     /// Class for the outbound spool
     /// </summary>
     public class SpoolArchive : Spool {
-
+        #region // Properties
         ///<summary>Canonical name for outbound spool</summary>
         public const string Label = "mmm_Archive";
-
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new SpoolArchive(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="directory">The directory in which the spool is stored.</param>
-        /// <param name="storeName">The store name.</param>
+        /// <param name="storeId">The store name.</param>
         /// <param name="cryptoParameters">The cryptographic parameters.</param>
         /// <param name="keyCollection">The key collection to fetch keys from.</param>
-        public SpoolArchive(string directory, string storeName,
-            CryptoParameters cryptoParameters = null,
-                    IKeyCollection keyCollection = null) :
-                base(directory, storeName, cryptoParameters, keyCollection) {
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public SpoolArchive(
+                    string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) :
+                base(directory, storeId, cryptoParameters, keyCollection, decrypt, create) {
 
             }
+        #endregion
         }
 
 

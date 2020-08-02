@@ -16,11 +16,36 @@ namespace Goedel.Mesh {
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
     public class CatalogDevice : Catalog<CatalogedDevice> {
+
+        #region // Properties
+
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Device";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+
+        #endregion
+        #region // Factory methods and constructors
+
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogDevice(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -44,6 +69,9 @@ namespace Goedel.Mesh {
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
+        #endregion
+        #region // Class methods
+
         /// <summary>
         /// Return a string describing the catalog entries.
         /// </summary>
@@ -57,33 +85,31 @@ namespace Goedel.Mesh {
 
             return builder.ToString();
             }
-
+        #endregion
         }
 
     public partial class CatalogedDevice {
+        #region // Properties
+
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
         public override string _PrimaryKey => DeviceUDF;
-
 
         /// <summary>
         /// The device connection assertion. This is set by either a new assertion being generated
         /// for a newly added device or by decoding the SignedDeviceConnection entry after 
         /// deserialization.
         /// </summary>
-        public ConnectionDevice ConnectionDevice => connectionDevice ??
-            ConnectionDevice.Decode(EnvelopedConnectionDevice).CacheValue(out connectionDevice);
-        ConnectionDevice connectionDevice = null;
+        public ConnectionUser ConnectionUser => connectionUser ??
+            ConnectionUser.Decode(EnvelopedConnectionUser).CacheValue(out connectionUser);
+        ConnectionUser connectionUser = null;
 
-
-
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileMesh"/>
-        ///to return the <see cref="ProfileAccount"/> value.</summary>
-        public ProfileUser ProfileAccount => profileAccount ??
-            ProfileUser.Decode(EnvelopedProfileMesh).CacheValue(out profileAccount);
-        ProfileUser profileAccount;
-
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileUser"/>
+        ///to return the <see cref="ProfileUser"/> value.</summary>
+        public ProfileUser ProfileUser => profileUser ??
+            ProfileUser.Decode(EnvelopedProfileUser).CacheValue(out profileUser);
+        ProfileUser profileUser;
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedProfileDevice"/>
         ///to return the <see cref="ProfileDevice"/> value.</summary>
@@ -91,18 +117,25 @@ namespace Goedel.Mesh {
                 ProfileDevice.Decode(EnvelopedProfileDevice).CacheValue(out profileDevice);
         ProfileDevice profileDevice;
 
-        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationDevice"/>
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationUser"/>
         ///to return the <see cref="ActivationDevice"/> value.</summary>
-        public ActivationDevice GetActivationDevice(IKeyCollection keyCollection) =>
-            activationDevice ?? (keyCollection == null ? null :
-                ActivationDevice.Decode(EnvelopedActivationDevice, keyCollection).CacheValue(out activationDevice));
-        ActivationDevice activationDevice;
+        public ActivationUser GetActivationUser(IKeyCollection keyCollection) =>
+            activationUser ?? (keyCollection == null ? null :
+                ActivationUser.Decode(EnvelopedActivationUser, keyCollection).CacheValue(out activationUser));
+        ActivationUser activationUser;
+
+
+        #endregion
+        #region // Factory methods and constructors
 
         /// <summary>
         /// Default constructor used for deserialization.
         /// </summary>
         public CatalogedDevice() {
             }
+
+        #endregion
+        #region // Override methods
 
         /// <summary>
         /// Convert the cataloged device to a string.
@@ -132,28 +165,15 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"Mesh UDF {UDF}");
             DareEnvelope.Report(builder);
 
-            ProfileAccount.ToBuilder(builder, indent, "[Profile Mesh Missing]");
+            ProfileUser.ToBuilder(builder, indent, "[Profile Mesh Missing]");
             ProfileDevice.ToBuilder(builder, indent, "[Profile Device Missing]");
-            ConnectionDevice.ToBuilder(builder, indent, "[Connection Device Missing]");
-            GetActivationDevice(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
-
-            if (Accounts == null) {
-                builder.AppendIndent(indent, $"Accounts: None");
-                }
-            else {
-                builder.AppendIndent(indent, $"Accounts: {Accounts.Count}");
-                indent++;
-                foreach (var account in Accounts) {
-                    builder.AppendIndent(indent, $"Account Entry {account.AccountUDF}");
-
-                    account.ProfileAccount.ToBuilder(builder, indent, "[Profile Account Missing]");
-                    account.ConnectionAccount.ToBuilder(builder, indent, "[Profile Device Missing]");
-                    account.GetActivationAccount(keyCollection).ToBuilder(builder, indent, "[Profile Device Missing]");
-                    }
-
-                }
+            ConnectionUser.ToBuilder(builder, indent, "[Connection Device Missing]");
+            GetActivationUser(keyCollection).ToBuilder(builder, indent, "[Activation Device Missing]");
 
             }
+
+        #endregion
+        #region // Class methods
 
         /// <summary>
         /// Decode <paramref name="envelope"/> and return the inner <see cref="CatalogedDevice"/>
@@ -167,33 +187,6 @@ namespace Goedel.Mesh {
                         MeshItem.Decode(envelope, keyCollection) as CatalogedDevice;
 
 
-
-        /// <summary>
-        /// Match the specified account entry.
-        /// </summary>
-        /// <param name="localName">Local name to match</param>
-        /// <param name="accountName">Service identifier to match</param>
-        /// <returns>The account if found, otherwise null.</returns>
-        public AccountEntry GetAccount(string localName = null,
-                string accountName = null) {
-            localName.Future();
-
-            if (Accounts == null || Accounts.Count == 0) {
-                return null;
-                }
-            if (accountName == null) {
-                return Accounts[0];
-                }
-
-            foreach (var account in Accounts) {
-                if (account.ProfileAccount.MatchAccountAddress(accountName) >= 0) {
-                    return account;
-                    }
-                }
-
-            return null;
-            }
-
         /// <summary>
         /// Verify the Catalogued Device information and verify that it is all correctly signed.
         /// </summary>
@@ -201,22 +194,20 @@ namespace Goedel.Mesh {
         public virtual bool Validate() {
 
             // Verify the master profile is correctly self signed.
-            ProfileAccount.Validate();
+            ProfileUser.Validate();
 
             // Verify the device profile is correctly self signed.
             ProfileDevice.Validate();
 
             // Verify that the connection and activation entries are signed under the master profile
-            ProfileAccount.Verify(EnvelopedConnectionDevice);
-            ProfileAccount.Verify(EnvelopedActivationDevice);
-
-            // Verify that each connected account is correct.
-            foreach (var account in Accounts) {
-                account.Validate();
-                }
+            ProfileUser.Verify(EnvelopedConnectionUser);
+            ProfileUser.Verify(EnvelopedActivationUser);
 
             return true; // this will probably turn into exception return.
             }
+
+
+        #endregion
         }
 
 

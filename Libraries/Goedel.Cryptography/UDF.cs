@@ -90,11 +90,6 @@ namespace Goedel.Cryptography {
         ///<summary>4096 bit RSA keypair</summary>
         RSA4096 = 10,
 
-        ///<summary>Mesh master profile</summary>
-        MeshProfileMaster = 256,
-
-        ///<summary>Mesh master profile</summary>
-        MeshActivationMaster = 257,
 
         ///<summary>Mesh device profile</summary>
         MeshProfileDevice = 258,
@@ -103,11 +98,11 @@ namespace Goedel.Cryptography {
         MeshActivationDevice = 259,
 
         ///<summary>Mesh device profile</summary>
-        MeshProfileAccount = 250,
+        MeshProfileUser = 250,
 
 
         ///<summary>Mesh device profile</summary>
-        MeshActivationAccount = 261,
+        MeshActivationUser = 261,
 
         ///<summary>Mesh device profile</summary>
         MeshProfileGroup = 262,
@@ -1251,11 +1246,10 @@ namespace Goedel.Cryptography {
                     break;
                     }
 
-                case UdfAlgorithmIdentifier.MeshProfileMaster:
                 case UdfAlgorithmIdentifier.MeshProfileDevice:
                 case UdfAlgorithmIdentifier.MeshActivationDevice:
-                case UdfAlgorithmIdentifier.MeshProfileAccount:
-                case UdfAlgorithmIdentifier.MeshActivationAccount:
+                case UdfAlgorithmIdentifier.MeshProfileUser:
+                case UdfAlgorithmIdentifier.MeshActivationUser:
                 case UdfAlgorithmIdentifier.MeshProfileGroup:
                 case UdfAlgorithmIdentifier.MeshActivationGroup:
                 case UdfAlgorithmIdentifier.MeshProfileService:

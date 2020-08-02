@@ -39,18 +39,6 @@ namespace Goedel.Mesh {
         PartialService = 0x05,
 
 
-        // ** Master Profile
-        ///<summary>Master profile offline signature</summary>
-        MasterProfile = IndexSeedType * 1,
-
-        ///<summary>Master profile offline signature</summary>
-        MasterOfflineSign = MasterProfile,
-
-        ///<summary>Master profile online signature</summary>
-        MasterOnlineSign = OnlineSign,
-
-        ///<summary>Master profile encryption</summary>
-        MasterEncrypt = Encrypt,
 
 
         // ** Device Profile
@@ -62,24 +50,24 @@ namespace Goedel.Mesh {
 
 
         ///<summary>Master profile encryption</summary>
-        DeviceEncrypt = DeviceSign + Encrypt,
+        DeviceEncrypt = DeviceProfile + Encrypt,
 
         ///<summary>Master profile authentication</summary>
-        DeviceAuthenticate = DeviceSign + Authenticate,
+        DeviceAuthenticate = DeviceProfile + Authenticate,
 
 
         // ** Account Profile
         ///<summary>Master profile offline signature</summary>
-        AccountProfile = IndexSeedType * 3,
+        UserProfile = IndexSeedType * 3,
 
         ///<summary>Master profile offline signature</summary>
-        AccountSign = AccountProfile + Sign,
+        UserSign = UserProfile + Sign,
 
         ///<summary>Master profile encryption</summary>
-        AccountEncrypt = AccountSign + Encrypt,
+        UserEncrypt = UserProfile + Encrypt,
 
         ///<summary>Master profile authentication</summary>
-        AccountAuthenticate = AccountSign + Authenticate,
+        UserAuthenticate = UserProfile + Authenticate,
 
 
         // ** Group Profile
@@ -90,16 +78,16 @@ namespace Goedel.Mesh {
         GroupSign = GroupProfile + Sign,
 
         ///<summary>Master profile encryption</summary>
-        GroupEncrypt = GroupSign + Encrypt,
+        GroupEncrypt = GroupProfile + Encrypt,
 
         ///<summary>Master profile authentication</summary>
-        GroupAuthenticate = GroupSign + Authenticate,
+        GroupAuthenticate = GroupProfile + Authenticate,
 
         ///<summary>Master profile authentication</summary>
-        GroupUser = GroupSign + PartialUser,
+        GroupUser = GroupProfile + PartialUser,
 
         ///<summary>Master profile authentication</summary>
-        GroupService = GroupSign + PartialService,
+        GroupService = GroupProfile + PartialService,
 
 
         // ** Service Profile
@@ -107,13 +95,13 @@ namespace Goedel.Mesh {
         ServiceProfile = IndexSeedType * 5,
 
         ///<summary>Master profile offline signature</summary>
-        ServiceSign = AccountProfile + Sign,
+        ServiceSign = ServiceProfile + Sign,
 
         ///<summary>Master profile encryption</summary>
-        ServiceEncrypt = AccountSign + Encrypt,
+        ServiceEncrypt = ServiceProfile + Encrypt,
 
         ///<summary>Master profile authentication</summary>
-        ServiceAuthenticate = AccountSign + Authenticate,
+        ServiceAuthenticate = ServiceProfile + Authenticate,
 
         }
 

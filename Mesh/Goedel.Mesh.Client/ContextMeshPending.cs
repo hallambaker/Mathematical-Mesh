@@ -29,6 +29,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>The connection binding the calling context to the account.</summary>
         public override Connection Connection => throw new NYI();
 
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => throw new NotImplementedException();
+
 
         /////<summary>Convenience accessor for the Account Service ID</summary>
         //public string AccountAddress => CatalogedPending?.AccountAddress;
@@ -79,7 +81,8 @@ namespace Goedel.Mesh.Client {
                     UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign,
                     algorithmAuthenticate);
 
-            var profileDevice = new ProfileDevice(secretSeed, meshHost.KeyCollection, true);
+            var profileDevice = new ProfileDevice(secretSeed, meshHost.KeyCollection);
+            profileDevice.PersistSeed(meshHost.KeyCollection);
 
             return ConnectService(meshHost, profileDevice, accountAddress, localName, pin);
             }
@@ -131,7 +134,7 @@ namespace Goedel.Mesh.Client {
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = accountAddress,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,
-                EnvelopedProfileMaster = response.EnvelopedProfileMaster,
+                EnvelopedProfileUser = response.EnvelopedProfileMaster,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
                 EnvelopedAccountAssertion = response.EnvelopedAccountAssertion
                 };

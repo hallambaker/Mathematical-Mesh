@@ -13,12 +13,31 @@ namespace Goedel.Mesh {
     /// Bookmark catalog. Describes the bookmarks in the user's Mesh account.
     /// </summary>
     public class CatalogBookmark : Catalog<CatalogedBookmark> {
-        
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Bookmark";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogBookmark(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -43,14 +62,15 @@ namespace Goedel.Mesh {
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
-
+        #endregion
         }
 
 
     public partial class CatalogedBookmark {
+        #region // Properties
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => Path;
-
+        #endregion
         }
 
 

@@ -451,7 +451,7 @@ namespace Goedel.Cryptography.Dare {
         public byte[] Decrypt(List<Recipient> Recipients, CryptoAlgorithmId AlgorithmID) {
             foreach (var Recipient in Recipients) {
 
-                var DecryptionKey = keyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid);
+                var DecryptionKey = KeyCollection.Default.TryFindKeyDecryption(Recipient.Header.Kid);
 
                 // Recipient has the following fields of interest
                 // Recipient.EncryptedKey -- The RFC3394 wrapped symmetric key

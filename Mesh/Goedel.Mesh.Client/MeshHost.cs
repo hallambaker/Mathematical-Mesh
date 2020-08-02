@@ -162,29 +162,58 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Create a new Mesh master profile without account or service.
+        /// Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
         /// </summary>
+        ///<param name="accountAddress">Account address to bind to.</param>
+        /// <param name="localName">Local name for easy reference.</param>
+        /// <param name="algorithmSign">Signature algorithm.</param>
+        /// <param name="algorithmEncrypt">Encryption algorithm</param>
+        /// <param name="algorithmAuthenticate">Authentication algorithm</param>
+        /// <param name="secretSeed">Secret seed used to generate private keys.</param>
+        /// <param name="profileDevice">Specify the device profile.</param>
         /// <returns>Context for administering the Mesh</returns>
-        public ContextAccount CreateMesh(
-                string serviceAddress,
+        public ContextUser CreateMesh(
+                string accountAddress,
                 string localName=null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] meshSecret = null,
-                bool? persist = null) {
+                byte[] secretSeed = null,
+                ProfileDevice profileDevice = null) {
 
-            localName.Future();
+            // create the initial online signature key bound to this device
+            var keyPairOnlineSignature = 
+                KeyPair.FactorySignature(algorithmSign, KeySecurity.Device, KeyCollection);
 
-            var context = ContextUser.CreateMesh(
-                    this, null,null,  algorithmSign, algorithmEncrypt, algorithmAuthenticate,
-                    meshSecret, persist: persist);
+            // Create the Mesh for the user
+            var contextUser = ContextUser.CreateMesh(
+                    this,
+                    keyPairOnlineSignature,
+                    localName,
+                    algorithmSign: algorithmSign, 
+                    algorithmEncrypt: algorithmEncrypt, 
+                    algorithmAuthenticate: algorithmAuthenticate,
+                    masterSecret: secretSeed);
 
-            Register(context);
-            //Console.WriteLine($"Created profile {context.ProfileMesh.UDF}");
 
-            return context;
+            // Set the service 
+            contextUser.SetService(accountAddress);
 
+            // Create a device and catalog entry.
+            var persistDevice = profileDevice == null;
+            profileDevice ??= new ProfileDevice(KeyCollection, 
+                    algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+            var catalogedDevice = contextUser.AddDevice(profileDevice, keyPairOnlineSignature, true);
+
+            //Persist the results.
+            if (persistDevice) {
+                profileDevice.PersistSeed(KeyCollection);
+                }
+            contextUser.Persist(catalogedDevice);
+            contextUser.PersistSeed();
+            Register(contextUser);
+
+            return contextUser;
             }
 
 

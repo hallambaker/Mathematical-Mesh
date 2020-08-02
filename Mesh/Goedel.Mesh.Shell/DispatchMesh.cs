@@ -109,18 +109,17 @@ namespace Goedel.Mesh.Shell {
 
 
             var (algorithm, meshSecret) = secret.ParseKey();
-            algorithm.AssertEqual(UdfAlgorithmIdentifier.MeshProfileMaster, InvalidRecoverySecret.Throw);
-            var contextMesh = MeshHost.CreateMesh("main", meshSecret: meshSecret);
+
+            // should switch on algorithm so we can recover different types of profile!!!
+
+
+            (algorithm == UdfAlgorithmIdentifier.MeshProfileUser |
+                algorithm == UdfAlgorithmIdentifier.MeshProfileGroup).AssertTrue(InvalidRecoverySecret.Throw);
+
+            var contextMesh = MeshHost.CreateMesh("main", secretSeed: meshSecret);
 
             throw new NYI();
-            //"recover subordinate accounts, etc.".TaskFunctionality();
-            //return new ResultRecover() {
-            //    Success = true,
-            //    ProfileMesh = contextMesh.ProfileMesh,
-            //    CatalogedDevice = contextMesh.CatalogedDevice,
-            //    MeshUDF = contextMesh.ProfileMesh.UDF,
-            //    DeviceUDF = contextMesh.CatalogedDevice.UDF
-            //    };
+
 
             }
 

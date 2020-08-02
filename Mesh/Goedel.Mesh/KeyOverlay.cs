@@ -65,13 +65,12 @@ namespace Goedel.Mesh {
         /// <returns>The Mesh key group identifier.</returns>
         public static MeshKeyType GetMeshKeyType(this UdfAlgorithmIdentifier udfAlgorithmIdentifier) =>
             udfAlgorithmIdentifier switch {
-                UdfAlgorithmIdentifier.MeshProfileMaster => MeshKeyType.MasterProfile,
                 UdfAlgorithmIdentifier.MeshProfileDevice => MeshKeyType.DeviceProfile,
-                UdfAlgorithmIdentifier.MeshProfileAccount => MeshKeyType.AccountProfile,
+                UdfAlgorithmIdentifier.MeshProfileUser => MeshKeyType.UserProfile,
                 UdfAlgorithmIdentifier.MeshProfileGroup => MeshKeyType.GroupProfile,
                 UdfAlgorithmIdentifier.MeshProfileService => MeshKeyType.ServiceProfile,
                 UdfAlgorithmIdentifier.MeshActivationDevice => MeshKeyType.DeviceProfile,
-                UdfAlgorithmIdentifier.MeshActivationAccount => MeshKeyType.AccountProfile,
+                UdfAlgorithmIdentifier.MeshActivationUser => MeshKeyType.UserProfile,
                 UdfAlgorithmIdentifier.MeshActivationGroup => MeshKeyType.GroupProfile,
                 UdfAlgorithmIdentifier.MeshActivationService => MeshKeyType.ServiceProfile,
                 _ => throw new NYI()
@@ -128,7 +127,7 @@ namespace Goedel.Mesh {
         /// <param name="keySecurity">The key security model of the derrived key.</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair BasePrivate(this PrivateKeyUDF secretSeed,
-                    MeshKeyType meshKeyType, keyCollection keyCollection = null,
+                    MeshKeyType meshKeyType, IKeyCollection keyCollection = null,
                     KeySecurity keySecurity= KeySecurity.Ephemeral) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
@@ -219,7 +218,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPairAdvanced ActivatePublic(this KeyPair baseKey,
-            string activationSeed, MeshKeyType meshKeyType, keyCollection keyCollection = null) {
+            string activationSeed, MeshKeyType meshKeyType, KeyCollection keyCollection = null) {
             //Console.WriteLine($"Public: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);

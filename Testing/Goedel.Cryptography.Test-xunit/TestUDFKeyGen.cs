@@ -298,9 +298,8 @@ namespace Goedel.XUnit {
             yield return new object[] { TEST2 };
             yield return new object[] { TEST3 };
             yield return new object[] { TEST4 };
-            yield return new object[] { TEST_KG_Master };
             yield return new object[] { TEST_KG_Device };
-            yield return new object[] { TEST_KG_Account };
+            yield return new object[] { TEST_KG_User };
             yield return new object[] { TEST_KG_Group };
             yield return new object[] { TEST_KG_Service };
             }
@@ -342,15 +341,7 @@ namespace Goedel.XUnit {
 
 
         #region // KeyGen tests
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_Master = new TestVectorUDFKeyGenUdfKey() {
-            Seed = "test1",
-            SeedA = "test1a",
-            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileMaster,
-            KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MB7C-DUD7-VIYZ-I2Q7-62UQ-QKFM-JAF5",
-            ResultEncrypt = "MCGL-PBKW-VD7N-OHC6-FIDW-53JX-C7SO",
-            ResultAuthenticate = "MBHM-YNFG-DPCG-GFLX-4RV7-FLU3-ZTI7"
-            };
+
 
         public static TestVectorUDFKeyGenUdfKey TEST_KG_Device = new TestVectorUDFKeyGenUdfKey() {
             Seed = "test1",
@@ -362,14 +353,15 @@ namespace Goedel.XUnit {
             ResultAuthenticate = "MAVJ-733B-OLW5-O5VC-B7ST-ZZPG-VTVD"
             };
 
-        public static TestVectorUDFKeyGenUdfKey TEST_KG_Account = new TestVectorUDFKeyGenUdfKey() {
+        // will fail as 
+        public static TestVectorUDFKeyGenUdfKey TEST_KG_User = new TestVectorUDFKeyGenUdfKey() {
             Seed = "test1",
             SeedA = "test1a",
-            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileAccount,
+            UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileUser,
             KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "MCSQ-NZPS-DMRT-QT4A-V2MG-CWFK-AJB7",
-            ResultEncrypt = "MC3T-U35K-KRAR-7OWK-ECWG-KJ4O-MUX4",
-            ResultAuthenticate = "MBN6-L5RR-72N5-GPFD-6SS5-34PZ-RY5J"
+            ResultSign = "fail",
+            ResultEncrypt = "fail",
+            ResultAuthenticate = "fail"
             };
 
         public static TestVectorUDFKeyGenUdfKey TEST_KG_Group= new TestVectorUDFKeyGenUdfKey() {

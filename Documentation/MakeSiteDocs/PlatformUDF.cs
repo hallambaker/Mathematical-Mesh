@@ -161,31 +161,6 @@ namespace ExampleGenerator {
                     OKM = HKDF.Derive(null, 448);
                     break;
                     }
-
-                case UdfAlgorithmIdentifier.Any:
-                    break;
-                case UdfAlgorithmIdentifier.P256:
-                    break;
-                case UdfAlgorithmIdentifier.P384:
-                    break;
-                case UdfAlgorithmIdentifier.P521:
-                    break;
-                case UdfAlgorithmIdentifier.RSA2048:
-                    break;
-                case UdfAlgorithmIdentifier.RSA3072:
-                    break;
-                case UdfAlgorithmIdentifier.RSA4096:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileMaster:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileAccount:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationAccount:
-                    break;
                 default:
                     break;
                 }
@@ -237,32 +212,7 @@ namespace ExampleGenerator {
                     break;
                     }
 
-                case UdfAlgorithmIdentifier.Any:
-                    break;
-                case UdfAlgorithmIdentifier.X25519:
-                    break;
-                case UdfAlgorithmIdentifier.X448:
-                    break;
-                case UdfAlgorithmIdentifier.Ed25519:
-                    break;
-                case UdfAlgorithmIdentifier.Ed448:
-                    break;
-                case UdfAlgorithmIdentifier.RSA2048:
-                    break;
-                case UdfAlgorithmIdentifier.RSA3072:
-                    break;
-                case UdfAlgorithmIdentifier.RSA4096:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileMaster:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileAccount:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationAccount:
-                    break;
+
                 default:
                     break;
                 }
@@ -310,32 +260,6 @@ namespace ExampleGenerator {
                     break;
                     }
 
-                case UdfAlgorithmIdentifier.Any:
-                    break;
-                case UdfAlgorithmIdentifier.X25519:
-                    break;
-                case UdfAlgorithmIdentifier.X448:
-                    break;
-                case UdfAlgorithmIdentifier.Ed25519:
-                    break;
-                case UdfAlgorithmIdentifier.Ed448:
-                    break;
-                case UdfAlgorithmIdentifier.RSA2048:
-                    break;
-                case UdfAlgorithmIdentifier.RSA3072:
-                    break;
-                case UdfAlgorithmIdentifier.RSA4096:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileMaster:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshProfileAccount:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationDevice:
-                    break;
-                case UdfAlgorithmIdentifier.MeshActivationAccount:
-                    break;
                 default:
                     break;
                 }

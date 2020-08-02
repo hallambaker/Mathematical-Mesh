@@ -15,9 +15,14 @@ namespace Goedel.Mesh {
         ///<summary>The identifier of the default service.</summary>
         public string ServiceDefault => AccountAddresses?[0];
 
-        ///<summary>The secret seed value used to derrive profile parameters.</summary>
-        public KeyPair KeyEncrypt;
+        /////<summary>The private encryption key generated from the secret seed.</summary>
+        //public KeyPair PrivateEncryption;
 
+        /////<summary>The private signature key generated from the secret seed.</summary>
+        //public KeyPair PrivateOfflineSignature;
+
+        /////<summary>The private authentication key generated from the secret seed.</summary>
+        //public KeyPair PrivateAuthentication;
 
         //KeyPair keySignOffline;
         CryptoKey keySignOnline;
@@ -35,139 +40,90 @@ namespace Goedel.Mesh {
         public ProfileUser() {
             }
 
-
-        public ProfileUser(
-            IKeyCollection meshHost,
-            PrivateKeyUDF secretSeedMaster,
-            string serviceAddress,
-            bool? persist = null
-            ) {
-            throw new NYI();
-            }
-
-
         /// <summary>
         /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
         /// seed.
         /// </summary>
-        /// <param name="profileMesh">The mesh profile to which this account will belong.</param>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="keyCollection"/>.</param>
-        public ProfileUser(
-                IKeyCollection keyCollection,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-
-                byte[] secret = null,
-                bool? persist = null) : this(keyCollection,
-                    new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileAccount,
-                        algorithmEncrypt, algorithmSign, secret:secret),
-                    persist: (persist != null ? persist == true : secret == null)) { }
-
-
-        /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
-        /// </summary>
-        /// <param name="profileMesh">The mesh profile to which this account will belong.</param>
         /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
         /// <param name="secretSeed">The secret seed value.</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <param name="keyPairOnlineSignature">The intial online signature key.
         /// <paramref name="keyCollection"/>.</param>
         public ProfileUser(
                     IKeyCollection keyCollection,
                     PrivateKeyUDF secretSeed,
-                    bool persist = false) {
-            //SecretSeed = secretSeed;
+                    KeyPair keyPairOnlineSignature) {
+            //Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
 
-            Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
+            // Generate the private keys
+            var PrivateOfflineSignature = secretSeed.BasePrivate(
+                MeshKeyType.UserSign, keyCollection, KeySecurity.Storable);
+            var PrivateEncryption = secretSeed.BasePrivate(
+                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Storable);
+            var PrivateAuthentication = secretSeed.BasePrivate(
+                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Storable);
 
+            //Set the public key parameters
+            KeyOfflineSignature = new KeyData(PrivateOfflineSignature.KeyPairPublic());
+            KeyEncryption = new KeyData(PrivateEncryption.KeyPairPublic());
+            KeyAuthentication = new KeyData(PrivateAuthentication.KeyPairPublic());
 
-            var meshKeyType = MeshKeyType.AccountProfile;
-            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
-            KeyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt, 
-                    keySecurity:KeySecurity.Exportable);
-            var keyAuthenticate = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
-
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(KeyEncrypt.KeyPairPublic());
-            KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
-
-
-
-            var keyOnlineSign = KeyPair.Factory(keySign.CryptoAlgorithmId, keySecurity: KeySecurity.ExportableStored,
-                keyCollection, keyUses: KeyUses.Sign);
-
-            KeysOnlineSignature = new List<KeyData> { 
-                new KeyData(keyOnlineSign.KeyPairPublic())};
-
-            if (persist) {
-                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
-                }
-
-            Sign(keySign);
-            }
-
-        /// <summary>
-        /// Connect the device described by <paramref name="catalogedDevice"/> with 
-        /// the set of permissions <paramref name="permissions"/>> to the account
-        /// described by this profile using the account administration key acquired from
-        /// <paramref name="catalogedDevice"/>.
-        /// </summary>
-        /// <param name="keyCollection">Key collection from which to fetch the key to sign
-        /// the corresponding Activation and Connection.</param>
-        /// <param name="catalogedDevice">The device to connect. The catalog entry will
-        /// be updated to reflect the connection to the account.</param>
-        /// <param name="permissions">The set of permissions to grant to the device
-        /// within the account.</param>
-        /// <param name="accountEncryptionKey">Key or key share used to decrypt the
-        /// data encrypted to the account key.</param>
-        /// <returns>The account description.</returns>
-        public AccountEntry ConnectDevice(
-                        IKeyCollection keyCollection,
-                        CatalogedDevice catalogedDevice,
-                        KeyData accountEncryptionKey,
-                        List<Permission> permissions
-                        ) {
-
-            permissions.Future(); // Mark permissions as required parameter for future use.
-
-            // Get an online signature key if not already found
-            keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
-
-            // Grant the device access to data encrypted under the account key.
-            // Note that this cannot be granted through the capabilities catalog because that
-            // is also encrypted under the account key.
-            var activationAccount = new ActivationAccount(catalogedDevice.ProfileDevice) {
-                KeyAccountEncryption = accountEncryptionKey 
+            KeysOnlineSignature = new List<KeyData> {
+                new KeyData(keyPairOnlineSignature.KeyPairPublic())
                 };
 
-
-            // Sign and encrypt the activation
-            activationAccount.Package(keySignOnline);
-
-            // Encrypt to the device
-            var accountEntry = new AccountEntry() {
-                AccountUDF = UDF,
-                EnvelopedProfileAccount = DareEnvelope,
-                EnvelopedConnectionAccount = activationAccount.ConnectionAccount.DareEnvelope,
-                EnvelopedActivationAccount = activationAccount.DareEnvelope
-                };
-
-            catalogedDevice.Accounts ??= new List<AccountEntry>();
-            catalogedDevice.Accounts.Add(accountEntry);
-
-            return accountEntry;
+            Sign(PrivateOfflineSignature);
             }
 
+        ///// <summary>
+        ///// Connect the device described by <paramref name="catalogedDevice"/> with 
+        ///// the set of permissions <paramref name="permissions"/>> to the account
+        ///// described by this profile using the account administration key acquired from
+        ///// <paramref name="catalogedDevice"/>.
+        ///// </summary>
+        ///// <param name="keyCollection">Key collection from which to fetch the key to sign
+        ///// the corresponding Activation and Connection.</param>
+        ///// <param name="catalogedDevice">The device to connect. The catalog entry will
+        ///// be updated to reflect the connection to the account.</param>
+        ///// <param name="permissions">The set of permissions to grant to the device
+        ///// within the account.</param>
+        ///// <param name="accountEncryptionKey">Key or key share used to decrypt the
+        ///// data encrypted to the account key.</param>
+        ///// <returns>The account description.</returns>
+        //public AccountEntry ConnectDevice(
+        //                IKeyCollection keyCollection,
+        //                CatalogedDevice catalogedDevice,
+        //                KeyData accountEncryptionKey,
+        //                List<Permission> permissions
+        //                ) {
 
+        //    permissions.Future(); // Mark permissions as required parameter for future use.
 
+        //    // Get an online signature key if not already found
+        //    keySignOnline ??= keyCollection.LocatePrivate(KeysOnlineSignature);
 
+        //    // Grant the device access to data encrypted under the account key.
+        //    // Note that this cannot be granted through the capabilities catalog because that
+        //    // is also encrypted under the account key.
+        //    var activationAccount = new ActivationUser(catalogedDevice.ProfileDevice) {
+        //        KeyAccountEncryption = accountEncryptionKey 
+        //        };
 
+        //    // Sign and encrypt the activation
+        //    activationAccount.Package(keySignOnline);
+
+        //    // Encrypt to the device
+        //    var accountEntry = new AccountEntry() {
+        //        AccountUDF = UDF,
+        //        EnvelopedProfileAccount = DareEnvelope,
+        //        EnvelopedConnectionAccount = activationAccount.ConnectionAccount.DareEnvelope,
+        //        EnvelopedActivationAccount = activationAccount.DareEnvelope
+        //        };
+
+        //    //catalogedDevice.Accounts ??= new List<AccountEntry>();
+        //    //catalogedDevice.Accounts.Add(accountEntry);
+
+        //    return accountEntry;
+        //    }
 
         /// <summary>
         /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
@@ -236,51 +192,45 @@ namespace Goedel.Mesh {
 
 
 
-    public partial class ActivationAccount {
+    public partial class ActivationUser {
 
         ///<summary>The UDF profile constant used for key derrivation 
         ///<see cref="Constants.UDFActivationAccount"/></summary>
         public override string UDFKeyDerrivation => Constants.UDFActivationAccount;
 
         ///<summary>The connection value.</summary>
-        public override Connection Connection => ConnectionAccount;
+        public override Connection Connection => ConnectionUser;
 
-        ///<summary>The <see cref="ConnectionAccount"/> instance binding the activated device
+        ///<summary>The <see cref="ConnectionUser"/> instance binding the activated device
         ///to a MeshProfile.</summary>
-        public ConnectionAccount ConnectionAccount { get; set; }
-
-        /////<summary>The aggregate encryption key</summary>
-        //public KeyPairAdvanced KeyEncryption { get; set; }
-
-        /////<summary>The aggregate authentication key</summary>
-        //public KeyPairAdvanced KeyAuthentication { get; set; }
+        public ConnectionUser ConnectionUser { get; set; }
 
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
-        public ActivationAccount() {
+        public ActivationUser() {
             }
 
         /// <summary>
-        /// Construct a new <see cref="ActivationDevice"/> instance for the profile
+        /// Construct a new <see cref="ActivationUser"/> instance for the profile
         /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
         /// calculated from the values specified for the activation type.
         /// If the value <paramref name="masterSecret"/> is
         /// specified, it is used as the seed value. Otherwise, a seed value of
         /// length <paramref name="bits"/> is generated.
         /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionAccount"/> generated for the public values.
+        /// <see cref="ConnectionUser"/> generated for the public values.
         /// </summary>
         /// <param name="profileDevice">The base profile that the activation activates.</param>
         /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
         /// a seed value of <paramref name="bits"/> length is generated.</param>
         /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
         /// is null.</param>
-        public ActivationAccount(
+        public ActivationUser(
                     ProfileDevice profileDevice,
                     byte[] masterSecret = null,
                     int bits = 256) : base(
-                        profileDevice, UdfAlgorithmIdentifier.MeshActivationAccount, masterSecret, bits) {
+                        profileDevice, UdfAlgorithmIdentifier.MeshActivationUser, masterSecret, bits) {
             ProfileDevice = profileDevice;
 
             AccountUDF = profileDevice.UDF;
@@ -292,7 +242,7 @@ namespace Goedel.Mesh {
 
 
             // Create the (unsigned) ConnectionDevice
-            ConnectionAccount = new ConnectionAccount() {
+            ConnectionUser = new ConnectionUser() {
                 KeyEncryption = new KeyData(keyEncryption.KeyPairPublic()),
                 KeySignature = new KeyData(KeySignature.KeyPairPublic()),
                 KeyAuthentication = new KeyData(keyAuthentication.KeyPairPublic())
@@ -303,14 +253,14 @@ namespace Goedel.Mesh {
 
 
         /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationAccount"/>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationUser"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ActivationAccount Decode(DareEnvelope envelope,
+        public static new ActivationUser Decode(DareEnvelope envelope,
                     IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ActivationAccount;
+                        MeshItem.Decode(envelope, keyCollection) as ActivationUser;
 
 
         /// <summary>
@@ -334,12 +284,12 @@ namespace Goedel.Mesh {
         }
 
 
-    public partial class ConnectionAccount {
+    public partial class ConnectionUser {
 
         /// <summary>
         /// Constructor for use by deserializers.
         /// </summary>
-        public ConnectionAccount() {
+        public ConnectionUser() {
             }
 
 
@@ -353,7 +303,7 @@ namespace Goedel.Mesh {
         /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
         public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
 
-            builder.AppendIndent(indent, $"Connection Account");
+            builder.AppendIndent(indent, $"Connection User");
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
@@ -370,14 +320,14 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ConnectionAccount"/>
+        /// Decode <paramref name="envelope"/> and return the inner <see cref="ConnectionUser"/>
         /// </summary>
         /// <param name="envelope">The envelope to decode.</param>
         /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
         /// <returns>The decoded profile.</returns>
-        public static new ConnectionAccount Decode(DareEnvelope envelope,
+        public static new ConnectionUser Decode(DareEnvelope envelope,
                     IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ConnectionAccount;
+                        MeshItem.Decode(envelope, keyCollection) as ConnectionUser;
 
 
         }

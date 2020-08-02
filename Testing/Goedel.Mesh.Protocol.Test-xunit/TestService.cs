@@ -217,8 +217,8 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshDeviceConnectPIN() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, AccountAlice,
+                "main");
 
             var catalogDevice = contextAccountAlice.GetCatalogDevice();
 
@@ -266,8 +266,8 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshDeviceConnectApprove() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, 
+                    DeviceAliceAdmin, AccountAlice, "main");
 
             // New Device
             var contextAccount3Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
@@ -286,21 +286,13 @@ namespace Goedel.XUnit {
             //contextAccount3.Sync();
             }
 
-        [Fact]
-        public void MeshCatalogStandalone() {
-            var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice);
 
-            //var contactCatalog = contextAccountAlice.GetCatalogContact();
-            contextAccountAlice.SetContactSelf(ContactAlice);
-            }
 
         [Fact]
         public void MeshCatalogAccount() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
             }
 
 
@@ -309,8 +301,8 @@ namespace Goedel.XUnit {
         public void MeshCatalogMultipleDevice() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
 
 
             }
@@ -319,10 +311,10 @@ namespace Goedel.XUnit {
         public void MeshMessageContact() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
-                out var contextAccountBob, AccountBob);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, 
+                    DeviceBobAdmin, AccountBob, "main");
 
 
             // This test is failing because the message from Bob isn't passed to Alice.
@@ -351,10 +343,10 @@ namespace Goedel.XUnit {
         public void MeshMessageConfirm() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
-                out var contextAccountBob, AccountBob);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceBobAdmin, AccountBob, "main");
 
             // Bob ---> Alice
             contextAccountBob.ConfirmationRequest(AccountAlice, "Open the pod bay doors");
@@ -395,10 +387,10 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var plaintext = Platform.GetRandomBytes(1000);
 
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, "main",
-                out var contextAccountAlice, AccountAlice);
-            MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceBobAdmin, "main",
-                out var contextAccountBob, AccountBob);
+            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+                    DeviceBobAdmin, AccountBob, "main");
 
             Exchange(contextAccountAlice, contextAccountBob);
 
@@ -450,7 +442,7 @@ namespace Goedel.XUnit {
             throw new NYI();
 
             //Verify(first.ActivationAccount, second.ActivationAccount);
-            Verify(first.ProfileAccount, second.ProfileAccount);
+            Verify(first.ProfileUser, second.ProfileUser);
             (first.StoresDirectory == second.StoresDirectory).TestTrue();
             (first.KeySignatureUDF == second.KeySignatureUDF).TestTrue();
             (first.KeyEncryptionUDF == second.KeyEncryptionUDF).TestTrue();
@@ -458,7 +450,7 @@ namespace Goedel.XUnit {
             return true;
             }
 
-        bool Verify(ActivationAccount first, ActivationAccount second) {
+        bool Verify(ActivationUser first, ActivationUser second) {
             //Verify(first.ConnectionAccount, second.ConnectionAccount);
             (first.AccountUDF == second.AccountUDF).TestTrue();
             return true;
@@ -472,20 +464,13 @@ namespace Goedel.XUnit {
             //return true;
             }
 
-        public bool Verify(ConnectionAccount first, ConnectionAccount second) {
+        public bool Verify(ConnectionUser first, ConnectionUser second) {
             (first.KeySignature.UDF == second.KeySignature.UDF).TestTrue();
             (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
             (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).TestTrue();
             return true;
             }
 
-
-        public bool Verify(ConnectionDevice first, ConnectionDevice second) {
-            (first.KeySignature.UDF == second.KeySignature.UDF).TestTrue();
-            (first.KeyEncryption.UDF == second.KeyEncryption.UDF).TestTrue();
-            (first.KeyAuthentication.UDF == second.KeyAuthentication.UDF).TestTrue();
-            return true;
-            }
 
         }
     }

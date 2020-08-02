@@ -14,12 +14,33 @@ namespace Goedel.Mesh {
     /// Device catalog. Describes the members of a Mesh Group.
     /// </summary>
     public class CatalogMember : Catalog<CatalogedMember> {
-
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Member";
 
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogMember(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+
+
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -42,21 +63,22 @@ namespace Goedel.Mesh {
             base(directory, storeName ?? Label,
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
-
+        #endregion
         }
 
     public partial class CatalogedMember {
-
+        #region // Properties
         /// <summary>
         /// The primary key used to catalog the entry.
         /// </summary>
         public override string _PrimaryKey => ContactAddress;
-
+        #endregion
+        #region // Factory methods and constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
         public CatalogedMember() { }
-
+        #endregion
         }
 
 

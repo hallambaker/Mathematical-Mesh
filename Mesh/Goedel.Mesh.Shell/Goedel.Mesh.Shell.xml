@@ -4325,14 +4325,8 @@
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionDevice">
-            <summary>The <see cref="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionDevice"/> instance.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.PrivateDevice">
-            <summary>The <see cref="T:Goedel.Mesh.ActivationDevice"/> instance.</summary>
-        </member>
-        <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.AssertionAccount">
-            <summary>The <see cref="F:Goedel.Mesh.Shell.ResultCreatePersonal.AssertionAccount"/> instance.</summary>
+        <member name="F:Goedel.Mesh.Shell.ResultCreatePersonal.ConnectionUser">
+            <summary>The <see cref="T:Goedel.Mesh.ConnectionUser"/> instance.</summary>
         </member>
         <member name="M:Goedel.Mesh.Shell.ResultCreatePersonal.ToString">
             <summary>
@@ -4344,11 +4338,11 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ProfileAccount">
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ProfileUser">
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationAccount">
+        <member name="P:Goedel.Mesh.Shell.ResultCreateAccount.ActivationUser">
             <summary>
             </summary>
         </member>

@@ -12,17 +12,17 @@ namespace Goedel.Mesh {
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="ConnectionAccount"/> .</summary>
-        public ConnectionAccount ConnectionAccount => connectionAccount ??
-            ConnectionAccount.Decode(EnvelopedConnectionAccount).CacheValue(out connectionAccount);
-        ConnectionAccount connectionAccount = null;
+        public ConnectionUser ConnectionAccount => connectionAccount ??
+            ConnectionUser.Decode(EnvelopedConnectionAccount).CacheValue(out connectionAccount);
+        ConnectionUser connectionAccount = null;
 
 
         ///<summary>Cached convenience accessor. Returns the corresponding 
         ///<see cref="GetActivationAccount"/> .</summary>
-        public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
+        public ActivationUser GetActivationAccount(IKeyCollection keyCollection) =>
             activationAccount ?? (keyCollection == null ? null :
-            ActivationAccount.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
-        ActivationAccount activationAccount;
+            ActivationUser.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
+        ActivationUser activationAccount;
 
         /// <summary>
         /// Verify the AccountEntry contains all the required fields and their contents 

@@ -13,29 +13,33 @@ namespace Goedel.Mesh {
     /// Device catalog. Describes the network entries in a Mesh account.
     /// </summary>
     public class CatalogNetwork : Catalog<CatalogedNetwork> {
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Network";
         
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
+        #endregion
+        #region // Factory methods and constructors
+
         /// <summary>
-        /// Locate credential matching the specified service name, ignoring the protocol value.
+        /// Factory delegate
         /// </summary>
-        /// <param name="key">The service to be matched.</param>
-        /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogedNetwork LocateByService(string key) {
-            foreach (var network in AsCatalogedType) {
-                if (network.Service == key) {
-                    return network;
-                    }
-                }
-            return null;
-            }
-
-
-
-        //Locate(Key) as CatalogEntryCredential;
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogNetwork(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -60,10 +64,28 @@ namespace Goedel.Mesh {
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
+        #endregion
+        #region // Class methods
+
+        /// <summary>
+        /// Locate credential matching the specified service name, ignoring the protocol value.
+        /// </summary>
+        /// <param name="key">The service to be matched.</param>
+        /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
+        public CatalogedNetwork LocateByService(string key) {
+            foreach (var network in AsCatalogedType) {
+                if (network.Service == key) {
+                    return network;
+                    }
+                }
+            return null;
+            }
+        #endregion
         }
 
 
     public partial class CatalogedNetwork {
+        #region // Properties
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => PrimaryKey(Protocol, Service);
 
@@ -77,7 +99,8 @@ namespace Goedel.Mesh {
         public static string PrimaryKey(string protocol, string service) =>
             $"{protocol ?? ""}:{service ?? ""}";
 
-
+        #endregion
+        #region // Override methods
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.
         /// </summary>
@@ -92,7 +115,7 @@ namespace Goedel.Mesh {
             return stringBuilder.ToString();
 
             }
-
+        #endregion
         }
 
     #endregion

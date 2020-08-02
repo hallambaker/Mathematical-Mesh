@@ -9,23 +9,28 @@ using System.IO;
 
 namespace Goedel.Mesh {
 
-    ///// <summary>
-    ///// Factory method returning a store of this type
-    ///// </summary>
-    ///// <param name="directory">The directory in which the store is kept/is to be created.</param>
-    ///// <param name="name">The name of the store (defaults to the store name)</param>
-    ///// <param name="cryptoParameters">The cryptographic parameters</param>
-    ///// <param name="keyCollection">The key collection used for decryption</param>
-    ///// <returns>The created store</returns>
-    //public delegate Store StoreFactoryDelegate(
-    //                string directory,
-    //                string name,
-    //                CryptoParameters cryptoParameters,
-    //                KeyCollection keyCollection);
+
+    /// <summary>
+    /// Factory delegate
+    /// </summary>
+    /// <param name="directory">Directory of store file on local machine.</param>
+    /// <param name="storeId">Store identifier.</param>
+    /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+    /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+    /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+    /// <param name="create">If true, create a new file if none exists.</param>
+    public delegate Store StoreFactoryDelegate(
+                    string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true);
 
     /// <summary>
     /// Base class for managing Mesh stores (catalogs, spools).
     /// </summary>
+    /// 
     public class Store : Disposable {
         ///<summary>The default name for the container</summary>
         public virtual string ContainerDefault => throw new NYI();
@@ -51,22 +56,43 @@ namespace Goedel.Mesh {
         ///<summary>The disposal routing</summary>
         protected override void Disposing() => Container?.Dispose();
 
+
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static Store Factory(
+                    string directory, 
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new Store(directory, storeId, cryptoParameters, keyCollection);
+
+
         /// <summary>
         /// The constructor
         /// </summary>
-        /// <param name="directory"></param>
-        /// <param name="containerName"></param>
-        /// <param name="cryptoParameters"></param>
-        /// <param name="keyCollection"></param>
-        /// <param name="decrypt"></param>
-        /// <param name="create"></param>
-        public Store(string directory, string containerName = null,
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public Store(string directory, 
+                    string storeId = null,
                     CryptoParameters cryptoParameters = null,
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) {
 
-            ContainerName = containerName ?? ContainerDefault;
+            ContainerName = storeId ?? ContainerDefault;
             var fileName = FileName(directory, ContainerName);
 
 

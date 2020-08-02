@@ -18,53 +18,25 @@ namespace Goedel.Mesh.Client {
         #region // Public properties
 
         ///<summary>The account profile</summary>
-        public override Profile Profile => ProfileAccount;
-
-
-        /////<summary>The enclosing mesh context.</summary>
-        //public override ContextMesh ContextMesh => throw new NYI();
-
-        ///<summary>The account entry</summary>
-        public AccountEntry AccountEntry { get; private set; }
-
-        ///<summary>Convenience accessor for the account connection</summary>
-        ConnectionAccount ConnectionAccount => AccountEntry.ConnectionAccount;
+        public override Profile Profile => ProfileUser;
 
         ///<summary>Convenience accessor for the connection.</summary>
-        public override Connection Connection => ConnectionAccount;
-
-
+        public override Connection Connection => ConnectionUser;
 
         ///<summary>The cataloged device</summary>
         public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
 
         ///<summary>The profile</summary>
-        public ProfileUser ProfileAccount => CatalogedDevice?.ProfileAccount;
+        public ProfileUser ProfileUser { get; private set; }
 
         ///<summary>The connection device</summary>
-        public ConnectionDevice ConnectionDevice => CatalogedDevice?.ConnectionDevice;
+        public ConnectionUser ConnectionUser => CatalogedDevice?.ConnectionUser;
 
         ///<summary>The device activation</summary>
-        public ActivationDevice ActivationDevice => CatalogedDevice?.GetActivationDevice(KeyCollection);
-
-        ///<summary>The device key generation seed</summary>
-        protected PrivateKeyUDF DeviceKeySeed;
+        public ActivationUser ActivationUser => CatalogedDevice?.GetActivationUser(KeyCollection);
 
         ///<summary>The device key generation seed</summary>
         protected PrivateKeyUDF MeshSecretSeed;
-
-
-
-
-        ///<summary>This context has the make device an adminitrator capability.</summary>
-        public bool HasPrivilegeMakeAdministrator = false;
-
-        ///<summary>This context has the add device capability.</summary>
-        public bool HasPrivilegeAddDevice = false;
-
-        ///<summary>This context has the messaging capability.</summary>
-        public bool HasPrivilegeMessaging = false;
-
 
         KeyPair deviceDecrypt;
         KeyPair keySignature;
@@ -82,35 +54,38 @@ namespace Goedel.Mesh.Client {
         /// <param name="meshHost">The Mesh host to add the admin context to.</param>
         public ContextUser(
                 MeshHost meshHost,
-                CatalogedMachine catalogedMachine) : base (meshHost, catalogedMachine) {
+                CatalogedMachine catalogedMachine) : base(meshHost, catalogedMachine) => Activate();
 
 
-            // unpack the device key seed and add it to the key collection
-            // ToDo: Create a wrapper that allows the DeviceKeySeed to be a wrapper to an embedded device key
-            DeviceKeySeed ??= ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
+        void Activate() {
+            if (CatalogedDevice == null) {
+                return;
+                }
+
+            ProfileUser = CatalogedDevice.ProfileUser;
+
+            var DeviceKeySeed = ProfileDevice?.GetPrivateKeyUDF(MeshHost.MeshMachine);
             deviceDecrypt = DeviceKeySeed?.BasePrivate(MeshKeyType.DeviceEncrypt);
             KeyCollection.Add(deviceDecrypt);
 
-            if (CatalogedDevice != null) {
-                var activationKey = ActivationDevice.ActivationKey;
-                activationKey.AssertNotNull(Internal.Throw);
+            var activationKey = ActivationUser.ActivationKey;
+            activationKey.AssertNotNull(Internal.Throw);
 
-                keySignature = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceSign, KeyCollection);
-                keyEncryption = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceEncrypt, KeyCollection);
-                keyAuthentication = DeviceKeySeed.ActivatePrivate(
-                    activationKey, MeshKeyType.DeviceAuthenticate, KeyCollection);
+            keySignature = DeviceKeySeed.ActivatePrivate(
+                activationKey, MeshKeyType.DeviceSign, KeyCollection);
+            keyEncryption = DeviceKeySeed.ActivatePrivate(
+                activationKey, MeshKeyType.DeviceEncrypt, KeyCollection);
+            keyAuthentication = DeviceKeySeed.ActivatePrivate(
+                activationKey, MeshKeyType.DeviceAuthenticate, KeyCollection);
 
-                (keySignature.KeyIdentifier).AssertEqual(ConnectionDevice.KeySignature.UDF,
-                        KeyActivationFailed.Throw);
-                (keyEncryption.KeyIdentifier).AssertEqual(ConnectionDevice.KeyEncryption.UDF,
-                        KeyActivationFailed.Throw);
-                (keyAuthentication.KeyIdentifier).AssertEqual(ConnectionDevice.KeyAuthentication.UDF,
-                        KeyActivationFailed.Throw);
-                }
-
+            (keySignature.KeyIdentifier).AssertEqual(ConnectionUser.KeySignature.UDF,
+                    KeyActivationFailed.Throw);
+            (keyEncryption.KeyIdentifier).AssertEqual(ConnectionUser.KeyEncryption.UDF,
+                    KeyActivationFailed.Throw);
+            (keyAuthentication.KeyIdentifier).AssertEqual(ConnectionUser.KeyAuthentication.UDF,
+                    KeyActivationFailed.Throw);
             }
+
 
         #endregion
         #region // Account creation 
@@ -119,79 +94,40 @@ namespace Goedel.Mesh.Client {
         /// Create a new personal mesh and return an administration context for it.
         /// </summary>
         /// <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
-        /// <param name="profileDevice">The device profile.</param>
+        /// <param name="localName">Optional local name to be associated with the account.</param>
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
         /// <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
-        /// <param name="deviceSecret">Specifies a seed from which to generate the ProfileDevice</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="meshHost"/>.</param>
         /// <returns>An administration context instance for the created profile.</returns>
         public static ContextUser CreateMesh(
                 MeshHost meshHost,
-                string serviceAddress = null,
-                ProfileDevice profileDevice = null,
+                KeyPair onlineSignature,
+                string localName = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] masterSecret = null,
-                byte[] deviceSecret = null,
-                bool? persist = null) {
+                byte[] masterSecret = null) {
 
             // Create the master profile.
-            var secretSeedMaster = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileMaster, algorithmEncrypt, algorithmSign,
+            var secretSeed = new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileUser, algorithmEncrypt, algorithmSign,
                 algorithmAuthenticate, masterSecret);
-            persist ??= masterSecret == null;
 
-            var profileAccount = new ProfileUser(meshHost.KeyCollection, secretSeedMaster, serviceAddress, persist == true);
+            var profileUser = new ProfileUser(meshHost.KeyCollection, secretSeed, onlineSignature);
 
-            profileDevice ??= new ProfileDevice(meshHost.KeyCollection,
-                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
-                deviceSecret, true);
+            var catalogedMachine = new CatalogedStandard() {
+                EnvelopedProfileUser = profileUser.DareEnvelope,
+                Local = localName
+                };
 
-            return CreateMesh(meshHost, profileAccount, profileDevice, algorithmSign);
+            var contextUser = new ContextUser(meshHost, catalogedMachine) {
+                MeshSecretSeed = secretSeed, // temporary access
+                ProfileUser = profileUser 
+                };
+
+            return contextUser;
             }
-
-
-        /// <summary>
-        /// Create a new personal mesh.
-        /// </summary>
-        /// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-        /// <param name="profileDevice">The device profile.</param>
-        /// <param name="profileMaster">The mesh profile.</param>
-        /// <param name="algorithmSign">The algorithm to use for the adminitrator signature key</param>
-        /// <returns>An administration context instance for the created profile.</returns>
-        public static ContextUser CreateMesh(
-            MeshHost meshHost,
-            ProfileUser profileMaster,
-            ProfileDevice profileDevice,
-            CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default) {
-
-            //Console.WriteLine($"Created new mesh  {profileMaster.UDF} device {profileDevice.UDF}");
-
-            // Add this device to the profile as an administrator device by adding the necessary activation.
-            var activationDevice = new ActivationDevice(profileDevice);
-            throw new NYI();
-
-
-            //var catalogedAdmin = AddAdministrator(meshHost, profileMaster, profileDevice, activationDevice, algorithmSign);
-
-            //// Create an administration context
-            //var contextMeshAdmin = new ContextMeshAdmin(meshHost, catalogedAdmin);
-
-
-            //// Use the administration context to create a connection for this device and add to the record
-            //var catalogedDevice = contextMeshAdmin.CreateCataloguedDevice(profileMaster, profileDevice, activationDevice);
-            //catalogedAdmin.CatalogedDevice = catalogedDevice;
-
-
-            //// Now save the results to host.dcat (the only catalog we have at this point) and return the admin context.
-            //meshHost.Register(catalogedAdmin, contextMeshAdmin);
-            //return contextMeshAdmin;
-            }
-
 
 
         #endregion
@@ -203,17 +139,25 @@ namespace Goedel.Mesh.Client {
         /// <returns>The Mesh secret bytes.</returns>
         byte[] GetMeshSecret() {
             // pull the master key
-            var mastersecret = KeyCollection.LocatePrivateKey(ProfileAccount.KeyOfflineSignature.UDF);
+            var mastersecret = KeyCollection.LocatePrivateKey(ProfileUser.KeyOfflineSignature.UDF);
             mastersecret.AssertNotNull(NoMeshSecret.Throw);
             // convert to byte array;
             return (mastersecret as PrivateKeyUDF).PrivateValue.FromBase32();
             }
 
         /// <summary>
+        /// Persist the Mesh Secret to the persistence store of this machine.
+        /// </summary>
+        public void PersistSeed() {
+            MeshSecretSeed.AssertNotNull(NoMeshSecret.Throw);
+            KeyCollection.Persist(Profile.KeyOfflineSignature.UDF, MeshSecretSeed, false);
+            }
+
+
+        /// <summary>
         /// Erase the Mesh Secret from the persistence store of this machine.
         /// </summary>
-        /// <returns>True if the key was found, otherwise false.</returns>
-        public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileAccount.KeyOfflineSignature.UDF);
+        public void EraseMeshSecret() => KeyCollection.ErasePrivateKey(ProfileUser.KeyOfflineSignature.UDF);
 
         /// <summary>
         /// Create an escrow set for the master key.
@@ -236,11 +180,21 @@ namespace Goedel.Mesh.Client {
             throw new NYI();
             }
 
-        public void GrantAdministrator(
-                CatalogedDevice targetDevice) {
+        public void Persist(CatalogedDevice catalogedDevice) {
             throw new NYI();
             }
 
+        public void GrantAdministrator(
+                CatalogedDevice targetDevice, KeyPair keyPairOnlineSignature) {
+            throw new NYI();
+            }
+
+
+        /// <summary>
+        /// Set the initial Mesh Service. This MUST be called before devices are added to the 
+        /// personal mesh. This method does not support transfer of the Mesh Service.
+        /// </summary>
+        /// <param name="accountAddress">The account address</param>
         public void SetService(
                 string accountAddress) {
             var keySign = GetOfflineSignatureKey();
@@ -252,93 +206,56 @@ namespace Goedel.Mesh.Client {
             var helloResponse = MeshClient.Hello(helloRequest);
 
             // Add to assertion
-            ProfileAccount.AccountAddresses = ProfileAccount.AccountAddresses ?? new List<string>();
-            ProfileAccount.AccountAddresses.Add(accountAddress);
-            ProfileAccount.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
+            ProfileUser.AccountAddresses = ProfileUser.AccountAddresses ?? new List<string>();
+            ProfileUser.AccountAddresses.Add(accountAddress);
+            ProfileUser.EnvelopedProfileService = helloResponse.EnvelopedProfileService;
 
-            ProfileAccount.Sign(keySign);
-
-
+            ProfileUser.Sign(keySign);
 
             var createRequest = new CreateRequest() {
                 AccountAddress = accountAddress,
-                SignedProfileAccount = ProfileAccount.DareEnvelope,
+                SignedProfileAccount = ProfileUser.DareEnvelope,
                 };
 
             // Attempt to register with service in question
-            MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
+            var response = MeshClient.CreateAccount(createRequest, MeshClient.JpcSession);
+            response.AssertSuccess(ServerOperationFailed.Throw);
 
             // Generate a contact and self-sign
             var contact = CreateContact();
             SetContactSelf(contact);
 
+            MakeStores();
 
-            // Update all the devices connected to this profile.
-            UpdateDevices(ProfileAccount);
-
-            GetCatalogCapability();
-            GetCatalogApplication();
-            GetCatalogContact();
-            GetCatalogDevice();
-            GetCatalogCredential();
-            GetCatalogBookmark();
-            GetCatalogCalendar();
-            GetCatalogNetwork();
             SyncProgressUpload();
-
-            }
-
-        /// <summary>
-        /// Update all the devices connected to the account to incorporate values from
-        /// <paramref name="account"/>.
-        /// </summary>
-        /// <param name="account">The modified account profile.</param>
-        void UpdateDevices(ProfileUser account) {
-            var catalog = GetCatalogDevice();
-
-            var updates = new List<CatalogedDevice>();
-            foreach (var device in catalog.AsCatalogedType) {
-                bool updated = false;
-                device.Accounts ??= new List<AccountEntry>();
-
-                foreach (var accountEntry in device.Accounts) {
-                    if (accountEntry.AccountUDF == account.UDF) {
-                        accountEntry.EnvelopedProfileAccount = account.DareEnvelope;
-                        updated = true;
-                        }
-                    }
-                if (!updated) {
-                    }
-                updates.Add(device);
-
-                }
-            foreach (var device in updates) {
-                catalog.Update(device);
-                }
-            //ContextMesh.UpdateDevice();
-            throw new NYI();
-
             }
 
 
         #endregion
         #region // Operations requiring AdminSignatureKey - AddDevice, GrantPermission, GrantCapability
 
-        KeyPair GetAdminSignatureKey() {
+        CryptoKey GetAdminSignatureKey() {
+            Profile.KeysOnlineSignature.AssertNotNull(NYI.Throw);
+            foreach (var onlineKey in Profile.KeysOnlineSignature) {
+                var keyPair = KeyCollection.LocatePrivateKeyPair(onlineKey.UDF);
+                if (keyPair != null) {
+                    return keyPair;
+                    }
+                }
             throw new NYI();
             }
 
-        /// <summary>
-        /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
-        /// </summary>
-        /// <param name="profileDevice">Profile of the device to be added.</param>
-        /// <returns>The CatalogedDevice entry.</returns>
-        public CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice) {
-            var activationDevice = new ActivationDevice(profileDevice);
-            var result = CreateCataloguedDevice(ProfileAccount, profileDevice, activationDevice);
+        ///// <summary>
+        ///// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>.
+        ///// </summary>
+        ///// <param name="profileDevice">Profile of the device to be added.</param>
+        ///// <returns>The CatalogedDevice entry.</returns>
+        //public CatalogedDevice CreateCataloguedDevice(ProfileDevice profileDevice) {
+        //    var activationDevice = new ActivationDevice(profileDevice);
+        //    var result = CreateCataloguedDevice(ProfileUser, profileDevice, activationDevice);
 
-            return result;
-            }
+        //    return result;
+        //    }
 
         /// <summary>
         /// Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
@@ -351,7 +268,7 @@ namespace Goedel.Mesh.Client {
         CatalogedDevice CreateCataloguedDevice(
                     ProfileUser profileAccount,
                     ProfileDevice profileDevice,
-                    ActivationDevice activationDevice) {
+                    ActivationUser activationDevice) {
 
             var keyAdministratorSignature = GetAdminSignatureKey();
 
@@ -364,19 +281,18 @@ namespace Goedel.Mesh.Client {
             activationDevice.Package(keyAdministratorSignature);
             activationDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
-            var connectionDevice = activationDevice.ConnectionDevice;
+            var connectionDevice = activationDevice.ConnectionUser;
             connectionDevice.AssertNotNull(Internal.Throw);
             connectionDevice.DareEnvelope.AssertNotNull(Internal.Throw);
 
             // Wrap the connectionDevice and activationDevice in envelopes
 
-
-            var catalogEntryDevice = new Mesh.CatalogedDevice() {
+            var catalogEntryDevice = new CatalogedDevice() {
                 UDF = activationDevice.UDF,
-                EnvelopedProfileMesh = profileAccount.DareEnvelope,
+                EnvelopedProfileUser = profileAccount.DareEnvelope,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                EnvelopedConnectionDevice = connectionDevice.DareEnvelope,
-                EnvelopedActivationDevice = activationDevice.DareEnvelope,
+                EnvelopedConnectionUser = connectionDevice.DareEnvelope,
+                EnvelopedActivationUser = activationDevice.DareEnvelope,
                 DeviceUDF = profileDevice.UDF
                 };
 
@@ -384,31 +300,53 @@ namespace Goedel.Mesh.Client {
             }
 
         /// <summary>
-        /// Add a device to the account and the underlying Mesh.
+        /// Add a device to the account.
         /// </summary>
         /// <param name="profileDevice">Profile of the device to add.</param>
         /// <returns>The catalog entry.</returns>
-        public CatalogedDevice AddDevice(ProfileDevice profileDevice) {
-            //var device = ContextMeshAdmin.CreateCataloguedDevice(profileDevice);
+        public CatalogedDevice AddDevice(
+                        ProfileDevice profileDevice, 
+                        KeyPair keyPairOnlineSignature = null,
+                        bool superAdmin = false) {
+            
 
-            //var accountEncryptionKey = GetAccountEncryptionKey();
-            //// Connect the device to the Account
-            //ProfileAccount.ConnectDevice(KeyCollection, device, accountEncryptionKey, null);
+            // Grant the device access to data encrypted under the account key.
+            // Note that this cannot be granted through the capabilities catalog because that
+            // is also encrypted under the account key.
+            var activationUser = new ActivationUser(profileDevice);
 
 
-            ////Console.WriteLine(device.ToString());
+            // Grant
+            var keyPairEncryption = KeyCollection.LocatePrivateKeyPair(KeyEncryptionUDF);
+            activationUser.KeyDeviceEncryption = AddCapability(activationUser, keyPairEncryption);
+
+            if (keyPairOnlineSignature != null) {
+
+                activationUser.KeyAccountOnlineSignature = AddCapability(activationUser, keyPairOnlineSignature);
+                if (superAdmin) {
+                    var keyPairOfflineSignature = KeyCollection.LocatePrivateKeyPair(ProfileUser.UDF);
+                    activationUser.KeyAccountOfflineSignature = AddCapability(activationUser, keyPairOfflineSignature);
+                    }
+                }
 
 
-            //// Update the local and remote catalog.
-            //AddDevice(device);
+            var catalogedDevice = CreateCataloguedDevice(ProfileUser, profileDevice, activationUser);
+            catalogedDevice.SignatureUDF = keyPairOnlineSignature?.KeyIdentifier;
 
-            //return device;
-
-            throw new NYI();
+            return catalogedDevice;
             }
 
 
-
+        /// <summary>
+        /// Generate a capability for the key <paramref name="keyPair"/> and grant access
+        /// to <paramref name="activationUser"/> if a threshold capability is created, 
+        /// add the service portion to the capabilities catalog.
+        /// </summary>
+        /// <param name="activationUser">Device to receive the capability.</param>
+        /// <param name="keyPair">Keypair from which the capability is to be derrived.</param>
+        public KeyData AddCapability (ActivationUser activationUser, CryptoKey keyPair) {
+            throw new NYI();
+            }
 
 
         /// <summary>
@@ -428,7 +366,7 @@ namespace Goedel.Mesh.Client {
                 };
             contact.Sources.Add(tagged);
 
-            contact.Id = ProfileAccount.UDF;
+            contact.Id = ProfileUser.UDF;
 
 
             var catalog = GetCatalogContact();
@@ -450,12 +388,12 @@ namespace Goedel.Mesh.Client {
         public override Contact CreateContact(
                     List<CryptographicCapability> capabilities = null) {
 
-            var address = new NetworkAddress(AccountAddress, ProfileAccount) {
+            var address = new NetworkAddress(AccountAddress, ProfileUser) {
                 Capabilities = capabilities
                 };
 
             var anchorAccount = new Anchor() {
-                UDF = ProfileAccount.UDF,
+                UDF = ProfileUser.UDF,
                 Validation = "Self"
                 };
             // ContextMesh.ProfileMesh.UDF 
@@ -478,10 +416,10 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The account service address.</returns>
         public override string GetAccountAddress() {
-            ProfileAccount.AccountAddresses.AssertNotNull(AccountNotBound.Throw);
-            (ProfileAccount.AccountAddresses.Count > 0).AssertTrue(AccountNotBound.Throw);
+            ProfileUser.AccountAddresses.AssertNotNull(AccountNotBound.Throw);
+            (ProfileUser.AccountAddresses.Count > 0).AssertTrue(AccountNotBound.Throw);
 
-            return ProfileAccount.AccountAddresses[0];
+            return ProfileUser.AccountAddresses[0];
             }
 
         /// <summary>
@@ -519,26 +457,47 @@ namespace Goedel.Mesh.Client {
 
         #region // Store management and convenience accessors
 
-        /// <summary>
-        /// Create a new instance bound to the specified core within this account context.
-        /// </summary>
-        /// <param name="name">The name of the store to bind.</param>
-        /// <returns>The store instance.</returns>
-        protected override Store MakeStore(string name) => name switch
-            {
-                SpoolInbound.Label => new SpoolInbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolOutbound.Label => new SpoolOutbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolLocal.Label => new SpoolLocal(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                SpoolArchive.Label => new SpoolArchive(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogCredential.Label => new CatalogCredential(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogContact.Label => new CatalogContact(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogCalendar.Label => new CatalogCalendar(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogBookmark.Label => new CatalogBookmark(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogNetwork.Label => new CatalogNetwork(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                _ => base.MakeStore(name),
-                };
+        ///<summary>Dictionarry used to create stores</summary>
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => stores;
+        Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
+            {SpoolInbound.Label, SpoolInbound.Factory},
+            {SpoolOutbound.Label, SpoolOutbound.Factory},
+            {SpoolLocal.Label, SpoolLocal.Factory},
+            {SpoolArchive.Label, SpoolArchive.Factory},
+
+            {CatalogCredential.Label, CatalogCredential.Factory},
+            {CatalogContact.Label, CatalogContact.Factory},
+            {CatalogCalendar.Label, CatalogCalendar.Factory},
+            {CatalogBookmark.Label, CatalogBookmark.Factory},
+            {CatalogNetwork.Label, CatalogNetwork.Factory},
+            {CatalogApplication.Label, CatalogApplication.Factory},
+            {CatalogDevice.Label, CatalogDevice.Factory},
+
+            // All contexts have a capability catalog:
+            {CatalogCapability.Label, CatalogCapability.Factory}
+            };
+
+
+        ///// <summary>
+        ///// Create a new instance bound to the specified core within this account context.
+        ///// </summary>
+        ///// <param name="name">The name of the store to bind.</param>
+        ///// <returns>The store instance.</returns>
+        //protected override Store MakeStore(string name) => name switch
+        //    {
+        //        SpoolInbound.Label => new SpoolInbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        SpoolOutbound.Label => new SpoolOutbound(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        SpoolLocal.Label => new SpoolLocal(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        SpoolArchive.Label => new SpoolArchive(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogCredential.Label => new CatalogCredential(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogContact.Label => new CatalogContact(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogCalendar.Label => new CatalogCalendar(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogBookmark.Label => new CatalogBookmark(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogNetwork.Label => new CatalogNetwork(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogApplication.Label => new CatalogApplication(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        CatalogDevice.Label => new CatalogDevice(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
+        //        _ => base.MakeStore(name),
+        //        };
 
 
         ///<summary>Returns the application catalog for the account</summary>
@@ -1222,7 +1181,7 @@ namespace Goedel.Mesh.Client {
         /// <returns></returns>
         public DareEnvelope GetSelf(string localName) {
             var catalog = GetCatalogContact();
-            var entry = catalog.PersistenceStore.Get(ProfileAccount.UDF);
+            var entry = catalog.PersistenceStore.Get(ProfileUser.UDF);
 
             var self = entry.JsonObject as CatalogedContact;
 

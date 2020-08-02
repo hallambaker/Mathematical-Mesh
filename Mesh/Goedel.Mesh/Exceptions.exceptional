@@ -6,6 +6,8 @@ Namespace Goedel.Mesh
 		Description
 			|An internal assertion check failed.
 
+		Exception NoDeviceSecret
+			Console "The device Secret required to perform the operation is not installed on this device"
 
 		Exception NoMeshSecret
 			Console "The Mesh Secret required to perform the operation is not installed on this device"

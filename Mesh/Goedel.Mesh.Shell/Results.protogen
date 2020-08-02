@@ -77,8 +77,8 @@
 
 	Structure ResultCreateAccount
 		Inherits							ResultCreateDevice
-		Struct ProfileAccount				ProfileAccount
-		Struct ActivationAccount			ActivationAccount
+		Struct ProfileUser					ProfileUser
+		Struct ActivationUser				ActivationUser
 	
 	Structure ResultRegisterService
 		Inherits							ResultCreateAccount

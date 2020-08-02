@@ -354,7 +354,7 @@ namespace Goedel.Mesh.Shell {
         //CatalogEntryDevice.EnvelopedDevicePrivate.;
 
         ///<summary>The account UDF.</summary>
-        public string Account => ActivationAccount?.AccountUDF;
+        public string Account => ActivationUser?.AccountUDF;
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.
@@ -383,14 +383,9 @@ namespace Goedel.Mesh.Shell {
 
     public partial class ResultCreatePersonal {
 
-        ///<summary>The <see cref="ConnectionDevice"/> instance.</summary>
-        public ConnectionDevice ConnectionDevice = null;
+        ///<summary>The <see cref="Mesh.ConnectionUser"/> instance.</summary>
+        public ConnectionUser ConnectionUser = null;
 
-        ///<summary>The <see cref="ActivationDevice"/> instance.</summary>
-        public ActivationDevice PrivateDevice = null;
-
-        ///<summary>The <see cref="AssertionAccount"/> instance.</summary>
-        public ProfileUser AssertionAccount = null;
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.

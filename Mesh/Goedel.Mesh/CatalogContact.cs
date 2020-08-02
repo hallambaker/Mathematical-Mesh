@@ -18,8 +18,7 @@ namespace Goedel.Mesh {
 
     public class CatalogContact : Catalog<CatalogedContact> {
 
-
-
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Contact";
 
@@ -33,9 +32,25 @@ namespace Goedel.Mesh {
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
-
-
-        //public CatalogedContact LocateByID(string Key) => Locate(Key) as CatalogedContact;
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogContact(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
@@ -58,7 +73,8 @@ namespace Goedel.Mesh {
             base(directory, storeName ?? Label,
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
-
+        #endregion
+        #region // Override methods
         /// <summary>
         /// Callback called before adding a new entry to the catalog. Overriden to update the values
         /// in <see cref="DictionaryByNetworkAddress"/>.
@@ -72,6 +88,9 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
         protected override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+
+        #endregion
+        #region // Class methods
 
         void UpdateLocal(CatalogedEntry catalogedEntry) {
             var catalogedContact = catalogedEntry as CatalogedContact;
@@ -222,10 +241,12 @@ namespace Goedel.Mesh {
             }
 
 
-
+        #endregion
         }
 
     public partial class CatalogedContact {
+
+        #region // Properties
         /// <summary>
         /// The primary key used to catalog the entry. This is the UDF of the authentication key.
         /// </summary>
@@ -235,11 +256,17 @@ namespace Goedel.Mesh {
         // ///<summary>Returns the inner contact value.</summary>
         //public Contact Contact => Contact.Decode(EnvelopedContact);
 
+
+        #endregion
+        #region // Factory methods and constructors
+
         /// <summary>
         /// Default constructor for deserializers.
         /// </summary>
 
         public CatalogedContact() => Key = UDF.Nonce();
+
+
 
         /// <summary>
         /// Create a cataloged contact from <paramref name="contact"/>.
@@ -252,6 +279,9 @@ namespace Goedel.Mesh {
             Self = self;
             Key = contact.Id ?? UDF.Nonce();
             }
+
+        #endregion
+        #region // Override methods
 
         /// <summary>
         /// Describe the entry, appending the output to <paramref name="builder"/>.
@@ -289,7 +319,7 @@ namespace Goedel.Mesh {
 
             }
 
-
+        #endregion
         }
     #endregion
     #region // Contact and sub classes

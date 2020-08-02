@@ -22,6 +22,8 @@ namespace Goedel.Mesh.Client {
 
         public override Connection Connection => throw new NotImplementedException();
 
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => throw new NotImplementedException();
+
 
         /// <summary>
         /// Constructor.
@@ -130,7 +132,8 @@ namespace Goedel.Mesh.Client {
             var serviceAuthenticator = CatalogedPublication.GetServiceAuthenticator(key);
             var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
-            var profileDevice = new ProfileDevice(privateKeyUDF, meshHost.KeyCollection, true);
+            var profileDevice = new ProfileDevice(privateKeyUDF, meshHost.KeyCollection);
+            profileDevice.PersistSeed(meshHost.KeyCollection);
 
             // create a Mesh Host entry.
 

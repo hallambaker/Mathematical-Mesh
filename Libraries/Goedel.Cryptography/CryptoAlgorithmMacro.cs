@@ -29,6 +29,47 @@ namespace Goedel.Cryptography {
     /// </summary>
     public static class CryptoID {
 
+        ///<summary>The default signature algorithm</summary>
+        public static CryptoAlgorithmId DefaultSignatureId = CryptoAlgorithmId.Ed448;
+
+        ///<summary>The default public encryption algorithm</summary>
+        public static CryptoAlgorithmId DefaultExchangeId = CryptoAlgorithmId.X448;
+
+        ///<summary>The default digest algorithm</summary>
+        public static CryptoAlgorithmId DefaultEncryptionId = CryptoAlgorithmId.AES256CBC;
+
+        ///<summary>The default digest algorithm</summary>
+        public static CryptoAlgorithmId DefaultDigestId = CryptoAlgorithmId.SHA_2_512;
+
+        ///<summary>The default digest algorithm</summary>
+        public static CryptoAlgorithmId DefaultMACId= CryptoAlgorithmId.HMAC_SHA_2_512;
+
+
+        /// <summary>
+        /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultExchangeId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="CryptoID.DefaultExchangeId"/>, 
+        /// otherwise returns <paramref name="algorithmID"/>.</returns>
+        public static CryptoAlgorithmId DefaultExchange(this CryptoAlgorithmId algorithmID) =>
+            algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultExchangeId : algorithmID;
+
+        /// <summary>
+        /// Apply the default signature algorithm specified in <see cref="CryptoID.DefaultSignatureId"/> 
+        /// if required.
+        /// </summary>
+        /// <param name="algorithmID">The algorithm identifier to be defaulted.</param>
+        /// <returns>If <paramref name="algorithmID"/> is <see cref="CryptoAlgorithmId.Default"/>
+        /// returns the value <see cref="CryptoID.DefaultSignatureId"/>, 
+        /// otherwise returns <paramref name="algorithmID"/>.</returns>
+        public static CryptoAlgorithmId DefaultSignature(this CryptoAlgorithmId algorithmID) =>
+            algorithmID == CryptoAlgorithmId.Default ? CryptoID.DefaultSignatureId : algorithmID;
+
+
+
+
 
         /// <summary>
         /// Return the MAC algorithm from a possibly composite ID

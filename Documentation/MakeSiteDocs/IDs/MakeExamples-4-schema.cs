@@ -71,27 +71,11 @@ namespace ExampleGenerator {
 
 				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
 				 var profileDevice = catalogedDevice?.ProfileDevice;
-				 var connectionDevice = catalogedDevice?.ConnectionDevice;
-				 ActivationDevice privateDevice = null ; //catalogedDevice?.ActivationDevice;
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("Alice's Device Profile specifies keys for encryption, signature and exchange:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				 Format(profileDevice);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Since the Device Profile keys are ultimately under the control of the device and/or\n{0}", _Indent);
-				_Output.Write ("software provider, these are considered insufficiently trustworthy and the\n{0}", _Indent);
-				_Output.Write ("administration device creates key contributions to be added to the device keys\n{0}", _Indent);
-				_Output.Write ("to establish the key set to be used in the context of the user's personal Mesh:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Format(privateDevice);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The resulting key set is specified in the device connection:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Format(connectionDevice);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("All the above are combined to form the CatalogedDevice entry:\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Format(catalogedDevice);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -107,17 +91,30 @@ namespace ExampleGenerator {
 		public void _SchemaAccount(CreateExamples Example) {
 
 				 var resultCreateAccount = CommandsAddAcountAlice[0].Result as ResultCreateAccount;
-				 var profileAccount = resultCreateAccount.ProfileAccount;
-				 var activationAccount = resultCreateAccount.ActivationAccount;
+				 var profileUser = resultCreateAccount.ProfileUser;
+				 var activationUser = resultCreateAccount.ActivationUser;
+				 var catalogedDevice = AliceProfiles?.CatalogedDevice;
+				 var connectionUser = catalogedDevice?.ConnectionUser;
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The account profile specifies the online and offline signature keys used to maintain the\n{0}", _Indent);
 				_Output.Write ("profile and the encryption key to be used by the account.\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(profileAccount);
+				 Format(profileUser);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("Each device using the account requires an activation record:\n{0}", _Indent);
+				_Output.Write ("Each device connected to the account requires an activation record. This specifies the \n{0}", _Indent);
+				_Output.Write ("key contribtions added to the manufacturer device profile keys:\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				 Format(activationAccount);
+				 Format(activationUser);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("The resulting key set is specified in the device connection:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(connectionUser);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("All the above plus the ProfileDevice are combined to form the CatalogedDevice entry:\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
+				 Format(catalogedDevice);
+				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
 					}
 		
@@ -162,7 +159,9 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDevicePrivate(CreateExamples Example) {
 
-				 Format(AliceProfiles?.AssertionAccount);
+				_Output.Write ("\n{0}", _Indent);
+				_Output.Write ("*****************Remove\n{0}", _Indent);
+				_Output.Write ("\n{0}", _Indent);
 					}
 		
 
@@ -176,7 +175,7 @@ namespace ExampleGenerator {
 			}
 		public void _SchemaDeviceConnection(CreateExamples Example) {
 
-				 Format(AliceProfiles?.AssertionAccount);
+				_Output.Write ("*****************Remove\n{0}", _Indent);
 					}
 		
 

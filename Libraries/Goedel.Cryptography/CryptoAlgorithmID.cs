@@ -336,7 +336,11 @@ namespace Goedel.Cryptography {
         Persistable = 0b0010,
 
         ///<summary>Flag indicating that the private key may be exported.</summary>
-        Exportable = 0b0100,
+        Storable = 0b0100,
+
+        ///<summary>Flag indicating that the private key may be exported.</summary>
+        Exportable = 0b01000,
+
 
         ///<summary>Private key that cannot be exported or persisted.</summary>
         Ephemeral = Null,

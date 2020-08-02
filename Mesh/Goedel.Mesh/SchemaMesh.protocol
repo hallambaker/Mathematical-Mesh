@@ -76,22 +76,6 @@
 
 
 
-	Structure EscrowedKeySet
-		Description
-			|A set of escrowed keys. 
-		TStruct Key MasterSignatureKey
-			Description
-				|A Master Signature Key
-		TStruct Key MasterEncryptionKey
-			Description
-				|The Master Encryption Key
-		TStruct Key MasterEscrowKeys
-			Multiple
-			Description
-				|The escrowed master escrow keys.
-
-
-
 
 	Section 2 "Assertion classes"
 		Description
@@ -205,32 +189,6 @@
 			Description
 				|Key used to authenticate requests made by the device.
 
-	Structure ActivationDevice // To do list accounts as permissions 
-		Inherits Activation
-
-
-		TStruct Activation Activations
-			Multiple
-			Description
-				|List of application and account activation data. Keys, etc.
-
-	Structure ConnectionDevice
-		Inherits Connection
-		Struct Permission Permissions
-			Multiple
-			Description
-				|List of the permissions that the device has been granted.
-		Struct KeyData KeySignature
-			Description
-				|The signature key for use of the device under the profile
-		Struct KeyData KeyEncryption
-			Description
-				|The encryption key for use of the device under the profile
-		Struct KeyData KeyAuthentication
-			Description
-				|The authentication key for use of the device under the profile
-
-
 	Structure CatalogedEscrow
 		Inherits CatalogedEntry
 		Description
@@ -246,25 +204,25 @@
 		String UDF
 			Description
 				|UDF of the signature key of the device in the Mesh
-		Struct DareEnvelope EnvelopedProfileMesh
-			Description
-				|The Mesh profile
 		String DeviceUDF
 			Description
-				|UDF of the signature key of the device
+				|UDF of the offline signature key of the device
+		String SignatureUDF
+			Description
+				|UDF of the account online signature key
+		Struct DareEnvelope EnvelopedProfileUser
+			Description
+				|The Mesh profile
 		Struct DareEnvelope EnvelopedProfileDevice
 			Description
 				|The device profile
-		Struct DareEnvelope EnvelopedConnectionDevice
+		Struct DareEnvelope EnvelopedConnectionUser
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
-		Struct DareEnvelope EnvelopedActivationDevice
+		Struct DareEnvelope EnvelopedActivationUser
 			Description
 				|The activations of the device within the Mesh
-		Struct AccountEntry Accounts
-			Multiple
-			Description
-				|The accounts that this device is connected to
+
 
 	Structure CatalogedPublication
 		Inherits CatalogedEntry
@@ -312,24 +270,37 @@
 				|Key used to authenticate requests made by the device.
 
 
-	Structure ActivationAccount
+	Structure ActivationUser
 		Inherits Activation
 		String AccountUDF
 			Description
 				|The UDF of the account
-		Struct KeyData KeyAccountEncryption
-			Description
-				|Key used to encrypt data under this profile
-		Struct KeyData KeyAccountSignature
-			Description
-				|Key used to encrypt data under this profile
 
-	Structure ConnectionAccount
-		Inherits Connection
-		String AccountAddresses
+		Struct KeyData KeyDeviceEncryption
+			Description
+				|Public key for device specific encryption
+		Struct KeyData KeyDeviceSignature
+			Description
+				|Public key for device specific signature
+		Struct KeyData KeyDeviceAuthentication
+			Description
+				|Public key for device specific authentication
+		Struct KeyData KeyAccountOnlineSignature
+			Description
+				|Grant access to ProfileUser online signing key
+		Struct KeyData KeyAccountOfflineSignature
+			Description
+				|Grant access to ProfileUser offline signing key
+		TStruct Activation Activations
 			Multiple
 			Description
-				|The list of service identifiers.
+				|List of device specific activations for appliactions, etc.
+
+	Structure ConnectionUser
+		Inherits Connection
+		String AccountAddress
+			Description
+				|The account address
 		Struct Permission Permissions
 			Multiple
 			Description
@@ -343,6 +314,8 @@
 		Struct KeyData KeyAuthentication
 			Description
 				|The authentication key for use of the device under the profile
+
+
 
 	Structure AccountEntry
 		Description

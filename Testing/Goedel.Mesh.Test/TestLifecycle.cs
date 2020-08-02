@@ -34,7 +34,7 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public static void Test_Lifecycle(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_Lifecycle(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             Test_LifecycleMaster(CryptoAlgorithmID, keyCollection, KeySize);
             Test_LifecycleAdmin(CryptoAlgorithmID, keyCollection, KeySize);
             Test_LifecycleDevice(CryptoAlgorithmID, keyCollection, KeySize);
@@ -44,7 +44,7 @@ namespace Goedel.Mesh.Test {
 
 
 
-        public static void Test_LifecycleMaster(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_LifecycleMaster(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = true;
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Master, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
@@ -52,7 +52,7 @@ namespace Goedel.Mesh.Test {
             CheckPersisted(Encrypter.KeyIdentifier, keyCollection, true, Exportable);
             }
 
-        public static void Test_LifecycleAdmin(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_LifecycleAdmin(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = false;
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Admin, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
@@ -62,7 +62,7 @@ namespace Goedel.Mesh.Test {
 
 
 
-        public static void Test_LifecycleDevice(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_LifecycleDevice(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = false;
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Device, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
@@ -74,7 +74,7 @@ namespace Goedel.Mesh.Test {
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal
         /// fails as the key is never written to the local store</summary>
         /// <param name="CryptoAlgorithmID"></param>
-        public static void Test_LifecycleEphemeral(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_LifecycleEphemeral(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = false;
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.Ephemeral, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
@@ -85,7 +85,7 @@ namespace Goedel.Mesh.Test {
         /// <summary>Test for lifecycle of ephemeral key. Key can be created and used but FindLocal
         /// fails as the key is never written to the local store</summary>
         /// <param name="CryptoAlgorithmID"></param>
-        public static void Test_LifecycleExportable(this CryptoAlgorithmId CryptoAlgorithmID, keyCollection keyCollection, int KeySize = 2048) {
+        public static void Test_LifecycleExportable(this CryptoAlgorithmId CryptoAlgorithmID, KeyCollection keyCollection, int KeySize = 2048) {
             bool Exportable = true;
             var Encrypter = KeyPair.Factory(CryptoAlgorithmID, KeySecurity.ExportableStored, keyCollection, keySize: KeySize);
             Encrypter.Test_EncryptDecrypt();
@@ -114,7 +114,7 @@ namespace Goedel.Mesh.Test {
         /// then that it cannot be found after deletion.
         /// </summary>
         /// <param name="UDF"></param>
-        static void CheckPersisted(string UDF, keyCollection keyCollection, bool persisted, bool exportable) {
+        static void CheckPersisted(string UDF, KeyCollection keyCollection, bool persisted, bool exportable) {
 
             var key = keyCollection.LocatePrivateKeyPair(UDF);
             if (!persisted) {

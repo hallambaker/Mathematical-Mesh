@@ -181,7 +181,7 @@ namespace Goedel.Cryptography {
         /// Persist key to <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="keyCollection">Key Collection the key is to be persisted to.</param>
-        public override void Persist(keyCollection keyCollection) {
+        public override void Persist(KeyCollection keyCollection) {
             Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var privateParameters = Provider.ExportParameters(true);
             var pkix = privateParameters.RSAPrivateKey();
@@ -251,7 +251,7 @@ namespace Goedel.Cryptography {
         /// the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory(
                 PKIXPrivateKeyRSA PKIXParameters,
-        KeySecurity keySecurity, keyCollection keyCollection) {
+        KeySecurity keySecurity, KeyCollection keyCollection) {
             var RSAParameters = PKIXParameters.RSAParameters();
             return new KeyPairRSA(RSAParameters, keySecurity);
             }

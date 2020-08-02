@@ -108,7 +108,7 @@ namespace Goedel.Mesh {
         /// <param name="user">The user to add.</param>
         /// <returns>The group activation record for the user.</returns>
         public DeviceRecryptionKey AddMember(
-                    keyCollection keyCollection,
+                    KeyCollection keyCollection,
                     Contact user) {
 
 

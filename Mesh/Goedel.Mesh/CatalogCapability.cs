@@ -14,7 +14,7 @@ namespace Goedel.Mesh {
     /// Capability catalog. Contains keys used to perform capabilities.
     /// </summary>
     public class CatalogCapability : Catalog<CatalogedCapability> {
-
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Capability";
 
@@ -37,6 +37,26 @@ namespace Goedel.Mesh {
         ///<summary>Dictionary for locating capabilities for use.</summary>
         public Dictionary<string, CapabilityFairExchange> DictionaryFairExchange =
                 new Dictionary<string, CapabilityFairExchange>();
+
+        #endregion
+        #region // Factory methods and constructors
+        /// <summary>
+        /// Factory delegate
+        /// </summary>
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogCapability(directory, storeId, cryptoParameters, keyCollection, decrypt:decrypt, create:create);
 
 
         /// <summary>
@@ -62,7 +82,8 @@ namespace Goedel.Mesh {
                     base(directory, storeName ?? Label,
                         cryptoParameters, keyCollection, meshClient: meshClient, decrypt: decrypt, create: create) {
             }
-
+        #endregion
+        #region // Class methods
         /// <summary>
         /// Resolve a decryption capability corresponding to the key <paramref name="keyId"/>.
         /// </summary>
@@ -159,16 +180,18 @@ namespace Goedel.Mesh {
                     }
                 }
             }
+        #endregion
         }
 
     // NYI should all be DareMessages to allow them to be signed.
     public partial class CatalogedCapability {
-
+        #region // Properties
         /// <summary>
         /// The primary key used to catalog the entry, this is the identifier of the key.
         /// </summary>
         public override string _PrimaryKey => Capability._PrimaryKey;
-
+        #endregion
+        #region // Factory methods and constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>
@@ -178,7 +201,7 @@ namespace Goedel.Mesh {
         /// Create a cataloged capability for <paramref name="capability"/>.
         /// </summary>
         public CatalogedCapability(CryptographicCapability capability) => Capability = capability;
-
+        #endregion
         }
 
 

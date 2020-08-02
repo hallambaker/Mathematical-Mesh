@@ -15,7 +15,7 @@ namespace Goedel.Mesh {
     /// </summary>
 
     public class CatalogCredential : Catalog<CatalogedCredential> {
-
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
 
         public const string Label = "mmm_Credential";
@@ -23,20 +23,27 @@ namespace Goedel.Mesh {
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
+        #endregion
+        #region // Factory methods and constructors
+
         /// <summary>
-        /// Locate credential matching the specified service name, ignoring the protocol value.
+        /// Factory delegate
         /// </summary>
-        /// <param name="key">The service to be matched.</param>
-        /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
-        public CatalogedCredential LocateByService(string key) {
-            foreach (var credential in AsCatalogedType) {
-                if (credential.Service == key) {
-                    return credential;
-                    }
-                }
-            return null;
-            }
-        
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogCredential(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+
         /// <summary>
         /// Constructor for a catalog named <paramref name="storeName"/> in directory
         /// <paramref name="directory"/> using the cryptographic parameters <paramref name="cryptoParameters"/>
@@ -59,12 +66,33 @@ namespace Goedel.Mesh {
                         cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
+        #endregion
+        #region // Class methods
+        /// <summary>
+        /// Locate credential matching the specified service name, ignoring the protocol value.
+        /// </summary>
+        /// <param name="key">The service to be matched.</param>
+        /// <returns>If a match is found, returns the matching entry, otherwise null.</returns>
+        public CatalogedCredential LocateByService(string key) {
+            foreach (var credential in AsCatalogedType) {
+                if (credential.Service == key) {
+                    return credential;
+                    }
+                }
+            return null;
+            }
+        #endregion
         }
 
 
     public partial class CatalogedCredential {
+        #region // Properties
+
         ///<summary>The primary key is protocol:site </summary>
         public override string _PrimaryKey => $"{Protocol ?? ""}:{Service ?? ""}";
+
+        #endregion
+        #region // Override methods
 
         /// <summary>
         /// Converts the value of this instance to a <see langword="String"/>.
@@ -80,7 +108,7 @@ namespace Goedel.Mesh {
             return stringBuilder.ToString();
 
             }
-
+        #endregion
         }
     #endregion
 

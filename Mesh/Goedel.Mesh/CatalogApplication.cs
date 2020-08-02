@@ -15,19 +15,33 @@ namespace Goedel.Mesh {
     /// Device catalog. Describes the properties of all devices connected to the user's Mesh account.
     /// </summary>
     public class CatalogApplication : Catalog<CatalogedApplication> {
+        #region // Properties
         ///<summary>The canonical label for the catalog</summary>
         public const string Label = "mmm_Application";
         
         ///<summary>The catalog label</summary>
         public override string ContainerDefault => Label;
 
+        #endregion
+        #region // Factory methods and constructors
 
         /// <summary>
-        /// Return the application entry for the site <paramref name="key"/>.
+        /// Factory delegate
         /// </summary>
-        /// <param name="key">Unique identifier of the device to return.</param>
-        /// <returns>The <see cref="CatalogedApplication"/> entry.</returns>
-        public CatalogedApplication LocateBySite(string key) => Locate(key) as CatalogedApplication;
+        /// <param name="directory">Directory of store file on local machine.</param>
+        /// <param name="storeId">Store identifier.</param>
+        /// <param name="cryptoParameters">Cryptographic parameters for the store.</param>
+        /// <param name="keyCollection">Key collection to be used to resolve keys</param>
+        /// <param name="decrypt">If true, attempt decryption of payload contents./</param>
+        /// <param name="create">If true, create a new file if none exists.</param>
+        public static new Store Factory(
+                string directory,
+                    string storeId,
+                    CryptoParameters cryptoParameters = null,
+                    IKeyCollection keyCollection = null,
+                    bool decrypt = true,
+                    bool create = true) =>
+            new CatalogApplication(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
 
         /// <summary>
@@ -51,7 +65,8 @@ namespace Goedel.Mesh {
             base(directory, storeName, cryptoParameters, keyCollection, decrypt: decrypt, create: create) {
             }
 
-
+        #endregion
+        #region // Class methods
 
         /// <summary>
         /// Locate the group <paramref name="groupAddress"/> in the catalog.
@@ -61,6 +76,8 @@ namespace Goedel.Mesh {
         /// <returns>The unique catalog identifier for the group.</returns>
         public CatalogedGroup LocateGroup(string groupAddress) => 
                 Locate(CatalogedGroup.GetGroupID(groupAddress)) as CatalogedGroup;
+
+        #endregion
         }
 
     public partial class CatalogedApplication {
@@ -73,7 +90,7 @@ namespace Goedel.Mesh {
         }
 
     public partial class CatalogedGroup {
-
+        #region // Properties
         ///<summary>Return the catalog identifier for the group <paramref name="groupAddress"/>.</summary>
         public static string GetGroupID(string groupAddress) => Constants.PrefixCatalogedGroup + groupAddress;
 
@@ -82,7 +99,8 @@ namespace Goedel.Mesh {
         /// </summary>
         public override string _PrimaryKey => GetGroupID(Key);
 
-
+        #endregion
+        #region // Factory methods and constructors
         /// <summary>
         /// Default constructor for serialization.
         /// </summary>     
@@ -94,6 +112,8 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="profileGroup">The profile of the group to create an entry for.</param>
         public CatalogedGroup(ProfileGroup profileGroup) => Profile = profileGroup;
+
+        #endregion
 
         }
     #endregion

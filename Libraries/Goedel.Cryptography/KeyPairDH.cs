@@ -250,7 +250,7 @@ namespace Goedel.Cryptography {
 
         ///<summary>Persist the private key to the specified collection.</summary>
         /// <param name="keyCollection">The key collection that key are to be persisted to </param>
-        public override void Persist(keyCollection keyCollection) {
+        public override void Persist(KeyCollection keyCollection) {
             Assert.AssertTrue(PersistPending, CryptographicException.Throw);
             var pkix = new PKIXPrivateKeyDH() {
                 Domain = DHDomain,

@@ -852,7 +852,7 @@ namespace ExampleGenerator {
         static void CheckDecode(
                     DareEnvelope envelope,
                     byte[] plaintext,
-                    keyCollection keyCollection
+                    KeyCollection keyCollection
                     ) {
 
             var cryptoStack = envelope.Header.GetCryptoStack(keyCollection);

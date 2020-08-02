@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Client {
     /// Context binding for a Group account
     /// </summary>
     public class ContextGroup : ContextAccount {
-
+        #region // Properties
 
         ///<summary>The enclosing mesh context.</summary>
         public ContextUser ContextAccount;
@@ -40,6 +40,23 @@ namespace Goedel.Mesh.Client {
         public override string StoresDirectory => storesDirectory ??
             Path.Combine(MeshMachine.DirectoryMesh, ProfileGroup.UDF).CacheValue(out storesDirectory);
         string storesDirectory;
+
+        ///<summary>Dictionarry used to create stores</summary>
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => stores;
+        Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
+            {SpoolInbound.Label, SpoolInbound.Factory},
+            {SpoolOutbound.Label, SpoolOutbound.Factory},
+            {SpoolLocal.Label, SpoolLocal.Factory},
+            {SpoolArchive.Label, SpoolArchive.Factory},
+
+            {CatalogMember.Label, CatalogMember.Factory},
+
+            // All contexts have a capability catalog:
+            {CatalogCapability.Label, CatalogCapability.Factory}
+            };
+
+        #endregion
+        #region // Factory methods and constructors
 
         /// <summary>
         /// Default constuctor, creates a group context for <paramref name="catalogedGroup"/>
@@ -74,24 +91,12 @@ namespace Goedel.Mesh.Client {
             return result;
             }
 
+        #endregion
+        #region // Class methods
 
         ///<summary>Returns the network catalog for the account</summary>
         public CatalogMember GetCatalogMember() => GetStore(CatalogMember.Label) as CatalogMember;
 
-        /// <summary>
-        /// Create a new instance bound to the specified core within this account context.
-        /// </summary>
-        /// <param name="name">The name of the store to bind.</param>
-        /// <returns>The store instance.</returns>
-        protected override Store MakeStore(string name) => name switch
-            {
-                CatalogMember.Label => new CatalogMember(StoresDirectory, name, ContainerCryptoParameters, KeyCollection),
-                _ => base.MakeStore(name),
-                };
-
-
-
-        #region Implement Group operations
 
         ///<summary>Return the account address.</summary>
         public override string GetAccountAddress() => CatalogedGroup.Key;
@@ -113,12 +118,12 @@ namespace Goedel.Mesh.Client {
             var networkProtocolEntry = ContextAccount.GetCatalogContact().GetNetworkEntry(memberAddress);
 
             var userEncryptionKey = networkProtocolEntry.MeshKeyEncryption;
-            var serviceEncryptionKey = ContextAccount.ProfileAccount.ProfileService.KeyEncryption.CryptoKey;
+            var serviceEncryptionKey = ContextAccount.ProfileUser.ProfileService.KeyEncryption.CryptoKey;
 
 
             // Create the capability 
             var capabilityService = new CapabilityDecryptServiced() {
-                AuthenticationId = ContextAccount.ProfileAccount.UDF,
+                AuthenticationId = ContextAccount.ProfileUser.UDF,
                 KeyDataEncryptionKey = serviceEncryptionKey
                 };
 

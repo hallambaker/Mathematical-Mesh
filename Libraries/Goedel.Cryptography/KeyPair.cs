@@ -139,6 +139,44 @@ namespace Goedel.Cryptography {
 
             }
 
+
+        /// <summary>
+        /// Factory method to generate a signature keypair of a type specified by <paramref name="algorithmID"/>
+        /// and the specified parameters using the default implementation registered with the
+        /// KeyPair type.
+        /// </summary>
+        /// <param name="algorithmID">The type of keypair to create.</param>
+        /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        /// <returns>The created key pair</returns>
+        public static KeyPair FactorySignature(
+                    CryptoAlgorithmId algorithmID,
+                    KeySecurity keySecurity,
+                    IKeyLocate keyCollection = null,
+                    int keySize = 0) =>
+                Factory(algorithmID.DefaultSignature(), keySecurity, keyCollection, keySize, KeyUses.Sign);
+
+        /// <summary>
+        /// Factory method to generate an encryption keypair of a type specified by <paramref name="algorithmID"/>
+        /// and the specified parameters using the default implementation registered with the
+        /// KeyPair type.
+        /// </summary>
+        /// <param name="algorithmID">The type of keypair to create.</param>
+        /// <param name="keySize">The key size (ignored if the algorithm supports only one key size)</param>
+        /// <param name="keySecurity">The key security model</param>
+        /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
+        /// the value of <paramref name="keySecurity"/></param>
+        /// <returns>The created key pair</returns>
+        public static KeyPair FactoryExchange(
+            CryptoAlgorithmId algorithmID,
+            KeySecurity keySecurity,
+            IKeyLocate keyCollection = null,
+            int keySize = 0) =>
+                Factory(algorithmID.DefaultExchange(), keySecurity, keyCollection, keySize, KeyUses.Encrypt);
+
+
         /// <summary>
         /// Factory creating a key pair of the type specified by <paramref name="algorithmID"/>
         /// using the data <paramref name="binaryData"/> as the seed for the KDF and optional
@@ -214,17 +252,21 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection">The key collection to add the key to.</param>
         /// <param name="keySecurity">The key security model.</param>
         public static void Register(KeyPair keyPair,
-            KeySecurity keySecurity,
-            IKeyLocate keyCollection) {
+                KeySecurity keySecurity,
+                IKeyLocate keyCollection) {
             Assert.AssertNotNull(keyPair, NoProviderSpecified.Throw);
             keyPair.KeySecurity = keySecurity;
 
-            if (keySecurity != KeySecurity.Ephemeral) {
-                keyCollection ??= Cryptography.keyCollection.Default;
-
-                keyCollection.Persist(keyPair);
-                keyCollection.Add(keyPair);
+            if (keySecurity == KeySecurity.Ephemeral) {
+                return;
                 }
+            keyCollection ??= Cryptography.KeyCollection.Default;
+            keyCollection.Add(keyPair);
+
+            if (keySecurity != KeySecurity.Persistable) {
+                return;
+                }
+            keyCollection.Persist(keyPair);
             }
 
         /// <summary>
@@ -313,7 +355,7 @@ namespace Goedel.Cryptography {
         /// Persist key to the key collection <paramref name="keyCollection"/>.
         /// </summary>
         /// <param name="keyCollection"></param>
-        public abstract void Persist(keyCollection keyCollection);
+        public abstract void Persist(KeyCollection keyCollection);
 
 
 
