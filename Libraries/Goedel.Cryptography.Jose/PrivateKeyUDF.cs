@@ -1,5 +1,44 @@
 ﻿namespace Goedel.Cryptography.Jose {
-    public partial class PrivateKeyUDF {
+
+    /// <summary>
+    /// Interface providing key activation functions. This interface is supported
+    /// by PrivateKeyUDF allowing keys to be derived from a pair of seeds. Devices
+    /// whose keys are bound to an HSM should provide a class exposing the IActivate
+    /// interface that exposes the necessary functionality for key location,
+    /// activation and use.
+    /// </summary>
+    public interface IActivate {
+
+        ///<summary>The encryption algorithm identifier</summary>
+        CryptoAlgorithmId AlgorithmEncryptID { get; }
+
+        ///<summary>The signature algorithm identifier</summary>
+        CryptoAlgorithmId AlgorithmSignID { get; }
+
+        ///<summary>The authentication algorithm identifier</summary>
+        CryptoAlgorithmId AlgorithmAuthenticateID { get; }
+
+
+        /// <summary>
+        /// Generate a composite private key by generating private keys by means
+        /// of the activation seed <paramref name="activationSeed"/> and the
+        /// class instance generator.
+        /// </summary>
+        /// <param name="activationSeed">The activation seed value.</param>
+        /// <param name="keyCollection">The key collection to register the private key to</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+        /// <returns>The generated ephemeral key.</returns>
+        KeyPair ActivatePrivate(
+            string activationSeed,
+            IKeyLocate keyCollection,
+            KeyUses keyUses, string saltSuffix,
+            CryptoAlgorithmId cryptoAlgorithmID);
+
+        }
+
+    public partial class PrivateKeyUDF: IActivate {
 
 
         ///<summary>The encryption algorithm identifier</summary>
@@ -70,6 +109,40 @@
             AlgorithmSign = algorithmSign.ToJoseID();
             AlgorithmEncrypt = algorithmEncrypt.ToJoseID();
             AlgorithmAuthenticate = algorithmAuthenticate.ToJoseID();
+            }
+
+
+        /// <summary>
+        /// Generate a composite private key by generating private keys by means
+        /// of the activation seed <paramref name="activationSeed"/> and the
+        /// class instance generator.
+        /// </summary>
+        /// <param name="activationSeed">The activation seed value.</param>
+        /// <param name="keyCollection">The key collection to register the private key to</param>
+        /// <param name="keyUses">The permitted key uses.</param>
+        /// <param name="saltSuffix">The salt suffix for use in key derrivation.</param>
+        /// <param name="cryptoAlgorithmID">The cryptographic algorithm.</param>
+        /// <returns>The generated ephemeral key.</returns>
+        public KeyPair ActivatePrivate(
+                    string activationSeed,
+                    IKeyLocate keyCollection, 
+                    KeyUses keyUses, string saltSuffix, 
+                    CryptoAlgorithmId cryptoAlgorithmID) {
+            var baseKey = UDF.DeriveKey(PrivateValue, keyCollection,
+                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+
+            //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
+
+            var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
+                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
+
+
+
+            var combinedKey = activationKey.Combine(baseKey, keyUses: keyUses);
+
+            //Console.WriteLine($"   result {combinedKey}");
+
+            return combinedKey;
             }
 
 

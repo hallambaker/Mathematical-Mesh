@@ -501,12 +501,12 @@ namespace Goedel.Mesh {
 
                 switch (meshItem) {
                     case ProfileUser profileAccount:
-                    meshKeyEncryption = profileAccount.KeyEncryption.CryptoKey;
-                    meshKeyAdministrator = profileAccount.KeyOfflineSignature.CryptoKey;
+                    meshKeyEncryption = profileAccount.AccountEncryption.CryptoKey;
+                    meshKeyAdministrator = profileAccount.OfflineSignature.CryptoKey;
                     break;
                     case ProfileGroup profileGroup:
-                    meshKeyEncryption = profileGroup.KeyEncryption.CryptoKey;
-                    meshKeyAdministrator = profileGroup.KeyOfflineSignature.CryptoKey;
+                    meshKeyEncryption = profileGroup.AccountEncryption.CryptoKey;
+                    meshKeyAdministrator = profileGroup.OfflineSignature.CryptoKey;
                     break;
 
                     }

@@ -78,12 +78,12 @@ namespace Goedel.Cryptography.Jose {
         /// </summary>
         /// <param name="pkixKey">The PKIX key parameters</param>
         /// <returns>The JOSE key</returns>
-        public static Key Factory(IPKIXPublicKey pkixKey) => pkixKey switch
+        public static Key Factory(IPkixPublicKey pkixKey) => pkixKey switch
             {
-                PKIXPrivateKeyRSA PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
+                PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PrivateKeyRSA(PKIXPrivateKeyRSA),
                 PKIXPrivateKeyDH PKIXPrivateKeyDH => new PrivateKeyDH(PKIXPrivateKeyDH),
                 PKIXPrivateKeyECDH PKIXPrivateKeyECDH => new PrivateKeyECDH(PKIXPrivateKeyECDH),
-                PKIXPublicKeyRSA PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
+                PkixPublicKeyRsa PKIXPublicKeyRSA => new PublicKeyRSA(PKIXPublicKeyRSA),
                 PKIXPublicKeyDH PKIXPublicKeyDH => new PublicKeyDH(PKIXPublicKeyDH),
                 PKIXPublicKeyECDH PKIXPublicKeyECDH => new PublicKeyECDH(PKIXPublicKeyECDH),
                 _ => null,
@@ -96,7 +96,7 @@ namespace Goedel.Cryptography.Jose {
         /// <returns>The JOSE key</returns>
         public static Key Factory(IPKIXPrivateKey pkixKey) => pkixKey switch
             {
-                PKIXPrivateKeyRSA privateKey => new PrivateKeyRSA(privateKey),
+                PkixPrivateKeyRsa privateKey => new PrivateKeyRSA(privateKey),
                 PKIXPrivateKeyDH privateKey => new PrivateKeyDH(privateKey),
                 PKIXPrivateKeyECDH privateKey => new PrivateKeyECDH(privateKey),
                 _ => null,
@@ -114,7 +114,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="keyPair">Key pair to convert</param>
         /// <returns>JOSE public Key value</returns>
         public static Key FactoryPublic(KeyPair keyPair) {
-            var PKIX = keyPair?.PKIXPublicKey;
+            var PKIX = keyPair?.PkixPublicKey;
             return Factory(PKIX);
             }
 

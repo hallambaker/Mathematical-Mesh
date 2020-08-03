@@ -335,8 +335,9 @@ namespace Goedel.Cryptography {
         ///<summary>Flag indicating that the private key may be persisted to the local machine.</summary>
         Persistable = 0b0010,
 
-        ///<summary>Flag indicating that the private key may be exported.</summary>
-        Storable = 0b0100,
+        ///<summary>Flag indicating that the private key may be stored in an in-memory
+        ///structure (e.g. key collection) but not persisted.</summary>
+        Session = 0b0100,
 
         ///<summary>Flag indicating that the private key may be exported.</summary>
         Exportable = 0b01000,
@@ -346,14 +347,13 @@ namespace Goedel.Cryptography {
         Ephemeral = Null,
 
         ///<summary>Private key that is stored on the local machine and cannot be exported.</summary>
-        Bound = Persisted,
+        Bound = Persistable,
 
         ///<summary>Flag indicating that the private key has been store and may be exported.</summary>
-        ExportableStored = Persisted | Exportable,
+        ExportableStored = Persistable | Exportable,
 
         ///<summary>Key is public only.</summary>
-        Public = 0b1000,
-
+        Public = 0b10000,
 
         /// <summary>
         /// Key is a Mesh master key and will be stored in a key container marked 

@@ -77,7 +77,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyECDH;
+        public override IPkixPublicKey PkixPublicKey => PKIXPublicKeyECDH;
 
 
 

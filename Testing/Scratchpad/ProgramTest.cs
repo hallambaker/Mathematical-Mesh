@@ -37,10 +37,7 @@ namespace Scratchpad {
             //TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestMessageContactInPerson();
 
-
-
-
-            TestService.Test().MeshMessageContact();
+            TestService.Test().MeshDeviceConnectApprove();
 
 
             // ***** Currently failing tests

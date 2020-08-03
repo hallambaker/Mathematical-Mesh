@@ -140,7 +140,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void Test_Write_RSA_Public() {
-            var Key = new PublicKeyRSA(TestKeyPairRSA.PKIXPublicKeyRSA);
+            var Key = new PublicKeyRSA(TestKeyPairRSA.PkixPublicKeyRsa);
 
             var Text = Key.ToJson();
             ("Test_Write_RSA_Public.jpub").WriteFileNew(Text);
@@ -150,7 +150,7 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void Test_Write_RSA_Private() {
-            var Key = new PrivateKeyRSA(TestKeyPairRSA.PKIXPrivateKeyRSA);
+            var Key = new PrivateKeyRSA(TestKeyPairRSA.PkixPrivateKeyRSA);
 
             var Text = Key.ToJson(true);
             ("Test_Write_RSA_Private.jprv").WriteFileNew(Text);

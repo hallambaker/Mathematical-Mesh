@@ -84,7 +84,7 @@ namespace Goedel.Mesh {
         /// <param name="secretSeed">The secret seed.</param>
         /// <returns>The  <see cref="CryptoAlgorithmId"/> identifier.</returns>
         public static CryptoAlgorithmId GetCryptoAlgorithmID(this MeshKeyType meshKeyType,
-            PrivateKeyUDF secretSeed) => (meshKeyType & MeshKeyType.MaskKeyUse) switch
+                            IActivate secretSeed) => (meshKeyType & MeshKeyType.MaskKeyUse) switch
                 {
                     MeshKeyType.Sign => secretSeed.AlgorithmSignID,
                     MeshKeyType.OnlineSign => secretSeed.AlgorithmSignID,
@@ -150,7 +150,7 @@ namespace Goedel.Mesh {
         /// (the key is always generated as ephemeral.)</param>
         /// <returns>The derrived key.</returns>
         public static KeyPair ActivatePrivate(this PrivateKeyUDF activationSeed,
-            PrivateKeyUDF baseSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) =>
+            IActivate baseSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) =>
                 ActivatePrivate(baseSeed, activationSeed.PrivateValue, meshKeyType, keyCollection);
 
 
@@ -164,30 +164,15 @@ namespace Goedel.Mesh {
         /// <param name="activationSeed">The activation seed value.</param>
         /// <param name="baseSeed">The secret seed value.</param>
         /// <param name="meshKeyType">The mesh key type.</param>
-        /// <param name="keyCollection">The key collection to register the private key to
-        /// (the key is always generated as ephemeral.)</param>
+        /// <param name="keyCollection">The key collection to register the private key to</param>
         /// <returns>The derrived key.</returns>
-        public static KeyPair ActivatePrivate(this PrivateKeyUDF baseSeed,
+        public static KeyPair ActivatePrivate(this IActivate baseSeed,
             string activationSeed, MeshKeyType meshKeyType, IKeyCollection keyCollection = null) {
 
             meshKeyType.ParseMeshKeyType(out var keyUses, out var saltSuffix);
             var cryptoAlgorithmID = GetCryptoAlgorithmID(meshKeyType, baseSeed);
 
-            var baseKey = UDF.DeriveKey(baseSeed.PrivateValue, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
-
-            //Console.WriteLine($"Private: Base-{baseKey.UDF} Seed-{activationSeed} Type-{meshKeyType}");
-
-            var activationKey = UDF.DeriveKey(activationSeed, keyCollection,
-                    KeySecurity.Ephemeral, keyUses: keyUses, cryptoAlgorithmID, saltSuffix) as KeyPairAdvanced;
-
-            
-
-            var combinedKey = activationKey.Combine(baseKey, keyUses: keyUses);
-
-            //Console.WriteLine($"   result {combinedKey}");
-
-            return combinedKey;
+            return baseSeed.ActivatePrivate(activationSeed, keyCollection, keyUses, saltSuffix, cryptoAlgorithmID);
             }
 
 

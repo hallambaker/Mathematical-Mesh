@@ -12,7 +12,7 @@
 	Structure CatalogedMachine
 		Description
 			|Describes a current or pending connection to a Mesh
-		String ID
+		String Id
 			Description
 				|Unique object instance identifier.
 		String Local
@@ -27,10 +27,6 @@
 		Struct CatalogedDevice CatalogedDevice
 			Description
 				|The cataloged device profile
-
-
-
-
 
 	Structure CatalogedStandard
 		Inherits CatalogedMachine
@@ -48,7 +44,6 @@
 		String DeviceUDF
 			Description
 				|UDF of the connected device
-
 
 	Structure CatalogedPending
 		Inherits CatalogedMachine
@@ -92,8 +87,3 @@
 		String DeviceAuthenticator
 			Description
 				|Authenticator key used to authenticate claim to the device.	
-
-
-		//Struct DevicePreconfiguration DevicePreconfiguration
-		//	Description
-		//		|The Device Preconfiguration entry

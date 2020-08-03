@@ -157,7 +157,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyDH;
+        public override IPkixPublicKey PkixPublicKey => PKIXPublicKeyDH;
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public override KeyUses KeyUses { get; } = KeyUses.Encrypt;

@@ -28,87 +28,87 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Create PKIX RSAPrivateKey from RSAParameters structure.
         /// </summary>
-        /// <param name="RSAParameters">The RSA Parameters in .NET format.</param>
+        /// <param name="parameters">The RSA Parameters in .NET format.</param>
         /// <returns>The private key in Goedel format.</returns> 
-        public static PKIXPrivateKeyRSA RSAPrivateKey(this RSAParameters RSAParameters) => new PKIXPrivateKeyRSA() {
+        public static PkixPrivateKeyRsa GetPkixPrivateKeyRSA(this RSAParameters parameters) => new PkixPrivateKeyRsa() {
 
-            Modulus = RSAParameters.Modulus,
-            PublicExponent = RSAParameters.Exponent,
-            PrivateExponent = RSAParameters.D,
-            Prime1 = RSAParameters.P,
-            Prime2 = RSAParameters.Q,
-            Exponent1 = RSAParameters.DP,
-            Exponent2 = RSAParameters.DQ,
-            Coefficient = RSAParameters.InverseQ
+            Modulus = parameters.Modulus,
+            PublicExponent = parameters.Exponent,
+            PrivateExponent = parameters.D,
+            Prime1 = parameters.P,
+            Prime2 = parameters.Q,
+            Exponent1 = parameters.DP,
+            Exponent2 = parameters.DQ,
+            Coefficient = parameters.InverseQ
             };
 
         /// <summary>
         /// Convert PKIX RSAPrivateKey to RSAParameters structure.
         /// </summary>
-        /// <param name="RSAPrivateKey">RSA key  in System.Security.Cryptography form</param>
+        /// <param name="privateKey">RSA key  in System.Security.Cryptography form</param>
         /// <returns>The RSA parameters in PKIX format.</returns>
-        public static RSAParameters RSAParameters(this PKIXPrivateKeyRSA RSAPrivateKey) => new RSAParameters {
-            Modulus = RSAPrivateKey.Modulus,
-            Exponent = RSAPrivateKey.PublicExponent,
-            D = RSAPrivateKey.PrivateExponent,
-            P = RSAPrivateKey.Prime1,
-            Q = RSAPrivateKey.Prime2,
-            DP = RSAPrivateKey.Exponent1,
-            DQ = RSAPrivateKey.Exponent2,
-            InverseQ = RSAPrivateKey.Coefficient,
+        public static RSAParameters GetRsaParameters(this PkixPrivateKeyRsa privateKey) => new RSAParameters {
+            Modulus = privateKey.Modulus,
+            Exponent = privateKey.PublicExponent,
+            D = privateKey.PrivateExponent,
+            P = privateKey.Prime1,
+            Q = privateKey.Prime2,
+            DP = privateKey.Exponent1,
+            DQ = privateKey.Exponent2,
+            InverseQ = privateKey.Coefficient,
             };
 
         /// <summary>
         /// Create PKIX RSAPublicKey from RSAParameters structure.
         /// </summary>
-        /// <param name="RSAParameters">Input parameters  in System.Security.Cryptography form</param>
+        /// <param name="parameters">Input parameters  in System.Security.Cryptography form</param>
         /// <returns>The public key in Goedel format.</returns>
-        public static PKIXPublicKeyRSA RSAPublicKey(this RSAParameters RSAParameters) => new PKIXPublicKeyRSA() {
+        public static PkixPublicKeyRsa GetPkixPublicKeyRsa(this RSAParameters parameters) => new PkixPublicKeyRsa() {
 
-            Modulus = RSAParameters.Modulus,
-            PublicExponent = RSAParameters.Exponent
+            Modulus = parameters.Modulus,
+            PublicExponent = parameters.Exponent
             };
 
         /// <summary>
         /// Convert PKIX RSAPublicKey to RSAParameters structure.
         /// </summary>
-        /// <param name="RSAPublicKey">The RSA public key</param>
+        /// <param name="publicKey">The RSA public key</param>
         /// <returns>The RSA parameters in System.Security.Cryotography. format.</returns>
-        public static RSAParameters RSAParameters(this PKIXPublicKeyRSA RSAPublicKey) => new RSAParameters {
-            Modulus = RSAPublicKey.Modulus,
-            Exponent = RSAPublicKey.PublicExponent,
+        public static RSAParameters GetRsaParameters(this PkixPublicKeyRsa publicKey) => new RSAParameters {
+            Modulus = publicKey.Modulus,
+            Exponent = publicKey.PublicExponent,
             };
 
 
         /// <summary>
         /// Convert binary data to portable certificate.
         /// </summary>
-        /// <param name="Data">Input data</param>
+        /// <param name="data">Input data</param>
         /// <returns>The certificate</returns>
-        public static Certificate Certificate(this byte[] Data) {
+        public static Certificate Certificate(this byte[] data) {
 
-            var X509Cert = new X509Certificate2(Data);
+            var X509Cert = new X509Certificate2(data);
             var TBSCertificate = X509Cert.TBSCertificate();
-            return new Certificate(Data, TBSCertificate);
+            return new Certificate(data, TBSCertificate);
             }
 
         /// <summary>
         /// Create a TBSCertificate item from a X509Certificate2 object.
         /// </summary>
-        /// <param name="X509Cert">The X509 certificate to form TBS certificate from</param>
+        /// <param name="x509Cert">The X509 certificate to form TBS certificate from</param>
         /// <returns>The TBS certificate structure</returns>
-        public static TBSCertificate TBSCertificate(this X509Certificate2 X509Cert) {
+        public static TBSCertificate TBSCertificate(this X509Certificate2 x509Cert) {
 
             var TBSCertificate = new TBSCertificate() {
-                Version = X509Cert.Version,
-                SerialNumber = BaseConvert.FromBase16(X509Cert.SerialNumber),
-                Signature = X509Cert.SignatureAlgorithm.AlgorithmIdentifier(),
+                Version = x509Cert.Version,
+                SerialNumber = BaseConvert.FromBase16(x509Cert.SerialNumber),
+                Signature = x509Cert.SignatureAlgorithm.AlgorithmIdentifier(),
                 //Issuer = Parse(X509Cert.IssuerName),
-                Validity = new Validity(X509Cert.NotBefore, X509Cert.NotAfter),
+                Validity = new Validity(x509Cert.NotBefore, x509Cert.NotAfter),
                 //Subject = Parse(X509Cert.SubjectName),
                 Extensions = new List<Goedel.Cryptography.PKIX.Extension>(),
                 };
-            foreach (var Extension in X509Cert.Extensions) {
+            foreach (var Extension in x509Cert.Extensions) {
                 //TBSCertificate.Extensions.Add(Parse(Extension));
                 }
             return TBSCertificate;
@@ -127,7 +127,7 @@ namespace Goedel.Cryptography {
         /// <remarks>NOT IMPLEMENTED STUB</remarks>
         /// <param name="DN">Distinguished Name in System.Security.Cryptography form</param>
         /// <returns>Portable list of Names.</returns>
-        public static List<Name> Names(this X500DistinguishedName DN) => null;
+        public static List<Name> Names(this X500DistinguishedName DN) => throw new NYI();
 
         /// <summary>
         /// Convert .NET extension to portable extensions 
@@ -135,7 +135,7 @@ namespace Goedel.Cryptography {
         /// <remarks>NOT IMPLEMENTED STUB</remarks>
         /// <param name="X509Extension">The X509 extension in System.Security.Cryptography form</param>
         /// <returns>Portable extension representation.</returns>
-        public static PKIX.Extension Extension(this X509Extension X509Extension) => null;
+        public static PKIX.Extension Extension(this X509Extension X509Extension) => throw new NYI();
 
         /// <summary>
         /// Convert CryptoAlgorithmID <paramref name="cryptoAlgorithmID"/> to the 

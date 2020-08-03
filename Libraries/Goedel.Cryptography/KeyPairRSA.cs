@@ -36,39 +36,39 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return the underlying .NET cryptographic provider.
         /// </summary>
-        public virtual AsymmetricAlgorithm AsymmetricAlgorithm => Provider;
-        private RSACryptoServiceProvider Provider;
-        private RSAParameters PublicParameters;
+        public virtual AsymmetricAlgorithm AsymmetricAlgorithm => provider;
+        private RSACryptoServiceProvider provider;
+        private RSAParameters publicParameters;
 
 
         #region //Properties
         ///<summary>The private key parameters represented in PKIX form</summary>
         public override IPKIXPrivateKey PKIXPrivateKey {
             get {
-                Assert.AssertNotNull(PKIXPrivateKeyRSA, NotExportable.Throw);
-                return PKIXPrivateKeyRSA;
+                Assert.AssertNotNull(PkixPrivateKeyRSA, NotExportable.Throw);
+                return PkixPrivateKeyRSA;
                 }
             }
 
 
         ///<summary>The public key parameters represented in PKIX form</summary>
-        public override IPKIXPublicKey PKIXPublicKey => PKIXPublicKeyRSA;
+        public override IPkixPublicKey PkixPublicKey => PkixPublicKeyRsa;
 
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public override PKIXPrivateKeyRSA PKIXPrivateKeyRSA { get; }
+        public override PkixPrivateKeyRsa PkixPrivateKeyRSA { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public override PKIXPublicKeyRSA PKIXPublicKeyRSA => PublicParameters.RSAPublicKey();
+        public override PkixPublicKeyRsa PkixPublicKeyRsa => publicParameters.GetPkixPublicKeyRsa();
 
         /// <summary>The supported key uses (e.g. signing, encryption)</summary>
         public override KeyUses KeyUses { get; } = Cryptography.KeyUses.Any;
 
         ///<summary>If true, the key only has access to public key values.</summary>
-        public override bool PublicOnly => Provider.PublicOnly;
+        public override bool PublicOnly => provider.PublicOnly;
 
         #endregion
 
@@ -87,14 +87,14 @@ namespace Goedel.Cryptography {
         /// </summary>
         public override SubjectPublicKeyInfo KeyInfoData =>
                 new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPublicKeyRSA.DER());
+                        PkixPublicKeyRsa.DER());
 
         /// <summary>
         /// Return a PKIX SubjectPublicKeyInfo structure for the private key.
         /// </summary>
         public override SubjectPublicKeyInfo PrivateKeyInfoData =>
                 new SubjectPublicKeyInfo(CryptoConfig.MapNameToOID("RSA"),
-                        PKIXPrivateKeyRSA.DER());
+                        PkixPrivateKeyRSA.DER());
 
         /// <summary>
         /// Generate an ephemeral RSA key with the specified key size.
@@ -106,14 +106,14 @@ namespace Goedel.Cryptography {
                     RSACryptoServiceProvider rsa,
                     KeySecurity keyType = KeySecurity.Public,
                     KeyUses keyUses = KeyUses.Any) {
-            Provider = rsa;
+            provider = rsa;
             KeySecurity = keyType;
             KeyUses = keyUses;
-            PublicParameters = rsa.ExportParameters(false);
+            publicParameters = rsa.ExportParameters(false);
 
             if (keyType.IsExportable()) {
-                var PrivateParameters = Provider.ExportParameters(true);
-                PKIXPrivateKeyRSA = PrivateParameters.RSAPrivateKey();
+                var PrivateParameters = provider.ExportParameters(true);
+                PkixPrivateKeyRSA = PrivateParameters.GetPkixPrivateKeyRSA();
                 }
             }
 
@@ -132,21 +132,21 @@ namespace Goedel.Cryptography {
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        public KeyPairRSA(PKIXPublicKeyRSA PKIXParameters) {
-            PublicParameters = PKIXParameters.RSAParameters();
-            Provider = new RSACryptoServiceProvider();
-            Provider.ImportParameters(PublicParameters);
+        public KeyPairRSA(PkixPublicKeyRsa PKIXParameters) {
+            publicParameters = PKIXParameters.GetRsaParameters();
+            provider = new RSACryptoServiceProvider();
+            provider.ImportParameters(publicParameters);
             }
 
         /// <summary>
         /// Generate a KeyPair from a .NET set of parameters.
         /// </summary>
         /// <param name="PKIXParameters">The RSA parameters as a PKIX structure</param>
-        public KeyPairRSA(PKIXPrivateKeyRSA PKIXParameters) {
-            PublicParameters = PKIXParameters.RSAParameters();
+        public KeyPairRSA(PkixPrivateKeyRsa PKIXParameters) {
+            publicParameters = PKIXParameters.GetRsaParameters();
 
-            Provider = new RSACryptoServiceProvider();
-            Provider.ImportParameters(PublicParameters);
+            provider = new RSACryptoServiceProvider();
+            provider.ImportParameters(publicParameters);
             }
 
         /// <summary>
@@ -183,8 +183,8 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection">Key Collection the key is to be persisted to.</param>
         public override void Persist(KeyCollection keyCollection) {
             Assert.AssertTrue(PersistPending, CryptographicException.Throw);
-            var privateParameters = Provider.ExportParameters(true);
-            var pkix = privateParameters.RSAPrivateKey();
+            var privateParameters = provider.ExportParameters(true);
+            var pkix = privateParameters.GetPkixPrivateKeyRSA();
             keyCollection.Persist(KeyIdentifier, pkix, KeySecurity.IsExportable());
             }
 
@@ -193,9 +193,9 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <returns></returns>
         public override KeyPair KeyPairPublic() {
-            var Result = new KeyPairRSA(Provider.ExportParameters(false));
-            Assert.AssertTrue(Result.PublicOnly, CryptographicException.Throw);
-            return Result;
+            var result = new KeyPairRSA(provider.ExportParameters(false), KeySecurity.Public, KeyUses.Sign);
+            Assert.AssertTrue(result.PublicOnly, CryptographicException.Throw);
+            return result;
             }
 
         /// <summary>
@@ -235,11 +235,11 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Delegate to create a key pair base
         /// </summary>
-        /// <param name="PKIXParameters">The parameters to construct from</param>
+        /// <param name="pkixParameters">The parameters to construct from</param>
         /// <returns>The created key pair</returns>
-        public static new KeyPair KeyPairPublicFactory(PKIXPublicKeyRSA PKIXParameters) {
-            var RSAParameters = PKIXParameters.RSAParameters();
-            return new KeyPairRSA(RSAParameters);
+        public static new KeyPair KeyPairPublicFactory(PkixPublicKeyRsa pkixParameters) {
+            var rsaParameters = pkixParameters.GetRsaParameters();
+            return new KeyPairRSA(rsaParameters);
             }
 
         /// <summary>
@@ -250,9 +250,9 @@ namespace Goedel.Cryptography {
         /// <param name="keyCollection">The key collection that keys are to be persisted to (dependent on 
         /// the value of <paramref name="keySecurity"/></param>/// <returns>The created key pair</returns>
         public static new KeyPair KeyPairPrivateFactory(
-                PKIXPrivateKeyRSA PKIXParameters,
+                PkixPrivateKeyRsa PKIXParameters,
         KeySecurity keySecurity, KeyCollection keyCollection) {
-            var RSAParameters = PKIXParameters.RSAParameters();
+            var RSAParameters = PKIXParameters.GetRsaParameters();
             return new KeyPairRSA(RSAParameters, keySecurity);
             }
 
@@ -269,7 +269,7 @@ namespace Goedel.Cryptography {
         /// <param name="Salt">Optional salt value for use in key derivation.</param>
         public override void Encrypt(byte[] Key, out byte[] Exchange, out KeyPair Ephemeral, byte[] Salt = null) {
             Ephemeral = null;
-            Exchange = Provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
+            Exchange = provider.Encrypt(Key, RSAEncryptionPadding.Pkcs1);
             }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Goedel.Cryptography {
                 KeyPair Ephemeral = null,
                 CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
                 KeyAgreementResult Partial = null,
-                byte[] Salt = null) => Provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
+                byte[] Salt = null) => provider.Decrypt(EncryptedKey, RSAEncryptionPadding.Pkcs1);
 
         /// <summary>
         /// Sign a precomputed digest
@@ -300,7 +300,7 @@ namespace Goedel.Cryptography {
         public override byte[] SignHash(
                 byte[] Data,
                 CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default,
-                byte[] Context = null) => Provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
+                byte[] Context = null) => provider.SignHash(Data, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
 
         /// <summary>
         /// Verify a signature over the purported data digest.
@@ -312,7 +312,7 @@ namespace Goedel.Cryptography {
         /// <param name="Digest">The digest value to be verified.</param>
         /// <returns>True if the signature is valid, otherwise false.</returns>
         public override bool VerifyHash(byte[] Digest, byte[] Signature,
-                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => Provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
+                CryptoAlgorithmId AlgorithmID = CryptoAlgorithmId.Default, byte[] Context = null) => provider.VerifyHash(Digest, Signature, AlgorithmID.ToHashAlgorithmName(), RSASignaturePadding.Pkcs1);
         #endregion
         }
 

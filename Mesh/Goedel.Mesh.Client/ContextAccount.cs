@@ -107,8 +107,18 @@ namespace Goedel.Mesh.Client {
         public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
 
 
-        ///<summary>List of stores</summary>
-        public abstract Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates { get; }
+        ///<summary>List of catalogs</summary>
+        public abstract Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates { get; }
+
+        ///<summary>List of spools, these are the same for each type of account.</summary>
+        public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => stores;
+        Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
+            {SpoolInbound.Label, SpoolInbound.Factory},
+            {SpoolOutbound.Label, SpoolOutbound.Factory},
+            {SpoolLocal.Label, SpoolLocal.Factory},
+            {SpoolArchive.Label, SpoolArchive.Factory},
+            };
+
 
         #endregion
 
@@ -528,10 +538,15 @@ namespace Goedel.Mesh.Client {
                         name, ContainerCryptoParameters, KeyCollection, meshClient: (this as IMeshClient));
                 }
 
-            if (DictionaryStoreDelegates.TryGetValue(name, out var factory)) {
+            if (DictionaryCatalogDelegates.TryGetValue(name, out var factory)) {
                 return factory(StoresDirectory,
                     name, ContainerCryptoParameters, KeyCollection);
                 }
+            if (DictionarySpoolDelegates.TryGetValue(name, out factory)) {
+                return factory(StoresDirectory,
+                    name, ContainerCryptoParameters, KeyCollection);
+                }
+
 
             throw new NYI();
             }
@@ -540,8 +555,8 @@ namespace Goedel.Mesh.Client {
         /// Force generation of all stores.
         /// </summary>
         protected void MakeStores() {
-            foreach (var entry in DictionaryStoreDelegates) {
-                GetStore(entry.Key, true);
+            foreach (var entry in DictionaryCatalogDelegates) {
+                GetStore(entry.Key, false);
                 }
             }
 

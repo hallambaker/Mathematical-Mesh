@@ -65,7 +65,7 @@ namespace Goedel.Mesh {
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
             var keyAuthenticate = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
 
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            OfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
 
@@ -76,7 +76,7 @@ namespace Goedel.Mesh {
 
         public void PersistSeed(IKeyCollection keyCollection = null) {
             SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
-            keyCollection.Persist(KeyOfflineSignature.UDF, SecretSeed, false);
+            keyCollection.Persist(OfflineSignature.UDF, SecretSeed, false);
             }
 
         /// <summary>
@@ -103,10 +103,10 @@ namespace Goedel.Mesh {
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
-            builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {OfflineSignature.UDF} ");
 
-            if (KeysOnlineSignature != null) {
-                foreach (var online in KeysOnlineSignature) {
+            if (OnlineSignature != null) {
+                foreach (var online in OnlineSignature) {
                     builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
                     }
                 }

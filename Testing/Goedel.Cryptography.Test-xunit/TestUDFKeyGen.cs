@@ -359,9 +359,9 @@ namespace Goedel.XUnit {
             SeedA = "test1a",
             UdfAlgorithmIdentifier = UdfAlgorithmIdentifier.MeshProfileUser,
             KeyUses = KeyUses.KeyAgreement,
-            ResultSign = "fail",
-            ResultEncrypt = "fail",
-            ResultAuthenticate = "fail"
+            ResultSign = "MCSQ-NZPS-DMRT-QT4A-V2MG-CWFK-AJB7",
+            ResultEncrypt = "MC3T-U35K-KRAR-7OWK-ECWG-KJ4O-MUX4",
+            ResultAuthenticate = "MBN6-L5RR-72N5-GPFD-6SS5-34PZ-RY5J"
             };
 
         public static TestVectorUDFKeyGenUdfKey TEST_KG_Group= new TestVectorUDFKeyGenUdfKey() {

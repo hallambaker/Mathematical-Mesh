@@ -8,7 +8,7 @@ namespace Goedel.Cryptography.PKIX {
 	/// PKIXPublicKeyECDH 
     /// </summary>
 	public abstract partial class PKIXPublicKeyECDH : Goedel.ASN.ByteArrayVerbatim, 
-                    IPKIXPublicKey, IKeyPublicECDH {
+                    IPkixPublicKey, IKeyPublicECDH {
 
         /// <summary>The Jose curve identifier.</summary>
         public abstract string CurveJose { get; }
@@ -43,7 +43,7 @@ namespace Goedel.Cryptography.PKIX {
         public override void Encode(Goedel.ASN.Buffer buffer) => buffer.Encode__Octets(Data, 0, -1);
 
         /// <summary>Return the corresponding public parameters</summary>
-        public IPKIXPublicKey PublicParameters => this;
+        public IPkixPublicKey PublicParameters => this;
 
         }
 
@@ -91,7 +91,7 @@ namespace Goedel.Cryptography.PKIX {
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => PKIXPublicKeyECDH;
+        public IPkixPublicKey PublicParameters => PKIXPublicKeyECDH;
 
 
         /// <summary>

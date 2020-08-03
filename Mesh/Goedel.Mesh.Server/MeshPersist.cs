@@ -117,8 +117,8 @@ namespace Goedel.Mesh.Server {
             using var accountHandle = GetAccountUnverified(messageConnectionRequestClient.AccountAddress);
             var serviceNonce = CryptoCatalog.GetBits(128);
 
-            var MeshUDF = accountHandle.ProfileUser.KeyOfflineSignature.CryptoKey.UDFBytes;
-            var DeviceUDF = messageConnectionRequestClient.ProfileDevice.KeyOfflineSignature.CryptoKey.UDFBytes;
+            var MeshUDF = accountHandle.ProfileUser.OfflineSignature.CryptoKey.UDFBytes;
+            var DeviceUDF = messageConnectionRequestClient.ProfileDevice.OfflineSignature.CryptoKey.UDFBytes;
 
             var witness = UDF.MakeWitnessString(MeshUDF, serviceNonce, DeviceUDF,
                 messageConnectionRequestClient.ClientNonce);

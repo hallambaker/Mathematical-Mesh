@@ -26,12 +26,12 @@ namespace Goedel.Mesh {
             var keyAuthenticate = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixAuthenticate);
             var keyEncryption = Derive(keyCollection, secretSeed, Constants.UDFMeshKeySufixEncrypt);
 
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            OfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyAuthentication = new KeyData(keyAuthenticate.KeyPairPublic());
             KeyEncryption = new KeyData(keyEncryption.KeyPairPublic());
 
             if (persist) {
-                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                keyCollection.Persist(OfflineSignature.UDF, secretSeed, false);
                 }
             }
 
@@ -43,7 +43,7 @@ namespace Goedel.Mesh {
         /// <param name="keySign">The offline signature key.</param>
         /// <param name="keyEncrypt">The service encryption key.</param>
         public ProfileService(KeyPair keySign, KeyPair keyEncrypt) {
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
+            OfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             }
 

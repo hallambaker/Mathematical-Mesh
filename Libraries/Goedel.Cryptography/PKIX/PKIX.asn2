@@ -479,12 +479,12 @@ Class PrivateKeyInfo
 		Code 0
 		Implicit
 
-Class PKIXPublicKeyRSA 
+Class PkixPublicKeyRsa
 	Modulus					BigInteger
 	PublicExponent			BigInteger
 
 
-Class PKIXPrivateKeyRSA
+Class PkixPrivateKeyRsa
 	Version					Integer
 	Modulus					BigInteger
 	PublicExponent			BigInteger

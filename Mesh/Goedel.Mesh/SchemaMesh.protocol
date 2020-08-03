@@ -119,13 +119,13 @@
 		Inherits Assertion
 		Description 
 			|Parent class from which all profile classes are derived
-		Struct KeyData KeyOfflineSignature
+		Struct KeyData OfflineSignature
 			Description
 				|The permanent signature key used to sign the profile itself. The UDF of
 				|the key is used as the permanent object identifier of the profile. Thus,
 				|by definition, the KeySignature value of a Profile does not change under
-				|any circumstance. The only case in which a 
-		Struct KeyData KeysOnlineSignature
+				|any circumstance.
+		Struct KeyData OnlineSignature
 			Multiple
 			Description
 				|A Personal profile contains at least one OSK which is used to sign 
@@ -145,12 +145,9 @@
 		Description 
 			|Contains the private activation information for a Mesh application running on
 			|a specific device
-		Struct DareEnvelope EnvelopedConnection
-			Description
-				|The signed AssertionDeviceConnection.
 		String ActivationKey
 			Description
-				|The master secret from which all the key contributions are derrived.
+				|Secret seed used to derive keys unless explicitly specified.
 
 	Structure Permission
 		String Name
@@ -188,14 +185,6 @@
 		Struct KeyData KeyAuthentication
 			Description
 				|Key used to authenticate requests made by the device.
-
-	Structure CatalogedEscrow
-		Inherits CatalogedEntry
-		Description
-			|Escrow records for recovery of Mesh accounts
-		Struct DareEnvelope EnvelopedEscrowRecord
-			Description
-				|The encrypted escrow record
 	
 	Structure CatalogedDevice
 		Inherits CatalogedEntry
@@ -219,10 +208,17 @@
 		Struct DareEnvelope EnvelopedConnectionUser
 			Description
 				|The public assertion demonstrating connection of the Device to the Mesh
+		
 		Struct DareEnvelope EnvelopedActivationUser
 			Description
-				|The activations of the device within the Mesh
-
+				|The activation of the device within the Mesh account
+		Struct DareEnvelope EnvelopedActivationAccount
+			Description
+				|The activation of the device within the Mesh account
+		Struct DareEnvelope EnvelopedActivationApplication
+			Multiple
+			Description
+				|Application activations granted to the device.
 
 	Structure CatalogedPublication
 		Inherits CatalogedEntry
@@ -254,7 +250,7 @@
 			Multiple
 			Description
 				|Service address(es).
-		Struct KeyData KeyEncryption
+		Struct KeyData AccountEncryption
 			Description
 				|Key currently used to encrypt data under this profile
 		Struct DareEnvelope EnvelopedProfileService
@@ -267,7 +263,9 @@
 			|Account assertion. This is signed by the service hosting the account.
 		Struct KeyData KeyAuthentication
 			Description
-				|Key used to authenticate requests made by the device.
+				|Key used to authenticate requests made under this user account.
+
+
 
 
 	Structure ActivationUser
@@ -276,25 +274,47 @@
 			Description
 				|The UDF of the account
 
-		Struct KeyData KeyDeviceEncryption
-			Description
-				|Public key for device specific encryption
-		Struct KeyData KeyDeviceSignature
-			Description
-				|Public key for device specific signature
-		Struct KeyData KeyDeviceAuthentication
-			Description
-				|Public key for device specific authentication
-		Struct KeyData KeyAccountOnlineSignature
+
+	Structure ActivationAccount
+		Inherits Activation
+		Struct KeyData AccountOnlineSignature
 			Description
 				|Grant access to ProfileUser online signing key
-		Struct KeyData KeyAccountOfflineSignature
+		Struct KeyData AccountOfflineSignature
 			Description
 				|Grant access to ProfileUser offline signing key
-		TStruct Activation Activations
+		Struct KeyData AccountEncryption
+			Description
+				|Grant access to ProfileUser account encryption key
+		Struct KeyData AccountAuthentication
+			Description
+				|Grant access to ProfileUser account authentication key
+
+	Structure ActivationApplication
+		Inherits Activation
+
+	Structure ActivationApplicationEmail
+		Inherits Activation
+		String Account
+			Description
+				|The email account for which the credential is valid
+		String Protocol
 			Multiple
 			Description
-				|List of device specific activations for appliactions, etc.
+				|S/MIME or OpenPGP
+		Struct KeyData Encryption
+			Description
+				|Explicit specification of decryption key
+		Struct KeyData Signature
+			Description
+				|Explicit specification of signature key
+
+	Structure ActivationApplicationSsh
+		Inherits Activation
+		Struct KeyData Authentication
+			Description
+				|Explicit specification of authentication key
+
 
 	Structure ConnectionUser
 		Inherits Connection
@@ -305,13 +325,13 @@
 			Multiple
 			Description
 				|List of the permissions that the device has been granted.
-		Struct KeyData KeySignature
+		Struct KeyData DeviceSignature
 			Description
 				|The signature key for use of the device under the profile
-		Struct KeyData KeyEncryption
+		Struct KeyData DeviceEncryption
 			Description
 				|The encryption key for use of the device under the profile
-		Struct KeyData KeyAuthentication
+		Struct KeyData DeviceAuthentication
 			Description
 				|The authentication key for use of the device under the profile
 

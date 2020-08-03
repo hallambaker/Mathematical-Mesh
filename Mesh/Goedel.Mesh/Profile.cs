@@ -70,7 +70,7 @@ namespace Goedel.Mesh {
         public override string _PrimaryKey => UDF;
 
         ///<summary>The UDF of the profile, that is the UDF of the offline signature.</summary>
-        public string UDF => KeyOfflineSignature.UDF;
+        public string UDF => OfflineSignature.UDF;
 
         /// <summary>
         /// Verify the profile to check that it is correctly signed and consistent.
@@ -151,7 +151,7 @@ namespace Goedel.Mesh {
             MeshKeyType = udfAlgorithmIdentifier.GetMeshKeyType();
             ActivationKey = Cryptography.UDF.DerivedKey(udfAlgorithmIdentifier, data: masterSecret, bits);
 
-            KeySignature = profile.KeyOfflineSignature.ActivatePublic(ActivationKey,
+            KeySignature = profile.OfflineSignature.ActivatePublic(ActivationKey,
                MeshKeyType | MeshKeyType.Sign);
             }
 
@@ -163,7 +163,6 @@ namespace Goedel.Mesh {
         /// the corresponding <see cref="ProfileDevice"/>.</returns>
         public DareEnvelope Package(CryptoKey SignatureKey) {
 
-            EnvelopedConnection = Connection.Sign(SignatureKey);
             DareEnvelope = DareEnvelope.Encode(GetBytes(true), 
                 signingKey: SignatureKey, encryptionKey: ProfileDevice.KeyEncryption.CryptoKey);
 

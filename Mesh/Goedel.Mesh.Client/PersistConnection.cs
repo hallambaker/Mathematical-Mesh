@@ -172,13 +172,13 @@ namespace Goedel.Mesh.Client {
                 //    break;
                 //    }
                 case CatalogedStandard adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.ID == adminEntry.ID) {
+                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.Id == adminEntry.Id) {
                         DefaultEntry = adminEntry;
                         }
                     break;
                     }
                 case CatalogedMachine adminEntry: {
-                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.ID == adminEntry.ID) {
+                    if (DefaultEntry == null || adminEntry.Default || DefaultEntry.Id == adminEntry.Id) {
                         DefaultEntry = adminEntry;
                         }
                     break;

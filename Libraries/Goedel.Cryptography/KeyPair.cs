@@ -41,7 +41,7 @@ namespace Goedel.Cryptography {
         /// If true, the KeySecurity model marks the key to be persisted but the key has not
         /// (yet) been stored.
         /// </summary>
-        public bool PersistPending => (KeySecurity.IsPersisted() & !IsPersisted);
+        public bool PersistPending => (KeySecurity.IsPersistable() & !IsPersisted);
 
 
         ///<summary>If true, a signature generated using this key will always include the
@@ -263,7 +263,7 @@ namespace Goedel.Cryptography {
             keyCollection ??= Cryptography.KeyCollection.Default;
             keyCollection.Add(keyPair);
 
-            if (keySecurity != KeySecurity.Persistable) {
+            if ((keySecurity& KeySecurity.Persistable) != KeySecurity.Persistable) {
                 return;
                 }
             keyCollection.Persist(keyPair);
@@ -319,12 +319,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public abstract IPKIXPublicKey PKIXPublicKey { get; }
+        public abstract IPkixPublicKey PkixPublicKey { get; }
 
 
         ///<summary>The raw UDF fingerprint.</summary>
         public override byte[] UDFBytes => udfBytes ?? 
-                PKIXPublicKey.UDFBytes(512).CacheValue(out udfBytes);
+                PkixPublicKey.UDFBytes(512).CacheValue(out udfBytes);
         byte[] udfBytes = null;
 
 

@@ -34,6 +34,12 @@ namespace Goedel.Mesh {
         ProfileService profileService = null;
 
 
+        // account key accessors
+        public KeyPair PrivateAccountOfflineSignature { get; set; }
+        public KeyPair PrivateAccountEncryption { get; set; }
+        public KeyPair PrivateAccountAuthentication { get; set; }
+
+
         /// <summary>
         /// Blank constructor for use by deserializers.
         /// </summary>
@@ -55,23 +61,23 @@ namespace Goedel.Mesh {
             //Console.WriteLine($"Created seed {secretSeed.PrivateValue}");
 
             // Generate the private keys
-            var PrivateOfflineSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserSign, keyCollection, KeySecurity.Storable);
-            var PrivateEncryption = secretSeed.BasePrivate(
-                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Storable);
-            var PrivateAuthentication = secretSeed.BasePrivate(
-                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Storable);
+            PrivateAccountOfflineSignature = secretSeed.BasePrivate(
+                MeshKeyType.UserSign, keyCollection, KeySecurity.Ephemeral);
+            PrivateAccountEncryption = secretSeed.BasePrivate(
+                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Session);
+            PrivateAccountAuthentication = secretSeed.BasePrivate(
+                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Session);
 
             //Set the public key parameters
-            KeyOfflineSignature = new KeyData(PrivateOfflineSignature.KeyPairPublic());
-            KeyEncryption = new KeyData(PrivateEncryption.KeyPairPublic());
-            KeyAuthentication = new KeyData(PrivateAuthentication.KeyPairPublic());
+            OfflineSignature = new KeyData(PrivateAccountOfflineSignature.KeyPairPublic());
+            AccountEncryption = new KeyData(PrivateAccountEncryption.KeyPairPublic());
+            KeyAuthentication = new KeyData(PrivateAccountAuthentication.KeyPairPublic());
 
-            KeysOnlineSignature = new List<KeyData> {
+            OnlineSignature = new List<KeyData> {
                 new KeyData(keyPairOnlineSignature.KeyPairPublic())
                 };
 
-            Sign(PrivateOfflineSignature);
+            Sign(PrivateAccountOfflineSignature);
             }
 
         ///// <summary>
@@ -139,9 +145,9 @@ namespace Goedel.Mesh {
             indent++;
             DareEnvelope.Report(builder, indent);
             indent++;
-            builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
-            if (KeysOnlineSignature != null) {
-                foreach (var online in KeysOnlineSignature) {
+            builder.AppendIndent(indent, $"KeyOfflineSignature: {OfflineSignature.UDF} ");
+            if (OnlineSignature != null) {
+                foreach (var online in OnlineSignature) {
                     builder.AppendIndent(indent, $"KeysOnlineSignature: {online.UDF} ");
                     }
                 }
@@ -153,7 +159,7 @@ namespace Goedel.Mesh {
             else {
                 builder.AppendIndent(indent, $"AccountAddress : [None]");
                 }
-            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
+            builder.AppendIndent(indent, $"KeyEncryption:       {AccountEncryption.UDF} ");
 
             }
 
@@ -186,148 +192,6 @@ namespace Goedel.Mesh {
                 }
             return -1;
             }
-
-
-        }
-
-
-
-    public partial class ActivationUser {
-
-        ///<summary>The UDF profile constant used for key derrivation 
-        ///<see cref="Constants.UDFActivationAccount"/></summary>
-        public override string UDFKeyDerrivation => Constants.UDFActivationAccount;
-
-        ///<summary>The connection value.</summary>
-        public override Connection Connection => ConnectionUser;
-
-        ///<summary>The <see cref="ConnectionUser"/> instance binding the activated device
-        ///to a MeshProfile.</summary>
-        public ConnectionUser ConnectionUser { get; set; }
-
-        /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public ActivationUser() {
-            }
-
-        /// <summary>
-        /// Construct a new <see cref="ActivationUser"/> instance for the profile
-        /// <paramref name="profileDevice"/>. The property <see cref="Activation.ActivationKey"/> is
-        /// calculated from the values specified for the activation type.
-        /// If the value <paramref name="masterSecret"/> is
-        /// specified, it is used as the seed value. Otherwise, a seed value of
-        /// length <paramref name="bits"/> is generated.
-        /// The public key value is calculated for the public key pairs and the corresponding
-        /// <see cref="ConnectionUser"/> generated for the public values.
-        /// </summary>
-        /// <param name="profileDevice">The base profile that the activation activates.</param>
-        /// <param name="masterSecret">If not null, specifies the seed value. Otherwise,
-        /// a seed value of <paramref name="bits"/> length is generated.</param>
-        /// <param name="bits">The size of the seed to be generated if <paramref name="masterSecret"/>
-        /// is null.</param>
-        public ActivationUser(
-                    ProfileDevice profileDevice,
-                    byte[] masterSecret = null,
-                    int bits = 256) : base(
-                        profileDevice, UdfAlgorithmIdentifier.MeshActivationUser, masterSecret, bits) {
-            ProfileDevice = profileDevice;
-
-            AccountUDF = profileDevice.UDF;
-
-            var keyEncryption = profileDevice.KeyEncryption.ActivatePublic(ActivationKey,
-                    MeshKeyType | MeshKeyType.Encrypt);
-            var keyAuthentication = profileDevice.KeyAuthentication.ActivatePublic(ActivationKey,
-                    MeshKeyType | MeshKeyType.Authenticate);
-
-
-            // Create the (unsigned) ConnectionDevice
-            ConnectionUser = new ConnectionUser() {
-                KeyEncryption = new KeyData(keyEncryption.KeyPairPublic()),
-                KeySignature = new KeyData(KeySignature.KeyPairPublic()),
-                KeyAuthentication = new KeyData(keyAuthentication.KeyPairPublic())
-                };
-            }
-
-
-
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ActivationUser"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ActivationUser Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ActivationUser;
-
-
-        /// <summary>
-        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-        /// a leading indent of <paramref name="indent"/> units. The key collection 
-        /// <paramref name="keyCollection"/> is used to decrypt any encrypted data.
-        /// </summary>
-        /// <param name="builder">The string builder to write to.</param>
-        /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="keyCollection">The Key collection.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
-
-            builder.AppendIndent(indent, $"Activation Account");
-            indent++;
-            DareEnvelope.Report(builder, indent);
-            indent++;
-
-            builder.AppendIndent(indent, $"Activation Key:   {ActivationKey} ");
-            builder.AppendIndent(indent, $"KeySignature:     {KeySignature} ");
-            }
-        }
-
-
-    public partial class ConnectionUser {
-
-        /// <summary>
-        /// Constructor for use by deserializers.
-        /// </summary>
-        public ConnectionUser() {
-            }
-
-
-        /// <summary>
-        /// Append a description of the instance to the StringBuilder <paramref name="builder"/> with
-        /// a leading indent of <paramref name="indent"/> units. The cryptographic context from
-        /// the key collection <paramref name="keyCollection"/> is used to decrypt any encrypted data.
-        /// </summary>
-        /// <param name="builder">The string builder to write to.</param>
-        /// <param name="indent">The number of units to indent the presentation.</param>
-        /// <param name="keyCollection">The key collection to use to obtain decryption keys.</param>
-        public override void ToBuilder(StringBuilder builder, int indent = 0, IKeyCollection keyCollection = null) {
-
-            builder.AppendIndent(indent, $"Connection User");
-            indent++;
-            DareEnvelope.Report(builder, indent);
-            indent++;
-            //builder.AppendIndent(indent, $"KeyOfflineSignature: {KeyOfflineSignature.UDF} ");
-
-            //if (KeysOnlineSignature != null) {
-            //    foreach (var online in KeysOnlineSignature) {
-            //        builder.AppendIndent(indent, $"   KeysOnlineSignature: {online.UDF} ");
-            //        }
-            //    }
-            builder.AppendIndent(indent, $"KeyEncryption:       {KeyEncryption.UDF} ");
-            builder.AppendIndent(indent, $"KeyAuthentication:   {KeyAuthentication.UDF} ");
-
-            }
-
-        /// <summary>
-        /// Decode <paramref name="envelope"/> and return the inner <see cref="ConnectionUser"/>
-        /// </summary>
-        /// <param name="envelope">The envelope to decode.</param>
-        /// <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
-        /// <returns>The decoded profile.</returns>
-        public static new ConnectionUser Decode(DareEnvelope envelope,
-                    IKeyLocate keyCollection = null) =>
-                        MeshItem.Decode(envelope, keyCollection) as ConnectionUser;
 
 
         }

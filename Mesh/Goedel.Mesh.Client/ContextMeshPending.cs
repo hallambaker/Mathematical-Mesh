@@ -29,7 +29,7 @@ namespace Goedel.Mesh.Client {
         ///<summary>The connection binding the calling context to the account.</summary>
         public override Connection Connection => throw new NYI();
 
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => throw new NotImplementedException();
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => throw new NotImplementedException();
 
 
         /////<summary>Convenience accessor for the Account Service ID</summary>
@@ -130,7 +130,7 @@ namespace Goedel.Mesh.Client {
             // create the pending connection here
 
             var catalogedPending = new CatalogedPending() {
-                ID = profileDevice.UDF,
+                Id = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = accountAddress,
                 EnvelopedMessageConnectionResponse = response.EnvelopedConnectionResponse,

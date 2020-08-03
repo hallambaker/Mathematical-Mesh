@@ -118,11 +118,19 @@ namespace Goedel.Mesh {
         ProfileDevice profileDevice;
 
         ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationUser"/>
-        ///to return the <see cref="ActivationDevice"/> value.</summary>
+        ///to return the <see cref="ActivationUser"/> value.</summary>
         public ActivationUser GetActivationUser(IKeyCollection keyCollection) =>
             activationUser ?? (keyCollection == null ? null :
                 ActivationUser.Decode(EnvelopedActivationUser, keyCollection).CacheValue(out activationUser));
         ActivationUser activationUser;
+
+
+        ///<summary>Cached convenience accessor that unpacks the value of <see cref="EnvelopedActivationAccount"/>
+        ///to return the <see cref="ActivationAccount"/> value.</summary>
+        public ActivationAccount GetActivationAccount(IKeyCollection keyCollection) =>
+            activationAccount ?? (keyCollection == null ? null :
+                ActivationAccount.Decode(EnvelopedActivationAccount, keyCollection).CacheValue(out activationAccount));
+        ActivationAccount activationAccount;
 
 
         #endregion

@@ -47,7 +47,7 @@
         <member name="P:Goedel.Mesh.Client.CatalogedMachine.ProfileDevice">
             <summary>The device profile</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.CatalogedMachine.ID">
+        <member name="P:Goedel.Mesh.Client.CatalogedMachine.Id">
              <summary>
             Unique object instance identifier.
              </summary>
@@ -523,8 +523,11 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolLocal">
             <summary>Returns the local spool  for the account</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryStoreDelegates">
-            <summary>List of stores</summary>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryCatalogDelegates">
+            <summary>List of catalogs</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextAccount.DictionarySpoolDelegates">
+            <summary>List of spools, these are the same for each type of account.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -766,7 +769,7 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryStoreDelegates">
+        <member name="P:Goedel.Mesh.Client.ContextGroup.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.#ctor(Goedel.Mesh.Client.ContextUser,Goedel.Mesh.CatalogedGroup)">
@@ -941,6 +944,9 @@
             Context for interacting with a Mesh Account
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.StoresDirectory">
+            <summary>The directory containing the catalogs related to the account.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.Profile">
             <summary>The account profile</summary>
         </member>
@@ -957,6 +963,9 @@
             <summary>The connection device</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.ActivationUser">
+            <summary>The device activation</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.ActivationAccount">
             <summary>The device activation</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
@@ -976,6 +985,7 @@
             </summary>
             <param name="meshHost">The mesh host context that the mesh is going to be created on.</param>
             <param name="localName">Optional local name to be associated with the account.</param>
+            <param name="onlineSignature">The key to be used for initial administration operations.</param>
             <param name="algorithmSign">The signature algorithm.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <param name="algorithmAuthenticate">The authentication algorithm.</param>
@@ -1006,6 +1016,24 @@
             <param name="threshold">Number of shares required to recreate the quorum</param>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.Persist(Goedel.Mesh.CatalogedDevice)">
+            <summary>
+            Persist the update to <paramref name="catalogedDevice"/> to the service and local
+            catalogs.
+            </summary>
+            <param name="catalogedDevice">The update to persist.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GrantAdministrator(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
+            <summary>
+            Grant administrative privileges to the device <paramref name="targetDevice"/> using
+            the online signing key <paramref name="keyPairOnlineSignature"/>. If 
+            <paramref name="superAdmin"/> is true, also grant super-administration
+            privilege.
+            </summary>
+            <param name="targetDevice">Device to grant administrative privilege to.</param>
+            <param name="keyPairOnlineSignature">The online signature capability.</param>
+            <param name="superAdmin">The offline signature capability.</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetService(System.String)">
             <summary>
             Set the initial Mesh Service. This MUST be called before devices are added to the 
@@ -1013,7 +1041,7 @@
             </summary>
             <param name="accountAddress">The account address</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationUser)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateCataloguedDevice(Goedel.Mesh.ProfileUser,Goedel.Mesh.ProfileDevice,Goedel.Mesh.ActivationUser,Goedel.Mesh.ActivationAccount)">
             <summary>
             Create a CatalogedDevice entry for the device with profile <paramref name="profileDevice"/>
             and activation <paramref name="activationDevice"/>.
@@ -1025,19 +1053,24 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.AddDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
             <summary>
-            Add a device to the account.
+            Add the device specified by <paramref name="profileDevice"/> to the account granting administration
+            privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
+            privilege if <paramref name="superAdmin"/> is true. Note that it is possible for a device to 
+            be a super administrator without also being an administrator.
             </summary>
             <param name="profileDevice">Profile of the device to add.</param>
+            <param name="keyPairOnlineSignature">If not null, specifies an online signature key that is to be used
+            to sign administrator functions.</param>
+            <param name="superAdmin">It true specifies that super administrator privileges are to be granted.</param>
             <returns>The catalog entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Mesh.ActivationUser,Goedel.Cryptography.CryptoKey)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.AddCapability(Goedel.Cryptography.CryptoKey)">
             <summary>
-            Generate a capability for the key <paramref name="keyPair"/> and grant access
-            to <paramref name="activationUser"/> if a threshold capability is created, 
+            Generate a capability for the key <paramref name="keyPair"/>.
             add the service portion to the capabilities catalog.
             </summary>
-            <param name="activationUser">Device to receive the capability.</param>
             <param name="keyPair">Keypair from which the capability is to be derrived.</param>
+            
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.SetContactSelf(Goedel.Mesh.Contact,System.String)">
             <summary>
@@ -1078,7 +1111,7 @@
             <returns>The first cryptographic capability this device has been granted if found,
             otherwise null.</returns>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryStoreDelegates">
+        <member name="P:Goedel.Mesh.Client.ContextUser.DictionaryCatalogDelegates">
             <summary>Dictionarry used to create stores</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetCatalogApplication">
@@ -1130,6 +1163,36 @@
             </summary>
             <param name="keyId">The key identifier to match.</param>
             <returns>The key pair if found.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConnectionRequest">
+            <summary>
+            Return the latest unprocessed MessageConnectionRequest that was received.
+            </summary>
+            <returns>The latest unprocessed MessageConnectionRequest</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageContactRequest">
+            <summary>
+            Return the latest unprocessed MessageContactRequest that was received.
+            </summary>
+            <returns>The latest unprocessed MessageContactRequest</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageContactReply">
+            <summary>
+            Return the latest unprocessed MessageContactRequest that was received.
+            </summary>
+            <returns>The latest unprocessed MessageContactRequest</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConfirmationRequest">
+            <summary>
+            Return the latest unprocessed MessageConfirmationRequest that was received.
+            </summary>
+            <returns>The latest unprocessed MessageConfirmationRequest</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessageConfirmationResponse">
+            <summary>
+            Return the latest unprocessed MessageConfirmationResponse that was received.
+            </summary>
+            <returns>The latest unprocessed MessageConfirmationResponse</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetPendingMessage(System.String)">
             <summary>
@@ -1504,7 +1567,6 @@
         </member>
         <member name="T:Goedel.Mesh.Client.NotAdministrator">
             <summary>
-            The action requested can only be performed by an administrator account
             </summary>
         </member>
         <member name="P:Goedel.Mesh.Client.NotAdministrator.ExceptionFormatDelegate">
@@ -1530,6 +1592,37 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Client.NotAdministrator.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.NotSuperAdministrator">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.NotSuperAdministrator.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.NotSuperAdministrator.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.NotSuperAdministrator.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.NotSuperAdministrator._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Client.NotSuperAdministrator.Throw">
             <summary>
             The public fatory delegate
             </summary>

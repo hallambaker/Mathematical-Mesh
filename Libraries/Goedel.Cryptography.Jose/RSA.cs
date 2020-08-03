@@ -18,7 +18,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PublicKeyRSA(KeyPairBaseRSA KeyPair) {
             Kid = KeyPair.KeyIdentifier;
-            var RSAPublicKey = KeyPair.PKIXPublicKeyRSA;
+            var RSAPublicKey = KeyPair.PkixPublicKeyRsa;
 
             N = RSAPublicKey.Modulus;
             E = RSAPublicKey.PublicExponent;
@@ -28,7 +28,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from a PKIX RSAPublicKey structure.
         /// </summary>
         /// <param name="RSAPublicKey">RSA Public Key.</param>
-        public PublicKeyRSA(PKIXPublicKeyRSA RSAPublicKey) {
+        public PublicKeyRSA(PkixPublicKeyRsa RSAPublicKey) {
             this.N = RSAPublicKey.Modulus;
             this.E = RSAPublicKey.PublicExponent;
             }
@@ -37,7 +37,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as a PKIX RSAPublicKey structure;
         /// </summary>
-        public virtual PKIXPublicKeyRSA PKIXPublicKeyRSA => new PKIXPublicKeyRSA() {
+        public virtual PkixPublicKeyRsa PKIXPublicKeyRSA => new PkixPublicKeyRsa() {
             Modulus = N,
             PublicExponent = E
             };
@@ -74,7 +74,7 @@ namespace Goedel.Cryptography.Jose {
         /// <param name="KeyPair">An RSA key Pair.</param>
         public PrivateKeyRSA(KeyPairBaseRSA KeyPair) {
             Kid = KeyPair.KeyIdentifier;
-            var RSAPrivateKey = KeyPair.PKIXPrivateKeyRSA;
+            var RSAPrivateKey = KeyPair.PkixPrivateKeyRSA;
             Assert.AssertNotNull(RSAPrivateKey, NotExportable.Throw);
 
 
@@ -93,7 +93,7 @@ namespace Goedel.Cryptography.Jose {
         /// Construct from a PKIX RSAPublicKey structure.
         /// </summary>
         /// <param name="RSAPrivateKey">RSA Public Key.</param>
-        public PrivateKeyRSA(PKIXPrivateKeyRSA RSAPrivateKey) {
+        public PrivateKeyRSA(PkixPrivateKeyRsa RSAPrivateKey) {
             N = RSAPrivateKey.Modulus;
             E = RSAPrivateKey.PublicExponent;
             D = RSAPrivateKey.PrivateExponent;
@@ -107,7 +107,7 @@ namespace Goedel.Cryptography.Jose {
         /// <summary>
         /// Return the parameters as PKIX RSAPrivateKey structure;
         /// </summary>
-        public virtual PKIXPrivateKeyRSA PKIXPrivateKeyRSA => new PKIXPrivateKeyRSA() {
+        public virtual PkixPrivateKeyRsa PKIXPrivateKeyRSA => new PkixPrivateKeyRsa() {
             Modulus = N,
             PublicExponent = E,
             PrivateExponent = D,

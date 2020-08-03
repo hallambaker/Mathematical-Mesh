@@ -100,8 +100,8 @@ namespace Goedel.Mesh.Client {
 
         void Register(ContextAccount contextMesh) {
             var machine = contextMesh.CatalogedMachine;
-            DictionaryUDFContextMesh.Remove(machine.ID);
-            DictionaryUDFContextMesh.Add(machine.ID, contextMesh);
+            DictionaryUDFContextMesh.Remove(machine.Id);
+            DictionaryUDFContextMesh.Add(machine.Id, contextMesh);
             if (machine.Local != null) {
                 DictionaryLocalContextMesh.AddSafe(machine.Local, contextMesh);
                 }
@@ -227,7 +227,7 @@ namespace Goedel.Mesh.Client {
 
             admin.Future();
 
-            var key = localName ?? ContainerHost?.DefaultEntry?.ID;
+            var key = localName ?? ContainerHost?.DefaultEntry?.Id;
             return LocateMesh(key);
             }
 
@@ -244,7 +244,7 @@ namespace Goedel.Mesh.Client {
 
             switch (machine) {
                 case CatalogedPending catalogedPending: {
-                    var contextPending = LocateMesh(catalogedPending.ID) as ContextMeshPending;
+                    var contextPending = LocateMesh(catalogedPending.Id) as ContextMeshPending;
                     return contextPending.Complete();
                     }
                 case CatalogedPreconfigured catalogedPreconfigured: {

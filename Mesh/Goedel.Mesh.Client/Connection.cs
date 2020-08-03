@@ -15,7 +15,7 @@ namespace Goedel.Mesh.Client {
     public partial class CatalogedMachine {
 
         ///<summary>The unique identifier.</summary>
-        public override string _PrimaryKey => ID;
+        public override string _PrimaryKey => Id;
 
         ///<summary>The device profile</summary>
         public virtual ProfileDevice ProfileDevice => throw new NYI();

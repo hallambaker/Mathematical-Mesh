@@ -91,7 +91,7 @@ namespace Goedel.Mesh.Client {
         ///Unique object instance identifier.
         /// </summary>
 
-		public virtual string						ID  {get; set;}
+		public virtual string						Id  {get; set;}
         /// <summary>
         ///Local short name for the profile
         /// </summary>
@@ -160,10 +160,10 @@ namespace Goedel.Mesh.Client {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			if (ID != null) {
+			if (Id != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("ID", 1);
-					_writer.WriteString (ID);
+				_writer.WriteToken ("Id", 1);
+					_writer.WriteString (Id);
 				}
 			if (Local != null) {
 				_writer.WriteObjectSeparator (ref _first);
@@ -218,8 +218,8 @@ namespace Goedel.Mesh.Client {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
-				case "ID" : {
-					ID = jsonReader.ReadString ();
+				case "Id" : {
+					Id = jsonReader.ReadString ();
 					break;
 					}
 				case "Local" : {

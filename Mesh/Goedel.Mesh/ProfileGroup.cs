@@ -44,11 +44,11 @@ namespace Goedel.Mesh {
             var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
             var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
 
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            OfflineSignature = new KeyData(keySign.KeyPairPublic());
+            AccountEncryption = new KeyData(keyEncrypt.KeyPairPublic());
 
             if (persist == true) {
-                keyCollection.Persist(KeyOfflineSignature.UDF, secretSeed, false);
+                keyCollection.Persist(OfflineSignature.UDF, secretSeed, false);
                 }
 
             Sign(keySign);
@@ -64,8 +64,8 @@ namespace Goedel.Mesh {
         /// <param name="keyEncrypt">The encryption key.</param>
         public ProfileGroup(
             KeyPair keySign, KeyPair keyEncrypt) {
-            KeyOfflineSignature = new KeyData(keySign.KeyPairPublic());
-            KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
+            OfflineSignature = new KeyData(keySign.KeyPairPublic());
+            AccountEncryption = new KeyData(keyEncrypt.KeyPairPublic());
             }
 
 
@@ -112,7 +112,7 @@ namespace Goedel.Mesh {
                     Contact user) {
 
 
-            var key = keyCollection.LocatePrivateKeyPair(KeyEncryption.UDF) as KeyPairAdvanced;
+            var key = keyCollection.LocatePrivateKeyPair(AccountEncryption.UDF) as KeyPairAdvanced;
             throw new NYI();
 
             //key.GenerateRecryptionPair(out var serviceKey, out var deviceKey);

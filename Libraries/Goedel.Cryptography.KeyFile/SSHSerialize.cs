@@ -183,7 +183,7 @@ namespace Goedel.Cryptography.KeyFile {
         public byte[] Modulus;
 
         /// <summary>The RSA Key Pair</summary>
-        public PKIXPublicKeyRSA RSAPublicKey => new PKIXPublicKeyRSA() {
+        public PkixPublicKeyRsa RSAPublicKey => new PkixPublicKeyRsa() {
             Modulus = Modulus,
             PublicExponent = Exponent
             };
@@ -197,7 +197,7 @@ namespace Goedel.Cryptography.KeyFile {
         /// </summary>
         /// <param name="RSAKeyPair">Keypair to construct from</param>
         public SSH_RSA(KeyPairBaseRSA RSAKeyPair) {
-            var PKIXPublicKeyRSA = RSAKeyPair.PKIXPublicKeyRSA;
+            var PKIXPublicKeyRSA = RSAKeyPair.PkixPublicKeyRsa;
             Exponent = PKIXPublicKeyRSA.PublicExponent;
             Modulus = PKIXPublicKeyRSA.Modulus;
             }

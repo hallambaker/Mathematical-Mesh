@@ -3819,9 +3819,9 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// PKIXPublicKeyRSA 
+	/// PkixPublicKeyRsa 
     /// </summary>
-	public partial class PKIXPublicKeyRSA : Goedel.ASN.Root {
+	public partial class PkixPublicKeyRsa : Goedel.ASN.Root {
 
 		/// <summary> ASN.1 member Modulus </summary>
 		public byte []  Modulus  {get; set;}
@@ -3867,9 +3867,9 @@ namespace Goedel.Cryptography.PKIX {
 
 		}
     /// <summary>
-	/// PKIXPrivateKeyRSA 
+	/// PkixPrivateKeyRsa 
     /// </summary>
-	public partial class PKIXPrivateKeyRSA : Goedel.ASN.Root {
+	public partial class PkixPrivateKeyRsa : Goedel.ASN.Root {
 
 		/// <summary> ASN.1 member Version </summary>
 		public int  Version  {get; set;}

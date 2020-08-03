@@ -235,7 +235,7 @@ namespace Goedel.Cryptography {
     /// <param name="pkixParameters"></param>
     /// <returns></returns>
     public delegate KeyPair FactoryRSAPublicKeyDelegate(
-        PKIXPublicKeyRSA pkixParameters);
+        PkixPublicKeyRsa pkixParameters);
 
 
     /// <summary>
@@ -247,7 +247,7 @@ namespace Goedel.Cryptography {
     /// the value of <paramref name="keyType"/></param>
     /// <returns>the created key pair</returns>
     public delegate KeyPair FactoryRSAPrivateKeyDelegate(
-            PKIXPrivateKeyRSA pkixParameters,
+            PkixPrivateKeyRsa pkixParameters,
             KeySecurity keyType, KeyCollection keyCollection);
 
     /// <summary>
@@ -258,12 +258,12 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// Return private key parameters in PKIX structure
         /// </summary>
-        public abstract PKIXPrivateKeyRSA PKIXPrivateKeyRSA { get; }
+        public abstract PkixPrivateKeyRsa PkixPrivateKeyRSA { get; }
 
         /// <summary>
         /// Return public key parameters in PKIX structure
         /// </summary>
-        public abstract PKIXPublicKeyRSA PKIXPublicKeyRSA { get; }
+        public abstract PkixPublicKeyRsa PkixPublicKeyRsa { get; }
 
         /// <summary>
         /// Construct a KeyPair entry from PKIX parameters. Defaults to the built in
@@ -284,7 +284,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="pkixKey">The public key parameters.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPair Create(PKIXPublicKeyRSA pkixKey) =>
+        public static KeyPair Create(PkixPublicKeyRsa pkixKey) =>
             KeyPairPublicFactory(pkixKey);
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Goedel.Cryptography {
         /// </summary>
         /// <param name="pkixKey">The private key parameters.</param>
         /// <returns>The created key pair.</returns>
-        public static KeyPair Create(PKIXPrivateKeyRSA pkixKey = null) =>
+        public static KeyPair Create(PkixPrivateKeyRsa pkixKey = null) =>
             KeyPairPrivateFactory(pkixKey, KeySecurity.Exportable, null);
 
         }

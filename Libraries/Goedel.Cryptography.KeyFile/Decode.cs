@@ -104,12 +104,12 @@ namespace Goedel.Cryptography.KeyFile {
                 if (TaggedData.Tag == "RSAPRIVATEKEY") {
                     // is ASN.1 format DER modulus/exponent etc.
 
-                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    var RSAPrivate = new PkixPrivateKeyRsa(TaggedData.Data);
                     return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
                     }
                 else if (TaggedData.Tag == "RSAPUBLICKEY") {
                     // is ASN.1 format DER modulus/exponent
-                    var RSAPrivate = new PKIXPrivateKeyRSA(TaggedData.Data);
+                    var RSAPrivate = new PkixPrivateKeyRsa(TaggedData.Data);
                     return KeyPairBaseRSA.KeyPairPrivateFactory(RSAPrivate, keySecurity, keyCollection);
                     }
                 else if (TaggedData.Tag == "SSH2PUBLICKEY") {

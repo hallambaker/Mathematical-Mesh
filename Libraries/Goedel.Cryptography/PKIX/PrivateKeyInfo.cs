@@ -63,20 +63,20 @@ namespace Goedel.Cryptography.PKIX {
 
 
 
-    public partial class PKIXPrivateKeyRSA {
+    public partial class PkixPrivateKeyRsa {
 
 
         /// <summary>
         /// Default constructor, create empty structure.
         /// </summary>
-        public PKIXPrivateKeyRSA() {
+        public PkixPrivateKeyRsa() {
             }
 
         /// <summary>
         /// Create structure from ASN1 data
         /// </summary>
         /// <param name="Data">The encoded private key data</param>
-        public PKIXPrivateKeyRSA(byte[] Data) {
+        public PkixPrivateKeyRsa(byte[] Data) {
             var Buffer = new global::Goedel.ASN.DecodeBuffer(Data);
             Decode(Buffer);
             }

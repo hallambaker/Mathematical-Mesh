@@ -42,7 +42,7 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The private key data formatted as a PKIX KeyInfo data blob.
         /// </summary>
-        public override IPKIXPublicKey PKIXPublicKey => KeyGroup.PKIXPublicKey;
+        public override IPkixPublicKey PkixPublicKey => KeyGroup.PkixPublicKey;
 
         ///<summary>If true, the key only has access to public key values. This is always true for 
         ///a partial key.</summary>

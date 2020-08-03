@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Client {
 
         public override Connection Connection => throw new NotImplementedException();
 
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => throw new NotImplementedException();
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => throw new NotImplementedException();
 
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Goedel.Mesh.Client {
             // Create a pending connection entry.
             var profileDevice = CatalogedPreconfigured.ProfileDevice;
             var catalogedPending = new CatalogedPending() {
-                ID = profileDevice.UDF,
+                Id = profileDevice.UDF,
                 DeviceUDF = profileDevice.UDF,
                 AccountAddress = messageClaim.Sender,
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
@@ -139,7 +139,7 @@ namespace Goedel.Mesh.Client {
 
             var catalogedPreconfig = new CatalogedPreconfigured() {
                 EnvelopedProfileDevice = profileDevice.DareEnvelope,
-                ID = profileDevice.UDF,
+                Id = profileDevice.UDF,
                 ServiceAuthenticator = serviceAuthenticator,
                 DeviceAuthenticator = deviceAuthenticator,
                 PublicationId = publicationID,

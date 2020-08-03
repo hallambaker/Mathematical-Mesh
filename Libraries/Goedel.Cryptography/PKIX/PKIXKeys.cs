@@ -30,7 +30,7 @@
     /// Interface permitting Key classes to be managed as if they inherited from
     /// a common base class.
     /// </summary>
-    public interface IPKIXPublicKey : IPKIXData {
+    public interface IPkixPublicKey : IPKIXData {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -42,7 +42,7 @@
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        IPKIXPublicKey PublicParameters { get; }
+        IPkixPublicKey PublicParameters { get; }
 
         }
 
@@ -51,7 +51,7 @@
     /// Interface permitting Key classes to be managed as if they inherited from
     /// a common base class.
     /// </summary>
-    public interface IPKIXPrivateKey : IPKIXPublicKey {
+    public interface IPKIXPrivateKey : IPkixPublicKey {
 
         }
 
@@ -63,7 +63,7 @@
         }
 
 
-    public partial class PKIXPublicKeyDH : IPKIXPublicKey, IKeyPublicDH {
+    public partial class PKIXPublicKeyDH : IPkixPublicKey, IKeyPublicDH {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -84,7 +84,7 @@
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => this;
+        public IPkixPublicKey PublicParameters => this;
 
         }
 
@@ -109,7 +109,7 @@
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => PKIXPublicKeyDH;
+        public IPkixPublicKey PublicParameters => PKIXPublicKeyDH;
 
 
         /// <summary>
@@ -132,7 +132,7 @@
 
 
 
-    public partial class PKIXPublicKeyRSA : IPKIXPublicKey {
+    public partial class PkixPublicKeyRsa : IPkixPublicKey {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -153,11 +153,11 @@
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => this;
+        public IPkixPublicKey PublicParameters => this;
 
         }
 
-    public partial class PKIXPrivateKeyRSA : IPKIXPrivateKey {
+    public partial class PkixPrivateKeyRsa : IPKIXPrivateKey {
 
         /// <summary>
         /// Construct a PKIX SubjectPublicKeyInfo block
@@ -178,15 +178,15 @@
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public IPKIXPublicKey PublicParameters => PKIXPublicKeyRSA;
+        public IPkixPublicKey PublicParameters => PKIXPublicKeyRSA;
 
 
         /// <summary>
         /// Return the corresponding public parameters
         /// </summary>
-        public PKIXPublicKeyRSA PKIXPublicKeyRSA {
+        public PkixPublicKeyRsa PKIXPublicKeyRSA {
             get {
-                _PKIXPublicKeyRSA ??= new PKIXPublicKeyRSA() {
+                _PKIXPublicKeyRSA ??= new PkixPublicKeyRsa() {
                     Modulus = Modulus,
                     PublicExponent = PublicExponent
                     };
@@ -194,7 +194,7 @@
                 }
             }
 
-        PKIXPublicKeyRSA _PKIXPublicKeyRSA = null;
+        PkixPublicKeyRsa _PKIXPublicKeyRSA = null;
 
         }
 

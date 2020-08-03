@@ -42,7 +42,7 @@ namespace Goedel.Mesh.Client {
         string storesDirectory;
 
         ///<summary>Dictionarry used to create stores</summary>
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryStoreDelegates => stores;
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;
         Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
             {SpoolInbound.Label, SpoolInbound.Factory},
             {SpoolOutbound.Label, SpoolOutbound.Factory},
@@ -128,15 +128,15 @@ namespace Goedel.Mesh.Client {
                 };
 
             var capabilityMember = new CapabilityDecryptPartial() {
-                Id = ProfileGroup.KeyEncryption.UDF,
-                SubjectId = ProfileGroup.KeyEncryption.UDF,
+                Id = ProfileGroup.AccountEncryption.UDF,
+                SubjectId = ProfileGroup.AccountEncryption.UDF,
                 ServiceAddress = AccountAddress,
                 KeyDataEncryptionKey = userEncryptionKey
                 };
 
 
             var keyGenerate = ContextAccount.GetCatalogCapability().TryFindKeyGenerate(
-                            ProfileGroup.KeyEncryption.UDF);
+                            ProfileGroup.AccountEncryption.UDF);
             keyGenerate.CreateShares(capabilityService, capabilityMember);
 
             // Fix up the identifiers.
