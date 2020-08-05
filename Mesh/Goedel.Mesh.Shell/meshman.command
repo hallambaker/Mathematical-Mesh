@@ -44,6 +44,8 @@
 	OptionSet AccountOptions
 		Option AccountAddress "account" String
 			Brief "Account identifier (e.g. alice@example.com) or profile fingerprint"
+		Option LocalName "local" String
+			Brief "Local name for account (e.g. personal)"
 
 	OptionSet DeviceProfileInfo
 		Option DeviceNew "new" Flag
@@ -196,15 +198,6 @@
 			Include AccountOptions
 			Include Reporting
 			Option AutoApprove "auto" Flag
-
-
-		Command AccountRegister "register"
-			Brief "Register existing profile at a new portal"
-			Parameter NewAccountID "account" String
-				Brief "New account"
-			Include Reporting
-			Include AccountOptions
-			Include DeviceProfileInfo
 
 		Command AccountGetPIN "pin"
 			Brief "Get a pin value to pre-authorize a connection"

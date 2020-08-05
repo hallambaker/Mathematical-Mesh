@@ -27,8 +27,6 @@ namespace Goedel.XUnit {
 
             Dispatch($"account hello {AliceService1}");
 
-            Dispatch($"account register {AliceService1}");
-
             var result1 = Dispatch($"account status");
 
 
@@ -49,11 +47,11 @@ namespace Goedel.XUnit {
         public string MalletDevice1 = "Mallet1";
 
         [Fact]
-        public void TestEscrowMeshOnly() {
+        public void TestEscrowChangeDevice() {
 
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
 
-            var ProfileCreateAlice = testCLIAlice1.Example($"account create");
+            var ProfileCreateAlice = testCLIAlice1.Example($"account create  {AccountA}");
             var AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
             var ProfileList = testCLIAlice1.Example($"account list");
@@ -75,9 +73,9 @@ namespace Goedel.XUnit {
             }
 
         [Fact]
-        public void TestEscrowAccountService() {
+        public void TestEscrowDeleteDevice() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"account create /service={AccountA}");
+            testCLIAlice1.Dispatch($"account create {AccountA}");
 
             var ProfileEscrow = testCLIAlice1.Example($"account escrow");
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
@@ -94,11 +92,31 @@ namespace Goedel.XUnit {
             }
 
 
+        [Fact]
+        public void TestEscrowChangeService() {
+            var testCLIAlice1 = GetTestCLI(AliceDevice1);
+            testCLIAlice1.Dispatch($"account create {AccountA}");
+
+            var ProfileEscrow = testCLIAlice1.Example($"account escrow");
+            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+
+            var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
+
+            var testCLIAlice2 = GetTestCLI(AliceDevice2);
+            var ProfileRecover = testCLIAlice2.Example($"account recover  {AccountA2} {share1} {share2} /verify");
+
+            testCLIAlice2.Dispatch($"account sync");
+
+            "Should add much more test functionality here".TaskTest();
+            }
+
+
 
         [Fact]
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"account create AccountA");
+            testCLIAlice1.Dispatch($"account create {AccountA}");
 
             var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
 
@@ -112,27 +130,12 @@ namespace Goedel.XUnit {
         public void TestConnectRequest() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
             var testCLIAlice2 = GetTestCLI(AliceDevice2);
-
             var testCLIMallet1 = GetTestCLI(MalletDevice1);
 
             var ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             var ResultHello = ProfileHello[0].Result as ResultHello;
 
-            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create  AliceService1");
-
-
-
-
-
-            //JSONReader.Trace = true;
-
-            // here add the service
-
-            // Error: This is failing because there is no entry in Alice/Keys and Profiles/Host.Dare is empty
-            var CommandsAddServiceAlice = testCLIAlice1.ExampleNoCatch($"account register {AliceService1}");
-            var ProfileSync = testCLIAlice1.Example($"account sync");
-
-
+            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create {AliceService1}");
 
 
             // ToDo: need to add a flow for an administration QR code push and implement the QR code document.

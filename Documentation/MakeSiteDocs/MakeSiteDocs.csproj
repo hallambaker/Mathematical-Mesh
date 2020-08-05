@@ -88,11 +88,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Web\CommandsetMesh.cs">
-      <DependentUpon>CommandsetMesh.script</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Update="Web\CommandsetAccount.cs">
       <DependentUpon>CommandsetAccount.script</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -218,10 +213,6 @@
     </None>
     <None Update="Web\UserGuide.script">
       <LastGenOutput>UserGuide.cs</LastGenOutput>
-      <Generator>gscript</Generator>
-    </None>
-    <None Update="Web\CommandsetMesh.script">
-      <LastGenOutput>CommandsetMesh.cs</LastGenOutput>
       <Generator>gscript</Generator>
     </None>
     <None Update="Web\CommandsetAccount.script">

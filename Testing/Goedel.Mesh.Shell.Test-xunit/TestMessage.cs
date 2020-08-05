@@ -145,7 +145,7 @@ namespace Goedel.XUnit {
             }
 
         Result MakeAccount(TestCLI device, string account) {
-            var result = device.Dispatch($"mesh create /service={account}");
+            var result = device.Dispatch($"account create {account}");
 
             // check there is the correct contact entry for this account.
             ValidContact(device, account);

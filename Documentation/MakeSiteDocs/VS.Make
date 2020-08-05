@@ -46,7 +46,6 @@ ToolTargets = \
 	Web\CommandsetAccount.cs\
 	Web\ToDo.cs\
 	Web\UserGuide.cs\
-	Web\CommandsetMesh.cs\
 	Web\CommandsetAccount.cs\
 	Web\CommandsetMail.cs\
 	Web\CommandsetSSH.cs\
@@ -63,6 +62,7 @@ ToolTargets = \
 	Web\CommandsetHash.cs\
 	Web\CommandsetContainer.cs\
 	Web\CommandsetDevice.cs
+
 Exceptions.cs : Exceptions.exceptional 
 	exceptional Exceptions.exceptional  /cs  Exceptions.cs
 
@@ -92,9 +92,6 @@ Web\ToDo.cs : Web\ToDo.script
 
 Web\UserGuide.cs : Web\UserGuide.script 
 	gscript Web\UserGuide.script  Web\UserGuide.cs
-
-Web\CommandsetMesh.cs : Web\CommandsetMesh.script 
-	gscript Web\CommandsetMesh.script  Web\CommandsetMesh.cs
 
 Web\CommandsetAccount.cs : Web\CommandsetAccount.script 
 	gscript Web\CommandsetAccount.script  Web\CommandsetAccount.cs

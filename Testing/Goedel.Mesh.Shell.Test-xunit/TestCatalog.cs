@@ -67,9 +67,9 @@ namespace Goedel.XUnit {
             // then test import into the catalog from the file.
 
             // create the accounts
-            device1.Dispatch($"mesh create /service={AccountA}");
-            device2.Dispatch($"mesh create /service={AccountB}");
-            device3.Dispatch($"mesh create /service={AccountC}");
+            device1.Dispatch($"account create {AccountA}");
+            device2.Dispatch($"account create {AccountB}");
+            device3.Dispatch($"account create {AccountC}");
 
             // Check each account has exactly the right set of contacts (i.e. self):
             ValidContact(device1, AccountA);

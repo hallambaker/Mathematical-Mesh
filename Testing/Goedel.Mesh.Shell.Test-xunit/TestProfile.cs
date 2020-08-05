@@ -10,6 +10,8 @@ using Xunit;
 namespace Goedel.XUnit {
     public partial class ShellTests {
         string AccountA => "alice@example.com";
+        string AccountA2 => "alice@example.net";
+
         string AccountB => "bob@example.com";
         string AccountC => "carol@example.com";
         string AccountQ => "quartermaster@example.com";
@@ -45,7 +47,7 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create /service={AccountA}");
+            device1.Dispatch($"account create {AccountA}");
 
             device1.CheckHostCatalogExtended();
 
@@ -89,7 +91,8 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create /service={accountA}");
+
+            device1.Dispatch($"account create {AccountA}");
 
             device1.Connect(device2, accountA);
             device1.Connect(device3, accountA);
@@ -103,7 +106,8 @@ namespace Goedel.XUnit {
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"mesh create /service={accountA}");
+
+            device1.Dispatch($"account create {AccountA}");
 
             var result = device1.Dispatch($"account pin /expire 0") as ResultPIN;
             Thread.Sleep(1000); // make sure that the PIN expires
@@ -125,7 +129,8 @@ namespace Goedel.XUnit {
             var device1 = GetTestCLI("Device1");
             var device2 = GetTestCLI("Device2");
 
-            device1.Dispatch($"mesh create /service={accountA}");
+
+            device1.Dispatch($"account create {AccountA}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
@@ -148,7 +153,8 @@ namespace Goedel.XUnit {
             var device2 = GetTestCLI("Device2");
             var device3 = GetTestCLI("Device3");
 
-            device1.Dispatch($"mesh create /service={accountA}");
+
+            device1.Dispatch($"account create {AccountA}");
 
             var result = device1.Dispatch($"account pin") as ResultPIN;
 
@@ -181,7 +187,8 @@ namespace Goedel.XUnit {
             var deviceAdmin     = GetTestCLI(DeviceAdminName);
             var deviceConnect1   = GetTestCLI(DeviceConnect1Name);
 
-            deviceAdmin.Dispatch($"mesh create /service={AccountA}");
+
+            deviceAdmin.Dispatch($"account create {AccountA}");
 
             // create the connection QR code
             var invite = deviceAdmin.Dispatch($"account invite") as ResultPIN;
@@ -209,7 +216,8 @@ namespace Goedel.XUnit {
             var deviceAdmin = GetTestCLI(DeviceAdminName);
             var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 
-            deviceQ.Dispatch($"mesh create /service={AccountQ}");
+
+            deviceAdmin.Dispatch($"account create {AccountA}");
             var deviceInit = deviceQ.Dispatch($"device preconfig") as ResultPublishDevice;
 
 

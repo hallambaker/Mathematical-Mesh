@@ -207,11 +207,11 @@ namespace Goedel.Mesh.Shell {
         /// <returns>The account context.</returns>
         public virtual ContextUser GetContextAccount(IAccountOptions options) {
 
-            throw new NYI();
-            //options.Future();
-            //var contextMesh = MeshHost.GetContextMesh();
+            //throw new NYI();
+            var accountAddress = options.AccountAddress.Value;
+            var local = options.LocalName.Value;
 
-            //return contextMesh.GetContextAccount();
+            return MeshHost.GetContextMesh(accountAddress ?? local) as ContextUser;
             }
 
 

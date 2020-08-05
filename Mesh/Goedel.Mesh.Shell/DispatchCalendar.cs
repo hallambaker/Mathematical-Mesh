@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
 
         public override ShellResult CalendarAdd(CalendarAdd Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var title = Options.Title.Value;
             var identifier = Options.Identifier.Value ?? UDF.Nonce();
 
@@ -24,9 +24,9 @@ namespace Goedel.Mesh.Shell {
                 Key = identifier,
                 Title = title
                 };
-            using (var catalog = contextAccount.GetCatalogCalendar()) {
-                catalog.Update(entry);
-                }
+            var catalog = contextAccount.GetCatalogCalendar();
+            catalog.Update(entry);
+
 
             return new ResultEntry() {
                 Success = true,
@@ -41,7 +41,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarImport(CalendarImport Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             "Implement file import functionality".TaskFunctionality(true);
 
             var identifier = Options.Identifier.Value ?? UDF.Nonce();
@@ -49,9 +49,9 @@ namespace Goedel.Mesh.Shell {
             var entry = new CatalogedTask() {
                 Key = identifier
                 };
-            using (var catalog = contextAccount.GetCatalogCalendar()) {
-                catalog.Update(entry);
-                }
+
+            var catalog = contextAccount.GetCatalogCalendar();
+            catalog.Update(entry);
 
             return new ResultEntry() {
                 Success = true,
@@ -65,10 +65,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarDelete(CalendarDelete Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var identifier = Options.Identifier.Value;
 
-            using var catalog = contextAccount.GetCatalogCalendar();
+            var catalog = contextAccount.GetCatalogCalendar();
             var result = catalog.Locate(identifier);
             result.AssertNotNull(EntryNotFound.Throw, identifier);
             catalog.Delete(result);
@@ -85,8 +85,8 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult CalendarGet(CalendarGet Options) {
-            using var contextAccount = GetContextAccount(Options);
-            using var catalog = contextAccount.GetCatalogCalendar();
+            var contextAccount = GetContextAccount(Options);
+            var catalog = contextAccount.GetCatalogCalendar();
             var identifier = Options.Identifier.Value;
 
             var result = catalog.Locate(identifier);

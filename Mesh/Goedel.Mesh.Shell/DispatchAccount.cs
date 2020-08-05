@@ -84,26 +84,6 @@ namespace Goedel.Mesh.Shell {
 
 
         /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountRegister(AccountRegister Options) {
-            using var contextAccount = GetContextAccount(Options); //GetContextMeshAdmin(Options);
-
-            throw new NYI();
-
-            //contextAccount.AddService(Options.NewAccountID.Value);
-
-            //return new ResultRegisterService() {
-            //    Success = true,
-            //    AccountAddress = contextAccount.AccountAddress,
-            //    ActivationAccount = contextAccount.ActivationAccount,
-            //    ProfileAccount = contextAccount.ProfileAccount
-            //    };
-            }
-
-        /// <summary>
         /// Dispatch method, returns a connection PIN code for the account.
         /// Requires administrative privileges.
         /// </summary>

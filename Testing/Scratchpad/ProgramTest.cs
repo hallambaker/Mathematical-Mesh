@@ -33,62 +33,50 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-            // ** Fast access to simple tests for regression fixing.
-            //TestService.Test().MeshCatalogAccount();
-            //ShellTests.Test().TestMessageContactInPerson();
+            // Target for Thursday:
+            TestService.Test().MeshEscrowRecover();
+            ShellTests.Test().TestAccountDelete();
+            ShellTests.Test().TestEscrowChangeDevice();
+            ShellTests.Test().TestEscrowChangeService();
+            ShellTests.Test().TestEscrowDeleteDevice();
 
-            // New service tests to ease shell testing
-
-            //// Escrow/recover capability
-            //TestService.Test().MeshEscrowRecover();
-            
-            //// Grant of Admin and Messaging privs
-            //TestService.Test().MeshGrantPrivs();
+            // Target for Friday
 
             //// Connect by dynamic QR
             //TestService.Test().MeshDeviceConnectDynamicQR();
 
-
-            ShellTests.Test().TestAccount();
-            // ***** Currently failing tests
-
-
-            // ** Just need some testing on the PIN expiry/reuse stuff.
-
-            //****The PIN is not being marked as used.
+            //ShellTests.Test().TestProfileConnectPin();
+            //ShellTests.Test().TestProfileConnectPinInvalid();
+            //ShellTests.Test().TestProfileConnectPinExpired();
             //ShellTests.Test().TestProfileConnectPinReused();
-
-            //****This is failing because the PIN code is not type Encryption or EncryptSignature
-            // This is required for EARLs.
+            //ShellTests.Test().TestProfileConnectStaticQR();
             //ShellTests.Test().TestProfileConnectDynamicQR();
 
 
-
-            //ShellTests.Test().TestAccountDelete();
-
-
-
-            // **** Needs a lot of design work
-
-            // ** Application related shell commands
-
-            //ShellTests.Test().TestProfileMail();
-            //ShellTests.Test().TestProfileSSHPrivate();
-            //ShellTests.Test().TestProfileSSHPublic();
-
-            // ** The Device Authorization stuff - nix these and restart
+            // The Auth bundle:
+            ShellTests.Test().TestMessageGroup();
+            TestService.Test().MeshGrantPrivs();
+            // [Tests will likely need a rewrite here...]
             //ShellTests.Test().TestProfileConnectAuth();
-            //ShellTests.Test().TestProfileConnectAuthAdmin();
             //ShellTests.Test().TestProfileConnectAuthAll();
 
-            // ** The whole Escrow thing
-            //ShellTests.Test().TestEscrowAccountService();
-            //ShellTests.Test().TestEscrowMeshOnly();
+
+            // The App bundle:
+            ShellTests.Test().TestProfileMail();
+            ShellTests.Test().TestProfileSSHPrivate();
+            ShellTests.Test().TestProfileSSHPublic();
 
 
 
 
             // **** Tests yet to be written
+
+            // ** DARE Sign
+
+            // ** Mess with signature, various ways
+
+
+
 
             // ** Is the profile signed?
 
@@ -102,17 +90,6 @@ namespace Scratchpad {
 
             // ** are messages encrypted to the recipient only?
 
-
-
-            // **** Tests recently solved
-
-            //ShellTests.Test().TestMessageGroup();
-            //ShellTests.Test().TestMessageConfirmationAccept();
-            //ShellTests.Test().TestMessageConfirmationReject();
-            //ShellTests.Test().TestProfileConnectPinExpired();
-            //ShellTests.Test().TestProfileConnectPinInvalid();
-            //ShellTests.Test().TestMessageContactBusinessCardExchange();
-            //ShellTests.Test().TestProfileContact();
             }
 
 

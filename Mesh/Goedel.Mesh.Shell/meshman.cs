@@ -192,7 +192,6 @@ namespace Goedel.Mesh.Shell {
 				{"create", _AccountCreate._DescribeCommand },
 				{"status", _AccountStatus._DescribeCommand },
 				{"sync", _AccountSync._DescribeCommand },
-				{"register", _AccountRegister._DescribeCommand },
 				{"pin", _AccountGetPIN._DescribeCommand },
 				{"invite", _AccountInvite._DescribeCommand },
 				{"publish", _AccountPublish._DescribeCommand },
@@ -530,16 +529,6 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.AccountSync (Options);
-			Dispatch._PostProcess (result);
-			}
-
-		public static void Handle_AccountRegister (
-					DispatchShell  DispatchIn, string[] Args, int Index) {
-			Shell Dispatch =	DispatchIn as Shell;
-			AccountRegister		Options = new AccountRegister ();
-			ProcessOptions (Args, Index, Options);
-			Dispatch._PreProcess (Options);
-			var result = Dispatch.AccountRegister (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1547,6 +1536,7 @@ namespace Goedel.Mesh.Shell {
 
 	public interface IAccountOptions {
 		String			AccountAddress{get; set;}
+		String			LocalName{get; set;}
 		}
 
 	public interface IDeviceProfileInfo {
@@ -1618,6 +1608,7 @@ namespace Goedel.Mesh.Shell {
 							IAccountOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String ()			} ;
 
 
@@ -1633,6 +1624,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -1647,6 +1647,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
 					Index = 0,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
 					}
 				}
 			};
@@ -1876,6 +1883,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -1894,41 +1902,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -1945,32 +1962,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					}
 				}
@@ -1986,6 +2010,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -2006,50 +2031,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [auto]</summary>
-		public virtual Flag AutoApprove {
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _AutoApprove {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [auto]</summary>
+		public virtual Flag AutoApprove {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _AutoApprove {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -2066,39 +2100,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AutoApprove", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 5,
+					Index = 6,
 					Key = "auto"
 					}
 				}
@@ -2109,209 +2150,13 @@ namespace Goedel.Mesh.Shell {
     public partial class AccountSync : _AccountSync {
         } // class AccountSync
 
-    public class _AccountRegister : Goedel.Command.Dispatch ,
-							IReporting,
-							IAccountOptions,
-							IDeviceProfileInfo {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new Flag (),
-			new String (),
-			new String (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String NewAccountID {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _NewAccountID {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [new]</summary>
-		public virtual Flag DeviceNew {
-			get => _Data[6] as Flag;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _DeviceNew {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [dudf]</summary>
-		public virtual String DeviceUDF {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _DeviceUDF {
-			set => _Data[7].Parameter (value);
-			}
-		/// <summary>Field accessor for option [did]</summary>
-		public virtual String DeviceID {
-			get => _Data[8] as String;
-			set => _Data[8]  = value;
-			}
-
-		public virtual string _DeviceID {
-			set => _Data[8].Parameter (value);
-			}
-		/// <summary>Field accessor for option [dd]</summary>
-		public virtual String DeviceDescription {
-			get => _Data[9] as String;
-			set => _Data[9]  = value;
-			}
-
-		public virtual string _DeviceDescription {
-			set => _Data[9].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "register",
-			Brief =  "Register existing profile at a new portal",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountRegister,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "NewAccountID", 
-					Default = null, // null if null
-					Brief = "New account",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 5,
-					Key = "account"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceNew", 
-					Default = "false", // null if null
-					Brief = "Force creation of new device profile",
-					Index = 6,
-					Key = "new"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceUDF", 
-					Default = null, // null if null
-					Brief = "Device profile fingerprint",
-					Index = 7,
-					Key = "dudf"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceID", 
-					Default = null, // null if null
-					Brief = "Device identifier",
-					Index = 8,
-					Key = "did"
-					},
-				new DescribeEntryOption () {
-					Identifier = "DeviceDescription", 
-					Default = null, // null if null
-					Brief = "Device description",
-					Index = 9,
-					Key = "dd"
-					}
-				}
-			};
-
-		}
-
-    public partial class AccountRegister : _AccountRegister {
-        } // class AccountRegister
-
     public class _AccountGetPIN : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new Integer (),
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -2348,6 +2193,423 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "pin",
+			Brief =  "Get a pin value to pre-authorize a connection",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountGetPIN,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Length", 
+					Default = "8", // null if null
+					Brief = "Length of PIN to generate (default is 8 characters)",
+					Index = 0,
+					Key = "length"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Expire", 
+					Default = "1", // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "expire"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountGetPIN : _AccountGetPIN {
+        } // class AccountGetPIN
+
+    public class _AccountInvite : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "invite",
+			Brief =  "Create a device invitation Uri",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountInvite,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountInvite : _AccountInvite {
+        } // class AccountInvite
+
+    public class _AccountPublish : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "publish",
+			Brief =  "Create a new device profile and register the corresponding URI.",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountPublish,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountPublish : _AccountPublish {
+        } // class AccountPublish
+
+    public class _AccountConnect : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Uri {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Uri {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -2389,31 +2651,31 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "pin",
-			Brief =  "Get a pin value to pre-authorize a connection",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountGetPIN,
+			Identifier = "connect",
+			Brief =  "Connect by means of a connection uri",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountConnect,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Length", 
-					Default = "8", // null if null
-					Brief = "Length of PIN to generate (default is 8 characters)",
+				new DescribeEntryParameter () {
+					Identifier = "Uri", 
+					Default = null, // null if null
+					Brief = "The device location URI",
 					Index = 0,
-					Key = "length"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Expire", 
-					Default = "1", // null if null
-					Brief = "<Unspecified>",
-					Index = 1,
-					Key = "expire"
+					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
+					Index = 1,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -2448,356 +2710,6 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class AccountGetPIN : _AccountGetPIN {
-        } // class AccountGetPIN
-
-    public class _AccountInvite : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "invite",
-			Brief =  "Create a device invitation Uri",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountInvite,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class AccountInvite : _AccountInvite {
-        } // class AccountInvite
-
-    public class _AccountPublish : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "publish",
-			Brief =  "Create a new device profile and register the corresponding URI.",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountPublish,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class AccountPublish : _AccountPublish {
-        } // class AccountPublish
-
-    public class _AccountConnect : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Uri {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Uri {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "connect",
-			Brief =  "Connect by means of a connection uri",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountConnect,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
-					Default = null, // null if null
-					Brief = "The device location URI",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
     public partial class AccountConnect : _AccountConnect {
         } // class AccountConnect
 
@@ -2807,6 +2719,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -2838,6 +2751,182 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [quorum]</summary>
+		public virtual Integer Quorum {
+			get => _Data[7] as Integer;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Quorum {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [shares]</summary>
+		public virtual Integer Shares {
+			get => _Data[8] as Integer;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Shares {
+			set => _Data[8].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "escrow",
+			Brief =  "Create a set of key escrow shares",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountEscrow,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "Algorithms", 
+					Default = null, // null if null
+					Brief = "List of algorithm specifiers",
+					Index = 0,
+					Key = "alg"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Quorum", 
+					Default = "2", // null if null
+					Brief = "<Unspecified>",
+					Index = 7,
+					Key = "quorum"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Shares", 
+					Default = "3", // null if null
+					Brief = "<Unspecified>",
+					Index = 8,
+					Key = "shares"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountEscrow : _AccountEscrow {
+        } // class AccountEscrow
+
+    public class _AccountPurge : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[2] as Enumeration<EnumReporting>;
@@ -2874,45 +2963,27 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [quorum]</summary>
-		public virtual Integer Quorum {
-			get => _Data[6] as Integer;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Quorum {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for option [shares]</summary>
-		public virtual Integer Shares {
-			get => _Data[7] as Integer;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Shares {
-			set => _Data[7].Parameter (value);
-			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "escrow",
-			Brief =  "Create a set of key escrow shares",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountEscrow,
+			Identifier = "purge",
+			Brief =  "Purge the Mesh recovery key from this device",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountPurge,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "Algorithms", 
-					Default = null, // null if null
-					Brief = "List of algorithm specifiers",
-					Index = 0,
-					Key = "alg"
-					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
+					Index = 0,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -2941,131 +3012,6 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 5,
 					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Quorum", 
-					Default = "2", // null if null
-					Brief = "<Unspecified>",
-					Index = 6,
-					Key = "quorum"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Shares", 
-					Default = "3", // null if null
-					Brief = "<Unspecified>",
-					Index = 7,
-					Key = "shares"
-					}
-				}
-			};
-
-		}
-
-    public partial class AccountEscrow : _AccountEscrow {
-        } // class AccountEscrow
-
-    public class _AccountPurge : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "purge",
-			Brief =  "Purge the Mesh recovery key from this device",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountPurge,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
 					}
 				}
 			};
@@ -3080,6 +3026,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -3109,131 +3056,140 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share1 {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Share1 {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share2 {
+		public virtual String Share1 {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Share2 {
+		public virtual string _Share1 {
 			set => _Data[6].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share3 {
+		public virtual String Share2 {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Share3 {
+		public virtual string _Share2 {
 			set => _Data[7].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share4 {
+		public virtual String Share3 {
 			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Share4 {
+		public virtual string _Share3 {
 			set => _Data[8].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share5 {
+		public virtual String Share4 {
 			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Share5 {
+		public virtual string _Share4 {
 			set => _Data[9].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share6 {
+		public virtual String Share5 {
 			get => _Data[10] as String;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Share6 {
+		public virtual string _Share5 {
 			set => _Data[10].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share7 {
+		public virtual String Share6 {
 			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Share7 {
+		public virtual string _Share6 {
 			set => _Data[11].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Share8 {
+		public virtual String Share7 {
 			get => _Data[12] as String;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Share8 {
+		public virtual string _Share7 {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual ExistingFile File {
-			get => _Data[13] as ExistingFile;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Share8 {
+			get => _Data[13] as String;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Share8 {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verify]</summary>
-		public virtual Flag Verify {
-			get => _Data[14] as Flag;
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual ExistingFile File {
+			get => _Data[14] as ExistingFile;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Verify {
+		public virtual string _File {
 			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verify]</summary>
+		public virtual Flag Verify {
+			get => _Data[15] as Flag;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _Verify {
+			set => _Data[15].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -3250,102 +3206,109 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share1", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share2", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share3", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 7,
+					Index = 8,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share4", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 8,
+					Index = 9,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share5", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 9,
+					Index = 10,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share6", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 10,
+					Index = 11,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share7", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 11,
+					Index = 12,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Share8", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 12,
+					Index = 13,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 13,
+					Index = 14,
 					Key = "file"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verify", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 14,
+					Index = 15,
 					Key = "verify"
 					}
 				}
@@ -3365,6 +3328,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String ()			} ;
 
 
@@ -3416,6 +3380,15 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[4].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[5] as String;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[5].Parameter (value);
+			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
@@ -3458,6 +3431,13 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
 					Index = 4,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 5,
+					Key = "local"
 					}
 				}
 			};
@@ -3472,6 +3452,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -3491,125 +3472,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "get",
-			Brief =  "Describe the specified profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_AccountGet,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class AccountGet : _AccountGet {
-        } // class AccountGet
-
-    public class _AccountExport : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new NewFile (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile File {
-			get => _Data[0] as NewFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
 			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _AccountAddress {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -3647,6 +3516,144 @@ namespace Goedel.Mesh.Shell {
 
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "get",
+			Brief =  "Describe the specified profile",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountGet,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountGet : _AccountGet {
+        } // class AccountGet
+
+    public class _AccountExport : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new NewFile (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[0] as NewFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -3670,32 +3677,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -3712,6 +3726,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new NewFile (),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -3740,41 +3755,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -3798,32 +3822,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -4224,116 +4255,6 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "pending",
-			Brief =  "Get list of pending connection requests",
-			HandleDelegate =  CommandLineInterpreter.Handle_DevicePending,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class DevicePending : _DevicePending {
-        } // class DevicePending
-
-    public class _DeviceComplete : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -4353,41 +4274,178 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "pending",
+			Brief =  "Get list of pending connection requests",
+			HandleDelegate =  CommandLineInterpreter.Handle_DevicePending,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class DevicePending : _DevicePending {
+        } // class DevicePending
+
+    public class _DeviceComplete : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -4404,32 +4462,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					}
 				}
@@ -4459,6 +4524,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -4595,41 +4661,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[14] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[14] as String;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[14].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[15] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[15] as Enumeration<EnumReporting>;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[15].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[16] as Flag;
 			set => _Data[16]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[16].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[17] as Flag;
 			set => _Data[17]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[17].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[18] as Flag;
+			set => _Data[18]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[18].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -4737,32 +4812,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 13,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 14,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 14,
+					Index = 15,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 15,
+					Index = 16,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 16,
+					Index = 17,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 17,
+					Index = 18,
 					Key = "json"
 					}
 				}
@@ -4778,6 +4860,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -4807,41 +4890,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -4865,32 +4957,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -4906,6 +5005,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -4935,6 +5035,151 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "Remove device from device catalog",
+			HandleDelegate =  CommandLineInterpreter.Handle_DeviceDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "DeviceID", 
+					Default = null, // null if null
+					Brief = "Device identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class DeviceDelete : _DeviceDelete {
+        } // class DeviceDelete
+
+    public class _DeviceList : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[2] as Enumeration<EnumReporting>;
@@ -4971,133 +5216,14 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "delete",
-			Brief =  "Remove device from device catalog",
-			HandleDelegate =  CommandLineInterpreter.Handle_DeviceDelete,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "DeviceID", 
-					Default = null, // null if null
-					Brief = "Device identifier",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class DeviceDelete : _DeviceDelete {
-        } // class DeviceDelete
-
-    public class _DeviceList : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for parameter []</summary>
 		public virtual String GroupID {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
 			}
 
 		public virtual string _GroupID {
-			set => _Data[5].Parameter (value);
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -5114,39 +5240,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					}
 				}
@@ -5175,6 +5308,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new Flag (),
 			new Flag (),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -5302,41 +5436,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[13] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[13] as String;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[14] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[14] as Enumeration<EnumReporting>;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[14].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[15] as Flag;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[15].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[16] as Flag;
 			set => _Data[16]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[16].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[17] as Flag;
+			set => _Data[17]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[17].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -5437,32 +5580,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 12,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 13,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 13,
+					Index = 14,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 14,
+					Index = 15,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 15,
+					Index = 16,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 16,
+					Index = 17,
 					Key = "json"
 					}
 				}
@@ -5478,6 +5628,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -5507,509 +5658,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "join",
-			Brief =  "Connect by means of a connection URI from an administration device.",
-			HandleDelegate =  CommandLineInterpreter.Handle_DeviceJoin,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
-					Default = null, // null if null
-					Brief = "The device location URI",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class DeviceJoin : _DeviceJoin {
-        } // class DeviceJoin
-
-    public class _DeviceInstall : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Profile {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Profile {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "install",
-			Brief =  "Connect by means of a connection URI from an administration device.",
-			HandleDelegate =  CommandLineInterpreter.Handle_DeviceInstall,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Profile", 
-					Default = null, // null if null
-					Brief = "The device profile",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class DeviceInstall : _DeviceInstall {
-        } // class DeviceInstall
-
-    public class _DevicePreconfigure : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "preconfig",
-			Brief =  "Generate new device profile and publish as an EARL",
-			HandleDelegate =  CommandLineInterpreter.Handle_DevicePreconfigure,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class DevicePreconfigure : _DevicePreconfigure {
-        } // class DevicePreconfigure
-
-    public class _MessageContact : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Recipient {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Recipient {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "contact",
-			Brief =  "Post a conection request to a user",
-			HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Recipient", 
-					Default = null, // null if null
-					Brief = "The recipient to send the conection request to",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class MessageContact : _MessageContact {
-        } // class MessageContact
-
-    public class _MessageConfirm : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Recipient {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Recipient {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Text {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Text {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AccountAddress {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -6051,31 +5706,31 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "confirm",
-			Brief =  "Post a confirmation request to a user",
-			HandleDelegate =  CommandLineInterpreter.Handle_MessageConfirm,
+			Identifier = "join",
+			Brief =  "Connect by means of a connection URI from an administration device.",
+			HandleDelegate =  CommandLineInterpreter.Handle_DeviceJoin,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Recipient", 
+					Identifier = "Uri", 
 					Default = null, // null if null
-					Brief = "The recipient to send the confirmation request to",
+					Brief = "The device location URI",
 					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Text", 
-					Default = null, // null if null
-					Brief = "The recipient to send the confirmation request to",
-					Index = 1,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
+					Index = 1,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -6110,14 +5765,160 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class MessageConfirm : _MessageConfirm {
-        } // class MessageConfirm
+    public partial class DeviceJoin : _DeviceJoin {
+        } // class DeviceJoin
 
-    public class _MessagePending : Goedel.Command.Dispatch ,
+    public class _DeviceInstall : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Profile {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Profile {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "install",
+			Brief =  "Connect by means of a connection URI from an administration device.",
+			HandleDelegate =  CommandLineInterpreter.Handle_DeviceInstall,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Profile", 
+					Default = null, // null if null
+					Brief = "The device profile",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class DeviceInstall : _DeviceInstall {
+        } // class DeviceInstall
+
+    public class _DevicePreconfigure : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -6137,41 +5938,485 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "preconfig",
+			Brief =  "Generate new device profile and publish as an EARL",
+			HandleDelegate =  CommandLineInterpreter.Handle_DevicePreconfigure,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class DevicePreconfigure : _DevicePreconfigure {
+        } // class DevicePreconfigure
+
+    public class _MessageContact : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Recipient {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Recipient {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "contact",
+			Brief =  "Post a conection request to a user",
+			HandleDelegate =  CommandLineInterpreter.Handle_MessageContact,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Recipient", 
+					Default = null, // null if null
+					Brief = "The recipient to send the conection request to",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class MessageContact : _MessageContact {
+        } // class MessageContact
+
+    public class _MessageConfirm : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Recipient {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Recipient {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Text {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Text {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "confirm",
+			Brief =  "Post a confirmation request to a user",
+			HandleDelegate =  CommandLineInterpreter.Handle_MessageConfirm,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Recipient", 
+					Default = null, // null if null
+					Brief = "The recipient to send the confirmation request to",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Text", 
+					Default = null, // null if null
+					Brief = "The recipient to send the confirmation request to",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class MessageConfirm : _MessageConfirm {
+        } // class MessageConfirm
+
+    public class _MessagePending : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6188,32 +6433,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					}
 				}
@@ -6229,6 +6481,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -6258,41 +6511,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6316,32 +6578,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -6357,6 +6626,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -6386,41 +6656,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6444,32 +6723,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -6485,6 +6771,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -6514,41 +6801,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6572,32 +6868,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -6613,6 +6916,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -6640,6 +6944,153 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "block",
+			Brief =  "Reject a pending request and block requests from that source",
+			HandleDelegate =  CommandLineInterpreter.Handle_MessageBlock,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "RequestID", 
+					Default = null, // null if null
+					Brief = "Specifies the request to reject and block",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class MessageBlock : _MessageBlock {
+        } // class MessageBlock
+
+    public class _GroupCreate : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							ICryptoOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -6678,144 +7129,23 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "block",
-			Brief =  "Reject a pending request and block requests from that source",
-			HandleDelegate =  CommandLineInterpreter.Handle_MessageBlock,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "RequestID", 
-					Default = null, // null if null
-					Brief = "Specifies the request to reject and block",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class MessageBlock : _MessageBlock {
-        } // class MessageBlock
-
-    public class _GroupCreate : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							ICryptoOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [alg]</summary>
 		public virtual String Algorithms {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Algorithms {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Algorithms {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _GroupID {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6832,46 +7162,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 5,
+					Index = 6,
 					Key = "alg"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -6888,6 +7225,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -6908,59 +7246,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String MemberID {
+		public virtual String GroupID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _MemberID {
+		public virtual string _GroupID {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String MemberID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _MemberID {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -6977,46 +7324,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "MemberID", 
 					Default = null, // null if null
 					Brief = "User to add",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -7033,6 +7387,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -7053,59 +7408,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String MemberID {
+		public virtual String GroupID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _MemberID {
+		public virtual string _GroupID {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String MemberID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _MemberID {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7122,46 +7486,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "MemberID", 
 					Default = null, // null if null
 					Brief = "User to find",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -7178,6 +7549,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -7198,59 +7570,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual String MemberID {
+		public virtual String GroupID {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _MemberID {
+		public virtual string _GroupID {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String MemberID {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _MemberID {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7267,46 +7648,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "MemberID", 
 					Default = null, // null if null
 					Brief = "User to delete",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -7322,6 +7710,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -7342,50 +7731,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String GroupID {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _GroupID {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String GroupID {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _GroupID {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7402,39 +7800,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "GroupID", 
 					Default = null, // null if null
 					Brief = "Recryption group name in user@example.com format",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					}
 				}
@@ -7452,6 +7857,7 @@ namespace Goedel.Mesh.Shell {
 							ICryptoOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -7488,104 +7894,113 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [openpgp]</summary>
-		public virtual Flag OpenPGP {
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _OpenPGP {
+		public virtual string _Json {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [smime]</summary>
-		public virtual Flag SMIME {
+		/// <summary>Field accessor for option [openpgp]</summary>
+		public virtual Flag OpenPGP {
 			get => _Data[7] as Flag;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _SMIME {
+		public virtual string _OpenPGP {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [configuration]</summary>
-		public virtual ExistingFile Configuration {
-			get => _Data[8] as ExistingFile;
+		/// <summary>Field accessor for option [smime]</summary>
+		public virtual Flag SMIME {
+			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Configuration {
+		public virtual string _SMIME {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [ca]</summary>
-		public virtual String CA {
-			get => _Data[9] as String;
+		/// <summary>Field accessor for option [configuration]</summary>
+		public virtual ExistingFile Configuration {
+			get => _Data[9] as ExistingFile;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _CA {
+		public virtual string _Configuration {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [inbound]</summary>
-		public virtual String Inbound {
+		/// <summary>Field accessor for option [ca]</summary>
+		public virtual String CA {
 			get => _Data[10] as String;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Inbound {
+		public virtual string _CA {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [outbound]</summary>
-		public virtual String Outbound {
+		/// <summary>Field accessor for option [inbound]</summary>
+		public virtual String Inbound {
 			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Outbound {
+		public virtual string _Inbound {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
+		/// <summary>Field accessor for option [outbound]</summary>
+		public virtual String Outbound {
 			get => _Data[12] as String;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _Outbound {
 			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
+			get => _Data[13] as String;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _Algorithms {
+			set => _Data[13].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7609,81 +8024,88 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "OpenPGP", 
 					Default = null, // null if null
 					Brief = "Create encryption and signature keys for OpenPGP",
-					Index = 6,
+					Index = 7,
 					Key = "openpgp"
 					},
 				new DescribeEntryOption () {
 					Identifier = "SMIME", 
 					Default = null, // null if null
 					Brief = "Create encryption and signature keys for S/MIME",
-					Index = 7,
+					Index = 8,
 					Key = "smime"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Configuration", 
 					Default = null, // null if null
 					Brief = "Configuration file describing network settings",
-					Index = 8,
+					Index = 9,
 					Key = "configuration"
 					},
 				new DescribeEntryOption () {
 					Identifier = "CA", 
 					Default = null, // null if null
 					Brief = "Certificate Authority to request certificate from",
-					Index = 9,
+					Index = 10,
 					Key = "ca"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Inbound", 
 					Default = null, // null if null
 					Brief = "inbound service configuration",
-					Index = 10,
+					Index = 11,
 					Key = "inbound"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Outbound", 
 					Default = null, // null if null
 					Brief = "outbound service configuration",
-					Index = 11,
+					Index = 12,
 					Key = "outbound"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 12,
+					Index = 13,
 					Key = "alg"
 					}
 				}
@@ -7699,6 +8121,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -7728,6 +8151,155 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "update",
+			Brief =  "Update an existing mail application profile",
+			HandleDelegate =  CommandLineInterpreter.Handle_MailUpdate,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Address", 
+					Default = null, // null if null
+					Brief = "Mail account to update",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class MailUpdate : _MailUpdate {
+        } // class MailUpdate
+
+    public class _SMIMEPrivate : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							IPrivateKeyOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new NewFile (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[2] as Enumeration<EnumReporting>;
@@ -7764,164 +8336,41 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "update",
-			Brief =  "Update an existing mail application profile",
-			HandleDelegate =  CommandLineInterpreter.Handle_MailUpdate,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Address", 
-					Default = null, // null if null
-					Brief = "Mail account to update",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class MailUpdate : _MailUpdate {
-        } // class MailUpdate
-
-    public class _SMIMEPrivate : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							IPrivateKeyOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new NewFile (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
 		/// <summary>Field accessor for option [format]</summary>
 		public virtual String Format {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Format {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Password {
+		public virtual string _Format {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[7] as NewFile;
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Password {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[8] as String;
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[8] as NewFile;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Address {
+		public virtual string _File {
 			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[9].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -7938,60 +8387,67 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Format", 
 					Default = null, // null if null
 					Brief = "File format",
-					Index = 5,
+					Index = 6,
 					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Password", 
 					Default = null, // null if null
 					Brief = "Password to encrypt private key",
-					Index = 6,
+					Index = 7,
 					Key = "password"
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "Output file",
-					Index = 7,
+					Index = 8,
 					Key = "file"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account to update",
-					Index = 8,
+					Index = 9,
 					Key = ""
 					}
 				}
@@ -8009,6 +8465,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -8030,222 +8487,58 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Format {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[6] as NewFile;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[6].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[7] as String;
-			set => _Data[7]  = value;
-			}
-
-		public virtual string _Address {
-			set => _Data[7].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "public",
-			Brief =  "Extract the public key/certificate for the specified account",
-			HandleDelegate =  CommandLineInterpreter.Handle_SMIMEPublic,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Format", 
-					Default = null, // null if null
-					Brief = "File format",
-					Index = 5,
-					Key = "format"
-					},
-				new DescribeEntryOption () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "Output file",
-					Index = 6,
-					Key = "file"
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Address", 
-					Default = null, // null if null
-					Brief = "Mail account identifier",
-					Index = 7,
-					Key = ""
-					}
-				}
-			};
-
-		}
-
-    public partial class SMIMEPublic : _SMIMEPublic {
-        } // class SMIMEPublic
-
-    public class _PGPPrivate : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							IPrivateKeyOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String (),
-			new String (),
-			new NewFile (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
 		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
+			set => _Data[3].Parameter (value);
 			}
 		/// <summary>Field accessor for option [report]</summary>
 		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Format {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Password {
+		public virtual string _Format {
 			set => _Data[6].Parameter (value);
 			}
 		/// <summary>Field accessor for option [file]</summary>
@@ -8269,6 +8562,196 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "public",
+			Brief =  "Extract the public key/certificate for the specified account",
+			HandleDelegate =  CommandLineInterpreter.Handle_SMIMEPublic,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Format", 
+					Default = null, // null if null
+					Brief = "File format",
+					Index = 6,
+					Key = "format"
+					},
+				new DescribeEntryOption () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "Output file",
+					Index = 7,
+					Key = "file"
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Address", 
+					Default = null, // null if null
+					Brief = "Mail account identifier",
+					Index = 8,
+					Key = ""
+					}
+				}
+			};
+
+		}
+
+    public partial class SMIMEPublic : _SMIMEPublic {
+        } // class SMIMEPublic
+
+    public class _PGPPrivate : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							IPrivateKeyOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String (),
+			new String (),
+			new NewFile (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Format {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Password {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[8] as NewFile;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[8].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[9] as String;
+			set => _Data[9]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[9].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "private",
 			Brief =  "Extract the private key for the specified account",
 			HandleDelegate =  CommandLineInterpreter.Handle_PGPPrivate,
@@ -8281,60 +8764,67 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Format", 
 					Default = null, // null if null
 					Brief = "File format",
-					Index = 5,
+					Index = 6,
 					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Password", 
 					Default = null, // null if null
 					Brief = "Password to encrypt private key",
-					Index = 6,
+					Index = 7,
 					Key = "password"
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "Output file",
-					Index = 7,
+					Index = 8,
 					Key = "file"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account to update",
-					Index = 8,
+					Index = 9,
 					Key = ""
 					}
 				}
@@ -8351,6 +8841,7 @@ namespace Goedel.Mesh.Shell {
 							IPublicKeyOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -8373,68 +8864,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Format {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[6] as NewFile;
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Format {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[7] as String;
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[7] as NewFile;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Address {
+		public virtual string _File {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8451,53 +8951,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Format", 
 					Default = null, // null if null
 					Brief = "File format",
-					Index = 5,
+					Index = 6,
 					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "Output file",
-					Index = 6,
+					Index = 7,
 					Key = "file"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account identifier",
-					Index = 7,
+					Index = 8,
 					Key = ""
 					}
 				}
@@ -8513,6 +9020,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -8533,50 +9041,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Address {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Address {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Address {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Address {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8593,39 +9110,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Address", 
 					Default = null, // null if null
 					Brief = "Mail account identifier",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					}
 				}
@@ -8648,6 +9172,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -8669,68 +9194,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Application {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [alg]</summary>
-		public virtual String Algorithms {
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Algorithms {
+		public virtual string _Application {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String ID {
+		/// <summary>Field accessor for option [alg]</summary>
+		public virtual String Algorithms {
 			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _ID {
+		public virtual string _Algorithms {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String ID {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _ID {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8747,53 +9281,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Application", 
 					Default = null, // null if null
 					Brief = "The application format",
-					Index = 5,
+					Index = 6,
 					Key = "application"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Algorithms", 
 					Default = null, // null if null
 					Brief = "List of algorithm specifiers",
-					Index = 6,
+					Index = 7,
 					Key = "alg"
 					},
 				new DescribeEntryOption () {
 					Identifier = "ID", 
 					Default = null, // null if null
 					Brief = "Key identifier",
-					Index = 7,
+					Index = 8,
 					Key = "id"
 					}
 				}
@@ -8811,6 +9352,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -8832,68 +9374,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Format {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [password]</summary>
-		public virtual String Password {
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
 			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Password {
+		public virtual string _Format {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[7] as NewFile;
+		/// <summary>Field accessor for option [password]</summary>
+		public virtual String Password {
+			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Password {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[8] as NewFile;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -8910,53 +9461,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Format", 
 					Default = null, // null if null
 					Brief = "File format",
-					Index = 5,
+					Index = 6,
 					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Password", 
 					Default = null, // null if null
 					Brief = "Password to encrypt private key",
-					Index = 6,
+					Index = 7,
 					Key = "password"
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "Output file",
-					Index = 7,
+					Index = 8,
 					Key = "file"
 					}
 				}
@@ -8974,6 +9532,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -8994,59 +9553,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [format]</summary>
-		public virtual String Format {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Format {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual NewFile File {
-			get => _Data[6] as NewFile;
+		/// <summary>Field accessor for option [format]</summary>
+		public virtual String Format {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Format {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [file]</summary>
+		public virtual NewFile File {
+			get => _Data[7] as NewFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9063,46 +9631,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Format", 
 					Default = null, // null if null
 					Brief = "File format",
-					Index = 5,
+					Index = 6,
 					Key = "format"
 					},
 				new DescribeEntryOption () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "Output file",
-					Index = 6,
+					Index = 7,
 					Key = "file"
 					}
 				}
@@ -9119,6 +9694,7 @@ namespace Goedel.Mesh.Shell {
 							ISSHOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -9140,59 +9716,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Application {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[6] as ExistingFile;
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Application {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile File {
+			get => _Data[7] as ExistingFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9209,46 +9794,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Application", 
 					Default = null, // null if null
 					Brief = "The application format",
-					Index = 5,
+					Index = 6,
 					Key = "application"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -9290,6 +9882,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -9309,50 +9902,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Application {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Application {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9369,39 +9971,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Application", 
 					Default = null, // null if null
 					Brief = "The application format",
-					Index = 5,
+					Index = 6,
 					Key = "application"
 					}
 				}
@@ -9418,6 +10027,7 @@ namespace Goedel.Mesh.Shell {
 							ISSHOptions {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -9439,59 +10049,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Application {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[6] as ExistingFile;
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Application {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile File {
+			get => _Data[7] as ExistingFile;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9508,46 +10127,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Application", 
 					Default = null, // null if null
 					Brief = "The application format",
-					Index = 5,
+					Index = 6,
 					Key = "application"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					}
 				}
@@ -9565,134 +10191,6 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag (),
-			new String ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Application {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "host",
-			Brief =  "List the known SSH sites (aka known hosts)",
-			HandleDelegate =  CommandLineInterpreter.Handle_SSHKnown,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Application", 
-					Default = null, // null if null
-					Brief = "The application format",
-					Index = 5,
-					Key = "application"
-					}
-				}
-			};
-
-		}
-
-    public partial class SSHKnown : _SSHKnown {
-        } // class SSHKnown
-
-    public class _SSHAuth : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting,
-							ISSHOptions {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -9713,50 +10211,205 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [application]</summary>
-		public virtual String Application {
-			get => _Data[5] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Application {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Application {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "host",
+			Brief =  "List the known SSH sites (aka known hosts)",
+			HandleDelegate =  CommandLineInterpreter.Handle_SSHKnown,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Application", 
+					Default = null, // null if null
+					Brief = "The application format",
+					Index = 6,
+					Key = "application"
+					}
+				}
+			};
+
+		}
+
+    public partial class SSHKnown : _SSHKnown {
+        } // class SSHKnown
+
+    public class _SSHAuth : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting,
+							ISSHOptions {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag (),
+			new String ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [application]</summary>
+		public virtual String Application {
+			get => _Data[6] as String;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Application {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9773,39 +10426,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Application", 
 					Default = null, // null if null
 					Brief = "The application format",
-					Index = 5,
+					Index = 6,
 					Key = "application"
 					}
 				}
@@ -9821,6 +10481,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new String (),
@@ -9870,41 +10531,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[4] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[4] as String;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[5] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[5] as Enumeration<EnumReporting>;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[7] as Flag;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -9942,32 +10612,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 3,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 4,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 5,
+					Index = 6,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 6,
+					Index = 7,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 7,
+					Index = 8,
 					Key = "json"
 					}
 				}
@@ -9985,133 +10662,6 @@ namespace Goedel.Mesh.Shell {
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Site {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Site {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "get",
-			Brief =  "Lookup password entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_PasswordGet,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Site", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class PasswordGet : _PasswordGet {
-        } // class PasswordGet
-
-    public class _PasswordDelete : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -10140,876 +10690,13 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "delete",
-			Brief =  "Delete password entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_PasswordDelete,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Site", 
-					Default = null, // null if null
-					Brief = "Domain name of Web site",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class PasswordDelete : _PasswordDelete {
-        } // class PasswordDelete
-
-    public class _PasswordDump : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Site {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Site {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "list",
-			Brief =  "List password entries",
-			HandleDelegate =  CommandLineInterpreter.Handle_PasswordDump,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Site", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class PasswordDump : _PasswordDump {
-        } // class PasswordDump
-
-    public class _ContactSelf : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [file]</summary>
-		public virtual ExistingFile File {
-			get => _Data[0] as ExistingFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "self",
-			Brief =  "Update contact entry for self",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactSelf,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = "file"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactSelf : _ContactSelf {
-        } // class ContactSelf
-
-    public class _ContactStatic : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "static",
-			Brief =  "Create static contact retrieval URI",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactStatic,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactStatic : _ContactStatic {
-        } // class ContactStatic
-
-    public class _ContactDynamic : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "dynamic",
-			Brief =  "Create dynamic contact retrieval URI",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactDynamic,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactDynamic : _ContactDynamic {
-        } // class ContactDynamic
-
-    public class _ContactFetch : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Uri {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Uri {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "fetch",
-			Brief =  "Request contact from URI without presenting own contact",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactFetch,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactFetch : _ContactFetch {
-        } // class ContactFetch
-
-    public class _ContactExchange : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Uri {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Uri {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "exchange",
-			Brief =  "Request contact from URI presenting own contact",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactExchange,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactExchange : _ContactExchange {
-        } // class ContactExchange
-
-    public class _ContactExport : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new NewFile (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Identifier {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Identifier {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile File {
-			get => _Data[1] as NewFile;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
 			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _AccountAddress {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -11051,31 +10738,31 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "export",
-			Brief =  "Export contact entry from catalog",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactExport,
+			Identifier = "get",
+			Brief =  "Lookup password entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_PasswordGet,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "Contact entry identifier",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryParameter () {
-					Identifier = "File", 
+					Identifier = "Site", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 1,
+					Index = 0,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
+					Index = 1,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -11110,15 +10797,16 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class ContactExport : _ContactExport {
-        } // class ContactExport
+    public partial class PasswordGet : _PasswordGet {
+        } // class PasswordGet
 
-    public class _ContactAdd : Goedel.Command.Dispatch ,
+    public class _PasswordDelete : Goedel.Command.Dispatch ,
 							IAccountOptions,
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
+			new String (),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -11130,6 +10818,296 @@ namespace Goedel.Mesh.Shell {
 
 
 		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Site {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Site {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "Delete password entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_PasswordDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Site", 
+					Default = null, // null if null
+					Brief = "Domain name of Web site",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class PasswordDelete : _PasswordDelete {
+        } // class PasswordDelete
+
+    public class _PasswordDump : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Site {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Site {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "list",
+			Brief =  "List password entries",
+			HandleDelegate =  CommandLineInterpreter.Handle_PasswordDump,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Site", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class PasswordDump : _PasswordDump {
+        } // class PasswordDump
+
+    public class _ContactSelf : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [file]</summary>
 		public virtual ExistingFile File {
 			get => _Data[0] as ExistingFile;
 			set => _Data[0]  = value;
@@ -11145,6 +11123,150 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "self",
+			Brief =  "Update contact entry for self",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactSelf,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = "file"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactSelf : _ContactSelf {
+        } // class ContactSelf
+
+    public class _ContactStatic : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -11186,24 +11308,24 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "add",
-			Brief =  "Add contact entry from file",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactAdd,
+			Identifier = "static",
+			Brief =  "Create static contact retrieval URI",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactStatic,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
+					Index = 0,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -11238,6 +11360,731 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
+    public partial class ContactStatic : _ContactStatic {
+        } // class ContactStatic
+
+    public class _ContactDynamic : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "dynamic",
+			Brief =  "Create dynamic contact retrieval URI",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactDynamic,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactDynamic : _ContactDynamic {
+        } // class ContactDynamic
+
+    public class _ContactFetch : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Uri {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Uri {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "fetch",
+			Brief =  "Request contact from URI without presenting own contact",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactFetch,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Uri", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactFetch : _ContactFetch {
+        } // class ContactFetch
+
+    public class _ContactExchange : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Uri {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Uri {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "exchange",
+			Brief =  "Request contact from URI presenting own contact",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactExchange,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Uri", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactExchange : _ContactExchange {
+        } // class ContactExchange
+
+    public class _ContactExport : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new NewFile (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[1] as NewFile;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "export",
+			Brief =  "Export contact entry from catalog",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactExport,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactExport : _ContactExport {
+        } // class ContactExport
+
+    public class _ContactAdd : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile File {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "add",
+			Brief =  "Add contact entry from file",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactAdd,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
     public partial class ContactAdd : _ContactAdd {
         } // class ContactAdd
 
@@ -11246,6 +12093,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -11275,41 +12123,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -11333,32 +12190,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -11374,6 +12238,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -11404,6 +12269,166 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [encrypt]</summary>
+		public virtual String Encrypt {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Encrypt {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "get",
+			Brief =  "Lookup contact entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactGet,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Encrypt", 
+					Default = null, // null if null
+					Brief = "Encrypt the contact under the specified key",
+					Index = 7,
+					Key = "encrypt"
+					}
+				}
+			};
+
+		}
+
+    public partial class ContactGet : _ContactGet {
+        } // class ContactGet
+
+    public class _ContactDump : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[2] as Enumeration<EnumReporting>;
@@ -11440,36 +12465,27 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [encrypt]</summary>
-		public virtual String Encrypt {
-			get => _Data[6] as String;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Encrypt {
-			set => _Data[6].Parameter (value);
-			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "get",
-			Brief =  "Lookup contact entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactGet,
+			Identifier = "list",
+			Brief =  "List contact entries",
+			HandleDelegate =  CommandLineInterpreter.Handle_ContactDump,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "Contact entry identifier",
-					Index = 0,
-					Key = ""
-					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
+					Index = 0,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -11498,124 +12514,6 @@ namespace Goedel.Mesh.Shell {
 					Brief = "Report output in JSON format",
 					Index = 5,
 					Key = "json"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Encrypt", 
-					Default = null, // null if null
-					Brief = "Encrypt the contact under the specified key",
-					Index = 6,
-					Key = "encrypt"
-					}
-				}
-			};
-
-		}
-
-    public partial class ContactGet : _ContactGet {
-        } // class ContactGet
-
-    public class _ContactDump : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "list",
-			Brief =  "List contact entries",
-			HandleDelegate =  CommandLineInterpreter.Handle_ContactDump,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
 					}
 				}
 			};
@@ -11630,6 +12528,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new String (),
@@ -11679,6 +12578,781 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[3].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[4] as String;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[5] as Enumeration<EnumReporting>;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[8] as Flag;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[8].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "add",
+			Brief =  "Add bookmark",
+			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkAdd,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Path", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Uri", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Title", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 2,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 3,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 4,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 6,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 7,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 8,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class BookmarkAdd : _BookmarkAdd {
+        } // class BookmarkAdd
+
+    public class _BookmarkDelete : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Uri {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Uri {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [path]</summary>
+		public virtual String Path {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Path {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "Delete bookmark entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Uri", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "Path", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "path"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class BookmarkDelete : _BookmarkDelete {
+        } // class BookmarkDelete
+
+    public class _BookmarkGet : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "get",
+			Brief =  "Lookup bookmark entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkGet,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class BookmarkGet : _BookmarkGet {
+        } // class BookmarkGet
+
+    public class _BookmarkDump : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "list",
+			Brief =  "List bookmark entries",
+			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkDump,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 2,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 3,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 5,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class BookmarkDump : _BookmarkDump {
+        } // class BookmarkDump
+
+    public class _CalendarImport : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new ExistingFile (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile File {
+			get => _Data[0] as ExistingFile;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _File {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String Identifier {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "import",
+			Brief =  "Add calendar entry from file",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarImport,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "File", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = "id"
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class CalendarImport : _CalendarImport {
+        } // class CalendarImport
+
+    public class _CalendarAdd : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Title {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Title {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [id]</summary>
+		public virtual String Identifier {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[4] as Enumeration<EnumReporting>;
@@ -11719,37 +13393,37 @@ namespace Goedel.Mesh.Shell {
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
 			Identifier = "add",
-			Brief =  "Add bookmark",
-			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkAdd,
+			Brief =  "Add calendar entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarAdd,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
-					Identifier = "Path", 
+					Identifier = "Title", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
+				new DescribeEntryOption () {
+					Identifier = "Identifier", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
 					Index = 1,
-					Key = ""
-					},
-				new DescribeEntryParameter () {
-					Identifier = "Title", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 2,
-					Key = ""
+					Key = "id"
 					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 3,
+					Index = 2,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -11784,680 +13458,6 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class BookmarkAdd : _BookmarkAdd {
-        } // class BookmarkAdd
-
-    public class _BookmarkDelete : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Uri {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Uri {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [path]</summary>
-		public virtual String Path {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Path {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[6] as Flag;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "delete",
-			Brief =  "Delete bookmark entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkDelete,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Uri", 
-					Default = null, // null if null
-					Brief = "Contact entry identifier",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "Path", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 1,
-					Key = "path"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 4,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 5,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 6,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class BookmarkDelete : _BookmarkDelete {
-        } // class BookmarkDelete
-
-    public class _BookmarkGet : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Identifier {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Identifier {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "get",
-			Brief =  "Lookup bookmark entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkGet,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class BookmarkGet : _BookmarkGet {
-        } // class BookmarkGet
-
-    public class _BookmarkDump : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "list",
-			Brief =  "List bookmark entries",
-			HandleDelegate =  CommandLineInterpreter.Handle_BookmarkDump,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class BookmarkDump : _BookmarkDump {
-        } // class BookmarkDump
-
-    public class _CalendarImport : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new ExistingFile (),
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile File {
-			get => _Data[0] as ExistingFile;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _File {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String Identifier {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Identifier {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[6] as Flag;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "import",
-			Brief =  "Add calendar entry from file",
-			HandleDelegate =  CommandLineInterpreter.Handle_CalendarImport,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "File", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 1,
-					Key = "id"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 4,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 5,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 6,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class CalendarImport : _CalendarImport {
-        } // class CalendarImport
-
-    public class _CalendarAdd : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Title {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Title {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [id]</summary>
-		public virtual String Identifier {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _Identifier {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[2] as String;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[5].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[6] as Flag;
-			set => _Data[6]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[6].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "add",
-			Brief =  "Add calendar entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_CalendarAdd,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Title", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 1,
-					Key = "id"
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 4,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 5,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 6,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
     public partial class CalendarAdd : _CalendarAdd {
         } // class CalendarAdd
 
@@ -12468,6 +13468,7 @@ namespace Goedel.Mesh.Shell {
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -12495,41 +13496,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -12553,32 +13563,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 2,
+					Index = 3,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 3,
+					Index = 4,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 4,
+					Index = 5,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 5,
+					Index = 6,
 					Key = "json"
 					}
 				}
@@ -12594,6 +13611,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -12621,6 +13639,150 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "Delete calendar entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "Contact entry identifier",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 1,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class CalendarDelete : _CalendarDelete {
+        } // class CalendarDelete
+
+    public class _CalendarDump : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter [report]</summary>
@@ -12662,24 +13824,24 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "delete",
-			Brief =  "Delete calendar entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_CalendarDelete,
+			Identifier = "list",
+			Brief =  "List calendar entries",
+			HandleDelegate =  CommandLineInterpreter.Handle_CalendarDump,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "Contact entry identifier",
-					Index = 0,
-					Key = ""
-					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
+					Index = 0,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -12714,117 +13876,6 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class CalendarDelete : _CalendarDelete {
-        } // class CalendarDelete
-
-    public class _CalendarDump : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "list",
-			Brief =  "List calendar entries",
-			HandleDelegate =  CommandLineInterpreter.Handle_CalendarDump,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
     public partial class CalendarDump : _CalendarDump {
         } // class CalendarDump
 
@@ -12834,6 +13885,7 @@ namespace Goedel.Mesh.Shell {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new ExistingFile (),
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -12872,41 +13924,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[3] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[4] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[6] as Flag;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -12937,32 +13998,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 2,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 4,
+					Index = 5,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 5,
+					Index = 6,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 6,
+					Index = 7,
 					Key = "json"
 					}
 				}
@@ -12980,6 +14048,7 @@ namespace Goedel.Mesh.Shell {
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new ExistingFile (),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -13017,6 +14086,167 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[2].Parameter (value);
 			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[3] as String;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[4] as Enumeration<EnumReporting>;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[7] as Flag;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[7].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "add",
+			Brief =  "Add calendar entry from file",
+			HandleDelegate =  CommandLineInterpreter.Handle_NetworkAdd,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "Identifier", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryParameter () {
+					Identifier = "Password", 
+					Default = null, // null if null
+					Brief = "<Unspecified>",
+					Index = 1,
+					Key = ""
+					},
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 2,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 3,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 4,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 5,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 6,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 7,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class NetworkAdd : _NetworkAdd {
+        } // class NetworkAdd
+
+    public class _NetworkGet : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String Identifier {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _Identifier {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[2].Parameter (value);
+			}
 		/// <summary>Field accessor for parameter [report]</summary>
 		public virtual Enumeration<EnumReporting> EnumReporting {
 			get => _Data[3] as Enumeration<EnumReporting>;
@@ -13056,9 +14286,9 @@ namespace Goedel.Mesh.Shell {
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
 		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "add",
-			Brief =  "Add calendar entry from file",
-			HandleDelegate =  CommandLineInterpreter.Handle_NetworkAdd,
+			Identifier = "get",
+			Brief =  "Lookup calendar entry",
+			HandleDelegate =  CommandLineInterpreter.Handle_NetworkGet,
 			Lazy =  false,
 			Entries = new List<DescribeEntry> () {
 				new DescribeEntryParameter () {
@@ -13068,19 +14298,19 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = ""
 					},
-				new DescribeEntryParameter () {
-					Identifier = "Password", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 1,
-					Key = ""
-					},
 				new DescribeEntryOption () {
 					Identifier = "AccountAddress", 
 					Default = null, // null if null
 					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 2,
+					Index = 1,
 					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
@@ -13115,134 +14345,6 @@ namespace Goedel.Mesh.Shell {
 
 		}
 
-    public partial class NetworkAdd : _NetworkAdd {
-        } // class NetworkAdd
-
-    public class _NetworkGet : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual String Identifier {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _Identifier {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[1] as String;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[4].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[5] as Flag;
-			set => _Data[5]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[5].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "get",
-			Brief =  "Lookup calendar entry",
-			HandleDelegate =  CommandLineInterpreter.Handle_NetworkGet,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryParameter () {
-					Identifier = "Identifier", 
-					Default = null, // null if null
-					Brief = "<Unspecified>",
-					Index = 0,
-					Key = ""
-					},
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 1,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 2,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 3,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 4,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
     public partial class NetworkGet : _NetworkGet {
         } // class NetworkGet
 
@@ -13253,6 +14355,7 @@ namespace Goedel.Mesh.Shell {
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
 			new String (),
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -13280,41 +14383,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[2] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[2] as String;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[3] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[3] as Enumeration<EnumReporting>;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[6] as Flag;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -13338,6 +14450,141 @@ namespace Goedel.Mesh.Shell {
 					Index = 1,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 2,
+					Key = "local"
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 4,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 5,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 6,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class NetworkDelete : _NetworkDelete {
+        } // class NetworkDelete
+
+    public class _NetworkDump : Goedel.Command.Dispatch ,
+							IAccountOptions,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for option [account]</summary>
+		public virtual String AccountAddress {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _AccountAddress {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _LocalName {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[4].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
+			set => _Data[5]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[5].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "list",
+			Brief =  "List network entries",
+			HandleDelegate =  CommandLineInterpreter.Handle_NetworkDump,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryOption () {
+					Identifier = "AccountAddress", 
+					Default = null, // null if null
+					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
+					Index = 0,
+					Key = "account"
+					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
@@ -13364,117 +14611,6 @@ namespace Goedel.Mesh.Shell {
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
 					Index = 5,
-					Key = "json"
-					}
-				}
-			};
-
-		}
-
-    public partial class NetworkDelete : _NetworkDelete {
-        } // class NetworkDelete
-
-    public class _NetworkDump : Goedel.Command.Dispatch ,
-							IAccountOptions,
-							IReporting {
-
-		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
-			new String (),
-			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
-			new Flag (),
-			new Flag (),
-			new Flag ()			} ;
-
-
-
-
-
-		/// <summary>Field accessor for option [account]</summary>
-		public virtual String AccountAddress {
-			get => _Data[0] as String;
-			set => _Data[0]  = value;
-			}
-
-		public virtual string _AccountAddress {
-			set => _Data[0].Parameter (value);
-			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
-			set => _Data[1]  = value;
-			}
-
-		public virtual string _EnumReporting {
-			set => _Data[1].Parameter (value);
-			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
-			set => _Data[2]  = value;
-			}
-
-		public virtual string _Verbose {
-			set => _Data[2].Parameter (value);
-			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
-			get => _Data[3] as Flag;
-			set => _Data[3]  = value;
-			}
-
-		public virtual string _Report {
-			set => _Data[3].Parameter (value);
-			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
-			get => _Data[4] as Flag;
-			set => _Data[4]  = value;
-			}
-
-		public virtual string _Json {
-			set => _Data[4].Parameter (value);
-			}
-		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
-
-		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
-			Identifier = "list",
-			Brief =  "List network entries",
-			HandleDelegate =  CommandLineInterpreter.Handle_NetworkDump,
-			Lazy =  false,
-			Entries = new List<DescribeEntry> () {
-				new DescribeEntryOption () {
-					Identifier = "AccountAddress", 
-					Default = null, // null if null
-					Brief = "Account identifier (e.g. alice@example.com) or profile fingerprint",
-					Index = 0,
-					Key = "account"
-					},
-				new DescribeEntryEnumerate () {
-					Identifier = "EnumReporting", 
-					Default = null, // null if null
-					Brief = "Reporting level",
-					Index = 1,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Verbose", 
-					Default = "true", // null if null
-					Brief = "Verbose reports (default)",
-					Index = 2,
-					Key = "verbose"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Report", 
-					Default = "true", // null if null
-					Brief = "Report output (default)",
-					Index = 3,
-					Key = "report"
-					},
-				new DescribeEntryOption () {
-					Identifier = "Json", 
-					Default = "false", // null if null
-					Brief = "Report output in JSON format",
-					Index = 4,
 					Key = "json"
 					}
 				}
@@ -14764,6 +15900,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -14839,68 +15976,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[7] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[7] as String;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[8] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[8] as Enumeration<EnumReporting>;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Output {
-			get => _Data[11] as NewFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Json {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [sub]</summary>
-		public virtual Flag Subdirectories {
-			get => _Data[12] as Flag;
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Output {
+			get => _Data[12] as NewFile;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Subdirectories {
+		public virtual string _Output {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String SymmetrictKey {
-			get => _Data[13] as String;
+		/// <summary>Field accessor for option [sub]</summary>
+		public virtual Flag Subdirectories {
+			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _SymmetrictKey {
+		public virtual string _Subdirectories {
 			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String SymmetrictKey {
+			get => _Data[14] as String;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _SymmetrictKey {
+			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -14959,53 +16105,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 6,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 7,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 7,
+					Index = 8,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 8,
+					Index = 9,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 9,
+					Index = 10,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 10,
+					Index = 11,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Output", 
 					Default = null, // null if null
 					Brief = "Filename for encrypted output.",
-					Index = 11,
+					Index = 12,
 					Key = "out"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Subdirectories", 
 					Default = null, // null if null
 					Brief = "Process subdirectories recursively.",
-					Index = 12,
+					Index = 13,
 					Key = "sub"
 					},
 				new DescribeEntryOption () {
 					Identifier = "SymmetrictKey", 
 					Default = null, // null if null
 					Brief = "Specifies the value of the master key",
-					Index = 13,
+					Index = 14,
 					Key = "key"
 					}
 				}
@@ -15021,6 +16174,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -15043,68 +16197,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[5] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Output {
-			get => _Data[6] as NewFile;
+		public virtual ExistingFile Input {
+			get => _Data[6] as ExistingFile;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _Output {
+		public virtual string _Input {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String SymmetrictKey {
-			get => _Data[7] as String;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Output {
+			get => _Data[7] as NewFile;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _SymmetrictKey {
+		public virtual string _Output {
 			set => _Data[7].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String SymmetrictKey {
+			get => _Data[8] as String;
+			set => _Data[8]  = value;
+			}
+
+		public virtual string _SymmetrictKey {
+			set => _Data[8].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -15121,53 +16284,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "Encrypted File",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Output", 
 					Default = null, // null if null
 					Brief = "Decrypted File",
-					Index = 6,
+					Index = 7,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "SymmetrictKey", 
 					Default = null, // null if null
 					Brief = "Specifies the value of the master key",
-					Index = 7,
+					Index = 8,
 					Key = "key"
 					}
 				}
@@ -15183,6 +16353,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -15204,59 +16375,68 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[5] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String SymmetricKey {
-			get => _Data[6] as String;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[6] as ExistingFile;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _SymmetricKey {
+		public virtual string _Input {
 			set => _Data[6].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String SymmetricKey {
+			get => _Data[7] as String;
+			set => _Data[7]  = value;
+			}
+
+		public virtual string _SymmetricKey {
+			set => _Data[7].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -15273,46 +16453,53 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "Encrypted File",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "SymmetricKey", 
 					Default = null, // null if null
 					Brief = "Specifies the value of the master key",
-					Index = 6,
+					Index = 7,
 					Key = "key"
 					}
 				}
@@ -15336,6 +16523,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new ExistingFile (),
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -15419,41 +16607,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[8] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[8] as String;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[9] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[9] as Enumeration<EnumReporting>;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[11].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[12] as Flag;
+			set => _Data[12]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[12].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -15519,32 +16716,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 7,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 8,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 9,
+					Index = 10,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 10,
+					Index = 11,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 11,
+					Index = 12,
 					Key = "json"
 					}
 				}
@@ -15571,6 +16775,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new Enumeration<EnumAuthentication> (CommandLineInterpreter.DescribeEnumAuthentication),
 			new Enumeration<EnumUse> (CommandLineInterpreter.DescribeEnumUse),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -15663,50 +16868,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[9] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[9] as String;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[10] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[10] as Enumeration<EnumReporting>;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[11] as Flag;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[12] as Flag;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile Container {
-			get => _Data[13] as NewFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Json {
 			set => _Data[13].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile Container {
+			get => _Data[14] as NewFile;
+			set => _Data[14]  = value;
+			}
+
+		public virtual string _Container {
+			set => _Data[14].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -15779,39 +16993,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 8,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 9,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 9,
+					Index = 10,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 10,
+					Index = 11,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 11,
+					Index = 12,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 12,
+					Index = 13,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "New container",
-					Index = 13,
+					Index = 14,
 					Key = ""
 					}
 				}
@@ -15834,6 +17055,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new Flag (),
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -15904,86 +17126,95 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[6] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[7] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[7] as Enumeration<EnumReporting>;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for option [type]</summary>
-		public virtual String Type {
-			get => _Data[10] as String;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Type {
+		public virtual string _Json {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [auth]</summary>
-		public virtual Enumeration<EnumAuthentication> EnumAuthentication {
-			get => _Data[11] as Enumeration<EnumAuthentication>;
+		/// <summary>Field accessor for option [type]</summary>
+		public virtual String Type {
+			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _EnumAuthentication {
+		public virtual string _Type {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [use]</summary>
-		public virtual Enumeration<EnumUse> EnumUse {
-			get => _Data[12] as Enumeration<EnumUse>;
+		/// <summary>Field accessor for parameter [auth]</summary>
+		public virtual Enumeration<EnumAuthentication> EnumAuthentication {
+			get => _Data[12] as Enumeration<EnumAuthentication>;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _EnumUse {
+		public virtual string _EnumAuthentication {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Input {
-			get => _Data[13] as ExistingFile;
+		/// <summary>Field accessor for parameter [use]</summary>
+		public virtual Enumeration<EnumUse> EnumUse {
+			get => _Data[13] as Enumeration<EnumUse>;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Input {
+		public virtual string _EnumUse {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [out]</summary>
-		public virtual NewFile Container {
-			get => _Data[14] as NewFile;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Input {
+			get => _Data[14] as ExistingFile;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Input {
 			set => _Data[14].Parameter (value);
+			}
+		/// <summary>Field accessor for option [out]</summary>
+		public virtual NewFile Container {
+			get => _Data[15] as NewFile;
+			set => _Data[15]  = value;
+			}
+
+		public virtual string _Container {
+			set => _Data[15].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16035,67 +17266,74 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 6,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 6,
+					Index = 7,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 7,
+					Index = 8,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 9,
+					Index = 10,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Type", 
 					Default = null, // null if null
 					Brief = "The container type, plain/tree/digest/chain/tree",
-					Index = 10,
+					Index = 11,
 					Key = "type"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumAuthentication", 
 					Default = null, // null if null
 					Brief = "Authentication and indexing",
-					Index = 11,
+					Index = 12,
 					Key = "auth"
 					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumUse", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 12,
+					Index = 13,
 					Key = "use"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Input", 
 					Default = null, // null if null
 					Brief = "Directory containing files to create archive from",
-					Index = 13,
+					Index = 14,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "New container",
-					Index = 14,
+					Index = 15,
 					Key = "out"
 					}
 				}
@@ -16117,6 +17355,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new String (),
 			new Flag (),
+			new String (),
 			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
@@ -16185,68 +17424,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[6] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[7] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[7] as Enumeration<EnumReporting>;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
-			get => _Data[10] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Json {
 			set => _Data[10].Parameter (value);
 			}
 		/// <summary>Field accessor for parameter []</summary>
-		public virtual NewFile File {
-			get => _Data[11] as NewFile;
+		public virtual ExistingFile Container {
+			get => _Data[11] as ExistingFile;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _File {
+		public virtual string _Container {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [key]</summary>
-		public virtual String Key {
-			get => _Data[12] as String;
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual NewFile File {
+			get => _Data[12] as NewFile;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Key {
+		public virtual string _File {
 			set => _Data[12].Parameter (value);
+			}
+		/// <summary>Field accessor for option [key]</summary>
+		public virtual String Key {
+			get => _Data[13] as String;
+			set => _Data[13]  = value;
+			}
+
+		public virtual string _Key {
+			set => _Data[13].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16298,53 +17546,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 6,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 6,
+					Index = 7,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 7,
+					Index = 8,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 9,
+					Index = 10,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to append to",
-					Index = 10,
+					Index = 11,
 					Key = ""
 					},
 				new DescribeEntryParameter () {
 					Identifier = "File", 
 					Default = null, // null if null
 					Brief = "File to append",
-					Index = 11,
+					Index = 12,
 					Key = ""
 					},
 				new DescribeEntryOption () {
 					Identifier = "Key", 
 					Default = null, // null if null
 					Brief = "<Unspecified>",
-					Index = 12,
+					Index = 13,
 					Key = "key"
 					}
 				}
@@ -16443,6 +17698,7 @@ namespace Goedel.Mesh.Shell {
 			new Flag (),
 			new String (),
 			new String (),
+			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
 			new Flag (),
@@ -16507,50 +17763,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[6] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[7] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[7] as Enumeration<EnumReporting>;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[9].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
-			get => _Data[10] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
 			set => _Data[10]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Json {
 			set => _Data[10].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Container {
+			get => _Data[11] as ExistingFile;
+			set => _Data[11]  = value;
+			}
+
+		public virtual string _Container {
+			set => _Data[11].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16602,39 +17867,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 6,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 6,
+					Index = 7,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 7,
+					Index = 8,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 9,
+					Index = 10,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to append to",
-					Index = 10,
+					Index = 11,
 					Key = ""
 					}
 				}
@@ -16653,6 +17925,7 @@ namespace Goedel.Mesh.Shell {
 			new ExistingFile (),
 			new NewFile (),
 			new Integer (),
+			new String (),
 			new String (),
 			new String (),
 			new String (),
@@ -16719,41 +17992,50 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[5].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[6] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[6] as String;
 			set => _Data[6]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[6].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[7] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[7] as Enumeration<EnumReporting>;
 			set => _Data[7]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[7].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[8] as Flag;
 			set => _Data[8]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[8].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[9] as Flag;
 			set => _Data[9]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[9].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[10] as Flag;
+			set => _Data[10]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[10].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -16805,32 +18087,39 @@ namespace Goedel.Mesh.Shell {
 					Index = 5,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 6,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 6,
+					Index = 7,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 7,
+					Index = 8,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 8,
+					Index = 9,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 9,
+					Index = 10,
 					Key = "json"
 					}
 				}
@@ -16859,6 +18148,7 @@ namespace Goedel.Mesh.Shell {
 			new String (),
 			new Enumeration<EnumAuthentication> (CommandLineInterpreter.DescribeEnumAuthentication),
 			new Enumeration<EnumUse> (CommandLineInterpreter.DescribeEnumUse),
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -16971,68 +18261,77 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[10].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[11] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[11] as String;
 			set => _Data[11]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[11].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[12] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[12] as Enumeration<EnumReporting>;
 			set => _Data[12]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[12].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[13] as Flag;
 			set => _Data[13]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[13].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[14] as Flag;
 			set => _Data[14]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[14].Parameter (value);
 			}
-		/// <summary>Field accessor for option [decrypt]</summary>
-		public virtual Flag Decrypt {
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
 			get => _Data[15] as Flag;
 			set => _Data[15]  = value;
 			}
 
-		public virtual string _Decrypt {
+		public virtual string _Json {
 			set => _Data[15].Parameter (value);
 			}
-		/// <summary>Field accessor for option [index]</summary>
-		public virtual Flag Index {
+		/// <summary>Field accessor for option [decrypt]</summary>
+		public virtual Flag Decrypt {
 			get => _Data[16] as Flag;
 			set => _Data[16]  = value;
 			}
 
-		public virtual string _Index {
+		public virtual string _Decrypt {
 			set => _Data[16].Parameter (value);
 			}
-		/// <summary>Field accessor for option [purge]</summary>
-		public virtual Flag Purge {
+		/// <summary>Field accessor for option [index]</summary>
+		public virtual Flag Index {
 			get => _Data[17] as Flag;
 			set => _Data[17]  = value;
 			}
 
-		public virtual string _Purge {
+		public virtual string _Index {
 			set => _Data[17].Parameter (value);
+			}
+		/// <summary>Field accessor for option [purge]</summary>
+		public virtual Flag Purge {
+			get => _Data[18] as Flag;
+			set => _Data[18]  = value;
+			}
+
+		public virtual string _Purge {
+			set => _Data[18].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -17119,53 +18418,60 @@ namespace Goedel.Mesh.Shell {
 					Index = 10,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 11,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 11,
+					Index = 12,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 12,
+					Index = 13,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 13,
+					Index = 14,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 14,
+					Index = 15,
 					Key = "json"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Decrypt", 
 					Default = "false", // null if null
 					Brief = "Decrypt contents",
-					Index = 15,
+					Index = 16,
 					Key = "decrypt"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Index", 
 					Default = "true", // null if null
 					Brief = "Append an index record to the end",
-					Index = 16,
+					Index = 17,
 					Key = "index"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Purge", 
 					Default = "true", // null if null
 					Brief = "Purge unused data etc.",
-					Index = 17,
+					Index = 18,
 					Key = "purge"
 					}
 				}
@@ -17181,6 +18487,7 @@ namespace Goedel.Mesh.Shell {
 							IReporting {
 
 		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
 			new String (),
 			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
 			new Flag (),
@@ -17201,50 +18508,59 @@ namespace Goedel.Mesh.Shell {
 		public virtual string _AccountAddress {
 			set => _Data[0].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter [report]</summary>
-		public virtual Enumeration<EnumReporting> EnumReporting {
-			get => _Data[1] as Enumeration<EnumReporting>;
+		/// <summary>Field accessor for option [local]</summary>
+		public virtual String LocalName {
+			get => _Data[1] as String;
 			set => _Data[1]  = value;
 			}
 
-		public virtual string _EnumReporting {
+		public virtual string _LocalName {
 			set => _Data[1].Parameter (value);
 			}
-		/// <summary>Field accessor for option [verbose]</summary>
-		public virtual Flag Verbose {
-			get => _Data[2] as Flag;
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[2] as Enumeration<EnumReporting>;
 			set => _Data[2]  = value;
 			}
 
-		public virtual string _Verbose {
+		public virtual string _EnumReporting {
 			set => _Data[2].Parameter (value);
 			}
-		/// <summary>Field accessor for option [report]</summary>
-		public virtual Flag Report {
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
 			get => _Data[3] as Flag;
 			set => _Data[3]  = value;
 			}
 
-		public virtual string _Report {
+		public virtual string _Verbose {
 			set => _Data[3].Parameter (value);
 			}
-		/// <summary>Field accessor for option [json]</summary>
-		public virtual Flag Json {
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
 			get => _Data[4] as Flag;
 			set => _Data[4]  = value;
 			}
 
-		public virtual string _Json {
+		public virtual string _Report {
 			set => _Data[4].Parameter (value);
 			}
-		/// <summary>Field accessor for parameter []</summary>
-		public virtual ExistingFile Container {
-			get => _Data[5] as ExistingFile;
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[5] as Flag;
 			set => _Data[5]  = value;
 			}
 
-		public virtual string _Container {
+		public virtual string _Json {
 			set => _Data[5].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual ExistingFile Container {
+			get => _Data[6] as ExistingFile;
+			set => _Data[6]  = value;
+			}
+
+		public virtual string _Container {
+			set => _Data[6].Parameter (value);
 			}
 		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
 
@@ -17261,39 +18577,46 @@ namespace Goedel.Mesh.Shell {
 					Index = 0,
 					Key = "account"
 					},
+				new DescribeEntryOption () {
+					Identifier = "LocalName", 
+					Default = null, // null if null
+					Brief = "Local name for account (e.g. personal)",
+					Index = 1,
+					Key = "local"
+					},
 				new DescribeEntryEnumerate () {
 					Identifier = "EnumReporting", 
 					Default = null, // null if null
 					Brief = "Reporting level",
-					Index = 1,
+					Index = 2,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Verbose", 
 					Default = "true", // null if null
 					Brief = "Verbose reports (default)",
-					Index = 2,
+					Index = 3,
 					Key = "verbose"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Report", 
 					Default = "true", // null if null
 					Brief = "Report output (default)",
-					Index = 3,
+					Index = 4,
 					Key = "report"
 					},
 				new DescribeEntryOption () {
 					Identifier = "Json", 
 					Default = "false", // null if null
 					Brief = "Report output in JSON format",
-					Index = 4,
+					Index = 5,
 					Key = "json"
 					},
 				new DescribeEntryParameter () {
 					Identifier = "Container", 
 					Default = null, // null if null
 					Brief = "Container to read",
-					Index = 5,
+					Index = 6,
 					Key = ""
 					}
 				}
@@ -17359,11 +18682,6 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult AccountSync ( AccountSync Options) {
-			CommandLineInterpreter.DescribeValues (Options);
-			return null;
-			}
-
-		public virtual ShellResult AccountRegister ( AccountRegister Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

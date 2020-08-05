@@ -9,7 +9,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordAdd(PasswordAdd Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var site = Options.Site.Value;
             var username = Options.Username.Value;
             var password = Options.Password.Value;
@@ -20,9 +20,8 @@ namespace Goedel.Mesh.Shell {
                 Password = password
                 };
 
-            using (var catalog = contextAccount.GetCatalogCredential()) {
-                catalog.Update(entry);
-                }
+            var catalog = contextAccount.GetCatalogCredential();
+            catalog.Update(entry);
 
             return new ResultEntry() {
                 Success = true,
@@ -36,10 +35,10 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordGet(PasswordGet Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var site = Options.Site.Value;
 
-            using var catalog = contextAccount.GetCatalogCredential();
+            var catalog = contextAccount.GetCatalogCredential();
             var result = catalog.LocateByService(site);
 
 
@@ -55,14 +54,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDelete(PasswordDelete Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var site = Options.Site.Value;
 
 
-            using (var catalog = contextAccount.GetCatalogCredential()) {
-                var result = catalog.LocateByService(site);
-                catalog.Delete(result);
-                }
+            var catalog = contextAccount.GetCatalogCredential();
+            var result = catalog.LocateByService(site);
+            catalog.Delete(result);
+
 
             return new Result() {
                 Success = true
@@ -75,15 +74,14 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult PasswordDump(PasswordDump Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new ResultDump() {
                 Success = true,
                 CatalogedEntries = new List<CatalogedEntry>()
                 };
-            using (var catalog = contextAccount.GetCatalogCredential()) {
-                foreach (var entry in catalog) {
-                    result.CatalogedEntries.Add(entry);
-                    }
+            var catalog = contextAccount.GetCatalogCredential();
+            foreach (var entry in catalog) {
+                result.CatalogedEntries.Add(entry);
                 }
             return result;
             }

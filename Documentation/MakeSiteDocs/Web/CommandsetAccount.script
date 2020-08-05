@@ -50,6 +50,29 @@ service when we create the profile:
 
 #% Describe(CommandSet);
 
+
+#% Describe(CommandSet, _AccountConnect._DescribeCommand);
+
+The `account connect` command 
+
+
+#% Describe(CommandSet, _AccountCreate._DescribeCommand);
+
+The `account create` command
+
+#% Describe(CommandSet, _AccountEscrow._DescribeCommand);
+
+The `account escrow` command
+
+#% Describe(CommandSet, _AccountGet._DescribeCommand);
+
+The `account get` command
+
+#% Describe(CommandSet, _AccountExport._DescribeCommand);
+
+The `account export` command
+
+
 #% Describe(CommandSet, _AccountHello._DescribeCommand);
 
 The `account hello` command attempts to contact a Mesh service and reports the
@@ -57,17 +80,15 @@ service configuration if successful.
 
 #%  ConsoleReference (Examples.ProfileHello);
 
-#!% Describe(CommandSet, _AccountRegister._DescribeCommand);
+#% Describe(CommandSet, _AccountImport._DescribeCommand);
 
-The `account register` command 
+The `account import` command
 
-#!%  ConsoleReference (Examples.ProfileRegister);
 
-#% Describe(CommandSet, _AccountSync._DescribeCommand);
+#% Describe(CommandSet, _AccountInvite._DescribeCommand);
 
-The `account sync` command 
+The `account invite` command 
 
-#!%  ConsoleReference (Examples.ProfileSync);
 
 #% Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 
@@ -81,6 +102,32 @@ The '/expire' option specifies an expiry time for the request as an integer
 followed by the letter m, h or d for minutes, hours and days respectively.
 
 #%  ConsoleReference (Examples.ConnectGetPin);
+
+
+#% Describe(CommandSet, _AccountPublish._DescribeCommand);
+
+The `account publish` command 
+
+
+#% Describe(CommandSet, _AccountPurge._DescribeCommand);
+
+The `account purge` command
+
+
+
+#% Describe(CommandSet, _AccountStatus._DescribeCommand);
+
+The `account status` command 
+
+
+
+
+#% Describe(CommandSet, _AccountSync._DescribeCommand);
+
+The `account sync` command 
+
+#!%  ConsoleReference (Examples.ProfileSync);
+
 
 
 #end xfile

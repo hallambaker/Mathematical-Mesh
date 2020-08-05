@@ -31,8 +31,6 @@ namespace ExampleGenerator {
 			 DareReference (Index);
 			 WebContainer (Index);
 			 ContainerReference (Index);
-			 WebProfile (Index);
-			 ProfileReference (Index);
 			 WebConnect (Index);
 			 ConnectReference (Index);
 			

@@ -827,11 +827,9 @@ namespace Goedel.Mesh.Client {
             var catalog = GetCatalogApplication();
             var entry = catalog.LocateGroup(groupAddress);
 
-            //// construct the group context
-            //// We do not attempt to get admin privs here, we will do that if necessary.
-            //return new ContextGroup(this, entry);
-
-            throw new NYI();
+            // construct the group context
+            // We do not attempt to get admin privs here, we will do that if necessary.
+            return new ContextGroup(this, entry);
             }
 
 
