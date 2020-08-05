@@ -60,18 +60,19 @@ namespace Goedel.Utilities {
             }
 
         /// <summary>
-        /// Returns the string <paramref name="accountID"/> if it is a well formed account identifier
-        /// and null otherwise.
+        /// Returns true if <paramref name="accountID"/> is a reasonably well formed account
+        /// address, other
         /// </summary>
         /// <param name="accountID">The string to test.</param>
         /// <returns><paramref name="accountID"/> if it is a well formed account identifier
         /// and null otherwise.</returns>
-        public static string IsAccountID(this string accountID) {
-            if (accountID == null) {
-                return null;
+        public static bool IsAccountID(this string accountID) {
+            if (accountID == null || accountID.Length < 3) {
+                return false;
                 }
-            return accountID.LastIndexOf('@') < 0 ? null : accountID;
+            return true; // Hack: need to do this properly.
             }
+
 
 
         ///// <summary>

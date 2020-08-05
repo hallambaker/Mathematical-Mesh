@@ -62,11 +62,11 @@ namespace Goedel.Mesh {
 
             // Generate the private keys
             PrivateAccountOfflineSignature = secretSeed.BasePrivate(
-                MeshKeyType.UserSign, keyCollection, KeySecurity.Ephemeral);
+                MeshKeyType.UserSign, keyCollection, KeySecurity.Exportable);
             PrivateAccountEncryption = secretSeed.BasePrivate(
-                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Session);
+                MeshKeyType.UserEncrypt, keyCollection, KeySecurity.Exportable);
             PrivateAccountAuthentication = secretSeed.BasePrivate(
-                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Session);
+                MeshKeyType.UserAuthenticate, keyCollection, KeySecurity.Exportable);
 
             //Set the public key parameters
             OfflineSignature = new KeyData(PrivateAccountOfflineSignature.KeyPairPublic());

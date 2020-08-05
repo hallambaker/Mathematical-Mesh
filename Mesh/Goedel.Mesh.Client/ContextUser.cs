@@ -28,6 +28,11 @@ namespace Goedel.Mesh.Client {
         ///<summary>Convenience accessor for the connection.</summary>
         public override Connection Connection => ConnectionUser;
 
+        ///<summary>Cached accessor to the account address.</summary>
+        public override string AccountAddress => accountAddress ?? GetAccountAddress().CacheValue(out accountAddress);
+
+        string accountAddress;
+
         ///<summary>The cataloged device</summary>
         public virtual CatalogedDevice CatalogedDevice => CatalogedMachine?.CatalogedDevice;
 
@@ -45,6 +50,10 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>The device key generation seed</summary>
         protected PrivateKeyUDF MeshSecretSeed;
+
+
+        ///<summary>The member's device signature key</summary>
+        protected override KeyPair KeySignature => PrivateDeviceSignature;
 
         // device key accessors
         KeyPair PrivateDeviceDecrypt { get; }
@@ -251,7 +260,8 @@ namespace Goedel.Mesh.Client {
                 string accountAddress) {
             PrivateAccountOfflineSignature.AssertNotNull(NotSuperAdministrator.Throw);
 
-            AccountAddress = accountAddress;
+            // cache the account address value
+            this.accountAddress = accountAddress;
 
             var helloRequest = new HelloRequest();
             var helloResponse = MeshClient.Hello(helloRequest);
@@ -406,7 +416,7 @@ namespace Goedel.Mesh.Client {
 
             var catalogCapability = GetCatalogCapability();
 
-            return new KeyData(keyPair);
+            return new KeyData(keyPair, true);
             }
 
 
@@ -476,11 +486,15 @@ namespace Goedel.Mesh.Client {
         /// now as the code doesn't really support the 'multiple services per account' model yet.
         /// </summary>
         /// <returns>The account service address.</returns>
-        public override string GetAccountAddress() {
+        public string GetAccountAddress() {
             ProfileUser.AccountAddresses.AssertNotNull(AccountNotBound.Throw);
-            (ProfileUser.AccountAddresses.Count > 0).AssertTrue(AccountNotBound.Throw);
+            foreach (var address in ProfileUser.AccountAddresses) {
+                if (address.IsAccountID()) {
+                    return address;
+                    }
 
-            return ProfileUser.AccountAddresses[0];
+                }
+            throw new AddressNotSupported();
             }
 
         /// <summary>
@@ -519,8 +533,8 @@ namespace Goedel.Mesh.Client {
         #region // Store management and convenience accessors
 
         ///<summary>Dictionarry used to create stores</summary>
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => stores;
-        Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
+        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
+        Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
             {CatalogCredential.Label, CatalogCredential.Factory},
             {CatalogContact.Label, CatalogContact.Factory},
             {CatalogCalendar.Label, CatalogCalendar.Factory},
@@ -787,19 +801,19 @@ namespace Goedel.Mesh.Client {
             GetCatalogApplication().New(catalogedGroup);
 
 
-            //var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
+            var contextGroup = ContextGroup.CreateGroup(this, catalogedGroup);
 
-            //var contact = contextGroup.CreateContact();
-            //// Bug: Should also encrypt the relevant admin key to the admin encryption key.
-
-
-            //var contactCatalog = GetCatalogContact();
-            //contactCatalog.Add(contact);
+            var contact = contextGroup.CreateContact();
+            // Bug: Should also encrypt the relevant admin key to the admin encryption key.
 
 
-            //return contextGroup;
+            var contactCatalog = GetCatalogContact();
+            contactCatalog.Add(contact);
 
-            throw new NYI();
+
+            return contextGroup;
+
+
             }
 
         /// <summary>

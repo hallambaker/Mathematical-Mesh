@@ -57,9 +57,6 @@
 			Brief "Device description"
 
 
-	OptionSet MasterProfileInfo
-		Option MasterUDF "mudf" String
-			Brief "Master profile fingerprint"
 
 	OptionSet DeviceAuthOptions
 		Option Auth "auth" String
@@ -172,85 +169,6 @@
 			Case eCatalog "catalog"
 				Brief "Object catalog"
 
-	CommandSet Mesh "mesh"
-
-		Brief "Commands for creating and managing a personal Mesh"
-
-		Command MeshCreate "create"
-			Return ResultMasterCreate
-			Brief "Create new personal profile"
-			Option NewAccountID "account" String
-				Brief "New account"
-			Option NewServiceID "service" String
-				Brief "New service"
-			Include Reporting
-			Include DeviceProfileInfo
-			Include CryptoOptions
-		
-		Command MeshEscrow "escrow"
-			Return ResultEscrow
-			Brief "Create a set of key escrow shares"
-			Include CryptoOptions
-			Include MasterProfileInfo
-			Include Reporting
-			Option Quorum "quorum" Integer
-				Default "2"
-			Option Shares "shares" Integer
-				Default "3"
-
-		Command MeshPurge "purge"
-			Return ResultMachine
-			Brief "Purge the Mesh recovery key from this device"
-			Include MasterProfileInfo
-			Include Reporting
-
-		Command MeshRecover "recover"
-			Return ResultMasterCreate
-			Brief "Recover escrowed profile"
-			Include MasterProfileInfo
-			Include Reporting
-			Parameter Share1 "s1" String
-			Parameter Share2 "s2" String
-			Parameter Share3 "s3" String
-			Parameter Share4 "s4" String
-			Parameter Share5 "s5" String
-			Parameter Share6 "s6" String
-			Parameter Share7 "s7" String
-			Parameter Share8 "s8" String
-			Option File "file" ExistingFile
-			Option Verify "verify" Flag
-
-
-		// Describe configuration
-		Command MeshList "list"
-			Return ResultMachine
-			Brief "List all profiles on the local machine"
-			Include Reporting
-			Include MasterProfileInfo
-
-		Command MeshGet "get"
-			Return ResultMachine
-			Brief "Describe the specified profile"
-			Include MasterProfileInfo
-			Include Reporting
-
-		// Export and import of profiles
-		Command MeshExport "export"
-			Return ResultMachine
-			Brief "Export the specified profile data to the specified file"
-			Parameter File "file" NewFile
-			Include MasterProfileInfo
-			Include Reporting
-
-		Command MeshImport "import"
-			Return ResultMachine
-			Brief "Import the specified profile data to the specified file"
-			Parameter File "file" NewFile
-			Include MasterProfileInfo
-			Include Reporting
-
-
-
 	CommandSet Account "account"
 		Brief "Account creation and management commands."
 	
@@ -259,10 +177,12 @@
 			Include AccountOptions
 
 		Command AccountCreate "create"
-			Brief "Create new account"
+			Brief "Create new account profile"
 			Parameter NewAccountID "account" String
+				Brief "New account"				
+			Option Localname "localname" String
 				Brief "Account friendly name"
-			Include MasterProfileInfo
+			Include DeviceProfileInfo
 			Include Reporting
 			Include CryptoOptions
 
@@ -284,7 +204,6 @@
 				Brief "New account"
 			Include Reporting
 			Include AccountOptions
-			Include MasterProfileInfo
 			Include DeviceProfileInfo
 
 		Command AccountGetPIN "pin"
@@ -314,6 +233,71 @@
 				Brief "The device location URI"			
 			Include AccountOptions
 			Include Reporting
+
+
+
+		Command AccountEscrow "escrow"
+			Return ResultEscrow
+			Brief "Create a set of key escrow shares"
+			Include CryptoOptions
+			Include AccountOptions
+			Include Reporting
+			Option Quorum "quorum" Integer
+				Default "2"
+			Option Shares "shares" Integer
+				Default "3"
+
+		Command AccountPurge "purge"
+			Return ResultMachine
+			Brief "Purge the Mesh recovery key from this device"
+			Include AccountOptions
+			Include Reporting
+
+		Command AccountRecover "recover"
+			Return ResultMasterCreate
+			Brief "Recover escrowed profile"
+			Include AccountOptions
+			Include Reporting
+			Parameter Share1 "s1" String
+			Parameter Share2 "s2" String
+			Parameter Share3 "s3" String
+			Parameter Share4 "s4" String
+			Parameter Share5 "s5" String
+			Parameter Share6 "s6" String
+			Parameter Share7 "s7" String
+			Parameter Share8 "s8" String
+			Option File "file" ExistingFile
+			Option Verify "verify" Flag
+
+
+		// Describe configuration
+		Command AccountList "list"
+			Return ResultMachine
+			Brief "List all profiles on the local machine"
+			Include Reporting
+			Include AccountOptions
+
+		Command AccountGet "get"
+			Return ResultMachine
+			Brief "Describe the specified profile"
+			Include AccountOptions
+			Include Reporting
+
+		// Export and import of profiles
+		Command AccountExport "export"
+			Return ResultMachine
+			Brief "Export the specified profile data to the specified file"
+			Parameter File "file" NewFile
+			Include AccountOptions
+			Include Reporting
+
+		Command AccountImport "import"
+			Return ResultMachine
+			Brief "Import the specified profile data to the specified file"
+			Parameter File "file" NewFile
+			Include AccountOptions
+			Include Reporting
+
 
 
 	CommandSet Connect "device"

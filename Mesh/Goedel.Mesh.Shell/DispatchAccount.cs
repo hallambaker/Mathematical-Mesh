@@ -35,17 +35,14 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult AccountCreate(AccountCreate Options) {
             var accountID = Options.NewAccountID.Value;
+            var localname = Options.Localname.Value;
 
-            using var contextMesh = GetContextMeshAdmin(Options);
-
-            throw new NYI();
-
-            //var contextAccount = contextMesh.CreateAccount(accountID);
-            //return new ResultCreateAccount() {
-            //    Success = true,
-            //    ProfileAccount = contextAccount.ProfileAccount,
-            //    ActivationAccount = contextAccount.ActivationAccount
-            //    };
+            var contextAccount = MeshHost.CreateMesh(accountID, localname);
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileUser = contextAccount.ProfileUser,
+                ActivationUser = contextAccount.ActivationUser
+                };
             }
 
 

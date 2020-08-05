@@ -183,7 +183,7 @@ namespace Goedel.Mesh.Client {
 
             // create the initial online signature key bound to this device
             var keyPairOnlineSignature = 
-                KeyPair.FactorySignature(algorithmSign, KeySecurity.Device, KeyCollection);
+                KeyPair.FactorySignature(algorithmSign, KeySecurity.ExportableStored, KeyCollection);
 
             // Create the Mesh for the user
             var contextUser = ContextUser.CreateMesh(
@@ -205,15 +205,26 @@ namespace Goedel.Mesh.Client {
                     algorithmSign, algorithmEncrypt, algorithmAuthenticate);
             var catalogedDevice = contextUser.AddDevice(profileDevice, keyPairOnlineSignature, true);
 
+            // now create the host catalog entry and apply to the context user.
+            var catalogedMachine = new CatalogedStandard() {
+                Id = profileDevice.UDF,
+                Local = localName,
+                CatalogedDevice = catalogedDevice,
+                EnvelopedProfileUser = contextUser.ProfileUser.DareEnvelope
+                };
+
             //Persist the results.
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
             contextUser.Persist(catalogedDevice);
             contextUser.PersistSeed();
-            Register(contextUser);
 
-            return contextUser;
+            // Now abandon the original context and create a new one
+            var contextUserFinal = new ContextUser(this, catalogedMachine);
+            Register(catalogedMachine, contextUserFinal);
+
+            return contextUserFinal;
             }
 
 

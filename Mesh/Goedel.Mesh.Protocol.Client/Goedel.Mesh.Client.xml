@@ -493,15 +493,6 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.KeyDeviceAuthentication">
             <summary>The authentication key used by this device to authenticate</summary>
         </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyEncryptionUDF">
-            <summary>Convenience accessor for the encryption key fingerprint.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeySignatureUDF">
-            <summary>Convenience accessor for the signature key fingerprint.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Client.ContextAccount.KeyAuthenticationUDF">
-            <summary>Convenience accessor for the authentication key fingerprint.</summary>
-        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
         </member>
@@ -623,9 +614,6 @@
             Send a message signed using the mesh administration key.
             </summary>
             <param name="meshMessage"></param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.GetAccountAddress">
-            <summary>Return the account address.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
@@ -757,6 +745,9 @@
         <member name="P:Goedel.Mesh.Client.ContextGroup.Profile">
             <summary>The account profile</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.AccountAddress">
+            <summary>The account address.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.ProfileGroup">
             <summary>The group profile.</summary>
         </member>
@@ -765,6 +756,9 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.Connection">
             <summary>Convenience accessor for the connection.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextGroup.KeySignature">
+            <summary>The member's device signature key</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextGroup.StoresDirectory">
             <summary>The directory containing the catalogs related to the account.</summary>
@@ -790,9 +784,6 @@
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.GetCatalogMember">
             <summary>Returns the network catalog for the account</summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.GetAccountAddress">
-            <summary>Return the account address.</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.Add(System.String,System.String)">
             <summary>
@@ -852,11 +843,16 @@
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.CatalogedPending">
             <summary>Convenience accessor for the pending context.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPending.AccountAddress">
+            <summary>The account address from the cataloged pending record. Note that this
+            address MUST be for the same service that the original request was made to.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.Profile">
-            <summary>The account profile</summary>
+            <summary>The account profile. Always null.</summary>
         </member>
         <member name="P:Goedel.Mesh.Client.ContextMeshPending.Connection">
-            <summary>The connection binding the calling context to the account.</summary>
+            <summary>The connection binding the calling context to the account. This is of course null
+            since a device in the state Mesh Pending does not have a connection by definition.</summary>
         </member>
         <member name="F:Goedel.Mesh.Client.ContextMeshPending.DeviceKeySeed">
             <summary>The device key generation seed</summary>
@@ -909,6 +905,15 @@
         <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.CatalogedPreconfigured">
             <summary>Convenience accessor for the pending context.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.Profile">
+            <summary>The manufacturer profile used to direct configuration.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.Connection">
+            <summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextMeshPreconfigured.AccountAddress">
+            <summary>The account address. This binds to the manufacturer account.</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextMeshPreconfigured.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
             Constructor.
@@ -953,6 +958,9 @@
         <member name="P:Goedel.Mesh.Client.ContextUser.Connection">
             <summary>Convenience accessor for the connection.</summary>
         </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.AccountAddress">
+            <summary>Cached accessor to the account address.</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextUser.CatalogedDevice">
             <summary>The cataloged device</summary>
         </member>
@@ -970,6 +978,9 @@
         </member>
         <member name="F:Goedel.Mesh.Client.ContextUser.MeshSecretSeed">
             <summary>The device key generation seed</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.ContextUser.KeySignature">
+            <summary>The member's device signature key</summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -1403,6 +1414,37 @@
             public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
         </member>
         <member name="F:Goedel.Mesh.Client.Internal.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.AddressNotSupported">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Client.AddressNotSupported.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Client.AddressNotSupported.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.AddressNotSupported.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.AddressNotSupported._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Client.AddressNotSupported.Throw">
             <summary>
             The public fatory delegate
             </summary>

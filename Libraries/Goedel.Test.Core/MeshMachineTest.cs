@@ -60,11 +60,7 @@ namespace Goedel.Test.Core {
         // Convenience routines 
         public ContextUser GetContextAccount(string localName = null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
-            var contextMesh = machine.MeshHost.GetContextMesh(localName);
-
-            throw new NYI();
-
-            //return contextMesh.GetContextAccount(localName, accountName);
+            return  machine.MeshHost.GetContextMesh(localName) as ContextUser;
             }
 
 

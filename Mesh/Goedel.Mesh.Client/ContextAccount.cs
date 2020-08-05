@@ -65,22 +65,14 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>The member's device signature key</summary>
-        protected KeyPair KeySignature { get; set; }
+        protected virtual KeyPair KeySignature => throw new NYI();
 
         ///<summary>The account encryption key </summary>
-        protected KeyPair KeyAccountEncryption { get; set; }
+        protected virtual KeyPair KeyAccountEncryption { get; set; }
 
         ///<summary>The authentication key used by this device to authenticate</summary>
-        protected KeyPair KeyDeviceAuthentication { get; set; }
+        protected virtual KeyPair KeyDeviceAuthentication { get; set; }
 
-
-        ///<summary>Convenience accessor for the encryption key fingerprint.</summary>
-        public string KeyEncryptionUDF => KeyAccountEncryption.KeyIdentifier;
-        ///<summary>Convenience accessor for the signature key fingerprint.</summary>
-        public string KeySignatureUDF => KeySignature.KeyIdentifier;
-
-        ///<summary>Convenience accessor for the authentication key fingerprint.</summary>
-        public string KeyAuthenticationUDF => KeyDeviceAuthentication.KeyIdentifier;
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public virtual string StoresDirectory { get; set; }
@@ -97,7 +89,7 @@ namespace Goedel.Mesh.Client {
         MeshService meshClient;
 
         ///<summary>The Account Address</summary>
-        public virtual string AccountAddress { get; protected set; }
+        public abstract string AccountAddress { get; }
 
 
         ///<summary>Returns the network catalog for the account</summary>
@@ -108,11 +100,14 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>List of catalogs</summary>
-        public abstract Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates { get; }
-
+        public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
+        Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
+             // All contexts have a capability catalog:
+            {CatalogCapability.Label, CatalogCapability.Factory}
+            };
         ///<summary>List of spools, these are the same for each type of account.</summary>
-        public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => stores;
-        Dictionary<string, StoreFactoryDelegate> stores = new Dictionary<string, StoreFactoryDelegate>() {
+        public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => spoolDelegates;
+        Dictionary<string, StoreFactoryDelegate> spoolDelegates = new Dictionary<string, StoreFactoryDelegate>() {
             {SpoolInbound.Label, SpoolInbound.Factory},
             {SpoolOutbound.Label, SpoolOutbound.Factory},
             {SpoolLocal.Label, SpoolLocal.Factory},
@@ -183,7 +178,9 @@ namespace Goedel.Mesh.Client {
         /// <param name="PinUDF">The identifier of the PIN</param>
         /// <returns>The message (if found), otherwise null.</returns>
         public MessagePIN GetMessagePIN(string PinUDF) {
-            var pinCreate = GetSpoolLocal().CheckPIN(PinUDF);
+            var spoolLocal = GetSpoolLocal();
+
+            var pinCreate = spoolLocal.CheckPIN(PinUDF);
             return pinCreate?.Message as MessagePIN;
             }
 
@@ -413,14 +410,9 @@ namespace Goedel.Mesh.Client {
                 return;
                 }
 
-
-            AccountAddress = GetAccountAddress();
-
             meshClient = GetMeshClient(AccountAddress);
             }
 
-        ///<summary>Return the account address.</summary>
-        public abstract string GetAccountAddress();
 
         #endregion
 

@@ -504,56 +504,49 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshCreate(Goedel.Mesh.Shell.MeshCreate)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountEscrow(Goedel.Mesh.Shell.AccountEscrow)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshEscrow(Goedel.Mesh.Shell.MeshEscrow)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountPurge(Goedel.Mesh.Shell.AccountPurge)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshPurge(Goedel.Mesh.Shell.MeshPurge)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountRecover(Goedel.Mesh.Shell.AccountRecover)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshRecover(Goedel.Mesh.Shell.MeshRecover)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountList(Goedel.Mesh.Shell.AccountList)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshList(Goedel.Mesh.Shell.MeshList)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountGet(Goedel.Mesh.Shell.AccountGet)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshGet(Goedel.Mesh.Shell.MeshGet)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountExport(Goedel.Mesh.Shell.AccountExport)">
             <summary>
             Dispatch method
             </summary>
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshExport(Goedel.Mesh.Shell.MeshExport)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.MeshImport(Goedel.Mesh.Shell.MeshImport)">
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountImport(Goedel.Mesh.Shell.AccountImport)">
             <summary>
             Dispatch method
             </summary>
@@ -794,13 +787,6 @@
             </summary>
             <param name="options">Options specifying the Mesh account id to bind to.</param>
             <returns>The Mesh Client.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.GetContextMeshAdmin(Goedel.Mesh.Shell.IMasterProfileInfo)">
-            <summary>
-            Obtain an administration context for the options specified in <paramref name="options"/>.
-            </summary>
-            <param name="options">The command options.</param>
-            <returns>The administration context.</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.GetContextAccount(Goedel.Mesh.Shell.IAccountOptions)">
             <summary>
@@ -1156,197 +1142,26 @@
             <param name="args">The set of arguments.</param>
             <param name="index">The first unparsed argument.</param>
         </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.NewAccountID">
-            <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.NewServiceID">
-            <summary>Field accessor for option [service]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.DeviceNew">
-            <summary>Field accessor for option [new]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.DeviceUDF">
-            <summary>Field accessor for option [dudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.DeviceID">
-            <summary>Field accessor for option [did]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.DeviceDescription">
-            <summary>Field accessor for option [dd]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshCreate.Algorithms">
-            <summary>Field accessor for option [alg]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Algorithms">
-            <summary>Field accessor for option [alg]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Quorum">
-            <summary>Field accessor for option [quorum]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshEscrow.Shares">
-            <summary>Field accessor for option [shares]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshPurge.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshPurge.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshPurge.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshPurge.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshPurge.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share1">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share2">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share3">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share4">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share5">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share6">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share7">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Share8">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.File">
-            <summary>Field accessor for option [file]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshRecover.Verify">
-            <summary>Field accessor for option [verify]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshList.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshList.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshList.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshList.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshList.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshGet.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshGet.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshGet.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshGet.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshGet.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshExport.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.File">
-            <summary>Field accessor for parameter []</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.EnumReporting">
-            <summary>Field accessor for parameter [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.Verbose">
-            <summary>Field accessor for option [verbose]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.Report">
-            <summary>Field accessor for option [report]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._MeshImport.Json">
-            <summary>Field accessor for option [json]</summary>
-        </member>
         <member name="P:Goedel.Mesh.Shell._AccountHello.AccountAddress">
             <summary>Field accessor for option [account]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.NewAccountID">
             <summary>Field accessor for parameter []</summary>
         </member>
-        <member name="P:Goedel.Mesh.Shell._AccountCreate.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.Localname">
+            <summary>Field accessor for option [localname]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceNew">
+            <summary>Field accessor for option [new]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceUDF">
+            <summary>Field accessor for option [dudf]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceID">
+            <summary>Field accessor for option [did]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountCreate.DeviceDescription">
+            <summary>Field accessor for option [dd]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.EnumReporting">
             <summary>Field accessor for parameter [report]</summary>
@@ -1413,9 +1228,6 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRegister.AccountAddress">
             <summary>Field accessor for option [account]</summary>
-        </member>
-        <member name="P:Goedel.Mesh.Shell._AccountRegister.MasterUDF">
-            <summary>Field accessor for option [mudf]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountRegister.DeviceNew">
             <summary>Field accessor for option [new]</summary>
@@ -1496,6 +1308,156 @@
             <summary>Field accessor for option [report]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountConnect.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Algorithms">
+            <summary>Field accessor for option [alg]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Quorum">
+            <summary>Field accessor for option [quorum]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountEscrow.Shares">
+            <summary>Field accessor for option [shares]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountPurge.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share1">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share2">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share3">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share4">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share5">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share6">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share7">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Share8">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.File">
+            <summary>Field accessor for option [file]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountRecover.Verify">
+            <summary>Field accessor for option [verify]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountList.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountGet.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountExport.Json">
+            <summary>Field accessor for option [json]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.File">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.AccountAddress">
+            <summary>Field accessor for option [account]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountImport.Json">
             <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._DeviceRequestConnect.AccountAddress">

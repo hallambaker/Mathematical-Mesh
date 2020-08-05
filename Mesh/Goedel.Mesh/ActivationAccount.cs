@@ -66,10 +66,10 @@ namespace Goedel.Mesh {
                 IKeyCollection keyCollection, 
                 IActivate deviceKeySeed) {
 
-            PrivateAccountOfflineSignature = AccountOnlineSignature?.GetKeyPair();
-            PrivateAccountOnlineSignature = AccountOfflineSignature?.GetKeyPair();
-            PrivateAccountEncryption = AccountEncryption?.GetKeyPair();
-            PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair();
+            PrivateAccountOfflineSignature = AccountOnlineSignature?.GetKeyPair(KeySecurity.Exportable);
+            PrivateAccountOnlineSignature = AccountOfflineSignature?.GetKeyPair(KeySecurity.Exportable);
+            PrivateAccountEncryption = AccountEncryption?.GetKeyPair(KeySecurity.Exportable);
+            PrivateAccountAuthentication = AccountAuthentication?.GetKeyPair(KeySecurity.Exportable);
 
             }
 

@@ -22,14 +22,17 @@ namespace Goedel.Mesh.Client {
         KeyPair keyEncryption;
         //KeyPair keySignature;
 
+        ///<summary>The account address from the cataloged pending record. Note that this
+        ///address MUST be for the same service that the original request was made to.</summary>
+        public override string AccountAddress => CatalogedPending.AccountAddress;
 
-        ///<summary>The account profile</summary>
-        public override Profile Profile => throw new NYI();
+        
+        ///<summary>The account profile. Always null.</summary>
+        public override Profile Profile => null;
 
-        ///<summary>The connection binding the calling context to the account.</summary>
-        public override Connection Connection => throw new NYI();
-
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => throw new NotImplementedException();
+        ///<summary>The connection binding the calling context to the account. This is of course null
+        ///since a device in the state Mesh Pending does not have a connection by definition.</summary>
+        public override Connection Connection =>null;
 
 
         /////<summary>Convenience accessor for the Account Service ID</summary>
@@ -183,31 +186,28 @@ namespace Goedel.Mesh.Client {
                     ConnectionException.Throw);
 
 
-            throw new NYI(); // fixin's needed below
+            var catalogedEntry = respondConnection.CatalogedDevice;
+            var profileUser = catalogedEntry.ProfileUser;
 
-            //var catalogedEntry = respondConnection.CatalogedDevice;
-            //var profileMaster = catalogedEntry.ProfileMesh;
+            // now create the host catalog entry
+            var catalogedStandard = new CatalogedStandard() {
+                Id = ProfileDevice.UDF,
+                CatalogedDevice = catalogedEntry,
+                EnvelopedProfileUser = profileUser.DareEnvelope
+                };
 
-            //// now create the host catalog entry
-            //var catalogedStandard = new CatalogedStandard() {
-            //    ID = ProfileDevice.UDF,
-            //    CatalogedDevice = catalogedEntry,
-            //    EnvelopedProfileMaster = profileMaster.DareEnvelope
-            //    };
+            // create the context mesh
+            var contextUser = new ContextUser(MeshHost, catalogedStandard);
 
-            //// create the context mesh
-            //var contextMesh = new ContextMesh(MeshHost, catalogedStandard);
+            MeshHost.Register(catalogedStandard, contextUser);
 
-            //MeshHost.Register(catalogedStandard, contextMesh);
-
-            //// now create the account context for the account we asked to connect to and initialize
-            //var contextAccount = contextMesh.GetContextAccount(accountName: AccountAddress);
-            //Directory.CreateDirectory(contextAccount.StoresDirectory);
-            //contextAccount.Sync();
-            //return contextAccount;
+            // now create the account context for the account we asked to connect to and initialize
+            Directory.CreateDirectory(contextUser.StoresDirectory);
+            contextUser.Sync();
+            return contextUser;
             }
 
-        public override string GetAccountAddress() => throw new NotImplementedException();
+
         }
 
     }

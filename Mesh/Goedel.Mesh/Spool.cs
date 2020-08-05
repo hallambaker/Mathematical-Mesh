@@ -519,7 +519,7 @@ namespace Goedel.Mesh {
                     IKeyCollection keyCollection = null,
                     bool decrypt = true,
                     bool create = true) =>
-            new SpoolInbound(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
+            new SpoolLocal(directory, storeId, cryptoParameters, keyCollection, decrypt, create);
 
         /// <summary>
         /// Constructor.

@@ -91,21 +91,16 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshServiceFull() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var machineAdmin = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var machineAdminAlice = new MeshMachineTest(testEnvironmentCommon, DeviceAliceAdmin);
+            var machineAdminBob = new MeshMachineTest(testEnvironmentCommon, DeviceBobAdmin);
+
+            machineAdminAlice.CheckHostCatalogExtended();
 
 
-            machineAdmin.CheckHostCatalogExtended();
+            // Create a presonal mesh 
+            var contextAccountAlice_1_a = machineAdminAlice.MeshHost.CreateMesh(AccountAlice, "personal");
 
-
-            var contextMeshAdmin = machineAdmin.MeshHost.CreateMesh("main");
-
-            machineAdmin.CheckHostCatalogExtended();
-
-
-            var contextAccountAlice_1_a = contextMeshAdmin.CreateAccount("main");
-            // Failure at this point because the profile is not written out after creating the account.
-
-            machineAdmin.CheckHostCatalogExtended();
+            machineAdminAlice.CheckHostCatalogExtended();
 
 
             // Perform some offline operations on the account catalogs
@@ -113,7 +108,7 @@ namespace Goedel.XUnit {
             contextAccountAlice_1_a.SetContactSelf(ContactAlice);
 
             // Check we can read the data from a second context
-            var contextAccountAlice_1_b = machineAdmin.GetContextAccount();
+            var contextAccountAlice_1_b = machineAdminAlice.GetContextAccount();
 
 
             // fails because the contextAccountAlice_1_b is null because the profile didn't get written out.
@@ -125,9 +120,6 @@ namespace Goedel.XUnit {
 
 
             // ****  Multiple device tests
-
-            // Add a service
-            contextAccountAlice_1_a.AddService(AccountAlice);
 
             // Connect a second device using the PIN connection mechanism
             var machineAlice2 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
@@ -153,27 +145,24 @@ namespace Goedel.XUnit {
             catalogCredential.New(password1);
 
 
-            // Bug: This is failing because the get pending routine is not traversing containers correctly
 
-            //// Connect a third device by approving a request
-            //var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
-            //var contextAccount3 = machineAlice3.Connect(AccountAlice);
+            // Connect a third device by approving a request
+            var machineAlice3 = new MeshMachineTest(testEnvironmentCommon, DeviceAlice3);
+            var contextAccount3 = machineAlice3.MeshHost.Connect(AccountAlice);
 
-            //sync = contextAccountAlice_1_a.Sync();
-            //var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
-            //contextAccountAlice_1_a.Process(connectRequest3);
+            sync = contextAccountAlice_1_a.Sync();
+            var connectRequest3 = contextAccountAlice_1_a.GetPendingMessageConnectionRequest();
+            contextAccountAlice_1_a.Process(connectRequest3);
 
-            //contextAccount3.Complete();
+            contextAccount3.Complete();
 
 
             // Do some catalog updates and check the results
             catalogCredential.New(password2);
 
             // Check message handling - introduce Bob
-            var machineAdminBob = MeshMachineTest.GenerateMasterAccount(
-                testEnvironmentCommon, DeviceBobAdmin, "main",
-                out var contextAccountBob,
-                AccountBob);
+            var contextAccountBob = machineAdminBob.MeshHost.CreateMesh(AccountBob, "personal");
+
 
             //var contactCatalogBob = contextAccountBob.GetCatalogContact();
             contextAccountBob.SetContactSelf(ContactBob);
@@ -181,11 +170,9 @@ namespace Goedel.XUnit {
             // **** Contact testing
             contextAccountBob.ContactRequest(AccountAlice);
 
-            // This is not syncing inbound spool as it should. Still only have two frames, not three!
             sync = contextAccountAlice_1_a.Sync();
             var contactRequest = contextAccountAlice_1_a.GetPendingMessageContactRequest();
             contextAccountAlice_1_a.Process(contactRequest);
-
 
             // Get the response back
             sync = contextAccountBob.Sync();
@@ -290,7 +277,26 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void MeshAllNew() {
+        public void MeshEscrowRecover() {
+
+            // Create mesh
+
+            // create key shares
+
+            // delete seed
+
+            // FAIL: create key shares 2
+
+            // Recover on different device from key shares
+
+            // Recover to new service
+
+            throw new NYI();
+            }
+
+
+        [Fact]
+        public void MeshGrantPrivs() {
             // SUCCESS: Create a personal mesh on device1
 
 
@@ -470,9 +476,6 @@ namespace Goedel.XUnit {
             Verify(first.ActivationUser, second.ActivationUser);
             Verify(first.ProfileUser, second.ProfileUser);
             (first.StoresDirectory == second.StoresDirectory).TestTrue();
-            (first.KeySignatureUDF == second.KeySignatureUDF).TestTrue();
-            (first.KeyEncryptionUDF == second.KeyEncryptionUDF).TestTrue();
-            (first.KeyAuthenticationUDF == second.KeyAuthenticationUDF).TestTrue();
             return true;
             }
 

@@ -6,7 +6,8 @@ Namespace Goedel.Mesh.Client
 		Description
 			|An internal assertion check failed.
 
-
+	Exception AddressNotSupported
+		Console "The profile does not have a supported address format."
 
 	Exception AccountNotBound
 		Console "The Mesh account is not bound to a service."

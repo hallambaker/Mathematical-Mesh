@@ -8,49 +8,49 @@ namespace Goedel.Mesh.Shell {
     public partial class Shell {
 
 
+        ///// <summary>
+        ///// Dispatch method
+        ///// </summary>
+        ///// <param name="Options">The command line options.</param>
+        ///// <returns>Mesh result instance</returns>
+        //public override ShellResult MeshCreate(MeshCreate Options) {
+
+        //    var service = Options.NewServiceID.Value;
+
+        //    var account = Options.NewAccountID.Value ?? service;
+
+
+
+        //    // here we need to decide if this is a local name or an account name.
+
+
+        //    var contextMesh = MeshHost.CreateMesh("main");
+
+        //    throw new NYI();
+        //    //if (account != null) {
+        //    //    var contextAccount = contextMesh.CreateAccount(service);
+        //    //    if (service != null) {
+        //    //        contextAccount.AddService(service);
+        //    //        }
+        //    //    }
+
+        //    //return new ResultCreatePersonal() {
+        //    //    Success = true,
+        //    //    ProfileMesh = contextMesh.ProfileMesh,
+        //    //    CatalogedDevice = contextMesh.CatalogedDevice,
+        //    //    MeshUDF = contextMesh.ProfileMesh.UDF,
+        //    //    DeviceUDF = contextMesh.CatalogedDevice.UDF
+        //    //    };
+        //    }
+
+
         /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshCreate(MeshCreate Options) {
-
-            var service = Options.NewServiceID.Value;
-
-            var account = Options.NewAccountID.Value ?? service;
-
-
-
-            // here we need to decide if this is a local name or an account name.
-
-
-            var contextMesh = MeshHost.CreateMesh("main");
-
-            throw new NYI();
-            //if (account != null) {
-            //    var contextAccount = contextMesh.CreateAccount(service);
-            //    if (service != null) {
-            //        contextAccount.AddService(service);
-            //        }
-            //    }
-
-            //return new ResultCreatePersonal() {
-            //    Success = true,
-            //    ProfileMesh = contextMesh.ProfileMesh,
-            //    CatalogedDevice = contextMesh.CatalogedDevice,
-            //    MeshUDF = contextMesh.ProfileMesh.UDF,
-            //    DeviceUDF = contextMesh.CatalogedDevice.UDF
-            //    };
-            }
-
-
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshEscrow(MeshEscrow Options) {
-            var contextMesh = GetContextMeshAdmin(Options);
+        public override ShellResult AccountEscrow(AccountEscrow Options) {
+            var contextMesh = GetContextAccount(Options);
             var shares = contextMesh.Escrow(3, 2);
 
             var textShares = new List<string>();
@@ -71,8 +71,8 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshPurge(MeshPurge Options) {
-            var contextMesh = GetContextMeshAdmin(Options);
+        public override ShellResult AccountPurge(AccountPurge Options) {
+            var contextMesh = GetContextAccount(Options);
 
             throw new NYI();
             }
@@ -90,7 +90,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshRecover(MeshRecover Options) {
+        public override ShellResult AccountRecover(AccountRecover Options) {
             
             // ToDo: this is going to need refactoring so that the localname and account tabs are filled.
 
@@ -130,7 +130,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshList(MeshList Options) {
+        public override ShellResult AccountList(AccountList Options) {
             var catalogedMachines = new List<CatalogedMachine>();
             "extract hosts from machine".TaskFunctionality();
 
@@ -145,7 +145,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshGet(MeshGet Options) {
+        public override ShellResult AccountGet(AccountGet Options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "select default host".TaskFunctionality();
@@ -161,7 +161,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshExport(MeshExport Options) {
+        public override ShellResult AccountExport(AccountExport Options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "export host data".TaskFunctionality();
@@ -177,7 +177,7 @@ namespace Goedel.Mesh.Shell {
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
-        public override ShellResult MeshImport(MeshImport Options) {
+        public override ShellResult AccountImport(AccountImport Options) {
             var catalogedMachines = new List<CatalogedMachine>();
 
             "import host data".TaskFunctionality();

@@ -37,9 +37,19 @@ namespace Scratchpad {
             //TestService.Test().MeshCatalogAccount();
             //ShellTests.Test().TestMessageContactInPerson();
 
-            TestService.Test().MeshDeviceConnectApprove();
+            // New service tests to ease shell testing
+
+            //// Escrow/recover capability
+            //TestService.Test().MeshEscrowRecover();
+            
+            //// Grant of Admin and Messaging privs
+            //TestService.Test().MeshGrantPrivs();
+
+            //// Connect by dynamic QR
+            //TestService.Test().MeshDeviceConnectDynamicQR();
 
 
+            ShellTests.Test().TestAccount();
             // ***** Currently failing tests
 
 

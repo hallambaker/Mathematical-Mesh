@@ -17,12 +17,14 @@ namespace Goedel.Mesh.Client {
         public CatalogedPreconfigured CatalogedPreconfigured
                     => CatalogedMachine as CatalogedPreconfigured;
 
-
+        ///<summary>The manufacturer profile used to direct configuration.</summary>
         public override Profile Profile => throw new NotImplementedException();
 
+        ///<summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
         public override Connection Connection => throw new NotImplementedException();
 
-        public override Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => throw new NotImplementedException();
+        ///<summary>The account address. This binds to the manufacturer account.</summary>
+        public override string AccountAddress => CatalogedPreconfigured.AccountAddress;
 
 
         /// <summary>
@@ -153,7 +155,5 @@ namespace Goedel.Mesh.Client {
             return context;
 
             }
-
-        public override string GetAccountAddress() => throw new NotImplementedException();
         }
     }

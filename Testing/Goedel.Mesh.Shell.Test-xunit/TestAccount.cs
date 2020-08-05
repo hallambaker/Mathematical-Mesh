@@ -17,9 +17,6 @@ namespace Goedel.XUnit {
             var site1 = "example.com"; var username1 = "alice1"; var password1 = "password1";
             var username3 = "alice3"; var password3 = "password3";
 
-
-            Dispatch($"mesh create");
-
             Dispatch($"account create {AliceAccount1}");
 
             Dispatch($"password add  {site1} {username1} {password1}");
@@ -56,21 +53,21 @@ namespace Goedel.XUnit {
 
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
 
-            var ProfileCreateAlice = testCLIAlice1.Example($"mesh create");
+            var ProfileCreateAlice = testCLIAlice1.Example($"account create");
             var AliceProfiles = ProfileCreateAlice[0].Result as ResultCreatePersonal;
 
-            var ProfileList = testCLIAlice1.Example($"mesh list");
-            var ProfileDump = testCLIAlice1.Example($"mesh get");
+            var ProfileList = testCLIAlice1.Example($"account list");
+            var ProfileDump = testCLIAlice1.Example($"account get");
 
 
             // Escrow round trip
-            var ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
+            var ProfileEscrow = testCLIAlice1.Example($"account escrow");
 
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
             var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
             var testCLIAlice2 = GetTestCLI(AliceDevice2);
-            var ProfileRecover = testCLIAlice2.Example($"mesh recover {share1} {share2} /verify");
+            var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /verify");
 
             testCLIAlice2.Dispatch($"account sync");
 
@@ -80,16 +77,16 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestEscrowAccountService() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"mesh create /service={AccountA}");
+            testCLIAlice1.Dispatch($"account create /service={AccountA}");
 
-            var ProfileEscrow = testCLIAlice1.Example($"mesh escrow");
+            var ProfileEscrow = testCLIAlice1.Example($"account escrow");
             var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
             var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            var ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+            var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
 
             var testCLIAlice2 = GetTestCLI(AliceDevice2);
-            var ProfileRecover = testCLIAlice2.Example($"mesh recover {share1} {share2} /verify");
+            var ProfileRecover = testCLIAlice2.Example($"account recover {share1} {share2} /verify");
 
             testCLIAlice2.Dispatch($"account sync");
 
@@ -101,9 +98,9 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"mesh create /service={AccountA}");
+            testCLIAlice1.Dispatch($"account create AccountA");
 
-            var ProfileAliceDelete = testCLIAlice1.Example($"mesh delete");
+            var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
 
             // failing here as account was not deleted off the service.
             testCLIAlice1.Dispatch($"account sync", fail: true);
@@ -118,13 +115,13 @@ namespace Goedel.XUnit {
 
             var testCLIMallet1 = GetTestCLI(MalletDevice1);
 
-            // Issue: check to see that there is an entry in the Host catalog.
-            var ProfileCreateAlice = testCLIAlice1.ExampleNoCatch($"mesh create");
-
-            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create");
-
             var ProfileHello = testCLIAlice1.Example($"account hello {AliceService1}");
             var ResultHello = ProfileHello[0].Result as ResultHello;
+
+            var ProfileCreateAliceAccount = testCLIAlice1.ExampleNoCatch($"account create  AliceService1");
+
+
+
 
 
             //JSONReader.Trace = true;

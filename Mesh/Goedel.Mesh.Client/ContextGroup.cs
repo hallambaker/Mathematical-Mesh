@@ -27,6 +27,8 @@ namespace Goedel.Mesh.Client {
         ///<summary>The account profile</summary>
         public override Profile Profile => ProfileGroup;
 
+        ///<summary>The account address.</summary>
+        public override string AccountAddress => CatalogedGroup.Key;
 
         ///<summary>The group profile.</summary>
         public ProfileGroup ProfileGroup => CatalogedGroup.Profile;
@@ -35,6 +37,10 @@ namespace Goedel.Mesh.Client {
         public ConnectionGroup ConnectionGroup;
         ///<summary>Convenience accessor for the connection.</summary>
         public override Connection Connection => ConnectionGroup;
+
+
+        ///<summary>The member's device signature key</summary>
+        protected override KeyPair KeySignature => null;
 
         ///<summary>The directory containing the catalogs related to the account.</summary>
         public override string StoresDirectory => storesDirectory ??
@@ -68,8 +74,6 @@ namespace Goedel.Mesh.Client {
                     base(contextAccount.MeshHost, null) { 
             CatalogedGroup = catalogedGroup;
             ContextAccount = contextAccount;
-            AccountAddress = CatalogedGroup.Key;
-
             }
 
         /// <summary>
@@ -97,9 +101,6 @@ namespace Goedel.Mesh.Client {
         ///<summary>Returns the network catalog for the account</summary>
         public CatalogMember GetCatalogMember() => GetStore(CatalogMember.Label) as CatalogMember;
 
-
-        ///<summary>Return the account address.</summary>
-        public override string GetAccountAddress() => CatalogedGroup.Key;
 
 
         // ToDo: Implement Add member to group

@@ -22,7 +22,7 @@ namespace Goedel.Mesh.Shell {
         public virtual IMeshMachineClient MeshMachine { get; }
 
         ///<summary>Convenience accessor for the Mesh Host.</summary>
-        public MeshHost MeshHost => MeshMachine.MeshHost;
+        public MeshHost MeshHost => MeshMachine?.MeshHost;
 
         ///<summary>The Host catalog.</summary>
         public virtual MeshHost CatalogHost => catalogHost ??
@@ -199,20 +199,6 @@ namespace Goedel.Mesh.Shell {
 
             }
 
-        ///// <summary>
-        ///// Get or create a device profile without an associated account.
-        ///// </summary>
-        ///// <param name="options">The shell options.</param>
-        ///// <returns>The device context</returns>
-        //public virtual ContextMeshAdmin GetContextMeshAdmin(IDeviceProfileInfo options) => MeshHost.GetContextMesh(admin: true) as ContextMeshAdmin;
-
-        /// <summary>
-        /// Obtain an administration context for the options specified in <paramref name="options"/>.
-        /// </summary>
-        /// <param name="options">The command options.</param>
-        /// <returns>The administration context.</returns>
-        public virtual ContextUser GetContextMeshAdmin(IMasterProfileInfo options) => 
-                    MeshHost.GetContextMesh(admin: true) as ContextUser;
 
         /// <summary>
         /// Obtain an account context for the options specified in <paramref name="options"/>.
