@@ -278,36 +278,39 @@ namespace Goedel.XUnit {
 
         [Fact]
         public void MeshEscrowRecover() {
+
+            // Create mesh
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var contextAliceOriginal = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
+            // create key shares
             var shares = contextAliceOriginal.Escrow(3, 2);
 
-
+            // Recover on different device from key shares
             var recoveryMachine = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
 
+            // create key shares
             var recoveryShares = new List<string> { shares[0].UDFKey, shares[1].UDFKey };
             var secret = new SharedSecret(recoveryShares);
 
-            var recoveredAccount = recoveryMachine.MeshHost.CreateMesh("recover", secret.UDFKey);
-
-            // Create mesh
-
-            // create key shares
+            var recoveredAccount = recoveryMachine.MeshHost.CreateMesh("recover", 
+                        secretSeed:secret.UDFKey);
 
             // delete seed
+            contextAliceOriginal.EraseMeshSecret();
 
             // FAIL: create key shares 2
 
-            // Recover on different device from key shares
+            Xunit.Assert.Throws<NoMeshSecret>( 
+                ()=>contextAliceOriginal.Escrow(3, 2));
 
             // Recover to new service
 
 
             contextAliceOriginal.ProfileUser.UDF.TestEqual( recoveredAccount.ProfileUser.UDF);
 
-            throw new NYI();
+
             }
 
 

@@ -11,6 +11,8 @@
 			Description
 				|The calculated fingerprint did not match the expected value.
 
+		Exception ProfileFingerprintInvalid
+			Console "The identifier is not a valid profile fingerprint"
 
 		Exception AccountNotFound
 			Console "Profile not found"

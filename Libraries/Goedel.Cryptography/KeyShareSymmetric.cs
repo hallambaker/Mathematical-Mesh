@@ -158,53 +158,6 @@ namespace Goedel.Cryptography {
             }
 
 
-        ///// <summary>
-        ///// Combine the shares <paramref name="shares"/> using the prime modulus 
-        ///// <paramref name="modulus"/> with a threshold of <paramref name="threshold"/>
-        ///// </summary>
-        ///// <param name="shares">The shares to construct the coefficient from.</param>
-        ///// <param name="modulus">The prime modulus.</param>
-        ///// <param name="threshold">The threshold value.</param>
-        ///// <returns>The recovered value.</returns>
-        //public static BigInteger CombineNT2(KeyShare[] shares, BigInteger modulus, int threshold) {
-
-        //    Assert.False(shares.Length < threshold, InsufficientShares.Throw);
-
-        //    BigInteger accum = 0;
-
-        //    for (var formula = 0; formula < threshold; formula++) {
-
-        //        var value = shares[formula].Value;
-        //        var start = shares[formula].Index;
-
-        //        Console.WriteLine($"Value = {start}, {value} ");
-
-        //        BigInteger numerator = 1, denominator = 1;
-        //        for (var count = 0; count < threshold; count++) {
-        //            if (formula == count) {
-        //                continue;  // If not the same value
-        //                }
-
-
-        //            var next = shares[count].Index;
-
-        //            numerator = (numerator * -next) % modulus;
-        //            denominator = (denominator * (start - next)) % modulus;
-
-        //            Console.WriteLine($"    {count},{next}:{numerator}/{denominator}");
-        //            }
-
-        //        Console.WriteLine($"Total {formula}: {numerator}/{denominator}");
-
-        //        var InvDenominator = ModInverse(denominator, modulus);
-
-        //        accum = (accum + (value * numerator * InvDenominator)).Mod(modulus);
-        //        }
-
-        //    return accum;
-        //    }
-
-
         // Not the fastest way to do modular inverse but the easiest with the
         // available tools in .net
         static BigInteger ModInverse(BigInteger k, BigInteger m) {
@@ -242,16 +195,16 @@ namespace Goedel.Cryptography {
         /// <summary>
         /// The Key Value as a Base32 encoded string.
         /// </summary>
-        public virtual string UDFKey => Cryptography.UDF.SymmetricKey(Key);
+        public virtual string UDFKey => UDF.PresentationBase32(Key, Key.Length*8);
 
         ///<summary>The UDF identifier of the secret value.</summary>
-        public string UDFIdentifier => Cryptography.UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
+        public string UDFIdentifier => UDF.ContentDigestOfUDF(UDFKey, bits: KeyBits * 2);
 
         ///<summary>The maximum allowed secret value.</summary>
         public BigInteger SecretMax;
 
         ///<summary>The number of 32 bit words used to represent the value.</summary>
-        public int ShareWords;
+        public int ShareBytes;
 
 
         /// <summary>
@@ -271,7 +224,7 @@ namespace Goedel.Cryptography {
         public SharedSecret(byte[] key) {
             Key = key;
             Value = key.BigIntegerBigEndian();
-            Prime = GetPrime(KeyBits, out SecretMax, out ShareWords);
+            Prime = GetPrime(KeyBits, out SecretMax, out ShareBytes);
             }
 
 
@@ -360,6 +313,44 @@ namespace Goedel.Cryptography {
             75,
             };
 
+        public readonly static int[] PrimeOffsetNext = new int[] {
+            1,            1,         43,          15,
+            15,          21,         81,          13,
+            15,          13,          7,          61,
+            111,         25,        451,          51,
+            85,         175,        253,           7,
+            87,         427,         27,         133,
+            235,        375,        423,         735,
+            357,        115,         81,         297,
+            175,         57,         45,         127,
+            61,          37,         91,          27,
+            15,         241,        231,          55,
+            105,        127,        115,         231,
+            207,        181,         37,         235,
+            163,       1093,        187,         211,
+            21,         841,        445,         165,
+            777,        583,        133,          75
+            };
+
+        public readonly static int[] PrimeOffsetPrevious = new int[] {
+            5,           15,          3,           5,
+            87,          59,          5,          59,
+            93,          65,        299,          17,
+            17,          75,        119,         159,
+            113,         83,         17,          47,
+            257,        233,         33,         237,
+            75,         299,        377,          63,
+            567,        467,        237,         189,
+            275,        237,         47,         167,
+            285,         75,        203,         197,
+            155,          3,        119,         657,
+            719,        315,         57,         317,
+            107,        593,       1005,         435,
+            389,        299,         33,         203,
+            627,        437,        209,          47,
+            17,         257,        503,         569
+            };
+
         /// <summary>
         /// Return the prime number that is strictly greater than 2^n where n is 
         /// the smallest integer multiple of 32 greater or equal to <paramref name="bits"/>.
@@ -371,9 +362,13 @@ namespace Goedel.Cryptography {
         public static BigInteger GetPrime(int bits, out BigInteger exponent, out int index) {
             Assert.AssertTrue(bits > 0 & bits <= 512, KeySizeNotSupported.Throw);
 
-            index = (bits + 31) / 32;
-            exponent = BigInteger.Pow(2, 32 * index);
-            return exponent + new BigInteger(PrimeValues[index - 1]);
+            index = (bits + 7) / 8;
+            exponent = BigInteger.Pow(2, 8 * index);
+            var result = exponent + new BigInteger(PrimeOffsetNext[index - 1]);
+
+            result.IsProbablePrime().VerifyTrue(Internal.Throw);
+            
+            return result;
             }
 
 
@@ -411,7 +406,7 @@ namespace Goedel.Cryptography {
             var keyShares = new KeyShareSymmetric[n];
 
             for (int i = 0; i < n; i++) {
-                keyShares[i] = new KeyShareSymmetric(i, k, ShareWords*4);
+                keyShares[i] = new KeyShareSymmetric(i, k, ShareBytes);
                 }
             Split(keyShares, k, out polynomial);
 
@@ -446,7 +441,7 @@ namespace Goedel.Cryptography {
 
             var accum = CombineNT(shares, modulus, threshold);
             //Console.WriteLine($"Reconstructed value = {accum}");
-            return accum.ToByteArrayBigEndian(shareChunks * 4);
+            return accum.ToByteArrayBigEndian(shareChunks);
             }
 
         /// <summary>

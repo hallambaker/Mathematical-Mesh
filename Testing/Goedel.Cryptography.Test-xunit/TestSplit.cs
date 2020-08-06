@@ -25,18 +25,13 @@ namespace Goedel.XUnit {
         [InlineData(512)]
         public void TestKey(int bits, string hexData = null) {
             var data = hexData == null ? CryptoCatalog.GetBits(bits) : hexData.FromBase16();
+
             var secret = new SharedSecret(data);
             var udf = secret.UDFKey;
 
             var secret2 = new SharedSecret(secret.Key);
             secret2.UDFKey.TestEqual(udf);
 
-            var key = UDF.SymmetricKey(udf);
-            key.TestEqual(secret.Key);
-
-            var secret3 = new SharedSecret(udf);
-            secret3.Key.TestEqual(secret.Key);
-            secret3.UDFKey.TestEqual(udf);
             }
 
         [Theory]

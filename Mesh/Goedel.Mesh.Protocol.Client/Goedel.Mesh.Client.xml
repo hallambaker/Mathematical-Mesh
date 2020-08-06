@@ -560,6 +560,11 @@
             <param name="PinUDF">The identifier of the PIN</param>
             <returns>The message (if found), otherwise null.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.DeleteAccount">
+            <summary>
+            Delete the associated account from the local machine.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetMeshClient(System.String)">
             <summary>
             Returns a Mesh service client for <paramref name="accountAddress"/>.
@@ -1007,6 +1012,7 @@
             <summary>
             Get the MeshSecret.
             </summary>
+            <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The Mesh secret bytes.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.PersistSeed">
@@ -1025,6 +1031,7 @@
             </summary>
             <param name="shares">Number of shares to create</param>
             <param name="threshold">Number of shares required to recreate the quorum</param>
+            <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Persist(Goedel.Mesh.CatalogedDevice)">
@@ -2145,7 +2152,7 @@
         <member name="F:Goedel.Mesh.Client.MeshHost.DictionaryLocalContextMesh">
             <summary>Dictionary mapping mesh local name to Context.</summary>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.LocateMesh(System.String)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.LocateMesh(System.String,System.Boolean)">
             <summary>
             Locate context by UDF or localname. The context acquired is owned by the MeshHost instance
             and MUST NOT be disposed of by the caller.
@@ -2162,11 +2169,11 @@
             already exist.</param>
             <param name="context">The dynamic context that interfaces to the catalog item.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Delete(Goedel.Mesh.Client.HostCatalogItem)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.Delete(System.String)">
             <summary>
             Delete <paramref name="profile"/> from the host catalog.
             </summary>
-            <param name="profile">The profile to delete</param>
+            <param name="key">The profile to delete</param>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String,Goedel.Mesh.ProfileDevice)">
              <summary>

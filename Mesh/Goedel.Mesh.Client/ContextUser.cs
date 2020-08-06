@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol;
+using System.Diagnostics;
 
 namespace Goedel.Mesh.Client {
 
@@ -138,6 +139,8 @@ namespace Goedel.Mesh.Client {
             // Create the master profile.
             var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileUser, secretSeed);
 
+            Screen.WriteLine($"***** Secret Seed = {privateKeyUDF.PrivateValue}");
+
             var profileUser = new ProfileUser(meshHost.KeyCollection, privateKeyUDF, onlineSignature);
 
             var catalogedMachine = new CatalogedStandard() {
@@ -167,13 +170,19 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Get the MeshSecret.
         /// </summary>
+        /// <exception cref="NoMeshSecret">Is thrown if the private key cannot be found.</exception>
         /// <returns>The Mesh secret bytes.</returns>
         byte[] GetMeshSecret() {
-            // pull the master key
-            MeshSecretSeed = KeyCollection.LocatePrivateKey(ProfileUser.OfflineSignature.UDF) as PrivateKeyUDF;
-            MeshSecretSeed.AssertNotNull(NoMeshSecret.Throw);
-            // convert to byte array;
-            return MeshSecretSeed.PrivateValue.FromBase32();
+            try {
+                // pull the master key
+                MeshSecretSeed = KeyCollection.LocatePrivateKey(ProfileUser.OfflineSignature.UDF) as PrivateKeyUDF;
+                MeshSecretSeed.AssertNotNull(NoMeshSecret.Throw);
+                // convert to byte array;
+                return MeshSecretSeed.PrivateValue.FromBase32();
+                }
+            catch {
+                throw new NoMeshSecret();
+                }
             }
 
         /// <summary>
@@ -195,6 +204,7 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="shares">Number of shares to create</param>
         /// <param name="threshold">Number of shares required to recreate the quorum</param>
+        /// <exception cref="NoMeshSecret">Is thrown if the private key cannot be found.</exception>
         /// <returns>The encrypted escrow entry and the key shares.</returns>
         public KeyShareSymmetric[] Escrow(int shares, int threshold) {
             var mastersecretBytes = GetMeshSecret();

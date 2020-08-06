@@ -116,9 +116,9 @@ namespace Goedel.XUnit {
         [Fact]
         public void TestAccountDelete() {
             var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"account create {AccountA}");
-
-            var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
+            var account = testCLIAlice1.Dispatch($"account create {AccountA}") as ResultCreateAccount;
+            var profileUdf = account.ProfileUser.UDF;
+            var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 
             // failing here as account was not deleted off the service.
             testCLIAlice1.Dispatch($"account sync", fail: true);

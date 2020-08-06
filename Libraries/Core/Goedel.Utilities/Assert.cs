@@ -305,73 +305,22 @@ namespace Goedel.Utilities {
 
 
 
-        //*****************
-
-        ///// <summary>Throw an exception if the specified condition is true. 
-        /////Assert.False (test, NYIException.Throw, "test was true")
-        ///// </summary>
-        ///// <param name="condition">The condition</param>
-        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        ///// Condition is true</param>
-        ///// <param name="Reason">Reason data for filling throw template</param>
-        ///// <param name="Int">Integer default parameter</param>
-        ///// <param name="String">String default parameter</param>
-        //public static void False(bool condition, ThrowDelegate throwDelegate,
-        //            object Reason = null, string String = null, int Int = -1) {
-        //    if (condition) {
-        //        throw throwDelegate();
-        //        }
-        //    }
-
-        ///// <summary>Throw an exception if the specified condition is false. 
-        /////Assert.True (test, NYIException.Throw, "test was false")
-        ///// </summary>
-        ///// <param name="condition">The condition</param>
-        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        ///// Condition is true</param>
-        ///// <param name="Reason">Reason data for filling throw template</param>
-        ///// <param name="Int">Integer default parameter</param>
-        ///// <param name="String">String default parameter</param>
-        //public static void AssertTrue(bool condition, ThrowDelegate throwDelegate,
-        //            object Reason = null, string String = null, int Int = -1) {
-        //    if (!condition) {
-        //        throw throwDelegate();
-        //        }
-        //    }
+        /// <summary>If debugging Throw an exception if <paramref name="condition"/> is false. 
+        /// (test, NYIException.Throw, "test was false").AssertTrue();
+        /// </summary>
+        /// <param name="condition">The condition</param>
+        /// <param name="throwDelegate">Delegate that creates the exception to be thrown if
+        /// Condition is true</param>
+        /// <param name="args">Reason arguments to be passed to the throw delegate.</param>
+        public static void VerifyTrue(this bool condition, ThrowDelegate throwDelegate,
+                    params object[] args) {
+            if (!condition) {
+                throw throwDelegate(args);
+                }
+            }
 
 
-        ///// <summary>Throw an exception if the specified condition is false. 
-        /////Assert.True (test, NYIException.Throw, "test was false")
-        ///// </summary>
-        ///// <param name="condition">The condition</param>
-        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        ///// Condition is true</param>
-        ///// <param name="Reason">Reason data for filling throw template</param>
-        ///// <param name="Int">Integer default parameter</param>
-        ///// <param name="String">String default parameter</param>
-        //public static void Null(object condition, ThrowDelegate throwDelegate = null,
-        //            object Reason = null, string String = null, int Int = -1) {
-        //    if (condition!=null) {
-        //        throw throwDelegate();
-        //        }
-        //    }
 
-        ///// <summary>Throw an exception if the specified condition is false. 
-        /////Assert.True (test, NYIException.Throw, "test was false")
-        ///// </summary>
-        ///// <param name="condition">The condition</param>
-        ///// <param name="throwDelegate">Delegate that creates the exception to be thrown if
-        ///// Condition is true</param>
-        ///// <param name="Reason">Reason data for filling throw template</param>
-        ///// <param name="Int">Integer default parameter</param>
-        ///// <param name="String">String default parameter</param>
-        //public static void NotNull(object condition, ThrowDelegate throwDelegate = null,
-        //            object Reason = null, string String = null, int Int = -1) {
-        //    if (condition == null) {
-        //        throw throwDelegate();
-        //        }
-        //    }
-        // ** Task declarations.
 
         /// <summary>
         /// Utility routine used to flag missing code to implement missing
@@ -402,7 +351,7 @@ namespace Goedel.Utilities {
         /// <param name="description">Description of the missing functionality.</param>
         /// <param name="exception">If true, throw an exception.</param>
         public static void TaskFunctionality(this string description, bool exception = false) {
-            Console.WriteLine($"***Functionality missing***{description}");
+            Screen.WriteLine($"***Functionality missing***{description}");
             if (exception) {
                 throw new NYI();
                 }
@@ -416,7 +365,7 @@ namespace Goedel.Utilities {
         /// <param name="result">The result value to be returned.</param>
         /// <returns>The value <paramref name="result"/>.</returns>
         public static string Task(this string result, string description) {
-            Console.WriteLine($"***Task***{description}");
+            Screen.WriteLine($"***Task***{description}");
             return result;
             }
 

@@ -80,6 +80,12 @@
 		Struct ProfileUser					ProfileUser
 		Struct ActivationUser				ActivationUser
 	
+
+	Structure ResultDeleteAccount
+		Inherits							ResultCreateDevice
+		String								UDF
+
+
 	Structure ResultRegisterService
 		Inherits							ResultCreateAccount
 		String								AccountAddress

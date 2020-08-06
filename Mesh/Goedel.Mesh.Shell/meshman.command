@@ -188,6 +188,14 @@
 			Include Reporting
 			Include CryptoOptions
 
+
+		Command AccountDelete "delete"
+			Brief "Delete an account profile"
+			Parameter ProfileUdf "udf" String
+				Brief "Fingerprint of the account to be removed from this device"
+			Include Reporting
+
+
 		Command AccountStatus "status"
 			Brief "Return the status of the account catalogs and spools"
 			Include AccountOptions

@@ -23,6 +23,13 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountDelete(Goedel.Mesh.Shell.AccountDelete)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.AccountStatus(Goedel.Mesh.Shell.AccountStatus)">
             <summary>
             Register a profile to a new service. This is not currently supported.
@@ -53,6 +60,55 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.AccountConnect(Goedel.Mesh.Shell.AccountConnect)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountEscrow(Goedel.Mesh.Shell.AccountEscrow)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountPurge(Goedel.Mesh.Shell.AccountPurge)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountRecover(Goedel.Mesh.Shell.AccountRecover)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountList(Goedel.Mesh.Shell.AccountList)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountGet(Goedel.Mesh.Shell.AccountGet)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountExport(Goedel.Mesh.Shell.AccountExport)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.AccountImport(Goedel.Mesh.Shell.AccountImport)">
             <summary>
             Dispatch method
             </summary>
@@ -497,55 +553,6 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountEscrow(Goedel.Mesh.Shell.AccountEscrow)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountPurge(Goedel.Mesh.Shell.AccountPurge)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountRecover(Goedel.Mesh.Shell.AccountRecover)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountList(Goedel.Mesh.Shell.AccountList)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountGet(Goedel.Mesh.Shell.AccountGet)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountExport(Goedel.Mesh.Shell.AccountExport)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.AccountImport(Goedel.Mesh.Shell.AccountImport)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.MessageContact(Goedel.Mesh.Shell.MessageContact)">
             <summary>
             Dispatch method
@@ -881,6 +888,37 @@
             The public fatory delegate
             </summary>
         </member>
+        <member name="T:Goedel.Mesh.Shell.ProfileFingerprintInvalid">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ProfileFingerprintInvalid.ExceptionFormatDelegate">
+            <summary>The exception formatting delegate. May be overriden 
+            locally or globally to implement different exception formatting.</summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ProfileFingerprintInvalid.Templates">
+            <summary></summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileFingerprintInvalid.#ctor(System.String,System.Exception,System.Object[])">
+            <summary>
+            Construct instance for exception
+            </summary>		
+            <param name="description">Description of the error, may be used to override the 
+            generated message.</param>	
+            <param name="inner">Inner Exception</param>	
+            <param name="args">Optional list of parameterized arguments.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ProfileFingerprintInvalid._Throw(System.Object)">
+            <summary>
+            The public fatory delegate
+            </summary>
+            public static new global::Goedel.Utilities.ThrowNewDelegate ThrowNew = _Throw;
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ProfileFingerprintInvalid.Throw">
+            <summary>
+            The public fatory delegate
+            </summary>
+        </member>
         <member name="T:Goedel.Mesh.Shell.AccountNotFound">
             <summary>
             Account not valid
@@ -1173,6 +1211,21 @@
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountCreate.Algorithms">
             <summary>Field accessor for option [alg]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountDelete.ProfileUdf">
+            <summary>Field accessor for parameter []</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountDelete.EnumReporting">
+            <summary>Field accessor for parameter [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountDelete.Verbose">
+            <summary>Field accessor for option [verbose]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountDelete.Report">
+            <summary>Field accessor for option [report]</summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell._AccountDelete.Json">
+            <summary>Field accessor for option [json]</summary>
         </member>
         <member name="P:Goedel.Mesh.Shell._AccountStatus.AccountAddress">
             <summary>Field accessor for option [account]</summary>
@@ -4600,6 +4653,65 @@
             Converts the value of this instance to a <see langword="String"/>.
             </summary>
             <returns>The current string.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Shell.ResultDeleteAccount">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount.UDF">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.Shell.ResultDeleteAccount._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.Shell.ResultDeleteAccount.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.Shell.ResultDeleteAccount.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
         </member>
         <member name="T:Goedel.Mesh.Shell.ResultRegisterService">
             <summary>

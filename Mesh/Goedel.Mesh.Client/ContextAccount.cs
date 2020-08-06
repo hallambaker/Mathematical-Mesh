@@ -5,6 +5,7 @@ using Goedel.Utilities;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Goedel.Mesh.Client {
 
@@ -117,6 +118,15 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
+        protected override void Disposing() {
+            foreach (var status in DictionaryStores) {
+                var store = status.Value.Store;
+
+                store.Dispose();
+                }
+
+            }
+
         #region // Constructors
 
         /// <summary>
@@ -187,6 +197,32 @@ namespace Goedel.Mesh.Client {
         #endregion
 
         #region // Account operations sync, send message
+
+        /// <summary>
+        /// Delete the associated account from the local machine.
+        /// </summary>
+        public void DeleteAccount() {
+
+            // post device leave notice to service
+
+
+
+            // close all open stores and clear the dictionary
+            foreach (var status in DictionaryStores) {
+                var store = status.Value.Store;
+
+                store.Dispose();
+                }
+            DictionaryStores.Clear();
+
+            // erase files from local storage
+            Directory.Delete(StoresDirectory, true);
+
+            // Erase from the registry
+            MeshHost.Deregister(this);
+            MeshHost.Delete(Profile.UDF);
+            }
+
 
         /// <summary>
         /// Returns a Mesh service client for <paramref name="accountAddress"/>.

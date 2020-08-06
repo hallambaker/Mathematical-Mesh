@@ -11,7 +11,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageContact(MessageContact Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var recipient = Options.Recipient.Value;
 
             var message = contextAccount.ContactRequest(recipient);
@@ -29,7 +29,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageConfirm(MessageConfirm Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var recipient = Options.Recipient.Value;
             var text = Options.Text.Value;
 
@@ -50,7 +50,7 @@ namespace Goedel.Mesh.Shell {
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessagePending(MessagePending Options) {
 
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
 
             // this is failing to read in the inbound messages as it should.
             // The 
@@ -96,7 +96,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageStatus(MessageStatus Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new ResultSent() {
 
                 };
@@ -122,7 +122,7 @@ namespace Goedel.Mesh.Shell {
 
 
         ShellResult Process(IAccountOptions options, string requestid, bool accept) {
-            using var contextAccount = GetContextAccount(options);
+            var contextAccount = GetContextAccount(options);
             var processResult = contextAccount.Process(requestid, accept);
 
 
@@ -138,7 +138,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult MessageBlock(MessageBlock Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new ResultSent() {
 
                 };

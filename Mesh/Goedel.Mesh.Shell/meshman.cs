@@ -190,6 +190,7 @@ namespace Goedel.Mesh.Shell {
 			Entries = new  SortedDictionary<string, DescribeCommand> () {
 				{"hello", _AccountHello._DescribeCommand },
 				{"create", _AccountCreate._DescribeCommand },
+				{"delete", _AccountDelete._DescribeCommand },
 				{"status", _AccountStatus._DescribeCommand },
 				{"sync", _AccountSync._DescribeCommand },
 				{"pin", _AccountGetPIN._DescribeCommand },
@@ -509,6 +510,16 @@ namespace Goedel.Mesh.Shell {
 			ProcessOptions (Args, Index, Options);
 			Dispatch._PreProcess (Options);
 			var result = Dispatch.AccountCreate (Options);
+			Dispatch._PostProcess (result);
+			}
+
+		public static void Handle_AccountDelete (
+					DispatchShell  DispatchIn, string[] Args, int Index) {
+			Shell Dispatch =	DispatchIn as Shell;
+			AccountDelete		Options = new AccountDelete ();
+			ProcessOptions (Args, Index, Options);
+			Dispatch._PreProcess (Options);
+			var result = Dispatch.AccountDelete (Options);
 			Dispatch._PostProcess (result);
 			}
 
@@ -1876,6 +1887,116 @@ namespace Goedel.Mesh.Shell {
 
     public partial class AccountCreate : _AccountCreate {
         } // class AccountCreate
+
+    public class _AccountDelete : Goedel.Command.Dispatch ,
+							IReporting {
+
+		public override Goedel.Command.Type[] _Data {get; set;} = new Goedel.Command.Type [] {
+			new String (),
+			new Enumeration<EnumReporting> (CommandLineInterpreter.DescribeEnumReporting),
+			new Flag (),
+			new Flag (),
+			new Flag ()			} ;
+
+
+
+
+
+		/// <summary>Field accessor for parameter []</summary>
+		public virtual String ProfileUdf {
+			get => _Data[0] as String;
+			set => _Data[0]  = value;
+			}
+
+		public virtual string _ProfileUdf {
+			set => _Data[0].Parameter (value);
+			}
+		/// <summary>Field accessor for parameter [report]</summary>
+		public virtual Enumeration<EnumReporting> EnumReporting {
+			get => _Data[1] as Enumeration<EnumReporting>;
+			set => _Data[1]  = value;
+			}
+
+		public virtual string _EnumReporting {
+			set => _Data[1].Parameter (value);
+			}
+		/// <summary>Field accessor for option [verbose]</summary>
+		public virtual Flag Verbose {
+			get => _Data[2] as Flag;
+			set => _Data[2]  = value;
+			}
+
+		public virtual string _Verbose {
+			set => _Data[2].Parameter (value);
+			}
+		/// <summary>Field accessor for option [report]</summary>
+		public virtual Flag Report {
+			get => _Data[3] as Flag;
+			set => _Data[3]  = value;
+			}
+
+		public virtual string _Report {
+			set => _Data[3].Parameter (value);
+			}
+		/// <summary>Field accessor for option [json]</summary>
+		public virtual Flag Json {
+			get => _Data[4] as Flag;
+			set => _Data[4]  = value;
+			}
+
+		public virtual string _Json {
+			set => _Data[4].Parameter (value);
+			}
+		public override DescribeCommandEntry DescribeCommand {get; set;} = _DescribeCommand;
+
+		public static DescribeCommandEntry _DescribeCommand = new  DescribeCommandEntry () {
+			Identifier = "delete",
+			Brief =  "Delete an account profile",
+			HandleDelegate =  CommandLineInterpreter.Handle_AccountDelete,
+			Lazy =  false,
+			Entries = new List<DescribeEntry> () {
+				new DescribeEntryParameter () {
+					Identifier = "ProfileUdf", 
+					Default = null, // null if null
+					Brief = "Fingerprint of the account to be removed from this device",
+					Index = 0,
+					Key = ""
+					},
+				new DescribeEntryEnumerate () {
+					Identifier = "EnumReporting", 
+					Default = null, // null if null
+					Brief = "Reporting level",
+					Index = 1,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Verbose", 
+					Default = "true", // null if null
+					Brief = "Verbose reports (default)",
+					Index = 2,
+					Key = "verbose"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Report", 
+					Default = "true", // null if null
+					Brief = "Report output (default)",
+					Index = 3,
+					Key = "report"
+					},
+				new DescribeEntryOption () {
+					Identifier = "Json", 
+					Default = "false", // null if null
+					Brief = "Report output in JSON format",
+					Index = 4,
+					Key = "json"
+					}
+				}
+			};
+
+		}
+
+    public partial class AccountDelete : _AccountDelete {
+        } // class AccountDelete
 
     public class _AccountStatus : Goedel.Command.Dispatch ,
 							IAccountOptions,
@@ -18672,6 +18793,11 @@ namespace Goedel.Mesh.Shell {
 			}
 
 		public virtual ShellResult AccountCreate ( AccountCreate Options) {
+			CommandLineInterpreter.DescribeValues (Options);
+			return null;
+			}
+
+		public virtual ShellResult AccountDelete ( AccountDelete Options) {
 			CommandLineInterpreter.DescribeValues (Options);
 			return null;
 			}

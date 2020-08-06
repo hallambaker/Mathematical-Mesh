@@ -34,27 +34,33 @@ namespace Scratchpad {
             _ = Goedel.XUnit.TestItem.Initialize;
 
 
+            //TestSplit.Test().TestKey(16);
 
-            TestService.Test().MeshCatalogAccount();
+            ShellTests.Test().TestConnectRequest();
+
+            //TestService.Test().MeshCatalogAccount();
 
             // Target for Thursday:
-            TestService.Test().MeshEscrowRecover();
-            ShellTests.Test().TestAccountDelete();
-            ShellTests.Test().TestEscrowChangeDevice();
-            ShellTests.Test().TestEscrowChangeService();
-            ShellTests.Test().TestEscrowDeleteDevice();
+            //TestService.Test().MeshEscrowRecover();
+            //ShellTests.Test().TestAccountDelete();
+            //ShellTests.Test().TestEscrowChangeDevice();
+            //ShellTests.Test().TestEscrowChangeService();
+            //ShellTests.Test().TestEscrowDeleteDevice();
 
             // Target for Friday
 
             //// Connect by dynamic QR
-            //TestService.Test().MeshDeviceConnectDynamicQR();
+            ///
+            TestService.Test().MeshDeviceConnectApprove();
 
-            //ShellTests.Test().TestProfileConnectPin();
-            //ShellTests.Test().TestProfileConnectPinInvalid();
-            //ShellTests.Test().TestProfileConnectPinExpired();
-            //ShellTests.Test().TestProfileConnectPinReused();
-            //ShellTests.Test().TestProfileConnectStaticQR();
-            //ShellTests.Test().TestProfileConnectDynamicQR();
+            TestService.Test().MeshDeviceConnectDynamicQR();
+
+            ShellTests.Test().TestProfileConnectPin();
+            ShellTests.Test().TestProfileConnectPinInvalid();
+            ShellTests.Test().TestProfileConnectPinExpired();
+            ShellTests.Test().TestProfileConnectPinReused();
+            ShellTests.Test().TestProfileConnectStaticQR();
+            ShellTests.Test().TestProfileConnectDynamicQR();
 
 
             // The App bundle:
@@ -68,8 +74,8 @@ namespace Scratchpad {
 
             //TestService.Test().MeshGrantPrivs();
             //[Tests will likely need a rewrite here...]
-                //   ShellTests.Test().TestProfileConnectAuth();
-                //   ShellTests.Test().TestProfileConnectAuthAll();
+            //   ShellTests.Test().TestProfileConnectAuth();
+            //   ShellTests.Test().TestProfileConnectAuthAll();
 
 
 

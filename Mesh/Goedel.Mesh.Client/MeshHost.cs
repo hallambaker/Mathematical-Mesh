@@ -104,10 +104,36 @@ namespace Goedel.Mesh.Client {
             var machine = contextMesh.CatalogedMachine;
             DictionaryUDFContextMesh.Remove(machine.Id);
             DictionaryUDFContextMesh.Add(machine.Id, contextMesh);
+
+            if (contextMesh.AccountAddress != null) {
+                DictionaryLocalContextMesh.AddSafe(contextMesh.AccountAddress, contextMesh);
+                }
+            if (contextMesh.Profile != null) {
+                DictionaryUDFContextMesh.AddSafe(contextMesh.Profile.UDF, contextMesh);
+                }
+
             if (machine.Local != null) {
                 DictionaryLocalContextMesh.AddSafe(machine.Local, contextMesh);
                 }
             }
+
+
+        public void Deregister(ContextAccount contextMesh) {
+            var machine = contextMesh.CatalogedMachine;
+            DictionaryUDFContextMesh.Remove(machine.Id);
+
+            if (contextMesh.AccountAddress != null) {
+                DictionaryLocalContextMesh.Remove(contextMesh.AccountAddress);
+                }
+            if (contextMesh.Profile != null) {
+                DictionaryUDFContextMesh.Remove(contextMesh.Profile.UDF);
+                }
+
+            if (machine.Local != null) {
+                DictionaryLocalContextMesh.Remove(machine.Local);
+                }
+            }
+
 
         /// <summary>
         /// Locate context by UDF or localname. The context acquired is owned by the MeshHost instance
@@ -115,14 +141,15 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="key">The UDF or name to resolve.</param>
         /// <returns>The context, if a matching context is found. Otherwise null.</returns>
-        public ContextAccount LocateMesh(string key) {
+        public ContextAccount LocateMesh(string key, bool useLocal=true) {
             key.AssertNotNull(MeshNotFound.Throw);
 
 
             if (DictionaryUDFContextMesh.TryGetValue(key, out var context)) {
                 return context;
                 }
-            if (DictionaryLocalContextMesh.TryGetValue(key, out context)) {
+
+            if (useLocal && DictionaryLocalContextMesh.TryGetValue(key, out context)) {
                 return context;
                 }
 
@@ -154,9 +181,9 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Delete <paramref name="profile"/> from the host catalog.
         /// </summary>
-        /// <param name="profile">The profile to delete</param>
-        public virtual void Delete(HostCatalogItem profile) =>
-                ContainerHost.Delete(profile._PrimaryKey);
+        /// <param name="key">The profile to delete</param>
+        public virtual void Delete(string key) =>
+                ContainerHost.Delete(key);
         #endregion
 
 
@@ -224,6 +251,7 @@ namespace Goedel.Mesh.Client {
                 }
             contextUser.Persist(catalogedDevice);
             contextUser.PersistSeed();
+            contextUser.Dispose();
 
             // Now abandon the original context and create a new one
             var contextUserFinal = new ContextUser(this, catalogedMachine);

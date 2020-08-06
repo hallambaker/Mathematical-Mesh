@@ -125,7 +125,7 @@ namespace Goedel.Cryptography.Core {
                 return Key.FromJson(data.JsonReader(), true);
                 }
             catch {
-                throw new NYI();
+                throw new PrivateKeyNotFound();
                 }
             }
 
