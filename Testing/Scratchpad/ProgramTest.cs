@@ -33,6 +33,10 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
+
+
+            TestService.Test().MeshCatalogAccount();
+
             // Target for Thursday:
             TestService.Test().MeshEscrowRecover();
             ShellTests.Test().TestAccountDelete();
@@ -53,18 +57,22 @@ namespace Scratchpad {
             //ShellTests.Test().TestProfileConnectDynamicQR();
 
 
-            // The Auth bundle:
-            ShellTests.Test().TestMessageGroup();
-            TestService.Test().MeshGrantPrivs();
-            // [Tests will likely need a rewrite here...]
-            //ShellTests.Test().TestProfileConnectAuth();
-            //ShellTests.Test().TestProfileConnectAuthAll();
-
-
             // The App bundle:
-            ShellTests.Test().TestProfileMail();
-            ShellTests.Test().TestProfileSSHPrivate();
-            ShellTests.Test().TestProfileSSHPublic();
+            //ShellTests.Test().TestMessageGroup();
+            //ShellTests.Test().TestProfileMail();
+            //ShellTests.Test().TestProfileSSHPrivate();
+            //ShellTests.Test().TestProfileSSHPublic();
+
+
+            // The Auth bundle:
+
+            //TestService.Test().MeshGrantPrivs();
+            //[Tests will likely need a rewrite here...]
+                //   ShellTests.Test().TestProfileConnectAuth();
+                //   ShellTests.Test().TestProfileConnectAuthAll();
+
+
+
 
 
 

@@ -80,25 +80,24 @@ namespace Goedel.Mesh {
         /// <param name="persist">If true, the secretSeed is persisted to the local store.</param>
         /// <param name="secret">Specifies the value of the random seed. If null, a new seed 
         /// is generated.</param>
+        /// <param name="bits">The size of secret to generate in bits/</param>
         /// <returns>The group profile and secret seed.</returns>
         public static (ProfileGroup, PrivateKeyUDF) Generate(
                     IMeshMachine meshMachine,
                     CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                     CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                     byte[] secret = null,
-                    bool? persist = false) {
+                    bool? persist = false,
+                    int bits = 256) {
 
             var secretSeed = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileGroup,
-                    algorithmEncrypt, algorithmSign, secret:secret);
+                null, secret,
+                algorithmEncrypt, algorithmSign,
+                bits: bits);
             var profileGroup =  new ProfileGroup(secretSeed, meshMachine.KeyCollection, persist);
 
             return (profileGroup, secretSeed);
             }
-
-
-
-
-
 
         /// <summary>
         /// Add a member to the group.

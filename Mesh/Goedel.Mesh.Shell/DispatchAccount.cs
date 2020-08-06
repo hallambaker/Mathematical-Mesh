@@ -37,11 +37,11 @@ namespace Goedel.Mesh.Shell {
             var accountID = Options.NewAccountID.Value;
             var localname = Options.Localname.Value;
 
-            var contextAccount = MeshHost.CreateMesh(accountID, localname);
+            var contextUser = MeshHost.CreateMesh(accountID, localname);
             return new ResultCreateAccount() {
                 Success = true,
-                ProfileUser = contextAccount.ProfileUser,
-                ActivationUser = contextAccount.ActivationUser
+                ProfileUser = contextUser.ProfileUser,
+                ActivationUser = contextUser.ActivationUser
                 };
             }
 

@@ -60,29 +60,29 @@
         public PrivateKeyUDF() {
             }
 
-        /// <summary>
-        /// Constructor generating a new instance with a private key derived from the
-        /// seed <paramref name="secret"/> if not null or a randomly generated key
-        /// of <paramref name="bits"/> bits otherwise.
-        /// </summary>
-        /// <param name="udfAlgorithmIdentifier">The type of master secret.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmSign">The signature algorithm</param>
-        /// <param name="algorithmAuthenticate">The signature algorithm</param>
-        /// <param name="secret">The master secret.</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
-        public PrivateKeyUDF(
-                UdfAlgorithmIdentifier udfAlgorithmIdentifier,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] secret = null,
-                int bits = 256) : this(
-                    udfAlgorithmIdentifier,
-                    UDF.DerivedKey(udfAlgorithmIdentifier, data: secret ?? Platform.GetRandomBits(bits)), 
-                                algorithmEncrypt, algorithmSign, algorithmAuthenticate
-                    ) {
-            }
+        ///// <summary>
+        ///// Constructor generating a new instance with a private key derived from the
+        ///// seed <paramref name="secret"/> if not null or a randomly generated key
+        ///// of <paramref name="bits"/> bits otherwise.
+        ///// </summary>
+        ///// <param name="udfAlgorithmIdentifier">The type of master secret.</param>
+        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        ///// <param name="algorithmSign">The signature algorithm</param>
+        ///// <param name="algorithmAuthenticate">The signature algorithm</param>
+        ///// <param name="secret">The master secret.</param>
+        ///// <param name="bits">The size of key to generate in bits/</param>
+        //public PrivateKeyUDF(
+        //        UdfAlgorithmIdentifier udfAlgorithmIdentifier,
+        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+        //        byte[] secret = null,
+        //        int bits = 256) : this(
+        //            udfAlgorithmIdentifier,
+        //            UDF.DerivedKey(udfAlgorithmIdentifier, data: secret ?? Platform.GetRandomBits(bits)), 
+        //                        algorithmEncrypt, algorithmSign, algorithmAuthenticate
+        //            ) {
+        //    }
 
 
 
@@ -91,19 +91,24 @@
         /// seed  <paramref name="udf"/>.
         /// </summary>
         /// <param name="udfAlgorithmIdentifier">The type of master secret.</param>
-        /// <param name="udf">The private seed value</param>
+        /// <param name="udf">The master secret as a UDF string.</param>
+        /// <param name="secret">The master secret as a byte array (ignored 
+        /// if <paramref name="udf"/> is not null).</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
-
+        /// <param name="bits">The size of key to generate in bits/</param>
         public PrivateKeyUDF(
-                UdfAlgorithmIdentifier udfAlgorithmIdentifier,
+                    UdfAlgorithmIdentifier udfAlgorithmIdentifier,
                 string udf = null,
+                byte[] secret = null,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
+                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                int bits = 256) {
 
-            PrivateValue = udf;
+            PrivateValue = udf ?? UDF.DerivedKey(udfAlgorithmIdentifier, 
+                data: secret ?? Platform.GetRandomBits(bits));
             KeyType = udfAlgorithmIdentifier.ToString();
 
             AlgorithmSign = algorithmSign.ToJoseID();

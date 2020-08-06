@@ -105,6 +105,7 @@ namespace Goedel.Mesh.Shell {
             AddIfPresent(recoverShares, Options.Share6);
             AddIfPresent(recoverShares, Options.Share7);
             AddIfPresent(recoverShares, Options.Share8);
+
             var secret = new SharedSecret(recoverShares);
 
 
@@ -116,11 +117,14 @@ namespace Goedel.Mesh.Shell {
             (algorithm == UdfAlgorithmIdentifier.MeshProfileUser |
                 algorithm == UdfAlgorithmIdentifier.MeshProfileGroup).AssertTrue(InvalidRecoverySecret.Throw);
 
-            var contextMesh = MeshHost.CreateMesh("main", secretSeed: meshSecret);
-
-            throw new NYI();
+            var contextUser = MeshHost.CreateMesh("main", secretSeed: secret.UDFKey);
 
 
+            return new ResultCreateAccount() {
+                Success = true,
+                ProfileUser = contextUser.ProfileUser,
+                ActivationUser = contextUser.ActivationUser
+                };
             }
 
         #region // Data dump, import and export of profiles - punt on this for now

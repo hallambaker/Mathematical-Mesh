@@ -26,25 +26,26 @@ namespace Goedel.Mesh {
             }
 
 
-        /// <summary>
-        /// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
-        /// seed.
-        /// </summary>
-        /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="algorithmSign">The signature algorithm.</param>
-        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
-        /// <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
-        /// <paramref name="keyCollection"/>.</param>
-        public ProfileDevice(
-                    IKeyCollection keyCollection,
-                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] secret = null) : this(
-                    new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmSign, algorithmAuthenticate, secret),
-                    keyCollection) { }
+        ///// <summary>
+        ///// Construct a new ProfileDevice instance from a <see cref="PrivateKeyUDF"/>
+        ///// seed.
+        ///// </summary>
+        ///// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
+        ///// <param name="algorithmSign">The signature algorithm.</param>
+        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        ///// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        ///// <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
+        ///// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        ///// <paramref name="keyCollection"/>.</param>
+        //public ProfileDevice(
+        //            PrivateKeyUDF secretSeed = null,
+        //    IKeyCollection keyCollection = null,
+        //    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+        //    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+        //    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+        //    byte[] secret = null) : this(
+        //            new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileDevice, algorithmEncrypt, algorithmEncrypt: algorithmSign, algorithmSign: algorithmAuthenticate, algorithmAuthenticate: secret),
+        //            keyCollection) { }
 
 
         /// <summary>
@@ -53,17 +54,27 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="secretSeed">The secret seed value.</param>
         /// <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-        /// <param name="persist">If <see langword="true"/> persist the secret seed value to
+        /// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        /// <param name="algorithmSign">The signature algorithm</param>
+        /// <param name="algorithmAuthenticate">The signature algorithm</param>
+        /// <param name="bits">The size of key to generate in bits/</param>
         /// <paramref name="keyCollection"/>.</param>
         public ProfileDevice(
-                    PrivateKeyUDF secretSeed,
-                    IKeyCollection keyCollection =null) {
-            SecretSeed = secretSeed;
+                    CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+                    CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
+                    PrivateKeyUDF secretSeed = null,
+                    int bits = 256) {
+
+            SecretSeed = secretSeed ?? new PrivateKeyUDF(
+                UdfAlgorithmIdentifier.MeshProfileDevice, null, null,
+                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
+                bits: bits);
 
             var meshKeyType = MeshKeyType.DeviceProfile;
-            var keySign = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
-            var keyEncrypt = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
-            var keyAuthenticate = secretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
+            var keySign = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Sign);
+            var keyEncrypt = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Encrypt);
+            var keyAuthenticate = SecretSeed.BasePrivate(meshKeyType | MeshKeyType.Authenticate);
 
             OfflineSignature = new KeyData(keySign.KeyPairPublic());
             KeyEncryption = new KeyData(keyEncrypt.KeyPairPublic());
@@ -73,7 +84,11 @@ namespace Goedel.Mesh {
             Sign(keySign);
             }
 
-
+        /// <summary>
+        /// Persist the secret seed used to generate a profile to the local machine as a non-exportable
+        /// secret.
+        /// </summary>
+        /// <param name="keyCollection"></param>
         public void PersistSeed(IKeyCollection keyCollection = null) {
             SecretSeed.AssertNotNull(NoDeviceSecret.Throw);
             keyCollection.Persist(OfflineSignature.UDF, SecretSeed, false);

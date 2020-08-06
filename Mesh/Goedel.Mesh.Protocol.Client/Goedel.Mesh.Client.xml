@@ -864,7 +864,7 @@
             <param name="meshHost">The Mesh host</param>
             <param name="catalogedMachine">The pending connection description.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Mesh.Client.ContextMeshPending.ConnectService(Goedel.Mesh.Client.MeshHost,System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Int32)">
             <summary>
             Initiate a connection request.
             </summary>
@@ -990,7 +990,7 @@
             <param name="catalogedMachine">Description of the device profile.</param>
             <param name="meshHost">The Mesh host to add the admin context to.</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.CreateMesh(Goedel.Mesh.Client.MeshHost,Goedel.Cryptography.KeyPair,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <member name="M:Goedel.Mesh.Client.ContextUser.CreateAccountUser(Goedel.Mesh.Client.MeshHost,Goedel.Cryptography.KeyPair,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String)">
             <summary>
             Create a new personal mesh and return an administration context for it.
             </summary>
@@ -1000,7 +1000,7 @@
             <param name="algorithmSign">The signature algorithm.</param>
             <param name="algorithmEncrypt">The encryption algorithm.</param>
             <param name="algorithmAuthenticate">The authentication algorithm.</param>
-            <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
+            <param name="secretSeed">A UDF secret seed</param>
             <returns>An administration context instance for the created profile.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GetMeshSecret">
@@ -1253,7 +1253,7 @@
             <param name="algorithmSign">The signature algorithm</param>
             <param name="algorithmAuthenticate">The signature algorithm</param>
             <param name="secret">The master secret.</param>
-            <param name="bits">The size of key to generate in bits/</param>
+            <param name="bits">The size of secret to generate in bits/</param>
             <returns>Response from the server.</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.Connect(System.String)">
@@ -2168,7 +2168,7 @@
             </summary>
             <param name="profile">The profile to delete</param>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],Goedel.Mesh.ProfileDevice)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.CreateMesh(System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.String,Goedel.Mesh.ProfileDevice)">
              <summary>
              Create a new Mesh master profile and bind to a Mesh service at <paramref name="accountAddress"/>.
              </summary>
@@ -2178,7 +2178,8 @@
              <param name="algorithmEncrypt">Encryption algorithm</param>
              <param name="algorithmAuthenticate">Authentication algorithm</param>
              <param name="secretSeed">Secret seed used to generate private keys.</param>
-             <param name="profileDevice">Specify the device profile.</param>
+             <param name="profileDevice">Specify the device profile. This allows use of a device 
+             profile bound to the machine hardware.</param>
              <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.GetContextMesh(System.String,System.Boolean)">
@@ -2215,12 +2216,6 @@
             manufacture.
             </summary>
             <returns>Context for administering the Mesh account via the service</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.RecoverMesh(System.String,System.Collections.Generic.IEnumerable{System.String},Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
-            <summary>
-            Create a new Mesh master profile without account or service
-            </summary>
-            <returns>Context for administering the Mesh</returns>
         </member>
         <member name="M:Goedel.Mesh.Client.MeshHost.CreateMeshWithAccount(System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
             <summary>

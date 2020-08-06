@@ -5963,28 +5963,13 @@
             Constructor for use by deserializers.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Dare.IKeyCollection,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[])">
+        <!-- Badly formed XML comment ignored for member "M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.Jose.PrivateKeyUDF,System.Int32)" -->
+        <member name="M:Goedel.Mesh.ProfileDevice.PersistSeed(Goedel.Cryptography.Dare.IKeyCollection)">
             <summary>
-            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
-            seed.
+            Persist the secret seed used to generate a profile to the local machine as a non-exportable
+            secret.
             </summary>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-            <param name="algorithmSign">The signature algorithm.</param>
-            <param name="algorithmEncrypt">The encryption algorithm.</param>
-            <param name="algorithmAuthenticate">The authentication algorithm.</param>
-            <param name="secret">Specifies a seed from which to generate the ProfileDevice</param>
-            <param name="persist">If <see langword="true"/> persist the secret seed value to
-            <paramref name="keyCollection"/>.</param>
-        </member>
-        <member name="M:Goedel.Mesh.ProfileDevice.#ctor(Goedel.Cryptography.Jose.PrivateKeyUDF,Goedel.Cryptography.Dare.IKeyCollection)">
-            <summary>
-            Construct a new ProfileDevice instance from a <see cref="T:Goedel.Cryptography.Jose.PrivateKeyUDF"/>
-            seed.
-            </summary>
-            <param name="secretSeed">The secret seed value.</param>
-            <param name="keyCollection">The keyCollection to manage and persist the generated keys.</param>
-            <param name="persist">If <see langword="true"/> persist the secret seed value to
-            <paramref name="keyCollection"/>.</param>
+            <param name="keyCollection"></param>
         </member>
         <member name="M:Goedel.Mesh.ProfileDevice.Decode(Goedel.Cryptography.Dare.DareEnvelope,Goedel.Cryptography.IKeyLocate)">
             <summary>
@@ -6101,7 +6086,7 @@
             <param name="keySign">The signature key.</param>
             <param name="keyEncrypt">The encryption key.</param>
         </member>
-        <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean})">
+        <member name="M:Goedel.Mesh.ProfileGroup.Generate(Goedel.Mesh.IMeshMachine,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Nullable{System.Boolean},System.Int32)">
             <summary>
             Generate a new <see cref="T:Goedel.Mesh.ProfileGroup"/>
             </summary>
@@ -6111,6 +6096,7 @@
             <param name="persist">If true, the secretSeed is persisted to the local store.</param>
             <param name="secret">Specifies the value of the random seed. If null, a new seed 
             is generated.</param>
+            <param name="bits">The size of secret to generate in bits/</param>
             <returns>The group profile and secret seed.</returns>
         </member>
         <member name="M:Goedel.Mesh.ProfileGroup.AddMember(Goedel.Cryptography.KeyCollection,Goedel.Mesh.Contact)">

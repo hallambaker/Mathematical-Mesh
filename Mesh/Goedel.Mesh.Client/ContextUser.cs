@@ -124,23 +124,21 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign">The signature algorithm.</param>
         /// <param name="algorithmEncrypt">The encryption algorithm.</param>
         /// <param name="algorithmAuthenticate">The authentication algorithm.</param>
-        /// <param name="masterSecret">Specifies a seed from which to generate the ProfileMesh</param>
+        /// <param name="secretSeed">A UDF secret seed</param>
         /// <returns>An administration context instance for the created profile.</returns>
-        public static ContextUser CreateMesh(
+        public static ContextUser CreateAccountUser(
                 MeshHost meshHost,
                 KeyPair onlineSignature,
                 string localName = null,
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] masterSecret = null) {
+                string secretSeed = null) {
 
             // Create the master profile.
-            var secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileUser, algorithmEncrypt, algorithmSign,
-                algorithmAuthenticate, masterSecret);
+            var privateKeyUDF = new PrivateKeyUDF(UdfAlgorithmIdentifier.MeshProfileUser, secretSeed);
 
-            var profileUser = new ProfileUser(meshHost.KeyCollection, secretSeed, onlineSignature);
+            var profileUser = new ProfileUser(meshHost.KeyCollection, privateKeyUDF, onlineSignature);
 
             var catalogedMachine = new CatalogedStandard() {
                 EnvelopedProfileUser = profileUser.DareEnvelope,
@@ -149,7 +147,7 @@ namespace Goedel.Mesh.Client {
                 };
 
             var contextUser = new ContextUser(meshHost, catalogedMachine) {
-                MeshSecretSeed = secretSeed, // temporary access
+                MeshSecretSeed = privateKeyUDF, // temporary access
                 ProfileUser = profileUser,
                 PrivateAccountOnlineSignature = onlineSignature,
                 PrivateAccountOfflineSignature = profileUser.PrivateAccountOfflineSignature,
@@ -816,6 +814,32 @@ namespace Goedel.Mesh.Client {
 
             }
 
+        ///// <summary>
+        ///// Recover a Mesh Profile from the recovery key value.
+        ///// </summary>
+        ///// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
+        ///// <param name="Key">The recovered UDF key derrivation seed. This may have leading
+        ///// zeros.</param>
+        ///// <param name="profileDevice">The device profile to bind to.</param>
+        ///// <param name="algorithmSign">The signature algorithm.</param>
+        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
+        ///// <param name="algorithmAuthenticate">The authentication algorithm.</param>
+        ///// <returns>An administration context instance for the recovered profile.</returns>
+        //public static ContextUser RecoverMesh(
+        //        MeshHost meshHost,
+        //        byte[] Key,
+        //        string localName,
+        //        ProfileDevice profileDevice = null,
+        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
+        //        ) {
+        //    return meshHost.CreateMesh("main", localName, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
+        //        masterSecret:Key, profileDevice:profileDevice);
+        //    }
+
+
+
         /// <summary>
         /// Get a managment context for the group <paramref name="groupAddress"/>.
         /// </summary>
@@ -851,7 +875,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmSign">The signature algorithm</param>
         /// <param name="algorithmAuthenticate">The signature algorithm</param>
         /// <param name="secret">The master secret.</param>
-        /// <param name="bits">The size of key to generate in bits/</param>
+        /// <param name="bits">The size of secret to generate in bits/</param>
         /// <returns>Response from the server.</returns>
         public PublishResponse CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed,
@@ -871,12 +895,9 @@ namespace Goedel.Mesh.Client {
 
 
             secretSeed = new PrivateKeyUDF(
-                UdfAlgorithmIdentifier.MeshProfileDevice,
-                algorithmEncrypt,
-                algorithmSign,
-                algorithmAuthenticate,
-                secret,
-                bits);
+                UdfAlgorithmIdentifier.MeshProfileDevice, null, secret, 
+                algorithmEncrypt, algorithmSign, algorithmAuthenticate,
+                bits: bits);
 
 
             pin = MeshUri.GetConnectPin(secretSeed, AccountAddress);
@@ -886,7 +907,7 @@ namespace Goedel.Mesh.Client {
             connectURI = MeshUri.ConnectUri(AccountAddress, pin);
 
             // Create a device profile and encrypt under pin
-            profileDevice = new ProfileDevice(secretSeed);
+            profileDevice = new ProfileDevice(secretSeed: secretSeed);
             var plaintext = profileDevice.DareEnvelope.GetBytes();
 
             var encryptedProfileDevice = DareEnvelope.Encode(plaintext, encryptionKey: key);

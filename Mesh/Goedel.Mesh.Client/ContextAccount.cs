@@ -625,9 +625,6 @@ namespace Goedel.Mesh.Client {
 
         #region Implement IDare
 
-        // Bug: this is going to fail because information from the contact catalog is not available.
-
-
         /// <summary>
         /// Create a new DARE Envelope from the specified parameters.
         /// </summary>

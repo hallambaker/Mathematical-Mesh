@@ -134,7 +134,7 @@ namespace Goedel.Mesh.Client {
             var serviceAuthenticator = CatalogedPublication.GetServiceAuthenticator(key);
             var deviceAuthenticator = CatalogedPublication.GetDeviceAuthenticator(key);
 
-            var profileDevice = new ProfileDevice(privateKeyUDF, meshHost.KeyCollection);
+            var profileDevice = new ProfileDevice(secretSeed: privateKeyUDF);
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             // create a Mesh Host entry.

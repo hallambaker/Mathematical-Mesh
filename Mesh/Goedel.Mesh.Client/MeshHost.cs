@@ -1,4 +1,6 @@
 ﻿using Goedel.Cryptography;
+using Goedel.Cryptography.Jose;
+using Goedel.Cryptography.Dare;
 using Goedel.Utilities;
 
 using System;
@@ -170,7 +172,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="algorithmEncrypt">Encryption algorithm</param>
         /// <param name="algorithmAuthenticate">Authentication algorithm</param>
         /// <param name="secretSeed">Secret seed used to generate private keys.</param>
-        /// <param name="profileDevice">Specify the device profile.</param>
+        /// <param name="profileDevice">Specify the device profile. This allows use of a device 
+        /// profile bound to the machine hardware.</param>
         /// <returns>Context for administering the Mesh</returns>
         public ContextUser CreateMesh(
                 string accountAddress,
@@ -178,7 +181,7 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
-                byte[] secretSeed = null,
+                string secretSeed = null,
                 ProfileDevice profileDevice = null) {
 
             // create the initial online signature key bound to this device
@@ -186,23 +189,25 @@ namespace Goedel.Mesh.Client {
                 KeyPair.FactorySignature(algorithmSign, KeySecurity.ExportableStored, KeyCollection);
 
             // Create the Mesh for the user
-            var contextUser = ContextUser.CreateMesh(
+            var contextUser = ContextUser.CreateAccountUser(
                     this,
                     keyPairOnlineSignature,
                     localName,
                     algorithmSign: algorithmSign, 
                     algorithmEncrypt: algorithmEncrypt, 
                     algorithmAuthenticate: algorithmAuthenticate,
-                    masterSecret: secretSeed);
-
+                    secretSeed: secretSeed);
 
             // Set the service 
             contextUser.SetService(accountAddress);
 
             // Create a device and catalog entry.
             var persistDevice = profileDevice == null;
-            profileDevice ??= new ProfileDevice(KeyCollection, 
-                    algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+
+            profileDevice ??= new ProfileDevice(algorithmSign: algorithmSign,
+                algorithmEncrypt: algorithmEncrypt, 
+                algorithmAuthenticate: algorithmAuthenticate);
+            
             var catalogedDevice = contextUser.AddDevice(profileDevice, keyPairOnlineSignature, true);
 
             // now create the host catalog entry and apply to the context user.
@@ -341,29 +346,24 @@ namespace Goedel.Mesh.Client {
             }
 
 
-        /// <summary>
-        /// Create a new Mesh master profile without account or service
-        /// </summary>
-        /// <returns>Context for administering the Mesh</returns>
-        public ContextAccount RecoverMesh(
-                string localName,
-                IEnumerable<string> shares = null,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
-                ) {
-            var secret = new SharedSecret(shares);
-            secret.Future();
-            localName.Future();
-            algorithmSign.Future();
-            algorithmEncrypt.Future();
-            algorithmAuthenticate.Future();
+        ///// <summary>
+        ///// Create a new Mesh master profile without account or service
+        ///// </summary>
+        ///// <returns>Context for administering the Mesh</returns>
+        //public ContextAccount RecoverMesh(
+        //        string localName,
+        //        IEnumerable<string> shares = null,
+        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
+        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
+        //        ) {
+        //    var secret = new SharedSecret(shares);
+        //    var bytes = UDF.Parse(out var code);
 
-            throw new NYI();
 
-            //return ContextMeshAdmin.RecoverMesh(
-            //         this, secret, null, escrow, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
-            }
+        //    return ContextUser.RecoverMesh(
+        //             this, secret.Key, localName, null, algorithmSign, algorithmEncrypt, algorithmAuthenticate);
+        //    }
 
         /// <summary>
         /// Create a new Mesh master profile and account without binding to a service
