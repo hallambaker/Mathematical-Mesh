@@ -381,6 +381,13 @@
             <param name="Options">The command line options.</param>
             <returns>Mesh result instance</returns>
         </member>
+        <member name="M:Goedel.Mesh.Shell.Shell.DevicePreconfigure(Goedel.Mesh.Shell.DevicePreconfigure)">
+            <summary>
+            Dispatch method
+            </summary>
+            <param name="Options">The command line options.</param>
+            <returns>Mesh result instance</returns>
+        </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceDelete(Goedel.Mesh.Shell.DeviceDelete)">
             <summary>
             Dispatch method
@@ -396,13 +403,6 @@
             <returns>Mesh result instance</returns>
         </member>
         <member name="M:Goedel.Mesh.Shell.Shell.DeviceAuthorize(Goedel.Mesh.Shell.DeviceAuthorize)">
-            <summary>
-            Dispatch method
-            </summary>
-            <param name="Options">The command line options.</param>
-            <returns>Mesh result instance</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Shell.Shell.DevicePreconfigure(Goedel.Mesh.Shell.DevicePreconfigure)">
             <summary>
             Dispatch method
             </summary>

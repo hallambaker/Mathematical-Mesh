@@ -146,6 +146,11 @@ namespace Goedel.Mesh.Client {
         #endregion
 
         #region // PIN code generation and use
+
+
+
+
+
         /// <summary>
         /// Create a PIN value of length <paramref name="length"/> bits valid for 
         /// <paramref name="validity"/> minutes.

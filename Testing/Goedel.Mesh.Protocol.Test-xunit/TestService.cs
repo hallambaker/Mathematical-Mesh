@@ -46,12 +46,13 @@ namespace Goedel.XUnit {
         static string AccountAlice = "alice@example.com";
         static string ServiceName = "example.com";
         static string AccountBob = "bob@example.com";
+        static string AccountQ = "q@example.com";
 
         public string DeviceAliceAdmin = "Alice Admin";
         public string DeviceAlice2 = "Alice Device 2";
         public string DeviceAlice3 = "Alice Device 3";
         public string DeviceBobAdmin = "Bob Admin";
-
+        public string DeviceQ = "DeviceQ";
 
         static string AccountGroup = "groupw@example.com";
 
@@ -126,7 +127,7 @@ namespace Goedel.XUnit {
             machineAlice2.CheckHostCatalogExtended(); // initial
 
             var boundPin = contextAccountAlice_1_a.GetPIN(Constants.MessagePINActionDevice);
-            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, PIN: boundPin.PIN);
+            var contextAccountAlice_2 = machineAlice2.MeshHost.Connect(AccountAlice, pin: boundPin.PIN);
             machineAlice2.CheckHostCatalogExtended(); // Connect pending
 
             // Still have to process of course to get the data
@@ -196,51 +197,54 @@ namespace Goedel.XUnit {
             contextAccountAlice_1_a.Process(confirmResponseBob);
             }
 
+
+        /// <summary>
+        /// Connect a device by approving a request
+        /// </summary>
+        [Fact]
+        public void MeshDeviceConnectApprove() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
+                    DeviceAliceAdmin, AccountAlice, "main");
+
+            // New Device
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
+                    AccountAlice);
+
+            // Admin Device
+            contextAccountAlice.Sync();
+            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
+            contextAccountAlice.Process(connectRequest);
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
+            }
+
+
         /// <summary>
         /// Connect a second device using the PIN connection mechanism
         /// </summary>
         [Fact]
         public void MeshDeviceConnectPIN() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, DeviceAliceAdmin, AccountAlice,
-                "main");
-
-            var catalogDevice = contextAccountAlice.GetCatalogDevice();
+            var contextAdmin = MeshMachineTest.GenerateAccountUser(
+                testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
 
             // Admin Device
-            var boundPin = contextAccountAlice.GetPIN(Constants.MessagePINActionDevice);
-
-            Console.WriteLine();
-            Console.WriteLine("**** Added the service, 1 device");
-            Console.WriteLine(catalogDevice.Report());
+            var boundPin = contextAdmin.GetPIN(Constants.MessagePINActionDevice);
+            ReportDevices(contextAdmin);
 
             // New Device
-            var contextAccount2Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
+            var contextOnboarding = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2,
                 AccountAlice, PIN: boundPin.PIN);
 
             // Admin Device
-            contextAccountAlice.Sync();
+            ProcessAutomatics(contextAdmin);
 
-
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
-
-            Console.WriteLine();
-            Console.WriteLine("**** Accepted 2nd device");
-            Console.WriteLine(catalogDevice.Report());
-            // Device has been added but the device connection lacks the account information!
-
-            var catalogDevice2 = contextAccountAlice.GetCatalogDevice();
-
-            var contextAccount2 = contextAccount2Pending.Complete();
-            Console.WriteLine();
-            Console.WriteLine("**** Synchronized 2nd device");
-            Console.WriteLine(catalogDevice2.Report());
-
-            contextAccount2.Sync();
-            Console.WriteLine();
-            Console.WriteLine("**** Synchronized 2nd device");
-            Console.WriteLine(catalogDevice2.Report());
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboarding);
+            ExerciseAccount(contextOnboarded);
             }
 
 
@@ -249,31 +253,61 @@ namespace Goedel.XUnit {
         /// </summary>
         [Fact]
         public void MeshDeviceConnectDynamicQR() {
-            throw new NYI();
-            }
-
-        /// <summary>
-        /// Connect a device by approving a request
-        /// </summary>
-        [Fact]
-        public void MeshDeviceConnectApprove() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, 
-                    DeviceAliceAdmin, AccountAlice, "main");
 
-            // New Device
-            var contextAccount3Pending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice3,
-                    AccountAlice);
+            var contextAdmin = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceAliceAdmin, AccountAlice,
+                "main");
+
+            // Create the QR Code with PIN
+            var boundPin = contextAdmin.GetPIN(Constants.MessagePINActionDevice);
+            var connectUri = MeshUri.ConnectUri(contextAdmin.AccountAddress, boundPin.PIN);
+
+            ReportDevices(contextAdmin);
+
+            // Present the QR code URI
+            var contextOnboardPending = MeshMachineTest.Connect(testEnvironmentCommon, DeviceAlice2, connectUri);
 
             // Admin Device
-            contextAccountAlice.Sync();
-            var connectRequest = contextAccountAlice.GetPendingMessageConnectionRequest();
-            contextAccountAlice.Process(connectRequest);
+            ProcessAutomatics(contextAdmin);
 
-            // New Device
-            var contextAccount3 = contextAccount3Pending.Complete();
-            contextAccount3.Sync();
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
             }
+
+
+        /// <summary>
+        /// Connect a second device using the Dynamic QR connection mechanism
+        /// </summary>
+        [Fact]
+        public void MeshDeviceConnectStaticQR() {
+            var testEnvironmentCommon = new TestEnvironmentCommon();
+
+
+            var contextQ = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, DeviceQ, AccountQ,
+                "main");
+            var contextAdmin = MeshMachineTest.GenerateAccountUser(
+                testEnvironmentCommon, DeviceAliceAdmin, AccountAlice, "main");
+
+            var DeviceOnboarding = new MeshMachineTest(testEnvironmentCommon, DeviceAlice2);
+
+            // Generate the profile and install it on the device
+            contextQ.Preconfigure(out var filename, out var profileDevice,
+                out var connectUri);
+
+            var contextOnboardPreconfigured = DeviceOnboarding.Install(filename);
+
+            contextAdmin.Connect(connectUri);
+
+            // Attempt to 
+            var contextOnboardPending = contextOnboardPreconfigured.Poll();
+
+            // Check second device
+            var contextOnboarded = TestCompletionSuccess(contextOnboardPending);
+            ExerciseAccount(contextOnboarded);
+
+            }
+
 
 
         [Fact]
@@ -281,7 +315,7 @@ namespace Goedel.XUnit {
 
             // Create mesh
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAliceOriginal = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAliceOriginal = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
             // create key shares
@@ -350,7 +384,7 @@ namespace Goedel.XUnit {
         [Fact]
         public void MeshCatalogAccount() {
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
             }
 
@@ -360,7 +394,7 @@ namespace Goedel.XUnit {
         public void MeshCatalogMultipleDevice() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
 
 
@@ -373,9 +407,9 @@ namespace Goedel.XUnit {
         public void MeshMessageContact() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon, 
+            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon, 
                     DeviceBobAdmin, AccountBob, "main");
 
 
@@ -400,9 +434,9 @@ namespace Goedel.XUnit {
         public void MeshMessageConfirm() {
             // Test service, devices for Alice, Bob
             var testEnvironmentCommon = new TestEnvironmentCommon();
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceBobAdmin, AccountBob, "main");
 
             // Bob ---> Alice
@@ -440,9 +474,9 @@ namespace Goedel.XUnit {
             var testEnvironmentCommon = new TestEnvironmentCommon();
             var plaintext = Platform.GetRandomBytes(1000);
 
-            var contextAccountAlice = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountAlice = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceAliceAdmin, AccountAlice, "main");
-            var contextAccountBob = MeshMachineTest.GenerateMasterAccount(testEnvironmentCommon,
+            var contextAccountBob = MeshMachineTest.GenerateAccountUser(testEnvironmentCommon,
                     DeviceBobAdmin, AccountBob, "main");
 
             Exchange(contextAccountAlice, contextAccountBob);
@@ -488,6 +522,36 @@ namespace Goedel.XUnit {
 
             }
 
+        #region // helper routines
+
+        void ReportDevices(ContextUser contextUser) {
+            var catalogDevice = contextUser.GetCatalogDevice();
+
+            Console.WriteLine();
+            Console.WriteLine(catalogDevice.Report());
+
+            }
+
+        /// <summary>
+        /// Exercise the account to verify functionality. Currently a stub.
+        /// </summary>
+        /// <param name="contextUser">The context to exercise the account from.</param>
+        void ExerciseAccount(ContextUser contextUser) => contextUser.Future();
+
+
+        List<IProcessResult> ProcessAutomatics(ContextUser contextUser) {
+            contextUser.Sync();
+            return contextUser.ProcessAutomatics();
+            }
+
+        ContextUser TestCompletionSuccess(ContextMeshPending contextMeshPending) {
+            var contextUser = contextMeshPending.Complete();
+            contextUser.Sync(); // Will fail if cannot complete
+
+            return contextUser;
+            }
+
+
 
         bool Verify(ContextUser first, ContextUser second) {
             //(first.ProfileDevice.UDF == second.ProfileDevice.UDF).AssertTrue();
@@ -517,6 +581,6 @@ namespace Goedel.XUnit {
             return true;
             }
 
-
+        #endregion
         }
     }

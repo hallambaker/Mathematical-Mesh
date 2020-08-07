@@ -10,6 +10,18 @@ namespace Goedel.Mesh {
     ///<summary>Static class for manipulating Mesh Uris</summary>
     public class MeshUri {
 
+
+        public static void ParseUri(ref string account, ref string pin) {
+            try {
+                (account, pin) = ParseConnectUri(account);
+                }
+            catch {
+                // leave unchanged
+                }
+            }
+
+
+
         /// <summary>
         /// Generate a connection URI for <paramref name="account"/> with secret 
         /// <paramref name="pin"/>.

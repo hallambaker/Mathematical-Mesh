@@ -824,32 +824,6 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        ///// <summary>
-        ///// Recover a Mesh Profile from the recovery key value.
-        ///// </summary>
-        ///// <param name="meshHost">The machine context that the mesh is going to be created on.</param>
-        ///// <param name="Key">The recovered UDF key derrivation seed. This may have leading
-        ///// zeros.</param>
-        ///// <param name="profileDevice">The device profile to bind to.</param>
-        ///// <param name="algorithmSign">The signature algorithm.</param>
-        ///// <param name="algorithmEncrypt">The encryption algorithm.</param>
-        ///// <param name="algorithmAuthenticate">The authentication algorithm.</param>
-        ///// <returns>An administration context instance for the recovered profile.</returns>
-        //public static ContextUser RecoverMesh(
-        //        MeshHost meshHost,
-        //        byte[] Key,
-        //        string localName,
-        //        ProfileDevice profileDevice = null,
-        //        CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-        //        CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default
-        //        ) {
-        //    return meshHost.CreateMesh("main", localName, algorithmSign, algorithmEncrypt, algorithmAuthenticate,
-        //        masterSecret:Key, profileDevice:profileDevice);
-        //    }
-
-
-
         /// <summary>
         /// Get a managment context for the group <paramref name="groupAddress"/>.
         /// </summary>
@@ -870,6 +844,37 @@ namespace Goedel.Mesh.Client {
 
         #endregion
         #region // Device connection
+
+        /// <summary>
+        /// Convenience wrapper for <see cref="CreateDeviceEarl"/>. Generates a device profile
+        /// and writes the <see cref="DevicePreconfiguration"/> data to a file in the directory
+        /// specified by <paramref name="path"/>.
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="profileDevice"></param>
+        /// <param name="connectUri"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public PublishResponse Preconfigure(
+                    out string filename,
+                    out ProfileDevice profileDevice,
+                    out string connectUri, 
+                    string path = "") {
+
+            var response = CreateDeviceEarl(
+                    out var secretSeed,
+                    out profileDevice,
+                    out var connectKey,
+                    out connectUri);
+
+            filename = Path.Combine(path, connectKey + ".medk");
+
+            var devicePreconfiguration = new DevicePreconfiguration(secretSeed, connectUri);
+            devicePreconfiguration.ToFile(filename, tagged: true);
+
+            return response;
+            }
+
 
         /// <summary>
         /// Create an EARL for a device, publish the result to the Mesh service and return 

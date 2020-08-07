@@ -299,10 +299,6 @@ namespace Goedel.Mesh.Client {
             return null;
             }
 
-        //ContextAccount Complete(CatalogedPending catalogedPending) {
-        //    var contextPending = LocateMesh(key) as ContextMeshPending;
-        //    return contextPending.Complete();
-        //    }
 
 
 
@@ -313,17 +309,7 @@ namespace Goedel.Mesh.Client {
         public ContextMeshPending Connect(
                 string accountAddress,
                 string localName = null,
-                string PIN = null,
-                CryptoAlgorithmId algorithmSign = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmEncrypt = CryptoAlgorithmId.Default,
-                CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default) {
-
-            algorithmSign.Future();
-            algorithmEncrypt.Future();
-            algorithmAuthenticate.Future();
-
-            return ContextMeshPending.ConnectService(this, accountAddress, localName, PIN);
-            }
+                string pin = null) => ContextMeshPending.ConnectService(this, accountAddress, localName, pin);
 
         /// <summary>
         /// Begin connection to a service.

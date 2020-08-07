@@ -16,16 +16,12 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult DeviceRequestConnect(DeviceRequestConnect Options) {
             var accountAddress = Options.AccountAddress.Value;
             var pin = Options.PIN.Value;
-            var contextMeshPending = MeshHost.Connect(accountAddress, PIN: pin);
+            var contextMeshPending = MeshHost.Connect(accountAddress, pin: pin);
 
             var result = new ResultConnect() {
                 CatalogedMachine = contextMeshPending.CatalogedMachine
                 };
 
-            var profileDevice = contextMeshPending.ProfileDevice;
-            //Console.WriteLine($"KeyOfflineSignature {profileDevice.KeyOfflineSignature.UDF}");
-            //Console.WriteLine($"KeyEncryption {profileDevice.KeyEncryption.UDF}");
-            //Console.WriteLine($"KeyAuthentication {profileDevice.KeyAuthentication.UDF}");
             return result;
             }
 
@@ -89,7 +85,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DevicePending(DevicePending Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             contextAccount.Sync();
 
             // get the inbound spool
@@ -144,7 +140,7 @@ namespace Goedel.Mesh.Shell {
             ProcessRequest(Options, Options.CompletionCode.Value, false);
 
         ShellResult ProcessRequest(IAccountOptions Options, string messageID, bool accept) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
 
             // Hack: should be able to accept, reject specific requests, not just
             // the last one.
@@ -171,13 +167,36 @@ namespace Goedel.Mesh.Shell {
 
             }
 
+
+
+
+        /// <summary>
+        /// Dispatch method
+        /// </summary>
+        /// <param name="Options">The command line options.</param>
+        /// <returns>Mesh result instance</returns>
+        public override ShellResult DevicePreconfigure(DevicePreconfigure Options) {
+            using var contextAccount = GetContextAccount(Options);
+
+            contextAccount.Preconfigure(out var filename, out var profileDevice, out var connectUri);
+
+            var result = new ResultPublishDevice() {
+                Uri = connectUri,
+                ProfileDevice = profileDevice,
+                FileName = filename,
+                };
+            "".TaskFunctionality();
+            return result;
+            }
+
+
         /// <summary>
         /// Dispatch method
         /// </summary>
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceDelete(DeviceDelete Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new Result() {
 
                 };
@@ -190,7 +209,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceList(DeviceList Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new Result() {
 
                 };
@@ -204,7 +223,7 @@ namespace Goedel.Mesh.Shell {
         /// <param name="Options">The command line options.</param>
         /// <returns>Mesh result instance</returns>
         public override ShellResult DeviceAuthorize(DeviceAuthorize Options) {
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var result = new ResultAuthorize() {
 
                 };

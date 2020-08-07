@@ -216,15 +216,10 @@ namespace Goedel.XUnit {
             var deviceAdmin = GetTestCLI(DeviceAdminName);
             var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
 
-
-            deviceAdmin.Dispatch($"account create {AccountA}");
             var deviceInit = deviceQ.Dispatch($"device preconfig") as ResultPublishDevice;
-
-
             deviceConnect1.Dispatch($"device install {deviceInit.FileName}");
 
-            deviceAdmin.Dispatch($"mesh create /service={AccountA}");
-
+            deviceAdmin.Dispatch($"account create {AccountA}");
 
             deviceAdmin.Dispatch($"account connect {deviceInit.Uri} ");
 

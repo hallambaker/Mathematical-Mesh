@@ -177,6 +177,7 @@ namespace Goedel.Mesh {
             Console.WriteLine($"Created Pin: {Account} / {SaltedPIN} => {MessageID}");
             }
 
+
         /// <summary>
         /// Salt the pin code <paramref name="pin"/> to bind it to the action 
         /// <paramref name="action"/>.

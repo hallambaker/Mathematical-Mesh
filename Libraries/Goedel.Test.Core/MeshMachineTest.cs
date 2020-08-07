@@ -58,20 +58,27 @@ namespace Goedel.Test.Core {
 
 
         // Convenience routines 
+
+
+        public ContextMeshPreconfigured Install(string filename) {
+            var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
+            return machine.MeshHost.Install(filename);
+            }
+
         public ContextUser GetContextAccount(string localName = null, string accountName = null) {
             var machine = new MeshMachineTest(testEnvironmentCommon, DirectoryMaster);
             return  machine.MeshHost.GetContextMesh(localName) as ContextUser;
             }
 
 
-        public static ContextUser GenerateMasterAccount(
+        public static ContextUser GenerateAccountUser(
                     TestEnvironmentCommon testEnvironmentCommon,
                     string machineName,
-                    string accountId,
+                    string accountAddress,
                     string localName=null) {
 
             var result = new MeshMachineTest(testEnvironmentCommon, machineName);
-            var contextUser = result.MeshHost.CreateMesh(accountId, localName);
+            var contextUser = result.MeshHost.CreateMesh(accountAddress, localName);
             return contextUser;
             }
 
@@ -83,26 +90,12 @@ namespace Goedel.Test.Core {
             string machineName,
             string accountId,
             string localName = null,
-            string PIN = null) {
+            string PIN = null,
+            string connectUri = null) {
 
             var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
-            return machine.MeshHost.Connect(accountId, PIN: PIN);
+            return machine.MeshHost.Connect(accountId, localName, pin: PIN);
             }
-
-        public static ContextUser Connect(
-            TestEnvironmentCommon testEnvironmentCommon,
-            string machineName,
-            ContextUser contextAccountAdmin,
-            string localName = null) {
-
-            var PIN = contextAccountAdmin.GetPIN(Constants.MessagePINActionDevice);
-
-            var machine = new MeshMachineTest(testEnvironmentCommon, machineName);
-            //return machine.Connect(contextAccountAdmin.AccountId, PIN: PIN);
-
-            throw new NYI();
-            }
-
 
 
         Dictionary<string, KeyPair> dictionaryKeyPairByUDF = new Dictionary<string, KeyPair>();

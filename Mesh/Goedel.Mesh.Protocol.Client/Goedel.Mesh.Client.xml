@@ -1245,6 +1245,18 @@
             <param name="groupAddress">The group to return the management context for.</param>
             <returns>The created management context.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextUser.Preconfigure(System.String@,Goedel.Mesh.ProfileDevice@,System.String@,System.String)">
+            <summary>
+            Convenience wrapper for <see cref="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)"/>. Generates a device profile
+            and writes the <see cref="T:Goedel.Mesh.DevicePreconfiguration"/> data to a file in the directory
+            specified by <paramref name="path"/>.
+            </summary>
+            <param name="filename"></param>
+            <param name="profileDevice"></param>
+            <param name="connectUri"></param>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.CreateDeviceEarl(Goedel.Cryptography.Jose.PrivateKeyUDF@,Goedel.Mesh.ProfileDevice@,System.String@,System.String@,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,System.Byte[],System.Int32)">
             <summary>
             Create an EARL for a device, publish the result to the Mesh service and return 
@@ -2205,7 +2217,7 @@
             <param name="localName"></param>
             <returns>Context for the newly bound account.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId,Goedel.Cryptography.CryptoAlgorithmId)">
+        <member name="M:Goedel.Mesh.Client.MeshHost.Connect(System.String,System.String,System.String)">
             <summary>
             Begin connection to a service.
             </summary>

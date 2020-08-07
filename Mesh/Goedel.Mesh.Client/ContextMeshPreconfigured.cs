@@ -18,7 +18,7 @@ namespace Goedel.Mesh.Client {
                     => CatalogedMachine as CatalogedPreconfigured;
 
         ///<summary>The manufacturer profile used to direct configuration.</summary>
-        public override Profile Profile => throw new NotImplementedException();
+        public override Profile Profile => CatalogedPreconfigured.ProfileDevice;
 
         ///<summary>Preconfigured devices have a connection to the manufacturer profile.</summary>
         public override Connection Connection => throw new NotImplementedException();

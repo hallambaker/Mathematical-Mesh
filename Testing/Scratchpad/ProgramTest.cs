@@ -36,7 +36,7 @@ namespace Scratchpad {
 
             //TestSplit.Test().TestKey(16);
 
-            ShellTests.Test().TestConnectRequest();
+            //ShellTests.Test().TestConnectRequest();
 
             //TestService.Test().MeshCatalogAccount();
 
@@ -51,16 +51,23 @@ namespace Scratchpad {
 
             //// Connect by dynamic QR
             ///
-            TestService.Test().MeshDeviceConnectApprove();
+
+            //TestService.Test().MeshDeviceConnectStaticQR();
+
+
+            // fitst connect works but not the second. Is there a bug in the message processing?
+            ShellTests.Test().TestProfileConnectPin();
+
+            // make sure that the pin is marked as read.
+            ShellTests.Test().TestProfileConnectPinReused();
+
 
             TestService.Test().MeshDeviceConnectDynamicQR();
-
-            ShellTests.Test().TestProfileConnectPin();
             ShellTests.Test().TestProfileConnectPinInvalid();
             ShellTests.Test().TestProfileConnectPinExpired();
-            ShellTests.Test().TestProfileConnectPinReused();
+
             ShellTests.Test().TestProfileConnectStaticQR();
-            ShellTests.Test().TestProfileConnectDynamicQR();
+
 
 
             // The App bundle:

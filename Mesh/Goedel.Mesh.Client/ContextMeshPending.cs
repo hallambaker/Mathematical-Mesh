@@ -81,13 +81,18 @@ namespace Goedel.Mesh.Client {
                 CryptoAlgorithmId algorithmAuthenticate = CryptoAlgorithmId.Default,
                 int bits = 256) {
 
+
+            // If accountAddress is a Mesh Connect URI, replace account, pin with the parsed values.
+            MeshUri.ParseUri(ref accountAddress, ref pin);
+
+
             var secretSeed = new PrivateKeyUDF(
                 UdfAlgorithmIdentifier.MeshProfileDevice, null, null,
                 algorithmEncrypt, algorithmSign, algorithmAuthenticate,
                 bits: bits);
 
 
-            var profileDevice = new ProfileDevice();
+            var profileDevice = new ProfileDevice(secretSeed:secretSeed);
             profileDevice.PersistSeed(meshHost.KeyCollection);
 
             return ConnectService(meshHost, profileDevice, accountAddress, localName, pin);

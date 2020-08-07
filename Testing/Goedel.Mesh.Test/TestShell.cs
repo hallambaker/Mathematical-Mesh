@@ -300,6 +300,7 @@ namespace Goedel.Mesh.Test {
         public void Connect(TestCLI newDevice, string account) {
             var result = Dispatch($"account pin") as ResultPIN;
             var pin = result.MessagePIN.PIN;
+
             newDevice.Dispatch($"device request {account} /pin {pin}");
             Dispatch($"account sync /auto");
 
