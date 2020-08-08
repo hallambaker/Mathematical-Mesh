@@ -20,7 +20,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{E9EAA6CF-ACFD-4F68-A4B9-18DBB8A98B48}"
 	ProjectSection(SolutionItems) = preProject
 		Outputs\Documents\Bib.xml = Outputs\Documents\Bib.xml
-		Services\meshportal_windows\startserver.bat = Services\meshportal_windows\startserver.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{0B0479B0-052D-4BCA-8920-7B2BAA788BE5}"

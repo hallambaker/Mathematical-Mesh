@@ -97,14 +97,19 @@ namespace Goedel.Mesh.Shell {
             var contextAccount = GetContextAccount(Options);
             var result = contextAccount.Sync();
 
+
+            int ProcessedResults = 0;
+
             if (Options.AutoApprove.Value) {
-                contextAccount.ProcessAutomatics();
+                var process = contextAccount.ProcessAutomatics();
+                ProcessedResults = process.Count;
                 }
 
 
             return new ResultSync() {
                 Success = true,
-                Fetched = result
+                Fetched = result,
+                ProcessedResults = ProcessedResults
                 };
             }
 

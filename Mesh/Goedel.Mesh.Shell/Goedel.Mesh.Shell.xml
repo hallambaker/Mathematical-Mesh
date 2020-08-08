@@ -4906,6 +4906,10 @@
             <summary>
             </summary>
         </member>
+        <member name="P:Goedel.Mesh.Shell.ResultSync.ProcessedResults">
+            <summary>
+            </summary>
+        </member>
         <member name="P:Goedel.Mesh.Shell.ResultSync._Tag">
             <summary>
             Tag identifying this class

@@ -29,10 +29,8 @@ namespace Goedel.Command {
         /// </summary>
         public static void About() {
             var CompilationDate = Script.AssemblyBuildTime;
-            //System.Reflection.Assembly.GetCallingAssembly());
 
             string Build = Script.LocalizeTime(CompilationDate, false);
-            //var fred = System.Reflection.Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyTitleAttribute>();
 
             Console.WriteLine(Script.AssemblyTitle);
             Console.WriteLine("  {0}", Script.AssemblyDescription);

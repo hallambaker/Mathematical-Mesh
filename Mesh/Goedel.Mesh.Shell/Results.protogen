@@ -103,6 +103,7 @@
 	Structure ResultSync
 		Inherits					Result
 		Integer						Fetched
+		Integer						ProcessedResults
 
 	Structure ResultEscrow
 		Inherits		Result

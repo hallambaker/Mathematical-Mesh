@@ -519,6 +519,10 @@ namespace Goedel.Mesh.Client {
                     count++;
                     store.AppendDirect(entry);
                     }
+
+
+                // need to set the store end frame!!!
+
                 return count;
                 }
 

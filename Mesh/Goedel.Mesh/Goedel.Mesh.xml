@@ -964,6 +964,12 @@
             <param name="decrypt">If true, attempt decryption of bodies to payloads.</param>
             <param name="create">If true, create a container if it does not already exist.</param>
         </member>
+        <member name="M:Goedel.Mesh.Catalog`1.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Append the envelopes <paramref name="envelope"/> to the
+            store.
+            </summary>
+        </member>
         <member name="M:Goedel.Mesh.Catalog`1.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
             <summary>
             Prepare the set of catalog updates <paramref name="updates"/> returning a list
@@ -12382,6 +12388,12 @@
             purposes of the container.
             </summary>
             <param name="dareMessage"></param>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.AppendDirect(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Append the envelopes <paramref name="envelope"/> to the
+            store.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Spool.CheckTime(System.Nullable{System.DateTime},System.Int64,System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
             <summary>

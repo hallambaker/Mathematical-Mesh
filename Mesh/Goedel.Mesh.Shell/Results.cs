@@ -2187,6 +2187,15 @@ namespace Goedel.Mesh.Shell {
 			get => _Fetched;
 			set {_Fetched = value; __Fetched = true; }
 			}
+		bool								__ProcessedResults = false;
+		private int						_ProcessedResults;
+        /// <summary>
+        /// </summary>
+
+		public virtual int						ProcessedResults {
+			get => _ProcessedResults;
+			set {_ProcessedResults = value; __ProcessedResults = true; }
+			}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2236,6 +2245,11 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("Fetched", 1);
 					_writer.WriteInteger32 (Fetched);
 				}
+			if (__ProcessedResults){
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ProcessedResults", 1);
+					_writer.WriteInteger32 (ProcessedResults);
+				}
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2271,6 +2285,10 @@ namespace Goedel.Mesh.Shell {
 			switch (tag) {
 				case "Fetched" : {
 					Fetched = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "ProcessedResults" : {
+					ProcessedResults = jsonReader.ReadInteger32 ();
 					break;
 					}
 				default : {

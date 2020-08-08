@@ -1015,15 +1015,28 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <returns>The results of the automatic processing attempted.</returns>
         public List<IProcessResult> ProcessAutomatics() {
-
             var results = new List<IProcessResult>();
+
+            Screen.WriteLine($"ProcessAutomatics");
+
+
+            // This is failing the second time round.
+            // The frame count is 3, the index of the returned record is 1
+            // SpoolEntryLast???
+
 
             var spoolInbound = GetSpoolInbound();
             foreach (var envelope in spoolInbound.GetMessages(MessageStatus.Open)) {
                 var meshMessage = envelope.Message;
+
+                Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {meshMessage.Status}");
+
+
                 switch (meshMessage) {
                     case AcknowledgeConnection acknowledgeConnection: {
                         if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
+                            Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinUDF}");
+
                             results.Add(ProcessAutomatic(acknowledgeConnection));
                             }
 

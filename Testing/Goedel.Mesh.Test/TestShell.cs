@@ -297,19 +297,21 @@ namespace Goedel.Mesh.Test {
             }
 
 
-        public void Connect(TestCLI newDevice, string account) {
+        public ResultSync Connect(TestCLI newDevice, string account) {
             var result = Dispatch($"account pin") as ResultPIN;
             var pin = result.MessagePIN.PIN;
 
             newDevice.Dispatch($"device request {account} /pin {pin}");
-            Dispatch($"account sync /auto");
+            var resultsync = Dispatch($"account sync /auto") as ResultSync;
 
-
+            (resultsync.ProcessedResults == 1).TestTrue();
 
             // failing because we are not correctly matching PIN allocation to requests
             newDevice.Dispatch($"device complete");
             newDevice.Dispatch($"account sync");
 
+
+            return resultsync;
             }
 
 

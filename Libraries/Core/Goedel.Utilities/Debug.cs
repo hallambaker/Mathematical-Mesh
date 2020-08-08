@@ -13,8 +13,18 @@ namespace Goedel.Utilities {
         /// </summary>
         /// <param name="format"></param>
         /// <param name="arg"></param>
-        public static void WriteLine(string format, params object[] arg) =>
+        public static void WriteLine(string format, params object[] arg) {
+
+            var caller = AssemblyStack.GetCallerMethodName();
+            if (caller == "TaskFunctionality") {
+                return;
+                }
+
+
             Console.WriteLine(format, arg);
+
+
+            }
 
 
         }

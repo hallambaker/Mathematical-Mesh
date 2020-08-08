@@ -178,6 +178,17 @@ namespace Goedel.Mesh {
             }
 
         /// <summary>
+        /// Append the envelopes <paramref name="envelope"/> to the
+        /// store.
+        /// </summary>
+        public override void AppendDirect(DareEnvelope envelope) {
+            Container.Append(envelope);
+            Intern(envelope, null);
+            }
+
+
+
+        /// <summary>
         /// Check that the time value <paramref name="dateTime"/> is within the boundaries
         /// defined by <paramref name="maxTicks"/>, <paramref name="notBefore"/> and
         /// <paramref name="notOnOrAfter"/>.

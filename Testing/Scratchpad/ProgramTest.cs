@@ -33,48 +33,29 @@ namespace Scratchpad {
             _ = Goedel.Mesh.Server.CatalogItem.Initialize;
             _ = Goedel.XUnit.TestItem.Initialize;
 
-
-            //TestSplit.Test().TestKey(16);
-
-            //ShellTests.Test().TestConnectRequest();
-
-            //TestService.Test().MeshCatalogAccount();
-
-            // Target for Thursday:
-            //TestService.Test().MeshEscrowRecover();
-            //ShellTests.Test().TestAccountDelete();
-            //ShellTests.Test().TestEscrowChangeDevice();
-            //ShellTests.Test().TestEscrowChangeService();
-            //ShellTests.Test().TestEscrowDeleteDevice();
-
-            // Target for Friday
-
-            //// Connect by dynamic QR
-            ///
-
-            //TestService.Test().MeshDeviceConnectStaticQR();
+            // Messages are not being marked as read after processing
+            // PINs are not being marked as being used
+            // need test to see how many messages are processed...
 
 
-            // fitst connect works but not the second. Is there a bug in the message processing?
+            // Also need to return full description of results from ResultSync
             ShellTests.Test().TestProfileConnectPin();
 
-            // make sure that the pin is marked as read.
+
             ShellTests.Test().TestProfileConnectPinReused();
 
 
-            TestService.Test().MeshDeviceConnectDynamicQR();
-            ShellTests.Test().TestProfileConnectPinInvalid();
-            ShellTests.Test().TestProfileConnectPinExpired();
+            //ShellTests.Test().TestEscrowChangeService();
+            //ShellTests.Test().TestProfileContact();
 
+            ShellTests.Test().TestProfileConnectDynamicQR();
             ShellTests.Test().TestProfileConnectStaticQR();
-
-
-
             // The App bundle:
             //ShellTests.Test().TestMessageGroup();
             //ShellTests.Test().TestProfileMail();
             //ShellTests.Test().TestProfileSSHPrivate();
             //ShellTests.Test().TestProfileSSHPublic();
+
 
 
             // The Auth bundle:
@@ -83,11 +64,7 @@ namespace Scratchpad {
             //[Tests will likely need a rewrite here...]
             //   ShellTests.Test().TestProfileConnectAuth();
             //   ShellTests.Test().TestProfileConnectAuthAll();
-
-
-
-
-
+            //   ShellTests.Test().TestProfileConnectAuthAdmin();
 
 
             // **** Tests yet to be written
