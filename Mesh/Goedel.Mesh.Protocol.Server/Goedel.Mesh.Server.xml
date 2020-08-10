@@ -57,13 +57,6 @@
             </summary>
             <param name="accountEntry">The account entry to create a handle for.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.Post(Goedel.Cryptography.Dare.DareEnvelope)">
-            <summary>
-            Post a message to the spool associated with the account. This is the only operation
-            that is supported for a device that is not connected to the account profile.
-            </summary>
-            <param name="dareMessage">The message to post.</param>
-        </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetCatalogPublication">
             <summary>
             Return the publication catalog. This is a catalog that the service MUST have
@@ -78,12 +71,19 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.PostInbound(Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>
             Post a message to the spool associated with the account. This is the only operation
             that is supported for a device that is not connected to the account profile.
             </summary>
             <param name="dareMessage">The message to post.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.PostLocal(Goedel.Cryptography.Dare.DareEnvelope)">
+            <summary>
+            Post a message to the spool associated with the account. This is the only operation
+            that is supported for a device that is not connected to the account profile.
+            </summary>
+            <param name="envelope">The message to post.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.AccountHandleUnverified.GetLocal(System.String)">
             <summary>
@@ -1053,7 +1053,7 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction  Post.
             </summary>
@@ -1160,7 +1160,7 @@
             <param name="account">The account for which the status is requested..</param>
             <param name="selections">The selection criteria.</param>
         </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope})">
+        <member name="M:Goedel.Mesh.Server.MeshPersist.AccountUpdate(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.ContainerUpdate},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{System.String})">
             <summary>
             Update an account record. There must be an existing record and the request must
             be appropriately authenticated.
@@ -1168,7 +1168,10 @@
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account for which the status is requested.</param>
             <param name="updates">Entries to be added to catalogs.</param>
-            <param name="selfs">Entries to be added to the user's inbound store.</param>
+            <param name="inbound">Entries to be added to the user's inbound store.</param>
+            <param name="outbound">Entries to be added to the user's outbound store.</param>
+            <param name="local">Entries to be added to the user's local store.</param>
+            <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.AccountDelete(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount)">
             <summary>

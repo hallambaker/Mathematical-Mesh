@@ -62,8 +62,8 @@ namespace Goedel.Mesh.Client {
 
         ///<summary>Return the corresponding response identifier.</summary>
         public string GetResponseID() => MessageConnectionResponse switch {
-            AcknowledgeConnection acknowledgeConnection => acknowledgeConnection.GetResponseID(),
-            MessageClaim messageClaim => messageClaim.GetResponseID(),
+            AcknowledgeConnection acknowledgeConnection => acknowledgeConnection.GetResponseId(),
+            MessageClaim messageClaim => messageClaim.GetResponseId(),
             _ => throw new NYI()
             };
 

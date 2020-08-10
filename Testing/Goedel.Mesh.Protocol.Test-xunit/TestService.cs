@@ -539,7 +539,7 @@ namespace Goedel.XUnit {
         void ExerciseAccount(ContextUser contextUser) => contextUser.Future();
 
 
-        List<IProcessResult> ProcessAutomatics(ContextUser contextUser) {
+        List<ProcessResult> ProcessAutomatics(ContextUser contextUser) {
             contextUser.Sync();
             return contextUser.ProcessAutomatics();
             }

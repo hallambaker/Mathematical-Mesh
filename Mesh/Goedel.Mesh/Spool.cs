@@ -38,7 +38,6 @@ namespace Goedel.Mesh {
         public Message Message => message ?? Decode().CacheValue(out message);
         Message message;
 
-
         ///<summary>Convenience accessor for the envelope index number.</summary>
         public long Index => DareEnvelope.Index;
 
@@ -395,6 +394,21 @@ namespace Goedel.Mesh {
             return Intern(envelope, null);
             }
 
+
+        /// <summary>
+        /// Apply the list of message status updates specified in <paramref name="references"/>.
+        /// </summary>
+        /// <param name="references">List of message status values to be updated.</param>
+        public void SetStatus(List<Reference> references) {
+            if (references == null || references.Count == 0) {
+                return;
+                }
+            var messageComplete = new MessageComplete() {
+                References = references
+                };
+
+            throw new NYI();
+            }
 
         }
 

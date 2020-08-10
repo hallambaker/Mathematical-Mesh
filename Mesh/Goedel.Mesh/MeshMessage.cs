@@ -9,6 +9,7 @@ using System;
 namespace Goedel.Mesh {
 
 
+
     public partial class Reference {
 
         ///<summary>Returns the envelope ID corresponding to the MessageID</summary>
@@ -34,7 +35,6 @@ namespace Goedel.Mesh {
                     _ => "Unknown"
                     };
             }
-
 
         }
 
@@ -198,18 +198,21 @@ namespace Goedel.Mesh {
         /// <param name="nonce">Client nonce value.</param>
         /// <param name="witness">The witness value being tested.</param>
         /// <returns></returns>
-        public static IProcessResult ValidatePin(
+        public static ProcessingResult ValidatePin(
                     MessagePIN messagePin,
                     string accountAddress,
                     DareEnvelope envelope,
                     byte[] nonce,
                     byte[] witness) {
 
-            if (messagePin == null || messagePin.Closed == true)  {
-                return new InvalidPIN();
+            if (messagePin == null )  {
+                return ProcessingResult.PinInvalid;
+                }
+            if (messagePin.Closed == true) {
+                return ProcessingResult.PinUsed;
                 }
             if (messagePin.Expires != null && messagePin.Expires < DateTime.Now) {
-                return new ExpiredPIN();
+                return ProcessingResult.PinExpired;
                 }
             var pinWitness = MessagePIN.GetPinWitness(
                         messagePin.SaltedPIN, 
@@ -217,10 +220,10 @@ namespace Goedel.Mesh {
                         envelope,
                         nonce);
             if (!pinWitness.IsEqualTo(witness)) {
-                return new InvalidPIN();
+                return ProcessingResult.PinInvalid;
                 }
 
-            return messagePin;
+            return ProcessingResult.Success;
             }
 
 

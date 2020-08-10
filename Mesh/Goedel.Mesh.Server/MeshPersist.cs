@@ -134,13 +134,13 @@ namespace Goedel.Mesh.Server {
                 };
 
             Console.WriteLine($"The AcknowledgeConnection.MessageID = {messageConnectionRequest.MessageID}");
-            Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseID()}");
+            Console.WriteLine($"The AcknowledgeConnection Response ID = {messageConnectionRequest.GetResponseId()}");
 
 
             // Bug: should authenticate the envelope under the service key and also encrypt it under the device key.
 
             var envelope = messageConnectionRequest.Encode();
-            accountHandle.Post(envelope);
+            accountHandle.PostInbound(envelope);
 
 
             var connectResponse = new ConnectResponse() {
@@ -250,29 +250,68 @@ namespace Goedel.Mesh.Server {
         /// <param name="jpcSession">The session connection data.</param>
         /// <param name="account">The account for which the status is requested.</param>
         /// <param name="updates">Entries to be added to catalogs.</param>
-        /// <param name="selfs">Entries to be added to the user's inbound store.</param>
+        /// <param name="inbound">Entries to be added to the user's inbound store.</param>
+        /// <param name="outbound">Entries to be added to the user's outbound store.</param>
+        /// <param name="local">Entries to be added to the user's local store.</param>
+        /// <param name="accounts">Accounts to which outbound messages are to be sent.</param>
         public void AccountUpdate(
                     JpcSession jpcSession,
                     VerifiedAccount account,
                     List<ContainerUpdate> updates,
-                    List<DareEnvelope> selfs) {
+                    List<DareEnvelope> inbound,
+                    List<DareEnvelope> outbound,
+                    List<DareEnvelope> local,
+                    List<string> accounts) {
             //AccountHandleVerified accountEntry = null;
 
+            // ToDo: This should be subject to a full multi stage commit process.
+
+            /*
+            1) Check all the envelopes meet the catalog/spool security policy and size constraint. 
+
+            2) lock all the required catalogs (probably lock the account)
+
+            3) Check that all the updates are consistent with the state of the catalog
+
+            4) Perform all the updates
+
+            5) Append all the messages to the relevant spools
+
+            6) Release all the locks.
+
+            */
             // report the updates to be applied here
 
 
             using var accountEntry = GetAccountVerified(account, jpcSession);
             accountEntry.AssertNotNull(MeshUnknownAccount.Throw);
-            if (selfs != null) {
-                foreach (var self in selfs) {
-                    accountEntry.Post(self);
-                    }
-                }
+
 
             if (updates != null) {
                 foreach (var update in updates) {
                     update.ToConsole();
                     accountEntry.StoreAppend(update.Container, update.Envelopes);
+                    }
+                }
+
+            if (inbound != null) {
+                foreach (var envelope in inbound) {
+                    accountEntry.PostInbound(envelope);
+                    }
+                }
+
+
+
+            if (local != null) {
+                foreach (var envelope in local) {
+                    accountEntry.PostLocal(envelope);
+                    }
+                }
+
+            // we always do these last
+            if (outbound != null) {
+                foreach (var envelope in outbound) {
+                    MessagePostOther(jpcSession, account, accounts, envelope);
                     }
                 }
 
@@ -528,7 +567,7 @@ namespace Goedel.Mesh.Server {
         bool MessagePostLocal(string recipient, DareEnvelope dareMessage) {
 
             var recipientAccount = GetAccountUnverified(recipient);
-            recipientAccount.Post(dareMessage);
+            recipientAccount.PostInbound(dareMessage);
 
             return true;
             }

@@ -94,8 +94,8 @@ namespace Goedel.XUnit {
 
             device1.Dispatch($"account create {AccountA}");
 
-            device1.Connect(device2, accountA);
-            device1.Connect(device3, accountA);
+            device1.Connect(device2, accountA).ProcessedResults.TestEqual(1);
+            device1.Connect(device3, accountA).ProcessedResults.TestEqual(1);
             }
 
 

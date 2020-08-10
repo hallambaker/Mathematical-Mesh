@@ -235,14 +235,14 @@ namespace Goedel.Mesh {
 						JPCInterface.Publish (request, session ?? JpcSession);
 
         /// <summary>
-		/// Base method for implementing the transaction  Post.
+		/// Base method for implementing the transaction  PostOld.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual PostResponse Post (
+        public virtual PostResponse PostOld (
                 PostRequest request, JpcSession session=null) => 
-						JPCInterface.Post (request, session ?? JpcSession);
+						JPCInterface.PostOld (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
@@ -446,10 +446,10 @@ namespace Goedel.Mesh {
         /// <param name="request">The request object.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override PostResponse Post (
+        public override PostResponse PostOld (
                 PostRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Post", request);
+            var responseData = JPCRemoteSession.Post("PostOld", request);
             var response = PostResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -606,10 +606,10 @@ namespace Goedel.Mesh {
 					Response = Service.Publish (Request, session);
 					break;
 					}
-				case "Post" : {
+				case "PostOld" : {
 					var Request = new PostRequest();
 					Request.Deserialize (jsonReader);
-					Response = Service.Post (Request, session);
+					Response = Service.PostOld (Request, session);
 					break;
 					}
 				case "Connect" : {
@@ -3359,11 +3359,28 @@ namespace Goedel.Mesh {
 
 		public virtual List<ContainerUpdate>				Updates  {get; set;}
         /// <summary>
-        ///Entries to be added to the inbound spool on the account, e.g. completion
-        ///messages.
+        ///The account(s) to which the request is directed.
         /// </summary>
 
-		public virtual List<DareEnvelope>				Self  {get; set;}
+		public virtual List<string>				Accounts  {get; set;}
+        /// <summary>
+        ///The messages to be sent to other accounts  
+        /// </summary>
+
+		public virtual List<DareEnvelope>				Outbound  {get; set;}
+        /// <summary>
+        ///Messages to be appended to the user's inbound spool. this is
+        ///typically used to post notifications to the user to mark messages as having been
+        ///read or responded to.
+        /// </summary>
+
+		public virtual List<DareEnvelope>				Inbound  {get; set;}
+        /// <summary>
+        ///Messages to be appended to the user's local spool. This is used to allow connecting
+        ///devices to collect activation messages before they have connected to the mesh.
+        /// </summary>
+
+		public virtual List<DareEnvelope>				Local  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3425,12 +3442,58 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Self != null) {
+			if (Accounts != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Self", 1);
+				_writer.WriteToken ("Accounts", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Self) {
+				foreach (var _index in Accounts) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					_writer.WriteString (_index);
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Outbound != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Outbound", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Outbound) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Inbound != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Inbound", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Inbound) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Local != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Local", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Local) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_writer.WriteObjectStart();
@@ -3489,16 +3552,55 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "Self" : {
+				case "Accounts" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Self = new List <DareEnvelope> ();
+					Accounts = new List <string> ();
+					while (_Going) {
+						string _Item = jsonReader.ReadString ();
+						Accounts.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Outbound" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Outbound = new List <DareEnvelope> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  DareEnvelope ();
 						_Item.Deserialize (jsonReader);
 						// var _Item = new DareEnvelope (jsonReader);
-						Self.Add (_Item);
+						Outbound.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Inbound" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Inbound = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
+						Inbound.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Local" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Local = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
+						Local.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -4058,19 +4160,23 @@ namespace Goedel.Mesh {
 
 		public virtual List<string>				Accounts  {get; set;}
         /// <summary>
-        ///The entries to be uploaded. These MAY be either complete messages or redacted messages.
-        ///In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-        ///service 
+        ///The messages to be sent to the addresses specified in Accounts. 
         /// </summary>
 
-		public virtual List<DareEnvelope>				Message  {get; set;}
+		public virtual List<DareEnvelope>				Outbound  {get; set;}
         /// <summary>
-        ///Messages to be appended to the user's self spool. this is
+        ///Messages to be appended to the user's inbound spool. this is
         ///typically used to post notifications to the user to mark messages as having been
         ///read or responded to.
         /// </summary>
 
-		public virtual List<DareEnvelope>				Self  {get; set;}
+		public virtual List<DareEnvelope>				Inbound  {get; set;}
+        /// <summary>
+        ///Messages to be appended to the user's local spool. This is used to allow connecting
+        ///devices to collect activation messages before they have connected to the mesh.
+        /// </summary>
+
+		public virtual List<DareEnvelope>				Local  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4127,12 +4233,12 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Message != null) {
+			if (Outbound != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Message", 1);
+				_writer.WriteToken ("Outbound", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Message) {
+				foreach (var _index in Outbound) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_writer.WriteObjectStart();
@@ -4144,12 +4250,29 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Self != null) {
+			if (Inbound != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Self", 1);
+				_writer.WriteToken ("Inbound", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Self) {
+				foreach (var _index in Inbound) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
+			if (Local != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("Local", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in Local) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_writer.WriteObjectStart();
@@ -4205,30 +4328,44 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "Message" : {
+				case "Outbound" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Message = new List <DareEnvelope> ();
+					Outbound = new List <DareEnvelope> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  DareEnvelope ();
 						_Item.Deserialize (jsonReader);
 						// var _Item = new DareEnvelope (jsonReader);
-						Message.Add (_Item);
+						Outbound.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
 					}
-				case "Self" : {
+				case "Inbound" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Self = new List <DareEnvelope> ();
+					Inbound = new List <DareEnvelope> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  DareEnvelope ();
 						_Item.Deserialize (jsonReader);
 						// var _Item = new DareEnvelope (jsonReader);
-						Self.Add (_Item);
+						Inbound.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
+				case "Local" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					Local = new List <DareEnvelope> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  DareEnvelope ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new DareEnvelope (jsonReader);
+						Local.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;

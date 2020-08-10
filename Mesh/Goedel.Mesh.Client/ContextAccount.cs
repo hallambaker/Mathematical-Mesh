@@ -411,7 +411,9 @@ namespace Goedel.Mesh.Client {
         public void SendMessage(
                     Message meshMessage,
                     List<string> recipients = null,
-                    CryptoKey encryptionKey = null
+                    CryptoKey encryptionKey = null,
+                    List<Reference> inboundComplete = null,
+                    List<Reference> localComplete = null
                     ) {
             Connect();
 
@@ -419,14 +421,16 @@ namespace Goedel.Mesh.Client {
 
 
             var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
+            
+            // this is not working because of the dopey idea that no recipient means the local spool.
 
-            var postRequest = new PostRequest() {
+            var uploadRequest = new UploadRequest() {
                 Accounts = recipients,
-                Message = new List<DareEnvelope>() { envelope }
+                Outbound = new List<DareEnvelope>() { envelope }
                 };
 
 
-            MeshClient.Post(postRequest);
+            MeshClient.Upload(uploadRequest);
             }
 
         /// <summary>
@@ -438,12 +442,12 @@ namespace Goedel.Mesh.Client {
 
             var message = meshMessage.Encode(KeySignature);
 
-            var postRequest = new PostRequest() {
-                Self = new List<DareEnvelope>() { message }
+            var uploadRequest = new UploadRequest() {
+                Local = new List<DareEnvelope>() { message }
                 };
 
 
-            MeshClient.Post(postRequest);
+            MeshClient.Upload(uploadRequest);
             }
 
         void Connect() {

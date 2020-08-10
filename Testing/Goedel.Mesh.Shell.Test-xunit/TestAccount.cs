@@ -92,24 +92,24 @@ namespace Goedel.XUnit {
             }
 
 
-        [Fact]
-        public void TestEscrowChangeService() {
-            var testCLIAlice1 = GetTestCLI(AliceDevice1);
-            testCLIAlice1.Dispatch($"account create {AccountA}");
+        //[Fact]
+        //public void TestEscrowChangeService() {
+        //    var testCLIAlice1 = GetTestCLI(AliceDevice1);
+        //    testCLIAlice1.Dispatch($"account create {AccountA}");
 
-            var ProfileEscrow = testCLIAlice1.Example($"account escrow");
-            var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
-            var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
+        //    var ProfileEscrow = testCLIAlice1.Example($"account escrow");
+        //    var share1 = (ProfileEscrow[0].Result as ResultEscrow).Shares[0];
+        //    var share2 = (ProfileEscrow[0].Result as ResultEscrow).Shares[2];
 
-            var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
+        //    var ProfileAliceDelete = testCLIAlice1.Example($"account delete");
 
-            var testCLIAlice2 = GetTestCLI(AliceDevice2);
-            var ProfileRecover = testCLIAlice2.Example($"account recover  {AccountA2} {share1} {share2} /verify");
+        //    var testCLIAlice2 = GetTestCLI(AliceDevice2);
+        //    var ProfileRecover = testCLIAlice2.Example($"account recover  {AccountA2} {share1} {share2} /verify");
 
-            testCLIAlice2.Dispatch($"account sync");
+        //    testCLIAlice2.Dispatch($"account sync");
 
-            "Should add much more test functionality here".TaskTest();
-            }
+        //    "Should add much more test functionality here".TaskTest();
+        //    }
 
 
 

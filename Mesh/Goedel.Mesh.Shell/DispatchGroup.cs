@@ -14,7 +14,7 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupCreate(GroupCreate Options) {
             var groupID = Options.GroupID.Value;
 
-            using var contextAccount = GetContextAccount(Options);
+            var contextAccount = GetContextAccount(Options);
             var contextGroup = contextAccount.CreateGroup(groupID);
 
             var result = new ResultEntry() {
@@ -31,8 +31,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupAdd(GroupAdd Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using var contextAccount = GetContextAccount(Options);
-            using var contextGroup = contextAccount.GetContextGroup(groupID);
+            var contextAccount = GetContextAccount(Options);
+            var contextGroup = contextAccount.GetContextGroup(groupID);
 
             var entryMember = contextGroup.Add(memberID);
 
@@ -50,8 +50,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupGet(GroupGet Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using var contextAccount = GetContextAccount(Options);
-            using var contextGroup = contextAccount.GetContextGroup(groupID);
+            var contextAccount = GetContextAccount(Options);
+            var contextGroup = contextAccount.GetContextGroup(groupID);
             var member = contextGroup.Locate(memberID);
 
             var result = new ResultEntry() {
@@ -69,8 +69,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupDelete(GroupDelete Options) {
             var groupID = Options.GroupID.Value;
             var memberID = Options.MemberID.Value;
-            using var contextAccount = GetContextAccount(Options);
-            using var contextGroup = contextAccount.GetContextGroup(groupID);
+            var contextAccount = GetContextAccount(Options);
+            var contextGroup = contextAccount.GetContextGroup(groupID);
             var member = contextGroup.Locate(memberID);
             member.AssertNotNull(EntryNotFound.Throw, memberID);
             contextGroup.Delete(member);
@@ -91,8 +91,8 @@ namespace Goedel.Mesh.Shell {
         public override ShellResult GroupList(GroupList Options) {
             var groupID = Options.GroupID.Value;
 
-            using var contextAccount = GetContextAccount(Options);
-            using var catalog = contextAccount.GetContextGroup(groupID);
+            var contextAccount = GetContextAccount(Options);
+            var catalog = contextAccount.GetContextGroup(groupID);
             var catalogedEntries = new List<CatalogedEntry>();
 
             var result = new ResultDump() {

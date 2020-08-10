@@ -104,6 +104,8 @@
 		Inherits					Result
 		Integer						Fetched
 		Integer						ProcessedResults
+		TStruct ProcessResult		ProcessResults
+			Multiple
 
 	Structure ResultEscrow
 		Inherits		Result
@@ -161,7 +163,7 @@
 
 	Structure ResultAuthorize
 		Inherits		Result
-		Struct Message Messages
+		TStruct ProcessResult Messages
 			Multiple
 
 	Structure ResultProcess

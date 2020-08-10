@@ -4763,7 +4763,7 @@
         <member name="P:Goedel.Mesh.Message.ErrorReport">
             <summary>The error report code</summary>
         </member>
-        <member name="M:Goedel.Mesh.Message.GetResponseID">
+        <member name="M:Goedel.Mesh.Message.GetResponseId">
             <summary>
             Return the identifier for a response to this message.
             </summary>
@@ -5428,9 +5428,9 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshService.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Post.
+            Base method for implementing the transaction  PostOld.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The authentication binding.</param>
@@ -5574,58 +5574,261 @@
             Mesh Protocol and Profile Definition.
             </summary>
         </member>
-        <member name="T:Goedel.Mesh.IProcessResult">
+        <member name="T:Goedel.Mesh.ProcessingResult">
             <summary>
-            Interface for returning the result of processing a message result
+            Results of a processing operation.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.IProcessResult.GetResponseID">
+        <member name="F:Goedel.Mesh.ProcessingResult.PinNotIssued">
+            <summary>Processing failed: The pin is invalid because it was never issued.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.PinInvalid">
+            <summary>Processing failed: The pin is invalid because validation checks failed.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.PinExpired">
+            <summary>Processing failed: The pin is invalid because it has expired</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.PinUsed">
+            <summary>Processing failed: The pin is invalid because it was already used.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.ExplicitApprovalRequired">
+            <summary>Processing was not performed  because the action requires explicit aproval.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.Threshold">
+            <summary>Processing was not performed because it required threshold approval.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.UnknownSender">
+            <summary>Processing was not performed because the sender is unknown.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.BlockedSender">
+            <summary>Processing was not performed because the sender is blocked.</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.ContactInvalid">
+            <summary>Processing failed because the contact data is missing or invalid</summary> 
+        </member>
+        <member name="F:Goedel.Mesh.ProcessingResult.Success">
+            <summary>Processing succeded</summary> 
+        </member>
+        <member name="T:Goedel.Mesh.ProcessResult">
+             <summary>
+            
+             For future use, allows logging of operations and results	
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.RequestMessage">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.InboundMessageId">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.InboundMessageStatus">
+            <summary>The new message status (<see cref="F:Goedel.Mesh.MessageStatus.None"/> if unchanged)</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.MessagePin">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.MessagePinId">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult.#ctor">
             <summary>
-            Returns the response identifier.
+            Deserialization constructor.
             </summary>
-            <returns>The response ID.</returns>
         </member>
-        <member name="P:Goedel.Mesh.IProcessResult.Success">
-            <summary>If true, the operation succeeded</summary>
+        <member name="M:Goedel.Mesh.ProcessResult.#ctor(Goedel.Mesh.Message,Goedel.Mesh.MessagePIN,System.Boolean)">
+            <summary>
+            Base constructor
+            </summary>
+            <param name="message">The request message that led to this result.</param>
+            <param name="messagePIN">The registration of the PIN code that supported this request.</param>
         </member>
-        <member name="P:Goedel.Mesh.IProcessResult.ErrorReport">
-            <summary>The error report code</summary>
+        <member name="P:Goedel.Mesh.ProcessResult.Success">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult.ErrorReport">
+             <summary>
+            The error report code.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ProcessResult._Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ProcessResult.__Tag">
+            <summary>
+            Tag identifying this class
+            </summary>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult._Factory">
+            <summary>
+            Factory method
+            </summary>
+            <returns>Object of this type</returns>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            </summary>
+            <param name="writer">Output stream</param>
+            <param name="wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+            <summary>
+            Serialize this object to the specified output stream.
+            Unlike the Serlialize() method, this method is not inherited from the
+            parent class allowing a specific version of the method to be called.
+            </summary>
+            <param name="_writer">Output stream</param>
+            <param name="_wrap">If true, output is wrapped with object
+            start and end sequences '{ ... }'.</param>
+            <param name="_first">If true, item is the first entry in a list.</param>
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+            <summary>
+            Deserialize a tagged stream
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
+            <returns>The created object.</returns>		
+        </member>
+        <member name="M:Goedel.Mesh.ProcessResult.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+            <summary>
+            Having read a tag, process the corresponding value data.
+            </summary>
+            <param name="jsonReader">The input stream</param>
+            <param name="tag">The tag</param>
+        </member>
+        <member name="T:Goedel.Mesh.InsufficientAuthorization">
+            <summary>The authorization specified is insufficient.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.InsufficientAuthorization.#ctor(Goedel.Mesh.Message)">
+            <summary>
+            Constructor, report that the request <paramref name="request"/> could not be performed 
+            because the specified pin code did not match the record <paramref name="messagePIN"/>
+            resulting in the error report <paramref name="pinValidation"/>.
+            </summary>
+            <param name="request"></param>
+            <param name="messagePIN"></param>
+            <param name="pinValidation"></param>
         </member>
         <member name="T:Goedel.Mesh.ProcessResultError">
-            <summary>
-            Base class for error results.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.ProcessResultError.GetResponseID">
-            <summary>
-            Returns the response identifier.
-            </summary>
-            <returns>The response ID.</returns>
-        </member>
-        <member name="P:Goedel.Mesh.ProcessResultError.Success">
-            <summary>Always false for an error result.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ProcessResultError.ErrorReport">
-            <summary>The error report code</summary>
-        </member>
-        <member name="T:Goedel.Mesh.PINNotAutomatic">
             <summary>Invalid PIN result.</summary>
         </member>
-        <member name="P:Goedel.Mesh.PINNotAutomatic.ErrorReport">
-            <summary>The error report code</summary>
+        <member name="M:Goedel.Mesh.ProcessResultError.#ctor(Goedel.Mesh.Message,Goedel.Mesh.ProcessingResult,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, report that the request <paramref name="request"/> could not be performed 
+            because the specified pin code did not match the record <paramref name="messagePIN"/>
+            resulting in the error report <paramref name="processingResult"/>.
+            </summary>
+            <param name="request"></param>
+            <param name="processingResult"></param>
+            <param name="messagePIN"></param>
         </member>
-        <member name="T:Goedel.Mesh.InvalidPIN">
-            <summary>Invalid PIN result.</summary>
+        <member name="T:Goedel.Mesh.ResultInvalid">
+            <summary>
+            Report refusal of a message. This is a success response because the request is 
+            successfully dealt with.
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.InvalidPIN.ErrorReport">
-            <summary>The error report code</summary>
+        <member name="M:Goedel.Mesh.ResultInvalid.#ctor(Goedel.Mesh.Message,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
         </member>
-        <member name="T:Goedel.Mesh.ExpiredPIN">
-            <summary>Expired PIN result. Note that this is different from an Invalid PIN as 
-            the user might decide to accept the PIN manually.</summary>
+        <member name="T:Goedel.Mesh.ResultRefused">
+            <summary>
+            Report refusal of a message. This is a success response because the request is 
+            successfully dealt with.
+            </summary>
         </member>
-        <member name="P:Goedel.Mesh.ExpiredPIN.ErrorReport">
-            <summary>The error report code</summary>
+        <member name="M:Goedel.Mesh.ResultRefused.#ctor(Goedel.Mesh.Message,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
+        </member>
+        <member name="T:Goedel.Mesh.ResultGroupInvitation">
+            <summary>
+            Report successful handling of a <see cref="F:Goedel.Mesh.ResultGroupInvitation.GroupInvitation"/> message.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ResultGroupInvitation.GroupInvitation">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ResultGroupInvitation.RequestMessage">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ResultGroupInvitation.#ctor(Goedel.Mesh.GroupInvitation,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
+        </member>
+        <member name="T:Goedel.Mesh.ResultAcknowledgeConnection">
+            <summary>
+            Report successful handling of a <see cref="F:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection"/> message.
+            </summary>
+        </member>
+        <member name="F:Goedel.Mesh.ResultAcknowledgeConnection.AcknowledgeConnection">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ResultAcknowledgeConnection.RequestMessage">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ResultAcknowledgeConnection.#ctor(Goedel.Mesh.AcknowledgeConnection,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
+        </member>
+        <member name="T:Goedel.Mesh.ResultReplyContact">
+            <summary>
+            Report successful handling of a <see cref="P:Goedel.Mesh.ResultReplyContact.ReplyContact"/> message.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ResultReplyContact.ReplyContact">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ResultReplyContact.#ctor(Goedel.Mesh.ReplyContact,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
+        </member>
+        <member name="T:Goedel.Mesh.ResultRequestContact">
+            <summary>
+            Report successful handling of a <see cref="P:Goedel.Mesh.ResultRequestContact.ReplyContact"/> message.
+            </summary>
+        </member>
+        <member name="P:Goedel.Mesh.ResultRequestContact.RequestContact">
+            <summary>The message that caused this result</summary>
+        </member>
+        <member name="P:Goedel.Mesh.ResultRequestContact.ReplyContact">
+            <summary>The response to the request.</summary>     
+        </member>
+        <member name="M:Goedel.Mesh.ResultRequestContact.#ctor(Goedel.Mesh.RequestContact,Goedel.Mesh.ReplyContact,Goedel.Mesh.MessagePIN)">
+            <summary>
+            Constructor, return an instance reporting the successful processing of 
+            <paramref name="request"/>.
+            </summary>
+            <param name="request">The request message.</param>
+            <param name="replyContact">The message sent in reply.</param>
+            <param name="messagePIN">PIN code registration, to be marked as used</param>
         </member>
         <member name="T:Goedel.Mesh.Assertion">
              <summary>
@@ -6674,7 +6877,7 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Implement the transaction
             </summary>		
@@ -8214,10 +8417,27 @@
             The data to be updated
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Self">
+        <member name="P:Goedel.Mesh.UploadRequest.Accounts">
              <summary>
-            Entries to be added to the inbound spool on the account, e.g. completion
-            messages.
+            The account(s) to which the request is directed.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest.Outbound">
+             <summary>
+            The messages to be sent to other accounts  
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest.Inbound">
+             <summary>
+            Messages to be appended to the user's inbound spool. this is
+            typically used to post notifications to the user to mark messages as having been
+            read or responded to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.UploadRequest.Local">
+             <summary>
+            Messages to be appended to the user's local spool. This is used to allow connecting
+            devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.UploadRequest._Tag">
@@ -8556,18 +8776,22 @@
             The account(s) to which the request is directed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.PostRequest.Message">
+        <member name="P:Goedel.Mesh.PostRequest.Outbound">
              <summary>
-            The entries to be uploaded. These MAY be either complete messages or redacted messages.
-            In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-            service 
+            The messages to be sent to the addresses specified in Accounts. 
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.PostRequest.Self">
+        <member name="P:Goedel.Mesh.PostRequest.Inbound">
              <summary>
-            Messages to be appended to the user's self spool. this is
+            Messages to be appended to the user's inbound spool. this is
             typically used to post notifications to the user to mark messages as having been
             read or responded to.
+             </summary>
+        </member>
+        <member name="P:Goedel.Mesh.PostRequest.Local">
+             <summary>
+            Messages to be appended to the user's local spool. This is used to allow connecting
+            devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.PostRequest._Tag">
@@ -12469,6 +12693,12 @@
             Return the last message in the spool.
             </summary>
             <returns>The spool entry if found, otherwise, null.</returns>
+        </member>
+        <member name="M:Goedel.Mesh.Spool.SetStatus(System.Collections.Generic.List{Goedel.Mesh.Reference})">
+            <summary>
+            Apply the list of message status updates specified in <paramref name="references"/>.
+            </summary>
+            <param name="references">List of message status values to be updated.</param>
         </member>
         <member name="T:Goedel.Mesh.SpoolEnumeratorRaw">
             <summary>

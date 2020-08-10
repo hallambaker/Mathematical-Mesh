@@ -152,7 +152,7 @@ namespace Goedel.Mesh {
 
         }
 
-    public partial class Message : IProcessResult {
+    public partial class Message{
 
 
         ///<summary>Always false for an error result.</summary>
@@ -166,7 +166,7 @@ namespace Goedel.Mesh {
         /// Return the identifier for a response to this message.
         /// </summary>
         /// <returns>The response identifier.</returns>
-        public string GetResponseID() => MakeResponseID(MessageID);
+        public string GetResponseId() => MakeResponseID(MessageID);
 
         /// <summary>
         /// Generate the response identifier as a deterministic function of the request

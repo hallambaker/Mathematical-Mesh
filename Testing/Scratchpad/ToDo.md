@@ -1,8 +1,45 @@
 ﻿# ToDo
 
+## Merge Post with Update
 
-## Need to get grants of capabilities to devices sorted.
 
+[Have renames Post to PostOld to identify issues.]
+
+
+1) Check all the envelopes meet the catalog/spool security policy and size constraint. 
+
+2) lock all the required catalogs (probably lock the account)
+
+3) Check that all the updates are consistent with the state of the catalog
+
+4) Perform all the updates
+
+5) Append all the messages to the relevant spools
+
+6) Release all the locks.
+
+
+## Need structure to specify security policy for stores
+
+Encrypted under this key
+Signed under that key
+
+Routine to check that a store is consistent with the security policy
+
+
+
+## Define Rights Structure
+
+A Rights structure specifies a set of keys that a device is to be granted.
+
+<dt>Genesis Rights
+
+<dd>Device has the genesis seed for the account and can grant any other privs.
+
+
+<dt>SuperAdmin Rights
+
+<dd>Device has 
 
 
 

@@ -91,19 +91,7 @@ namespace Goedel.Mesh.Server {
         public AccountHandleUnverified(AccountEntry accountEntry) : base(accountEntry) {
             }
 
-        /// <summary>
-        /// Post a message to the spool associated with the account. This is the only operation
-        /// that is supported for a device that is not connected to the account profile.
-        /// </summary>
-        /// <param name="dareMessage">The message to post.</param>
-        public void Post(DareEnvelope dareMessage) {
 
-            // here we should perform an authorization operation against the store.
-
-            using var container = new Spool(AccountEntry.Directory, SpoolInbound.Label);
-            container.Add(dareMessage);
-
-            }
 
 
         /// <summary>
@@ -123,18 +111,31 @@ namespace Goedel.Mesh.Server {
         public CatalogCapability GetCatalogCapability() =>
             new CatalogCapability(AccountEntry.Directory);
 
-
         /// <summary>
         /// Post a message to the spool associated with the account. This is the only operation
         /// that is supported for a device that is not connected to the account profile.
         /// </summary>
         /// <param name="dareMessage">The message to post.</param>
-        public void PostLocal(DareEnvelope dareMessage) {
+        public void PostInbound(DareEnvelope dareMessage) {
+
+            // here we should perform an authorization operation against the store.
+
+            using var container = new Spool(AccountEntry.Directory, SpoolInbound.Label);
+            container.Add(dareMessage);
+
+            }
+
+        /// <summary>
+        /// Post a message to the spool associated with the account. This is the only operation
+        /// that is supported for a device that is not connected to the account profile.
+        /// </summary>
+        /// <param name="envelope">The message to post.</param>
+        public void PostLocal(DareEnvelope envelope) {
 
             // here we should perform an authorization operation against the store.
 
             using var container = new Spool(AccountEntry.Directory, SpoolLocal.Label);
-            container.Add(dareMessage);
+            container.Add(envelope);
 
             }
 

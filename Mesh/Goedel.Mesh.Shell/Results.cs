@@ -2196,6 +2196,10 @@ namespace Goedel.Mesh.Shell {
 			get => _ProcessedResults;
 			set {_ProcessedResults = value; __ProcessedResults = true; }
 			}
+        /// <summary>
+        /// </summary>
+
+		public virtual List<ProcessResult>				ProcessResults  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -2250,6 +2254,22 @@ namespace Goedel.Mesh.Shell {
 				_writer.WriteToken ("ProcessedResults", 1);
 					_writer.WriteInteger32 (ProcessedResults);
 				}
+			if (ProcessResults != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("ProcessResults", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in ProcessResults) {
+					_writer.WriteArraySeparator (ref _firstarray);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    _writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -2289,6 +2309,17 @@ namespace Goedel.Mesh.Shell {
 					}
 				case "ProcessedResults" : {
 					ProcessedResults = jsonReader.ReadInteger32 ();
+					break;
+					}
+				case "ProcessResults" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					ProcessResults = new List <ProcessResult> ();
+					while (_Going) {
+						var _Item = ProcessResult.FromJson (jsonReader, true); // a tagged structure
+						ProcessResults.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
 					break;
 					}
 				default : {
@@ -3551,7 +3582,7 @@ namespace Goedel.Mesh.Shell {
         /// <summary>
         /// </summary>
 
-		public virtual List<Message>				Messages  {get; set;}
+		public virtual List<ProcessResult>				Messages  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -3603,12 +3634,11 @@ namespace Goedel.Mesh.Shell {
 				bool _firstarray = true;
 				foreach (var _index in Messages) {
 					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
+                    _writer.WriteObjectStart();
+                    _writer.WriteToken(_index._Tag, 1);
 					bool firstinner = true;
 					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
+                    _writer.WriteObjectEnd();
 					}
 				_writer.WriteArrayEnd ();
 				}
@@ -3649,12 +3679,9 @@ namespace Goedel.Mesh.Shell {
 				case "Messages" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Messages = new List <Message> ();
+					Messages = new List <ProcessResult> ();
 					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Message ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new Message (jsonReader);
+						var _Item = ProcessResult.FromJson (jsonReader, true); // a tagged structure
 						Messages.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}

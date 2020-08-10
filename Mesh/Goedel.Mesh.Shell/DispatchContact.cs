@@ -114,7 +114,7 @@ namespace Goedel.Mesh.Shell {
 
             var entry = catalog.Get(contactId);
 
-            var fileStream = file.OpenFileNew();
+            using var fileStream = file.OpenFileNew();
             catalog.WriteToStream(fileStream, entry);
 
             return new ResultEntry() {

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using Goedel.Protocol;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace Goedel.Mesh.Client {
 
@@ -1003,7 +1004,7 @@ namespace Goedel.Mesh.Client {
 
             var result = encryptedEnvelope.DecodeJsonObject(key) as DareEnvelope;
 
-            responseId = messageClaim.GetResponseID();
+            responseId = messageClaim.GetResponseId();
 
             return result;
             }
@@ -1014,8 +1015,8 @@ namespace Goedel.Mesh.Client {
         /// Process automatic actions.
         /// </summary>
         /// <returns>The results of the automatic processing attempted.</returns>
-        public List<IProcessResult> ProcessAutomatics() {
-            var results = new List<IProcessResult>();
+        public List<ProcessResult> ProcessAutomatics() {
+            var results = new List<ProcessResult>();
 
             Screen.WriteLine($"ProcessAutomatics");
 
@@ -1026,31 +1027,63 @@ namespace Goedel.Mesh.Client {
 
 
             var spoolInbound = GetSpoolInbound();
-            foreach (var envelope in spoolInbound.GetMessages(MessageStatus.Open)) {
-                var meshMessage = envelope.Message;
+            foreach (var spoolEntry in spoolInbound.GetMessages(MessageStatus.Open)) {
+                var meshMessage = spoolEntry.Message;
+
+                // Must enforce this from now on. 
+                spoolEntry.Open.AssertTrue(Internal.Throw);
 
                 Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {meshMessage.Status}");
 
-
-                switch (meshMessage) {
-                    case AcknowledgeConnection acknowledgeConnection: {
-                        if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
-                            Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinUDF}");
-
-                            results.Add(ProcessAutomatic(acknowledgeConnection));
+                if (!spoolEntry.Closed) {
+                    switch (meshMessage) {
+                        case AcknowledgeConnection acknowledgeConnection: {
+                            if (acknowledgeConnection.MessageConnectionRequest.PinUDF != null) {
+                                Screen.WriteLine($"    {acknowledgeConnection.MessageConnectionRequest.PinUDF}");
+                                results.Add(ProcessAutomatic(acknowledgeConnection));
+                                }
+                            break;
                             }
-
-                        break;
-                        }
-                    case ReplyContact replyContact: {
-                        results.Add(ProcessAutomatic(replyContact, false));
-                        break;
-                        }
-                    case GroupInvitation groupInvitation: {
-                        results.Add(ProcessAutomatic(groupInvitation));
-                        break;
+                        case ReplyContact replyContact: {
+                            results.Add(ProcessAutomatic(replyContact, false));
+                            break;
+                            }
+                        case GroupInvitation groupInvitation: {
+                            results.Add(ProcessAutomatic(groupInvitation));
+                            break;
+                            }
                         }
                     }
+
+                if (results.Count > 0) {
+                    var referencesInbound = new List<Reference>();
+                    var referencesLocal= new List<Reference>();
+                    foreach (var result in results) {
+                        if (result.InboundMessageStatus != MessageStatus.None) {
+                            referencesInbound.Add(new Reference() {
+                                MessageID = result.InboundMessageId,
+                                MessageStatus = result.InboundMessageStatus
+                                });
+                            }
+                        if (result.MessagePinId != null) {
+                            referencesLocal.Add(new Reference() {
+                                MessageID = result.MessagePinId,
+                                MessageStatus = MessageStatus.Closed
+                                });
+
+                            }
+                        }
+
+                    //// Write the used messages to the spools.
+                    //if (referencesInbound.Count > 0) {
+                    //    spoolInbound.SetStatus(referencesInbound);
+                    //    }
+                    //if (referencesLocal.Count > 0) {
+                    //    var spoolLocal = GetSpoolLocal();
+                    //    spoolLocal.SetStatus(referencesLocal);
+                    //    }
+                    }
+
                 }
 
             return results;
@@ -1059,107 +1092,107 @@ namespace Goedel.Mesh.Client {
 
 
         /// <summary>
-        /// Perform automatic processing of the message <paramref name="groupInvitation"/>.
+        /// Perform automatic processing of the message <paramref name="request"/>.
         /// </summary>
-        /// <param name="groupInvitation">Reply to contact request to be processed.</param>
+        /// <param name="request">Reply to contact request to be processed.</param>
         /// <param name="accept">Accept the requested action.</param>
         /// <param name="authorize">If true, the action is explicitly authorized.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(GroupInvitation groupInvitation, bool accept = true,
+        public ProcessResult ProcessAutomatic(
+                        GroupInvitation request, 
+                        bool accept = true,
                         bool authorize = false) {
-            accept.Future();
             authorize.Future();
 
-            if (groupInvitation.Contact == null) {
-                return null; // invitation did not contain a credential
+            if (!accept) {
+                return new ResultRefused(request);
                 }
 
-            GetCatalogContact().Add(groupInvitation.Contact);
-            if (groupInvitation.Contact?.NetworkAddresses == null) {
-                return null; // invitation did not contain a credential
+            if (request.Contact == null) {
+                return new ProcessResultError(request, ProcessingResult.ContactInvalid);
                 }
 
-            var catalogCapability = GetCatalogCapability();
-            foreach (var address in groupInvitation.Contact.NetworkAddresses) {
-                if (address.Capabilities != null) {
-                    foreach (var capability in address.Capabilities) {
-                        catalogCapability.Add(capability);
+            GetCatalogContact().Add(request.Contact);
+            if (request.Contact?.NetworkAddresses != null) {
+                var catalogCapability = GetCatalogCapability();
+                foreach (var address in request.Contact.NetworkAddresses) {
+                    if (address.Capabilities != null) {
+                        foreach (var capability in address.Capabilities) {
+                            catalogCapability.Add(capability);
+                            }
                         }
                     }
                 }
 
-
-
-            return null;
+            return new ResultGroupInvitation (request);
             }
 
         /// <summary>
-        /// Perform automatic processing of the message <paramref name="replyContact"/>.
+        /// Perform automatic processing of the message <paramref name="request"/>.
         /// </summary>
-        /// <param name="replyContact">Reply to contact request to be processed.</param>
+        /// <param name="request">Reply to contact request to be processed.</param>
         /// <param name="accept">Accept the requested action.</param>
         /// <param name="authorize">If true, the action is explicitly authorized.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(ReplyContact replyContact, bool accept = true,
-                        bool authorize = false) {
+        public ProcessResult ProcessAutomatic(
+                    ReplyContact request, 
+                    bool accept = true,
+                    bool authorize = false) {
+            
             authorize.Future();
 
             // check response pin here 
-            var messagePin = GetMessagePIN(replyContact.PinUDF);
+            var messagePin = GetMessagePIN(request.PinUDF);
 
-            var result = MessagePIN.ValidatePin(messagePin,
+            var pinStatus = MessagePIN.ValidatePin(messagePin,
                     AccountAddress,
-                    replyContact.AuthenticatedData,
-                    replyContact.ClientNonce,
-                    replyContact.PinWitness);
+                    request.AuthenticatedData,
+                    request.ClientNonce,
+                    request.PinWitness);
 
+            if (pinStatus != ProcessingResult.Success) {
+                return new ProcessResultError(request, pinStatus, messagePin);
+                }
             if (!(messagePin.Automatic | accept)) {
-                return new PINNotAutomatic();
+                return new InsufficientAuthorization(request);
                 }
 
-            if (!(result is MessagePIN)) {
-                return result;
-                }
+            GetCatalogContact().Add(request.AuthenticatedData);
 
-            GetCatalogContact().Add(replyContact.AuthenticatedData);
-
-            return null;
+            return new ResultReplyContact(request, messagePin);
             }
+
         /// <summary>
-        /// Perform automatic processing of the message <paramref name="acknowledgeConnection"/>.
+        /// Perform automatic processing of the message <paramref name="request"/>.
         /// </summary>
-        /// <param name="acknowledgeConnection">Connection request to be processed.</param>
+        /// <param name="request">Connection request to be processed.</param>
         /// <returns>The result of requesting the connection.</returns>
-        public IProcessResult ProcessAutomatic(AcknowledgeConnection acknowledgeConnection) {
-            var messageConnectionRequest = acknowledgeConnection.MessageConnectionRequest;
+        public ProcessResult ProcessAutomatic(AcknowledgeConnection request) {
+            var messageConnectionRequest = request.MessageConnectionRequest;
 
             // get the pin value here
             var messagePin = GetMessagePIN(messageConnectionRequest.PinUDF);
 
-            var result = MessagePIN.ValidatePin(messagePin,
+            var pinStatus = MessagePIN.ValidatePin(messagePin,
                     AccountAddress,
                     messageConnectionRequest.AuthenticatedData,
                     messageConnectionRequest.ClientNonce,
                     messageConnectionRequest.PinWitness);
 
-            if (!(result is MessagePIN)) {
-                return result;
+            if (pinStatus != ProcessingResult.Success) {
+                return new ProcessResultError(request, pinStatus, messagePin);
                 }
 
-            return Process(acknowledgeConnection, true);
+            return Process(request, true, messagePin);
             }
-
-
-
-
 
         /// <summary>
         /// Accept or reject a connection request.
         /// </summary>
         /// <param name="request">The request to accept or reject.</param>
         /// <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
-        IProcessResult Process(AcknowledgeConnection request, bool accept = true) {
-            var messageID = request.GetResponseID();
+        ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePIN messagePIN = null) {
+            var messageID = request.GetResponseId();
             var respondConnection = new RespondConnection() {
                 MessageID = messageID
                 };
@@ -1176,9 +1209,13 @@ namespace Goedel.Mesh.Client {
 
             //Console.WriteLine($"Accept connection ID is {messageID}");
 
+            if (messagePIN != null) {
+                "Here is the point that we need to generate the completion on the PIN".TaskFunctionality(true);
+                }
+
             SendMessage(respondConnection);
 
-            return respondConnection;
+            return new ResultAcknowledgeConnection(request, messagePIN);
             }
 
 
@@ -1193,7 +1230,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
         /// <returns></returns>
-        public IProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
+        public ProcessResult Process(string messageId, bool accept = true, bool reciprocate = true) {
 
 
             // Hack: should be able to accept, reject specific requests, not just
@@ -1213,8 +1250,8 @@ namespace Goedel.Mesh.Client {
         /// <param name="reciprocate">If true, reciprocate the response: e.g. return user's own
         /// contact information in response to an initial contact request.</param>
         /// <returns></returns>
-        public IProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true) {
-
+        public ProcessResult Process(Message meshMessage, bool accept = true, bool reciprocate = true) {
+            "Merge this processing loop with the other processing loop".TaskFunctionality();
             reciprocate.Future();
 
             switch (meshMessage) {
@@ -1259,7 +1296,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="requestContact">The contact request.</param>
         /// <param name="localname">Local name to be used to identify the contact recorded in
         /// the catalog.</param>
-        public IProcessResult ContactReply(RequestContact requestContact, string localname = null) {
+        public ProcessResult ContactReply(RequestContact requestContact, string localname = null) {
 
             // Add the requestContact.Self contact to the catalog
 
@@ -1268,11 +1305,13 @@ namespace Goedel.Mesh.Client {
                 catalog.Add(requestContact.Self);
                 }
 
-            return SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
+            var reply = SendReplyContact(requestContact.Sender, requestContact.PIN, localname);
 
+
+            return new ResultRequestContact(requestContact, reply);
             }
 
-        Message SendReplyContact(string recipient, string pin, string localname) {
+        ReplyContact SendReplyContact(string recipient, string pin, string localname) {
             // prepare the reply
             var contactSelf = GetSelf(localname);
 
@@ -1457,13 +1496,13 @@ namespace Goedel.Mesh.Client {
         /// </summary>
         /// <param name="requestConfirmation">The request received.</param>
         /// <param name="response">If true, accept the confirmation request, otherwise reject.</param>
-        public IProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
+        public ProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
             // prepare the contact request
 
             var recipient = requestConfirmation.Sender;
 
             var message = new ResponseConfirmation() {
-                MessageID = requestConfirmation.GetResponseID(),
+                MessageID = requestConfirmation.GetResponseId(),
                 Recipient = recipient,
                 Accept = response,
                 Request = requestConfirmation.DareEnvelope

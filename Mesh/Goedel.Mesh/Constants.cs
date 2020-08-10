@@ -142,7 +142,8 @@ namespace Goedel.Mesh {
         All = 0b11_1111,
 
         ///<summary>No messages.</summary>
-        None = 0b00_0000
+        None = 0b00_0000,
+
         }
 
     /// <summary>

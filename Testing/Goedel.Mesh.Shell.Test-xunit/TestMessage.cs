@@ -313,7 +313,7 @@ namespace Goedel.XUnit {
             var messageId = resultRequest.Message.MessageID;
 
             var resultHandle = ProcessMessage(deviceA, false, messageId);
-            var responseId = resultRequest.Message.GetResponseID();
+            var responseId = resultRequest.Message.GetResponseId();
             var resultResponse = GetResponse(deviceB, messageId) as ResponseConfirmation;
 
             resultResponse.Accept.TestFalse();

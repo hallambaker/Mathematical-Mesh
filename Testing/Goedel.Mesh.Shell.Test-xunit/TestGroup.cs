@@ -33,6 +33,8 @@ namespace Goedel.XUnit {
 
             deviceA.Dispatch($"group delete {accountGroup} {AccountB}");
             deviceA.Dispatch($"dare decode {result1.Filename}");
+
+            // Probably failing because Bob is not actually being deleted from the group
             deviceB.Dispatch($"dare decode {result1.Filename}", fail: true);
             }
 

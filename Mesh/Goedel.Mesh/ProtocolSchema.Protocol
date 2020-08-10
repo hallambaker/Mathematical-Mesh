@@ -328,8 +328,7 @@
 
 	Transaction User Upload UploadRequest UploadResponse
 		Description
-			|Request objects from the specified container with the specified search
-			|criteria.
+			|Attempt an atomic transaction on the containers and spools associated with an account.
 
 	Message UploadRequest
 		Inherits MeshRequestUser
@@ -340,11 +339,28 @@
 			Multiple
 			Description
 				|The data to be updated
-		Struct DareEnvelope Self
+		String Accounts
 			Multiple
 			Description
-				|Entries to be added to the inbound spool on the account, e.g. completion
-				|messages.
+				|The account(s) to which the request is directed.
+		Struct DareEnvelope Outbound
+			Multiple
+			Description
+				|The messages to be sent to other accounts  
+		Struct DareEnvelope Inbound
+			Multiple
+			Description
+				|Messages to be appended to the user's inbound spool. this is
+				|typically used to post notifications to the user to mark messages as having been
+				|read or responded to.
+		
+		Struct DareEnvelope Local
+			Multiple
+			Description
+				|Messages to be appended to the user's local spool. This is used to allow connecting
+				|devices to collect activation messages before they have connected to the mesh.
+
+
 
 	Message UploadResponse
 		Inherits MeshResponse
@@ -408,7 +424,7 @@
 
 	// Public requests
 
-	Transaction Public Post PostRequest PostResponse
+	Transaction Public PostOld PostRequest PostResponse
 		Description
 			|Request to post to a spool from an external party. The request and response
 			|messages are extensions of the corresponding messages for the Upload transaction.
@@ -423,18 +439,21 @@
 			Multiple
 			Description
 				|The account(s) to which the request is directed.
-		Struct DareEnvelope Message
+		Struct DareEnvelope Outbound
 			Multiple
 			Description
-				|The entries to be uploaded. These MAY be either complete messages or redacted messages.
-				|In either case, the messages MUST conform to the ConstraintsUpdate specified by the 
-				|service 
-		Struct DareEnvelope Self
+				|The messages to be sent to the addresses specified in Accounts. 
+		Struct DareEnvelope Inbound
 			Multiple
 			Description
-				|Messages to be appended to the user's self spool. this is
+				|Messages to be appended to the user's inbound spool. this is
 				|typically used to post notifications to the user to mark messages as having been
 				|read or responded to.
+		Struct DareEnvelope Local
+			Multiple
+			Description
+				|Messages to be appended to the user's local spool. This is used to allow connecting
+				|devices to collect activation messages before they have connected to the mesh.
 
 	Message PostResponse
 		Inherits UploadResponse

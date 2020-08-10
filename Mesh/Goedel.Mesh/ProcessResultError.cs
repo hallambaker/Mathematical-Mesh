@@ -7,61 +7,248 @@ using System;
 using System.Text;
 
 namespace Goedel.Mesh {
+
+
     /// <summary>
-    /// Interface for returning the result of processing a message result
+    /// Results of a processing operation.
     /// </summary>
-    public interface IProcessResult {
+    public enum ProcessingResult {
+        ///<summary>Processing failed: The pin is invalid because it was never issued.</summary> 
+        PinNotIssued,
+        ///<summary>Processing failed: The pin is invalid because validation checks failed.</summary> 
+        PinInvalid,
+        ///<summary>Processing failed: The pin is invalid because it has expired</summary> 
+        PinExpired,
+        ///<summary>Processing failed: The pin is invalid because it was already used.</summary> 
+        PinUsed,
 
-        /// <summary>
-        /// Returns the response identifier.
-        /// </summary>
-        /// <returns>The response ID.</returns>
-        string GetResponseID();
 
-        ///<summary>If true, the operation succeeded</summary>
-        bool Success { get; }
+        ///<summary>Processing was not performed  because the action requires explicit aproval.</summary> 
+        ExplicitApprovalRequired,
+        ///<summary>Processing was not performed because it required threshold approval.</summary> 
+        Threshold,
+        ///<summary>Processing was not performed because the sender is unknown.</summary> 
+        UnknownSender,
+        ///<summary>Processing was not performed because the sender is blocked.</summary> 
+        BlockedSender,
+        ///<summary>Processing failed because the contact data is missing or invalid</summary> 
+        ContactInvalid,
 
-        ///<summary>The error report code</summary>
-        string ErrorReport { get; }
+
+        ///<summary>Processing succeded</summary> 
+        Success
         }
 
 
-    /// <summary>
-    /// Base class for error results.
-    /// </summary>
-    public abstract class ProcessResultError : IProcessResult {
+
+
+    public partial class ProcessResult {
+
+        /// <summary>The message that caused this result</summary>
+        public virtual Message RequestMessage { get; }
+
+        /// <summary>The message that caused this result</summary>
+        public virtual string InboundMessageId => RequestMessage.MessageID;
+
+        /// <summary>The new message status (<see cref="MessageStatus.None"/> if unchanged)</summary>
+        public virtual MessageStatus InboundMessageStatus { get; set; } = MessageStatus.None;
+
+        /// <summary>The message that caused this result</summary>
+        public virtual MessagePIN MessagePin { get;}
+
+        /// <summary>The message that caused this result</summary>
+        public virtual string MessagePinId => MessagePin?.MessageID;
 
         /// <summary>
-        /// Returns the response identifier.
+        /// Deserialization constructor.
         /// </summary>
-        /// <returns>The response ID.</returns>
-        public string GetResponseID() => null;
+        public ProcessResult() {
+            }
 
-        ///<summary>Always false for an error result.</summary>
-        public bool Success => false;
+        /// <summary>
+        /// Base constructor
+        /// </summary>
+        /// <param name="message">The request message that led to this result.</param>
+        /// <param name="messagePIN">The registration of the PIN code that supported this request.</param>
+        public ProcessResult(Message message, MessagePIN messagePIN, bool success=true) {
+            RequestMessage = message;
+            MessagePin = messagePIN;
+            Success = success;
+            }
+        }
 
-        ///<summary>The error report code</summary>
-        public abstract string ErrorReport { get; }
+
+    ///<summary>The authorization specified is insufficient.</summary>
+    public class InsufficientAuthorization : ProcessResult {
+
+        /// <summary>
+        /// Constructor, report that the request <paramref name="request"/> could not be performed 
+        /// because the specified pin code did not match the record <paramref name="messagePIN"/>
+        /// resulting in the error report <paramref name="pinValidation"/>.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="messagePIN"></param>
+        /// <param name="pinValidation"></param>
+        public InsufficientAuthorization(Message request):
+                    base (request, null, false) {
+            }
+
+
         }
 
 
     ///<summary>Invalid PIN result.</summary>
-    public class PINNotAutomatic : ProcessResultError {
-        ///<summary>The error report code</summary>
-        public override string ErrorReport => "NotAutomatic";
+    public class ProcessResultError : ProcessResult {
+
+        /// <summary>
+        /// Constructor, report that the request <paramref name="request"/> could not be performed 
+        /// because the specified pin code did not match the record <paramref name="messagePIN"/>
+        /// resulting in the error report <paramref name="processingResult"/>.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="processingResult"></param>
+        /// <param name="messagePIN"></param>
+        public ProcessResultError(Message request, ProcessingResult processingResult, MessagePIN messagePIN = null) :
+                    base(request, messagePIN, false) => ErrorReport = processingResult.ToString();
+
+
         }
 
-    ///<summary>Invalid PIN result.</summary>
-    public class InvalidPIN : ProcessResultError {
-        ///<summary>The error report code</summary>
-        public override string ErrorReport => "InvalidPIN";
+
+    /// <summary>
+    /// Report refusal of a message. This is a success response because the request is 
+    /// successfully dealt with.
+    /// </summary>
+    public class ResultInvalid : ProcessResult {
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultInvalid(Message request, MessagePIN messagePIN = null) :
+                    base(request, messagePIN, false) => ErrorReport = "InvalidContact";
+
         }
 
-    ///<summary>Expired PIN result. Note that this is different from an Invalid PIN as 
-    ///the user might decide to accept the PIN manually.</summary>
-    public class ExpiredPIN : ProcessResultError {
-        ///<summary>The error report code</summary>
-        public override string ErrorReport => "ExpiredPIN";
+
+    /// <summary>
+    /// Report refusal of a message. This is a success response because the request is 
+    /// successfully dealt with.
+    /// </summary>
+    public class ResultRefused: ProcessResult {
+
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultRefused(Message request, MessagePIN messagePIN = null) :
+                    base(request, messagePIN) {  }
+
         }
+
+
+    /*
+     * The following results are currently stubs. They may be expanded at a later date to 
+     * describe the result of any successful operation.
+     * 
+     * In particular, when data from the contacts file is used to authenticate requests,
+     * need to attach that information as well.
+     */ 
+
+
+    /// <summary>
+    /// Report successful handling of a <see cref="GroupInvitation"/> message.
+    /// </summary>
+    public class ResultGroupInvitation : ProcessResult {
+
+        /// <summary>The message that caused this result</summary>
+        public GroupInvitation GroupInvitation;
+
+        /// <summary>The message that caused this result</summary>
+        public override Message RequestMessage => GroupInvitation;
+
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultGroupInvitation(GroupInvitation request, MessagePIN messagePIN = null) :
+                    base(request, messagePIN) { }
+
+        }
+
+    /// <summary>
+    /// Report successful handling of a <see cref="AcknowledgeConnection"/> message.
+    /// </summary>
+    public class ResultAcknowledgeConnection : ProcessResult {
+
+        /// <summary>The message that caused this result</summary>
+        public AcknowledgeConnection AcknowledgeConnection;
+
+        /// <summary>The message that caused this result</summary>
+        public override Message RequestMessage => AcknowledgeConnection;
+
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultAcknowledgeConnection(AcknowledgeConnection request, MessagePIN messagePIN = null) :
+                    base(request, messagePIN) { }
+
+
+        }
+
+    /// <summary>
+    /// Report successful handling of a <see cref="ReplyContact"/> message.
+    /// </summary>
+    public class ResultReplyContact : ProcessResult {
+
+        /// <summary>The message that caused this result</summary>
+        public ReplyContact ReplyContact => RequestMessage as ReplyContact;
+
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultReplyContact(ReplyContact request, MessagePIN messagePIN = null) :
+                    base(request, messagePIN) { }
+
+        }
+
+    /// <summary>
+    /// Report successful handling of a <see cref="ReplyContact"/> message.
+    /// </summary>
+    public class ResultRequestContact : ProcessResult {
+
+        /// <summary>The message that caused this result</summary>
+        public RequestContact RequestContact => RequestMessage as RequestContact;
+
+        /// <summary>The response to the request.</summary>     
+        public ReplyContact ReplyContact { get; }
+
+
+        /// <summary>
+        /// Constructor, return an instance reporting the successful processing of 
+        /// <paramref name="request"/>.
+        /// </summary>
+        /// <param name="request">The request message.</param>
+        /// <param name="replyContact">The message sent in reply.</param>
+        /// <param name="messagePIN">PIN code registration, to be marked as used</param>
+        public ResultRequestContact(
+                            RequestContact request,
+                            ReplyContact replyContact,
+                            MessagePIN messagePIN = null) :
+                    base(request, messagePIN) => ReplyContact = replyContact;
+
+        }
+
 
     }

@@ -39,9 +39,8 @@ namespace Scratchpad {
 
 
             // Also need to return full description of results from ResultSync
+            
             ShellTests.Test().TestProfileConnectPin();
-
-
             ShellTests.Test().TestProfileConnectPinReused();
 
 

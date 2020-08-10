@@ -1000,3 +1000,14 @@
 		String DeviceAuthenticate
 
 		DateTime Expires
+
+
+	Structure ProcessResult
+		Description
+			|For future use, allows logging of operations and results	
+		Inherits Message
+		Boolean Success
+		String ErrorReport
+			Description
+				|The error report code.
+

@@ -278,6 +278,9 @@ namespace Goedel.Mesh.Client {
 
             catalogMember.Delete(member);
 
+            // Update the swadding capabilities file!
+            throw new NYI();
+
             return;
             }
 
