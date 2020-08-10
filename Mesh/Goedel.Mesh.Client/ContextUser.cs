@@ -219,19 +219,6 @@ namespace Goedel.Mesh.Client {
         #region // Operations requiring OfflineSignatureKey - GrantAdmin, SetService
 
         /// <summary>
-        /// Persist the update to <paramref name="catalogedDevice"/> to the service and local
-        /// catalogs.
-        /// </summary>
-        /// <param name="catalogedDevice">The update to persist.</param>
-        public void Persist(CatalogedDevice catalogedDevice) {
-            var catalog = GetCatalogDevice();
-            var transaction = new TransactionServiced(MeshClient);
-            transaction.Update(catalog, catalogedDevice);
-            transaction.Commit();
-            }
-
-
-        /// <summary>
         /// Grant administrative privileges to the device <paramref name="targetDevice"/> using
         /// the online signing key <paramref name="keyPairOnlineSignature"/>. If 
         /// <paramref name="superAdmin"/> is true, also grant super-administration
@@ -311,6 +298,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="profileAccount">The mesh profile.</param>
         /// <param name="profileDevice">Profile of the device to be added.</param>
         /// <param name="activationDevice">The device key overlay.</param>
+        /// <param name="activationAccount">The account key overlay.</param>
         /// <returns>The CatalogedDevice entry.</returns>
         CatalogedDevice CreateCataloguedDevice(
                     ProfileUser profileAccount,
@@ -366,7 +354,7 @@ namespace Goedel.Mesh.Client {
         /// to sign administrator functions.</param>
         /// <param name="superAdmin">It true specifies that super administrator privileges are to be granted.</param>
         /// <returns>The catalog entry.</returns>
-        public CatalogedDevice AddDevice(
+        public CatalogedDevice MakeCatalogedDevice(
                         ProfileDevice profileDevice, 
                         KeyPair keyPairOnlineSignature = null,
                         bool superAdmin = false) {
@@ -553,7 +541,8 @@ namespace Goedel.Mesh.Client {
             {CatalogDevice.Label, CatalogDevice.Factory},
 
             // All contexts have a capability catalog:
-            {CatalogCapability.Label, CatalogCapability.Factory}
+            {CatalogCapability.Label, CatalogCapability.Factory},
+            {CatalogPublication.Label, CatalogPublication.Factory}
             };
 
         ///<summary>Returns the application catalog for the account</summary>
@@ -958,7 +947,7 @@ namespace Goedel.Mesh.Client {
             // Approve the request
             // Have to add in the Mesh profile here and Account Assertion
 
-            var cataloguedDevice = AddDevice(profileDevice);
+            var cataloguedDevice = MakeCatalogedDevice(profileDevice);
 
             //Console.WriteLine($"Accept connection ID is {responseId}");
             var respondConnection = new RespondConnection() {
@@ -967,7 +956,13 @@ namespace Goedel.Mesh.Client {
                 Result = Constants.TransactionResultAccept
                 };
 
-            SendMessage(respondConnection);
+            // Transactional update.
+            var transact = TransactBegin();
+            LocalMessage(transact, respondConnection);
+            CatalogUpdate(transact, GetCatalogDevice(), cataloguedDevice);
+            Transact(transact);
+
+            //SendMessage(respondConnection);
 
 
             // ContextMeshPending
@@ -1054,27 +1049,6 @@ namespace Goedel.Mesh.Client {
                             }
                         }
                     }
-
-                if (results.Count > 0) {
-                    var referencesInbound = new List<Reference>();
-                    var referencesLocal= new List<Reference>();
-                    foreach (var result in results) {
-                        if (result.InboundMessageStatus != MessageStatus.None) {
-                            referencesInbound.Add(new Reference() {
-                                MessageID = result.InboundMessageId,
-                                MessageStatus = result.InboundMessageStatus
-                                });
-                            }
-                        if (result.MessagePinId != null) {
-                            referencesLocal.Add(new Reference() {
-                                MessageID = result.MessagePinId,
-                                MessageStatus = MessageStatus.Closed
-                                });
-
-                            }
-                        }
-                    }
-
                 }
 
             return results;
@@ -1191,7 +1165,7 @@ namespace Goedel.Mesh.Client {
                 };
             if (accept) {
                 // Connect the device to the Mesh
-                var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
+                var device = MakeCatalogedDevice(request.MessageConnectionRequest.ProfileDevice);
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;
                 }
@@ -1388,17 +1362,28 @@ namespace Goedel.Mesh.Client {
                 NotOnOrAfter = expire
                 };
 
-            var publishRequest = new PublishRequest() {
-                Publications = new List<CatalogedPublication>() { catalogedPublication },
-                };
+            //var publishRequest = new PublishRequest() {
+            //    Publications = new List<CatalogedPublication>() { catalogedPublication },
+            //    };
 
-            var publishResponse = MeshClient.Publish(publishRequest);
-            publishResponse.AssertSuccess();
+            //var publishResponse = MeshClient.Publish(publishRequest);
+            //publishResponse.AssertSuccess();
 
             // Register the pin
             var messageConnectionPIN = new MessagePIN(pin, automatic, expire, AccountAddress, "Contact");
-            SendMessageAdmin(messageConnectionPIN);
+            //SendMessageAdmin(messageConnectionPIN);
             // Spec - maybe should enforce type check here.
+
+
+            var transactRequest = TransactBegin();
+            LocalMessage(transactRequest, messageConnectionPIN);
+
+            var catalogPublication = GetCatalogPublication();
+            CatalogUpdate(transactRequest, catalogPublication, catalogedPublication);
+
+
+            Transact(transactRequest);
+
 
 
             // return the contact address

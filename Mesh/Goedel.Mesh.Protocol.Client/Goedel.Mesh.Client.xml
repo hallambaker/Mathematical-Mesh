@@ -508,6 +508,9 @@
         <member name="P:Goedel.Mesh.Client.ContextAccount.AccountAddress">
             <summary>The Account Address</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogPublication">
+            <summary>Returns the network catalog for the account</summary>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetCatalogCapability">
             <summary>Returns the network catalog for the account</summary>
         </member>
@@ -519,6 +522,11 @@
         </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionarySpoolDelegates">
             <summary>List of spools, these are the same for each type of account.</summary>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Disposing">
+            <summary>
+            Disposal method called on exit.
+            </summary>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.#ctor(Goedel.Mesh.Client.MeshHost,Goedel.Mesh.Client.CatalogedMachine)">
             <summary>
@@ -613,12 +621,6 @@
             <param name="recipients">The recipients the message is to be sent to. If null, the
             message is for local pickup.</param>
             <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessageAdmin(Goedel.Mesh.Message)">
-            <summary>
-            Send a message signed using the mesh administration key.
-            </summary>
-            <param name="meshMessage"></param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
@@ -736,7 +738,7 @@
             <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Mesh.Message)">
+        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.NetworkProtocolEntry,Goedel.Mesh.Message)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
             outbound message of <paramref name="transactRequest"/>.
@@ -870,19 +872,6 @@
             <param name="memberAddress">The member to add.</param>
             <param name="text">Constrained text to be included in the invitation.</param>
             <returns>The member catalog entry.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.AddCapability(Goedel.Mesh.CryptographicCapability,Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Add a device to the device catalog.
-            </summary>
-            <param name="capability">The capability to add.</param>
-            <param name="encryptionKey">Optional encryption key used to encrypt the capability.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextGroup.AddMember(Goedel.Mesh.CatalogedMember)">
-            <summary>
-            Add a device to the device catalog.
-            </summary>
-            <param name="CatalogedMember">The device to add.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextGroup.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
@@ -1107,13 +1096,6 @@
             <exception cref="T:Goedel.Mesh.NoMeshSecret">Is thrown if the private key cannot be found.</exception>
             <returns>The encrypted escrow entry and the key shares.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.Persist(Goedel.Mesh.CatalogedDevice)">
-            <summary>
-            Persist the update to <paramref name="catalogedDevice"/> to the service and local
-            catalogs.
-            </summary>
-            <param name="catalogedDevice">The update to persist.</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.GrantAdministrator(Goedel.Mesh.CatalogedDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
             <summary>
             Grant administrative privileges to the device <paramref name="targetDevice"/> using
@@ -1140,9 +1122,10 @@
             <param name="profileAccount">The mesh profile.</param>
             <param name="profileDevice">Profile of the device to be added.</param>
             <param name="activationDevice">The device key overlay.</param>
+            <param name="activationAccount">The account key overlay.</param>
             <returns>The CatalogedDevice entry.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextUser.AddDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
+        <member name="M:Goedel.Mesh.Client.ContextUser.MakeCatalogedDevice(Goedel.Mesh.ProfileDevice,Goedel.Cryptography.KeyPair,System.Boolean)">
             <summary>
             Add the device specified by <paramref name="profileDevice"/> to the account granting administration
             privileges if <paramref name="keyPairOnlineSignature"/> is not null and super administration 
@@ -2393,44 +2376,6 @@
             Commit a Delete transaction to memory
             </summary>
             <param name="containerStoreEntry">The container store entry representing the transaction</param>
-        </member>
-        <member name="T:Goedel.Mesh.Client.TransactionServiced">
-            <summary>
-            Class backing a transaction manager that persists transactions to a Mesh
-            Service account and the local store.
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.#ctor(Goedel.Mesh.MeshService)">
-            <summary>
-            Constructor for a transaction manager
-            </summary>
-            <param name="meshClient">The Mesh client to use to service the account.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.New(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Queue request to create <paramref name="catalogEntry"/> as a new persisted object.
-            </summary>
-            <param name="catalogEntry">The object to create.</param>
-            <param name="catalog">The catalog in which to create the object.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.Update(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Queue request to create or update <paramref name="catalogEntry"/>.
-            </summary>
-            <param name="catalogEntry">The object to update or create.</param>
-            <param name="catalog">The catalog in which to create the object.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.Delete(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Queue request to delete <paramref name="catalogEntry"/>.
-            </summary>
-            <param name="catalogEntry">The object to delete.</param>
-            <param name="catalog">The catalog in which to create the object.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.TransactionServiced.Commit">
-            <summary>
-            Commit a set of queued requests.
-            </summary>
         </member>
     </members>
 </doc>

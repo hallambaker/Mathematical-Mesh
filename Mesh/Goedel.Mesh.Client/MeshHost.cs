@@ -227,12 +227,10 @@ namespace Goedel.Mesh.Client {
 
             // Create a device and catalog entry.
             var persistDevice = profileDevice == null;
-
             profileDevice ??= new ProfileDevice(algorithmSign: algorithmSign,
                 algorithmEncrypt: algorithmEncrypt, 
                 algorithmAuthenticate: algorithmAuthenticate);
-            
-            var catalogedDevice = contextUser.AddDevice(profileDevice, keyPairOnlineSignature, true);
+            var catalogedDevice = contextUser.MakeCatalogedDevice(profileDevice, keyPairOnlineSignature, true);
 
             // now create the host catalog entry and apply to the context user.
             var catalogedMachine = new CatalogedStandard() {
@@ -246,12 +244,20 @@ namespace Goedel.Mesh.Client {
             if (persistDevice) {
                 profileDevice.PersistSeed(KeyCollection);
                 }
-            contextUser.Persist(catalogedDevice);
+            //contextUser.Persist(catalogedDevice);
             contextUser.PersistSeed();
             contextUser.Dispose();
 
             // Now abandon the original context and create a new one
             var contextUserFinal = new ContextUser(this, catalogedMachine);
+
+            // Add the catalog device under the new user context.
+            var transactRequest = new TransactRequest() {
+                };
+            var catalogDevice = contextUserFinal.GetCatalogDevice();
+            contextUserFinal.CatalogUpdate(transactRequest, catalogDevice, catalogedDevice);
+
+            // Register the mesh description on the local machine.
             Register(catalogedMachine, contextUserFinal);
 
             return contextUserFinal;

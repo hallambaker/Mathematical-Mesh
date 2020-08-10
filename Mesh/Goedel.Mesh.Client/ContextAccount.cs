@@ -94,6 +94,11 @@ namespace Goedel.Mesh.Client {
 
 
         ///<summary>Returns the network catalog for the account</summary>
+        public CatalogPublication GetCatalogPublication() => GetStore(CatalogPublication.Label) as CatalogPublication;
+
+
+
+        ///<summary>Returns the network catalog for the account</summary>
         public CatalogCapability GetCatalogCapability() => GetStore(CatalogCapability.Label) as CatalogCapability;
 
         ///<summary>Returns the local spool  for the account</summary>
@@ -104,7 +109,8 @@ namespace Goedel.Mesh.Client {
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;
         Dictionary<string, StoreFactoryDelegate> catalogDelegates = new Dictionary<string, StoreFactoryDelegate>() {
              // All contexts have a capability catalog:
-            {CatalogCapability.Label, CatalogCapability.Factory}
+            {CatalogCapability.Label, CatalogCapability.Factory},
+            {CatalogPublication.Label, CatalogPublication.Factory}
             };
         ///<summary>List of spools, these are the same for each type of account.</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionarySpoolDelegates => spoolDelegates;
@@ -118,10 +124,12 @@ namespace Goedel.Mesh.Client {
 
         #endregion
 
+        /// <summary>
+        /// Disposal method called on exit.
+        /// </summary>
         protected override void Disposing() {
             foreach (var status in DictionaryStores) {
                 var store = status.Value.Store;
-
                 store.Dispose();
                 }
 
@@ -146,11 +154,6 @@ namespace Goedel.Mesh.Client {
         #endregion
 
         #region // PIN code generation and use
-
-
-
-
-
         /// <summary>
         /// Create a PIN value of length <paramref name="length"/> bits valid for 
         /// <paramref name="validity"/> minutes.
@@ -183,7 +186,12 @@ namespace Goedel.Mesh.Client {
         protected MessagePIN RegisterPIN(string pin, bool automatic, DateTime? expires, string accountAddress, string action) {
             var messageConnectionPIN = new MessagePIN(pin, automatic, expires, accountAddress, action);
 
-            SendMessageAdmin(messageConnectionPIN);
+
+            var transactRequest = TransactBegin();
+            LocalMessage(transactRequest, messageConnectionPIN);
+            Transact(transactRequest);
+
+            //SendMessageAdmin(messageConnectionPIN);
             return messageConnectionPIN;
             }
 
@@ -207,15 +215,11 @@ namespace Goedel.Mesh.Client {
         /// Delete the associated account from the local machine.
         /// </summary>
         public void DeleteAccount() {
-
             // post device leave notice to service
-
-
 
             // close all open stores and clear the dictionary
             foreach (var status in DictionaryStores) {
                 var store = status.Value.Store;
-
                 store.Dispose();
                 }
             DictionaryStores.Clear();
@@ -438,22 +442,22 @@ namespace Goedel.Mesh.Client {
             MeshClient.Transact(uploadRequest);
             }
 
-        /// <summary>
-        /// Send a message signed using the mesh administration key.
-        /// </summary>
-        /// <param name="meshMessage"></param>
-        public void SendMessageAdmin(Message meshMessage) {
-            Connect();
+        ///// <summary>
+        ///// Send a message signed using the mesh administration key.
+        ///// </summary>
+        ///// <param name="meshMessage"></param>
+        //public void SendMessageAdmin(Message meshMessage) {
+        //    Connect();
 
-            var message = meshMessage.Encode(KeySignature);
+        //    var message = meshMessage.Encode(KeySignature);
 
-            var uploadRequest = new TransactRequest() {
-                Local = new List<DareEnvelope>() { message }
-                };
+        //    var uploadRequest = new TransactRequest() {
+        //        Local = new List<DareEnvelope>() { message }
+        //        };
 
 
-            MeshClient.Transact(uploadRequest);
-            }
+        //    MeshClient.Transact(uploadRequest);
+        //    }
 
         void Connect() {
             if (MeshClient != null) {

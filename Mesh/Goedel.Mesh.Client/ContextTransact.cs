@@ -51,6 +51,10 @@ namespace Goedel.Mesh.Client {
     public partial class ContextAccount {
 
 
+        KeyPair SignOutboundMessage => null;
+        KeyPair SignInboundMessage => null;
+        KeyPair SignLocalMessage => null;
+
         /// <summary>
         /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
         /// outbound message of <paramref name="transactRequest"/>.
@@ -60,15 +64,20 @@ namespace Goedel.Mesh.Client {
         /// <param name="message">The message to send</param>
         public void OutboundMessage(
                 TransactRequest transactRequest,
-                string recipient,
+                NetworkProtocolEntry recipient,
                 Message message) {
+
+            var recipientAddress = recipient.NetworkAddress;
+            var recipientEncryptionKey = recipient.MeshKeyEncryption;
+
             transactRequest.Outbound ??= new List<Cryptography.Dare.DareEnvelope>();
             transactRequest.Accounts ??= new List<string>();
 
-            var envelope = message.Encode(); // Todo: Sign, encrypt
+            var envelope = message.Encode(signingKey: SignOutboundMessage,
+                    encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
             transactRequest.Outbound.Add(envelope);
             if (recipient != null) {
-                transactRequest.Accounts.Add(recipient);
+                transactRequest.Accounts.Add(recipientAddress.Address);
                 }
             }
 
@@ -203,6 +212,9 @@ namespace Goedel.Mesh.Client {
             update.Delete(catalogedEntry);
             }
 
+
+
+        public TransactRequest TransactBegin() => new TransactRequest();
 
         /// <summary>
         /// Perform the transaction described by <paramref name="transactRequest"/>. If the
