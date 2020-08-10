@@ -172,6 +172,7 @@ namespace Goedel.Mesh {
             }
 
 
+
         /// <summary>
         /// Prepare the set of catalog updates <paramref name="updates"/> returning a list
         /// of <see cref="DareEnvelope"/> applying the updates to the sequence.
@@ -282,21 +283,21 @@ namespace Goedel.Mesh {
         /// derrived classes to update local indexes.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        protected virtual void NewEntry(CatalogedEntry catalogedEntry) { }
+        public virtual void NewEntry(CatalogedEntry catalogedEntry) { }
 
         /// <summary>
         /// Callback called before updating an entry in the catalog. May be overriden in 
         /// derrived classes to update local indexes.
         /// </summary>
         /// <param name="catalogedEntry">The entry being updated.</param>
-        protected virtual void UpdateEntry(CatalogedEntry catalogedEntry) { }
+        public virtual void UpdateEntry(CatalogedEntry catalogedEntry) { }
 
         /// <summary>
         /// Callback called before deleting an entry from the catalog. May be overriden in 
         /// derrived classes to update local indexes.
         /// </summary>
         /// <param name="Key">The entry being deleted.</param>
-        protected virtual void DeleteEntry(string Key) { }
+        public virtual void DeleteEntry(string Key) { }
 
 
         // Test: Check what happens when an attempt is made to perform conflicting updates to a store.

@@ -4702,10 +4702,6 @@
             <summary>
             </summary>
         </member>
-        <member name="P:Goedel.Mesh.Message.References">
-            <summary>
-            </summary>
-        </member>
         <member name="P:Goedel.Mesh.Message._Tag">
             <summary>
             Tag identifying this class
@@ -4815,6 +4811,10 @@
             <param name="envelope">The envelope to decode.</param>
             <param name="keyCollection">Key collection to use to obtain decryption keys.</param>
             <returns>The decoded profile.</returns>
+        </member>
+        <member name="P:Goedel.Mesh.MessageComplete.References">
+            <summary>
+            </summary>
         </member>
         <member name="P:Goedel.Mesh.MessageComplete._Tag">
             <summary>
@@ -5412,9 +5412,9 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshService.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  Upload.
+            Base method for implementing the transaction  Transact.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The authentication binding.</param>
@@ -5428,9 +5428,9 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshService.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
-            Base method for implementing the transaction  PostOld.
+            Base method for implementing the transaction  Post.
             </summary>
             <param name="request">The request object to send to the host.</param>
             <param name="session">The authentication binding.</param>
@@ -5786,13 +5786,17 @@
         <member name="P:Goedel.Mesh.ResultAcknowledgeConnection.RequestMessage">
             <summary>The message that caused this result</summary>
         </member>
-        <member name="M:Goedel.Mesh.ResultAcknowledgeConnection.#ctor(Goedel.Mesh.AcknowledgeConnection,Goedel.Mesh.MessagePIN)">
+        <member name="F:Goedel.Mesh.ResultAcknowledgeConnection.TransactResponse">
+            <summary>Result of the transaction</summary>
+        </member>
+        <member name="M:Goedel.Mesh.ResultAcknowledgeConnection.#ctor(Goedel.Mesh.AcknowledgeConnection,Goedel.Mesh.MessagePIN,Goedel.Mesh.TransactResponse)">
             <summary>
             Constructor, return an instance reporting the successful processing of 
             <paramref name="request"/>.
             </summary>
             <param name="request">The request message.</param>
             <param name="messagePIN">PIN code registration, to be marked as used</param>
+            <param name="transactResponse">The transaction response</param>
         </member>
         <member name="T:Goedel.Mesh.ResultReplyContact">
             <summary>
@@ -6861,7 +6865,7 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Implement the transaction
             </summary>		
@@ -6877,7 +6881,7 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.MeshServiceClient.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Implement the transaction
             </summary>		
@@ -8405,58 +8409,58 @@
             </summary>
             <param name="exception">Optional exception specifier.</param>
         </member>
-        <member name="T:Goedel.Mesh.UploadRequest">
+        <member name="T:Goedel.Mesh.TransactRequest">
              <summary>
             
              Upload entries to a container. This request is only valid if it is issued
              by the owner of the account
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Updates">
+        <member name="P:Goedel.Mesh.TransactRequest.Updates">
              <summary>
             The data to be updated
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Accounts">
+        <member name="P:Goedel.Mesh.TransactRequest.Accounts">
              <summary>
             The account(s) to which the request is directed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Outbound">
+        <member name="P:Goedel.Mesh.TransactRequest.Outbound">
              <summary>
             The messages to be sent to other accounts  
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Inbound">
+        <member name="P:Goedel.Mesh.TransactRequest.Inbound">
              <summary>
             Messages to be appended to the user's inbound spool. this is
             typically used to post notifications to the user to mark messages as having been
             read or responded to.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest.Local">
+        <member name="P:Goedel.Mesh.TransactRequest.Local">
              <summary>
             Messages to be appended to the user's local spool. This is used to allow connecting
             devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadRequest._Tag">
+        <member name="P:Goedel.Mesh.TransactRequest._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.UploadRequest.__Tag">
+        <member name="F:Goedel.Mesh.TransactRequest.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest._Factory">
+        <member name="M:Goedel.Mesh.TransactRequest._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.TransactRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -8465,7 +8469,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.TransactRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -8476,7 +8480,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.TransactRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8484,48 +8488,54 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.UploadRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.TransactRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="T:Goedel.Mesh.UploadResponse">
+        <member name="F:Goedel.Mesh.TransactRequest.LocalReferences">
+            <summary>List of completion references to be added to the local spool</summary>
+        </member>
+        <member name="F:Goedel.Mesh.TransactRequest.InboundReferences">
+            <summary>List of completion references to be added to the inbound spool</summary>
+        </member>
+        <member name="T:Goedel.Mesh.TransactResponse">
              <summary>
             
              Response to an upload request. 
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadResponse.Entries">
+        <member name="P:Goedel.Mesh.TransactResponse.Entries">
              <summary>
             The responses to the entries.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadResponse.ConstraintsData">
+        <member name="P:Goedel.Mesh.TransactResponse.ConstraintsData">
              <summary>
             If the upload request contains redacted entries, specifies constraints 
             that apply to the redacted entries as a group. Thus the total payloads
             of all the messages must not exceed the specified value.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.UploadResponse._Tag">
+        <member name="P:Goedel.Mesh.TransactResponse._Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="F:Goedel.Mesh.UploadResponse.__Tag">
+        <member name="F:Goedel.Mesh.TransactResponse.__Tag">
             <summary>
             Tag identifying this class
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse._Factory">
+        <member name="M:Goedel.Mesh.TransactResponse._Factory">
             <summary>
             Factory method
             </summary>
             <returns>Object of this type</returns>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.TransactResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             </summary>
@@ -8534,7 +8544,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
+        <member name="M:Goedel.Mesh.TransactResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
             <summary>
             Serialize this object to the specified output stream.
             Unlike the Serlialize() method, this method is not inherited from the
@@ -8545,7 +8555,7 @@
             start and end sequences '{ ... }'.</param>
             <param name="_first">If true, item is the first entry in a list.</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
+        <member name="M:Goedel.Mesh.TransactResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
             <summary>
             Deserialize a tagged stream
             </summary>
@@ -8553,14 +8563,14 @@
             <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
             <returns>The created object.</returns>		
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
+        <member name="M:Goedel.Mesh.TransactResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>
             <param name="jsonReader">The input stream</param>
             <param name="tag">The tag</param>
         </member>
-        <member name="M:Goedel.Mesh.UploadResponse.#ctor(System.Exception)">
+        <member name="M:Goedel.Mesh.TransactResponse.#ctor(System.Exception)">
             <summary>
             Default constructor. 
             </summary>
@@ -8776,22 +8786,9 @@
             The account(s) to which the request is directed.
              </summary>
         </member>
-        <member name="P:Goedel.Mesh.PostRequest.Outbound">
+        <member name="P:Goedel.Mesh.PostRequest.Messages">
              <summary>
             The messages to be sent to the addresses specified in Accounts. 
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.PostRequest.Inbound">
-             <summary>
-            Messages to be appended to the user's inbound spool. this is
-            typically used to post notifications to the user to mark messages as having been
-            read or responded to.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.PostRequest.Local">
-             <summary>
-            Messages to be appended to the user's local spool. This is used to allow connecting
-            devices to collect activation messages before they have connected to the mesh.
              </summary>
         </member>
         <member name="P:Goedel.Mesh.PostRequest._Tag">

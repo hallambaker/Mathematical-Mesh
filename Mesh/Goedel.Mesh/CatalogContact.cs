@@ -80,14 +80,14 @@ namespace Goedel.Mesh {
         /// in <see cref="DictionaryByNetworkAddress"/>.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        protected override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void NewEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
 
         /// <summary>
         /// Callback called before updating an entry in the catalog. Overriden to update the values
         /// in <see cref="DictionaryByNetworkAddress"/>.
         /// </summary>
         /// <param name="catalogedEntry">The entry being added.</param>
-        protected override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
+        public override void UpdateEntry(CatalogedEntry catalogedEntry) => UpdateLocal(catalogedEntry);
 
         #endregion
         #region // Class methods

@@ -69,10 +69,10 @@ namespace Goedel.Mesh.Client {
                     Index = (int)catalog.Container.FrameCount,
                     Envelopes = envelopes
                     };
-                var uploadRequest = new UploadRequest() {
+                var uploadRequest = new TransactRequest() {
                     Updates = new List<ContainerUpdate> { containerUpdate }
                     };
-                var uploadResponse = MeshClient.Upload(uploadRequest);
+                var uploadResponse = MeshClient.Transact(uploadRequest);
                 uploadResponse.AssertSuccess();
                 }
             catalog.Commit(envelopes, updates);

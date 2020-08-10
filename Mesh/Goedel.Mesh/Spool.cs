@@ -329,7 +329,7 @@ namespace Goedel.Mesh {
                 // do nothing, we can't read the contents of the message
                 }
             else if (envelope.Header.ContentMeta.MessageType == MessageComplete.__Tag) {
-                var message = spoolEntry.Message;
+                var message = spoolEntry.Message as MessageComplete;
                 message.AssertNotNull(InvalidMessage.Throw);  // Hack - need to collect up the errors 
                 foreach (var reference in message.References) {
                     // Do we already have an entry?

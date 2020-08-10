@@ -871,17 +871,15 @@
 				|value. 
 		String Sender
 		String Recipient
-		Struct Reference References
-			Multiple
-
 
 	Structure MessageError
 		Inherits Message
 		String ErrorCode
 
-
 	Structure MessageComplete
 		Inherits Message
+		Struct Reference References
+			Multiple
 
 	Structure MessagePinValidated
 		Inherits Message

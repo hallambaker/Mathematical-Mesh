@@ -9317,10 +9317,6 @@ namespace Goedel.Mesh {
         /// </summary>
 
 		public virtual string						Recipient  {get; set;}
-        /// <summary>
-        /// </summary>
-
-		public virtual List<Reference>				References  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9379,23 +9375,6 @@ namespace Goedel.Mesh {
 				_writer.WriteToken ("Recipient", 1);
 					_writer.WriteString (Recipient);
 				}
-			if (References != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("References", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in References) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9439,20 +9418,6 @@ namespace Goedel.Mesh {
 					}
 				case "Recipient" : {
 					Recipient = jsonReader.ReadString ();
-					break;
-					}
-				case "References" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					References = new List <Reference> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  Reference ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new Reference (jsonReader);
-						References.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
 					break;
 					}
 				default : {
@@ -9572,6 +9537,10 @@ namespace Goedel.Mesh {
 	/// <summary>
 	/// </summary>
 	public partial class MessageComplete : Message {
+        /// <summary>
+        /// </summary>
+
+		public virtual List<Reference>				References  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -9616,6 +9585,23 @@ namespace Goedel.Mesh {
 				_writer.WriteObjectStart ();
 				}
 			((Message)this).SerializeX(_writer, false, ref _first);
+			if (References != null) {
+				_writer.WriteObjectSeparator (ref _first);
+				_writer.WriteToken ("References", 1);
+				_writer.WriteArrayStart ();
+				bool _firstarray = true;
+				foreach (var _index in References) {
+					_writer.WriteArraySeparator (ref _firstarray);
+					// This is an untagged structure. Cannot inherit.
+                    //_writer.WriteObjectStart();
+                    //_writer.WriteToken(_index._Tag, 1);
+					bool firstinner = true;
+					_index.Serialize (_writer, true, ref firstinner);
+                    //_writer.WriteObjectEnd();
+					}
+				_writer.WriteArrayEnd ();
+				}
+
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}
@@ -9649,6 +9635,20 @@ namespace Goedel.Mesh {
 		public override void DeserializeToken (JsonReader jsonReader, string tag) {
 			
 			switch (tag) {
+				case "References" : {
+					// Have a sequence of values
+					bool _Going = jsonReader.StartArray ();
+					References = new List <Reference> ();
+					while (_Going) {
+						// an untagged structure.
+						var _Item = new  Reference ();
+						_Item.Deserialize (jsonReader);
+						// var _Item = new Reference (jsonReader);
+						References.Add (_Item);
+						_Going = jsonReader.NextArray ();
+						}
+					break;
+					}
 				default : {
 					base.DeserializeToken(jsonReader, tag);
 					break;

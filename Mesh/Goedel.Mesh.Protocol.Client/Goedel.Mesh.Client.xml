@@ -736,6 +736,79 @@
             <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
+            outbound message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="recipient">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.InboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> as an
+            inbound message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="message">The message to append to the inbound spool.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LocalMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> as a
+            local message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="message">The message to append to the local spool.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.InboundComplete(Goedel.Mesh.TransactRequest,Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+            <summary>
+            Mark the message <paramref name="completed"/> on the inbound spool as having status 
+            <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
+            <paramref name="response"/> is not null, mark it as the response.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="messageStatus">The new message status.</param>
+            <param name="completed">The message whose status is being changed.</param>
+            <param name="response">The message generated in response.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.LocalComplete(Goedel.Mesh.TransactRequest,Goedel.Mesh.MessageStatus,Goedel.Mesh.Message,Goedel.Mesh.Message)">
+            <summary>
+            Mark the message <paramref name="completed"/> on the local spool as having status 
+            <paramref name="messageStatus"/> on <paramref name="transactRequest"/>. If 
+            <paramref name="response"/> is not null, mark it as the response.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="messageStatus">The new message status.</param>
+            <param name="completed">The message whose status is being changed.</param>
+            <param name="response">The message generated in response.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CatalogUpdate``1(Goedel.Mesh.TransactRequest,Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to append <paramref name="catalogedEntry"/> to the catalog
+            <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.CatalogDelete``1(Goedel.Mesh.TransactRequest,Goedel.Mesh.Catalog{``0},``0)">
+            <summary>
+            Append a request to delete <paramref name="catalogedEntry"/> from the catalog
+            <paramref name="catalog"/> to the transaction <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="catalog">The catalog to be updated</param>
+            <param name="catalogedEntry">The entry to add as an update.</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.Transact(Goedel.Mesh.TransactRequest)">
+            <summary>
+            Perform the transaction described by <paramref name="transactRequest"/>. If the
+            remote operation succeeds, apply the changes to the local stores.
+            </summary>
+            <param name="transactRequest">The transaction to perform.</param>
+            <returns>Response from the Mesh service.</returns>
+        </member>
         <member name="T:Goedel.Mesh.Client.ContextGroup">
             <summary>
             Context binding for a Group account

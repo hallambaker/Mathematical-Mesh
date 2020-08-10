@@ -192,13 +192,19 @@ namespace Goedel.Mesh {
         /// <summary>The message that caused this result</summary>
         public override Message RequestMessage => AcknowledgeConnection;
 
+        /// <summary>Result of the transaction</summary>
+        public TransactResponse TransactResponse;
+
         /// <summary>
         /// Constructor, return an instance reporting the successful processing of 
         /// <paramref name="request"/>.
         /// </summary>
         /// <param name="request">The request message.</param>
         /// <param name="messagePIN">PIN code registration, to be marked as used</param>
-        public ResultAcknowledgeConnection(AcknowledgeConnection request, MessagePIN messagePIN = null) :
+        /// <param name="transactResponse">The transaction response</param>
+        public ResultAcknowledgeConnection(
+                AcknowledgeConnection request, MessagePIN messagePIN,
+                TransactResponse transactResponse) :
                     base(request, messagePIN) { }
 
 

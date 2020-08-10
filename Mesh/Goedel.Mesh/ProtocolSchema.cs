@@ -80,8 +80,8 @@ namespace Goedel.Mesh {
 			{"StatusResponse", StatusResponse._Factory},
 			{"DownloadRequest", DownloadRequest._Factory},
 			{"DownloadResponse", DownloadResponse._Factory},
-			{"UploadRequest", UploadRequest._Factory},
-			{"UploadResponse", UploadResponse._Factory},
+			{"TransactRequest", TransactRequest._Factory},
+			{"TransactResponse", TransactResponse._Factory},
 			{"EntryResponse", EntryResponse._Factory},
 			{"PublishRequest", PublishRequest._Factory},
 			{"PublishResponse", PublishResponse._Factory},
@@ -215,14 +215,14 @@ namespace Goedel.Mesh {
 						JPCInterface.Download (request, session ?? JpcSession);
 
         /// <summary>
-		/// Base method for implementing the transaction  Upload.
+		/// Base method for implementing the transaction  Transact.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual UploadResponse Upload (
-                UploadRequest request, JpcSession session=null) => 
-						JPCInterface.Upload (request, session ?? JpcSession);
+        public virtual TransactResponse Transact (
+                TransactRequest request, JpcSession session=null) => 
+						JPCInterface.Transact (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Publish.
@@ -235,14 +235,14 @@ namespace Goedel.Mesh {
 						JPCInterface.Publish (request, session ?? JpcSession);
 
         /// <summary>
-		/// Base method for implementing the transaction  PostOld.
+		/// Base method for implementing the transaction  Post.
         /// </summary>
         /// <param name="request">The request object to send to the host.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object from the service</returns>
-        public virtual PostResponse PostOld (
+        public virtual PostResponse Post (
                 PostRequest request, JpcSession session=null) => 
-						JPCInterface.PostOld (request, session ?? JpcSession);
+						JPCInterface.Post (request, session ?? JpcSession);
 
         /// <summary>
 		/// Base method for implementing the transaction  Connect.
@@ -416,11 +416,11 @@ namespace Goedel.Mesh {
         /// <param name="request">The request object.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override UploadResponse Upload (
-                UploadRequest request, JpcSession session=null) {
+        public override TransactResponse Transact (
+                TransactRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("Upload", request);
-            var response = UploadResponse.FromJson(responseData.JsonReader(), true);
+            var responseData = JPCRemoteSession.Post("Transact", request);
+            var response = TransactResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
             }
@@ -446,10 +446,10 @@ namespace Goedel.Mesh {
         /// <param name="request">The request object.</param>
 		/// <param name="session">The authentication binding.</param>
 		/// <returns>The response object</returns>
-        public override PostResponse PostOld (
+        public override PostResponse Post (
                 PostRequest request, JpcSession session=null) {
 
-            var responseData = JPCRemoteSession.Post("PostOld", request);
+            var responseData = JPCRemoteSession.Post("Post", request);
             var response = PostResponse.FromJson(responseData.JsonReader(), true);
 
             return response;
@@ -594,10 +594,10 @@ namespace Goedel.Mesh {
 					Response = Service.Download (Request, session);
 					break;
 					}
-				case "Upload" : {
-					var Request = new UploadRequest();
+				case "Transact" : {
+					var Request = new TransactRequest();
 					Request.Deserialize (jsonReader);
-					Response = Service.Upload (Request, session);
+					Response = Service.Transact (Request, session);
 					break;
 					}
 				case "Publish" : {
@@ -606,10 +606,10 @@ namespace Goedel.Mesh {
 					Response = Service.Publish (Request, session);
 					break;
 					}
-				case "PostOld" : {
+				case "Post" : {
 					var Request = new PostRequest();
 					Request.Deserialize (jsonReader);
-					Response = Service.PostOld (Request, session);
+					Response = Service.Post (Request, session);
 					break;
 					}
 				case "Connect" : {
@@ -3352,7 +3352,7 @@ namespace Goedel.Mesh {
 	/// Upload entries to a container. This request is only valid if it is issued
 	/// by the owner of the account
 	/// </summary>
-	public partial class UploadRequest : MeshRequestUser {
+	public partial class TransactRequest : MeshRequestUser {
         /// <summary>
         ///The data to be updated
         /// </summary>
@@ -3390,13 +3390,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "UploadRequest";
+		public new const string __Tag = "TransactRequest";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new UploadRequest();
+		public static new JsonObject _Factory () => new TransactRequest();
 
 
         /// <summary>
@@ -3516,15 +3516,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new UploadRequest FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new TransactRequest FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as UploadRequest;
+				return Out as TransactRequest;
 				}
-		    var Result = new UploadRequest ();
+		    var Result = new TransactRequest ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -3620,7 +3620,7 @@ namespace Goedel.Mesh {
 	///
 	/// Response to an upload request. 
 	/// </summary>
-	public partial class UploadResponse : MeshResponse {
+	public partial class TransactResponse : MeshResponse {
         /// <summary>
         ///The responses to the entries.
         /// </summary>
@@ -3642,13 +3642,13 @@ namespace Goedel.Mesh {
 		/// <summary>
         /// Tag identifying this class
         /// </summary>
-		public new const string __Tag = "UploadResponse";
+		public new const string __Tag = "TransactResponse";
 
 		/// <summary>
         /// Factory method
         /// </summary>
         /// <returns>Object of this type</returns>
-		public static new JsonObject _Factory () => new UploadResponse();
+		public static new JsonObject _Factory () => new TransactResponse();
 
 
         /// <summary>
@@ -3710,15 +3710,15 @@ namespace Goedel.Mesh {
         /// <param name="jsonReader">The input stream</param>
 		/// <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
         /// <returns>The created object.</returns>		
-        public static new UploadResponse FromJson (JsonReader jsonReader, bool tagged=true) {
+        public static new TransactResponse FromJson (JsonReader jsonReader, bool tagged=true) {
 			if (jsonReader == null) {
 				return null;
 				}
 			if (tagged) {
 				var Out = jsonReader.ReadTaggedObject (_TagDictionary);
-				return Out as UploadResponse;
+				return Out as TransactResponse;
 				}
-		    var Result = new UploadResponse ();
+		    var Result = new TransactResponse ();
 			Result.Deserialize (jsonReader);
 			Result.PostDecode();
 			return Result;
@@ -4163,20 +4163,7 @@ namespace Goedel.Mesh {
         ///The messages to be sent to the addresses specified in Accounts. 
         /// </summary>
 
-		public virtual List<DareEnvelope>				Outbound  {get; set;}
-        /// <summary>
-        ///Messages to be appended to the user's inbound spool. this is
-        ///typically used to post notifications to the user to mark messages as having been
-        ///read or responded to.
-        /// </summary>
-
-		public virtual List<DareEnvelope>				Inbound  {get; set;}
-        /// <summary>
-        ///Messages to be appended to the user's local spool. This is used to allow connecting
-        ///devices to collect activation messages before they have connected to the mesh.
-        /// </summary>
-
-		public virtual List<DareEnvelope>				Local  {get; set;}
+		public virtual List<DareEnvelope>				Messages  {get; set;}
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4233,46 +4220,12 @@ namespace Goedel.Mesh {
 				_writer.WriteArrayEnd ();
 				}
 
-			if (Outbound != null) {
+			if (Messages != null) {
 				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Outbound", 1);
+				_writer.WriteToken ("Messages", 1);
 				_writer.WriteArrayStart ();
 				bool _firstarray = true;
-				foreach (var _index in Outbound) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Inbound != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Inbound", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Inbound) {
-					_writer.WriteArraySeparator (ref _firstarray);
-					// This is an untagged structure. Cannot inherit.
-                    //_writer.WriteObjectStart();
-                    //_writer.WriteToken(_index._Tag, 1);
-					bool firstinner = true;
-					_index.Serialize (_writer, true, ref firstinner);
-                    //_writer.WriteObjectEnd();
-					}
-				_writer.WriteArrayEnd ();
-				}
-
-			if (Local != null) {
-				_writer.WriteObjectSeparator (ref _first);
-				_writer.WriteToken ("Local", 1);
-				_writer.WriteArrayStart ();
-				bool _firstarray = true;
-				foreach (var _index in Local) {
+				foreach (var _index in Messages) {
 					_writer.WriteArraySeparator (ref _firstarray);
 					// This is an untagged structure. Cannot inherit.
                     //_writer.WriteObjectStart();
@@ -4328,44 +4281,16 @@ namespace Goedel.Mesh {
 						}
 					break;
 					}
-				case "Outbound" : {
+				case "Messages" : {
 					// Have a sequence of values
 					bool _Going = jsonReader.StartArray ();
-					Outbound = new List <DareEnvelope> ();
+					Messages = new List <DareEnvelope> ();
 					while (_Going) {
 						// an untagged structure.
 						var _Item = new  DareEnvelope ();
 						_Item.Deserialize (jsonReader);
 						// var _Item = new DareEnvelope (jsonReader);
-						Outbound.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Inbound" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Inbound = new List <DareEnvelope> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareEnvelope ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
-						Inbound.Add (_Item);
-						_Going = jsonReader.NextArray ();
-						}
-					break;
-					}
-				case "Local" : {
-					// Have a sequence of values
-					bool _Going = jsonReader.StartArray ();
-					Local = new List <DareEnvelope> ();
-					while (_Going) {
-						// an untagged structure.
-						var _Item = new  DareEnvelope ();
-						_Item.Deserialize (jsonReader);
-						// var _Item = new DareEnvelope (jsonReader);
-						Local.Add (_Item);
+						Messages.Add (_Item);
 						_Going = jsonReader.NextArray ();
 						}
 					break;
@@ -4385,7 +4310,7 @@ namespace Goedel.Mesh {
 	///
 	/// 
 	/// </summary>
-	public partial class PostResponse : UploadResponse {
+	public partial class PostResponse : TransactResponse {
 		
 		/// <summary>
         /// Tag identifying this class
@@ -4429,7 +4354,7 @@ namespace Goedel.Mesh {
 			if (_wrap) {
 				_writer.WriteObjectStart ();
 				}
-			((UploadResponse)this).SerializeX(_writer, false, ref _first);
+			((TransactResponse)this).SerializeX(_writer, false, ref _first);
 			if (_wrap) {
 				_writer.WriteObjectEnd ();
 				}

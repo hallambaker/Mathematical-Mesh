@@ -185,12 +185,22 @@ namespace Goedel.Mesh {
             builder.AppendIndent(indent, $"{Container}:  {Index}+{Envelopes.Count} {Digest?.ToStringBase64url()}");
         }
 
-    public partial class UploadResponse {
+
+
+    public partial class TransactRequest {
+        /// <summary>List of completion references to be added to the local spool</summary>
+        public List<Reference> LocalReferences;
+
+        /// <summary>List of completion references to be added to the inbound spool</summary>
+        public List<Reference> InboundReferences;
+        }
+
+    public partial class TransactResponse {
         /// <summary>
         /// Default constructor. 
         /// </summary>
         /// <param name="exception">Optional exception specifier.</param>
-        public UploadResponse(Exception exception = null) : base(exception) {
+        public TransactResponse(Exception exception = null) : base(exception) {
             }
         }
 

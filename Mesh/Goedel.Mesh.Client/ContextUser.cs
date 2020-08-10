@@ -1073,15 +1073,6 @@ namespace Goedel.Mesh.Client {
 
                             }
                         }
-
-                    //// Write the used messages to the spools.
-                    //if (referencesInbound.Count > 0) {
-                    //    spoolInbound.SetStatus(referencesInbound);
-                    //    }
-                    //if (referencesLocal.Count > 0) {
-                    //    var spoolLocal = GetSpoolLocal();
-                    //    spoolLocal.SetStatus(referencesLocal);
-                    //    }
                     }
 
                 }
@@ -1192,11 +1183,12 @@ namespace Goedel.Mesh.Client {
         /// <param name="request">The request to accept or reject.</param>
         /// <param name="accept">If true, accept the request. Otherwise, it is rejected.</param>
         ProcessResult Process(AcknowledgeConnection request, bool accept = true, MessagePIN messagePIN = null) {
-            var messageID = request.GetResponseId();
-            var respondConnection = new RespondConnection() {
-                MessageID = messageID
-                };
+            var transactRequest = new TransactRequest();
 
+
+            var respondConnection = new RespondConnection() {
+                MessageID = request.GetResponseId()
+                };
             if (accept) {
                 // Connect the device to the Mesh
                 var device = AddDevice(request.MessageConnectionRequest.ProfileDevice);
@@ -1207,15 +1199,18 @@ namespace Goedel.Mesh.Client {
                 respondConnection.Result = Constants.TransactionResultReject;
                 }
 
-            //Console.WriteLine($"Accept connection ID is {messageID}");
+            LocalMessage(transactRequest, respondConnection);
 
+            // Mark the pin code as having been used.
             if (messagePIN != null) {
-                "Here is the point that we need to generate the completion on the PIN".TaskFunctionality(true);
+                LocalComplete(transactRequest, MessageStatus.Closed, 
+                    messagePIN, respondConnection);
                 }
 
-            SendMessage(respondConnection);
+            // Perform the transaction
+            var responseTransaction = Transact(transactRequest);
 
-            return new ResultAcknowledgeConnection(request, messagePIN);
+            return new ResultAcknowledgeConnection(request, messagePIN, responseTransaction);
             }
 
 

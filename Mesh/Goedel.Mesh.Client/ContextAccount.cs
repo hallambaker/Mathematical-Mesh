@@ -36,7 +36,7 @@ namespace Goedel.Mesh.Client {
     /// Base class from which Contexts for Accounts and Groups are derrived. These are
     /// separate contexts but share functions and thus code.
     /// </summary>
-    public abstract class ContextAccount : Disposable, IKeyLocate, IMeshClient {
+    public abstract partial class ContextAccount : Disposable, IKeyLocate, IMeshClient {
 
         #region // Properties
 
@@ -331,10 +331,10 @@ namespace Goedel.Mesh.Client {
 
 
             if (updates.Count > 0) {
-                var uploadRequest = new UploadRequest() {
+                var uploadRequest = new TransactRequest() {
                     Updates = updates
                     };
-                MeshClient.Upload(uploadRequest);
+                MeshClient.Transact(uploadRequest);
                 }
 
             return complete;
@@ -387,6 +387,11 @@ namespace Goedel.Mesh.Client {
 
 
 
+
+
+
+
+
         /// <summary>
         /// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
         /// </summary>
@@ -424,13 +429,13 @@ namespace Goedel.Mesh.Client {
             
             // this is not working because of the dopey idea that no recipient means the local spool.
 
-            var uploadRequest = new UploadRequest() {
+            var uploadRequest = new TransactRequest() {
                 Accounts = recipients,
                 Outbound = new List<DareEnvelope>() { envelope }
                 };
 
 
-            MeshClient.Upload(uploadRequest);
+            MeshClient.Transact(uploadRequest);
             }
 
         /// <summary>
@@ -442,12 +447,12 @@ namespace Goedel.Mesh.Client {
 
             var message = meshMessage.Encode(KeySignature);
 
-            var uploadRequest = new UploadRequest() {
+            var uploadRequest = new TransactRequest() {
                 Local = new List<DareEnvelope>() { message }
                 };
 
 
-            MeshClient.Upload(uploadRequest);
+            MeshClient.Transact(uploadRequest);
             }
 
         void Connect() {

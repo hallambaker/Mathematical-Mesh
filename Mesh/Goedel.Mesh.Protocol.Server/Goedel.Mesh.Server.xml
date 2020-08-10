@@ -1045,7 +1045,7 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Upload(Goedel.Mesh.UploadRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction  Upload.
             </summary>
@@ -1053,7 +1053,7 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.PostOld(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
+        <member name="M:Goedel.Mesh.Server.PublicMeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction  Post.
             </summary>
