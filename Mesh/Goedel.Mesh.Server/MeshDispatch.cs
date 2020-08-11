@@ -335,20 +335,20 @@ namespace Goedel.Mesh.Server {
             throw new NYI();
             }
 
-        /// <summary>
-		/// Server method implementing the transaction  Publish.
-        /// </summary>
-        /// <param name="request">The request object to send to the host.</param>
-		/// <param name="session">The authentication binding.</param>
-		/// <returns>The response object from the service</returns>
-        public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
+  //      /// <summary>
+		///// Server method implementing the transaction  Publish.
+  //      /// </summary>
+  //      /// <param name="request">The request object to send to the host.</param>
+		///// <param name="session">The authentication binding.</param>
+		///// <returns>The response object from the service</returns>
+  //      public override PublishResponse Publish(PublishRequest request, JpcSession session = null) {
 
-            Mesh.Publish(session, session.VerifiedAccount, request.Publications);
-            var response = new PublishResponse() {
-                };
+  //          Mesh.Publish(session, session.VerifiedAccount, request.Publications);
+  //          var response = new PublishResponse() {
+  //              };
 
-            return response;
-            }
+  //          return response;
+  //          }
 
         /// <summary>
 		/// Server method implementing the transaction  Claim.

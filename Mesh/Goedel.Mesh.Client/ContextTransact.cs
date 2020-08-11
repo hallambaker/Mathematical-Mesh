@@ -55,6 +55,24 @@ namespace Goedel.Mesh.Client {
         KeyPair SignInboundMessage => null;
         KeyPair SignLocalMessage => null;
 
+
+        /// <summary>
+        /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
+        /// outbound message of <paramref name="transactRequest"/>.
+        /// </summary>
+        /// <param name="transactRequest">The transaction request being built</param>
+        /// <param name="recipient">The message recipient</param>
+        /// <param name="message">The message to send</param>
+        public void OutboundMessage(
+                TransactRequest transactRequest,
+                string recipientAddress,
+                Message message) {
+            var recipientEncryptionKey = TryFindKeyEncryption(recipientAddress);
+            OutboundMessage(transactRequest, recipientAddress, recipientEncryptionKey,
+                message);
+            }
+
+
         /// <summary>
         /// Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
         /// outbound message of <paramref name="transactRequest"/>.
@@ -67,19 +85,41 @@ namespace Goedel.Mesh.Client {
                 NetworkProtocolEntry recipient,
                 Message message) {
 
-            var recipientAddress = recipient.NetworkAddress;
+            var recipientAddress = recipient.NetworkAddress.Address;
             var recipientEncryptionKey = recipient.MeshKeyEncryption;
 
+            OutboundMessage(transactRequest, recipientAddress, recipientEncryptionKey,
+                message);
+            }
+
+        /// <summary>
+        /// Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
+        /// encrypted under <paramref name="recipientEncryptionKey"/> as an
+        /// outbound message of <paramref name="transactRequest"/>.
+        /// </summary>
+        /// <param name="transactRequest">The transaction request being built</param>
+        /// <param name="recipientAddress">The message recipient address</param>
+        /// <param name="recipientEncryptionKey">The message recipient encryption key</param>
+        /// <param name="message">The message to send</param>
+        public void OutboundMessage(
+                TransactRequest transactRequest,
+                string recipientAddress,
+                CryptoKey recipientEncryptionKey,
+                Message message) {
             transactRequest.Outbound ??= new List<Cryptography.Dare.DareEnvelope>();
             transactRequest.Accounts ??= new List<string>();
+
+            message.Sender ??= AccountAddress;
 
             var envelope = message.Encode(signingKey: SignOutboundMessage,
                     encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
             transactRequest.Outbound.Add(envelope);
-            if (recipient != null) {
-                transactRequest.Accounts.Add(recipientAddress.Address);
+            if (recipientAddress != null) {
+                transactRequest.Accounts.Add(recipientAddress);
                 }
             }
+
+
 
         /// <summary>
         /// Add the message <paramref name="message"/> as an
@@ -243,31 +283,33 @@ namespace Goedel.Mesh.Client {
 
 
             if (response.Success()) {
-                // Perform local updates to each store.
-                foreach (var update in transactRequest.Updates) {
-                    var catalogUpdate = update as TransactionUpdate<CatalogedEntry>;
-                    var catalog = catalogUpdate.Catalog;
+                if (transactRequest.Updates != null) {
+                    // Perform local updates to each store.
+                    foreach (var update in transactRequest.Updates) {
+                        var catalogUpdate = update as TransactionUpdate<CatalogedEntry>;
+                        var catalog = catalogUpdate.Catalog;
 
-                    foreach (var envelope in catalogUpdate.Envelopes) {
+                        foreach (var envelope in catalogUpdate.Envelopes) {
 
-                        var action = envelope.Header.ContentMeta.Event;
+                            var action = envelope.Header.ContentMeta.Event;
 
-                        // persist update
-                        catalog.Apply(envelope); 
-                        
-                        // update in memory structure
-                        switch (action) {
-                            case PersistenceStore.EventNew: {
-                                catalog.NewEntry(envelope.JSONObject as CatalogedEntry);
-                                break;
-                                }
-                            case PersistenceStore.EventUpdate: {
-                                catalog.UpdateEntry(envelope.JSONObject as CatalogedEntry);
-                                break;
-                                }
-                            case PersistenceStore.EventDelete: {
-                                catalog.DeleteEntry((envelope.JSONObject as CatalogedEntry)._PrimaryKey);
-                                break;
+                            // persist update
+                            catalog.Apply(envelope);
+
+                            // update in memory structure
+                            switch (action) {
+                                case PersistenceStore.EventNew: {
+                                    catalog.NewEntry(envelope.JSONObject as CatalogedEntry);
+                                    break;
+                                    }
+                                case PersistenceStore.EventUpdate: {
+                                    catalog.UpdateEntry(envelope.JSONObject as CatalogedEntry);
+                                    break;
+                                    }
+                                case PersistenceStore.EventDelete: {
+                                    catalog.DeleteEntry((envelope.JSONObject as CatalogedEntry)._PrimaryKey);
+                                    break;
+                                    }
                                 }
                             }
                         }

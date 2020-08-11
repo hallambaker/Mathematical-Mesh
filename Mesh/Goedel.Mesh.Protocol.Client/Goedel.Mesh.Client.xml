@@ -602,26 +602,6 @@
             <param name="maxEnvelopes">The maximum number of envelopes to return.</param>
             <returns>If true, the synchronization has completed.</returns>
         </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.String,Goedel.Cryptography.CryptoKey)">
-            <summary>
-            Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
-            </summary>
-            <param name="meshMessage">The message to send.</param>
-            <param name="recipient">The recipient service ID.</param>
-            <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Client.ContextAccount.SendMessage(Goedel.Mesh.Message,System.Collections.Generic.List{System.String},Goedel.Cryptography.CryptoKey,System.Collections.Generic.List{Goedel.Mesh.Reference},System.Collections.Generic.List{Goedel.Mesh.Reference})">
-            <summary>
-            Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
-            is not null, the message is to be posted to the outbound spool to be forwarded to the
-            appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
-            collection.
-            </summary>
-            <param name="meshMessage">The message to post</param>
-            <param name="recipients">The recipients the message is to be sent to. If null, the
-            message is for local pickup.</param>
-            <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.CreateContact(System.Collections.Generic.List{Goedel.Mesh.CryptographicCapability})">
             <summary>
             Get the default (i.e. minimum contact info). This has a single network 
@@ -738,6 +718,15 @@
             <param name="verify">It true, verify the signature first.</param>
             <returns>The plaintext payload data.</returns>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
+            outbound message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="recipient">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.NetworkProtocolEntry,Goedel.Mesh.Message)">
             <summary>
             Add the message <paramref name="message"/> to <paramref name="recipient"/> as an
@@ -745,6 +734,17 @@
             </summary>
             <param name="transactRequest">The transaction request being built</param>
             <param name="recipient">The message recipient</param>
+            <param name="message">The message to send</param>
+        </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.OutboundMessage(Goedel.Mesh.TransactRequest,System.String,Goedel.Cryptography.CryptoKey,Goedel.Mesh.Message)">
+            <summary>
+            Add the message <paramref name="message"/> to <paramref name="recipientAddress"/> 
+            encrypted under <paramref name="recipientEncryptionKey"/> as an
+            outbound message of <paramref name="transactRequest"/>.
+            </summary>
+            <param name="transactRequest">The transaction request being built</param>
+            <param name="recipientAddress">The message recipient address</param>
+            <param name="recipientEncryptionKey">The message recipient encryption key</param>
             <param name="message">The message to send</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.InboundMessage(Goedel.Mesh.TransactRequest,Goedel.Mesh.Message)">
@@ -1451,7 +1451,7 @@
             <summary>
             Construct a confirmation request.
             </summary>
-            <param name="accountAddress">The contact to request.</param>
+            <param name="recipientAddress">The contact to request.</param>
             <param name="messageText">The message text to send.</param>
         </member>
         <member name="M:Goedel.Mesh.Client.ContextUser.ConfirmationResponse(Goedel.Mesh.RequestConfirmation,System.Boolean)">

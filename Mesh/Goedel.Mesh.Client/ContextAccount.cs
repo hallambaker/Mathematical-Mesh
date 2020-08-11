@@ -388,59 +388,51 @@ namespace Goedel.Mesh.Client {
 
             }
 
+        ///// <summary>
+        ///// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
+        ///// </summary>
+        ///// <param name="meshMessage">The message to send.</param>
+        ///// <param name="recipient">The recipient service ID.</param>
+        ///// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
+        //public void SendMessage(Message meshMessage, string recipient,
+        //            CryptoKey encryptionKey=null) =>
+        //    SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
 
 
+        ///// <summary>
+        ///// Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
+        ///// is not null, the message is to be posted to the outbound spool to be forwarded to the
+        ///// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
+        ///// collection.
+        ///// </summary>
+        ///// <param name="meshMessage">The message to post</param>
+        ///// <param name="recipients">The recipients the message is to be sent to. If null, the
+        ///// message is for local pickup.</param>
+        ///// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
+        //public void SendMessage(
+        //            Message meshMessage,
+        //            List<string> recipients = null,
+        //            CryptoKey encryptionKey = null,
+        //            List<Reference> inboundComplete = null,
+        //            List<Reference> localComplete = null
+        //            ) {
+        //    Connect();
+
+        //    meshMessage.Sender = AccountAddress;
 
 
-
-
-
-
-        /// <summary>
-        /// Send <paramref name="meshMessage"/> to <paramref name="recipient"/>.
-        /// </summary>
-        /// <param name="meshMessage">The message to send.</param>
-        /// <param name="recipient">The recipient service ID.</param>
-        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        public void SendMessage(Message meshMessage, string recipient,
-                    CryptoKey encryptionKey=null) =>
-            SendMessage(meshMessage, new List<string> { recipient }, encryptionKey);
-
-
-        /// <summary>
-        /// Post the message <paramref name="meshMessage"/> to the service. If <paramref name="recipients"/>
-        /// is not null, the message is to be posted to the outbound spool to be forwarded to the
-        /// appropriate Mesh Service. Otherwise, the message is posted to the local spool for local
-        /// collection.
-        /// </summary>
-        /// <param name="meshMessage">The message to post</param>
-        /// <param name="recipients">The recipients the message is to be sent to. If null, the
-        /// message is for local pickup.</param>
-        /// <param name="encryptionKey">The encryption key to encrypt the message to.</param>
-        public void SendMessage(
-                    Message meshMessage,
-                    List<string> recipients = null,
-                    CryptoKey encryptionKey = null,
-                    List<Reference> inboundComplete = null,
-                    List<Reference> localComplete = null
-                    ) {
-            Connect();
-
-            meshMessage.Sender = AccountAddress;
-
-
-            var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
+        //    var envelope = meshMessage.Encode(encryptionKey: encryptionKey);
             
-            // this is not working because of the dopey idea that no recipient means the local spool.
+        //    // this is not working because of the dopey idea that no recipient means the local spool.
 
-            var uploadRequest = new TransactRequest() {
-                Accounts = recipients,
-                Outbound = new List<DareEnvelope>() { envelope }
-                };
+        //    var uploadRequest = new TransactRequest() {
+        //        Accounts = recipients,
+        //        Outbound = new List<DareEnvelope>() { envelope }
+        //        };
 
 
-            MeshClient.Transact(uploadRequest);
-            }
+        //    MeshClient.Transact(uploadRequest);
+        //    }
 
         ///// <summary>
         ///// Send a message signed using the mesh administration key.

@@ -335,27 +335,27 @@ namespace Goedel.Mesh.Server {
                 }
             }
 
-        /// <summary>
-        /// Service a publication request. Note that at present the mechanism does not
-        /// support handling of external publication data.
-        /// </summary>
-        /// <param name="jpcSession">The session connection data.</param>
-        /// <param name="account">The account to publish to.</param> 
-        /// <param name="publications">The publications to be published.</param>
-        public void Publish(
-                    JpcSession jpcSession,
-                    VerifiedAccount account,
-                    List<CatalogedPublication> publications) {
+        ///// <summary>
+        ///// Service a publication request. Note that at present the mechanism does not
+        ///// support handling of external publication data.
+        ///// </summary>
+        ///// <param name="jpcSession">The session connection data.</param>
+        ///// <param name="account">The account to publish to.</param> 
+        ///// <param name="publications">The publications to be published.</param>
+        //public void Publish(
+        //            JpcSession jpcSession,
+        //            VerifiedAccount account,
+        //            List<CatalogedPublication> publications) {
 
-            using var accountEntry = GetAccountVerified(account, jpcSession);
-            using var store = accountEntry.GetCatalogPublication();
+        //    using var accountEntry = GetAccountVerified(account, jpcSession);
+        //    using var store = accountEntry.GetCatalogPublication();
 
-            foreach (var publication in publications) {
-                store.New(publication);
+        //    foreach (var publication in publications) {
+        //        store.New(publication);
 
-                }
+        //        }
 
-            }
+        //    }
 
         /// <summary>
         /// Verify a claim to a publication and return the value if accepted.

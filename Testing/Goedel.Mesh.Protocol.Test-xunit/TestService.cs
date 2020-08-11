@@ -349,7 +349,23 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void MeshGrantPrivs() {
+        public void MeshRevokeExternal() {
+            throw new NYI();
+            }
+
+        [Fact]
+        public void MeshGrantExternal() {
+            throw new NYI();
+            }
+
+        [Fact]
+        public void MeshGrantSuperAdmin() {
+            throw new NYI();
+            }
+
+
+        [Fact]
+        public void MeshGrantAdmin() {
             // SUCCESS: Create a personal mesh on device1
 
 

@@ -845,7 +845,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="connectUri"></param>
         /// <param name="path"></param>
         /// <returns></returns>
-        public PublishResponse Preconfigure(
+        public bool Preconfigure(
                     out string filename,
                     out ProfileDevice profileDevice,
                     out string connectUri, 
@@ -882,7 +882,7 @@ namespace Goedel.Mesh.Client {
         /// <param name="secret">The master secret.</param>
         /// <param name="bits">The size of secret to generate in bits/</param>
         /// <returns>Response from the server.</returns>
-        public PublishResponse CreateDeviceEarl(
+        public bool CreateDeviceEarl(
                     out PrivateKeyUDF secretSeed,
                     out ProfileDevice profileDevice,
                     out string pin,
@@ -921,14 +921,17 @@ namespace Goedel.Mesh.Client {
                 EnvelopedData = encryptedProfileDevice,
                 };
 
-            var publishRequest = new PublishRequest() {
-                Publications = new List<CatalogedPublication>() { catalogedPublication }
-                };
-
-            var publishResponse = MeshClient.Publish(publishRequest);
+            throw new NYI();
 
 
-            return publishResponse;
+            //var publishRequest = new PublishRequest() {
+            //    Publications = new List<CatalogedPublication>() { catalogedPublication }
+            //    };
+
+            //var publishResponse = MeshClient.Publish(publishRequest);
+
+
+            //return publishResponse;
             }
 
 
@@ -1304,7 +1307,11 @@ namespace Goedel.Mesh.Client {
                 };
 
             // send it to the service
-            SendMessage(message, recipient);
+            var transact = TransactBegin();
+            OutboundMessage(transact, recipient,  message);
+            Transact(transact);
+
+            //SendMessage(message, recipient);
 
             return message;
             }
@@ -1381,10 +1388,7 @@ namespace Goedel.Mesh.Client {
             var catalogPublication = GetCatalogPublication();
             CatalogUpdate(transactRequest, catalogPublication, catalogedPublication);
 
-
             Transact(transactRequest);
-
-
 
             // return the contact address
             return MeshUri.ConnectUri(AccountAddress, pin);
@@ -1412,7 +1416,11 @@ namespace Goedel.Mesh.Client {
 
             RegisterPIN(pin, true, null, AccountAddress, "Contact");
 
-            SendMessage(message, recipientAddress);
+            var transact = TransactBegin();
+            OutboundMessage(transact, recipientAddress, message);
+            Transact(transact);
+
+            //SendMessage(message, recipientAddress);
 
             // send it to the service
 
@@ -1454,17 +1462,19 @@ namespace Goedel.Mesh.Client {
         /// <summary>
         /// Construct a confirmation request.
         /// </summary>
-        /// <param name="accountAddress">The contact to request.</param>
+        /// <param name="recipientAddress">The contact to request.</param>
         /// <param name="messageText">The message text to send.</param>
-        public RequestConfirmation ConfirmationRequest(string accountAddress, string messageText) {
+        public RequestConfirmation ConfirmationRequest(string recipientAddress, string messageText) {
             // prepare the contact request
 
             var message = new RequestConfirmation() {
-                Recipient = accountAddress,
+                Recipient = recipientAddress,
                 Text = messageText
                 };
 
-            SendMessage(message, accountAddress);
+            var transact = TransactBegin();
+            OutboundMessage(transact, recipientAddress,  message);
+            Transact(transact);
 
             // send it to the service
             return message;
@@ -1479,16 +1489,18 @@ namespace Goedel.Mesh.Client {
         public ProcessResult ConfirmationResponse(RequestConfirmation requestConfirmation, bool response) {
             // prepare the contact request
 
-            var recipient = requestConfirmation.Sender;
+            var recipientAddress = requestConfirmation.Sender;
 
             var message = new ResponseConfirmation() {
                 MessageID = requestConfirmation.GetResponseId(),
-                Recipient = recipient,
+                Recipient = recipientAddress,
                 Accept = response,
                 Request = requestConfirmation.DareEnvelope
                 };
 
-            SendMessage(message, recipient);
+            var transact = TransactBegin();
+            OutboundMessage(transact, recipientAddress, message);
+            Transact(transact);
 
             // send it to the service
             return null;

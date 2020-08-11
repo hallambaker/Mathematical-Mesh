@@ -37,18 +37,23 @@ namespace Scratchpad {
             // PINs are not being marked as being used
             // need test to see how many messages are processed...
 
+            TestService.Test().MeshCatalogGroup();
+            //TestService.Test().MeshDeviceConnectStaticQR();
+            //TestService.Test().MeshMessageContact();
+
+
 
             // Also need to return full description of results from ResultSync
-            
-            ShellTests.Test().TestProfileConnectPin();
-            ShellTests.Test().TestProfileConnectPinReused();
+
+            //ShellTests.Test().TestProfileConnectPin();
+            //ShellTests.Test().TestProfileConnectPinReused();
 
 
             //ShellTests.Test().TestEscrowChangeService();
             //ShellTests.Test().TestProfileContact();
 
-            ShellTests.Test().TestProfileConnectDynamicQR();
-            ShellTests.Test().TestProfileConnectStaticQR();
+            //ShellTests.Test().TestProfileConnectDynamicQR();
+            //ShellTests.Test().TestProfileConnectStaticQR();
             // The App bundle:
             //ShellTests.Test().TestMessageGroup();
             //ShellTests.Test().TestProfileMail();
@@ -58,6 +63,12 @@ namespace Scratchpad {
 
 
             // The Auth bundle:
+
+            //TestService.Test().MeshRevokeExternal();
+            //TestService.Test().MeshGrantExternal();
+            //TestService.Test().MeshGrantAdmin();
+            //TestService.Test().MeshGrantSuperAdmin();
+
 
             //TestService.Test().MeshGrantPrivs();
             //[Tests will likely need a rewrite here...]

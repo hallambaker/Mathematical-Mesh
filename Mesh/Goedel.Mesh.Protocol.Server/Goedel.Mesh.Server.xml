@@ -1069,14 +1069,6 @@
             <param name="jpcSession">The connection authentication context.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.Server.PublicMeshService.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
-            <summary>
-            Server method implementing the transaction  Publish.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
-            <returns>The response object from the service</returns>
-        </member>
         <member name="M:Goedel.Mesh.Server.PublicMeshService.Claim(Goedel.Mesh.ClaimRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Server method implementing the transaction  Claim.
@@ -1180,15 +1172,6 @@
             </summary>
             <param name="jpcSession">The session connection data.</param>
             <param name="account">The account to be deleted.</param> 
-        </member>
-        <member name="M:Goedel.Mesh.Server.MeshPersist.Publish(Goedel.Protocol.JpcSession,Goedel.Protocol.VerifiedAccount,System.Collections.Generic.List{Goedel.Mesh.CatalogedPublication})">
-            <summary>
-            Service a publication request. Note that at present the mechanism does not
-            support handling of external publication data.
-            </summary>
-            <param name="jpcSession">The session connection data.</param>
-            <param name="account">The account to publish to.</param> 
-            <param name="publications">The publications to be published.</param>
         </member>
         <member name="M:Goedel.Mesh.Server.MeshPersist.Claim(Goedel.Protocol.JpcSession,Goedel.Cryptography.Dare.DareEnvelope)">
             <summary>

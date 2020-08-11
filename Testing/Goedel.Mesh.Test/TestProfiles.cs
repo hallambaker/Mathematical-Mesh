@@ -202,7 +202,8 @@ namespace Goedel.Mesh.Test {
 
 
 
-        void CheckCatalog(ICatalog catalog, List<CatalogedEntry> entries) {
+        void CheckCatalog<T>(Catalog<T> catalog, List<CatalogedEntry> entries)
+                    where T: CatalogedEntry{
 
             var sorted = new SortedDictionary<string, CatalogedEntry>();
             foreach (var entry in entries) {

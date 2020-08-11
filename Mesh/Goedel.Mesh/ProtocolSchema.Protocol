@@ -396,32 +396,6 @@
 				|of all the messages must not exceed the specified value.	
 
 
-
-	Transaction User Publish PublishRequest PublishResponse
-		Description
-			|Request to post to a spool from an external party. The request and response
-			|messages are extensions of the corresponding messages for the Upload transaction.
-			|It is expected that additional fields will be added as the need arises.
-
-
-	Message PublishRequest
-		Inherits MeshRequest
-		Description
-			|
-		Struct CatalogedPublication Publications
-			Multiple
-			Description
-				|The entries to be published. These may contain the full data
-				|or just the identifier, length and fingerprint.
-
-
-	Message PublishResponse
-		Inherits MeshResponse
-		Description
-			|
-
-
-
 	// Public requests
 
 	Transaction Public Post PostRequest PostResponse

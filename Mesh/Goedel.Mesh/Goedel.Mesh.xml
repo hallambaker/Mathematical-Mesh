@@ -874,64 +874,6 @@
         <member name="F:Goedel.Mesh.CatalogAction.Delete">
             <summary>Delete an entry.</summary>
         </member>
-        <member name="T:Goedel.Mesh.ICatalog">
-            <summary>
-            Interface to catalog functionality.
-            </summary>
-        </member>
-        <member name="P:Goedel.Mesh.ICatalog.Container">
-            <summary>The container</summary>
-        </member>
-        <member name="P:Goedel.Mesh.ICatalog.ContainerName">
-            <summary>The container identifier. Must be unique within a given account.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.ICatalog.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Prepare the set of catalog updates <paramref name="updates"/> returning a list
-            of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/> applying the updates to the sequence.
-            </summary>
-            <param name="updates">The updates to apply.</param>
-            <returns>The processed updates.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.ICatalog.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Commit the updates in <paramref name="envelopes"/> to the local persistence store.
-            </summary>
-            <param name="envelopes">The updates to apply.</param>
-            <param name="updates">The updates to apply.</param>
-        </member>
-        <member name="T:Goedel.Mesh.CatalogUpdate">
-            <summary>
-            Describes a single update to be applied to a single catalog. 
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.CatalogUpdate.Catalog">
-            <summary>The catalog to which this update will be applied.</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogUpdate.Action">
-            <summary>The action to apply</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogUpdate.CatalogEntry">
-            <summary>The entry to apply the action to</summary>
-        </member>
-        <member name="P:Goedel.Mesh.CatalogUpdate.PrimaryKey">
-            <summary>The primary key under which the entry is cataloged.</summary>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.ICatalog,Goedel.Mesh.CatalogAction,Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Construct a catalog update.
-            </summary>
-            <param name="action">The action to apply</param>
-            <param name="catalogEntry">The entry to apply the action to</param>
-            <param name="catalog">The catalog to apply the update to</param>
-        </member>
-        <member name="M:Goedel.Mesh.CatalogUpdate.#ctor(Goedel.Mesh.ICatalog,System.String)">
-            <summary>
-            Construct a catalog delete update.
-            </summary>
-            <param name="primaryKey">The primary key of the entry to delete.</param>
-            <param name="catalog">The catalog to apply the update to</param>
-        </member>
         <member name="T:Goedel.Mesh.Catalog`1">
             <summary>
             Base class for catalogs.
@@ -970,30 +912,6 @@
             store.
             </summary>
         </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Prepare(System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Prepare the set of catalog updates <paramref name="updates"/> returning a list
-            of <see cref="T:Goedel.Cryptography.Dare.DareEnvelope"/> applying the updates to the sequence.
-            </summary>
-            <param name="updates">The updates to apply.</param>
-            <returns>The processed updates.</returns>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Commit(System.Collections.Generic.List{Goedel.Cryptography.Dare.DareEnvelope},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Commit the updates in <paramref name="envelopes"/> to the local persistence store.
-            </summary>
-            <param name="envelopes">The envelopes to append.</param>
-            <param name="updates">The updates to apply</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.Transact(Goedel.Mesh.Catalog{`0},System.Collections.Generic.List{Goedel.Mesh.CatalogUpdate})">
-            <summary>
-            Apply the transactions specified in <paramref name="updates"/> to the catalog
-            <paramref name="catalog"/>.
-            </summary>
-            <param name="catalog">The catalog to apply the transactions to.</param>
-            <param name="updates">The updates to apply</param>
-            <returns>True if the transactions were accepted, otherwise false.</returns>
-        </member>
         <member name="M:Goedel.Mesh.Catalog`1.NewEntry(Goedel.Mesh.CatalogedEntry)">
             <summary>
             Callback called before adding a new entry to the catalog. May be overriden in 
@@ -1020,12 +938,6 @@
             Apply the update in <paramref name="dareMessage"/> to the persistence store.
             </summary>
             <param name="dareMessage">The update to apply.</param>
-        </member>
-        <member name="M:Goedel.Mesh.Catalog`1.TryNew(Goedel.Mesh.CatalogedEntry)">
-            <summary>
-            Add <paramref name="catalogEntry"/> to the catalog as a new entry.
-            </summary>
-            <param name="catalogEntry">The entry to add.</param>
         </member>
         <member name="M:Goedel.Mesh.Catalog`1.New(Goedel.Mesh.CatalogedEntry,Goedel.Cryptography.CryptoKey)">
             <summary>
@@ -5431,14 +5343,6 @@
             <param name="session">The authentication binding.</param>
             <returns>The response object from the service</returns>
         </member>
-        <member name="M:Goedel.Mesh.MeshService.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
-            <summary>
-            Base method for implementing the transaction  Publish.
-            </summary>
-            <param name="request">The request object to send to the host.</param>
-            <param name="session">The authentication binding.</param>
-            <returns>The response object from the service</returns>
-        </member>
         <member name="M:Goedel.Mesh.MeshService.Post(Goedel.Mesh.PostRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Base method for implementing the transaction  Post.
@@ -6877,14 +6781,6 @@
             <returns>The response object</returns>
         </member>
         <member name="M:Goedel.Mesh.MeshServiceClient.Transact(Goedel.Mesh.TransactRequest,Goedel.Protocol.JpcSession)">
-            <summary>
-            Implement the transaction
-            </summary>		
-            <param name="request">The request object.</param>
-            <param name="session">The authentication binding.</param>
-            <returns>The response object</returns>
-        </member>
-        <member name="M:Goedel.Mesh.MeshServiceClient.Publish(Goedel.Mesh.PublishRequest,Goedel.Protocol.JpcSession)">
             <summary>
             Implement the transaction
             </summary>		
@@ -8660,126 +8556,6 @@
             <returns>The created object.</returns>		
         </member>
         <member name="M:Goedel.Mesh.EntryResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.PublishRequest">
-             <summary>
-            
-             
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.PublishRequest.Publications">
-             <summary>
-            The entries to be published. These may contain the full data
-            or just the identifier, length and fingerprint.
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.PublishRequest._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.PublishRequest.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.PublishRequest._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.PublishRequest.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.PublishRequest.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.PublishRequest.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.PublishRequest.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
-            <summary>
-            Having read a tag, process the corresponding value data.
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tag">The tag</param>
-        </member>
-        <member name="T:Goedel.Mesh.PublishResponse">
-             <summary>
-            
-             
-             </summary>
-        </member>
-        <member name="P:Goedel.Mesh.PublishResponse._Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="F:Goedel.Mesh.PublishResponse.__Tag">
-            <summary>
-            Tag identifying this class
-            </summary>
-        </member>
-        <member name="M:Goedel.Mesh.PublishResponse._Factory">
-            <summary>
-            Factory method
-            </summary>
-            <returns>Object of this type</returns>
-        </member>
-        <member name="M:Goedel.Mesh.PublishResponse.Serialize(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            </summary>
-            <param name="writer">Output stream</param>
-            <param name="wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.PublishResponse.SerializeX(Goedel.Protocol.Writer,System.Boolean,System.Boolean@)">
-            <summary>
-            Serialize this object to the specified output stream.
-            Unlike the Serlialize() method, this method is not inherited from the
-            parent class allowing a specific version of the method to be called.
-            </summary>
-            <param name="_writer">Output stream</param>
-            <param name="_wrap">If true, output is wrapped with object
-            start and end sequences '{ ... }'.</param>
-            <param name="_first">If true, item is the first entry in a list.</param>
-        </member>
-        <member name="M:Goedel.Mesh.PublishResponse.FromJson(Goedel.Protocol.JsonReader,System.Boolean)">
-            <summary>
-            Deserialize a tagged stream
-            </summary>
-            <param name="jsonReader">The input stream</param>
-            <param name="tagged">If true, the input is wrapped in a tag specifying the type</param>
-            <returns>The created object.</returns>		
-        </member>
-        <member name="M:Goedel.Mesh.PublishResponse.DeserializeToken(Goedel.Protocol.JsonReader,System.String)">
             <summary>
             Having read a tag, process the corresponding value data.
             </summary>

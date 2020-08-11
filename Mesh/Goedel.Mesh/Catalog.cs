@@ -23,87 +23,12 @@ namespace Goedel.Mesh {
         }
 
 
-    /// <summary>
-    /// Interface to catalog functionality.
-    /// </summary>
-    public interface ICatalog : IEnumerable<CatalogedEntry> {
-
-        ///<summary>The container</summary>
-        Container Container { get; }
-
-        ///<summary>The container identifier. Must be unique within a given account.</summary>
-        string ContainerName { get; }
-
-        /// <summary>
-        /// Prepare the set of catalog updates <paramref name="updates"/> returning a list
-        /// of <see cref="DareEnvelope"/> applying the updates to the sequence.
-        /// </summary>
-        /// <param name="updates">The updates to apply.</param>
-        /// <returns>The processed updates.</returns>
-        List<DareEnvelope> Prepare(List<CatalogUpdate> updates);
-
-
-
-        /// <summary>
-        /// Commit the updates in <paramref name="envelopes"/> to the local persistence store.
-        /// </summary>
-        /// <param name="envelopes">The updates to apply.</param>
-        /// <param name="updates">The updates to apply.</param>
-        void Commit(List<DareEnvelope> envelopes, List<CatalogUpdate> updates);
-        }
-
-    /// <summary>
-    /// Describes a single update to be applied to a single catalog. 
-    /// </summary>
-    public struct CatalogUpdate {
-
-        ///<summary>The catalog to which this update will be applied.</summary>
-        public ICatalog Catalog;
-
-        ///<summary>The action to apply</summary>
-        public CatalogAction Action { get; set; }
-        
-        ///<summary>The entry to apply the action to</summary>
-        public CatalogedEntry CatalogEntry { get; set; }
-        ///<summary>The primary key under which the entry is cataloged.</summary>
-        public string PrimaryKey { get; set; }
-
-        /// <summary>
-        /// Construct a catalog update.
-        /// </summary>
-        /// <param name="action">The action to apply</param>
-        /// <param name="catalogEntry">The entry to apply the action to</param>
-        /// <param name="catalog">The catalog to apply the update to</param>
-        public CatalogUpdate(ICatalog catalog, CatalogAction action, CatalogedEntry catalogEntry) {
-            Action = action;
-            CatalogEntry = catalogEntry;
-            PrimaryKey = catalogEntry?._PrimaryKey;
-            Catalog = catalog;
-            }
-
-        /// <summary>
-        /// Construct a catalog delete update.
-        /// </summary>
-        /// <param name="primaryKey">The primary key of the entry to delete.</param>
-        /// <param name="catalog">The catalog to apply the update to</param>
-        public CatalogUpdate(ICatalog catalog, string primaryKey) {
-            Action = CatalogAction.Delete;
-            CatalogEntry = null;
-            PrimaryKey = primaryKey;
-            Catalog = catalog;
-            }
-
-
-
-
-        }
-
     #region // The data classes Catalog, CatalogedEntry
 
     /// <summary>
     /// Base class for catalogs.
     /// </summary>
-    public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>, ICatalog 
+    public abstract class Catalog<T> : Store, IEnumerable<CatalogedEntry>
                 where T : CatalogedEntry {
 
         ///<summary>Class exposing the Mesh Client locate interface.</summary>
@@ -172,112 +97,6 @@ namespace Goedel.Mesh {
             }
 
 
-
-        /// <summary>
-        /// Prepare the set of catalog updates <paramref name="updates"/> returning a list
-        /// of <see cref="DareEnvelope"/> applying the updates to the sequence.
-        /// </summary>
-        /// <param name="updates">The updates to apply.</param>
-        /// <returns>The processed updates.</returns>
-        public List<DareEnvelope> Prepare(List<CatalogUpdate> updates) {
-            var result = new List<DareEnvelope>();
-            foreach (var update in updates) {
-                switch (update.Action) {
-                    case CatalogAction.New: {
-                        var envelope = PersistenceStore.PrepareNew(update.CatalogEntry);
-                        envelope.JSONObject = update.CatalogEntry;
-                        result.Add(envelope);
-                        break;
-                        }
-                    case CatalogAction.Update: {
-                        var envelope = PersistenceStore.PrepareUpdate(out _, update.CatalogEntry);
-                        envelope.JSONObject = update.CatalogEntry;
-                        result.Add(envelope);
-                        break;
-                        }
-                    case CatalogAction.Delete: {
-                        var envelope = PersistenceStore.PrepareDelete(out _, update.PrimaryKey);
-                        if (envelope != null) {
-                            result.Add(envelope);
-                            }
-                        break;
-                        }
-
-                    default:
-                        break;
-                    }
-                }
-
-            return result;
-
-            }
-
-        /// <summary>
-        /// Commit the updates in <paramref name="envelopes"/> to the local persistence store.
-        /// </summary>
-        /// <param name="envelopes">The envelopes to append.</param>
-        /// <param name="updates">The updates to apply</param>
-        public void Commit(List<DareEnvelope> envelopes, List<CatalogUpdate> updates) {
-
-            foreach (var envelope in envelopes) {
-                PersistenceStore.Apply(envelope);
-                // error - this is not updating the persistence store index 
-                }
-            foreach (var update in updates) {
-                switch (update.Action) {
-                    case CatalogAction.New: {
-                        NewEntry(update.CatalogEntry);
-                        break;
-                        }
-                    case CatalogAction.Update: {
-                        UpdateEntry(update.CatalogEntry);
-                        break;
-                        }
-                    case CatalogAction.Delete: {
-                        DeleteEntry(update.PrimaryKey);
-                        break;
-                        }
-
-                    default:
-                    break;
-                    }
-                }
-
-            }
-
-        /// <summary>
-        /// Apply the transactions specified in <paramref name="updates"/> to the catalog
-        /// <paramref name="catalog"/>.
-        /// </summary>
-        /// <param name="catalog">The catalog to apply the transactions to.</param>
-        /// <param name="updates">The updates to apply</param>
-        /// <returns>True if the transactions were accepted, otherwise false.</returns>
-        public virtual bool Transact(Catalog<T> catalog, List<CatalogUpdate> updates) {
-            foreach (var update in updates) {
-                switch (update.Action) {
-                    case CatalogAction.New: {
-                        NewEntry(update.CatalogEntry);
-                        catalog.PersistenceStore.New(update.CatalogEntry);
-                        break;
-                        }
-                    case CatalogAction.Update: {
-                        UpdateEntry(update.CatalogEntry);
-                        catalog.PersistenceStore.Update(update.CatalogEntry);
-                        break;
-                        }
-                    case CatalogAction.Delete: {
-                        DeleteEntry(update.PrimaryKey);
-                        catalog.PersistenceStore.Delete(update.PrimaryKey);
-                        break;
-                        }
-
-                    default:
-                        break;
-                    }
-                }
-            return true;
-            }
-
         /// <summary>
         /// Callback called before adding a new entry to the catalog. May be overriden in 
         /// derrived classes to update local indexes.
@@ -309,23 +128,6 @@ namespace Goedel.Mesh {
         public void Apply(DareEnvelope dareMessage) => PersistenceStore.Apply(dareMessage);
 
 
-        /// <summary>
-        /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
-        /// </summary>
-        /// <param name="catalogEntry">The entry to add.</param>
-        public bool TryNew(CatalogedEntry catalogEntry) {
-            var catalogUpdate = new CatalogUpdate(this, CatalogAction.New, catalogEntry);
-
-            try {
-                Transact(this, new List<CatalogUpdate> { catalogUpdate });
-                return true;
-                }
-            catch {
-                return false;
-                }
-            }
-
-
 
         /// <summary>
         /// Add <paramref name="catalogEntry"/> to the catalog as a new entry.
@@ -333,10 +135,10 @@ namespace Goedel.Mesh {
         /// <param name="catalogEntry">The entry to add.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void New(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
-            encryptionKey.AssertNull(NYI.Throw); // for later use
 
-            var catalogUpdate = new CatalogUpdate(this, CatalogAction.New, catalogEntry);
-            Transact(this, new List<CatalogUpdate> { catalogUpdate });
+            var envelope = PersistenceStore.PrepareNew(catalogEntry, encryptionKey);
+            PersistenceStore.Apply(envelope);
+            NewEntry(catalogEntry);
             }
 
 
@@ -346,12 +148,9 @@ namespace Goedel.Mesh {
         /// <param name="catalogEntry">The entry to update.</param>
         /// <param name="encryptionKey">Key under which the item is to be encrypted.</param>
         public void Update(CatalogedEntry catalogEntry, CryptoKey encryptionKey = null) {
-            encryptionKey.AssertNull(NYI.Throw); // for later use
-
-
-            var catalogUpdate = new CatalogUpdate(this, CatalogAction.Update, catalogEntry);
-
-            Transact(this, new List<CatalogUpdate> { catalogUpdate });
+            var envelope = PersistenceStore.PrepareUpdate(out _, catalogEntry, encryptionKey: encryptionKey);
+            PersistenceStore.Apply(envelope);
+            UpdateEntry(catalogEntry);
             }
 
         /// <summary>
@@ -359,11 +158,10 @@ namespace Goedel.Mesh {
         /// </summary>
         /// <param name="catalogEntry">The entry to delete.</param>
         public void Delete(CatalogedEntry catalogEntry) {
-            var catalogUpdate = new CatalogUpdate(this, catalogEntry._PrimaryKey);
-            Transact(this, new List<CatalogUpdate> { catalogUpdate });
+            var envelope = PersistenceStore.PrepareDelete(out _, catalogEntry._PrimaryKey);
+            PersistenceStore.Apply(envelope);
+            DeleteEntry(catalogEntry._PrimaryKey);
             }
-
-
 
         /// <summary>
         /// Return the catalogued entry with key <paramref name="key"/> as the catalogued type.
@@ -371,9 +169,6 @@ namespace Goedel.Mesh {
         /// <param name="key">Unique identifier of the device to return.</param>
         /// <returns>The <see cref="CatalogedDevice"/> entry.</returns>
         public virtual T Get(string key) => Locate(key) as T;
-
-
-
 
         /// <summary>
         /// Add the catalog entry data speficied in the stream <paramref name="stream"/>. If 
