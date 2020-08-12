@@ -217,12 +217,6 @@
 			Include AccountOptions
 			Include Reporting
 
-		Command AccountInvite "invite"
-			Brief "Create a device invitation Uri"
-
-			Include AccountOptions
-			Include Reporting
-
 		Command AccountPublish "publish"
 			Brief "Create a new device profile and register the corresponding URI."
 			Include AccountOptions

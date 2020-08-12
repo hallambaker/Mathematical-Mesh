@@ -720,7 +720,7 @@ namespace Goedel.Cryptography.Dare {
         /// Write a previously prepared or validated Dare Envelope to the container directly.
         /// </summary>
         /// <param name="envelope"></param>
-        public virtual ContainerFrameIndex Append(DareEnvelope envelope) {
+        public virtual ContainerFrameIndex Append(DareEnvelope envelope, bool updateEnvelope = false) {
 
             var ContainerFrameIndex = new ContainerFrameIndex(envelope);
 
@@ -771,9 +771,14 @@ namespace Goedel.Cryptography.Dare {
             var dataTrailer = trailer.GetBytes(false);
             AppendFrame(dataHeader, envelope.Body, dataTrailer);
 
+            if (updateEnvelope) {
+                envelope.Header = header;
+                envelope.Trailer = trailer;
+                }
+
             //ContainerFrameIndex.dataPosition = JBCDStream.PositionWrite + 
 
-            return ContainerFrameIndex;
+                return ContainerFrameIndex;
 
             }
 

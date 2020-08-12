@@ -231,7 +231,7 @@ namespace Goedel.Mesh {
         /// Get the 
         /// </summary>
         /// <returns></returns>
-        public string GetURI() => MeshUri.ConnectUri(Account, SaltedPIN);
+        public string GetURI() => MeshUri.ConnectUri(Account, PIN);
 
         /// <summary>
         /// PIN code identifier 

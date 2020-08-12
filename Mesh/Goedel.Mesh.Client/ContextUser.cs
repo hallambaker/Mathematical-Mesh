@@ -1034,7 +1034,7 @@ namespace Goedel.Mesh.Client {
                 var meshMessage = spoolEntry.Message;
 
                 // Must enforce this from now on. 
-                spoolEntry.Open.AssertTrue(Internal.Throw);
+                //spoolEntry.Open.AssertTrue(Internal.Throw);
 
                 Screen.WriteLine($"$$ Got message {meshMessage.GetType()} { meshMessage.MessageID}: Status {meshMessage.Status}");
 
@@ -1085,9 +1085,12 @@ namespace Goedel.Mesh.Client {
                 return new ProcessResultError(request, ProcessingResult.ContactInvalid);
                 }
 
-            GetCatalogContact().Add(request.Contact);
+            var catalog = GetCatalogContact();
+            var transactRequest = new TransactRequest();
+
+            GetCatalogContact().Add(request.Contact);  // Hack: make transactional
             if (request.Contact?.NetworkAddresses != null) {
-                var catalogCapability = GetCatalogCapability();
+                var catalogCapability = GetCatalogCapability(); // Hack: make transactional
                 foreach (var address in request.Contact.NetworkAddresses) {
                     if (address.Capabilities != null) {
                         foreach (var capability in address.Capabilities) {
@@ -1096,6 +1099,10 @@ namespace Goedel.Mesh.Client {
                         }
                     }
                 }
+
+            //CatalogUpdate(transactRequest, catalog, catalogedContact);
+            //InboundComplete(transactRequest, MessageStatus.Closed, request, null);
+            Transact(transactRequest);
 
             return new ResultGroupInvitation (request);
             }
@@ -1130,7 +1137,14 @@ namespace Goedel.Mesh.Client {
                 return new InsufficientAuthorization(request);
                 }
 
-            GetCatalogContact().Add(request.AuthenticatedData);
+            var catalog = GetCatalogContact();
+            var contact = Contact.Decode(request.AuthenticatedData);
+            var catalogedContact = catalog.GetUpdated(contact);
+
+            var transactRequest = new TransactRequest();
+            CatalogUpdate(transactRequest, catalog, catalogedContact);
+            InboundComplete(transactRequest, MessageStatus.Closed, request, null);
+            Transact(transactRequest);
 
             return new ResultReplyContact(request, messagePin);
             }
@@ -1176,11 +1190,15 @@ namespace Goedel.Mesh.Client {
                 var device = MakeCatalogedDevice(request.MessageConnectionRequest.ProfileDevice);
                 respondConnection.CatalogedDevice = device;
                 respondConnection.Result = Constants.TransactionResultAccept;
+
+                CatalogUpdate(transactRequest, GetCatalogDevice(), device);
+
                 }
             else {
                 respondConnection.Result = Constants.TransactionResultReject;
                 }
 
+            InboundComplete(transactRequest, MessageStatus.Closed, request, respondConnection);
             LocalMessage(transactRequest, respondConnection);
 
             // Mark the pin code as having been used.

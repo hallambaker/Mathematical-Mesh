@@ -120,7 +120,7 @@ namespace Goedel.XUnit {
             var profileUdf = account.ProfileUser.UDF;
             var ProfileAliceDelete = testCLIAlice1.Example($"account delete {profileUdf}");
 
-            // failing here as account was not deleted off the service.
+            // Failing because the device catalog is keypt open.
             testCLIAlice1.Dispatch($"account sync", fail: true);
             }
 

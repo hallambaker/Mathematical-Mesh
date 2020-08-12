@@ -62,7 +62,7 @@ namespace Goedel.Mesh.Shell {
             contextUser.AssertNotNull(ProfileFingerprintInvalid.Throw);
 
             contextUser.DeleteAccount();
-
+            contextUser.Dispose();
 
             return new ResultDeleteAccount() {
                 Success = true,
@@ -129,33 +129,11 @@ namespace Goedel.Mesh.Shell {
                         validity: expire.Ticks);
 
             var result = new ResultPIN() {
-                MessagePIN = messageConnectionPIN
+                MessagePIN = messageConnectionPIN,
                 };
 
             return result;
             }
-
-
-        /// <summary>
-        /// Dispatch method
-        /// </summary>
-        /// <param name="Options">The command line options.</param>
-        /// <returns>Mesh result instance</returns>
-        public override ShellResult AccountInvite(AccountInvite Options) {
-            var contextAccount = GetContextAccount(Options);
-
-
-            var messagePIN = contextAccount.GetPIN(Constants.MessagePINActionContact, length: 128);
-            var uri = messagePIN.GetURI();
-
-            var result = new ResultPIN() {
-                MessagePIN = messagePIN,
-                Uri = uri
-                };
-
-            return result;
-            }
-
 
 
 

@@ -154,6 +154,7 @@ namespace Goedel.Mesh.Client {
             //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
 
             var envelope = message.Encode(); // Todo: Sign, encrypt
+            envelope.JSONObject = message;
 
             transactRequest.Outbound.Add(envelope);
             if (recipientAddress != null) {
@@ -173,6 +174,7 @@ namespace Goedel.Mesh.Client {
                 Message message) {
             transactRequest.Inbound ??= new List<Cryptography.Dare.DareEnvelope>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
+            envelope.JSONObject = message;
             transactRequest.Inbound.Add(envelope);
             }
 
@@ -187,6 +189,7 @@ namespace Goedel.Mesh.Client {
                 Message message) {
             transactRequest.Local ??= new List<Cryptography.Dare.DareEnvelope>();
             var envelope = message.Encode(); // Todo: Sign, encrypt
+            envelope.JSONObject = message;
             transactRequest.Local.Add(envelope);
             }
 
@@ -314,7 +317,7 @@ namespace Goedel.Mesh.Client {
                 var message = new MessageComplete() {
                     References = transactRequest.InboundReferences
                     };
-                LocalMessage(transactRequest, message);
+                InboundMessage(transactRequest, message);
                 }
             if (transactRequest.LocalReferences != null) {
                 var message = new MessageComplete() {
@@ -334,6 +337,19 @@ namespace Goedel.Mesh.Client {
                         catalogUpdate.Commit();
                         }
                     }
+                if (transactRequest.Inbound!= null) {
+                    var spoolInbound = GetSpoolInbound();
+                    foreach (var envelope in transactRequest.Inbound) {
+                        spoolInbound.Add(envelope);
+                        }
+                    }
+                if (transactRequest.Local != null) {
+                    var spoolLocal = GetSpoolLocal();
+                    foreach (var envelope in transactRequest.Local) {
+                        spoolLocal.Add(envelope);
+                        }
+                    }
+
                 }
 
             return response;

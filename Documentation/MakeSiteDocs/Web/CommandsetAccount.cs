@@ -106,12 +106,6 @@ namespace ExampleGenerator {
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `account import` command\n{0}", _Indent);
 				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				 Describe(CommandSet, _AccountInvite._DescribeCommand);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("The `account invite` command \n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
-				_Output.Write ("\n{0}", _Indent);
 				 Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 				_Output.Write ("\n{0}", _Indent);
 				_Output.Write ("The `account pin` command generates and registers a new PIN code that may be used\n{0}", _Indent);

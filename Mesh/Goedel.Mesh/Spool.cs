@@ -170,10 +170,10 @@ namespace Goedel.Mesh {
         /// field is discarded. The trailer, if present must be rewritten for the 
         /// purposes of the container.
         /// </summary>
-        /// <param name="dareMessage"></param>
-        public SpoolEntry Add(DareEnvelope dareMessage) {
-            Container.Append(dareMessage);
-            return Intern(dareMessage, null);
+        /// <param name="envelope"></param>
+        public SpoolEntry Add(DareEnvelope envelope) {
+            Container.Append(envelope, true);
+            return Intern(envelope, null);
             }
 
         /// <summary>

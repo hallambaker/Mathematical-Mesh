@@ -57,22 +57,21 @@ namespace Goedel.Mesh.Client {
 
             }
 
-        void Register(CatalogedMachine catalogedMachine) {
+        ContextAccount Register(CatalogedMachine catalogedMachine) {
             switch (catalogedMachine) {
                 // consider adding a machine catalog entry for a group...
                 case CatalogedStandard standardEntry: {
                     var context = new ContextUser(this, standardEntry);
                     Register(context);
-                    break;
+                    return context;
                     }
                 case CatalogedPending pendingEntry: {
                     var context = new ContextMeshPending(this, pendingEntry);
                     Register(context);
-                    break;
+                    return context;
                     }
-
                 default:
-                    break;
+                    return null;
                 }
             }
 
@@ -165,12 +164,15 @@ namespace Goedel.Mesh.Client {
             
             // persist the permanent record.
             var machine = ContainerHost.Update(catalogItem, create);
-            if (machine.JsonObject is CatalogedMachine catalogedMachine) {
-                Register(catalogedMachine);
+            if (context!=null) {
+                Register(context);
                 }
+            //if (machine.JsonObject is CatalogedMachine catalogedMachine) {
+            //    Register(catalogedMachine);
+            //    }
 
-            // register the dynamic context
-            Register(context);
+            //// register the dynamic context
+
 
             }
 
@@ -256,6 +258,7 @@ namespace Goedel.Mesh.Client {
                 };
             var catalogDevice = contextUserFinal.GetCatalogDevice();
             contextUserFinal.CatalogUpdate(transactRequest, catalogDevice, catalogedDevice);
+            contextUserFinal.Transact(transactRequest);
 
             // Register the mesh description on the local machine.
             Register(catalogedMachine, contextUserFinal);

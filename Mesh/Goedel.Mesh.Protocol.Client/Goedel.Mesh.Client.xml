@@ -517,6 +517,9 @@
         <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolLocal">
             <summary>Returns the local spool  for the account</summary>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.GetSpoolInbound">
+            <summary>Returns the local spool  for the account</summary>
+        </member>
         <member name="P:Goedel.Mesh.Client.ContextAccount.DictionaryCatalogDelegates">
             <summary>List of catalogs</summary>
         </member>

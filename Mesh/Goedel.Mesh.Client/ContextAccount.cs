@@ -104,6 +104,9 @@ namespace Goedel.Mesh.Client {
         ///<summary>Returns the local spool  for the account</summary>
         public SpoolLocal GetSpoolLocal() => GetStore(SpoolLocal.Label) as SpoolLocal;
 
+        ///<summary>Returns the local spool  for the account</summary>
+        public SpoolInbound GetSpoolInbound() => GetStore(SpoolInbound.Label) as SpoolInbound;
+
 
         ///<summary>List of catalogs</summary>
         public virtual Dictionary<string, StoreFactoryDelegate> DictionaryCatalogDelegates => catalogDelegates;

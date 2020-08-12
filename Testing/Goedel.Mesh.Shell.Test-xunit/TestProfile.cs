@@ -94,8 +94,10 @@ namespace Goedel.XUnit {
 
             device1.Dispatch($"account create {AccountA}");
 
-            device1.Connect(device2, accountA).ProcessedResults.TestEqual(1);
-            device1.Connect(device3, accountA).ProcessedResults.TestEqual(1);
+            var c1 = device1.Connect(device2, accountA);
+            c1.ProcessedResults.TestEqual(1);
+            var c2 = device1.Connect(device3, accountA);
+            c2.ProcessedResults.TestEqual(1);
             }
 
 
@@ -191,10 +193,10 @@ namespace Goedel.XUnit {
             deviceAdmin.Dispatch($"account create {AccountA}");
 
             // create the connection QR code
-            var invite = deviceAdmin.Dispatch($"account invite") as ResultPIN;
+            var invite = deviceAdmin.Dispatch($"account pin") as ResultPIN;
+            var uri = invite.MessagePIN.GetURI();
 
-
-            var result1 = deviceConnect1.Dispatch($"device join {invite.Uri}");
+            var result1 = deviceConnect1.Dispatch($"device join {uri}");
             deviceAdmin.Dispatch($"account sync  /auto");
 
             // This is currently failing because the completion
@@ -215,6 +217,9 @@ namespace Goedel.XUnit {
             var deviceQ = GetTestCLI(DeviceQName);
             var deviceAdmin = GetTestCLI(DeviceAdminName);
             var deviceConnect1 = GetTestCLI(DeviceConnect1Name);
+
+            deviceQ.Dispatch($"account create {AccountQ}");
+
 
             var deviceInit = deviceQ.Dispatch($"device preconfig") as ResultPublishDevice;
             deviceConnect1.Dispatch($"device install {deviceInit.FileName}");

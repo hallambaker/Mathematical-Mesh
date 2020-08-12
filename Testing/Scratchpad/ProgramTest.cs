@@ -41,14 +41,14 @@ namespace Scratchpad {
             //TestService.Test().MeshCatalogGroup();
 
             //ShellTests.Test().TestProfileConnectDynamicQR();
-            ShellTests.Test().TestProfileConnectStaticQR();
+            //ShellTests.Test().TestProfileConnectStaticQR();
 
 
 
             // Also need to return full description of results from ResultSync
 
-            //ShellTests.Test().TestProfileConnectPin();
-            //ShellTests.Test().TestProfileConnectPinReused();
+            //ShellTests.Test().TestProfileConnectPinInvalid();
+            ShellTests.Test().TestProfileConnectPinReused();
 
 
             //ShellTests.Test().TestEscrowChangeService();

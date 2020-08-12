@@ -84,12 +84,6 @@ service configuration if successful.
 
 The `account import` command
 
-
-#% Describe(CommandSet, _AccountInvite._DescribeCommand);
-
-The `account invite` command 
-
-
 #% Describe(CommandSet, _AccountGetPIN._DescribeCommand);
 
 The `account pin` command generates and registers a new PIN code that may be used

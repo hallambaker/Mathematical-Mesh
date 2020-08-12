@@ -129,6 +129,15 @@ namespace Goedel.Mesh {
             }
 
 
+        public CatalogedContact GetUpdated(Contact contact, bool self = false) {
+            var cataloged = new CatalogedContact(contact, self);
+
+            "Need to merge catalog data intelligently".TaskFunctionality();
+            
+            return cataloged;
+            }
+
+
 
         /// <summary>
         /// Add <paramref name="contact"/> to the catalog. If <paramref name="self"/> is true, this
