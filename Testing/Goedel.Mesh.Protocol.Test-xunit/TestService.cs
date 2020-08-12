@@ -349,7 +349,7 @@ namespace Goedel.XUnit {
 
 
         [Fact]
-        public void MeshRevokeExternal() {
+        public void MeshGrantRevokeExternal() {
             throw new NYI();
             }
 

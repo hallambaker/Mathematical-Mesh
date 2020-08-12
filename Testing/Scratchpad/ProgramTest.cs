@@ -37,9 +37,11 @@ namespace Scratchpad {
             // PINs are not being marked as being used
             // need test to see how many messages are processed...
 
-            TestService.Test().MeshCatalogGroup();
-            //TestService.Test().MeshDeviceConnectStaticQR();
-            //TestService.Test().MeshMessageContact();
+
+            //TestService.Test().MeshCatalogGroup();
+
+            //ShellTests.Test().TestProfileConnectDynamicQR();
+            ShellTests.Test().TestProfileConnectStaticQR();
 
 
 
@@ -52,8 +54,7 @@ namespace Scratchpad {
             //ShellTests.Test().TestEscrowChangeService();
             //ShellTests.Test().TestProfileContact();
 
-            //ShellTests.Test().TestProfileConnectDynamicQR();
-            //ShellTests.Test().TestProfileConnectStaticQR();
+
             // The App bundle:
             //ShellTests.Test().TestMessageGroup();
             //ShellTests.Test().TestProfileMail();

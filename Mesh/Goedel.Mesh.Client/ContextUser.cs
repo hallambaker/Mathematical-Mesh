@@ -921,7 +921,12 @@ namespace Goedel.Mesh.Client {
                 EnvelopedData = encryptedProfileDevice,
                 };
 
-            throw new NYI();
+
+            // commit the transaction
+            var transactPublication = new TransactRequest();
+            var catalogPublication = GetCatalogPublication();
+            CatalogUpdate(transactPublication, catalogPublication, catalogedPublication);
+            Transact(transactPublication);
 
 
             //var publishRequest = new PublishRequest() {
@@ -931,7 +936,7 @@ namespace Goedel.Mesh.Client {
             //var publishResponse = MeshClient.Publish(publishRequest);
 
 
-            //return publishResponse;
+            return true;
             }
 
 
@@ -1295,7 +1300,6 @@ namespace Goedel.Mesh.Client {
 
             var witness = MessagePIN.GetPinWitness(saltedPin, recipient, contactSelf, nonce);
             var pinUdf = MessagePIN.GetPinUDF(saltedPin, recipient);
-
 
             var message = new ReplyContact() {
                 Recipient = recipient,

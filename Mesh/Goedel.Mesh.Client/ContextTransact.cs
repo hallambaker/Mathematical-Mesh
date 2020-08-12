@@ -6,14 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Goedel.Protocol;
+using System.Transactions;
 
 namespace Goedel.Mesh.Client {
 
+    /// <summary>
+    /// Untyped transaction update.
+    /// </summary>
+    public abstract class TransactionUpdate : ContainerUpdate {
 
-    public class TransactionUpdate<T> : ContainerUpdate where T : CatalogedEntry {
+
+        public abstract void Commit();
+        }
+
+    /// <summary>
+    /// Typed transaction update
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class TransactionUpdate<T> : TransactionUpdate where T : CatalogedEntry {
 
         public Catalog<T> Catalog;
-
 
         public TransactionUpdate(Catalog<T> catalog) {
             Container = catalog.ContainerName;
@@ -24,11 +36,38 @@ namespace Goedel.Mesh.Client {
             }
 
 
+        public override void Commit() {
+
+            foreach (var envelope in Envelopes) {
+                var action = envelope.Header.ContentMeta.Event;
+
+                // persist update
+                Catalog.Apply(envelope);
+
+                // update in memory structure
+                switch (action) {
+                    case PersistenceStore.EventNew: {
+                        Catalog.NewEntry(envelope.JSONObject as CatalogedEntry);
+                        break;
+                        }
+                    case PersistenceStore.EventUpdate: {
+                        Catalog.UpdateEntry(envelope.JSONObject as CatalogedEntry);
+                        break;
+                        }
+                    case PersistenceStore.EventDelete: {
+                        Catalog.DeleteEntry(envelope.Header.ContentMeta.UniqueID);
+                        break;
+                        }
+                    }
+                }
+            }
+
+
         public DareEnvelope Update(T catalogedEntry) {
 
             // ToDo: need to seriously revise this to get the interlock stuff right.
             var envelope = Catalog.PersistenceStore.PrepareUpdate(out _, catalogedEntry);
-
+            envelope.JSONObject = catalogedEntry;
             Envelopes.Add(envelope);
 
             return envelope;
@@ -111,14 +150,16 @@ namespace Goedel.Mesh.Client {
 
             message.Sender ??= AccountAddress;
 
-            var envelope = message.Encode(signingKey: SignOutboundMessage,
-                    encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
+            //var envelope = message.Encode(signingKey: SignOutboundMessage,
+            //        encryptionKey: recipientEncryptionKey); // Todo: Sign, encrypt
+
+            var envelope = message.Encode(); // Todo: Sign, encrypt
+
             transactRequest.Outbound.Add(envelope);
             if (recipientAddress != null) {
                 transactRequest.Accounts.Add(recipientAddress);
                 }
             }
-
 
 
         /// <summary>
@@ -231,8 +272,8 @@ namespace Goedel.Mesh.Client {
                 T catalogedEntry) where T : CatalogedEntry {
             transactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(transactRequest.Updates, catalog);
-
             update.Update(catalogedEntry);
+            transactRequest.Updates.Add(update);
             }
 
         /// <summary>
@@ -248,12 +289,15 @@ namespace Goedel.Mesh.Client {
                 T catalogedEntry) where T : CatalogedEntry {
             transactRequest.Updates ??= new List<ContainerUpdate>();
             var update = GetContainerUpdate(transactRequest.Updates, catalog);
-
             update.Delete(catalogedEntry);
+            transactRequest.Updates.Add(update);
             }
 
 
-
+        /// <summary>
+        /// Begin a transaction.
+        /// </summary>
+        /// <returns></returns>
         public TransactRequest TransactBegin() => new TransactRequest();
 
         /// <summary>
@@ -286,32 +330,8 @@ namespace Goedel.Mesh.Client {
                 if (transactRequest.Updates != null) {
                     // Perform local updates to each store.
                     foreach (var update in transactRequest.Updates) {
-                        var catalogUpdate = update as TransactionUpdate<CatalogedEntry>;
-                        var catalog = catalogUpdate.Catalog;
-
-                        foreach (var envelope in catalogUpdate.Envelopes) {
-
-                            var action = envelope.Header.ContentMeta.Event;
-
-                            // persist update
-                            catalog.Apply(envelope);
-
-                            // update in memory structure
-                            switch (action) {
-                                case PersistenceStore.EventNew: {
-                                    catalog.NewEntry(envelope.JSONObject as CatalogedEntry);
-                                    break;
-                                    }
-                                case PersistenceStore.EventUpdate: {
-                                    catalog.UpdateEntry(envelope.JSONObject as CatalogedEntry);
-                                    break;
-                                    }
-                                case PersistenceStore.EventDelete: {
-                                    catalog.DeleteEntry((envelope.JSONObject as CatalogedEntry)._PrimaryKey);
-                                    break;
-                                    }
-                                }
-                            }
+                        var catalogUpdate = update as TransactionUpdate;
+                        catalogUpdate.Commit();
                         }
                     }
                 }

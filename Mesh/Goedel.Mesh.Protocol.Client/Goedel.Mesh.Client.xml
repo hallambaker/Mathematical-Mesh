@@ -803,6 +803,12 @@
             <param name="catalog">The catalog to be updated</param>
             <param name="catalogedEntry">The entry to add as an update.</param>
         </member>
+        <member name="M:Goedel.Mesh.Client.ContextAccount.TransactBegin">
+            <summary>
+            Begin a transaction.
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Goedel.Mesh.Client.ContextAccount.Transact(Goedel.Mesh.TransactRequest)">
             <summary>
             Perform the transaction described by <paramref name="transactRequest"/>. If the
@@ -1010,6 +1016,17 @@
             <param name="meshHost">The Mesh host to be written to.</param>
             <param name="devicePreconfiguration">The preconfiguration data.</param>
             <returns>Context for the preconfigured device.</returns>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactionUpdate">
+            <summary>
+            Untyped transaction update.
+            </summary>
+        </member>
+        <member name="T:Goedel.Mesh.Client.TransactionUpdate`1">
+            <summary>
+            Typed transaction update
+            </summary>
+            <typeparam name="T"></typeparam>
         </member>
         <member name="T:Goedel.Mesh.Client.ContextUser">
             <summary>

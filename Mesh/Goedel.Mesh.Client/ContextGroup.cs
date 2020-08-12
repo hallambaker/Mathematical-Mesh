@@ -186,38 +186,6 @@ namespace Goedel.Mesh.Client {
             return catalogedMember;
             }
 
-
-        ///// <summary>
-        ///// Add a device to the device catalog.
-        ///// </summary>
-        ///// <param name="capability">The capability to add.</param>
-        ///// <param name="encryptionKey">Optional encryption key used to encrypt the capability.</param>
-        //public void AddCapability(
-        //            CryptographicCapability capability,
-        //            CryptoKey encryptionKey = null) {
-        //    var catalog = GetCatalogCapability();
-        //    var transaction = new TransactionServiced(MeshClient);
-        //    var catalogedCapability = new CatalogedCapability(capability);
-        //    transaction.Update(catalog, catalogedCapability);
-        //    transaction.Commit();
-        //    }
-
-        ///// <summary>
-        ///// Add a device to the device catalog.
-        ///// </summary>
-        ///// <param name="CatalogedMember">The device to add.</param>
-        //public void AddMember(
-        //            CatalogedMember CatalogedMember) {
-        //    var catalog = GetCatalogMember();
-        //    var transaction = new TransactionServiced(MeshClient);
-        //    transaction.Update(catalog, CatalogedMember);
-        //    transaction.Commit();
-
-
-        //    // This is not applying the envelope locally!
-        //    }
-
-
         /// <summary>
         /// Get the default (i.e. minimum contact info). This has a single network 
         /// address entry for this mesh and mesh account. 
@@ -281,16 +249,16 @@ namespace Goedel.Mesh.Client {
         /// <returns>The member catalog entry.</returns>
         public void Delete(CatalogedMember member) {
             var catalogMember = GetCatalogMember();
+            var catalogCapability = GetCatalogCapability();
 
+            var capability = catalogCapability.Get(member.ServiceCapabilityId);
             // delete the capabilities of the member
 
+            var transactGroup = new TransactRequest();
+            CatalogDelete(transactGroup, catalogMember, member);
+            CatalogDelete(transactGroup, catalogCapability, capability);
 
-            catalogMember.Delete(member);
-
-            // Update the swadding capabilities file!
-            throw new NYI();
-
-            return;
+            Transact(transactGroup);
             }
 
 
